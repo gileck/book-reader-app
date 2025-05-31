@@ -4,6 +4,7 @@ import { CacheOptions, CacheParams, CacheResult, CacheStatus, CacheProvider } fr
  * Default cache options
  */
 const DEFAULT_OPTIONS: CacheOptions = {
+    isStaleTTL: 10000, // 10 seconds
     ttl: 3600000, // 1 hour
     bypassCache: false,
     maxStaleAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
@@ -64,7 +65,11 @@ export const createCache = (provider: CacheProvider) => {
 
         // Check if we want stale-while-revalidate behavior
         if (opts.staleWhileRevalidate) {
+<<<<<<< HEAD
             const staleResult = await provider.readCacheWithStale<T>(cacheKey, opts.ttl);
+=======
+            const staleResult = await provider.readCacheWithStale<T>(cacheKey, opts.isStaleTTL);
+>>>>>>> template/main
 
             if (staleResult) {
                 if (!staleResult.isStale) {

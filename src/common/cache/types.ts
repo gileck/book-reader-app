@@ -15,6 +15,8 @@ export interface CacheOptions {
     maxStaleAge?: number;
     /** Maximum cache size in bytes. When exceeded, oldest entries will be evicted. Default: 4MB */
     maxCacheSize?: number;
+    /** Time-to-live for stale data in milliseconds. Default: 10 seconds */
+    isStaleTTL?: number;
 }
 
 export interface CacheMetadata {
