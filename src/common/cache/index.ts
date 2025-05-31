@@ -65,11 +65,7 @@ export const createCache = (provider: CacheProvider) => {
 
         // Check if we want stale-while-revalidate behavior
         if (opts.staleWhileRevalidate) {
-<<<<<<< HEAD
-            const staleResult = await provider.readCacheWithStale<T>(cacheKey, opts.ttl);
-=======
             const staleResult = await provider.readCacheWithStale<T>(cacheKey, opts.isStaleTTL);
->>>>>>> template/main
 
             if (staleResult) {
                 if (!staleResult.isStale) {
