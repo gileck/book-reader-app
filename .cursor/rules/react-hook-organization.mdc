@@ -1,0 +1,96 @@
+---
+description: when developing React components and hooks
+globs: 
+alwaysApply: false
+---
+# React Hook Organization Pattern
+
+This rule documents the pattern for organizing complex React hooks in our codebase, as demonstrated in the ManageTrainingPlanPage component.
+
+## Core Principles
+
+1. **Single Responsibility**: Each hook file should handle a single domain of functionality
+2. **Composition over Monoliths**: Compose small, focused hooks rather than creating large monolithic hooks
+3. **Clear Dependencies**: Avoid circular dependencies by carefully structuring hook initialization
+4. **State Isolation**: Each hook manages its own internal state
+5. **Consistent API Pattern**: Use a consistent pattern for updating state and exposing functionality
+
+## Implementation Pattern
+
+For complex pages with significant logic, follow this organization pattern:
+
+### 1. Split by Domain
+
+Divide functionality into domain-specific hooks like:
+- `usePageHooks.ts` - Page-level concerns (tabs, loading, errors)
+- `usePlanDataHooks.ts` - Data fetching and management
+- `useExerciseHooks.ts` - Domain-specific functionality
+- `useWorkoutHooks.ts` - Another domain-specific area
+
+### 2. State Management Pattern
+
+Each hook should follow this pattern:
+- Define a state interface (e.g., `ExerciseState`)
+- Provide a default state function (e.g., `getDefaultExerciseState()`)
+- Use a single state object and partial updates pattern:
+```typescript
+const [state, setState] = useState(getDefaultState());
+const updateState = useCallback((partialState: Partial<State>) => {
+  setState(prev => ({ ...prev, ...partialState }));
+}, []);
+```
+
+### 3. Main Composition Hook
+
+The main hook (`useManageTrainingPlanPage.ts`) should:
+- Initialize all domain hooks
+- Create composite functions that coordinate between hooks
+- Return a well-defined interface that components can rely on
+- Avoid spreading properties - group related functionality (e.g., `workouts: {...}`)
+
+### 4. Hook File Organization
+
+For hooks that are part of a specific route, organize them in this structure:
+```
+src/client/routes/[ROUTE_NAME]/
+├── [ROUTE_NAME].tsx        // Main route component that uses hooks
+├── hooks/                  // All hooks for this route
+│   ├── useMainHook.ts      // Main composition hook
+│   ├── useDomainAHooks.ts  // Domain-specific hook A
+│   ├── useDomainBHooks.ts  // Domain-specific hook B
+│   └── useMainHook.types.ts // Types for the main hook
+└── components/             // Components that use the hooks
+```
+
+For reusable hooks used across multiple routes, use:
+```
+src/client/hooks/
+├── useSharedFeature/
+│   ├── index.ts
+│   ├── useSharedFeature.ts
+│   └── useSharedFeature.types.ts
+└── useAnotherSharedFeature.ts
+```
+
+### 5. Avoid Circular Dependencies
+
+When hooks need to interact:
+1. Initialize all hooks first
+2. Create coordination functions after initialization
+3. Pass callback functions as parameters instead of direct dependencies
+
+Example:
+```typescript
+// Initialize hooks
+const exerciseHooks = useExerciseHooks(planId);
+// Later when a function needs to call another hook's function
+executeDeleteExercise: async () => {
+  await exerciseHooks.executeDeleteExercise(loadInitialPageData);
+}
+```
+
+## File Size Guidelines
+
+- Hook files should generally stay under 250 lines
+- If a hook file exceeds 300 lines, consider further splitting it
+- Main composition hooks should focus on coordination rather than implementation

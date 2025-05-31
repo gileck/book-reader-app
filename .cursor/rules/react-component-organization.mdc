@@ -1,0 +1,137 @@
+---
+description: when developing React components
+globs: 
+alwaysApply: false
+---
+# React Component Organization Pattern
+
+This rule documents the pattern for organizing React components in our codebase, focusing on creating small, focused components with clear separation of concerns.
+
+## Core Principles
+
+1. **Single Responsibility**: Each component should handle one specific concern
+2. **Separation of Logic and UI**: Separate business logic from UI rendering
+3. **Composition over Complexity**: Compose small components rather than creating large monolithic ones
+4. **Consistent Folder Structure**: Organize related components in logical folder structures
+
+## Implementation Pattern
+
+For complex UI sections, follow this organization pattern:
+
+### 1. Split Components by Responsibility
+
+Break down large components into smaller, focused components:
+- `PageLayout.tsx` - Overall page structure
+- `HeaderSection.tsx` - Page header with title, actions
+- `ContentSection.tsx` - Main content area
+- `DataTable.tsx` - Table showing data
+- `FilterBar.tsx` - Controls for filtering data
+
+### 2. Container/Presentation Pattern
+
+Separate logic from presentation:
+- **Container Components**: Handle data fetching, state management, and business logic
+- **Presentation Components**: Focus on rendering UI based on props with minimal logic
+
+Example:
+```typescript
+// Container: Handles logic
+const UserListContainer = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Data fetching, filtering logic, etc.
+  
+  return <UserList users={users} isLoading={isLoading} onDelete={handleDelete} />;
+};
+
+// Presentation: Focuses on UI
+const UserList: React.FC<UserListProps> = ({ users, isLoading, onDelete }) => {
+  if (isLoading) return <LoadingSpinner />;
+  
+  return (
+    <div className="user-list">
+      {users.map(user => (
+        <UserListItem key={user.id} user={user} onDelete={onDelete} />
+      ))}
+    </div>
+  );
+};
+```
+
+### 3. Component Composition Hierarchy
+
+Build UI through composition:
+1. **Base/Atom Components**: Simple UI elements (buttons, inputs, etc.)
+2. **Compound Components**: Combinations of base components (form fields, cards)
+3. **Section Components**: Logical sections of a page or feature
+4. **Page Components**: Compose sections into complete pages
+
+### 4. File Organization
+
+#### Route-Specific Components
+
+For components that are part of a specific route, follow this structure:
+```
+src/client/routes/[ROUTE_NAME]/
+├── [ROUTE_NAME].tsx     // Main route component 
+├── index.ts             // Exports the route
+├── components/          // UI components specific to this route
+│   ├── Header.tsx       // Route-specific header
+│   ├── ContentSection.tsx 
+│   └── ListItem.tsx     
+├── hooks/               // Hooks specific to this route
+│   ├── useRouteData.ts  
+│   └── useFormHandling.ts
+└── types.ts             // Shared types for this route
+```
+
+#### Shared Components
+
+For reusable components used across multiple routes:
+```
+src/client/components/Feature/
+├── index.ts             // Exports all components
+├── FeatureContainer.tsx // Main container with logic
+├── Feature.tsx          // Main presentation component
+├── FeatureHeader.tsx    // Sub-component for header
+├── FeatureList.tsx      // Sub-component for list
+├── FeatureListItem.tsx  // Individual list item
+└── types.ts             // Shared types and interfaces
+```
+
+### 5. Split Files at These Boundaries
+
+Consider splitting components into separate files when:
+- A component exceeds 150 lines
+- A component has multiple complex sub-components
+- Logic and UI would be clearer if separated
+- A component is reused in multiple places
+
+## File Size Guidelines
+
+- Component files should generally stay under 150 lines
+- If a component file exceeds 200 lines, it should definitely be split
+- Container components should focus on logic and delegate rendering to presentation components
+- Main page components should primarily compose other components rather than implementing complex rendering logic
+
+## Example Component Structure
+
+For a typical feature or page:
+
+```
+// FeaturePage.tsx - Main page component
+const FeaturePage = () => {
+  const { data, actions } = useFeatureLogic(); // Custom hook for logic
+  
+  return (
+    <PageLayout>
+      <FeatureHeader title={data.title} onAction={actions.handleAction} />
+      <FeatureFilters filters={data.filters} onChange={actions.handleFilterChange} />
+      <FeatureList items={data.items} onItemClick={actions.handleItemClick} />
+    </PageLayout>
+  );
+};
+```
+
+Each component referenced above would live in its own file with focused responsibility.

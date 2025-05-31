@@ -1,0 +1,16 @@
+---
+description: when fixing eslint issues
+globs: 
+alwaysApply: false
+---
+# ESLint Custom Guidelines
+
+## ESLint Disable Comments
+
+- Do not use `// eslint-disable-next-line` or other ESLint disable comments unless specifically instructed by the user.
+
+## Post-Linting Verification
+
+- After fixing any lint issue, ALWAYS run `yarn checks`.
+- If `yarn checks` reports any further issues, fix all of them.
+- Ensure `yarn checks` completes with no errors before considering the linting task complete.
