@@ -19,6 +19,7 @@ export const apiClient = {
   ): Promise<CacheResult<ResponseType>> => {
     // Client-side caching wrapper
     const apiCall = async (): Promise<ResponseType> => {
+
       const response = await fetch('/api/process', {
         method: 'POST',
         headers: {
@@ -29,7 +30,7 @@ export const apiClient = {
           params,
           options: {
             ...options,
-            disableCache: options?.disableCache
+            disableCache: false
           }
         }),
       });
@@ -56,6 +57,8 @@ export const apiClient = {
         throw new Error(`Failed to call ${name}: No data returned`);
       }
 
+      console.log('apiCall', { name, params, options, result });
+
       return result.data;
     };
 
@@ -71,8 +74,8 @@ export const apiClient = {
         },
         {
           bypassCache: options?.bypassCache ?? false,
-          disableCache: options?.disableCache ?? false,
-          staleWhileRevalidate: options?.staleWhileRevalidate ?? true,
+          disableCache: true,
+          staleWhileRevalidate: false,
           ttl: options?.ttl,
           maxStaleAge: options?.maxStaleAge,
         }

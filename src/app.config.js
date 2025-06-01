@@ -1,7 +1,7 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const appConfig = {
-    appName: 'App Template AI',
+    appName: 'Book Reader App',
     cacheType: isProduction ? 's3' : 's3',
-    dbName: 'app_template_db'
+    dbName: 'book_reader_db'
 };

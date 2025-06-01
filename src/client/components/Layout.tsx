@@ -6,9 +6,7 @@ import {
   useTheme
 } from '@mui/material';
 import { TopNavBar } from './layout/TopNavBar';
-import { BottomNavBar } from './layout/BottomNavBar';
 import { DrawerMenu } from './layout/DrawerMenu';
-import { Footer } from './layout/Footer';
 import { NavigatorStandalone } from './layout/types';
 import { navItems, menuItems } from './NavLinks';
 
@@ -58,8 +56,8 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
       {/* Main Content */}
       <Container component="main" sx={{
         flexGrow: 1,
-        py: 3,
-        px: { xs: 2, sm: 3 },
+        py: 0,
+        px: 0,
         maxWidth: { xs: '100%', sm: 'md', md: 'lg' },
         // Add iOS momentum scrolling for a more native feel
         WebkitOverflowScrolling: 'touch',
@@ -70,10 +68,10 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
       </Container>
 
       {/* Footer (hidden on mobile) */}
-      <Footer isStandalone={isStandalone} />
+      {/* <Footer isStandalone={isStandalone} /> */}
 
       {/* Bottom Navigation (mobile only) */}
-      <BottomNavBar navItems={navItems} isStandalone={isStandalone} />
+      {/* <BottomNavBar navItems={navItems} isStandalone={isStandalone} /> */}
     </Box>
   );
 };
