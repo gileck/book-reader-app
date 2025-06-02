@@ -1,5 +1,4 @@
 import * as textToSpeech from '@google-cloud/text-to-speech';
-import type { TTSChunk } from '../../apis/tts/types';
 
 export interface TTSTimepoint {
     markName: string;

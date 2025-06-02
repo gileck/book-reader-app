@@ -115,6 +115,7 @@ export const Reader = () => {
                     <ReaderHeader book={book} chapter={chapter} />
                     <ReaderContent
                         chapter={chapter}
+                        scrollContainerRef={scrollContainerRef}
                         currentChunkIndex={(() => {
                             // Convert audio text chunk index to absolute chapter chunk index
                             const textChunks = chapter.content.chunks.filter(c => c.type === 'text');

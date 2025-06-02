@@ -20,16 +20,4 @@ export interface GenerateTtsResponse {
     audioContent?: string; // base64 encoded audio
     timepoints?: TTSTimepoint[];
     error?: string;
-}
-
-export interface ProcessTextChunksPayload {
-    text: string;
-    minWords?: number;
-    maxWords?: number;
-}
-
-export interface ProcessTextChunksResponse {
-    success: boolean;
-    chunks?: TTSChunk[];
-    error?: string;
 } 
