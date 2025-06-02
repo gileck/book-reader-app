@@ -96,7 +96,10 @@ async function uploadParsedBook(jsonPath, force = false) {
                     index: chunk.index,
                     text: chunk.text,
                     wordCount: chunk.wordCount,
-                    type: chunk.type || 'text'
+                    type: chunk.type || 'text',
+                    ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
+                    ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }),
+                    ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
                 }))
             },
             wordCount: chapter.wordCount,

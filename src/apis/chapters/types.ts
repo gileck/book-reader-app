@@ -3,7 +3,8 @@ export interface TextChunkClient {
     index: number;
     text: string;
     wordCount: number;
-    type: 'text' | 'image';
+    type: 'text' | 'image' | 'header';
+    pageNumber?: number;
     imageUrl?: string;
     imageAlt?: string;
 }

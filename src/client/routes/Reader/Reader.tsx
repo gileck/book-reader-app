@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, Typography, CircularProgress, Paper } from '@mui/material';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
@@ -25,6 +25,8 @@ export const Reader = () => {
         navigation,
         progress
     } = useReader();
+
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     // Get current reading context for Q&A
     const getCurrentSentence = () => {
@@ -96,7 +98,20 @@ export const Reader = () => {
         >
             <Box>
                 {/* Text Area */}
-                <Paper elevation={0} sx={{ maxWidth: 800, mx: 'auto', p: 4, mb: 4, pb: { xs: 20, sm: 16 }, borderRadius: 0 }}>
+                <Paper
+                    ref={scrollContainerRef}
+                    elevation={0}
+                    sx={{
+                        maxWidth: 800,
+                        mx: 'auto',
+                        p: 4,
+                        mb: 4,
+                        pb: { xs: 20, sm: 16 },
+                        borderRadius: 0,
+                        height: '70vh',
+                        overflow: 'auto'
+                    }}
+                >
                     <ReaderHeader book={book} chapter={chapter} />
                     <ReaderContent
                         chapter={chapter}

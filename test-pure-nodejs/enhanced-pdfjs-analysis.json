@@ -1,0 +1,15 @@
+{
+  "totalPagesScanned": 5,
+  "totalImages": 2,
+  "imagesByPage": [
+    {
+      "pageNumber": 1,
+      "imageCount": 1
+    },
+    {
+      "pageNumber": 4,
+      "imageCount": 1
+    }
+  ],
+  "canvasAvailable": true
+}

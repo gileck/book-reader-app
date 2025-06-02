@@ -191,6 +191,18 @@ export const BookLibrary = () => {
                         Active Book
                     </Typography>
                     <Card sx={{ backgroundColor: 'primary.50', border: '2px solid', borderColor: 'primary.main' }}>
+                        {activeBook.coverImage && (
+                            <Box
+                                component="img"
+                                src={activeBook.coverImage}
+                                alt={`${activeBook.title} cover`}
+                                sx={{
+                                    height: 200,
+                                    objectFit: 'cover',
+                                    width: '100%'
+                                }}
+                            />
+                        )}
                         <CardContent>
                             <Typography variant="h6" component="h3" gutterBottom>
                                 {activeBook.title}
@@ -260,6 +272,18 @@ export const BookLibrary = () => {
             }}>
                 {otherBooks.map((book) => (
                     <Card key={book._id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                        {book.coverImage && (
+                            <Box
+                                component="img"
+                                src={book.coverImage}
+                                alt={`${book.title} cover`}
+                                sx={{
+                                    height: 200,
+                                    objectFit: 'cover',
+                                    width: '100%'
+                                }}
+                            />
+                        )}
                         <CardContent sx={{ flexGrow: 1 }}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
                                 <Typography variant="h6" component="h3" sx={{ flexGrow: 1 }}>

@@ -3,7 +3,6 @@ import {
     Box,
     Typography,
     LinearProgress,
-    Grid,
     Card,
     CardContent,
     Chip
@@ -106,9 +105,9 @@ export const ReadingStatsDisplay: React.FC<ReadingStatsDisplayProps> = ({
                     Reading Progress
                 </Typography>
 
-                <Grid container spacing={3}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                     {/* Book-wide Progress */}
-                    <Grid item xs={12}>
+                    <Box>
                         <Box sx={{ marginBottom: 1 }}>
                             <Box sx={{
                                 display: 'flex',
@@ -137,10 +136,10 @@ export const ReadingStatsDisplay: React.FC<ReadingStatsDisplayProps> = ({
                                 }}
                             />
                         </Box>
-                    </Grid>
+                    </Box>
 
                     {/* Current Chapter Progress */}
-                    <Grid item xs={12}>
+                    <Box>
                         <Box sx={{ marginBottom: 2 }}>
                             <Box sx={{
                                 display: 'flex',
@@ -169,87 +168,92 @@ export const ReadingStatsDisplay: React.FC<ReadingStatsDisplayProps> = ({
                                 }}
                             />
                         </Box>
-                    </Grid>
+                    </Box>
 
                     {/* Statistics */}
-                    <Grid item xs={12}>
-                        <Grid container spacing={2}>
+                    <Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: 2,
+                            justifyContent: 'space-between'
+                        }}>
                             {/* Chapters Completed */}
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    gap: 1
-                                }}>
-                                    <CheckCircle sx={{ color: '#81c784', fontSize: 24 }} />
-                                    <Typography variant="h6" sx={{ color: '#81c784', fontWeight: 'bold' }}>
-                                        {chaptersCompleted}
-                                    </Typography>
-                                    <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
-                                        Chapters Completed
-                                    </Typography>
-                                </Box>
-                            </Grid>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 1,
+                                minWidth: '120px',
+                                flex: { xs: '1 1 45%', sm: '1 1 20%' }
+                            }}>
+                                <CheckCircle sx={{ color: '#81c784', fontSize: 24 }} />
+                                <Typography variant="h6" sx={{ color: '#81c784', fontWeight: 'bold' }}>
+                                    {chaptersCompleted}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
+                                    Chapters Completed
+                                </Typography>
+                            </Box>
 
                             {/* Total Reading Time */}
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    gap: 1
-                                }}>
-                                    <Schedule sx={{ color: '#ffb74d', fontSize: 24 }} />
-                                    <Typography variant="h6" sx={{ color: '#ffb74d', fontWeight: 'bold' }}>
-                                        {formatTime(totalReadingTime)}
-                                    </Typography>
-                                    <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
-                                        Total Time
-                                    </Typography>
-                                </Box>
-                            </Grid>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 1,
+                                minWidth: '120px',
+                                flex: { xs: '1 1 45%', sm: '1 1 20%' }
+                            }}>
+                                <Schedule sx={{ color: '#ffb74d', fontSize: 24 }} />
+                                <Typography variant="h6" sx={{ color: '#ffb74d', fontWeight: 'bold' }}>
+                                    {formatTime(totalReadingTime)}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
+                                    Total Time
+                                </Typography>
+                            </Box>
 
                             {/* Current Session */}
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    gap: 1
-                                }}>
-                                    <TrendingUp sx={{ color: '#f48fb1', fontSize: 24 }} />
-                                    <Typography variant="h6" sx={{ color: '#f48fb1', fontWeight: 'bold' }}>
-                                        {formatTime(currentSessionTime)}
-                                    </Typography>
-                                    <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
-                                        This Session
-                                    </Typography>
-                                </Box>
-                            </Grid>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 1,
+                                minWidth: '120px',
+                                flex: { xs: '1 1 45%', sm: '1 1 20%' }
+                            }}>
+                                <TrendingUp sx={{ color: '#f48fb1', fontSize: 24 }} />
+                                <Typography variant="h6" sx={{ color: '#f48fb1', fontWeight: 'bold' }}>
+                                    {formatTime(currentSessionTime)}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
+                                    This Session
+                                </Typography>
+                            </Box>
 
                             {/* Sessions Count */}
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    gap: 1
-                                }}>
-                                    <AutoStories sx={{ color: '#90caf9', fontSize: 24 }} />
-                                    <Typography variant="h6" sx={{ color: '#90caf9', fontWeight: 'bold' }}>
-                                        {sessionsCount}
-                                    </Typography>
-                                    <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
-                                        Sessions
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 1,
+                                minWidth: '120px',
+                                flex: { xs: '1 1 45%', sm: '1 1 20%' }
+                            }}>
+                                <AutoStories sx={{ color: '#90caf9', fontSize: 24 }} />
+                                <Typography variant="h6" sx={{ color: '#90caf9', fontWeight: 'bold' }}>
+                                    {sessionsCount}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: '#b0b0b0', textAlign: 'center' }}>
+                                    Sessions
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </Box>
 
                     {/* Chapter Status */}
-                    <Grid item xs={12}>
+                    <Box>
                         <Box sx={{
                             display: 'flex',
                             alignItems: 'center',
@@ -279,8 +283,8 @@ export const ReadingStatsDisplay: React.FC<ReadingStatsDisplayProps> = ({
                                 />
                             )}
                         </Box>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </CardContent>
         </Card>
     );

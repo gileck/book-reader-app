@@ -80,6 +80,7 @@ interface TextChunk {
   text: string;             // Plain text content (5-15 words optimal)
   wordCount: number;
   type: 'text' | 'image';   // Support for embedded images
+  pageNumber?: number;      // PDF page number for positioning (NEW)
   imageUrl?: string;        // If type is 'image'
   imageAlt?: string;        // Alt text for images
 }
