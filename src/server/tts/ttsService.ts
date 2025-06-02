@@ -1,4 +1,5 @@
 import * as textToSpeech from '@google-cloud/text-to-speech';
+import type { TTSChunk } from '../../apis/tts/types';
 
 export interface TTSTimepoint {
     markName: string;
@@ -8,13 +9,6 @@ export interface TTSTimepoint {
 export interface TTSResult {
     audioContent: string; // base64 encoded audio
     timepoints: TTSTimepoint[];
-}
-
-export interface TTSChunk {
-    text: string;
-    words: string[];
-    startIndex: number;
-    endIndex: number;
 }
 
 function getClient() {
@@ -46,61 +40,7 @@ function generateSSMLWithMarks(text: string): string {
     return ssml;
 }
 
-function chunkText(text: string, minWords: number = 5, maxWords: number = 15): TTSChunk[] {
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    const chunks: TTSChunk[] = [];
-    let currentChunk = '';
-    let currentWords: string[] = [];
-    let wordIndex = 0;
-
-    for (const sentence of sentences) {
-        const sentenceWords = sentence.trim().split(/\s+/).filter(w => w.length > 0);
-
-        // If adding this sentence would exceed maxWords, finalize current chunk
-        if (currentWords.length > 0 && currentWords.length + sentenceWords.length > maxWords) {
-            chunks.push({
-                text: currentChunk.trim(),
-                words: [...currentWords],
-                startIndex: wordIndex - currentWords.length,
-                endIndex: wordIndex - 1
-            });
-            currentChunk = '';
-            currentWords = [];
-        }
-
-        // Add sentence to current chunk
-        if (currentChunk.length > 0) {
-            currentChunk += ' ';
-        }
-        currentChunk += sentence.trim();
-        currentWords.push(...sentenceWords);
-        wordIndex += sentenceWords.length;
-
-        // If we have enough words, we can finalize the chunk
-        if (currentWords.length >= minWords) {
-            chunks.push({
-                text: currentChunk.trim(),
-                words: [...currentWords],
-                startIndex: wordIndex - currentWords.length,
-                endIndex: wordIndex - 1
-            });
-            currentChunk = '';
-            currentWords = [];
-        }
-    }
-
-    // Add remaining text as final chunk
-    if (currentChunk.trim().length > 0) {
-        chunks.push({
-            text: currentChunk.trim(),
-            words: [...currentWords],
-            startIndex: wordIndex - currentWords.length,
-            endIndex: wordIndex - 1
-        });
-    }
-
-    return chunks;
-}
+// Text chunking removed - chunks are pre-processed during PDF import and stored in database
 
 export async function synthesizeSpeechWithTiming(
     text: string,
@@ -151,6 +91,4 @@ export async function synthesizeSpeechWithTiming(
     }
 }
 
-export function processTextForTTS(text: string): TTSChunk[] {
-    return chunkText(text);
-} 
+// processTextForTTS removed - text is pre-chunked during PDF import 

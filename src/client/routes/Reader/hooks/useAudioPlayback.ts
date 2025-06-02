@@ -115,12 +115,17 @@ export const useAudioPlayback = (
                 return;
             }
 
+            let closestIndex = -1;
             for (let i = 0; i < timepoints.length; i++) {
                 if (currentTime >= timepoints[i].timeSeconds &&
                     (i === timepoints.length - 1 || currentTime < timepoints[i + 1].timeSeconds)) {
-                    updateState({ currentWordIndex: i });
+                    closestIndex = i;
                     break;
                 }
+            }
+
+            if (closestIndex !== -1) {
+                updateState({ currentWordIndex: closestIndex });
             }
         };
 
@@ -194,7 +199,7 @@ export const useAudioPlayback = (
             const wasPlaying = state.isPlaying;
             handlePause();
             updateState({ currentWordIndex: 0 });
-            if (state.audioChunks[state.currentChunkIndex]) {
+            if (state.audioChunks[state.currentChunkIndex]?.audio) {
                 state.audioChunks[state.currentChunkIndex].audio.currentTime = 0;
             }
 
@@ -224,7 +229,7 @@ export const useAudioPlayback = (
             const wasPlaying = state.isPlaying;
             handlePause();
             updateState({ currentWordIndex: 0 });
-            if (state.audioChunks[state.currentChunkIndex].audio) {
+            if (state.audioChunks[state.currentChunkIndex]?.audio) {
                 state.audioChunks[state.currentChunkIndex].audio.currentTime = 0;
             }
             const nextIndex = state.currentChunkIndex + 1;

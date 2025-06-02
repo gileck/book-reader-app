@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
 import { useReaderData } from './useReaderData';
 import { useAudioPlayback } from './useAudioPlayback';
@@ -10,10 +10,26 @@ const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
 
 export const useReader = () => {
     const { queryParams } = useRouter();
-    const { bookId } = queryParams;
+    const { bookId: queryBookId } = queryParams;
+
+    // Use bookId from query params, or fall back to active book from localStorage
+    const [bookId, setBookId] = useState<string | undefined>(queryBookId);
 
     // Track current chunk index separately to coordinate between hooks
     const [currentChunkIndex, setCurrentChunkIndex] = useState(0);
+
+    // Handle Active Book concept
+    useEffect(() => {
+        if (queryBookId) {
+            setBookId(queryBookId);
+        } else {
+            // No bookId in query params, use active book from localStorage
+            const activeBookId = localStorage.getItem('activeBookId');
+            if (activeBookId) {
+                setBookId(activeBookId);
+            }
+        }
+    }, [queryBookId]);
 
     // Initialize domain hooks
     const readerData = useReaderData(bookId);

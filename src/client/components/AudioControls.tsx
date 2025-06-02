@@ -12,7 +12,8 @@ import {
     SkipNext,
     ChevronLeft,
     ChevronRight,
-    Settings
+    Settings,
+    QuestionMark
 } from '@mui/icons-material';
 import { BookmarkDropdown } from './BookmarkDropdown';
 import type { BookmarkClient } from '../../apis/bookmarks/types';
@@ -30,6 +31,7 @@ interface AudioControlsProps {
     onBookmark: () => void;
     onSettings: () => void;
     onSpeedSettings: () => void;
+    onAskAI: () => void;
     isPlaying: boolean;
     isBookmarked?: boolean;
     progress: number; // 0-100 (chapter progress)
@@ -62,6 +64,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onBookmark,
     onSettings,
     onSpeedSettings,
+    onAskAI,
     isPlaying,
     isBookmarked = false,
     progress,
@@ -180,17 +183,32 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 alignItems: 'center',
                 position: 'relative'
             }}>
-                {/* Settings Button - Left */}
-                <IconButton
-                    onClick={onSettings}
-                    sx={{
-                        color: 'white',
-                        '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
-                    }}
-                    size="medium"
-                >
-                    <Settings />
-                </IconButton>
+                {/* Left Controls */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {/* Ask AI Button */}
+                    <IconButton
+                        onClick={onAskAI}
+                        sx={{
+                            color: 'white',
+                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
+                        }}
+                        size="medium"
+                    >
+                        <QuestionMark />
+                    </IconButton>
+
+                    {/* Settings Button */}
+                    <IconButton
+                        onClick={onSettings}
+                        sx={{
+                            color: 'white',
+                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
+                        }}
+                        size="medium"
+                    >
+                        <Settings />
+                    </IconButton>
+                </Box>
 
                 {/* Centered Play Controls */}
                 <Box sx={{

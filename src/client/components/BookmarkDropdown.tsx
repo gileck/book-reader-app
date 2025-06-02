@@ -98,21 +98,19 @@ export const BookmarkDropdown: React.FC<BookmarkDropdownProps> = ({
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
                 {/* Toggle Bookmark for Current Position */}
-                {onToggleBookmark && (
-                    <>
-                        <MenuItem onClick={handleToggleBookmark}>
-                            <ListItemIcon>
-                                <BookmarkAdd sx={{ color: 'primary.main' }} />
-                            </ListItemIcon>
-                            <ListItemText>
-                                <Typography variant="body2">
-                                    {isCurrentBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
-                                </Typography>
-                            </ListItemText>
-                        </MenuItem>
-                        {bookmarks.length > 0 && <Divider sx={{ borderColor: 'grey.700' }} />}
-                    </>
-                )}
+                {onToggleBookmark && [
+                    <MenuItem key="toggle-bookmark" onClick={handleToggleBookmark}>
+                        <ListItemIcon>
+                            <BookmarkAdd sx={{ color: 'primary.main' }} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography variant="body2">
+                                {isCurrentBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
+                            </Typography>
+                        </ListItemText>
+                    </MenuItem>,
+                    bookmarks.length > 0 && <Divider key="toggle-divider" sx={{ borderColor: 'grey.700' }} />
+                ]}
 
                 {bookmarks.length === 0 ? (
                     !onToggleBookmark && (
@@ -122,62 +120,60 @@ export const BookmarkDropdown: React.FC<BookmarkDropdownProps> = ({
                             </Typography>
                         </MenuItem>
                     )
-                ) : (
-                    <>
-                        <Box sx={{ px: 2, py: 1 }}>
-                            <Typography variant="subtitle2" color="primary.main">
-                                Bookmarks ({bookmarks.length})
-                            </Typography>
-                        </Box>
-                        <Divider sx={{ borderColor: 'grey.700' }} />
-                        {sortedBookmarks.map((bookmark) => {
-                            const isCurrentPosition =
-                                bookmark.chapterNumber === currentChapterNumber &&
-                                bookmark.chunkIndex === currentChunkIndex;
+                ) : [
+                    <Box key="bookmarks-header" sx={{ px: 2, py: 1 }}>
+                        <Typography variant="subtitle2" color="primary.main">
+                            Bookmarks ({bookmarks.length})
+                        </Typography>
+                    </Box>,
+                    <Divider key="bookmarks-divider" sx={{ borderColor: 'grey.700' }} />,
+                    ...sortedBookmarks.map((bookmark) => {
+                        const isCurrentPosition =
+                            bookmark.chapterNumber === currentChapterNumber &&
+                            bookmark.chunkIndex === currentChunkIndex;
 
-                            return (
-                                <MenuItem
-                                    key={bookmark._id}
-                                    onClick={() => handleBookmarkClick(bookmark)}
-                                    sx={{
-                                        backgroundColor: isCurrentPosition ? 'primary.dark' : 'transparent',
-                                        '&:hover': {
-                                            backgroundColor: isCurrentPosition ? 'primary.dark' : 'grey.800'
-                                        },
-                                        py: 1.5
-                                    }}
-                                >
-                                    <ListItemIcon>
-                                        <BookmarkIcon
-                                            sx={{
-                                                color: isCurrentPosition ? 'primary.light' : 'primary.main',
-                                                fontSize: 20
-                                            }}
-                                        />
-                                    </ListItemIcon>
-                                    <ListItemText>
-                                        <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                                            {bookmark.customName || `Chapter ${bookmark.chapterNumber}`}
-                                        </Typography>
-                                        <Typography
-                                            variant="caption"
-                                            color="grey.400"
-                                            sx={{
-                                                display: 'block',
-                                                mt: 0.5,
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                                whiteSpace: 'nowrap'
-                                            }}
-                                        >
-                                            {bookmark.previewText}
-                                        </Typography>
-                                    </ListItemText>
-                                </MenuItem>
-                            );
-                        })}
-                    </>
-                )}
+                        return (
+                            <MenuItem
+                                key={bookmark._id}
+                                onClick={() => handleBookmarkClick(bookmark)}
+                                sx={{
+                                    backgroundColor: isCurrentPosition ? 'primary.dark' : 'transparent',
+                                    '&:hover': {
+                                        backgroundColor: isCurrentPosition ? 'primary.dark' : 'grey.800'
+                                    },
+                                    py: 1.5
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <BookmarkIcon
+                                        sx={{
+                                            color: isCurrentPosition ? 'primary.light' : 'primary.main',
+                                            fontSize: 20
+                                        }}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                                        {bookmark.customName || `Chapter ${bookmark.chapterNumber}`}
+                                    </Typography>
+                                    <Typography
+                                        variant="caption"
+                                        color="grey.400"
+                                        sx={{
+                                            display: 'block',
+                                            mt: 0.5,
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap'
+                                        }}
+                                    >
+                                        {bookmark.previewText}
+                                    </Typography>
+                                </ListItemText>
+                            </MenuItem>
+                        );
+                    })
+                ]}
             </Menu>
         </>
     );

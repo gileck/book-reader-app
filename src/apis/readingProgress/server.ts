@@ -21,6 +21,15 @@ export const readingProgressApis = {
         try {
             const { userId, bookId, currentChapter, currentChunk, wordsRead, sessionTimeMinutes } = request;
 
+            // Validate ObjectId format
+            if (!userId || !ObjectId.isValid(userId)) {
+                throw new Error(`Invalid userId format: ${userId}`);
+            }
+
+            if (!bookId || !ObjectId.isValid(bookId)) {
+                throw new Error(`Invalid bookId format: ${bookId}`);
+            }
+
             const result = await updateReadingPosition(
                 new ObjectId(userId),
                 new ObjectId(bookId),
@@ -68,6 +77,23 @@ export const readingProgressApis = {
         try {
             const { userId, bookId } = request;
 
+            // Validate ObjectId format
+            if (!userId || !ObjectId.isValid(userId)) {
+                console.error('Invalid userId format:', userId);
+                return {
+                    success: true,
+                    readingProgress: null
+                };
+            }
+
+            if (!bookId || !ObjectId.isValid(bookId)) {
+                console.error('Invalid bookId format:', bookId);
+                return {
+                    success: true,
+                    readingProgress: null
+                };
+            }
+
             const result = await findReadingProgressByUserAndBook(
                 new ObjectId(userId),
                 new ObjectId(bookId)
@@ -113,6 +139,15 @@ export const readingProgressApis = {
     [GET_READING_STATS_API_NAME]: async (request: GetReadingStatsRequest): Promise<GetReadingStatsResponse> => {
         try {
             const { userId, bookId } = request;
+
+            // Validate ObjectId format
+            if (!userId || !ObjectId.isValid(userId)) {
+                throw new Error(`Invalid userId format: ${userId}`);
+            }
+
+            if (!bookId || !ObjectId.isValid(bookId)) {
+                throw new Error(`Invalid bookId format: ${bookId}`);
+            }
 
             const stats = await getReadingStats(
                 new ObjectId(userId),

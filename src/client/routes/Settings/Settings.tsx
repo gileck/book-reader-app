@@ -12,7 +12,8 @@ import {
   Divider,
   Snackbar,
   Alert,
-  CircularProgress
+  CircularProgress,
+  TextField
 } from '@mui/material';
 import { getAllModels } from '@/server/ai';
 import { AIModelDefinition } from '@/server/ai/models';
@@ -37,6 +38,13 @@ export function Settings() {
 
   const handleModelChange = (event: SelectChangeEvent) => {
     updateSettings({ aiModel: event.target.value });
+  };
+
+  const handleContextSentencesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 10) {
+      updateSettings({ contextSentencesCount: value });
+    }
   };
 
   const handleClearCache = async () => {
@@ -130,6 +138,30 @@ export function Settings() {
             ))}
           </Select>
         </FormControl>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" gutterBottom>
+          Book Q&A Context
+        </Typography>
+        <Typography variant="body2" color="text.secondary" paragraph>
+          Configure how many previous sentences to include as context when asking questions about the book content.
+        </Typography>
+
+        <TextField
+          fullWidth
+          type="number"
+          label="Context Sentences Count"
+          value={settings.contextSentencesCount}
+          onChange={handleContextSentencesChange}
+          inputProps={{
+            min: 1,
+            max: 10,
+            step: 1
+          }}
+          helperText="Number of previous sentences to include (1-10)"
+          sx={{ mt: 2 }}
+        />
       </Paper>
 
       <Snackbar

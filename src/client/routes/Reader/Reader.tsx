@@ -1,14 +1,19 @@
 import React from 'react';
 import { Box, Typography, CircularProgress, Paper } from '@mui/material';
 import { useReader } from './hooks/useReader';
+import { useBookQA } from './hooks/useBookQA';
 import { AudioControls } from '../../components/AudioControls';
 import { SpeedControlModal } from '../../components/SpeedControlModal';
 import { ThemeModal } from '../../components/ThemeModal';
 import { UserThemeProvider } from '../../components/UserThemeProvider';
 import { ReaderHeader } from './components/ReaderHeader';
 import { ReaderContent } from './components/ReaderContent';
+import { BookQAPanel } from './components/BookQAPanel';
+import { BookQAChatSettings } from './components/BookQAChatSettings';
+import { useSettings } from '../../settings/SettingsContext';
 
 export const Reader = () => {
+    const { settings: appSettings } = useSettings();
     const {
         book,
         chapter,
@@ -20,6 +25,36 @@ export const Reader = () => {
         navigation,
         progress
     } = useReader();
+
+    // Get current reading context for Q&A
+    const getCurrentSentence = () => {
+        if (!chapter || !audio.textChunks[audio.currentChunkIndex]) return '';
+        return audio.textChunks[audio.currentChunkIndex].text;
+    };
+
+    const getLastSentences = () => {
+        if (!chapter || audio.textChunks.length === 0) return '';
+        const contextCount = appSettings.contextSentencesCount;
+        const startIndex = Math.max(0, audio.currentChunkIndex - contextCount);
+        const endIndex = Math.max(0, audio.currentChunkIndex);
+
+        if (startIndex >= endIndex) return '';
+
+        const lastSentences = audio.textChunks
+            .slice(startIndex, endIndex)
+            .map(chunk => chunk.text)
+            .join(' ');
+        return lastSentences;
+    };
+
+    const bookQA = useBookQA({
+        bookId: book?._id || '',
+        bookTitle: book?.title || '',
+        chapterNumber: chapter?.chapterNumber || 1,
+        chapterTitle: chapter?.title || '',
+        currentSentence: getCurrentSentence(),
+        lastSentences: getLastSentences()
+    });
 
     if (loading) {
         return (
@@ -65,10 +100,47 @@ export const Reader = () => {
                     <ReaderHeader book={book} chapter={chapter} />
                     <ReaderContent
                         chapter={chapter}
-                        currentChunkIndex={audio.currentChunkIndex}
-                        getWordStyle={audio.getWordStyle}
-                        getSentenceStyle={audio.getSentenceStyle}
-                        handleWordClick={audio.handleWordClick}
+                        currentChunkIndex={(() => {
+                            // Convert audio text chunk index to absolute chapter chunk index
+                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
+                            const currentTextChunk = textChunks[audio.currentChunkIndex];
+                            if (!currentTextChunk) return 0;
+
+                            // Find this text chunk in the full chapters array
+                            return chapter.content.chunks.findIndex(chunk =>
+                                chunk.type === 'text' && chunk.text === currentTextChunk.text
+                            );
+                        })()}
+                        getWordStyle={(chunkIndex, wordIndex) => {
+                            // Convert absolute chunk index back to text chunk index for audio system
+                            const chunk = chapter.content.chunks[chunkIndex];
+                            if (chunk?.type !== 'text') return {};
+
+                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
+                            const textChunkIndex = textChunks.findIndex(tc => tc.text === chunk.text);
+
+                            return audio.getWordStyle(textChunkIndex, wordIndex);
+                        }}
+                        getSentenceStyle={(chunkIndex) => {
+                            // Convert absolute chunk index back to text chunk index for audio system
+                            const chunk = chapter.content.chunks[chunkIndex];
+                            if (chunk?.type !== 'text') return {};
+
+                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
+                            const textChunkIndex = textChunks.findIndex(tc => tc.text === chunk.text);
+
+                            return audio.getSentenceStyle(textChunkIndex);
+                        }}
+                        handleWordClick={(chunkIndex, wordIndex) => {
+                            // Convert absolute chunk index back to text chunk index for audio system
+                            const chunk = chapter.content.chunks[chunkIndex];
+                            if (chunk?.type !== 'text') return;
+
+                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
+                            const textChunkIndex = textChunks.findIndex(tc => tc.text === chunk.text);
+
+                            audio.handleWordClick(textChunkIndex, wordIndex);
+                        }}
                         isChunkBookmarked={bookmarks.isChunkBookmarked}
                     />
                 </Paper>
@@ -97,6 +169,7 @@ export const Reader = () => {
                         onBookmark={bookmarks.handleBookmark}
                         onSettings={settings.handleSettings}
                         onSpeedSettings={settings.handleSpeedSettings}
+                        onAskAI={bookQA.togglePanel}
                         isPlaying={audio.isPlaying}
                         isBookmarked={bookmarks.isBookmarked}
                         progress={(audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100}
@@ -141,6 +214,31 @@ export const Reader = () => {
                     onLineHeightChange={settings.handleLineHeightChange}
                     onFontFamilyChange={settings.handleFontFamilyChange}
                     onTextColorChange={settings.handleTextColorChange}
+                />
+
+                {/* Book Q&A Panel */}
+                <BookQAPanel
+                    open={bookQA.isOpen}
+                    fullScreen={bookQA.isFullScreen}
+                    loading={bookQA.isLoading}
+                    messages={bookQA.messages}
+                    onClose={bookQA.closePanel}
+                    onToggleFullScreen={bookQA.toggleFullScreen}
+                    onSubmitQuestion={bookQA.submitQuestion}
+                    onClearHistory={bookQA.clearHistory}
+                    onOpenSettings={bookQA.openSettings}
+                    currentBookTitle={book?.title || ''}
+                    currentChapterTitle={chapter?.title || ''}
+                    currentChapterNumber={chapter?.chapterNumber || 1}
+                    currentSentence={getCurrentSentence()}
+                />
+
+                {/* Book Q&A Chat Settings */}
+                <BookQAChatSettings
+                    open={bookQA.isSettingsOpen}
+                    onClose={bookQA.closeSettings}
+                    selectedModelId={bookQA.selectedModelId}
+                    onModelChange={bookQA.handleModelChange}
                 />
             </Box>
         </UserThemeProvider>

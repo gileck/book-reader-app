@@ -1,20 +1,16 @@
 export * from './index';
 
 import {
-    API_GENERATE_TTS,
-    API_PROCESS_TEXT_CHUNKS
+    API_GENERATE_TTS
 } from './index';
 
-import { synthesizeSpeechWithTiming, processTextForTTS } from '../../server/tts/ttsService';
+import { synthesizeSpeechWithTiming } from '../../server/tts/ttsService';
 import type {
     GenerateTtsPayload,
-    GenerateTtsResponse,
-    ProcessTextChunksPayload,
-    ProcessTextChunksResponse
+    GenerateTtsResponse
 } from './types';
 
 import { process as generateTtsProcess } from './handlers/generateTtsHandler';
-import { process as processTextChunksProcess } from './handlers/processTextChunksHandler';
 
 export async function generateTts(payload: GenerateTtsPayload): Promise<GenerateTtsResponse> {
     try {
@@ -50,33 +46,8 @@ export async function generateTts(payload: GenerateTtsPayload): Promise<Generate
     }
 }
 
-export async function processTextChunks(payload: ProcessTextChunksPayload): Promise<ProcessTextChunksResponse> {
-    try {
-        const { text } = payload;
-
-        if (!text?.trim()) {
-            return {
-                success: false,
-                error: 'Text is required'
-            };
-        }
-
-        const chunks = processTextForTTS(text);
-
-        return {
-            success: true,
-            chunks
-        };
-    } catch (error) {
-        console.error('Process text chunks error:', error);
-        return {
-            success: false,
-            error: 'Internal server error'
-        };
-    }
-}
+// processTextChunks removed - text chunking happens during PDF import, not at runtime
 
 export const ttsApiHandlers = {
-    [API_GENERATE_TTS]: { process: generateTtsProcess },
-    [API_PROCESS_TEXT_CHUNKS]: { process: processTextChunksProcess }
+    [API_GENERATE_TTS]: { process: generateTtsProcess }
 }; 
