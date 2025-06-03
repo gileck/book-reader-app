@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Box, Typography, CircularProgress, Paper } from '@mui/material';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
@@ -27,6 +27,75 @@ export const Reader = () => {
     } = useReader();
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    // Pre-compute and cache the mapping from absolute chunk indices to text chunk indices
+    const chunkIndexMapping = useMemo(() => {
+        if (!chapter) return { absoluteToText: new Map(), textToAbsolute: new Map(), textChunks: [] };
+        
+        const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
+        const absoluteToText = new Map<number, number>();
+        const textToAbsolute = new Map<number, number>();
+        
+        let textChunkIndex = 0;
+        chapter.content.chunks.forEach((chunk, absoluteIndex) => {
+            if (chunk.type === 'text') {
+                absoluteToText.set(absoluteIndex, textChunkIndex);
+                textToAbsolute.set(textChunkIndex, absoluteIndex);
+                textChunkIndex++;
+            }
+        });
+
+        return { absoluteToText, textToAbsolute, textChunks };
+    }, [chapter]);
+
+    // Optimized functions using cached mapping
+    const getOptimizedWordStyle = useMemo(() => {
+        return (chunkIndex: number, wordIndex: number) => {
+            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
+            if (textChunkIndex === undefined) return {};
+            return audio.getWordStyle(textChunkIndex, wordIndex);
+        };
+    }, [audio.getWordStyle, chunkIndexMapping]);
+
+    const getOptimizedWordClassName = useMemo(() => {
+        return (chunkIndex: number, wordIndex: number) => {
+            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
+            if (textChunkIndex === undefined) return '';
+            return audio.getWordClassName(textChunkIndex, wordIndex);
+        };
+    }, [audio.getWordClassName, chunkIndexMapping]);
+
+    const getOptimizedSentenceStyle = useMemo(() => {
+        return (chunkIndex: number) => {
+            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
+            if (textChunkIndex === undefined) return {};
+            return audio.getSentenceStyle(textChunkIndex);
+        };
+    }, [audio.getSentenceStyle, chunkIndexMapping]);
+
+    const getOptimizedSentenceClassName = useMemo(() => {
+        return (chunkIndex: number) => {
+            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
+            if (textChunkIndex === undefined) return '';
+            return audio.getSentenceClassName(textChunkIndex);
+        };
+    }, [audio.getSentenceClassName, chunkIndexMapping]);
+
+    const handleOptimizedWordClick = useMemo(() => {
+        return (chunkIndex: number, wordIndex: number) => {
+            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
+            if (textChunkIndex === undefined) return;
+            audio.handleWordClick(textChunkIndex, wordIndex);
+        };
+    }, [audio.handleWordClick, chunkIndexMapping]);
+
+    // Optimized current chunk index calculation
+    const currentChunkIndex = useMemo(() => {
+        const currentTextChunk = chunkIndexMapping.textChunks[audio.currentChunkIndex];
+        if (!currentTextChunk) return 0;
+        
+        return chunkIndexMapping.textToAbsolute.get(audio.currentChunkIndex) || 0;
+    }, [audio.currentChunkIndex, chunkIndexMapping]);
 
     // Get current reading context for Q&A
     const getCurrentSentence = () => {
@@ -116,47 +185,12 @@ export const Reader = () => {
                     <ReaderContent
                         chapter={chapter}
                         scrollContainerRef={scrollContainerRef}
-                        currentChunkIndex={(() => {
-                            // Convert audio text chunk index to absolute chapter chunk index
-                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
-                            const currentTextChunk = textChunks[audio.currentChunkIndex];
-                            if (!currentTextChunk) return 0;
-
-                            // Find this text chunk in the full chapters array
-                            return chapter.content.chunks.findIndex(chunk =>
-                                chunk.type === 'text' && chunk.text === currentTextChunk.text
-                            );
-                        })()}
-                        getWordStyle={(chunkIndex, wordIndex) => {
-                            // Convert absolute chunk index back to text chunk index for audio system
-                            const chunk = chapter.content.chunks[chunkIndex];
-                            if (chunk?.type !== 'text') return {};
-
-                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
-                            const textChunkIndex = textChunks.findIndex(tc => tc.text === chunk.text);
-
-                            return audio.getWordStyle(textChunkIndex, wordIndex);
-                        }}
-                        getSentenceStyle={(chunkIndex) => {
-                            // Convert absolute chunk index back to text chunk index for audio system
-                            const chunk = chapter.content.chunks[chunkIndex];
-                            if (chunk?.type !== 'text') return {};
-
-                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
-                            const textChunkIndex = textChunks.findIndex(tc => tc.text === chunk.text);
-
-                            return audio.getSentenceStyle(textChunkIndex);
-                        }}
-                        handleWordClick={(chunkIndex, wordIndex) => {
-                            // Convert absolute chunk index back to text chunk index for audio system
-                            const chunk = chapter.content.chunks[chunkIndex];
-                            if (chunk?.type !== 'text') return;
-
-                            const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
-                            const textChunkIndex = textChunks.findIndex(tc => tc.text === chunk.text);
-
-                            audio.handleWordClick(textChunkIndex, wordIndex);
-                        }}
+                        currentChunkIndex={currentChunkIndex}
+                        getWordStyle={getOptimizedWordStyle}
+                        getWordClassName={getOptimizedWordClassName}
+                        getSentenceStyle={getOptimizedSentenceStyle}
+                        getSentenceClassName={getOptimizedSentenceClassName}
+                        handleWordClick={handleOptimizedWordClick}
                         isChunkBookmarked={bookmarks.isChunkBookmarked}
                     />
                 </Paper>

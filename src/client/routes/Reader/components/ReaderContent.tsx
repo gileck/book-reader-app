@@ -8,7 +8,9 @@ interface ReaderContentProps {
     scrollContainerRef: React.RefObject<HTMLDivElement | null>;
     currentChunkIndex: number;
     getWordStyle: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
+    getWordClassName: (chunkIndex: number, wordIndex: number) => string;
     getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
+    getSentenceClassName: (chunkIndex: number) => string;
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
 }
@@ -18,7 +20,9 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     scrollContainerRef,
     currentChunkIndex,
     getWordStyle,
+    getWordClassName,
     getSentenceStyle,
+    getSentenceClassName,
     handleWordClick,
     isChunkBookmarked
 }) => {
@@ -29,7 +33,9 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 scrollContainerRef={scrollContainerRef}
                 currentChunkIndex={currentChunkIndex}
                 getWordStyle={getWordStyle}
+                getWordClassName={getWordClassName}
                 getSentenceStyle={getSentenceStyle}
+                getSentenceClassName={getSentenceClassName}
                 handleWordClick={handleWordClick}
                 isChunkBookmarked={isChunkBookmarked}
             />

@@ -144,7 +144,9 @@ export const useReader = () => {
             handleNextChunk: audioPlayback.handleNextChunk,
             preloadChunk: audioPlayback.preloadChunk,
             getWordStyle: audioPlayback.getWordStyle,
-            getSentenceStyle: audioPlayback.getSentenceStyle
+            getSentenceStyle: audioPlayback.getSentenceStyle,
+            getWordClassName: audioPlayback.getWordClassName,
+            getSentenceClassName: audioPlayback.getSentenceClassName
         },
 
         // User settings

@@ -17,6 +17,103 @@ const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
     audioChunks: {}
 });
 
+// CSS animation utilities
+const generateWordAnimationCSS = (
+    chunkIndex: number, 
+    timepoints: TTSTimepoint[], 
+    highlightColor: string,
+    wordSpeedOffset: number
+) => {
+    const keyframesName = `word-highlight-chunk-${chunkIndex}`;
+    
+    // Generate CSS for each word with animation delay
+    const wordStyles = timepoints.map((tp, wordIndex) => {
+        const delaySeconds = tp.timeSeconds - (wordSpeedOffset / 1000);
+        return `
+            .chunk-${chunkIndex}-word-${wordIndex}.css-animated {
+                animation: ${keyframesName} 0.3s ease-in-out ${delaySeconds}s both;
+                animation-play-state: var(--word-animation-state, paused);
+            }
+        `;
+    }).join('\n');
+
+    // Generate keyframes for the highlight animation
+    const keyframes = `
+        @keyframes ${keyframesName} {
+            0% { 
+                background-color: transparent;
+                color: inherit;
+                transform: scale(1);
+            }
+            50% { 
+                background-color: ${highlightColor || '#ff9800'};
+                color: #ffffff;
+                transform: scale(1.02);
+                border-radius: 3px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            100% { 
+                background-color: transparent;
+                color: inherit;
+                transform: scale(1);
+            }
+        }
+    `;
+
+    return keyframes + '\n' + wordStyles;
+};
+
+const generateChunkAnimationCSS = (
+    chunkIndex: number,
+    sentenceHighlightColor: string
+) => {
+    const keyframesName = `chunk-highlight-${chunkIndex}`;
+    
+    const chunkStyle = `
+        .chunk-${chunkIndex}.current-chunk.css-animated {
+            animation: ${keyframesName} 0.3s ease-in-out forwards;
+            animation-play-state: var(--chunk-animation-state, paused);
+        }
+    `;
+
+    const keyframes = `
+        @keyframes ${keyframesName} {
+            to {
+                background-color: ${sentenceHighlightColor || '#e3f2fd'};
+                border-radius: 4px;
+                padding: 2px 4px;
+            }
+        }
+    `;
+
+    return keyframes + '\n' + chunkStyle;
+};
+
+const injectCSS = (css: string, id: string) => {
+    // Remove existing style element if present
+    const existingStyle = document.getElementById(id);
+    if (existingStyle) {
+        existingStyle.remove();
+    }
+
+    // Create and inject new style element
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = css;
+    document.head.appendChild(style);
+};
+
+const updateAnimationState = (isPlaying: boolean) => {
+    document.documentElement.style.setProperty(
+        '--word-animation-state', 
+        isPlaying ? 'running' : 'paused'
+    );
+    document.documentElement.style.setProperty(
+        '--chunk-animation-state', 
+        isPlaying ? 'running' : 'paused'
+    );
+};
+
 export const useAudioPlayback = (
     chapter: ChapterClient | null,
     selectedVoice: string,
@@ -46,6 +143,12 @@ export const useAudioPlayback = (
             audio.load();
         });
 
+        // Clear all CSS animations
+        const existingWordStyles = document.querySelectorAll('style[id^="word-animation-chunk-"]');
+        existingWordStyles.forEach(style => style.remove());
+        const existingChunkStyles = document.querySelectorAll('style[id^="chunk-animation-chunk-"]');
+        existingChunkStyles.forEach(style => style.remove());
+        
         updateState({
             audioChunks: {},
             currentChunkIndex: 0,
@@ -54,6 +157,11 @@ export const useAudioPlayback = (
         });
         pendingRequests.current.clear();
     }, [selectedVoice, currentChapterNumber]);
+
+    // Update CSS animation state when playing/paused
+    useEffect(() => {
+        updateAnimationState(state.isPlaying);
+    }, [state.isPlaying]);
 
     // Audio generation effect
     useEffect(() => {
@@ -74,6 +182,22 @@ export const useAudioPlayback = (
 
                 if (result.data?.success && result.data.audioContent && result.data.timepoints) {
                     const audio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
+
+                    // Generate and inject CSS animations for this chunk
+                    const wordCSS = generateWordAnimationCSS(
+                        index, 
+                        result.data.timepoints, 
+                        highlightColor || '#ff9800',
+                        wordSpeedOffset
+                    );
+                    injectCSS(wordCSS, `word-animation-chunk-${index}`);
+
+                    // Generate and inject chunk highlighting CSS
+                    const chunkCSS = generateChunkAnimationCSS(
+                        index,
+                        sentenceHighlightColor || '#e3f2fd'
+                    );
+                    injectCSS(chunkCSS, `chunk-animation-chunk-${index}`);
 
                     updateState({
                         audioChunks: {
@@ -97,7 +221,7 @@ export const useAudioPlayback = (
         if (state.currentChunkIndex < textChunks.length - 1) {
             fetchChunk(state.currentChunkIndex + 1);
         }
-    }, [state.currentChunkIndex, textChunks, selectedVoice, currentChapterNumber]);
+    }, [state.currentChunkIndex, textChunks, selectedVoice, currentChapterNumber, highlightColor, wordSpeedOffset, sentenceHighlightColor]);
 
     // Word highlighting logic
     useEffect(() => {
@@ -290,7 +414,9 @@ export const useAudioPlayback = (
     }, [chapter, textChunks, selectedVoice, state.audioChunks, updateState]);
 
     const getWordStyle = useCallback((chunkIndex: number, wordIndex: number) => {
-        if (state.currentChunkIndex === chunkIndex) {
+        // CSS handles highlighting for current chunk with loaded audio
+        // Only provide fallback for chunks without loaded audio
+        if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
             if (state.isPlaying && state.currentWordIndex === wordIndex) {
                 return {
                     backgroundColor: highlightColor || '#ff9800',
@@ -300,22 +426,20 @@ export const useAudioPlayback = (
                     boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                 };
             }
-
-            return {
-                backgroundColor: 'transparent',
-                borderRadius: '3px'
-            };
         }
 
+        // Basic styling for all words
         return {
             backgroundColor: 'transparent',
             cursor: 'pointer',
             borderRadius: '3px'
         };
-    }, [state.currentChunkIndex, state.isPlaying, state.currentWordIndex, highlightColor, sentenceHighlightColor]);
+    }, [state.currentChunkIndex, state.isPlaying, state.currentWordIndex, highlightColor, state.audioChunks]);
 
     const getSentenceStyle = useCallback((chunkIndex: number) => {
-        if (state.currentChunkIndex === chunkIndex) {
+        // CSS handles highlighting for current chunk with loaded audio
+        // Only provide fallback styling for chunks without loaded audio
+        if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
             return {
                 backgroundColor: sentenceHighlightColor || '#e3f2fd',
                 borderRadius: '4px',
@@ -326,7 +450,25 @@ export const useAudioPlayback = (
         return {
             backgroundColor: 'transparent'
         };
-    }, [state.currentChunkIndex, sentenceHighlightColor]);
+    }, [state.currentChunkIndex, sentenceHighlightColor, state.audioChunks]);
+
+    // New function to get CSS class for sentence highlighting
+    const getSentenceClassName = useCallback((chunkIndex: number) => {
+        // For current chunk with loaded audio, use CSS animation
+        if (state.currentChunkIndex === chunkIndex && state.audioChunks[chunkIndex]) {
+            return `chunk-${chunkIndex} current-chunk css-animated`;
+        }
+        return '';
+    }, [state.currentChunkIndex, state.audioChunks]);
+
+    // New function to get CSS class for words
+    const getWordClassName = useCallback((chunkIndex: number, wordIndex: number) => {
+        // For current chunk with loaded audio, use CSS animation
+        if (state.currentChunkIndex === chunkIndex && state.audioChunks[chunkIndex]) {
+            return `chunk-${chunkIndex}-word-${wordIndex} css-animated`;
+        }
+        return '';
+    }, [state.currentChunkIndex, state.audioChunks]);
 
     return {
         currentChunkIndex: state.currentChunkIndex,
@@ -341,6 +483,8 @@ export const useAudioPlayback = (
         setCurrentChunkIndex,
         preloadChunk,
         getWordStyle,
-        getSentenceStyle
+        getSentenceStyle,
+        getWordClassName, // New function for CSS classes
+        getSentenceClassName // New function for sentence CSS classes
     };
 }; 
