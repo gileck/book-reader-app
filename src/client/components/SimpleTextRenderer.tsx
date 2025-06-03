@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useUserTheme } from './UserThemeProvider';
@@ -30,34 +30,49 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     const chunkRefs = useRef<Map<number, HTMLDivElement>>(new Map());
     const previousChunkIndex = useRef<number>(currentChunkIndex);
     const hasScrolledToInitialPosition = useRef<boolean>(false);
+    const [isContentVisible, setIsContentVisible] = useState(currentChunkIndex === 0);
 
-    // Handle initial scroll when chapter loads with a saved position
+    // Handle initial positioning when chapter loads with a saved position
     useEffect(() => {
         if (!hasScrolledToInitialPosition.current && currentChunkIndex > 0) {
             const scrollToInitialPosition = () => {
                 const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
                 if (currentChunkRef) {
-                    // Use instant scroll for initial position to avoid jarring smooth scroll on page load
+                    // Instantly position to correct location while content is hidden
                     currentChunkRef.scrollIntoView({
                         behavior: 'instant',
                         block: 'center'
                     });
                     hasScrolledToInitialPosition.current = true;
                     previousChunkIndex.current = currentChunkIndex;
+                    
+                    // Show content after positioning (small delay to ensure scroll completes)
+                    setTimeout(() => {
+                        setIsContentVisible(true);
+                    }, 50);
+                    
                     return true;
                 }
                 return false;
             };
 
-            // Try immediate scroll first
+            // Try immediate positioning first
             if (!scrollToInitialPosition()) {
-                // If immediate scroll fails (ref not ready), retry after a short delay
+                // If immediate positioning fails (ref not ready), retry after a short delay
                 const timeoutId = setTimeout(() => {
-                    scrollToInitialPosition();
+                    if (!scrollToInitialPosition()) {
+                        // If it still fails, show content anyway to prevent infinite hiding
+                        setIsContentVisible(true);
+                        hasScrolledToInitialPosition.current = true;
+                    }
                 }, 100);
                 
                 return () => clearTimeout(timeoutId);
             }
+        } else if (currentChunkIndex === 0) {
+            // If starting from beginning, show content immediately
+            setIsContentVisible(true);
+            hasScrolledToInitialPosition.current = true;
         }
     }, [currentChunkIndex]);
 
@@ -92,8 +107,25 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
         }
     }, [currentChunkIndex]);
 
+    // Safety timeout: ensure content becomes visible after maximum wait time
+    useEffect(() => {
+        if (!isContentVisible) {
+            const safetyTimeout = setTimeout(() => {
+                setIsContentVisible(true);
+                hasScrolledToInitialPosition.current = true;
+            }, 1000); // 1 second max wait
+
+            return () => clearTimeout(safetyTimeout);
+        }
+    }, [isContentVisible]);
+
     return (
-        <Box>
+        <Box
+            sx={{
+                opacity: isContentVisible ? 1 : 0,
+                transition: 'none' // No transition - instant visibility change
+            }}
+        >
             {chapter.content.chunks.map((chunk, index) => {
                 const previousChunk = index > 0 ? chapter.content.chunks[index - 1] : null;
                 const showPageNumber = chunk.pageNumber &&

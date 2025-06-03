@@ -1,14 +1,11 @@
 import { useEffect, useCallback, useRef, useState } from 'react';
-import { updateReadingPosition, getReadingProgress } from '../../../../apis/readingProgress/client';
+import { updateReadingPosition } from '../../../../apis/readingProgress/client';
 
 interface UseReadingProgressProps {
     userId: string;
     bookId: string | undefined;
     currentChapterNumber: number;
     currentChunkIndex: number;
-    setCurrentChapterNumber: (chapter: number) => void;
-    setCurrentChunkIndex: (chunk: number) => void;
-    onProgressLoaded?: (chapterNumber: number, chunkIndex: number) => void;
     isPlaying?: boolean; // Track if audio is playing for session time
 }
 
@@ -17,18 +14,13 @@ export const useReadingProgress = ({
     bookId,
     currentChapterNumber,
     currentChunkIndex,
-    setCurrentChapterNumber,
-    setCurrentChunkIndex,
-    onProgressLoaded,
     isPlaying = false
 }: UseReadingProgressProps) => {
-    const hasLoadedProgress = useRef(false);
     const saveTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
     const sessionStartTime = useRef<number>(Date.now());
     const lastActiveTime = useRef<number>(Date.now());
     const accumulatedSessionTime = useRef<number>(0);
 
-    const [isLoadingProgress, setIsLoadingProgress] = useState(true);
     const [progressData, setProgressData] = useState<{
         chapterProgress: number;
         bookProgress: number;
@@ -61,42 +53,6 @@ export const useReadingProgress = ({
         }
     }, [isPlaying]);
 
-    // Load reading progress on mount
-    useEffect(() => {
-        const loadProgress = async () => {
-            if (!bookId || hasLoadedProgress.current) return;
-
-            try {
-                const result = await getReadingProgress({ userId, bookId });
-
-                if (result.data?.success && result.data.readingProgress) {
-                    const progress = result.data.readingProgress;
-                    setCurrentChapterNumber(progress.currentChapter);
-                    setCurrentChunkIndex(progress.currentChunk);
-
-                    // Update progress display data
-                    setProgressData({
-                        chapterProgress: progress.chapterProgress,
-                        bookProgress: progress.bookProgress,
-                        totalReadingTime: progress.totalReadingTime,
-                        sessionsCount: progress.sessionsCount
-                    });
-
-                    onProgressLoaded?.(progress.currentChapter, progress.currentChunk);
-                }
-
-                hasLoadedProgress.current = true;
-                setIsLoadingProgress(false);
-            } catch (error) {
-                console.error('Error loading reading progress:', error);
-                hasLoadedProgress.current = true;
-                setIsLoadingProgress(false);
-            }
-        };
-
-        loadProgress();
-    }, [bookId, userId, setCurrentChapterNumber, setCurrentChunkIndex]);
-
     // Calculate current session time
     const getCurrentSessionTime = useCallback(() => {
         return Math.round(accumulatedSessionTime.current / 60); // Convert to minutes
@@ -104,7 +60,7 @@ export const useReadingProgress = ({
 
     // Save reading progress with session time
     const saveProgress = useCallback(async () => {
-        if (!bookId || !hasLoadedProgress.current) return;
+        if (!bookId) return;
 
         try {
             const sessionTimeMinutes = getCurrentSessionTime();
@@ -138,7 +94,7 @@ export const useReadingProgress = ({
 
     // Debounced save when position changes
     useEffect(() => {
-        if (!hasLoadedProgress.current) return;
+        if (!bookId) return;
 
         if (saveTimeoutRef.current) {
             clearTimeout(saveTimeoutRef.current);
@@ -153,7 +109,7 @@ export const useReadingProgress = ({
                 clearTimeout(saveTimeoutRef.current);
             }
         };
-    }, [currentChapterNumber, currentChunkIndex, saveProgress]);
+    }, [currentChapterNumber, currentChunkIndex, saveProgress, bookId]);
 
     // Save immediately when component unmounts
     useEffect(() => {
@@ -162,15 +118,14 @@ export const useReadingProgress = ({
                 clearTimeout(saveTimeoutRef.current);
             }
             // Fire and forget immediate save
-            if (hasLoadedProgress.current) {
+            if (bookId) {
                 saveProgress();
             }
         };
-    }, [saveProgress]);
+    }, [saveProgress, bookId]);
 
     return {
-        hasLoadedProgress: hasLoadedProgress.current,
-        isLoadingProgress,
+        isLoadingProgress: false, // No longer loading since main hook handles this
         progressData,
         getCurrentSessionTime
     };

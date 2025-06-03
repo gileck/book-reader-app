@@ -26,6 +26,8 @@ export const Reader = () => {
         progress
     } = useReader();
 
+    console.log('chapter', {chapter: chapter?.chapterNumber, loading});
+
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     // Pre-compute and cache the mapping from absolute chunk indices to text chunk indices
