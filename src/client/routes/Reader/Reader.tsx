@@ -174,10 +174,9 @@ export const Reader = () => {
                         maxWidth: 800,
                         mx: 'auto',
                         p: 4,
-                        mb: 4,
                         pb: { xs: 20, sm: 16 },
                         borderRadius: 0,
-                        height: '70vh',
+                        height: 'calc(100vh - 200px)', // Adjust to account for AudioControls height
                         overflow: 'auto'
                     }}
                 >
@@ -196,42 +195,31 @@ export const Reader = () => {
                 </Paper>
 
                 {/* Audio Controls - Fixed at bottom */}
-                <Box sx={{
-                    position: 'fixed',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    zIndex: 1000,
-                    backgroundColor: 'background.paper',
-                    borderTop: '1px solid',
-                    borderColor: 'divider'
-                }}>
-                    <AudioControls
-                        chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
-                        currentChunk={audio.currentChunkIndex + 1}
-                        totalChunks={audio.textChunks.length}
-                        onPlay={audio.handlePlay}
-                        onPause={audio.handlePause}
-                        onPreviousChunk={audio.handlePreviousChunk}
-                        onNextChunk={audio.handleNextChunk}
-                        onPreviousChapter={navigation.handlePreviousChapter}
-                        onNextChapter={navigation.handleNextChapter}
-                        onBookmark={bookmarks.handleBookmark}
-                        onSettings={settings.handleSettings}
-                        onSpeedSettings={settings.handleSpeedSettings}
-                        onAskAI={bookQA.togglePanel}
-                        isPlaying={audio.isPlaying}
-                        isBookmarked={bookmarks.isBookmarked}
-                        progress={(audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100}
-                        playbackSpeed={settings.playbackSpeed}
-                        bookmarks={bookmarks.bookmarks}
-                        currentChapterNumber={chapter.chapterNumber}
-                        currentChunkIndex={audio.currentChunkIndex}
-                        totalChapters={book.totalChapters}
-                        onNavigateToBookmark={navigation.handleNavigateToBookmark}
-                        progressData={progress}
-                    />
-                </Box>
+                <AudioControls
+                    chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
+                    currentChunk={audio.currentChunkIndex + 1}
+                    totalChunks={audio.textChunks.length}
+                    onPlay={audio.handlePlay}
+                    onPause={audio.handlePause}
+                    onPreviousChunk={audio.handlePreviousChunk}
+                    onNextChunk={audio.handleNextChunk}
+                    onPreviousChapter={navigation.handlePreviousChapter}
+                    onNextChapter={navigation.handleNextChapter}
+                    onBookmark={bookmarks.handleBookmark}
+                    onSettings={settings.handleSettings}
+                    onSpeedSettings={settings.handleSpeedSettings}
+                    onAskAI={bookQA.togglePanel}
+                    isPlaying={audio.isPlaying}
+                    isBookmarked={bookmarks.isBookmarked}
+                    progress={(audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100}
+                    playbackSpeed={settings.playbackSpeed}
+                    bookmarks={bookmarks.bookmarks}
+                    currentChapterNumber={chapter.chapterNumber}
+                    currentChunkIndex={audio.currentChunkIndex}
+                    totalChapters={book.totalChapters}
+                    onNavigateToBookmark={navigation.handleNavigateToBookmark}
+                    progressData={progress}
+                />
 
                 {/* Speed Control Modal */}
                 <SpeedControlModal
