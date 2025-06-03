@@ -29,18 +29,66 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     const { fontSize, lineHeight, fontFamily, textColor } = useUserTheme();
     const chunkRefs = useRef<Map<number, HTMLDivElement>>(new Map());
     const previousChunkIndex = useRef<number>(currentChunkIndex);
+    const hasScrolledToInitialPosition = useRef<boolean>(false);
 
-    // Auto-scroll to current chunk only when chunk index changes
+    // Handle initial scroll when chapter loads with a saved position
     useEffect(() => {
-        if (previousChunkIndex.current !== currentChunkIndex) {
-            const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
-            if (currentChunkRef) {
-                currentChunkRef.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
+        if (!hasScrolledToInitialPosition.current && currentChunkIndex > 0) {
+            const scrollToInitialPosition = () => {
+                const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
+                if (currentChunkRef) {
+                    // Use instant scroll for initial position to avoid jarring smooth scroll on page load
+                    currentChunkRef.scrollIntoView({
+                        behavior: 'instant',
+                        block: 'center'
+                    });
+                    hasScrolledToInitialPosition.current = true;
+                    previousChunkIndex.current = currentChunkIndex;
+                    return true;
+                }
+                return false;
+            };
+
+            // Try immediate scroll first
+            if (!scrollToInitialPosition()) {
+                // If immediate scroll fails (ref not ready), retry after a short delay
+                const timeoutId = setTimeout(() => {
+                    scrollToInitialPosition();
+                }, 100);
+                
+                return () => clearTimeout(timeoutId);
             }
-            previousChunkIndex.current = currentChunkIndex;
+        }
+    }, [currentChunkIndex]);
+
+    // Auto-scroll to current chunk only when chunk index changes (after initial load)
+    useEffect(() => {
+        if (hasScrolledToInitialPosition.current && previousChunkIndex.current !== currentChunkIndex) {
+            const scrollToChunk = () => {
+                const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
+                if (currentChunkRef) {
+                    currentChunkRef.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    return true;
+                }
+                return false;
+            };
+
+            // Try immediate scroll first
+            if (scrollToChunk()) {
+                previousChunkIndex.current = currentChunkIndex;
+            } else {
+                // If immediate scroll fails (ref not ready), retry after a short delay
+                const timeoutId = setTimeout(() => {
+                    if (scrollToChunk()) {
+                        previousChunkIndex.current = currentChunkIndex;
+                    }
+                }, 100);
+                
+                return () => clearTimeout(timeoutId);
+            }
         }
     }, [currentChunkIndex]);
 
