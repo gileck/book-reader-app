@@ -26,36 +26,50 @@ const generateWordAnimationCSS = (
 ) => {
     const keyframesName = `word-highlight-chunk-${chunkIndex}`;
     
-    // Generate CSS for each word with animation delay
+    // Generate CSS for each word with calculated duration
     const wordStyles = timepoints.map((tp, wordIndex) => {
-        const delaySeconds = tp.timeSeconds - (wordSpeedOffset / 1000);
+        const startTime = tp.timeSeconds - (wordSpeedOffset / 1000);
+        
+        // Calculate duration: time until next word or 0.8s default for last word
+        const nextTimepoint = timepoints[wordIndex + 1];
+        const duration = nextTimepoint 
+            ? (nextTimepoint.timeSeconds - tp.timeSeconds)
+            : 0.8; // Default duration for last word
+        
+        // Ensure minimum duration of 0.2s and maximum of 2s
+        const safeDuration = Math.max(0.2, Math.min(duration, 2));
+        
         return `
             .chunk-${chunkIndex}-word-${wordIndex}.css-animated {
-                animation: ${keyframesName} 0.3s ease-in-out ${delaySeconds}s both;
+                animation: ${keyframesName} ${safeDuration}s ease-out ${startTime}s both;
                 animation-play-state: var(--word-animation-state, paused);
             }
         `;
     }).join('\n');
 
-    // Generate keyframes for the highlight animation
+    // More subtle keyframes that stay highlighted for the duration
     const keyframes = `
         @keyframes ${keyframesName} {
             0% { 
                 background-color: transparent;
                 color: inherit;
-                transform: scale(1);
             }
-            50% { 
-                background-color: ${highlightColor || '#ff9800'};
-                color: #ffffff;
-                transform: scale(1.02);
+            5% { 
+                background-color: ${highlightColor || '#fff3e0'};
+                color: inherit;
                 border-radius: 3px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            85% { 
+                background-color: ${highlightColor || '#fff3e0'};
+                color: inherit;
+                border-radius: 3px;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             }
             100% { 
                 background-color: transparent;
                 color: inherit;
-                transform: scale(1);
+                box-shadow: none;
             }
         }
     `;
@@ -67,26 +81,20 @@ const generateChunkAnimationCSS = (
     chunkIndex: number,
     sentenceHighlightColor: string
 ) => {
-    const keyframesName = `chunk-highlight-${chunkIndex}`;
+    const borderColor = sentenceHighlightColor === '#f8f9fa' ? '#e3f2fd' : (sentenceHighlightColor || '#e3f2fd');
     
+    // Static highlighting without animation - instant feedback
     const chunkStyle = `
         .chunk-${chunkIndex}.current-chunk.css-animated {
-            animation: ${keyframesName} 0.3s ease-in-out forwards;
-            animation-play-state: var(--chunk-animation-state, paused);
+            background-color: ${sentenceHighlightColor || '#f8f9fa'};
+            border-left: 3px solid ${borderColor};
+            border-radius: 0 4px 4px 0;
+            margin-left: -3px;
+            transition: none; /* No animation for instant feedback */
         }
     `;
 
-    const keyframes = `
-        @keyframes ${keyframesName} {
-            to {
-                background-color: ${sentenceHighlightColor || '#e3f2fd'};
-                border-radius: 4px;
-                padding: 2px 4px;
-            }
-        }
-    `;
-
-    return keyframes + '\n' + chunkStyle;
+    return chunkStyle;
 };
 
 const injectCSS = (css: string, id: string) => {
@@ -108,10 +116,7 @@ const updateAnimationState = (isPlaying: boolean) => {
         '--word-animation-state', 
         isPlaying ? 'running' : 'paused'
     );
-    document.documentElement.style.setProperty(
-        '--chunk-animation-state', 
-        isPlaying ? 'running' : 'paused'
-    );
+    // Note: chunk highlighting is now static (no animation state needed)
 };
 
 export const useAudioPlayback = (
@@ -419,11 +424,11 @@ export const useAudioPlayback = (
         if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
             if (state.isPlaying && state.currentWordIndex === wordIndex) {
                 return {
-                    backgroundColor: highlightColor || '#ff9800',
-                    color: '#ffffff',
-                    transition: 'all 0.1s ease',
+                    backgroundColor: highlightColor || '#fff3e0',
+                    color: 'inherit',
+                    transition: 'all 0.2s ease',
                     borderRadius: '3px',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
                 };
             }
         }
@@ -440,10 +445,13 @@ export const useAudioPlayback = (
         // CSS handles highlighting for current chunk with loaded audio
         // Only provide fallback styling for chunks without loaded audio
         if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
+            const borderColor = sentenceHighlightColor === '#f8f9fa' ? '#e3f2fd' : (sentenceHighlightColor || '#e3f2fd');
             return {
-                backgroundColor: sentenceHighlightColor || '#e3f2fd',
-                borderRadius: '4px',
-                padding: '2px 4px'
+                backgroundColor: sentenceHighlightColor || '#f8f9fa',
+                borderLeft: `3px solid ${borderColor}`,
+                borderRadius: '0 4px 4px 0',
+                padding: '4px 8px 4px 8px',
+                marginLeft: '-3px'
             };
         }
 
