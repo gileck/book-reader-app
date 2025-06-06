@@ -13,6 +13,7 @@ interface SimpleTextRendererProps {
     getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
     getSentenceClassName: (chunkIndex: number) => string;
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
+    handleSentenceClick: (chunkIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
 }
 
@@ -24,6 +25,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     getSentenceStyle,
     getSentenceClassName,
     handleWordClick,
+    handleSentenceClick,
     isChunkBookmarked
 }) => {
     const { fontSize, lineHeight, fontFamily, textColor } = useUserTheme();
@@ -45,12 +47,12 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                     });
                     hasScrolledToInitialPosition.current = true;
                     previousChunkIndex.current = currentChunkIndex;
-                    
+
                     // Show content after positioning (small delay to ensure scroll completes)
                     setTimeout(() => {
                         setIsContentVisible(true);
                     }, 50);
-                    
+
                     return true;
                 }
                 return false;
@@ -66,7 +68,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                         hasScrolledToInitialPosition.current = true;
                     }
                 }, 100);
-                
+
                 return () => clearTimeout(timeoutId);
             }
         } else if (currentChunkIndex === 0) {
@@ -101,7 +103,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                         previousChunkIndex.current = currentChunkIndex;
                     }
                 }, 100);
-                
+
                 return () => clearTimeout(timeoutId);
             }
         }
@@ -197,12 +199,14 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                     <Typography
                                         variant="body1"
                                         className={getSentenceClassName(index)}
+                                        onDoubleClick={() => handleSentenceClick(index)}
                                         sx={{
                                             lineHeight: lineHeight,
                                             fontSize: `${fontSize}rem`,
                                             fontFamily: fontFamily,
                                             color: textColor,
                                             wordSpacing: 'normal',
+                                            cursor: 'pointer',
                                             ...getSentenceStyle(index)
                                         }}
                                     >

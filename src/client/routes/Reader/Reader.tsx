@@ -26,18 +26,18 @@ export const Reader = () => {
         progress
     } = useReader();
 
-    console.log('chapter', {chapter: chapter?.chapterNumber, loading});
+    // console.log('chapter', {chapter: chapter?.chapterNumber, loading});
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     // Pre-compute and cache the mapping from absolute chunk indices to text chunk indices
     const chunkIndexMapping = useMemo(() => {
         if (!chapter) return { absoluteToText: new Map(), textToAbsolute: new Map(), textChunks: [] };
-        
+
         const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
         const absoluteToText = new Map<number, number>();
         const textToAbsolute = new Map<number, number>();
-        
+
         let textChunkIndex = 0;
         chapter.content.chunks.forEach((chunk, absoluteIndex) => {
             if (chunk.type === 'text') {
@@ -91,11 +91,24 @@ export const Reader = () => {
         };
     }, [audio.handleWordClick, chunkIndexMapping]);
 
+    const handleOptimizedSentenceClick = useMemo(() => {
+        return (chunkIndex: number) => {
+            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
+            if (textChunkIndex === undefined) return;
+
+            // Set the current chunk index in reader state (will sync to audio)
+            navigation.setCurrentChunkIndex(textChunkIndex);
+
+            // Also jump to the first word of that chunk
+            audio.handleWordClick(textChunkIndex, 0);
+        };
+    }, [chunkIndexMapping, navigation.setCurrentChunkIndex, audio.handleWordClick]);
+
     // Optimized current chunk index calculation
     const currentChunkIndex = useMemo(() => {
         const currentTextChunk = chunkIndexMapping.textChunks[audio.currentChunkIndex];
         if (!currentTextChunk) return 0;
-        
+
         return chunkIndexMapping.textToAbsolute.get(audio.currentChunkIndex) || 0;
     }, [audio.currentChunkIndex, chunkIndexMapping]);
 
@@ -175,7 +188,7 @@ export const Reader = () => {
                     sx={{
                         maxWidth: 800,
                         mx: 'auto',
-                        p: 4,
+                        p: 1,
                         pb: { xs: 20, sm: 16 },
                         borderRadius: 0,
                         height: 'calc(100vh - 200px)', // Adjust to account for AudioControls height
@@ -192,6 +205,7 @@ export const Reader = () => {
                         getSentenceStyle={getOptimizedSentenceStyle}
                         getSentenceClassName={getOptimizedSentenceClassName}
                         handleWordClick={handleOptimizedWordClick}
+                        handleSentenceClick={handleOptimizedSentenceClick}
                         isChunkBookmarked={bookmarks.isChunkBookmarked}
                     />
                 </Paper>
@@ -212,6 +226,7 @@ export const Reader = () => {
                     onSpeedSettings={settings.handleSpeedSettings}
                     onAskAI={bookQA.togglePanel}
                     isPlaying={audio.isPlaying}
+                    isCurrentChunkLoading={audio.isCurrentChunkLoading}
                     isBookmarked={bookmarks.isBookmarked}
                     progress={(audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100}
                     playbackSpeed={settings.playbackSpeed}

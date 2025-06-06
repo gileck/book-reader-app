@@ -12,6 +12,7 @@ interface ReaderContentProps {
     getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
     getSentenceClassName: (chunkIndex: number) => string;
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
+    handleSentenceClick: (chunkIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
 }
 
@@ -24,6 +25,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     getSentenceStyle,
     getSentenceClassName,
     handleWordClick,
+    handleSentenceClick,
     isChunkBookmarked
 }) => {
     return (
@@ -37,6 +39,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 getSentenceStyle={getSentenceStyle}
                 getSentenceClassName={getSentenceClassName}
                 handleWordClick={handleWordClick}
+                handleSentenceClick={handleSentenceClick}
                 isChunkBookmarked={isChunkBookmarked}
             />
         </Box>

@@ -3,7 +3,8 @@ import {
     Box,
     IconButton,
     Typography,
-    LinearProgress
+    LinearProgress,
+    CircularProgress
 } from '@mui/material';
 import {
     PlayArrow,
@@ -33,6 +34,7 @@ interface AudioControlsProps {
     onSpeedSettings: () => void;
     onAskAI: () => void;
     isPlaying: boolean;
+    isCurrentChunkLoading?: boolean;
     isBookmarked?: boolean;
     progress: number; // 0-100 (chapter progress)
     playbackSpeed?: number;
@@ -66,6 +68,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onSpeedSettings,
     onAskAI,
     isPlaying,
+    isCurrentChunkLoading = false,
     isBookmarked = false,
     progress,
     playbackSpeed = 1.0,
@@ -87,6 +90,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             backgroundColor: '#1a1a1a',
             borderTop: '1px solid #333',
             padding: 2,
+            paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
             zIndex: 1000
         }}>
             {/* Chapter Title and Navigation */}
@@ -184,13 +188,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 position: 'relative'
             }}>
                 {/* Left Controls */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 100 }}>
                     {/* Ask AI Button */}
                     <IconButton
                         onClick={onAskAI}
                         sx={{
                             color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
+                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
+                            p: 1
                         }}
                         size="medium"
                     >
@@ -202,7 +207,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         onClick={onSettings}
                         sx={{
                             color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
+                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
+                            p: 1
                         }}
                         size="medium"
                     >
@@ -217,7 +223,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     transform: 'translateX(-50%)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1
+                    gap: 0.5
                 }}>
                     {/* Previous Chunk Button */}
                     <IconButton
@@ -226,7 +232,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         sx={{
                             color: 'white',
                             '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            '&:disabled': { color: 'rgba(255,255,255,0.3)' }
+                            '&:disabled': { color: 'rgba(255,255,255,0.3)' },
+                            p: 1
                         }}
                         size="large"
                     >
@@ -234,22 +241,45 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     </IconButton>
 
                     {/* Play/Pause Button */}
-                    <IconButton
-                        onClick={isPlaying ? onPause : onPlay}
-                        sx={{
-                            backgroundColor: isPlaying ? '#f44336' : '#4caf50',
-                            color: 'white',
-                            '&:hover': {
-                                backgroundColor: isPlaying ? '#d32f2f' : '#388e3c'
-                            },
-                            width: 64,
-                            height: 64,
-                            mx: 2
-                        }}
-                        size="large"
-                    >
-                        {isPlaying ? <Pause sx={{ fontSize: 32 }} /> : <PlayArrow sx={{ fontSize: 32 }} />}
-                    </IconButton>
+                    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                        <IconButton
+                            onClick={isPlaying ? onPause : onPlay}
+                            disabled={isCurrentChunkLoading}
+                            sx={{
+                                backgroundColor: isCurrentChunkLoading
+                                    ? '#666'
+                                    : isPlaying ? '#f44336' : '#4caf50',
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: isCurrentChunkLoading
+                                        ? '#666'
+                                        : isPlaying ? '#d32f2f' : '#388e3c'
+                                },
+                                '&:disabled': {
+                                    backgroundColor: '#666',
+                                    color: 'rgba(255,255,255,0.6)'
+                                },
+                                width: 64,
+                                height: 64,
+                                mx: 1
+                            }}
+                            size="large"
+                        >
+                            {isPlaying ? <Pause sx={{ fontSize: 32 }} /> : <PlayArrow sx={{ fontSize: 32 }} />}
+                        </IconButton>
+                        {isCurrentChunkLoading && (
+                            <CircularProgress
+                                size={68}
+                                sx={{
+                                    color: '#4caf50',
+                                    position: 'absolute',
+                                    top: -2,
+                                    left: 14,
+                                    zIndex: 1,
+                                }}
+                            />
+                        )}
+                    </Box>
 
                     {/* Next Chunk Button */}
                     <IconButton
@@ -258,7 +288,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         sx={{
                             color: 'white',
                             '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            '&:disabled': { color: 'rgba(255,255,255,0.3)' }
+                            '&:disabled': { color: 'rgba(255,255,255,0.3)' },
+                            p: 1
                         }}
                         size="large"
                     >
@@ -271,7 +302,9 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     marginLeft: 'auto',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1
+                    gap: 0.5,
+                    minWidth: 100,
+                    justifyContent: 'flex-end'
                 }}>
                     {/* Speed Control Button */}
                     <IconButton
@@ -279,11 +312,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         sx={{
                             color: 'white',
                             '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            minWidth: 60,
+                            minWidth: 50,
                             height: 48,
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 0.5
+                            gap: 0.5,
+                            p: 1
                         }}
                     >
                         <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 'bold' }}>

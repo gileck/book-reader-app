@@ -55,20 +55,20 @@ export const useReader = () => {
     useEffect(() => {
         const loadReaderData = async () => {
             if (!bookId) {
-                setState(prev => ({ 
-                    ...prev, 
-                    error: 'No book ID provided', 
-                    loading: false 
+                setState(prev => ({
+                    ...prev,
+                    error: 'No book ID provided',
+                    loading: false
                 }));
                 return;
             }
 
             try {
                 // Step 1: Set loading to true
-                setState(prev => ({ 
-                    ...prev, 
-                    loading: true, 
-                    error: null 
+                setState(prev => ({
+                    ...prev,
+                    loading: true,
+                    error: null
                 }));
 
                 // Step 2: Load reading progress to get current position
@@ -89,10 +89,10 @@ export const useReader = () => {
                 // Step 3: Load book data
                 const bookResult = await getBook({ bookId });
                 if (!bookResult.data || !bookResult.data.book) {
-                    setState(prev => ({ 
-                        ...prev, 
+                    setState(prev => ({
+                        ...prev,
                         error: 'Book not found',
-                        loading: false 
+                        loading: false
                     }));
                     return;
                 }
@@ -104,10 +104,10 @@ export const useReader = () => {
                 });
 
                 if (!chapterResult.data || !chapterResult.data.chapter) {
-                    setState(prev => ({ 
-                        ...prev, 
+                    setState(prev => ({
+                        ...prev,
                         error: 'Chapter not found',
-                        loading: false 
+                        loading: false
                     }));
                     return;
                 }
@@ -124,10 +124,10 @@ export const useReader = () => {
 
             } catch (error) {
                 console.error('Error loading reader data:', error);
-                setState(prev => ({ 
-                    ...prev, 
+                setState(prev => ({
+                    ...prev,
                     error: 'Failed to load book content',
-                    loading: false 
+                    loading: false
                 }));
             }
         };
@@ -158,10 +158,10 @@ export const useReader = () => {
             }
         } catch (error) {
             console.error('Error loading chapter:', error);
-            setState(prev => ({ 
-                ...prev, 
+            setState(prev => ({
+                ...prev,
                 error: 'Failed to load chapter',
-                loading: false 
+                loading: false
             }));
         }
     }, [bookId, state.currentChapterNumber]);
@@ -262,12 +262,14 @@ export const useReader = () => {
             currentChunkIndex: state.currentChunkIndex,
             currentWordIndex: audioPlayback.currentWordIndex,
             isPlaying: audioPlayback.isPlaying,
+            isCurrentChunkLoading: audioPlayback.isCurrentChunkLoading,
             textChunks: audioPlayback.textChunks,
             handlePlay: audioPlayback.handlePlay,
             handlePause: audioPlayback.handlePause,
             handleWordClick: audioPlayback.handleWordClick,
             handlePreviousChunk: audioPlayback.handlePreviousChunk,
             handleNextChunk: audioPlayback.handleNextChunk,
+            setCurrentChunkIndex: audioPlayback.setCurrentChunkIndex,
             preloadChunk: audioPlayback.preloadChunk,
             getWordStyle: audioPlayback.getWordStyle,
             getSentenceStyle: audioPlayback.getSentenceStyle,
@@ -318,7 +320,8 @@ export const useReader = () => {
         navigation: {
             handlePreviousChapter,
             handleNextChapter,
-            handleNavigateToBookmark
+            handleNavigateToBookmark,
+            setCurrentChunkIndex
         }
     };
 }; 

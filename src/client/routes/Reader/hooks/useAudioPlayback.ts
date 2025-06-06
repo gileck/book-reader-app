@@ -19,26 +19,26 @@ const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
 
 // CSS animation utilities
 const generateWordAnimationCSS = (
-    chunkIndex: number, 
-    timepoints: TTSTimepoint[], 
+    chunkIndex: number,
+    timepoints: TTSTimepoint[],
     highlightColor: string,
     wordSpeedOffset: number
 ) => {
     const keyframesName = `word-highlight-chunk-${chunkIndex}`;
-    
+
     // Generate CSS for each word with calculated duration
     const wordStyles = timepoints.map((tp, wordIndex) => {
         const startTime = tp.timeSeconds - (wordSpeedOffset / 1000);
-        
+
         // Calculate duration: time until next word or 0.8s default for last word
         const nextTimepoint = timepoints[wordIndex + 1];
-        const duration = nextTimepoint 
+        const duration = nextTimepoint
             ? (nextTimepoint.timeSeconds - tp.timeSeconds)
             : 0.8; // Default duration for last word
-        
+
         // Ensure minimum duration of 0.2s and maximum of 2s
         const safeDuration = Math.max(0.2, Math.min(duration, 2));
-        
+
         return `
             .chunk-${chunkIndex}-word-${wordIndex}.css-animated {
                 animation: ${keyframesName} ${safeDuration}s ease-out ${startTime}s both;
@@ -82,13 +82,14 @@ const generateChunkAnimationCSS = (
     sentenceHighlightColor: string
 ) => {
     const borderColor = sentenceHighlightColor === '#f8f9fa' ? '#e3f2fd' : (sentenceHighlightColor || '#e3f2fd');
-    
+
     // Static highlighting without animation - instant feedback
     const chunkStyle = `
         .chunk-${chunkIndex}.current-chunk.css-animated {
             background-color: ${sentenceHighlightColor || '#f8f9fa'};
             border-left: 3px solid ${borderColor};
             border-radius: 0 4px 4px 0;
+            padding: 4px 8px 4px 8px;
             margin-left: -3px;
             transition: none; /* No animation for instant feedback */
         }
@@ -113,7 +114,7 @@ const injectCSS = (css: string, id: string) => {
 
 const updateAnimationState = (isPlaying: boolean) => {
     document.documentElement.style.setProperty(
-        '--word-animation-state', 
+        '--word-animation-state',
         isPlaying ? 'running' : 'paused'
     );
     // Note: chunk highlighting is now static (no animation state needed)
@@ -153,7 +154,7 @@ export const useAudioPlayback = (
         existingWordStyles.forEach(style => style.remove());
         const existingChunkStyles = document.querySelectorAll('style[id^="chunk-animation-chunk-"]');
         existingChunkStyles.forEach(style => style.remove());
-        
+
         updateState({
             audioChunks: {},
             currentChunkIndex: 0,
@@ -190,8 +191,8 @@ export const useAudioPlayback = (
 
                     // Generate and inject CSS animations for this chunk
                     const wordCSS = generateWordAnimationCSS(
-                        index, 
-                        result.data.timepoints, 
+                        index,
+                        result.data.timepoints,
                         highlightColor || '#ff9800',
                         wordSpeedOffset
                     );
@@ -455,8 +456,11 @@ export const useAudioPlayback = (
             };
         }
 
+        // Apply same padding to non-highlighted sentences to prevent layout shifts
         return {
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            padding: '4px 8px 4px 8px',
+            marginLeft: '-3px'
         };
     }, [state.currentChunkIndex, sentenceHighlightColor, state.audioChunks]);
 
@@ -478,10 +482,14 @@ export const useAudioPlayback = (
         return '';
     }, [state.currentChunkIndex, state.audioChunks]);
 
+    // Check if current chunk is loading
+    const isCurrentChunkLoading = pendingRequests.current.has(state.currentChunkIndex);
+
     return {
         currentChunkIndex: state.currentChunkIndex,
         currentWordIndex: state.currentWordIndex,
         isPlaying: state.isPlaying,
+        isCurrentChunkLoading,
         textChunks,
         handlePlay,
         handlePause,

@@ -1,0 +1,8 @@
+to fix the bug do this:
+1. reproduce the bug using playwrite MCP
+2. find why the bug is happening (in the code)
+3. let me know what is the bug, why its happening and what are the options to fix it (from the most simple solution to the most complicated)
+4. I will provide the option that I want to go with
+5. fix the bug using the option I selected
+6. after fixing the bug, verify that the bug is fixed using playwrite MCP.
+7. run yarn checks to make sure all the issues are resolved.
