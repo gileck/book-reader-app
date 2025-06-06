@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
-import { getBook } from '../../../../apis/books/client';
+import { getBook, getBooks } from '../../../../apis/books/client';
 import { getChapterByNumber } from '../../../../apis/chapters/client';
 import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
@@ -27,6 +27,7 @@ export const useReader = () => {
 
     // Use bookId from query params, or fall back to active book from localStorage
     const [bookId, setBookId] = useState<string | undefined>(queryBookId);
+    const [bookIdResolved, setBookIdResolved] = useState<boolean>(false);
 
     // Main reader state
     const [state, setState] = useState<ReaderState>({
@@ -38,26 +39,94 @@ export const useReader = () => {
         error: null
     });
 
-    // Handle Active Book concept
-    useEffect(() => {
-        if (queryBookId) {
-            setBookId(queryBookId);
-        } else {
-            // No bookId in query params, use active book from localStorage
+    // Get current book ID from reading status if no book ID provided
+    const getCurrentBookId = async (): Promise<string | null> => {
+        try {
+            // First try localStorage
             const activeBookId = localStorage.getItem('activeBookId');
             if (activeBookId) {
-                setBookId(activeBookId);
+                return activeBookId;
             }
+
+            // If no activeBookId, get all books and find the most recently read one
+            const booksResult = await getBooks({});
+            if (!booksResult.data?.books) {
+                return null;
+            }
+
+            const books = booksResult.data.books;
+            let mostRecentBook: { bookId: string; lastReadAt: Date } | null = null;
+
+            // Check reading progress for each book to find the most recently read
+            for (const book of books) {
+                try {
+                    const progressResult = await getReadingProgress({
+                        userId,
+                        bookId: book._id
+                    });
+
+                    if (progressResult.data?.readingProgress) {
+                        const lastReadAt = new Date(progressResult.data.readingProgress.lastReadAt);
+                        if (!mostRecentBook || lastReadAt > mostRecentBook.lastReadAt) {
+                            mostRecentBook = {
+                                bookId: book._id,
+                                lastReadAt
+                            };
+                        }
+                    }
+                } catch (error) {
+                    // Continue if we can't get progress for this book
+                    console.warn(`Failed to get progress for book ${book._id}:`, error);
+                }
+            }
+
+            if (mostRecentBook) {
+                // Set this as the active book in localStorage for future use
+                localStorage.setItem('activeBookId', mostRecentBook.bookId);
+                return mostRecentBook.bookId;
+            }
+
+            // If no reading progress found, return the first book
+            if (books.length > 0) {
+                localStorage.setItem('activeBookId', books[0]._id);
+                return books[0]._id;
+            }
+
+            return null;
+        } catch (error) {
+            console.error('Error getting current book ID:', error);
+            return null;
         }
+    };
+
+    // Handle Active Book concept
+    useEffect(() => {
+        const resolveBookId = async () => {
+            if (queryBookId) {
+                setBookId(queryBookId);
+                setBookIdResolved(true);
+            } else {
+                const currentBookId = await getCurrentBookId();
+                setBookId(currentBookId || undefined);
+                setBookIdResolved(true);
+            }
+        };
+
+        resolveBookId();
     }, [queryBookId]);
 
     // Sequential loading flow
     useEffect(() => {
         const loadReaderData = async () => {
+            // Wait until we've attempted to resolve the book ID
+            if (!bookIdResolved) {
+                return;
+            }
+
             if (!bookId) {
                 setState(prev => ({
                     ...prev,
-                    error: 'No book ID provided',
+                    error: 'No books found',
                     loading: false
                 }));
                 return;
@@ -133,7 +202,7 @@ export const useReader = () => {
         };
 
         loadReaderData();
-    }, [bookId, userId]);
+    }, [bookId, bookIdResolved, userId]);
 
     // Function to change chapter (for navigation)
     const setCurrentChapterNumber = useCallback(async (chapterNumber: number) => {

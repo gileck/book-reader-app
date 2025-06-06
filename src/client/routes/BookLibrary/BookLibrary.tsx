@@ -292,6 +292,16 @@ export const BookLibrary = () => {
                                 <IconButton
                                     size="small"
                                     onClick={(event) => handleOpenMenu(book._id, event)}
+                                    sx={{
+                                        ml: 1,
+                                        backgroundColor: 'action.hover',
+                                        '&:hover': {
+                                            backgroundColor: 'action.selected',
+                                        },
+                                        border: '1px solid',
+                                        borderColor: 'divider'
+                                    }}
+                                    aria-label="Book options"
                                 >
                                     <MoreVertIcon />
                                 </IconButton>
@@ -299,9 +309,11 @@ export const BookLibrary = () => {
                                     anchorEl={menuAnchor[book._id] || null}
                                     open={Boolean(menuAnchor[book._id])}
                                     onClose={() => handleCloseMenu(book._id)}
+                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 >
                                     <MenuItem onClick={() => handleSetActiveBook(book._id)}>
-                                        <StarBorderIcon sx={{ mr: 1 }} />
+                                        <StarIcon sx={{ mr: 1, color: 'primary.main' }} />
                                         Set as Active Book
                                     </MenuItem>
                                 </Menu>
