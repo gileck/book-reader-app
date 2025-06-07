@@ -290,6 +290,30 @@ function detectChapters(text, config) {
                     console.log(`DEBUG: Found occurrence of "${matchingTitle}" at line ${i}: "${line}"`);
                 }
             }
+
+            // Also check for multi-line titles (title split across consecutive lines)
+            if (i < lines.length - 1) {
+                const nextLine = lines[i + 1];
+                const combinedLine = line + ' ' + nextLine;
+
+                const multiLineMatchingTitle = config.chapterNames.find(title => fuzzyMatch(combinedLine, title));
+
+                if (multiLineMatchingTitle) {
+                    if (!allChapterOccurrences[multiLineMatchingTitle]) {
+                        allChapterOccurrences[multiLineMatchingTitle] = [];
+                    }
+                    allChapterOccurrences[multiLineMatchingTitle].push({
+                        line: multiLineMatchingTitle,
+                        index: i,
+                        originalLine: combinedLine.trim(),
+                        isMultiLine: true
+                    });
+
+                    if (process.env.DEBUG_TEXT) {
+                        console.log(`DEBUG: Found multi-line occurrence of "${multiLineMatchingTitle}" at line ${i}: "${combinedLine.trim()}"`);
+                    }
+                }
+            }
         }
 
         // For each chapter, pick the occurrence that has the most content after it

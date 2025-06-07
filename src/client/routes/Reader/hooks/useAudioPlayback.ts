@@ -81,13 +81,11 @@ const generateChunkAnimationCSS = (
     chunkIndex: number,
     sentenceHighlightColor: string
 ) => {
-    const borderColor = sentenceHighlightColor === '#f8f9fa' ? '#e3f2fd' : (sentenceHighlightColor || '#e3f2fd');
 
     // Static highlighting without animation - instant feedback
     const chunkStyle = `
         .chunk-${chunkIndex}.current-chunk.css-animated {
             background-color: ${sentenceHighlightColor || '#f8f9fa'};
-            border-left: 3px solid ${borderColor};
             border-radius: 0 4px 4px 0;
             padding: 4px 8px 4px 8px;
             margin-left: -3px;
@@ -449,7 +447,6 @@ export const useAudioPlayback = (
             const borderColor = sentenceHighlightColor === '#f8f9fa' ? '#e3f2fd' : (sentenceHighlightColor || '#e3f2fd');
             return {
                 backgroundColor: sentenceHighlightColor || '#f8f9fa',
-                borderLeft: `3px solid ${borderColor}`,
                 borderRadius: '0 4px 4px 0',
                 padding: '4px 8px 4px 8px',
                 marginLeft: '-3px'
