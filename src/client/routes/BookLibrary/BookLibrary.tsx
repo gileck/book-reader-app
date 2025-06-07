@@ -1,28 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Box,
-    Typography,
-    Card,
-    CardContent,
-    CardActions,
-    Button,
-    CircularProgress,
-    Chip,
-    IconButton,
-    Menu,
-    MenuItem,
-    LinearProgress
-} from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Image from 'next/image';
 import { useRouter } from '../../router';
-import { getBooks } from '../../../apis/books/client';
+import { getBooks, deleteBook } from '../../../apis/books/client';
 import { getReadingProgress } from '../../../apis/readingProgress/client';
 import { BookClient } from '../../../apis/books/types';
 import { ReadingProgressClient } from '../../../apis/readingProgress/types';
+import './BookLibrary.css';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -36,7 +19,10 @@ export const BookLibrary = () => {
     const [books, setBooks] = useState<BookWithProgress[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [menuAnchor, setMenuAnchor] = useState<{ [key: string]: HTMLElement | null }>({});
+    const [sortBy, setSortBy] = useState<'title' | 'progress' | 'lastRead'>('title');
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
+    const [showOptionsMenu, setShowOptionsMenu] = useState<string | null>(null);
+    const [deletingBook, setDeletingBook] = useState<string | null>(null);
 
     useEffect(() => {
         loadBooksWithProgress();
@@ -47,16 +33,13 @@ export const BookLibrary = () => {
             setLoading(true);
             setError(null);
 
-            // Get all books
             const booksResult = await getBooks({});
             if (!booksResult.data) {
                 throw new Error('Failed to load books');
             }
 
-            // Get active book from localStorage
             const storedActiveBookId = localStorage.getItem('activeBookId');
 
-            // Load reading progress for each book
             const booksWithProgress: BookWithProgress[] = await Promise.all(
                 booksResult.data.books.map(async (book) => {
                     try {
@@ -89,11 +72,7 @@ export const BookLibrary = () => {
         }
     };
 
-    const handleStartReading = (bookId: string) => {
-        navigate(`/reader?bookId=${bookId}`);
-    };
-
-    const handleContinueReading = (bookId: string) => {
+    const handleOpenBook = (bookId: string) => {
         navigate(`/reader?bookId=${bookId}`);
     };
 
@@ -103,266 +82,261 @@ export const BookLibrary = () => {
             ...book,
             isActive: book._id === bookId
         })));
-        handleCloseMenu(bookId);
     };
 
-    const handleOpenMenu = (bookId: string, event: React.MouseEvent<HTMLElement>) => {
-        setMenuAnchor({ ...menuAnchor, [bookId]: event.currentTarget });
+    const handleRemoveBook = (bookId: string) => {
+        setShowDeleteConfirm(bookId);
     };
 
-    const handleCloseMenu = (bookId: string) => {
-        setMenuAnchor({ ...menuAnchor, [bookId]: null });
-    };
+    const confirmRemoveBook = async (bookId: string) => {
+        try {
+            setDeletingBook(bookId);
+            setError(null);
 
-    const getReadingStatusChip = (book: BookWithProgress) => {
-        if (!book.progress) {
-            return <Chip label="Not Started" color="default" size="small" />;
+            // Call the API to delete the book and all associated data
+            const result = await deleteBook({ bookId });
+
+            if (result.data?.success) {
+                // Remove from local state only if API call succeeded
+                setBooks(books.filter(book => book._id !== bookId));
+
+                // If the removed book was active, clear active book
+                const activeBookId = localStorage.getItem('activeBookId');
+                if (activeBookId === bookId) {
+                    localStorage.removeItem('activeBookId');
+                }
+            } else {
+                throw new Error('Failed to delete book');
+            }
+        } catch (error) {
+            console.error('Error removing book:', error);
+            setError(error instanceof Error ? error.message : 'Failed to remove book');
+        } finally {
+            setDeletingBook(null);
+            setShowDeleteConfirm(null);
         }
-
-        if (book.progress.bookProgress >= 100) {
-            return <Chip label="Completed" color="success" size="small" />;
-        }
-
-        if (book.progress.bookProgress > 0) {
-            return <Chip label="In Progress" color="primary" size="small" />;
-        }
-
-        return <Chip label="Not Started" color="default" size="small" />;
     };
 
-    const formatProgress = (progress?: ReadingProgressClient) => {
-        if (!progress) return 'No progress';
+    const toggleOptionsMenu = (bookId: string) => {
+        setShowOptionsMenu(showOptionsMenu === bookId ? null : bookId);
+    };
 
-        if (progress.bookProgress >= 100) {
-            return 'Completed';
+    const closeOptionsMenu = () => {
+        setShowOptionsMenu(null);
+    };
+
+    const getProgressPercentage = (progress?: ReadingProgressClient): number => {
+        return progress?.bookProgress || 0;
+    };
+
+    const getReadingStatus = (progress?: ReadingProgressClient): string => {
+        if (!progress) return 'Not Started';
+        if (progress.bookProgress >= 100) return 'Completed';
+        if (progress.bookProgress > 0) return 'Reading';
+        return 'Not Started';
+    };
+
+
+
+    const sortedBooks = [...books].sort((a, b) => {
+        switch (sortBy) {
+            case 'progress':
+                return getProgressPercentage(b.progress) - getProgressPercentage(a.progress);
+            case 'lastRead':
+                if (!a.progress && !b.progress) return 0;
+                if (!a.progress) return 1;
+                if (!b.progress) return -1;
+                return new Date(b.progress.lastReadAt).getTime() - new Date(a.progress.lastReadAt).getTime();
+            default:
+                return a.title.localeCompare(b.title);
         }
-
-        return `Chapter ${progress.currentChapter} • ${Math.round(progress.bookProgress)}% complete`;
-    };
-
-    const formatLastRead = (progress?: ReadingProgressClient) => {
-        if (!progress) return '';
-
-        const lastRead = new Date(progress.lastReadAt);
-        const now = new Date();
-        const diffDays = Math.floor((now.getTime() - lastRead.getTime()) / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 0) return 'Today';
-        if (diffDays === 1) return 'Yesterday';
-        if (diffDays < 7) return `${diffDays} days ago`;
-        return lastRead.toLocaleDateString();
-    };
+    });
 
     if (loading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-                <CircularProgress />
-            </Box>
+            <div className="book-library">
+                <div className="loading-container">
+                    <div className="spinner"></div>
+                    <p>Loading your library...</p>
+                </div>
+            </div>
         );
     }
 
     if (error) {
         return (
-            <Box textAlign="center" mt={4}>
-                <Typography color="error" variant="h6">
-                    {error}
-                </Typography>
-                <Button onClick={loadBooksWithProgress} sx={{ mt: 2 }}>
-                    Retry
-                </Button>
-            </Box>
+            <div className="book-library">
+                <div className="error-container">
+                    <h2>Error loading library</h2>
+                    <p>{error}</p>
+                    <button className="btn-primary" onClick={loadBooksWithProgress}>
+                        Try Again
+                    </button>
+                </div>
+            </div>
         );
     }
 
-    const activeBook = books.find(book => book.isActive);
-    const otherBooks = books.filter(book => !book.isActive);
-
     return (
-        <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Book Library
-            </Typography>
+        <div className="book-library">
+            <header className="library-header">
+                <h1>My Library</h1>
+                <div className="library-controls">
+                    <div className="sort-dropdown">
+                        <label htmlFor="sort-select" className="sr-only">Sort books</label>
+                        <select
+                            id="sort-select"
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value as 'title' | 'progress' | 'lastRead')}
+                            className="sort-select"
+                        >
+                            <option value="title">Sort by Title</option>
+                            <option value="progress">Sort by Progress</option>
+                            <option value="lastRead">Sort by Last Read</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
 
-            {/* Active Book Section */}
-            {activeBook && (
-                <Box sx={{ mb: 4 }}>
-                    <Typography variant="h5" component="h2" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <StarIcon color="primary" />
-                        Active Book
-                    </Typography>
-                    <Card sx={{ backgroundColor: 'primary.50', border: '2px solid', borderColor: 'primary.main' }}>
-                        {activeBook.coverImage && (
-                            <Box
-                                component="img"
-                                src={activeBook.coverImage}
-                                alt={`${activeBook.title} cover`}
-                                sx={{
-                                    height: 200,
-                                    objectFit: 'cover',
-                                    width: '100%'
+            {/* All Books Grid */}
+            <section className="all-books">
+                <h2>Your Books</h2>
+                {books.length === 0 ? (
+                    <div className="empty-state">
+                        <div className="empty-icon">📚</div>
+                        <h3>No books in your library</h3>
+                        <p>Add some books to get started with your reading journey.</p>
+                    </div>
+                ) : (
+                    <div className="books-grid">
+                        {sortedBooks.map((book) => (
+                            <div key={book._id} className={`book-card ${book.isActive ? 'book-card-active' : ''}`}>
+                                <div className="book-card-inner">
+                                    <div className="book-cover-container">
+                                        {book.coverImage ? (
+                                            <Image
+                                                src={book.coverImage}
+                                                alt={`${book.title} cover`}
+                                                className="book-cover"
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <div className="book-cover-placeholder">
+                                                <span>📖</span>
+                                            </div>
+                                        )}
+
+                                        {/* Progress indicator */}
+                                        {book.progress && book.progress.bookProgress > 0 && (
+                                            <div className="progress-indicator">
+                                                <div
+                                                    className="progress-bar"
+                                                    style={{ width: `${book.progress.bookProgress}%` }}
+                                                ></div>
+                                            </div>
+                                        )}
+
+                                        {/* Options button */}
+                                        <button
+                                            className="book-options-btn"
+                                            onClick={() => toggleOptionsMenu(book._id)}
+                                            aria-label="Book options"
+                                        >
+                                            ⋯
+                                        </button>
+
+                                        {/* Options menu */}
+                                        {showOptionsMenu === book._id && (
+                                            <>
+                                                <div className="options-menu-overlay" onClick={closeOptionsMenu}></div>
+                                                <div className="options-menu">
+                                                    <button
+                                                        className="options-menu-item primary"
+                                                        onClick={() => {
+                                                            handleOpenBook(book._id);
+                                                            closeOptionsMenu();
+                                                        }}
+                                                    >
+                                                        <span>📖</span>
+                                                        {book.progress ? 'Continue Reading' : 'Start Reading'}
+                                                    </button>
+                                                    {!book.isActive && (
+                                                        <button
+                                                            className="options-menu-item"
+                                                            onClick={() => {
+                                                                handleSetActiveBook(book._id);
+                                                                closeOptionsMenu();
+                                                            }}
+                                                        >
+                                                            <span>⭐</span>
+                                                            Set as Active Book
+                                                        </button>
+                                                    )}
+                                                    <button
+                                                        className="options-menu-item danger"
+                                                        onClick={() => {
+                                                            handleRemoveBook(book._id);
+                                                            closeOptionsMenu();
+                                                        }}
+                                                    >
+                                                        <span>🗑️</span>
+                                                        Remove Book
+                                                    </button>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    <div className="book-info">
+                                        <div className="book-meta">
+                                            <span className={`status-badge ${getReadingStatus(book.progress).toLowerCase().replace(' ', '-')}`}>
+                                                {getReadingStatus(book.progress)}
+                                            </span>
+                                            {book.progress && book.progress.bookProgress > 0 && (
+                                                <span className="progress-text">
+                                                    {Math.round(book.progress.bookProgress)}%
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteConfirm && (
+                <div className="modal-overlay" onClick={() => {
+                    setShowDeleteConfirm(null);
+                    closeOptionsMenu();
+                }}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <h3>Remove Book</h3>
+                        <p>Are you sure you want to remove this book from your library? This action cannot be undone.</p>
+                        <div className="modal-actions">
+                            <button
+                                className="btn-secondary"
+                                onClick={() => {
+                                    setShowDeleteConfirm(null);
+                                    closeOptionsMenu();
                                 }}
-                            />
-                        )}
-                        <CardContent>
-                            <Typography variant="h6" component="h3" gutterBottom>
-                                {activeBook.title}
-                            </Typography>
-                            {activeBook.author && (
-                                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-                                    by {activeBook.author}
-                                </Typography>
-                            )}
-                            {activeBook.description && (
-                                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                    {activeBook.description}
-                                </Typography>
-                            )}
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                                {getReadingStatusChip(activeBook)}
-                                <Typography variant="body2" color="text.secondary">
-                                    {formatProgress(activeBook.progress)}
-                                </Typography>
-                                {activeBook.progress && (
-                                    <Typography variant="body2" color="text.secondary">
-                                        Last read: {formatLastRead(activeBook.progress)}
-                                    </Typography>
-                                )}
-                            </Box>
-                            {activeBook.progress && activeBook.progress.bookProgress > 0 && (
-                                <LinearProgress
-                                    variant="determinate"
-                                    value={activeBook.progress.bookProgress}
-                                    sx={{ mb: 2 }}
-                                />
-                            )}
-                        </CardContent>
-                        <CardActions>
-                            <Button
-                                variant="contained"
-                                startIcon={<PlayArrowIcon />}
-                                onClick={() => activeBook.progress ? handleContinueReading(activeBook._id) : handleStartReading(activeBook._id)}
                             >
-                                {activeBook.progress ? 'Continue Reading' : 'Start Reading'}
-                            </Button>
-                        </CardActions>
-                    </Card>
-                </Box>
-            )}
-
-            {/* Other Books Section */}
-            <Typography variant="h5" component="h2" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <MenuBookIcon />
-                {activeBook ? 'Other Books' : 'All Books'}
-            </Typography>
-
-            {otherBooks.length === 0 && !activeBook && (
-                <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ py: 4 }}>
-                    No books found in your library.
-                </Typography>
-            )}
-
-            <Box sx={{
-                display: 'grid',
-                gridTemplateColumns: {
-                    xs: '1fr',
-                    sm: 'repeat(2, 1fr)',
-                    md: 'repeat(3, 1fr)'
-                },
-                gap: 3
-            }}>
-                {otherBooks.map((book) => (
-                    <Card key={book._id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                        {book.coverImage && (
-                            <Box
-                                component="img"
-                                src={book.coverImage}
-                                alt={`${book.title} cover`}
-                                sx={{
-                                    height: 200,
-                                    objectFit: 'cover',
-                                    width: '100%'
-                                }}
-                            />
-                        )}
-                        <CardContent sx={{ flexGrow: 1 }}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                                <Typography variant="h6" component="h3" sx={{ flexGrow: 1 }}>
-                                    {book.title}
-                                </Typography>
-                                <IconButton
-                                    size="small"
-                                    onClick={(event) => handleOpenMenu(book._id, event)}
-                                    sx={{
-                                        ml: 1,
-                                        backgroundColor: 'action.hover',
-                                        '&:hover': {
-                                            backgroundColor: 'action.selected',
-                                        },
-                                        border: '1px solid',
-                                        borderColor: 'divider'
-                                    }}
-                                    aria-label="Book options"
-                                >
-                                    <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                    anchorEl={menuAnchor[book._id] || null}
-                                    open={Boolean(menuAnchor[book._id])}
-                                    onClose={() => handleCloseMenu(book._id)}
-                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                >
-                                    <MenuItem onClick={() => handleSetActiveBook(book._id)}>
-                                        <StarIcon sx={{ mr: 1, color: 'primary.main' }} />
-                                        Set as Active Book
-                                    </MenuItem>
-                                </Menu>
-                            </Box>
-                            {book.author && (
-                                <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                                    by {book.author}
-                                </Typography>
-                            )}
-                            {book.description && (
-                                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                    {book.description.length > 100
-                                        ? `${book.description.substring(0, 100)}...`
-                                        : book.description
-                                    }
-                                </Typography>
-                            )}
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                                {getReadingStatusChip(book)}
-                            </Box>
-                            <Typography variant="body2" color="text.secondary">
-                                {formatProgress(book.progress)}
-                            </Typography>
-                            {book.progress && (
-                                <Typography variant="body2" color="text.secondary">
-                                    Last read: {formatLastRead(book.progress)}
-                                </Typography>
-                            )}
-                            {book.progress && book.progress.bookProgress > 0 && (
-                                <LinearProgress
-                                    variant="determinate"
-                                    value={book.progress.bookProgress}
-                                    sx={{ mt: 1 }}
-                                />
-                            )}
-                        </CardContent>
-                        <CardActions>
-                            <Button
-                                variant="outlined"
-                                startIcon={<PlayArrowIcon />}
-                                onClick={() => book.progress ? handleContinueReading(book._id) : handleStartReading(book._id)}
-                                fullWidth
+                                Cancel
+                            </button>
+                            <button
+                                className="btn-danger"
+                                onClick={() => confirmRemoveBook(showDeleteConfirm)}
+                                disabled={deletingBook === showDeleteConfirm}
                             >
-                                {book.progress ? 'Continue' : 'Start Reading'}
-                            </Button>
-                        </CardActions>
-                    </Card>
-                ))}
-            </Box>
-        </Box>
+                                {deletingBook === showDeleteConfirm ? 'Removing...' : 'Remove Book'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }; 

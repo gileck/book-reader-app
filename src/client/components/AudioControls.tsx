@@ -90,7 +90,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             backgroundColor: '#1a1a1a',
             borderTop: '1px solid #333',
             padding: 2,
-            paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
+            paddingBottom: 'max(30px, env(safe-area-inset-bottom))',
             zIndex: 1000
         }}>
             {/* Chapter Title and Navigation */}
@@ -273,8 +273,9 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                 sx={{
                                     color: '#4caf50',
                                     position: 'absolute',
-                                    top: -2,
-                                    left: 14,
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
                                     zIndex: 1,
                                 }}
                             />
