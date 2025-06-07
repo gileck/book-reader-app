@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import {
     Box,
     Typography,
-    Card,
-    CardContent,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    ListItemButton,
     CircularProgress,
     Alert,
-    Chip,
-    Divider,
-    IconButton
+    Avatar,
+    IconButton,
+    Collapse,
+    useTheme,
+    alpha
 } from '@mui/material';
 import {
     History as HistoryIcon,
-    MenuBook as BookIcon,
-    Schedule as TimeIcon,
     PlayArrow as PlayIcon,
-    ExpandMore as ExpandMoreIcon,
-    AccessTime as ClockIcon
+    ExpandLess,
+    ExpandMore
 } from '@mui/icons-material';
 import { getReadingSessions } from '@/apis/readingLogs/client';
 import { ReadingSessionClient } from '@/apis/readingLogs/types';
@@ -31,7 +31,9 @@ export const ReadingHistory: React.FC = () => {
     const [sessions, setSessions] = useState<ReadingSessionClient[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [expandedSession, setExpandedSession] = useState<string | null>(null);
     const { navigate } = useRouter();
+    const theme = useTheme();
 
     useEffect(() => {
         loadReadingSessions();
@@ -61,22 +63,20 @@ export const ReadingHistory: React.FC = () => {
     };
 
     const handleContinueReading = (session: ReadingSessionClient) => {
-        // Navigate to the book with the chapter from the session
         navigate(`/?bookId=${session.bookId}&chapter=${session.chapterNumber}`);
     };
 
     const handlePlayFromChunk = (session: ReadingSessionClient, chunkIndex: number) => {
-        // Navigate to the specific chunk
         navigate(`/?bookId=${session.bookId}&chapter=${session.chapterNumber}&chunk=${chunkIndex}`);
     };
 
+    const handleExpandSession = (sessionId: string) => {
+        setExpandedSession(expandedSession === sessionId ? null : sessionId);
+    };
+
     const formatTime = (minutes: number): string => {
-        if (minutes < 1) {
-            return '< 1m';
-        }
-        if (minutes < 60) {
-            return `${Math.round(minutes)}m`;
-        }
+        if (minutes < 1) return '< 1m';
+        if (minutes < 60) return `${Math.round(minutes)}m`;
         const hours = Math.floor(minutes / 60);
         const mins = Math.round(minutes % 60);
         return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
@@ -90,155 +90,359 @@ export const ReadingHistory: React.FC = () => {
         if (diffDays === 0) return 'Today';
         if (diffDays === 1) return 'Yesterday';
         if (diffDays < 7) return `${diffDays} days ago`;
-        return sessionDate.toLocaleDateString();
+        return sessionDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
 
     const formatDateTime = (date: Date): string => {
-        return new Date(date).toLocaleString();
+        return new Date(date).toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+        });
+    };
+
+    const getBookInitials = (title: string): string => {
+        return title
+            .split(' ')
+            .slice(0, 2)
+            .map(word => word.charAt(0).toUpperCase())
+            .join('');
     };
 
     if (loading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
-                <CircularProgress />
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="200px"
+                sx={{ pt: 8 }}
+            >
+                <CircularProgress size={32} thickness={4} sx={{ color: '#007AFF' }} />
             </Box>
         );
     }
 
     return (
-        <Box p={3} maxWidth="1200px" mx="auto">
-            <Typography variant="h4" gutterBottom>
-                <HistoryIcon sx={{ mr: 1, verticalAlign: 'bottom' }} />
-                Reading Sessions
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" gutterBottom sx={{ mb: 3 }}>
-                Your detailed reading log showing all your reading sessions and individual sentences you&apos;ve listened to.
-            </Typography>
+        <Box sx={{ minHeight: '100vh', backgroundColor: theme.palette.background.default }}>
+            {/* iOS-style Large Title Header */}
+            <Box
+                sx={{
+                    pt: { xs: 3, sm: 4 },
+                    pb: 2,
+                    px: { xs: 2, sm: 3 },
+                    borderBottom: `0.5px solid ${alpha(theme.palette.divider, 0.2)}`
+                }}
+            >
+                <Box display="flex" alignItems="center" gap={1.5} mb={1}>
+                    <HistoryIcon sx={{ fontSize: 28, color: '#007AFF' }} />
+                    <Typography
+                        variant="h1"
+                        sx={{
+                            fontSize: { xs: 28, sm: 34 },
+                            fontWeight: 700,
+                            lineHeight: 1.1,
+                            color: theme.palette.text.primary,
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
+                        }}
+                    >
+                        Reading Sessions
+                    </Typography>
+                </Box>
+                <Typography
+                    sx={{
+                        fontSize: 15,
+                        color: theme.palette.text.secondary,
+                        fontWeight: 400,
+                        lineHeight: 1.33
+                    }}
+                >
+                    Your reading activity
+                </Typography>
+            </Box>
 
             {error && (
-                <Alert severity="error" sx={{ mb: 2 }}>
-                    {error}
-                </Alert>
+                <Box sx={{ p: 2 }}>
+                    <Alert
+                        severity="error"
+                        sx={{
+                            borderRadius: '8px',
+                            fontSize: '15px'
+                        }}
+                    >
+                        {error}
+                    </Alert>
+                </Box>
             )}
 
             {sessions.length === 0 ? (
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            No reading sessions yet
-                        </Typography>
-                        <Typography variant="body2" align="center" color="text.secondary" sx={{ mt: 1 }}>
-                            Start reading with audio to see your reading sessions here
-                        </Typography>
-                    </CardContent>
-                </Card>
-            ) : (
-                <Box display="flex" flexDirection="column" gap={2}>
-                    {sessions.map((session, index) => (
-                        <Card key={session.sessionId} elevation={2}>
-                            <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls={`session-${index}-content`}
-                                    id={`session-${index}-header`}
-                                >
-                                    <Box display="flex" flexDirection="column" width="100%">
-                                        {/* Session Header */}
-                                        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
-                                            <Box display="flex" alignItems="center" gap={1}>
-                                                <BookIcon color="primary" />
-                                                <Typography variant="h6" component="span">
-                                                    {session.bookTitle}
-                                                </Typography>
-                                            </Box>
-                                            <Box display="flex" alignItems="center" gap={1}>
-                                                <Chip
-                                                    icon={<ClockIcon />}
-                                                    label={formatDate(session.startTime)}
-                                                    size="small"
-                                                    variant="outlined"
-                                                />
-                                                <IconButton
-                                                    size="small"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleContinueReading(session);
-                                                    }}
-                                                    sx={{ color: 'primary.main' }}
-                                                >
-                                                    <PlayIcon />
-                                                </IconButton>
-                                            </Box>
-                                        </Box>
-
-                                        {/* Session Stats */}
-                                        <Box display="flex" alignItems="center" gap={2} mt={1}>
-                                            <Typography variant="body2" color="text.secondary">
-                                                Chapter {session.chapterNumber}: {session.chapterTitle}
-                                            </Typography>
-                                            <Chip
-                                                icon={<TimeIcon />}
-                                                label={formatTime(session.duration)}
-                                                size="small"
-                                                variant="filled"
-                                                sx={{ backgroundColor: '#e8f5e8' }}
-                                            />
-                                            <Chip
-                                                label={`${session.totalLines} sentences`}
-                                                size="small"
-                                                variant="outlined"
-                                            />
-                                        </Box>
-                                    </Box>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Box>
-                                        {/* Session Details */}
-                                        <Box display="flex" justifyContent="space-between" mb={2}>
-                                            <Typography variant="body2" color="text.secondary">
-                                                Started: {formatDateTime(session.startTime)}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary">
-                                                Ended: {formatDateTime(session.endTime)}
-                                            </Typography>
-                                        </Box>
-
-                                        <Divider sx={{ mb: 2 }} />
-
-                                        {/* Individual Sentences */}
-                                        <Typography variant="h6" gutterBottom>
-                                            Sentences Read ({session.logs.length})
-                                        </Typography>
-                                        <Box display="flex" flexDirection="column" gap={1} maxHeight="300px" overflow="auto">
-                                            {session.logs.map((log) => (
-                                                <Card key={log._id} variant="outlined" sx={{ p: 2 }}>
-                                                    <Box display="flex" justifyContent="space-between" alignItems="flex-start">
-                                                        <Box flex={1} mr={2}>
-                                                            <Typography variant="body2" sx={{ mb: 1 }}>
-                                                                {log.chunkText}
-                                                            </Typography>
-                                                            <Typography variant="caption" color="text.secondary">
-                                                                Sentence #{log.chunkIndex + 1} • {formatDateTime(log.timestamp)}
-                                                            </Typography>
-                                                        </Box>
-                                                        <IconButton
-                                                            size="small"
-                                                            onClick={() => handlePlayFromChunk(session, log.chunkIndex)}
-                                                            sx={{ color: 'primary.main' }}
-                                                        >
-                                                            <PlayIcon fontSize="small" />
-                                                        </IconButton>
-                                                    </Box>
-                                                </Card>
-                                            ))}
-                                        </Box>
-                                    </Box>
-                                </AccordionDetails>
-                            </Accordion>
-                        </Card>
-                    ))}
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        pt: 8,
+                        px: 3
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            fontSize: 17,
+                            fontWeight: 600,
+                            color: theme.palette.text.secondary,
+                            mb: 1
+                        }}
+                    >
+                        No Reading Sessions
+                    </Typography>
+                    <Typography
+                        sx={{
+                            fontSize: 15,
+                            color: theme.palette.text.secondary,
+                            lineHeight: 1.33
+                        }}
+                    >
+                        Start reading to see your sessions
+                    </Typography>
                 </Box>
+            ) : (
+                <List
+                    sx={{
+                        p: 0,
+                        '& .MuiListItem-root': {
+                            px: 0
+                        }
+                    }}
+                >
+                    {sessions.map((session, index) => (
+                        <React.Fragment key={session.sessionId}>
+                            {/* Main Session Item */}
+                            <ListItem
+                                disablePadding
+                                sx={{
+                                    borderBottom: index < sessions.length - 1 || expandedSession === session.sessionId
+                                        ? `0.5px solid ${alpha(theme.palette.divider, 0.2)}`
+                                        : 'none'
+                                }}
+                            >
+                                <ListItemButton
+                                    onClick={() => handleExpandSession(session.sessionId)}
+                                    sx={{
+                                        px: { xs: 2, sm: 3 },
+                                        py: 1.5,
+                                        minHeight: 60,
+                                        '&:hover': {
+                                            backgroundColor: alpha(theme.palette.action.hover, 0.08)
+                                        },
+                                        '&:active': {
+                                            backgroundColor: alpha(theme.palette.action.hover, 0.12)
+                                        }
+                                    }}
+                                >
+                                    <ListItemAvatar sx={{ minWidth: 52 }}>
+                                        <Avatar
+                                            sx={{
+                                                width: 36,
+                                                height: 36,
+                                                backgroundColor: '#007AFF',
+                                                fontSize: '14px',
+                                                fontWeight: 600,
+                                                color: 'white'
+                                            }}
+                                        >
+                                            {getBookInitials(session.bookTitle)}
+                                        </Avatar>
+                                    </ListItemAvatar>
+
+                                    <ListItemText
+                                        primary={
+                                            <Typography
+                                                sx={{
+                                                    fontSize: 17,
+                                                    fontWeight: 400,
+                                                    lineHeight: 1.29,
+                                                    color: theme.palette.text.primary,
+                                                    mb: 0.25,
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap'
+                                                }}
+                                            >
+                                                {session.bookTitle}
+                                            </Typography>
+                                        }
+                                        secondary={
+                                            <Typography
+                                                sx={{
+                                                    fontSize: 15,
+                                                    color: theme.palette.text.secondary,
+                                                    lineHeight: 1.33
+                                                }}
+                                            >
+                                                {formatDate(session.startTime)} • {formatTime(session.duration)} • {session.totalLines} lines
+                                            </Typography>
+                                        }
+                                    />
+
+                                    <Box display="flex" alignItems="center" gap={0.5}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleContinueReading(session);
+                                            }}
+                                            sx={{
+                                                color: '#007AFF',
+                                                minWidth: 32,
+                                                minHeight: 32,
+                                                '&:hover': {
+                                                    backgroundColor: alpha('#007AFF', 0.1)
+                                                }
+                                            }}
+                                        >
+                                            <PlayIcon sx={{ fontSize: 18 }} />
+                                        </IconButton>
+
+                                        {expandedSession === session.sessionId ?
+                                            <ExpandLess sx={{ color: theme.palette.text.secondary, fontSize: 20 }} /> :
+                                            <ExpandMore sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
+                                        }
+                                    </Box>
+                                </ListItemButton>
+                            </ListItem>
+
+                            {/* Expanded Session Details */}
+                            <Collapse in={expandedSession === session.sessionId} timeout="auto" unmountOnExit>
+                                <Box
+                                    sx={{
+                                        backgroundColor: alpha(theme.palette.action.hover, 0.03),
+                                        borderBottom: `0.5px solid ${alpha(theme.palette.divider, 0.2)}`
+                                    }}
+                                >
+                                    {/* Session Stats */}
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-around',
+                                            py: 2,
+                                            px: 3,
+                                            borderBottom: `0.5px solid ${alpha(theme.palette.divider, 0.1)}`
+                                        }}
+                                    >
+                                        <Box textAlign="center">
+                                            <Typography sx={{ fontSize: 22, fontWeight: 600, color: theme.palette.text.primary }}>
+                                                {session.totalLines}
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 11, color: theme.palette.text.secondary, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 500 }}>
+                                                Lines
+                                            </Typography>
+                                        </Box>
+                                        <Box textAlign="center">
+                                            <Typography sx={{ fontSize: 22, fontWeight: 600, color: theme.palette.text.primary }}>
+                                                {formatTime(session.duration)}
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 11, color: theme.palette.text.secondary, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 500 }}>
+                                                Duration
+                                            </Typography>
+                                        </Box>
+                                        <Box textAlign="center">
+                                            <Typography sx={{ fontSize: 22, fontWeight: 600, color: theme.palette.text.primary }}>
+                                                Ch. {session.chapterNumber}
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 11, color: theme.palette.text.secondary, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 500 }}>
+                                                Chapter
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+
+                                    {/* Chapter Info */}
+                                    <Box sx={{ px: 3, py: 2, borderBottom: `0.5px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                                        <Typography sx={{ fontSize: 15, fontWeight: 600, color: theme.palette.text.primary, mb: 0.5 }}>
+                                            {session.chapterTitle}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 13, color: theme.palette.text.secondary }}>
+                                            {formatDateTime(session.startTime)} - {formatDateTime(session.endTime)}
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Individual Sentences */}
+                                    <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
+                                        {session.logs.map((log, logIndex) => (
+                                            <ListItem
+                                                key={log._id}
+                                                disablePadding
+                                                sx={{
+                                                    borderBottom: logIndex < session.logs.length - 1
+                                                        ? `0.5px solid ${alpha(theme.palette.divider, 0.06)}`
+                                                        : 'none'
+                                                }}
+                                            >
+                                                <ListItemButton
+                                                    onClick={() => handlePlayFromChunk(session, log.chunkIndex)}
+                                                    sx={{
+                                                        px: 3,
+                                                        py: 1.5,
+                                                        alignItems: 'flex-start',
+                                                        '&:hover': {
+                                                            backgroundColor: alpha(theme.palette.action.hover, 0.06)
+                                                        }
+                                                    }}
+                                                >
+                                                    <Box
+                                                        sx={{
+                                                            minWidth: 28,
+                                                            height: 20,
+                                                            borderRadius: '4px',
+                                                            backgroundColor: alpha('#007AFF', 0.1),
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            mr: 2,
+                                                            mt: 0.25
+                                                        }}
+                                                    >
+                                                        <Typography sx={{ fontSize: 11, fontWeight: 600, color: '#007AFF' }}>
+                                                            {log.chunkIndex + 1}
+                                                        </Typography>
+                                                    </Box>
+
+                                                    <Box flex={1} minWidth={0}>
+                                                        <Typography
+                                                            sx={{
+                                                                fontSize: 15,
+                                                                lineHeight: 1.4,
+                                                                color: theme.palette.text.primary,
+                                                                mb: 0.5
+                                                            }}
+                                                        >
+                                                            {log.chunkText}
+                                                        </Typography>
+                                                        <Typography
+                                                            sx={{
+                                                                fontSize: 12,
+                                                                color: theme.palette.text.secondary
+                                                            }}
+                                                        >
+                                                            {formatDateTime(log.timestamp)}
+                                                        </Typography>
+                                                    </Box>
+
+                                                    <PlayIcon
+                                                        sx={{
+                                                            fontSize: 16,
+                                                            color: '#007AFF',
+                                                            ml: 1,
+                                                            mt: 0.5
+                                                        }}
+                                                    />
+                                                </ListItemButton>
+                                            </ListItem>
+                                        ))}
+                                    </Box>
+                                </Box>
+                            </Collapse>
+                        </React.Fragment>
+                    ))}
+                </List>
             )}
         </Box>
     );

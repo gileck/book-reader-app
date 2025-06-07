@@ -22,7 +22,8 @@ const generateWordAnimationCSS = (
     chunkIndex: number,
     timepoints: TTSTimepoint[],
     highlightColor: string,
-    wordSpeedOffset: number
+    wordSpeedOffset: number,
+    isPlaying: boolean = false
 ) => {
     const keyframesName = `word-highlight-chunk-${chunkIndex}`;
 
@@ -42,7 +43,7 @@ const generateWordAnimationCSS = (
         return `
             .chunk-${chunkIndex}-word-${wordIndex}.css-animated {
                 animation: ${keyframesName} ${safeDuration}s ease-out ${startTime}s both;
-                animation-play-state: var(--word-animation-state, paused);
+                animation-play-state: ${isPlaying ? 'running' : 'paused'};
             }
         `;
     }).join('\n');
@@ -110,13 +111,7 @@ const injectCSS = (css: string, id: string) => {
     document.head.appendChild(style);
 };
 
-const updateAnimationState = (isPlaying: boolean) => {
-    document.documentElement.style.setProperty(
-        '--word-animation-state',
-        isPlaying ? 'running' : 'paused'
-    );
-    // Note: chunk highlighting is now static (no animation state needed)
-};
+
 
 export const useAudioPlayback = (
     chapter: ChapterClient | null,
@@ -164,8 +159,19 @@ export const useAudioPlayback = (
 
     // Update CSS animation state when playing/paused
     useEffect(() => {
-        updateAnimationState(state.isPlaying);
-    }, [state.isPlaying]);
+        const currentAudioData = state.audioChunks[state.currentChunkIndex];
+        if (currentAudioData) {
+            // Regenerate CSS for current chunk with updated play state
+            const wordCSS = generateWordAnimationCSS(
+                state.currentChunkIndex,
+                currentAudioData.timepoints,
+                highlightColor || '#ff9800',
+                wordSpeedOffset,
+                state.isPlaying
+            );
+            injectCSS(wordCSS, `word-animation-chunk-${state.currentChunkIndex}`);
+        }
+    }, [state.isPlaying, state.currentChunkIndex, state.audioChunks, highlightColor, wordSpeedOffset]);
 
     // Audio generation effect
     useEffect(() => {
@@ -192,7 +198,8 @@ export const useAudioPlayback = (
                         index,
                         result.data.timepoints,
                         highlightColor || '#ff9800',
-                        wordSpeedOffset
+                        wordSpeedOffset,
+                        state.isPlaying
                     );
                     injectCSS(wordCSS, `word-animation-chunk-${index}`);
 

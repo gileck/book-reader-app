@@ -531,33 +531,81 @@ function mapChunksToChapters(allChunks, chapters) {
 
     // Find where each chapter actually starts in the chunks
     const chapterStartIndices = [];
+    const foundHeaders = [];
 
+    // First pass: find EARLIEST occurrence of each chapter header (ignore bibliography)
     for (let i = 0; i < chapters.length; i++) {
         const chapterTitle = chapters[i].title;
         let startIndex = -1;
+        let earliestChunkIndex = -1;
 
-        // Look for the chapter title in chunk content (header or text)
+        // Look for ALL occurrences and pick the earliest one (likely actual content, not references)
         for (let j = 0; j < allChunks.length; j++) {
             const chunk = allChunks[j];
             if ((chunk.type === 'header' && chunk.text === chapterTitle) ||
                 (chunk.type === 'text' && chunk.text.includes(chapterTitle))) {
-                startIndex = j;
-                console.log(`   📖 Found "${chapterTitle}" at chunk ${j} (page ${chunk.pageNumber}) as ${chunk.type}`);
-                break;
+
+                if (earliestChunkIndex === -1) {
+                    // First occurrence - likely the actual chapter start
+                    earliestChunkIndex = j;
+                    startIndex = j;
+                    console.log(`   📖 Found "${chapterTitle}" at chunk ${j} (page ${chunk.pageNumber}) as ${chunk.type}`);
+                } else {
+                    // Later occurrence - likely bibliography reference, ignore but log
+                    console.log(`   📚 Ignoring later occurrence of "${chapterTitle}" at chunk ${j} (page ${chunk.pageNumber}) - likely reference`);
+                }
             }
         }
 
-        // If we can't find the chapter title, estimate based on previous chapters
-        if (startIndex === -1 && i > 0) {
-            const averageChapterLength = Math.floor(allChunks.length / chapters.length);
-            startIndex = i * averageChapterLength;
-            console.log(`   ⚠️ Could not find "${chapterTitle}", estimating at chunk ${startIndex}`);
-        } else if (startIndex === -1 && i === 0) {
-            startIndex = 0;
-            console.log(`   📖 First chapter "${chapterTitle}" starts at beginning`);
+        if (startIndex !== -1) {
+            foundHeaders.push({ chapterIndex: i, chunkIndex: startIndex, title: chapterTitle });
         }
 
         chapterStartIndices.push(startIndex);
+    }
+
+    // Second pass: sort found headers by chunk position and fix missing chapters
+    if (foundHeaders.length > 0) {
+        // Sort headers by their chunk position (not config order)
+        foundHeaders.sort((a, b) => a.chunkIndex - b.chunkIndex);
+
+        const firstFoundChunkIndex = foundHeaders[0].chunkIndex;
+        const firstFoundChapterIndex = foundHeaders[0].chapterIndex;
+
+        console.log(`   📋 First header found: "${foundHeaders[0].title}" at chunk ${firstFoundChunkIndex}`);
+
+        // Find chapters that appear before the first found header in config order
+        const missingChaptersBeforeFirst = [];
+        for (let i = 0; i < firstFoundChapterIndex; i++) {
+            if (chapterStartIndices[i] === -1) {
+                missingChaptersBeforeFirst.push(i);
+            }
+        }
+
+        if (missingChaptersBeforeFirst.length > 0 && firstFoundChunkIndex > 0) {
+            // Distribute content before first found header among missing chapters
+            const chunksPerMissingChapter = Math.floor(firstFoundChunkIndex / missingChaptersBeforeFirst.length);
+
+            missingChaptersBeforeFirst.forEach((chapterIndex, position) => {
+                const startChunk = position * chunksPerMissingChapter;
+                chapterStartIndices[chapterIndex] = startChunk;
+                console.log(`   🔧 Fixed missing chapter "${chapters[chapterIndex].title}" at chunk ${startChunk}`);
+            });
+        }
+    }
+
+    // Handle remaining missing chapters
+    for (let i = 0; i < chapters.length; i++) {
+        if (chapterStartIndices[i] === -1) {
+            if (i === 0) {
+                chapterStartIndices[i] = 0;
+                console.log(`   📖 First chapter "${chapters[i].title}" starts at beginning`);
+            } else {
+                const averageChapterLength = Math.floor(allChunks.length / chapters.length);
+                chapterStartIndices[i] = i * averageChapterLength;
+                console.log(`   ⚠️ Could not find "${chapters[i].title}", estimating at chunk ${chapterStartIndices[i]}`);
+            }
+        }
     }
 
     // Create chapter mappings based on actual start positions
