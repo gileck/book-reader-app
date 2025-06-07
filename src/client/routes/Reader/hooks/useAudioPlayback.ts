@@ -444,7 +444,6 @@ export const useAudioPlayback = (
         // CSS handles highlighting for current chunk with loaded audio
         // Only provide fallback styling for chunks without loaded audio
         if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
-            const borderColor = sentenceHighlightColor === '#f8f9fa' ? '#e3f2fd' : (sentenceHighlightColor || '#e3f2fd');
             return {
                 backgroundColor: sentenceHighlightColor || '#f8f9fa',
                 borderRadius: '0 4px 4px 0',

@@ -1,5 +1,4 @@
 import { NavItem } from './layout/types';
-import HomeIcon from '@mui/icons-material/Home';
 import ChatIcon from '@mui/icons-material/Chat';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import HistoryIcon from '@mui/icons-material/History';
@@ -8,9 +7,8 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 export const navItems: NavItem[] = [
-  { path: '/', label: 'Home', icon: <HomeIcon /> },
+  { path: '/', label: 'Reader', icon: <MenuBookIcon /> },
   { path: '/book-library', label: 'Book Library', icon: <LibraryBooksIcon /> },
-  { path: '/reader', label: 'Reader', icon: <MenuBookIcon /> },
   { path: '/ai-chat', label: 'AI Chat', icon: <ChatIcon /> },
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
@@ -18,9 +16,8 @@ export const navItems: NavItem[] = [
 ];
 
 export const menuItems: NavItem[] = [
-  { path: '/', label: 'Home', icon: <HomeIcon /> },
+  { path: '/', label: 'Reader', icon: <MenuBookIcon /> },
   { path: '/book-library', label: 'Book Library', icon: <LibraryBooksIcon /> },
-  { path: '/reader', label: 'Reader', icon: <MenuBookIcon /> },
   { path: '/ai-chat', label: 'AI Chat', icon: <ChatIcon /> },
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },

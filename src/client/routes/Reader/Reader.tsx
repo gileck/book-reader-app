@@ -1,5 +1,6 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Box, Typography, CircularProgress, Paper } from '@mui/material';
+import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
 import { AudioControls } from '../../components/AudioControls';
@@ -13,6 +14,7 @@ import { BookQAChatSettings } from './components/BookQAChatSettings';
 import { CostApprovalDialog } from './components/CostApprovalDialog';
 
 export const Reader = () => {
+    const { navigate } = useRouter();
     const {
         book,
         chapter,
@@ -24,6 +26,13 @@ export const Reader = () => {
         navigation,
         progress
     } = useReader();
+
+    // Navigate to book library if no books found
+    useEffect(() => {
+        if (!loading && error === 'No books found') {
+            navigate('/book-library');
+        }
+    }, [loading, error, navigate]);
 
     // console.log('chapter', {chapter: chapter?.chapterNumber, loading});
 

@@ -11,8 +11,8 @@ import { createRoutes } from '../router';
 
 // Define routes
 export const routes = createRoutes({
-  '/': Home,
-  '/reader': Reader,
+  '/': Reader,
+  '/home': Home,
   '/book-library': BookLibrary,
   '/ai-chat': AIChat,
   '/bookmarks': Bookmarks,

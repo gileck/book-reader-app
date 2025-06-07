@@ -105,9 +105,9 @@ export const ReadingHistory: React.FC = () => {
 
     const handleContinueReading = (bookWithProgress: BookWithProgress) => {
         if (bookWithProgress.progress) {
-            navigate(`/reader?bookId=${bookWithProgress.book._id}&chapter=${bookWithProgress.progress.currentChapter}&chunk=${bookWithProgress.progress.currentChunk}`);
+            navigate(`/?bookId=${bookWithProgress.book._id}&chapter=${bookWithProgress.progress.currentChapter}&chunk=${bookWithProgress.progress.currentChunk}`);
         } else {
-            navigate(`/reader?bookId=${bookWithProgress.book._id}&chapter=1`);
+            navigate(`/?bookId=${bookWithProgress.book._id}&chapter=1`);
         }
     };
 

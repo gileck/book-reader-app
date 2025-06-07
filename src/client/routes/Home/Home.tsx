@@ -9,10 +9,12 @@ import {
   Button,
   CircularProgress
 } from '@mui/material';
+import { useRouter } from '../../router';
 import { getBooks } from '../../../apis/books/client';
 import type { BookClient } from '../../../apis/books/types';
 
 export const Home = () => {
+  const { navigate } = useRouter();
   const [books, setBooks] = useState<BookClient[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +41,7 @@ export const Home = () => {
   }, []);
 
   const handleStartReading = (bookId: string) => {
-    window.location.href = `/reader?bookId=${bookId}&chapterNumber=1`;
+    navigate(`/?bookId=${bookId}&chapterNumber=1`);
   };
 
   if (loading) {

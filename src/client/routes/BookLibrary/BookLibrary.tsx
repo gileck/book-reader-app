@@ -73,7 +73,7 @@ export const BookLibrary = () => {
     };
 
     const handleOpenBook = (bookId: string) => {
-        navigate(`/reader?bookId=${bookId}`);
+        navigate(`/?bookId=${bookId}`);
     };
 
     const handleSetActiveBook = (bookId: string) => {

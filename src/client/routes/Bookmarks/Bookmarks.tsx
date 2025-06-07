@@ -138,7 +138,7 @@ export const Bookmarks: React.FC = () => {
     };
 
     const handleGoToBookmark = (bookmark: BookmarkClient) => {
-        navigate(`/reader?bookId=${bookmark.bookId}&chapter=${bookmark.chapterNumber}&chunk=${bookmark.chunkIndex}`);
+        navigate(`/?bookId=${bookmark.bookId}&chapter=${bookmark.chapterNumber}&chunk=${bookmark.chunkIndex}`);
     };
 
     const formatDate = (dateString: string) => {
