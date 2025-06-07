@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { parsePdfWithImages } = require('../src/parse-pdf-book-with-images');
+const { parsePdfWithImages } = require('../parser/parse-pdf-book-with-images');
 
 /**
  * Test suite for PDF book parsing with images
