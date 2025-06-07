@@ -120,7 +120,7 @@ export const Reader = () => {
 
     const getLastSentences = () => {
         if (!chapter || audio.textChunks.length === 0) return '';
-        const contextCount = appSettings.contextSentencesCount;
+        const contextCount = bookQA.contextLines;
         const startIndex = Math.max(0, audio.currentChunkIndex - contextCount);
         const endIndex = Math.max(0, audio.currentChunkIndex);
 
@@ -286,6 +286,8 @@ export const Reader = () => {
                     currentChapterTitle={chapter?.title || ''}
                     currentChapterNumber={chapter?.chapterNumber || 1}
                     currentSentence={getCurrentSentence()}
+                    contextLines={bookQA.contextLines}
+                    onContextLinesChange={bookQA.handleContextLinesChange}
                 />
 
                 {/* Book Q&A Chat Settings */}

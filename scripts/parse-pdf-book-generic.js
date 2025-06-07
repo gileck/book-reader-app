@@ -148,8 +148,71 @@ function chunkText(text, minWords = 5, maxWords = 15) {
     return mergedChunks;
 }
 
+/**
+ * Normalize text for fuzzy matching
+ */
+function normalizeText(text) {
+    return text
+        .replace(/\s+/g, ' ')           // Multiple spaces → single space
+        .replace(/[\u201C\u201D]/g, '"') // Smart quotes → straight quotes (U+201C, U+201D)
+        .replace(/[\u2018\u2019]/g, "'") // Smart apostrophes → straight (U+2018, U+2019)
+        .replace(/[\u2033\u2036]/g, '"') // Additional smart quotes (U+2033, U+2036)
+        .replace(/\\/g, '')             // Remove escape characters from config
+        .replace(/\s+(ix|xi{1,3}|[0-9]+)\s*$/i, '') // Remove page numbers at end
+        .trim();
+}
+
+/**
+ * Fuzzy match PDF line against config title
+ */
+function fuzzyMatch(pdfLine, configTitle) {
+    const normalizedLine = normalizeText(pdfLine);
+    const normalizedTitle = normalizeText(configTitle);
+
+    // Check exact match after normalization
+    if (normalizedLine === normalizedTitle) {
+        return true;
+    }
+
+    // Check if line starts with the title (handles joined content)
+    if (normalizedLine.startsWith(normalizedTitle)) {
+        return true;
+    }
+
+    // Check if title is contained in line (handles split lines)
+    if (normalizedLine.includes(normalizedTitle) && normalizedTitle.length > 10) {
+        return true;
+    }
+
+    // Handle split titles: check if line ends with most of the title
+    // Example: "e Search for Emotion's \"Fingerprints\"" should match "The Search for Emotion's \"Fingerprints\""
+    if (normalizedTitle.length > 10) {
+        // Try removing first 1-3 characters from title to handle split
+        for (let skip = 1; skip <= 3; skip++) {
+            const partialTitle = normalizedTitle.substring(skip);
+            if (partialTitle.length > 8 && normalizedLine === partialTitle) {
+                return true;
+            }
+            // Also check if line starts with partial title
+            if (partialTitle.length > 8 && normalizedLine.startsWith(partialTitle)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 // Generic chapter detection function
 function detectChapters(text, config) {
+    // DEBUG: Output raw text to file for inspection
+    if (process.env.DEBUG_TEXT) {
+        const fs = require('fs');
+        const debugPath = process.env.DEBUG_TEXT;
+        fs.writeFileSync(debugPath, text, 'utf8');
+        console.log(`DEBUG: Raw PDF text saved to ${debugPath}`);
+    }
+
     const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
     const chapters = [];
     let currentChapter = null;
@@ -161,49 +224,120 @@ function detectChapters(text, config) {
     const excludePattern = config.excludePatterns.length > 0 ?
         new RegExp(config.excludePatterns.join('|'), 'i') : null;
 
-    // For explicit chapters, find all occurrences and use the ones with actual content
+    // Auto-detect content start by finding "Contents" page and skipping the entire TOC
+    let contentStartIndex = 0;
+    for (let i = 0; i < Math.min(lines.length, 200); i++) { // Check first 200 lines
+        const line = lines[i].toLowerCase();
+        if (line.includes('contents') || line.includes('table of contents')) {
+            // Skip much further to get past the entire table of contents
+            // Look for the first substantial content after TOC
+            contentStartIndex = i + 50; // Start looking from +50 lines after Contents
+
+            // Find first line that looks like actual chapter content (not TOC entry)
+            for (let j = contentStartIndex; j < Math.min(lines.length, i + 200); j++) {
+                const candidateLine = lines[j];
+
+                // Look for lines that start chapter content (not TOC entries)
+                // TOC entries are usually short and have page numbers nearby
+                // Real content starts with substantial text
+                if (candidateLine.length > 50 &&
+                    !candidateLine.match(/^\d+$/) && // Not just a page number
+                    !candidateLine.match(/^[A-Z][a-z\s]{5,40}$/)) { // Not a short title line
+                    contentStartIndex = j - 5; // Start a bit before to catch chapter title
+                    break;
+                }
+            }
+
+            console.log(`DEBUG: Found "Contents" at line ${i}, starting chapter detection from line ${contentStartIndex}`);
+
+            // DEBUG: Show some lines around the content start
+            if (process.env.DEBUG_TEXT) {
+                console.log(`DEBUG: Lines around content start:`);
+                for (let j = Math.max(0, contentStartIndex - 5); j < Math.min(lines.length, contentStartIndex + 20); j++) {
+                    const prefix = j === contentStartIndex ? '>>> ' : '    ';
+                    console.log(`${prefix}Line ${j}: "${lines[j]}"`);
+                }
+            }
+            break;
+        }
+    }
+
+    // For explicit chapters, find first occurrence of each chapter name after content start
     if (config.chapterNames && config.chapterNames.length > 0) {
         let chapterOccurrences = [];
+        let usedChapterTitles = new Set();
 
-        // Find all occurrences of chapter names
-        for (let i = 0; i < lines.length; i++) {
+        // Find first occurrence of each chapter name after content start using fuzzy matching
+        for (let i = contentStartIndex; i < lines.length; i++) {
             const line = lines[i];
-            if (config.chapterNames.includes(line)) {
-                chapterOccurrences.push({ line: line, index: i });
+
+            // Find matching title using fuzzy matching
+            const matchingTitle = config.chapterNames.find(title => fuzzyMatch(line, title));
+
+            if (matchingTitle && !usedChapterTitles.has(matchingTitle)) {
+                chapterOccurrences.push({ line: matchingTitle, index: i });
+                usedChapterTitles.add(matchingTitle);
+
+                if (process.env.DEBUG_TEXT) {
+                    console.log(`DEBUG: Fuzzy matched line ${i}: "${line}"`);
+                    console.log(`  → Matched config title: "${matchingTitle}"`);
+                    console.log(`  → Normalized line: "${normalizeText(line)}"`);
+                    console.log(`  → Normalized title: "${normalizeText(matchingTitle)}"`);
+                } else {
+                    console.log(`DEBUG: Found first occurrence of "${matchingTitle}" at line ${i}`);
+                }
+            }
+
+            // DEBUG: Show what we're looking for vs what we found (only for potential matches)
+            else if (process.env.DEBUG_TEXT && config.chapterNames.some(title =>
+                normalizeText(line).includes(normalizeText(title).substring(0, 15)))) {
+                console.log(`DEBUG: Near-miss line ${i}: "${line}"`);
+                config.chapterNames.forEach(title => {
+                    const fuzzy = fuzzyMatch(line, title);
+                    const used = usedChapterTitles.has(title);
+                    console.log(`  vs "${title}": fuzzy=${fuzzy}, used=${used}`);
+                });
             }
         }
 
-        console.log(`DEBUG: Found ${chapterOccurrences.length} chapter occurrences`);
-        chapterOccurrences.forEach(occ => {
-            console.log(`  ${occ.line} at line ${occ.index}`);
-        });
+        console.log(`DEBUG: Found ${chapterOccurrences.length} unique chapter occurrences after content start`);
 
-        // Filter out table of contents entries - look for chapters with substantial content following them
+        // Validate chapters have content following them (simpler validation since we start after TOC)
         let realChapters = [];
         for (const occ of chapterOccurrences) {
             let contentLines = 0;
-            let contentLength = 0;
 
-            // Check the next 50 lines for substantial content
-            for (let j = occ.index + 1; j < Math.min(lines.length, occ.index + 50); j++) {
+            // Check the next 20 lines for content (reduced from 50 since we start after TOC)
+            for (let j = occ.index + 1; j < Math.min(lines.length, occ.index + 20); j++) {
                 const nextLine = lines[j];
 
-                // Stop if we hit another chapter name
-                if (config.chapterNames.includes(nextLine)) {
+                // Stop if we hit another chapter name (using fuzzy matching)
+                const isNextChapter = config.chapterNames.some(title => fuzzyMatch(nextLine, title));
+                if (isNextChapter) {
                     break;
                 }
 
                 // Count substantial content lines
                 if (nextLine.length > 20 && !/^\d+$/.test(nextLine)) {
                     contentLines++;
-                    contentLength += nextLine.length;
                 }
             }
 
-            console.log(`DEBUG: Chapter "${occ.line}" at line ${occ.index} has ${contentLines} content lines, ${contentLength} characters`);
+            console.log(`DEBUG: Chapter "${occ.line}" at line ${occ.index} has ${contentLines} content lines`);
 
-            // Only consider it a real chapter if it has substantial content following
-            if (contentLines > 5 && contentLength > 200) {
+            // DEBUG: Show what content was found/rejected
+            if (process.env.DEBUG_TEXT) {
+                for (let j = occ.index + 1; j < Math.min(lines.length, occ.index + 10); j++) {
+                    const nextLine = lines[j];
+                    const isNextChapter = config.chapterNames.some(title => fuzzyMatch(nextLine, title));
+                    const isContent = nextLine.length > 20 && !/^\d+$/.test(nextLine);
+                    console.log(`  Line ${j}: isNextChapter=${isNextChapter}, isContent=${isContent}, text="${nextLine.substring(0, 50)}..."`);
+                    if (isNextChapter) break;
+                }
+            }
+
+            // Much simpler validation - just need some content after chapter title
+            if (contentLines >= 3) {
                 realChapters.push(occ);
             }
         }

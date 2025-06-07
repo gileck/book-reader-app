@@ -39,6 +39,8 @@ interface BookQAPanelProps {
     currentChapterTitle: string;
     currentChapterNumber: number;
     currentSentence: string;
+    contextLines: number;
+    onContextLinesChange: (lines: number) => void;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -64,7 +66,9 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     currentBookTitle,
     currentChapterTitle,
     currentChapterNumber,
-    currentSentence
+    currentSentence,
+    contextLines,
+    onContextLinesChange
 }) => {
     const [question, setQuestion] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);

@@ -12,6 +12,65 @@ const pdfjsLib = require('pdfjs-dist/legacy/build/pdf');
 pdfjsLib.GlobalWorkerOptions.workerSrc = false;
 
 /**
+ * Auto-detect content start page by finding "Contents" or "Table of Contents"
+ */
+async function detectContentStartPage(pdfPath) {
+    console.log('🔍 Auto-detecting content start page...');
+
+    const pdfBuffer = fs.readFileSync(pdfPath);
+    const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
+
+    for (let pageNum = 1; pageNum <= Math.min(pdf.numPages, 20); pageNum++) { // Check first 20 pages
+        try {
+            const page = await pdf.getPage(pageNum);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ').toLowerCase();
+
+            // Look for table of contents indicators
+            if (pageText.includes('contents') || pageText.includes('table of contents')) {
+                console.log(`   📖 Found "Contents" on page ${pageNum}`);
+
+                // Skip much further to get past the entire table of contents
+                // Look for the first substantial content after TOC
+                let contentStartPage = pageNum + 8; // Start looking from +8 pages after Contents
+
+                // Find first page that looks like actual chapter content (not TOC entry)
+                for (let testPageNum = contentStartPage; testPageNum <= Math.min(pdf.numPages, pageNum + 30); testPageNum++) {
+                    try {
+                        const testPage = await pdf.getPage(testPageNum);
+                        const testTextContent = await testPage.getTextContent();
+                        const testPageText = testTextContent.items.map(item => item.str).join(' ');
+
+                        // Look for pages that have substantial content (not just TOC entries)
+                        // TOC entries are usually short and have page numbers nearby
+                        // Real content starts with substantial paragraphs
+                        const hasSubstantialContent = testPageText.length > 500; // Substantial text
+                        const hasLongSentences = testPageText.includes('.') && testPageText.split('.').some(sentence => sentence.length > 100);
+                        const notJustPageNumbers = !/^\s*\d+\s*$/.test(testPageText.trim());
+
+                        if (hasSubstantialContent && hasLongSentences && notJustPageNumbers) {
+                            contentStartPage = testPageNum;
+                            console.log(`   📖 Found substantial content starting at page ${contentStartPage}`);
+                            break;
+                        }
+                    } catch (testError) {
+                        console.log(`   ⚠️ Error testing page ${testPageNum}: ${testError.message}`);
+                    }
+                }
+
+                console.log(`   📖 Starting content parsing from page ${contentStartPage}`);
+                return contentStartPage;
+            }
+        } catch (error) {
+            console.log(`   ⚠️ Error scanning page ${pageNum}: ${error.message}`);
+        }
+    }
+
+    console.log('   ⚠️ No "Contents" page found, using default start from page 1');
+    return 1; // Fallback to page 1
+}
+
+/**
  * Extract text content page by page with PDF.js, filtered by chapters
  */
 async function extractPageAwareText(pdfPath, chapters) {
@@ -20,11 +79,14 @@ async function extractPageAwareText(pdfPath, chapters) {
     const pdfBuffer = fs.readFileSync(pdfPath);
     const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
 
+    // Auto-detect content start page
+    const contentStartPage = await detectContentStartPage(pdfPath);
+
     if (chapters.length === 0) {
         console.log('   ⚠️ No chapters provided, extracting all text');
-        // Fallback: extract all pages if no chapters provided
+        // Fallback: extract all pages if no chapters provided, starting from content start
         const pageData = [];
-        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        for (let pageNum = contentStartPage; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
             const textContent = await page.getTextContent();
             const pageText = textContent.items
@@ -60,16 +122,13 @@ async function extractPageAwareText(pdfPath, chapters) {
         return pageData;
     }
 
-    // Find the first chapter's starting position by looking for its title
-    const firstChapterTitle = chapters[0].title;
-    console.log(`   📍 Looking for first chapter: "${firstChapterTitle}"`);
+    // Start extraction from the detected content start page
+    console.log(`   📍 Starting extraction from detected content start page: ${contentStartPage}`);
 
-    // Extract page by page and find which page contains the first chapter
     const pageData = [];
-    let chapterStartPage = -1;
-    let pageOffset = 0; // Will be calculated based on where first chapter actually appears
+    let pageOffset = contentStartPage - 1; // Adjust page numbering based on content start
 
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    for (let pageNum = contentStartPage; pageNum <= pdf.numPages; pageNum++) {
         const page = await pdf.getPage(pageNum);
         const textContent = await page.getTextContent();
         const pageText = textContent.items
@@ -91,39 +150,22 @@ async function extractPageAwareText(pdfPath, chapters) {
             // Also remove common page artifacts
             cleanedText = cleanedText.replace(/^page\s+\d+\s*/i, '');
 
-            // Check if this page contains the first chapter
-            if (chapterStartPage === -1 && cleanedText.includes(firstChapterTitle)) {
-                chapterStartPage = pageNum;
+            // Use the corrected page number (subtract offset if text has page numbers)
+            const correctedPageNumber = textPageNumber || (pageNum - pageOffset);
 
-                // Calculate page offset based on the actual page number in the text
-                if (textPageNumber) {
-                    pageOffset = pageNum - textPageNumber;
-                    console.log(`   📖 First chapter starts on PDF page ${pageNum}, book page ${textPageNumber} (offset: ${pageOffset})`);
-                } else {
-                    console.log(`   📖 First chapter starts on page ${pageNum} (no page number in text)`);
-                }
-            }
+            pageData.push({
+                pageNumber: correctedPageNumber,
+                text: cleanedText.trim(),
+                wordCount: cleanedText.trim().split(/\s+/).filter(w => w.length > 0).length
+            });
 
-            // Only include pages from the first chapter onwards
-            if (chapterStartPage !== -1 && pageNum >= chapterStartPage) {
-                // Use the corrected page number (subtract offset)
-                const correctedPageNumber = textPageNumber || (pageNum - pageOffset);
-
-                pageData.push({
-                    pageNumber: correctedPageNumber,
-                    text: cleanedText.trim(),
-                    wordCount: cleanedText.trim().split(/\s+/).filter(w => w.length > 0).length
-                });
-                if (pageNum % 50 === 0) {
-                    console.log(`   Processing chapter text from PDF page ${pageNum} (book page ${correctedPageNumber})/${pdf.numPages}`);
-                }
-            } else if (pageNum % 50 === 0) {
-                console.log(`   Skipping pre-chapter PDF page ${pageNum}/${pdf.numPages}`);
+            if (pageNum % 50 === 0) {
+                console.log(`   Processing chapter text from PDF page ${pageNum} (book page ${correctedPageNumber})/${pdf.numPages}`);
             }
         }
     }
 
-    console.log(`✅ Extracted chapter text from ${pageData.length} pages (starting from page ${chapterStartPage})`);
+    console.log(`✅ Extracted chapter text from ${pageData.length} pages (starting from content page ${contentStartPage})`);
     return pageData;
 }
 
@@ -735,4 +777,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = { parsePdfWithImages, extractPageAwareText, extractImages }; 
+module.exports = { parsePdfWithImages, extractPageAwareText, extractImages, detectContentStartPage }; 

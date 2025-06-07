@@ -19,6 +19,7 @@ interface UseBookQAState {
     messages: ChatMessage[];
     selectedModelId: string;
     isSettingsOpen: boolean;
+    contextLines: number;
 }
 
 const DEFAULT_MODEL_ID = 'gemini-1.5-flash-8b'; // Default model
@@ -37,7 +38,8 @@ export const useBookQA = ({
         isLoading: false,
         messages: [],
         selectedModelId: DEFAULT_MODEL_ID,
-        isSettingsOpen: false
+        isSettingsOpen: false,
+        contextLines: 3
     });
 
     // Load conversation history and settings from localStorage on mount
@@ -58,11 +60,13 @@ export const useBookQA = ({
             const availableModels = getAllModels();
             const modelExists = availableModels.some(model => model.id === settings.selectedModelId);
             const selectedModelId = modelExists ? settings.selectedModelId : DEFAULT_MODEL_ID;
+            const contextLines = settings.contextLines || 3;
 
             setState(prev => ({
                 ...prev,
                 messages,
-                selectedModelId
+                selectedModelId,
+                contextLines
             }));
         } catch (error) {
             console.error('Error loading conversation/settings from localStorage:', error);
@@ -81,16 +85,19 @@ export const useBookQA = ({
         }
     }, [state.messages, bookId]);
 
-    // Save settings to localStorage whenever selectedModelId changes
+    // Save settings to localStorage whenever selectedModelId or contextLines changes
     useEffect(() => {
         const settingsKey = 'bookQA_settings';
         try {
-            const settings = { selectedModelId: state.selectedModelId };
+            const settings = {
+                selectedModelId: state.selectedModelId,
+                contextLines: state.contextLines
+            };
             localStorage.setItem(settingsKey, JSON.stringify(settings));
         } catch (error) {
             console.error('Error saving settings to localStorage:', error);
         }
-    }, [state.selectedModelId]);
+    }, [state.selectedModelId, state.contextLines]);
 
     const updateState = useCallback((partialState: Partial<UseBookQAState>) => {
         setState(prev => ({ ...prev, ...partialState }));
@@ -120,6 +127,10 @@ export const useBookQA = ({
         updateState({ selectedModelId: modelId });
     }, [updateState]);
 
+    const handleContextLinesChange = useCallback((lines: number) => {
+        updateState({ contextLines: lines });
+    }, [updateState]);
+
     const clearHistory = useCallback(() => {
         const conversationKey = `bookQA_conversation_${bookId}`;
         try {
@@ -132,6 +143,11 @@ export const useBookQA = ({
 
     const submitQuestion = useCallback(async (question: string) => {
         if (!question.trim() || state.isLoading) return;
+
+        // Auto-expand chat when submitting question
+        if (!state.isOpen) {
+            updateState({ isOpen: true });
+        }
 
         // Add user message immediately
         const userMessage: ChatMessage = {
@@ -231,6 +247,7 @@ export const useBookQA = ({
         state.isLoading,
         state.messages,
         state.selectedModelId,
+        state.isOpen,
         bookId,
         bookTitle,
         chapterNumber,
@@ -248,6 +265,7 @@ export const useBookQA = ({
         messages: state.messages,
         selectedModelId: state.selectedModelId,
         isSettingsOpen: state.isSettingsOpen,
+        contextLines: state.contextLines,
 
         // Actions
         togglePanel,
@@ -256,6 +274,7 @@ export const useBookQA = ({
         openSettings,
         closeSettings,
         handleModelChange,
+        handleContextLinesChange,
         clearHistory,
         submitQuestion
     };
