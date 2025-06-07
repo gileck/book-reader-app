@@ -7,6 +7,7 @@ import { chaptersApiHandlers } from "./chapters/server";
 import { ttsApiHandlers } from "./tts/server";
 import { bookmarksApiHandlers } from "./bookmarks/server";
 import { readingProgressApis } from "./readingProgress/server";
+import { readingLogsApis } from "./readingLogs/server";
 import * as userSettings from "./userSettings/server";
 import { API_GET_USER_SETTINGS, API_UPDATE_USER_SETTINGS } from "./userSettings/index";
 import * as bookContentChat from "./bookContentChat/server";
@@ -63,6 +64,16 @@ const typedReadingProgressApiHandlers = Object.entries(readingProgressApis).redu
   {} as ApiHandlers
 );
 
+const typedReadingLogsApiHandlers = Object.entries(readingLogsApis).reduce(
+  (acc, [key, handler]) => {
+    acc[key] = {
+      process: handler as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
+    };
+    return acc;
+  },
+  {} as ApiHandlers
+);
+
 export const apiHandlers: ApiHandlers = {
   [chat.name]: { process: chat.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [clearCache.name]: { process: clearCache.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
@@ -80,6 +91,7 @@ export const apiHandlers: ApiHandlers = {
   ...typedTtsApiHandlers,
   ...typedBookmarksApiHandlers,
   ...typedReadingProgressApiHandlers,
+  ...typedReadingLogsApiHandlers,
 };
 
 

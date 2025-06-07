@@ -81,6 +81,56 @@ function validateBookStructure(data) {
     console.log('✅ Book structure validation passed');
 }
 
+/**
+ * Comprehensive chapter validation - tests exact order, content, and completeness
+ * THIS IS WHAT MAKES TESTS ACTUALLY FAIL WHEN THEY SHOULD
+ */
+function validateChapterSequence(actualChapters, expectedChapterTitles, bookName) {
+    console.log('🔍 Validating chapter sequence and content...');
+
+    // 1. Exact count matching
+    if (actualChapters.length !== expectedChapterTitles.length) {
+        throw new Error(`Chapter count mismatch: expected ${expectedChapterTitles.length}, got ${actualChapters.length}`);
+    }
+
+    // 2. Exact order and title matching
+    for (let i = 0; i < expectedChapterTitles.length; i++) {
+        const expectedTitle = expectedChapterTitles[i];
+        const actualChapter = actualChapters[i];
+
+        if (actualChapter.title !== expectedTitle) {
+            throw new Error(`Chapter order mismatch at position ${i}: expected "${expectedTitle}", got "${actualChapter.title}"`);
+        }
+
+        console.log(`✅ Chapter ${i + 1}: "${actualChapter.title}" (position correct)`);
+    }
+
+    // 3. Content completeness validation - THIS IS THE KEY FIX
+    for (let i = 0; i < actualChapters.length; i++) {
+        const chapter = actualChapters[i];
+
+        // Check wordCount > 0
+        if (!chapter.wordCount || chapter.wordCount <= 0) {
+            throw new Error(`Chapter "${chapter.title}" has no content (wordCount: ${chapter.wordCount || 0})`);
+        }
+
+        // Check content.chunks is not empty
+        if (!chapter.content.chunks || chapter.content.chunks.length === 0) {
+            throw new Error(`Chapter "${chapter.title}" has empty chunks array`);
+        }
+
+        // Check for substantial text content (at least one text chunk)
+        const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
+        if (textChunks.length === 0) {
+            throw new Error(`Chapter "${chapter.title}" has no text content (only ${chapter.content.chunks.length} non-text chunks)`);
+        }
+
+        console.log(`✅ Chapter "${chapter.title}": ${chapter.wordCount} words, ${chapter.content.chunks.length} chunks (${textChunks.length} text)`);
+    }
+
+    console.log('✅ Chapter sequence and content validation passed');
+}
+
 function validateBookAgainstConfig(outputFile, configFile) {
     console.log(`\n🧪 Validating book against config...`);
     console.log(`📄 Output: ${path.basename(outputFile)}`);
@@ -222,31 +272,10 @@ function validateBook(bookName, outputFile, configFile) {
     console.log(`📖 Title: "${data.book.title}"`);
     console.log(`👤 Author: ${data.book.author}`);
 
-    // Test chapter count
-    const actualChapters = data.chapters.length;
-    console.log(`📚 Chapters: ${actualChapters}/${expected.expectedChapters}`);
+    // Comprehensive chapter validation (order, content, completeness)
+    console.log(`📚 Chapters: ${data.chapters.length}/${expected.expectedChapters}`);
 
-    if (actualChapters !== expected.expectedChapters) {
-        throw new Error(`Chapter count mismatch: expected ${expected.expectedChapters}, got ${actualChapters}`);
-    }
-
-    // Test chapter titles
-    const actualTitles = data.chapters.map(ch => ch.title);
-    const foundTitles = [];
-    const missingTitles = [];
-
-    for (const expectedTitle of expected.expectedChapterTitles) {
-        if (actualTitles.includes(expectedTitle)) {
-            foundTitles.push(expectedTitle);
-        } else {
-            missingTitles.push(expectedTitle);
-        }
-    }
-
-    // STRICT VALIDATION - Fail if any chapters are missing
-    if (missingTitles.length > 0) {
-        throw new Error(`Missing ${missingTitles.length} expected chapters: ${missingTitles.map(t => `"${t}"`).join(', ')}`);
-    }
+    validateChapterSequence(data.chapters, expected.expectedChapterTitles, bookName);
 
     // Test images
     const totalImages = data.chapters.reduce((sum, ch) =>
@@ -281,14 +310,14 @@ function validateBook(bookName, outputFile, configFile) {
         console.log('✅ Images folder path is relative and all chunks have imageName');
     }
 
-    console.log(`✅ Found all ${foundTitles.length} expected chapters!`);
+    console.log(`✅ All ${expected.expectedChapters} expected chapters validated!`);
     console.log(`📊 Success Rate: 100%`);
 
     return {
         bookName,
-        actualChapters,
+        actualChapters: data.chapters.length,
         expectedChapters: expected.expectedChapters,
-        foundTitles: foundTitles.length,
+        foundTitles: expected.expectedChapters,
         missingTitles: 0,
         successRate: 100,
         totalImages,
@@ -476,8 +505,8 @@ function showHelp() {
 Usage: node parser.test.js [command] [options]
 
 Commands:
-  config          Run validation tests using config files (config-based validation)
-  strict          Run strict validation tests reading expectations from config files
+  strict          Run strict validation tests (DEFAULT - comprehensive chapter validation)
+  config          Run config-based validation tests with fallback (legacy mode)
   help, --help    Show this help message
 
 Options:
@@ -485,8 +514,9 @@ Options:
   --output-file   Path to specific output file for single test
 
 Examples:
-  node parser.test.js config
-  node parser.test.js strict
+  node parser.test.js              # Runs strict validation (default)
+  node parser.test.js strict       # Explicitly run strict validation  
+  node parser.test.js config       # Run legacy config-based validation
   node parser.test.js config --book-folder ../files/MyBook/ --output-file ../files/MyBook/output.json
 
 Config file format (source of truth for expected values):
@@ -503,8 +533,9 @@ Config file format (source of truth for expected values):
   }
 }
 
-Note: Both 'config' and 'strict' modes now read expected values from config files.
-      The config file is the single source of truth for validation.
+Note: Strict validation (default) ensures comprehensive chapter quality.
+      Config mode provides legacy validation with fallback behavior.
+      Both modes read expected values from config files as source of truth.
 `);
 }
 
@@ -534,8 +565,8 @@ if (require.main === module) {
         } else if (command === 'strict') {
             runStrictValidationTests();
         } else {
-            console.log('🔄 Running default validation tests (config-based with fallback)...');
-            runValidationTests();
+            console.log('🔄 Running default validation tests (strict)...');
+            runStrictValidationTests();
         }
     } catch (error) {
         console.error('❌ Test execution failed:', error.message);
@@ -547,6 +578,7 @@ module.exports = {
     validateBook,
     validateBookAgainstConfig,
     validateBookStructure,
+    validateChapterSequence,
     runValidationTests,
     runStrictValidationTests,
     testParser,

@@ -4,131 +4,97 @@ import {
     Typography,
     Card,
     CardContent,
-    CardActions,
-    Button,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
     CircularProgress,
     Alert,
     Chip,
-    LinearProgress
+    Divider,
+    IconButton
 } from '@mui/material';
 import {
     History as HistoryIcon,
     MenuBook as BookIcon,
     Schedule as TimeIcon,
-    TrendingUp as ProgressIcon
+    PlayArrow as PlayIcon,
+    ExpandMore as ExpandMoreIcon,
+    AccessTime as ClockIcon
 } from '@mui/icons-material';
-import { getBooks } from '@/apis/books/client';
-import { getReadingProgress, getReadingStats } from '@/apis/readingProgress/client';
-import { BookClient } from '@/apis/books/types';
-import { ReadingProgressClient, ReadingProgressStats } from '@/apis/readingProgress/types';
+import { getReadingSessions } from '@/apis/readingLogs/client';
+import { ReadingSessionClient } from '@/apis/readingLogs/types';
 import { useRouter } from '../../router';
 
-interface BookWithProgress {
-    book: BookClient;
-    progress?: ReadingProgressClient;
-    stats?: ReadingProgressStats;
-}
+const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
 
 export const ReadingHistory: React.FC = () => {
-    const [booksWithProgress, setBooksWithProgress] = useState<BookWithProgress[]>([]);
+    const [sessions, setSessions] = useState<ReadingSessionClient[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const { navigate } = useRouter();
 
     useEffect(() => {
-        loadReadingHistory();
+        loadReadingSessions();
     }, []);
 
-    const loadReadingHistory = async () => {
+    const loadReadingSessions = async () => {
         try {
             setLoading(true);
+            setError(null);
 
-            // Get all books
-            const booksResult = await getBooks({});
-            if (!booksResult.data?.books) {
-                setError('Failed to load books');
-                return;
-            }
-
-            const books = booksResult.data.books;
-            const booksWithProgressData: BookWithProgress[] = [];
-
-            // For each book, try to get reading progress
-            for (const book of books) {
-                const bookWithProgress: BookWithProgress = { book };
-
-                try {
-                    // Get reading progress for this book
-                    const progressResult = await getReadingProgress({
-                        userId: 'user-1', // TODO: Get actual user ID from context
-                        bookId: book._id
-                    });
-
-                    if (progressResult.data?.readingProgress) {
-                        bookWithProgress.progress = progressResult.data.readingProgress;
-
-                        // Also get detailed stats
-                        const statsResult = await getReadingStats({
-                            userId: 'user-1', // TODO: Get actual user ID from context
-                            bookId: book._id
-                        });
-
-                        if (statsResult.data?.stats) {
-                            bookWithProgress.stats = statsResult.data.stats;
-                        }
-                    }
-                } catch (err) {
-                    // Continue if we can't get progress for this book
-                    console.warn(`Failed to get progress for book ${book._id}:`, err);
-                }
-
-                booksWithProgressData.push(bookWithProgress);
-            }
-
-            // Sort by last read date (books with progress first, then by last read)
-            booksWithProgressData.sort((a, b) => {
-                if (a.progress && !b.progress) return -1;
-                if (!a.progress && b.progress) return 1;
-                if (a.progress && b.progress) {
-                    return new Date(b.progress.lastReadAt).getTime() - new Date(a.progress.lastReadAt).getTime();
-                }
-                return 0;
+            const result = await getReadingSessions({
+                userId,
+                limit: 50
             });
 
-            setBooksWithProgress(booksWithProgressData);
-        } catch {
-            setError('Error loading reading history');
+            if (result.data?.success && result.data.sessions) {
+                setSessions(result.data.sessions);
+            } else {
+                setError('Failed to load reading sessions');
+            }
+        } catch (error) {
+            console.error('Error loading reading sessions:', error);
+            setError('Error loading reading sessions');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleContinueReading = (bookWithProgress: BookWithProgress) => {
-        if (bookWithProgress.progress) {
-            navigate(`/?bookId=${bookWithProgress.book._id}&chapter=${bookWithProgress.progress.currentChapter}&chunk=${bookWithProgress.progress.currentChunk}`);
-        } else {
-            navigate(`/?bookId=${bookWithProgress.book._id}&chapter=1`);
-        }
+    const handleContinueReading = (session: ReadingSessionClient) => {
+        // Navigate to the book with the chapter from the session
+        navigate(`/?bookId=${session.bookId}&chapter=${session.chapterNumber}`);
+    };
+
+    const handlePlayFromChunk = (session: ReadingSessionClient, chunkIndex: number) => {
+        // Navigate to the specific chunk
+        navigate(`/?bookId=${session.bookId}&chapter=${session.chapterNumber}&chunk=${chunkIndex}`);
     };
 
     const formatTime = (minutes: number): string => {
+        if (minutes < 1) {
+            return '< 1m';
+        }
         if (minutes < 60) {
             return `${Math.round(minutes)}m`;
         }
         const hours = Math.floor(minutes / 60);
         const mins = Math.round(minutes % 60);
-        return `${hours}h ${mins}m`;
+        return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
     };
 
-    const formatDate = (dateString: string): string => {
-        const date = new Date(dateString);
+    const formatDate = (date: Date): string => {
         const now = new Date();
-        const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+        const sessionDate = new Date(date);
+        const diffDays = Math.floor((now.getTime() - sessionDate.getTime()) / (1000 * 60 * 60 * 24));
 
         if (diffDays === 0) return 'Today';
         if (diffDays === 1) return 'Yesterday';
         if (diffDays < 7) return `${diffDays} days ago`;
-        return date.toLocaleDateString();
+        return sessionDate.toLocaleDateString();
+    };
+
+    const formatDateTime = (date: Date): string => {
+        return new Date(date).toLocaleString();
     };
 
     if (loading) {
@@ -140,10 +106,14 @@ export const ReadingHistory: React.FC = () => {
     }
 
     return (
-        <Box p={3}>
+        <Box p={3} maxWidth="1200px" mx="auto">
             <Typography variant="h4" gutterBottom>
                 <HistoryIcon sx={{ mr: 1, verticalAlign: 'bottom' }} />
-                Reading History
+                Reading Sessions
+            </Typography>
+
+            <Typography variant="body1" color="text.secondary" gutterBottom sx={{ mb: 3 }}>
+                Your detailed reading log showing all your reading sessions and individual sentences you&apos;ve listened to.
             </Typography>
 
             {error && (
@@ -152,134 +122,122 @@ export const ReadingHistory: React.FC = () => {
                 </Alert>
             )}
 
-            {booksWithProgress.length === 0 ? (
+            {sessions.length === 0 ? (
                 <Card>
                     <CardContent>
                         <Typography variant="h6" align="center" color="text.secondary">
-                            No reading history yet
+                            No reading sessions yet
                         </Typography>
                         <Typography variant="body2" align="center" color="text.secondary" sx={{ mt: 1 }}>
-                            Start reading some books to see your reading history here
+                            Start reading with audio to see your reading sessions here
                         </Typography>
                     </CardContent>
                 </Card>
             ) : (
-                <Box
-                    display="grid"
-                    gridTemplateColumns={{
-                        xs: '1fr',
-                        md: 'repeat(2, 1fr)',
-                        lg: 'repeat(3, 1fr)'
-                    }}
-                    gap={3}
-                >
-                    {booksWithProgress.map((bookWithProgress) => {
-                        const { book, progress, stats } = bookWithProgress;
-                        const hasProgress = !!progress;
-                        const bookProgress = stats?.bookProgress || 0;
-                        const isCompleted = bookProgress >= 100;
-
-                        return (
-                            <Card key={book._id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                                <CardContent sx={{ flex: 1 }}>
-                                    <Box display="flex" alignItems="center" gap={1} mb={2}>
-                                        <BookIcon color="primary" />
-                                        <Typography variant="h6" component="h3" sx={{ flex: 1 }}>
-                                            {book.title}
-                                        </Typography>
-                                        {isCompleted && (
-                                            <Chip
-                                                label="Completed"
-                                                color="success"
-                                                size="small"
-                                            />
-                                        )}
-                                    </Box>
-
-                                    {book.author && (
-                                        <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                                            by {book.author}
-                                        </Typography>
-                                    )}
-
-                                    {hasProgress ? (
-                                        <Box mt={2}>
-                                            {/* Progress Bar */}
-                                            <Box mb={2}>
-                                                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                                                    <Typography variant="body2" color="text.secondary">
-                                                        Progress
-                                                    </Typography>
-                                                    <Typography variant="body2" fontWeight="bold">
-                                                        {bookProgress}%
-                                                    </Typography>
-                                                </Box>
-                                                <LinearProgress
-                                                    variant="determinate"
-                                                    value={bookProgress}
-                                                    sx={{
-                                                        height: 6,
-                                                        borderRadius: 3,
-                                                        backgroundColor: '#f0f0f0',
-                                                        '& .MuiLinearProgress-bar': {
-                                                            backgroundColor: isCompleted ? '#4caf50' : '#4285f4',
-                                                            borderRadius: 3
-                                                        }
-                                                    }}
-                                                />
+                <Box display="flex" flexDirection="column" gap={2}>
+                    {sessions.map((session, index) => (
+                        <Card key={session.sessionId} elevation={2}>
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls={`session-${index}-content`}
+                                    id={`session-${index}-header`}
+                                >
+                                    <Box display="flex" flexDirection="column" width="100%">
+                                        {/* Session Header */}
+                                        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
+                                            <Box display="flex" alignItems="center" gap={1}>
+                                                <BookIcon color="primary" />
+                                                <Typography variant="h6" component="span">
+                                                    {session.bookTitle}
+                                                </Typography>
                                             </Box>
-
-                                            {/* Reading Stats */}
-                                            <Box display="flex" flexWrap="wrap" gap={1} mb={2}>
+                                            <Box display="flex" alignItems="center" gap={1}>
                                                 <Chip
-                                                    icon={<BookIcon />}
-                                                    label={`Chapter ${progress.currentChapter}`}
+                                                    icon={<ClockIcon />}
+                                                    label={formatDate(session.startTime)}
                                                     size="small"
                                                     variant="outlined"
                                                 />
-                                                {stats && (
-                                                    <Chip
-                                                        icon={<TimeIcon />}
-                                                        label={formatTime(stats.totalReadingTime)}
-                                                        size="small"
-                                                        variant="outlined"
-                                                    />
-                                                )}
-                                                {stats && stats.chaptersCompleted > 0 && (
-                                                    <Chip
-                                                        icon={<ProgressIcon />}
-                                                        label={`${stats.chaptersCompleted}/${stats.totalChapters} chapters`}
-                                                        size="small"
-                                                        variant="outlined"
-                                                    />
-                                                )}
+                                                <IconButton
+                                                    size="small"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleContinueReading(session);
+                                                    }}
+                                                    sx={{ color: 'primary.main' }}
+                                                >
+                                                    <PlayIcon />
+                                                </IconButton>
                                             </Box>
-
-                                            <Typography variant="caption" color="text.secondary">
-                                                Last read: {formatDate(progress.lastReadAt.toString())}
-                                            </Typography>
                                         </Box>
-                                    ) : (
-                                        <Box mt={2}>
+
+                                        {/* Session Stats */}
+                                        <Box display="flex" alignItems="center" gap={2} mt={1}>
                                             <Typography variant="body2" color="text.secondary">
-                                                Not started yet
+                                                Chapter {session.chapterNumber}: {session.chapterTitle}
+                                            </Typography>
+                                            <Chip
+                                                icon={<TimeIcon />}
+                                                label={formatTime(session.duration)}
+                                                size="small"
+                                                variant="filled"
+                                                sx={{ backgroundColor: '#e8f5e8' }}
+                                            />
+                                            <Chip
+                                                label={`${session.totalLines} sentences`}
+                                                size="small"
+                                                variant="outlined"
+                                            />
+                                        </Box>
+                                    </Box>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Box>
+                                        {/* Session Details */}
+                                        <Box display="flex" justifyContent="space-between" mb={2}>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Started: {formatDateTime(session.startTime)}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Ended: {formatDateTime(session.endTime)}
                                             </Typography>
                                         </Box>
-                                    )}
-                                </CardContent>
 
-                                <CardActions>
-                                    <Button
-                                        variant="contained"
-                                        fullWidth
-                                        onClick={() => handleContinueReading(bookWithProgress)}
-                                    >
-                                        {hasProgress ? 'Continue Reading' : 'Start Reading'}
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        );
-                    })}
+                                        <Divider sx={{ mb: 2 }} />
+
+                                        {/* Individual Sentences */}
+                                        <Typography variant="h6" gutterBottom>
+                                            Sentences Read ({session.logs.length})
+                                        </Typography>
+                                        <Box display="flex" flexDirection="column" gap={1} maxHeight="300px" overflow="auto">
+                                            {session.logs.map((log) => (
+                                                <Card key={log._id} variant="outlined" sx={{ p: 2 }}>
+                                                    <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                                                        <Box flex={1} mr={2}>
+                                                            <Typography variant="body2" sx={{ mb: 1 }}>
+                                                                {log.chunkText}
+                                                            </Typography>
+                                                            <Typography variant="caption" color="text.secondary">
+                                                                Sentence #{log.chunkIndex + 1} • {formatDateTime(log.timestamp)}
+                                                            </Typography>
+                                                        </Box>
+                                                        <IconButton
+                                                            size="small"
+                                                            onClick={() => handlePlayFromChunk(session, log.chunkIndex)}
+                                                            sx={{ color: 'primary.main' }}
+                                                        >
+                                                            <PlayIcon fontSize="small" />
+                                                        </IconButton>
+                                                    </Box>
+                                                </Card>
+                                            ))}
+                                        </Box>
+                                    </Box>
+                                </AccordionDetails>
+                            </Accordion>
+                        </Card>
+                    ))}
                 </Box>
             )}
         </Box>

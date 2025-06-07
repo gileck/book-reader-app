@@ -9,6 +9,7 @@ import { useAudioPlayback } from './useAudioPlayback';
 import { useUserSettings } from './useUserSettings';
 import { useBookmarks } from './useBookmarks';
 import { useReadingProgress } from './useReadingProgress';
+import { useReadingLogs } from './useReadingLogs';
 
 const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
 
@@ -261,6 +262,15 @@ export const useReader = () => {
         bookId,
         currentChapterNumber: state.currentChapterNumber,
         currentChunkIndex: state.currentChunkIndex,
+        isPlaying: audioPlayback.isPlaying
+    });
+
+    // Reading logs hook - logs every chunk that is played
+    useReadingLogs({
+        userId,
+        bookId,
+        chapter: state.chapter,
+        currentChunkIndex: audioPlayback.currentChunkIndex,
         isPlaying: audioPlayback.isPlaying
     });
 

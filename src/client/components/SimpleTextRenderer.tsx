@@ -217,7 +217,10 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                                     data-word-index={wordIndex}
                                                     className={getWordClassName(index, wordIndex)}
                                                     style={getWordStyle(index, wordIndex)}
-                                                    onDoubleClick={() => handleWordClick(index, wordIndex)}
+                                                    onDoubleClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleWordClick(index, wordIndex);
+                                                    }}
                                                 >
                                                     {word}
                                                 </span>
