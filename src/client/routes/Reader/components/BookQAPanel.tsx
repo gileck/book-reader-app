@@ -12,7 +12,12 @@ import {
     Slide,
     useTheme,
     useMediaQuery,
-    alpha
+    alpha,
+    FormControl,
+    Select,
+    MenuItem,
+    Chip,
+    Stack
 } from '@mui/material';
 import {
     Close,
@@ -83,6 +88,14 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
         scrollToBottom();
     }, [messages]);
 
+    // Auto-scroll when loading state changes (when answer arrives)
+    useEffect(() => {
+        if (!loading && messages.length > 0) {
+            // Small delay to ensure the message is rendered
+            setTimeout(scrollToBottom, 100);
+        }
+    }, [loading, messages.length]);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (question.trim() && !loading) {
@@ -114,7 +127,11 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
             >
                 <AppBar
                     sx={{
-                        position: 'relative',
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 1400,
                         backgroundColor: alpha(theme.palette.background.paper, 0.9),
                         backdropFilter: 'blur(20px)',
                         WebkitBackdropFilter: 'blur(20px)',
@@ -212,7 +229,8 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                     flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    backgroundColor: theme.palette.background.default
+                    backgroundColor: theme.palette.background.default,
+                    pt: '64px' // Account for fixed AppBar
                 }}>
                     <ChatContent
                         messages={messages}
@@ -229,6 +247,8 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                         onSubmit={handleSubmit}
                         onKeyPress={handleKeyPress}
                         fullScreen={true}
+                        contextLines={contextLines}
+                        onContextLinesChange={onContextLinesChange}
                     />
                 </Box>
             </Dialog>
@@ -371,6 +391,8 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                 onSubmit={handleSubmit}
                 onKeyPress={handleKeyPress}
                 fullScreen={false}
+                contextLines={contextLines}
+                onContextLinesChange={onContextLinesChange}
             />
         </Paper>
     );
@@ -575,6 +597,8 @@ interface ChatInputProps {
     onSubmit: (e: React.FormEvent) => void;
     onKeyPress: (e: React.KeyboardEvent) => void;
     fullScreen: boolean;
+    contextLines: number;
+    onContextLinesChange: (lines: number) => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -583,110 +607,191 @@ const ChatInput: React.FC<ChatInputProps> = ({
     onQuestionChange,
     onSubmit,
     onKeyPress,
-    fullScreen
+    fullScreen,
+    contextLines,
+    onContextLinesChange
 }) => {
     const theme = useTheme();
 
+    const quickQuestions = [
+        'Explain Simply',
+        'Explain Why'
+    ];
+
+    const handleQuickQuestion = (quickQuestion: string) => {
+        const fullQuestion = question.trim()
+            ? `${quickQuestion}: ${question.trim()}`
+            : quickQuestion;
+        onQuestionChange(fullQuestion);
+    };
+
     return (
         <Box
-            component="form"
-            onSubmit={onSubmit}
             sx={{
                 p: 3,
                 borderTop: fullScreen ? `1px solid ${alpha(theme.palette.divider, 0.08)}` : 'none',
-                display: 'flex',
-                gap: 2,
-                alignItems: 'flex-end',
                 backgroundColor: alpha(theme.palette.background.paper, 0.8),
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)'
             }}
         >
-            <TextField
-                fullWidth
-                multiline
-                maxRows={fullScreen ? 6 : 3}
-                placeholder="Ask a question about the book..."
-                value={question}
-                onChange={(e) => onQuestionChange(e.target.value)}
-                onKeyPress={onKeyPress}
-                disabled={loading}
-                variant="outlined"
-                sx={{
-                    '& .MuiInputBase-root': {
-                        fontSize: fullScreen ? '1rem' : '0.875rem',
-                        borderRadius: '20px',
-                        backgroundColor: alpha(theme.palette.background.default, 0.6),
-                        border: `1px solid ${alpha(theme.palette.divider, 0.12)}`,
-                        transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
-                        '&:hover': {
-                            border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
-                            backgroundColor: alpha(theme.palette.background.default, 0.8)
-                        },
-                        '&.Mui-focused': {
-                            border: `2px solid ${theme.palette.primary.main}`,
-                            backgroundColor: theme.palette.background.paper,
-                            boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`
-                        }
-                    },
-                    '& .MuiInputBase-input': {
-                        padding: '12px 16px',
-                        lineHeight: 1.5
-                    },
-                    '& .MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                    },
-                    '& .MuiInputBase-input::placeholder': {
-                        color: alpha(theme.palette.text.secondary, 0.6),
-                        opacity: 1
-                    }
-                }}
-            />
-            <IconButton
-                type="submit"
-                disabled={!question.trim() || loading}
-                sx={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: '50%',
-                    backgroundColor: question.trim() && !loading
-                        ? theme.palette.primary.main
-                        : alpha(theme.palette.action.disabled, 0.12),
-                    color: question.trim() && !loading
-                        ? theme.palette.primary.contrastText
-                        : theme.palette.action.disabled,
-                    transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
-                    boxShadow: question.trim() && !loading
-                        ? theme.palette.mode === 'light'
-                            ? '0 2px 8px rgba(0,0,0,0.15)'
-                            : '0 2px 8px rgba(0,0,0,0.3)'
-                        : 'none',
-                    '&:hover': {
-                        backgroundColor: question.trim() && !loading
-                            ? theme.palette.primary.dark
-                            : alpha(theme.palette.action.disabled, 0.12),
-                        transform: question.trim() && !loading ? 'scale(1.05)' : 'none'
-                    },
-                    '&:active': {
-                        transform: question.trim() && !loading ? 'scale(0.95)' : 'none'
-                    },
-                    '&:disabled': {
-                        backgroundColor: alpha(theme.palette.action.disabled, 0.12),
-                        color: theme.palette.action.disabled
-                    }
-                }}
-            >
-                {loading ? (
-                    <CircularProgress
-                        size={20}
+            {/* Quick Questions */}
+            <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+                {quickQuestions.map((quickQ) => (
+                    <Chip
+                        key={quickQ}
+                        label={quickQ}
+                        size="small"
+                        onClick={() => handleQuickQuestion(quickQ)}
+                        disabled={loading}
                         sx={{
-                            color: theme.palette.action.disabled
+                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                            height: 24,
+                            borderRadius: '12px',
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                            color: theme.palette.primary.main,
+                            border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                            '&:hover': {
+                                backgroundColor: alpha(theme.palette.primary.main, 0.15),
+                                transform: 'scale(1.02)'
+                            },
+                            '&:active': {
+                                transform: 'scale(0.98)'
+                            }
                         }}
                     />
-                ) : (
-                    <Send sx={{ fontSize: 20 }} />
-                )}
-            </IconButton>
+                ))}
+            </Stack>
+
+            {/* Input Row */}
+            <Box
+                component="form"
+                onSubmit={onSubmit}
+                sx={{
+                    display: 'flex',
+                    gap: 1,
+                    alignItems: 'flex-end'
+                }}
+            >
+                {/* Context Lines Selector */}
+                <FormControl size="small" sx={{ minWidth: 60 }}>
+                    <Select
+                        value={contextLines}
+                        onChange={(e) => onContextLinesChange(Number(e.target.value))}
+                        disabled={loading}
+                        sx={{
+                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                            height: 36,
+                            borderRadius: '8px',
+                            backgroundColor: alpha(theme.palette.background.default, 0.6),
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                border: `1px solid ${alpha(theme.palette.divider, 0.12)}`
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                border: `1px solid ${theme.palette.primary.main}`
+                            }
+                        }}
+                    >
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                            <MenuItem key={num} value={num} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>
+                                {num}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                {/* Text Input */}
+                <TextField
+                    fullWidth
+                    multiline
+                    maxRows={fullScreen ? 6 : 3}
+                    placeholder="Ask a question about the book..."
+                    value={question}
+                    onChange={(e) => onQuestionChange(e.target.value)}
+                    onKeyPress={onKeyPress}
+                    disabled={loading}
+                    variant="outlined"
+                    sx={{
+                        '& .MuiInputBase-root': {
+                            fontSize: fullScreen ? '1rem' : '0.875rem',
+                            borderRadius: '20px',
+                            backgroundColor: alpha(theme.palette.background.default, 0.6),
+                            border: `1px solid ${alpha(theme.palette.divider, 0.12)}`,
+                            transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
+                            '&:hover': {
+                                border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
+                                backgroundColor: alpha(theme.palette.background.default, 0.8)
+                            },
+                            '&.Mui-focused': {
+                                border: `2px solid ${theme.palette.primary.main}`,
+                                backgroundColor: theme.palette.background.paper,
+                                boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`
+                            }
+                        },
+                        '& .MuiInputBase-input': {
+                            padding: '12px 16px',
+                            lineHeight: 1.5
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            border: 'none'
+                        },
+                        '& .MuiInputBase-input::placeholder': {
+                            color: alpha(theme.palette.text.secondary, 0.6),
+                            opacity: 1
+                        }
+                    }}
+                />
+
+                {/* Send Button */}
+                <IconButton
+                    type="submit"
+                    disabled={!question.trim() || loading}
+                    sx={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: '50%',
+                        backgroundColor: question.trim() && !loading
+                            ? theme.palette.primary.main
+                            : alpha(theme.palette.action.disabled, 0.12),
+                        color: question.trim() && !loading
+                            ? theme.palette.primary.contrastText
+                            : theme.palette.action.disabled,
+                        transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
+                        boxShadow: question.trim() && !loading
+                            ? theme.palette.mode === 'light'
+                                ? '0 2px 8px rgba(0,0,0,0.15)'
+                                : '0 2px 8px rgba(0,0,0,0.3)'
+                            : 'none',
+                        '&:hover': {
+                            backgroundColor: question.trim() && !loading
+                                ? theme.palette.primary.dark
+                                : alpha(theme.palette.action.disabled, 0.12),
+                            transform: question.trim() && !loading ? 'scale(1.05)' : 'none'
+                        },
+                        '&:active': {
+                            transform: question.trim() && !loading ? 'scale(0.95)' : 'none'
+                        },
+                        '&:disabled': {
+                            backgroundColor: alpha(theme.palette.action.disabled, 0.12),
+                            color: theme.palette.action.disabled
+                        }
+                    }}
+                >
+                    {loading ? (
+                        <CircularProgress
+                            size={20}
+                            sx={{
+                                color: theme.palette.action.disabled
+                            }}
+                        />
+                    ) : (
+                        <Send sx={{ fontSize: 20 }} />
+                    )}
+                </IconButton>
+            </Box>
         </Box>
     );
 }; 

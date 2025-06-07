@@ -10,10 +10,8 @@ import { ReaderHeader } from './components/ReaderHeader';
 import { ReaderContent } from './components/ReaderContent';
 import { BookQAPanel } from './components/BookQAPanel';
 import { BookQAChatSettings } from './components/BookQAChatSettings';
-import { useSettings } from '../../settings/SettingsContext';
 
 export const Reader = () => {
-    const { settings: appSettings } = useSettings();
     const {
         book,
         chapter,

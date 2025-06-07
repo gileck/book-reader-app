@@ -5,7 +5,7 @@ import { getBooks, deleteBook } from '../../../apis/books/client';
 import { getReadingProgress } from '../../../apis/readingProgress/client';
 import { BookClient } from '../../../apis/books/types';
 import { ReadingProgressClient } from '../../../apis/readingProgress/types';
-import './BookLibrary.css';
+import styles from './BookLibrary.module.css';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -154,9 +154,9 @@ export const BookLibrary = () => {
 
     if (loading) {
         return (
-            <div className="book-library">
-                <div className="loading-container">
-                    <div className="spinner"></div>
+            <div className={styles.bookLibrary}>
+                <div className={styles.loadingContainer}>
+                    <div className={styles.spinner}></div>
                     <p>Loading your library...</p>
                 </div>
             </div>
@@ -165,11 +165,11 @@ export const BookLibrary = () => {
 
     if (error) {
         return (
-            <div className="book-library">
-                <div className="error-container">
+            <div className={styles.bookLibrary}>
+                <div className={styles.errorContainer}>
                     <h2>Error loading library</h2>
                     <p>{error}</p>
-                    <button className="btn-primary" onClick={loadBooksWithProgress}>
+                    <button className={styles.btnPrimary} onClick={loadBooksWithProgress}>
                         Try Again
                     </button>
                 </div>
@@ -178,17 +178,17 @@ export const BookLibrary = () => {
     }
 
     return (
-        <div className="book-library">
-            <header className="library-header">
+        <div className={styles.bookLibrary}>
+            <header className={styles.libraryHeader}>
                 <h1>My Library</h1>
-                <div className="library-controls">
-                    <div className="sort-dropdown">
+                <div className={styles.libraryControls}>
+                    <div className={styles.sortDropdown}>
                         <label htmlFor="sort-select" className="sr-only">Sort books</label>
                         <select
                             id="sort-select"
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value as 'title' | 'progress' | 'lastRead')}
-                            className="sort-select"
+                            className={styles.sortSelect}
                         >
                             <option value="title">Sort by Title</option>
                             <option value="progress">Sort by Progress</option>
@@ -199,39 +199,39 @@ export const BookLibrary = () => {
             </header>
 
             {/* All Books Grid */}
-            <section className="all-books">
+            <section className={styles.allBooks}>
                 <h2>Your Books</h2>
                 {books.length === 0 ? (
-                    <div className="empty-state">
-                        <div className="empty-icon">📚</div>
+                    <div className={styles.emptyState}>
+                        <div className={styles.emptyIcon}>📚</div>
                         <h3>No books in your library</h3>
                         <p>Add some books to get started with your reading journey.</p>
                     </div>
                 ) : (
-                    <div className="books-grid">
+                    <div className={styles.booksGrid}>
                         {sortedBooks.map((book) => (
-                            <div key={book._id} className={`book-card ${book.isActive ? 'book-card-active' : ''}`}>
-                                <div className="book-card-inner">
-                                    <div className="book-cover-container">
+                            <div key={book._id} className={`${styles.bookCard} ${book.isActive ? styles.bookCardActive : ''}`}>
+                                <div className={styles.bookCardInner}>
+                                    <div className={styles.bookCoverContainer}>
                                         {book.coverImage ? (
                                             <Image
                                                 src={book.coverImage}
                                                 alt={`${book.title} cover`}
-                                                className="book-cover"
+                                                className={styles.bookCover}
                                                 fill
                                                 style={{ objectFit: 'cover' }}
                                             />
                                         ) : (
-                                            <div className="book-cover-placeholder">
+                                            <div className={styles.bookCoverPlaceholder}>
                                                 <span>📖</span>
                                             </div>
                                         )}
 
                                         {/* Progress indicator */}
                                         {book.progress && book.progress.bookProgress > 0 && (
-                                            <div className="progress-indicator">
+                                            <div className={styles.progressIndicator}>
                                                 <div
-                                                    className="progress-bar"
+                                                    className={styles.progressBar}
                                                     style={{ width: `${book.progress.bookProgress}%` }}
                                                 ></div>
                                             </div>
@@ -239,7 +239,7 @@ export const BookLibrary = () => {
 
                                         {/* Options button */}
                                         <button
-                                            className="book-options-btn"
+                                            className={styles.bookOptionsBtn}
                                             onClick={() => toggleOptionsMenu(book._id)}
                                             aria-label="Book options"
                                         >
@@ -249,10 +249,10 @@ export const BookLibrary = () => {
                                         {/* Options menu */}
                                         {showOptionsMenu === book._id && (
                                             <>
-                                                <div className="options-menu-overlay" onClick={closeOptionsMenu}></div>
-                                                <div className="options-menu">
+                                                <div className={styles.optionsMenuOverlay} onClick={closeOptionsMenu}></div>
+                                                <div className={styles.optionsMenu}>
                                                     <button
-                                                        className="options-menu-item primary"
+                                                        className={`${styles.optionsMenuItem} ${styles.primary}`}
                                                         onClick={() => {
                                                             handleOpenBook(book._id);
                                                             closeOptionsMenu();
@@ -263,7 +263,7 @@ export const BookLibrary = () => {
                                                     </button>
                                                     {!book.isActive && (
                                                         <button
-                                                            className="options-menu-item"
+                                                            className={styles.optionsMenuItem}
                                                             onClick={() => {
                                                                 handleSetActiveBook(book._id);
                                                                 closeOptionsMenu();
@@ -274,7 +274,7 @@ export const BookLibrary = () => {
                                                         </button>
                                                     )}
                                                     <button
-                                                        className="options-menu-item danger"
+                                                        className={`${styles.optionsMenuItem} ${styles.danger}`}
                                                         onClick={() => {
                                                             handleRemoveBook(book._id);
                                                             closeOptionsMenu();
@@ -288,13 +288,13 @@ export const BookLibrary = () => {
                                         )}
                                     </div>
 
-                                    <div className="book-info">
-                                        <div className="book-meta">
-                                            <span className={`status-badge ${getReadingStatus(book.progress).toLowerCase().replace(' ', '-')}`}>
+                                    <div className={styles.bookInfo}>
+                                        <div className={styles.bookMeta}>
+                                            <span className={`${styles.statusBadge} ${styles[getReadingStatus(book.progress).toLowerCase().replace(' ', '-') as keyof typeof styles] || ''}`}>
                                                 {getReadingStatus(book.progress)}
                                             </span>
                                             {book.progress && book.progress.bookProgress > 0 && (
-                                                <span className="progress-text">
+                                                <span className={styles.progressText}>
                                                     {Math.round(book.progress.bookProgress)}%
                                                 </span>
                                             )}
@@ -309,16 +309,16 @@ export const BookLibrary = () => {
 
             {/* Delete Confirmation Modal */}
             {showDeleteConfirm && (
-                <div className="modal-overlay" onClick={() => {
+                <div className={styles.modalOverlay} onClick={() => {
                     setShowDeleteConfirm(null);
                     closeOptionsMenu();
                 }}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                         <h3>Remove Book</h3>
                         <p>Are you sure you want to remove this book from your library? This action cannot be undone.</p>
-                        <div className="modal-actions">
+                        <div className={styles.modalActions}>
                             <button
-                                className="btn-secondary"
+                                className={styles.btnSecondary}
                                 onClick={() => {
                                     setShowDeleteConfirm(null);
                                     closeOptionsMenu();
@@ -327,7 +327,7 @@ export const BookLibrary = () => {
                                 Cancel
                             </button>
                             <button
-                                className="btn-danger"
+                                className={styles.btnDanger}
                                 onClick={() => confirmRemoveBook(showDeleteConfirm)}
                                 disabled={deletingBook === showDeleteConfirm}
                             >
