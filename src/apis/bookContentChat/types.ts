@@ -10,6 +10,31 @@ export interface BookContentChatRequest {
     conversationHistory?: ChatMessage[];
 }
 
+export interface BookContentChatResponse {
+    result: string;
+    cost: {
+        totalCost: number;
+    };
+    error?: string;
+}
+
+// Cost estimation types
+export interface BookContentChatCostEstimateRequest {
+    modelId: string;
+    question: string;
+    bookTitle: string;
+    chapterNumber: number;
+    chapterTitle: string;
+    currentSentence: string;
+    lastSentences: string;
+    conversationHistory?: ChatMessage[];
+}
+
+export interface BookContentChatCostEstimateResponse {
+    estimatedCost: number;
+    error?: string;
+}
+
 export interface ChatMessage {
     role: 'user' | 'assistant';
     content: string;
@@ -18,14 +43,11 @@ export interface ChatMessage {
         number: number;
         title: string;
     };
+    currentSentence?: string;
     cost?: number;
-    currentSentence?: string; // For user messages, shows the sentence they're replying to
-}
-
-export interface BookContentChatResponse {
-    result: string;
-    cost: {
-        totalCost: number;
+    estimatedCost?: number;
+    replyTo?: {
+        messageIndex: number;
+        content: string;
     };
-    error?: string;
 } 

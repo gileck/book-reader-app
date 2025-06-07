@@ -10,7 +10,7 @@ import { readingProgressApis } from "./readingProgress/server";
 import * as userSettings from "./userSettings/server";
 import { API_GET_USER_SETTINGS, API_UPDATE_USER_SETTINGS } from "./userSettings/index";
 import * as bookContentChat from "./bookContentChat/server";
-import { API_BOOK_CONTENT_CHAT } from "./bookContentChat/index";
+import { API_BOOK_CONTENT_CHAT, API_BOOK_CONTENT_CHAT_ESTIMATE_COST } from "./bookContentChat/index";
 
 // Convert API handlers to typed format
 const typedBooksApiHandlers = Object.entries(booksApiHandlers).reduce(
@@ -74,6 +74,7 @@ export const apiHandlers: ApiHandlers = {
   [API_GET_USER_SETTINGS]: { process: userSettings.getUserSettings as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [API_UPDATE_USER_SETTINGS]: { process: userSettings.updateUserSettings as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [API_BOOK_CONTENT_CHAT]: { process: bookContentChat.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [API_BOOK_CONTENT_CHAT_ESTIMATE_COST]: { process: bookContentChat.estimateCost as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   ...typedBooksApiHandlers,
   ...typedChaptersApiHandlers,
   ...typedTtsApiHandlers,

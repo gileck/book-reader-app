@@ -13,7 +13,10 @@ import {
     Box,
     Divider,
     useTheme,
-    alpha
+    alpha,
+    FormControlLabel,
+    Checkbox,
+    TextField
 } from '@mui/material';
 import { getAllModels } from '../../../../server/ai/models';
 
@@ -22,25 +25,47 @@ interface BookQAChatSettingsProps {
     onClose: () => void;
     selectedModelId: string;
     onModelChange: (modelId: string) => void;
+    estimateBeforeSend: boolean;
+    onEstimateBeforeSendChange: (value: boolean) => void;
+    costApprovalThreshold: number;
+    onCostApprovalThresholdChange: (value: number) => void;
 }
 
 export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
     open,
     onClose,
     selectedModelId,
-    onModelChange
+    onModelChange,
+    estimateBeforeSend,
+    onEstimateBeforeSendChange,
+    costApprovalThreshold,
+    onCostApprovalThresholdChange
 }) => {
     const [localModelId, setLocalModelId] = useState(selectedModelId);
+    const [localEstimateBeforeSend, setLocalEstimateBeforeSend] = useState(estimateBeforeSend);
+    const [localCostApprovalThreshold, setLocalCostApprovalThreshold] = useState(costApprovalThreshold);
     const availableModels = getAllModels();
     const theme = useTheme();
 
     useEffect(() => {
         setLocalModelId(selectedModelId);
-    }, [selectedModelId]);
+        setLocalEstimateBeforeSend(estimateBeforeSend);
+        setLocalCostApprovalThreshold(costApprovalThreshold);
+    }, [selectedModelId, estimateBeforeSend, costApprovalThreshold]);
 
     const handleModelChange = (modelId: string) => {
         setLocalModelId(modelId);
         onModelChange(modelId);
+    };
+
+    const handleEstimateBeforeSendChange = (checked: boolean) => {
+        setLocalEstimateBeforeSend(checked);
+        onEstimateBeforeSendChange(checked);
+    };
+
+    const handleCostApprovalThresholdChange = (value: number) => {
+        setLocalCostApprovalThreshold(value);
+        onCostApprovalThresholdChange(value);
     };
 
     const handleClose = () => {
@@ -174,6 +199,87 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
 
                     <Divider sx={{ my: 3, opacity: 0.6 }} />
 
+                    {/* Cost Estimation Settings */}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontSize: '1.125rem',
+                            fontWeight: 600,
+                            mb: 1
+                        }}
+                    >
+                        Cost Management
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            mb: 3,
+                            lineHeight: 1.5
+                        }}
+                    >
+                        Control AI usage costs with estimation and approval settings.
+                    </Typography>
+
+                    {/* Estimate Before Send Checkbox */}
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={localEstimateBeforeSend}
+                                onChange={(e) => handleEstimateBeforeSendChange(e.target.checked)}
+                                sx={{
+                                    color: theme.palette.primary.main,
+                                    '&.Mui-checked': {
+                                        color: theme.palette.primary.main,
+                                    },
+                                }}
+                            />
+                        }
+                        label={
+                            <Box>
+                                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                                    Estimate cost before sending
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8125rem' }}>
+                                    Check AI response cost before making the request
+                                </Typography>
+                            </Box>
+                        }
+                        sx={{ mb: 3, alignItems: 'flex-start' }}
+                    />
+
+                    {/* Cost Approval Threshold */}
+                    <TextField
+                        fullWidth
+                        label="Cost Approval Threshold"
+                        type="number"
+                        value={localCostApprovalThreshold}
+                        onChange={(e) => handleCostApprovalThresholdChange(parseFloat(e.target.value) || 0)}
+                        helperText={`Requests costing more than $${localCostApprovalThreshold.toFixed(4)} will require approval`}
+                        disabled={!localEstimateBeforeSend}
+                        inputProps={{
+                            min: 0,
+                            step: 0.0001,
+                        }}
+                        sx={{
+                            mb: 3,
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '12px',
+                                backgroundColor: alpha(theme.palette.background.default, 0.6),
+                                transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
+                                '&:hover': {
+                                    backgroundColor: alpha(theme.palette.background.default, 0.8)
+                                },
+                                '&.Mui-focused': {
+                                    backgroundColor: theme.palette.background.paper,
+                                    boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`
+                                }
+                            }
+                        }}
+                    />
+
+                    <Divider sx={{ my: 3, opacity: 0.6 }} />
+
                     <Box
                         sx={{
                             backgroundColor: alpha(theme.palette.info.main, 0.04),
@@ -190,8 +296,8 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
                                 fontWeight: 400
                             }}
                         >
-                            <strong>Note:</strong> Different models may provide varying response quality and speed.
-                            Your selection will be saved for future chat sessions.
+                            <strong>Note:</strong> Cost estimation helps control AI usage expenses.
+                            When enabled, questions exceeding the threshold will require your approval before being sent.
                         </Typography>
                     </Box>
                 </Box>

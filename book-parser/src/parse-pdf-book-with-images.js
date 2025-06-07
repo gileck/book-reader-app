@@ -172,15 +172,14 @@ async function extractPageAwareText(pdfPath, chapters) {
 /**
  * Extract embedded images from PDF and save to local folder
  */
-async function extractImages(pdfPath, bookTitle, configPath) {
+async function extractImages(pdfPath, bookTitle, bookFolderPath) {
     console.log('🖼️  Extracting embedded images from PDF...');
 
     const { execSync } = require('child_process');
 
-    // Create images directory in the same folder as the config file
+    // Create images directory in the book folder
     const bookFolderName = bookTitle.replace(/[^a-zA-Z0-9]/g, '-');
-    const configDir = path.dirname(configPath);
-    const imagesDir = path.join(configDir, 'images', bookFolderName);
+    const imagesDir = path.join(bookFolderPath, 'images', bookFolderName);
     if (!fs.existsSync(imagesDir)) {
         fs.mkdirSync(imagesDir, { recursive: true });
         console.log(`📁 Created images directory: ${imagesDir}`);
@@ -260,7 +259,7 @@ async function extractImages(pdfPath, bookTitle, configPath) {
 
                         images.push({
                             pageNumber: pageInfo.pageNumber,
-                            imageUrl: `./images/${bookFolderName}/${finalFileName}`,
+                            imageName: finalFileName,
                             imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber})`,
                             originalName: file,
                             extracted: true
@@ -293,7 +292,7 @@ async function extractImages(pdfPath, bookTitle, configPath) {
 
                         images.push({
                             pageNumber: pageInfo.pageNumber,
-                            imageUrl: `./images/${bookFolderName}/${finalFileName}`,
+                            imageName: finalFileName,
                             imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber})`,
                             originalName: file,
                             extracted: true
@@ -306,7 +305,7 @@ async function extractImages(pdfPath, bookTitle, configPath) {
                         // Create placeholder for remaining detected images
                         images.push({
                             pageNumber: pageInfo.pageNumber,
-                            imageUrl: `./images/${bookFolderName}/page-${pageInfo.pageNumber}-image-${pageImageIndex + 1}.placeholder`,
+                            imageName: `page-${pageInfo.pageNumber}-image-${pageImageIndex + 1}.placeholder`,
                             imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber}) - Not extracted`,
                             placeholder: true
                         });
@@ -329,7 +328,7 @@ async function extractImages(pdfPath, bookTitle, configPath) {
             for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
                 images.push({
                     pageNumber: pageInfo.pageNumber,
-                    imageUrl: `./images/${bookFolderName}/page-${pageInfo.pageNumber}-image-${pageImageIndex + 1}.placeholder`,
+                    imageName: `page-${pageInfo.pageNumber}-image-${pageImageIndex + 1}.placeholder`,
                     imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber}) - Detection only`,
                     placeholder: true
                 });
@@ -339,7 +338,12 @@ async function extractImages(pdfPath, bookTitle, configPath) {
     }
 
     console.log(`✅ Processed ${images.length} images with correct page numbers`);
-    return images;
+
+    // Return both images and folder information
+    return {
+        images,
+        imagesFolderPath: `./images/${bookFolderName}`
+    };
 }
 
 /**
@@ -505,7 +509,7 @@ function createPageAwareChunks(pageData, images, chapters) {
                 wordCount: 0,
                 type: 'image',
                 pageNumber: page.pageNumber,
-                imageUrl: image.imageUrl,
+                imageName: image.imageName,
                 imageAlt: image.imageAlt
             });
         });
@@ -617,12 +621,45 @@ function extractBookMetadata(pdfData, filename, config) {
 }
 
 /**
+ * Find the first PDF file in a directory
+ */
+function findPdfFile(bookFolderPath) {
+    const files = fs.readdirSync(bookFolderPath);
+    const pdfFile = files.find(file => file.toLowerCase().endsWith('.pdf'));
+
+    if (!pdfFile) {
+        throw new Error(`No PDF file found in folder: ${bookFolderPath}`);
+    }
+
+    return path.join(bookFolderPath, pdfFile);
+}
+
+/**
+ * Find config.json file in a directory
+ */
+function findConfigFile(bookFolderPath) {
+    const configPath = path.join(bookFolderPath, 'config.json');
+
+    if (!fs.existsSync(configPath)) {
+        throw new Error(`No config.json file found in folder: ${bookFolderPath}`);
+    }
+
+    return configPath;
+}
+
+/**
  * Main parsing function with image support
  */
-async function parsePdfWithImages(pdfPath, configPath) {
+async function parsePdfWithImages(bookFolderPath) {
     console.log(`🚀 Starting PDF parsing with image support...`);
-    console.log(`📁 PDF: ${pdfPath}`);
-    console.log(`⚙️ Config: ${configPath}`);
+    console.log(`📁 Book folder: ${bookFolderPath}`);
+
+    // Find PDF and config files
+    const pdfPath = findPdfFile(bookFolderPath);
+    const configPath = findConfigFile(bookFolderPath);
+
+    console.log(`📄 Found PDF: ${path.basename(pdfPath)}`);
+    console.log(`⚙️ Found config: ${path.basename(configPath)}`);
 
     const config = loadBookConfig(configPath);
 
@@ -646,7 +683,7 @@ async function parsePdfWithImages(pdfPath, configPath) {
     const pageData = await extractPageAwareText(pdfPath, chapters);
 
     // Step 3: Extract images (from entire book)
-    const images = await extractImages(pdfPath, bookMetadata.title, configPath);
+    const { images, imagesFolderPath } = await extractImages(pdfPath, bookMetadata.title, bookFolderPath);
 
     // Step 4: Create page-aware chunks
     const allChunks = createPageAwareChunks(pageData, images, chapters);
@@ -659,7 +696,7 @@ async function parsePdfWithImages(pdfPath, configPath) {
     const totalChapters = enhancedChapters.length;
 
     // Use first image as cover image
-    const coverImage = images.length > 0 ? images[0].imageUrl : null;
+    const coverImage = images.length > 0 ? images[0].imageName : null;
 
     const book = {
         ...bookMetadata,
@@ -670,13 +707,13 @@ async function parsePdfWithImages(pdfPath, configPath) {
         updatedAt: new Date()
     };
 
-    return { book, chapters: enhancedChapters };
+    return { book, chapters: enhancedChapters, imagesFolderPath };
 }
 
 /**
  * Save to file
  */
-function saveToFile(book, chapters, outputPath) {
+function saveToFile(book, chapters, outputPath, imagesFolderPath) {
     const output = {
         book,
         chapters,
@@ -687,7 +724,8 @@ function saveToFile(book, chapters, outputPath) {
             avgWordsPerChapter: Math.round(book.totalWords / chapters.length),
             hasImages: chapters.some(ch => ch.content.chunks.some(chunk => chunk.type === 'image')),
             totalImages: chapters.reduce((sum, ch) =>
-                sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0)
+                sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0),
+            imagesFolderPath: imagesFolderPath || null
         }
     };
 
@@ -701,34 +739,30 @@ function saveToFile(book, chapters, outputPath) {
 async function main() {
     try {
         const args = process.argv.slice(2);
-        const pdfPath = args[0];
-        const configPath = args[1];
-        const outputPath = args[2];
+        const bookFolderPath = args[0];
 
-        if (!pdfPath) {
-            console.error('❌ PDF file path is required');
+        if (!bookFolderPath) {
+            console.error('❌ Book folder path is required');
             showHelp();
             process.exit(1);
         }
 
-        if (!configPath) {
-            console.error('❌ Config file path is required');
-            showHelp();
+        if (!fs.existsSync(bookFolderPath)) {
+            console.error(`❌ Book folder not found: ${bookFolderPath}`);
             process.exit(1);
         }
 
-        const finalOutputPath = outputPath || path.join(path.dirname(pdfPath), 'output.json');
-
-        if (!fs.existsSync(pdfPath)) {
-            console.error(`❌ PDF file not found: ${pdfPath}`);
+        if (!fs.statSync(bookFolderPath).isDirectory()) {
+            console.error(`❌ Path is not a directory: ${bookFolderPath}`);
             process.exit(1);
         }
 
         console.log('🚀 Starting PDF book parsing with images...');
 
-        const { book, chapters } = await parsePdfWithImages(pdfPath, configPath);
+        const { book, chapters, imagesFolderPath } = await parsePdfWithImages(bookFolderPath);
 
-        saveToFile(book, chapters, finalOutputPath);
+        const outputPath = path.join(bookFolderPath, 'output.json');
+        saveToFile(book, chapters, outputPath, imagesFolderPath);
 
         const totalImages = chapters.reduce((sum, ch) =>
             sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
@@ -739,7 +773,7 @@ async function main() {
         console.log(`📚 Chapters: ${chapters.length}`);
         console.log(`📝 Total words: ${book.totalWords.toLocaleString()}`);
         console.log(`🖼️ Total images: ${totalImages}`);
-        console.log(`📄 Output file: ${finalOutputPath}`);
+        console.log(`📄 Output file: ${outputPath}`);
 
     } catch (error) {
         console.error('❌ Error parsing PDF:', error);
@@ -752,16 +786,30 @@ async function main() {
  */
 function showHelp() {
     console.log(`
-Usage: node parse-pdf-book-with-images.js PDF_PATH CONFIG_PATH [OUTPUT_PATH]
+Usage: node parse-pdf-book-with-images.js BOOK_FOLDER_PATH
 
 Arguments:
-  PDF_PATH    Path to the PDF file (required)
-  CONFIG_PATH Path to the book configuration JSON file (required)
-  OUTPUT_PATH Output JSON file path (optional, defaults to same directory as PDF)
+  BOOK_FOLDER_PATH    Path to the book folder containing:
+                      - A PDF file (the first .pdf file found)
+                      - config.json (book configuration file)
+
+Output:
+  Creates output.json in the same folder
+  Creates images/ subfolder with extracted images
 
 Examples:
-  node parse-pdf-book-with-images.js ./my-book.pdf ./my-book-config.json
-  node parse-pdf-book-with-images.js ./my-book.pdf ./my-book-config.json ./output.json
+  node parse-pdf-book-with-images.js ./books/my-book/
+  node parse-pdf-book-with-images.js /path/to/book-folder/
+
+Book folder structure:
+  my-book/
+  ├── book.pdf          # Any PDF file
+  ├── config.json       # Book configuration
+  ├── output.json       # Generated output (after parsing)
+  └── images/           # Generated images folder (after parsing)
+      └── Book-Title/
+          ├── page-001-image-1.jpg
+          └── ...
 
 This enhanced parser extracts both text and images with page correlation.
 `);

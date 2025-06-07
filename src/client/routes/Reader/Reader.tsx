@@ -10,6 +10,7 @@ import { ReaderHeader } from './components/ReaderHeader';
 import { ReaderContent } from './components/ReaderContent';
 import { BookQAPanel } from './components/BookQAPanel';
 import { BookQAChatSettings } from './components/BookQAChatSettings';
+import { CostApprovalDialog } from './components/CostApprovalDialog';
 
 export const Reader = () => {
     const {
@@ -116,7 +117,18 @@ export const Reader = () => {
         return audio.textChunks[audio.currentChunkIndex].text;
     };
 
-    const getLastSentences = () => {
+    // Initialize bookQA hook first
+    const bookQA = useBookQA({
+        bookId: book?._id || '',
+        bookTitle: book?.title || '',
+        chapterNumber: chapter?.chapterNumber || 1,
+        chapterTitle: chapter?.title || '',
+        currentSentence: getCurrentSentence(),
+        getLastSentences: () => getLastSentences
+    });
+
+    // Define getLastSentences after bookQA is initialized using useMemo
+    const getLastSentences = useMemo(() => {
         if (!chapter || audio.textChunks.length === 0) return '';
         const contextCount = bookQA.contextLines;
         const startIndex = Math.max(0, audio.currentChunkIndex - contextCount);
@@ -129,16 +141,7 @@ export const Reader = () => {
             .map(chunk => chunk.text)
             .join(' ');
         return lastSentences;
-    };
-
-    const bookQA = useBookQA({
-        bookId: book?._id || '',
-        bookTitle: book?.title || '',
-        chapterNumber: chapter?.chapterNumber || 1,
-        chapterTitle: chapter?.title || '',
-        currentSentence: getCurrentSentence(),
-        lastSentences: getLastSentences()
-    });
+    }, [chapter, audio.textChunks, audio.currentChunkIndex, bookQA.contextLines]);
 
     if (loading) {
         return (
@@ -286,6 +289,9 @@ export const Reader = () => {
                     currentSentence={getCurrentSentence()}
                     contextLines={bookQA.contextLines}
                     onContextLinesChange={bookQA.handleContextLinesChange}
+                    selectedModelId={bookQA.selectedModelId}
+                    onModelChange={bookQA.handleModelChange}
+                    onSetReplyContext={bookQA.setReplyContext}
                 />
 
                 {/* Book Q&A Chat Settings */}
@@ -294,6 +300,18 @@ export const Reader = () => {
                     onClose={bookQA.closeSettings}
                     selectedModelId={bookQA.selectedModelId}
                     onModelChange={bookQA.handleModelChange}
+                    estimateBeforeSend={bookQA.estimateBeforeSend}
+                    onEstimateBeforeSendChange={bookQA.handleEstimateBeforeSendChange}
+                    costApprovalThreshold={bookQA.costApprovalThreshold}
+                    onCostApprovalThresholdChange={bookQA.handleCostApprovalThresholdChange}
+                />
+
+                {/* Cost Approval Dialog */}
+                <CostApprovalDialog
+                    open={bookQA.showCostApprovalDialog}
+                    estimatedCost={bookQA.estimatedCost || 0}
+                    onApprove={() => bookQA.handleCostApproval(true)}
+                    onCancel={() => bookQA.handleCostApproval(false)}
                 />
             </Box>
         </UserThemeProvider>

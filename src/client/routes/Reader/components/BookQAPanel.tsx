@@ -17,7 +17,8 @@ import {
     Select,
     MenuItem,
     Chip,
-    Stack
+    Stack,
+    Button
 } from '@mui/material';
 import {
     Close,
@@ -29,6 +30,9 @@ import {
 } from '@mui/icons-material';
 import { TransitionProps } from '@mui/material/transitions';
 import { ChatMessage } from '../../../../apis/bookContentChat/types';
+import { getAllModels } from '../../../../server/ai/models';
+import ReactMarkdown from 'react-markdown';
+import { TypingIndicator } from './TypingIndicator';
 
 interface BookQAPanelProps {
     open: boolean;
@@ -46,6 +50,9 @@ interface BookQAPanelProps {
     currentSentence: string;
     contextLines: number;
     onContextLinesChange: (lines: number) => void;
+    selectedModelId: string;
+    onModelChange: (modelId: string) => void;
+    onSetReplyContext: (messageIndex: number, messageContent: string) => void;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -73,7 +80,10 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     currentChapterNumber,
     currentSentence,
     contextLines,
-    onContextLinesChange
+    onContextLinesChange,
+    selectedModelId,
+    onModelChange,
+    onSetReplyContext
 }) => {
     const [question, setQuestion] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -81,7 +91,7 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
     };
 
     useEffect(() => {
@@ -96,9 +106,32 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
         }
     }, [loading, messages.length]);
 
+    // Auto-scroll when opening or expanding chat
+    useEffect(() => {
+        if (open) {
+            setTimeout(scrollToBottom, 200);
+        }
+    }, [open]);
+
+    useEffect(() => {
+        if (fullScreen) {
+            setTimeout(scrollToBottom, 200);
+        }
+    }, [fullScreen]);
+
+    const handleTextSelection = (selectedText: string) => {
+        if (selectedText.trim()) {
+            setQuestion(selectedText.trim());
+        }
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (question.trim() && !loading) {
+            // Aggressive immediate scrolling - no delay at all
+            messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
+            // Double-call to ensure it works even during state changes
+            setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'instant' }), 0);
             onSubmitQuestion(question.trim());
             setQuestion('');
         }
@@ -239,6 +272,12 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                         currentChapterTitle={currentChapterTitle}
                         fullScreen={true}
                         currentSentence={currentSentence}
+                        loading={loading}
+                        onTextSelection={handleTextSelection}
+                        onReply={(messageIndex, messageContent) => {
+                            onSetReplyContext(messageIndex, messageContent);
+                            setQuestion(`Reply to: "${messageContent.slice(0, 50)}${messageContent.length > 50 ? '...' : ''}" - `);
+                        }}
                     />
                     <ChatInput
                         question={question}
@@ -249,6 +288,8 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                         fullScreen={true}
                         contextLines={contextLines}
                         onContextLinesChange={onContextLinesChange}
+                        selectedModelId={selectedModelId}
+                        onModelChange={onModelChange}
                     />
                 </Box>
             </Dialog>
@@ -393,6 +434,8 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                 fullScreen={false}
                 contextLines={contextLines}
                 onContextLinesChange={onContextLinesChange}
+                selectedModelId={selectedModelId}
+                onModelChange={onModelChange}
             />
         </Paper>
     );
@@ -405,6 +448,9 @@ interface ChatContentProps {
     currentChapterTitle: string;
     fullScreen: boolean;
     currentSentence: string;
+    loading: boolean;
+    onTextSelection: (selectedText: string) => void;
+    onReply: (messageIndex: number, messageContent: string) => void;
 }
 
 const ChatContent: React.FC<ChatContentProps> = ({
@@ -416,7 +462,10 @@ const ChatContent: React.FC<ChatContentProps> = ({
     currentChapterTitle,
     fullScreen,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    currentSentence
+    currentSentence,
+    loading,
+    onTextSelection,
+    onReply
 }) => {
     const theme = useTheme();
 
@@ -504,20 +553,112 @@ const ChatContent: React.FC<ChatContentProps> = ({
                                 : theme.palette.mode === 'light'
                                     ? '0 1px 3px rgba(0,0,0,0.08)'
                                     : '0 1px 3px rgba(0,0,0,0.16)',
-                            transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)'
+                            transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
+                            userSelect: 'text',
+                            cursor: 'text'
+                        }}
+                        onMouseUp={() => {
+                            const selection = window.getSelection();
+                            const selectedText = selection?.toString();
+                            if (selectedText && selectedText.trim()) {
+                                onTextSelection(selectedText);
+                            }
                         }}
                     >
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                fontSize: fullScreen ? '1rem' : '0.875rem',
-                                lineHeight: 1.5,
-                                fontWeight: 400,
-                                whiteSpace: 'pre-wrap'
-                            }}
-                        >
-                            {message.content}
-                        </Typography>
+                        {message.role === 'assistant' ? (
+                            <ReactMarkdown
+                                components={{
+                                    p: ({ children }) => (
+                                        <Typography
+                                            component="div"
+                                            sx={{
+                                                fontSize: fullScreen ? '1rem' : '0.875rem',
+                                                lineHeight: 1.5,
+                                                fontWeight: 400,
+                                                margin: 0,
+                                                '&:not(:last-child)': { mb: 1 }
+                                            }}
+                                        >
+                                            {children}
+                                        </Typography>
+                                    ),
+                                    strong: ({ children }) => (
+                                        <Typography component="span" sx={{ fontWeight: 600 }}>
+                                            {children}
+                                        </Typography>
+                                    ),
+                                    em: ({ children }) => (
+                                        <Typography component="span" sx={{ fontStyle: 'italic' }}>
+                                            {children}
+                                        </Typography>
+                                    ),
+                                    ul: ({ children }) => (
+                                        <Box component="ul" sx={{ mt: 1, mb: 1, pl: 2 }}>
+                                            {children}
+                                        </Box>
+                                    ),
+                                    ol: ({ children }) => (
+                                        <Box component="ol" sx={{ mt: 1, mb: 1, pl: 2 }}>
+                                            {children}
+                                        </Box>
+                                    ),
+                                    li: ({ children }) => (
+                                        <Typography
+                                            component="li"
+                                            sx={{
+                                                fontSize: fullScreen ? '1rem' : '0.875rem',
+                                                lineHeight: 1.5,
+                                                mb: 0.5
+                                            }}
+                                        >
+                                            {children}
+                                        </Typography>
+                                    ),
+                                    code: ({ children }) => (
+                                        <Typography
+                                            component="code"
+                                            sx={{
+                                                backgroundColor: alpha(theme.palette.background.paper, 0.6),
+                                                px: 0.5,
+                                                py: 0.25,
+                                                borderRadius: '4px',
+                                                fontSize: '0.85em',
+                                                fontFamily: 'monospace'
+                                            }}
+                                        >
+                                            {children}
+                                        </Typography>
+                                    ),
+                                    blockquote: ({ children }) => (
+                                        <Box
+                                            sx={{
+                                                borderLeft: `3px solid ${alpha(theme.palette.primary.main, 0.3)}`,
+                                                pl: 2,
+                                                my: 1,
+                                                fontStyle: 'italic',
+                                                color: alpha(theme.palette.text.primary, 0.8)
+                                            }}
+                                        >
+                                            {children}
+                                        </Box>
+                                    )
+                                }}
+                            >
+                                {message.content}
+                            </ReactMarkdown>
+                        ) : (
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    fontSize: fullScreen ? '1rem' : '0.875rem',
+                                    lineHeight: 1.5,
+                                    fontWeight: 400,
+                                    whiteSpace: 'pre-wrap'
+                                }}
+                            >
+                                {message.content}
+                            </Typography>
+                        )}
                         {message.role === 'user' && message.currentSentence && (
                             <Box
                                 sx={{
@@ -540,12 +681,37 @@ const ChatContent: React.FC<ChatContentProps> = ({
                                 </Typography>
                             </Box>
                         )}
+                        {message.role === 'user' && message.replyTo && (
+                            <Box
+                                sx={{
+                                    mt: 1.5,
+                                    pt: 1.5,
+                                    borderTop: `1px solid ${alpha(theme.palette.primary.contrastText, 0.2)}`,
+                                }}
+                            >
+                                <Typography
+                                    variant="caption"
+                                    sx={{
+                                        fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                                        fontWeight: 400,
+                                        color: alpha(theme.palette.primary.contrastText, 0.8),
+                                        fontStyle: 'italic',
+                                        lineHeight: 1.4
+                                    }}
+                                >
+                                    Replying to AI: &ldquo;{message.replyTo.content.slice(0, 100)}{message.replyTo.content.length > 100 ? '...' : ''}&rdquo;
+                                </Typography>
+                            </Box>
+                        )}
                         {message.role === 'assistant' && (
                             <Box
                                 sx={{
                                     mt: 2,
                                     pt: 2,
-                                    borderTop: `1px solid ${alpha(theme.palette.divider, 0.08)}`
+                                    borderTop: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
                                 }}
                             >
                                 <Typography
@@ -561,6 +727,23 @@ const ChatContent: React.FC<ChatContentProps> = ({
                                 >
                                     📖 Chapter {message.chapterContext.number}: {message.chapterContext.title}
                                 </Typography>
+                                <Button
+                                    size="small"
+                                    onClick={() => onReply(index, message.content)}
+                                    sx={{
+                                        fontSize: fullScreen ? '0.6875rem' : '0.625rem',
+                                        color: alpha(theme.palette.text.secondary, 0.7),
+                                        minWidth: 'auto',
+                                        px: 1,
+                                        py: 0.5,
+                                        textTransform: 'none',
+                                        '&:hover': {
+                                            backgroundColor: alpha(theme.palette.primary.main, 0.08)
+                                        }
+                                    }}
+                                >
+                                    Reply
+                                </Button>
                             </Box>
                         )}
                     </Box>
@@ -580,11 +763,15 @@ const ChatContent: React.FC<ChatContentProps> = ({
                             minute: '2-digit'
                         })}
                         {message.role === 'assistant' && message.cost && (
-                            <span> • ${message.cost.toFixed(4)}</span>
+                            <span> • ${message.cost.toFixed(4)}{message.estimatedCost ? ` ($${message.estimatedCost.toFixed(4)})` : ''}</span>
                         )}
                     </Typography>
                 </Box>
             ))}
+
+            {/* Show typing indicator when loading */}
+            {loading && <TypingIndicator fullScreen={fullScreen} />}
+
             <div ref={messagesEndRef} />
         </Box>
     );
@@ -599,6 +786,8 @@ interface ChatInputProps {
     fullScreen: boolean;
     contextLines: number;
     onContextLinesChange: (lines: number) => void;
+    selectedModelId: string;
+    onModelChange: (modelId: string) => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -609,7 +798,9 @@ const ChatInput: React.FC<ChatInputProps> = ({
     onKeyPress,
     fullScreen,
     contextLines,
-    onContextLinesChange
+    onContextLinesChange,
+    selectedModelId,
+    onModelChange
 }) => {
     const theme = useTheme();
 
@@ -663,46 +854,17 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 ))}
             </Stack>
 
-            {/* Input Row */}
+            {/* Main Input Row */}
             <Box
                 component="form"
                 onSubmit={onSubmit}
                 sx={{
                     display: 'flex',
-                    gap: 1,
-                    alignItems: 'flex-end'
+                    gap: 2,
+                    alignItems: 'flex-end',
+                    mb: 2
                 }}
             >
-                {/* Context Lines Selector */}
-                <FormControl size="small" sx={{ minWidth: 60 }}>
-                    <Select
-                        value={contextLines}
-                        onChange={(e) => onContextLinesChange(Number(e.target.value))}
-                        disabled={loading}
-                        sx={{
-                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
-                            height: 36,
-                            borderRadius: '8px',
-                            backgroundColor: alpha(theme.palette.background.default, 0.6),
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: `1px solid ${alpha(theme.palette.divider, 0.12)}`
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: `1px solid ${theme.palette.primary.main}`
-                            }
-                        }}
-                    >
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                            <MenuItem key={num} value={num} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>
-                                {num}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-
                 {/* Text Input */}
                 <TextField
                     fullWidth
@@ -791,6 +953,106 @@ const ChatInput: React.FC<ChatInputProps> = ({
                         <Send sx={{ fontSize: 20 }} />
                     )}
                 </IconButton>
+            </Box>
+
+            {/* Context Lines Selector - Under input */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                {/* Context Selector */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                            color: 'text.secondary',
+                            minWidth: 'auto'
+                        }}
+                    >
+                        Context:
+                    </Typography>
+                    <FormControl size="small" sx={{ minWidth: 60 }}>
+                        <Select
+                            value={contextLines}
+                            onChange={(e) => onContextLinesChange(Number(e.target.value))}
+                            disabled={loading}
+                            sx={{
+                                fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                                height: 28,
+                                borderRadius: '6px',
+                                backgroundColor: alpha(theme.palette.background.default, 0.6),
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: `1px solid ${alpha(theme.palette.divider, 0.12)}`
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`
+                                },
+                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: `1px solid ${theme.palette.primary.main}`
+                                }
+                            }}
+                        >
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                                <MenuItem key={num} value={num} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>
+                                    {num}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                            color: 'text.secondary'
+                        }}
+                    >
+                        lines
+                    </Typography>
+                </Box>
+
+                {/* Model Selector */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                            color: 'text.secondary',
+                            minWidth: 'auto'
+                        }}
+                    >
+                        Model:
+                    </Typography>
+                    <FormControl size="small" sx={{ minWidth: 120 }}>
+                        <Select
+                            value={selectedModelId}
+                            onChange={(e) => onModelChange(e.target.value)}
+                            disabled={loading}
+                            sx={{
+                                fontSize: fullScreen ? '0.75rem' : '0.6875rem',
+                                height: 28,
+                                borderRadius: '6px',
+                                backgroundColor: alpha(theme.palette.background.default, 0.6),
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: `1px solid ${alpha(theme.palette.divider, 0.12)}`
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`
+                                },
+                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: `1px solid ${theme.palette.primary.main}`
+                                }
+                            }}
+                        >
+                            {getAllModels().map((model) => (
+                                <MenuItem
+                                    key={model.id}
+                                    value={model.id}
+                                    sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}
+                                >
+                                    {model.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
             </Box>
         </Box>
     );

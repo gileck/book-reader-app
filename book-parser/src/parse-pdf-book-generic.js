@@ -224,28 +224,35 @@ function detectChapters(text, config) {
     const excludePattern = config.excludePatterns.length > 0 ?
         new RegExp(config.excludePatterns.join('|'), 'i') : null;
 
-    // Auto-detect content start by finding "Contents" page and skipping the entire TOC
+    // Auto-detect content start by finding "Contents" page and looking for first chapter
     let contentStartIndex = 0;
     for (let i = 0; i < Math.min(lines.length, 200); i++) { // Check first 200 lines
         const line = lines[i].toLowerCase();
         if (line.includes('contents') || line.includes('table of contents')) {
-            // Skip much further to get past the entire table of contents
-            // Look for the first substantial content after TOC
-            contentStartIndex = i + 50; // Start looking from +50 lines after Contents
+            // Look for the first chapter title from config right after TOC
+            contentStartIndex = i + 5; // Start looking just a few lines after Contents
 
-            // Find first line that looks like actual chapter content (not TOC entry)
-            for (let j = contentStartIndex; j < Math.min(lines.length, i + 200); j++) {
+            // Search for the first chapter title from our config
+            let foundFirstChapter = false;
+            for (let j = i + 5; j < Math.min(lines.length, i + 100); j++) {
                 const candidateLine = lines[j];
 
-                // Look for lines that start chapter content (not TOC entries)
-                // TOC entries are usually short and have page numbers nearby
-                // Real content starts with substantial text
-                if (candidateLine.length > 50 &&
-                    !candidateLine.match(/^\d+$/) && // Not just a page number
-                    !candidateLine.match(/^[A-Z][a-z\s]{5,40}$/)) { // Not a short title line
-                    contentStartIndex = j - 5; // Start a bit before to catch chapter title
-                    break;
+                // Check if this line matches any chapter from config
+                if (config.chapterNames && config.chapterNames.length > 0) {
+                    const matchingTitle = config.chapterNames.find(title => fuzzyMatch(candidateLine, title));
+                    if (matchingTitle) {
+                        contentStartIndex = j - 2; // Start a bit before the chapter title
+                        foundFirstChapter = true;
+                        console.log(`DEBUG: Found first chapter "${matchingTitle}" at line ${j}, starting detection from line ${contentStartIndex}`);
+                        break;
+                    }
                 }
+            }
+
+            // If no chapter found, fall back to conservative approach
+            if (!foundFirstChapter) {
+                contentStartIndex = i + 15; // More conservative than before
+                console.log(`DEBUG: No first chapter found, using fallback start at line ${contentStartIndex}`);
             }
 
             console.log(`DEBUG: Found "Contents" at line ${i}, starting chapter detection from line ${contentStartIndex}`);
@@ -262,92 +269,81 @@ function detectChapters(text, config) {
         }
     }
 
-    // For explicit chapters, find first occurrence of each chapter name after content start
+    // For explicit chapters, find ALL occurrences of each chapter name and pick the best one
     if (config.chapterNames && config.chapterNames.length > 0) {
-        let chapterOccurrences = [];
-        let usedChapterTitles = new Set();
+        let allChapterOccurrences = {};
 
-        // Find first occurrence of each chapter name after content start using fuzzy matching
-        for (let i = contentStartIndex; i < lines.length; i++) {
+        // Find ALL occurrences of each chapter name using fuzzy matching
+        for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 
             // Find matching title using fuzzy matching
             const matchingTitle = config.chapterNames.find(title => fuzzyMatch(line, title));
 
-            if (matchingTitle && !usedChapterTitles.has(matchingTitle)) {
-                chapterOccurrences.push({ line: matchingTitle, index: i });
-                usedChapterTitles.add(matchingTitle);
+            if (matchingTitle) {
+                if (!allChapterOccurrences[matchingTitle]) {
+                    allChapterOccurrences[matchingTitle] = [];
+                }
+                allChapterOccurrences[matchingTitle].push({ line: matchingTitle, index: i, originalLine: line });
 
                 if (process.env.DEBUG_TEXT) {
-                    console.log(`DEBUG: Fuzzy matched line ${i}: "${line}"`);
-                    console.log(`  → Matched config title: "${matchingTitle}"`);
-                    console.log(`  → Normalized line: "${normalizeText(line)}"`);
-                    console.log(`  → Normalized title: "${normalizeText(matchingTitle)}"`);
-                } else {
-                    console.log(`DEBUG: Found first occurrence of "${matchingTitle}" at line ${i}`);
+                    console.log(`DEBUG: Found occurrence of "${matchingTitle}" at line ${i}: "${line}"`);
                 }
-            }
-
-            // DEBUG: Show what we're looking for vs what we found (only for potential matches)
-            else if (process.env.DEBUG_TEXT && config.chapterNames.some(title =>
-                normalizeText(line).includes(normalizeText(title).substring(0, 15)))) {
-                console.log(`DEBUG: Near-miss line ${i}: "${line}"`);
-                config.chapterNames.forEach(title => {
-                    const fuzzy = fuzzyMatch(line, title);
-                    const used = usedChapterTitles.has(title);
-                    console.log(`  vs "${title}": fuzzy=${fuzzy}, used=${used}`);
-                });
             }
         }
 
-        console.log(`DEBUG: Found ${chapterOccurrences.length} unique chapter occurrences after content start`);
+        // For each chapter, pick the occurrence that has the most content after it
+        let chapterOccurrences = [];
+        for (const [chapterTitle, occurrences] of Object.entries(allChapterOccurrences)) {
+            let bestOccurrence = null;
+            let maxContentLines = 0;
 
-        // Validate chapters have content following them (simpler validation since we start after TOC)
-        let realChapters = [];
-        for (const occ of chapterOccurrences) {
-            let contentLines = 0;
-
-            // Check the next 20 lines for content (reduced from 50 since we start after TOC)
-            for (let j = occ.index + 1; j < Math.min(lines.length, occ.index + 20); j++) {
-                const nextLine = lines[j];
-
-                // Stop if we hit another chapter name (using fuzzy matching)
-                const isNextChapter = config.chapterNames.some(title => fuzzyMatch(nextLine, title));
-                if (isNextChapter) {
-                    break;
-                }
-
-                // Count substantial content lines
-                if (nextLine.length > 20 && !/^\d+$/.test(nextLine)) {
-                    contentLines++;
-                }
-            }
-
-            console.log(`DEBUG: Chapter "${occ.line}" at line ${occ.index} has ${contentLines} content lines`);
-
-            // DEBUG: Show what content was found/rejected
-            if (process.env.DEBUG_TEXT) {
-                for (let j = occ.index + 1; j < Math.min(lines.length, occ.index + 10); j++) {
+            for (const occurrence of occurrences) {
+                // Count content lines after this occurrence
+                let contentLines = 0;
+                for (let j = occurrence.index + 1; j < Math.min(lines.length, occurrence.index + 100); j++) {
                     const nextLine = lines[j];
+
+                    // Stop if we hit another chapter name
                     const isNextChapter = config.chapterNames.some(title => fuzzyMatch(nextLine, title));
-                    const isContent = nextLine.length > 20 && !/^\d+$/.test(nextLine);
-                    console.log(`  Line ${j}: isNextChapter=${isNextChapter}, isContent=${isContent}, text="${nextLine.substring(0, 50)}..."`);
-                    if (isNextChapter) break;
+                    if (isNextChapter) {
+                        break;
+                    }
+
+                    // Count substantial content lines
+                    if (nextLine.length > 20 && !/^\d+$/.test(nextLine)) {
+                        contentLines++;
+                    }
+                }
+
+                if (process.env.DEBUG_TEXT) {
+                    console.log(`DEBUG: "${chapterTitle}" at line ${occurrence.index} has ${contentLines} content lines`);
+                }
+
+                // Pick the occurrence with the most content
+                if (contentLines > maxContentLines) {
+                    maxContentLines = contentLines;
+                    bestOccurrence = occurrence;
                 }
             }
 
-            // Much simpler validation - just need some content after chapter title
-            if (contentLines >= 3) {
-                realChapters.push(occ);
+            if (bestOccurrence && maxContentLines >= 1) {
+                chapterOccurrences.push(bestOccurrence);
+                console.log(`DEBUG: Selected "${chapterTitle}" at line ${bestOccurrence.index} (${maxContentLines} content lines)`);
+            } else if (process.env.DEBUG_TEXT) {
+                console.log(`DEBUG: Rejected all occurrences of "${chapterTitle}" - insufficient content (${maxContentLines} lines)`);
             }
         }
 
-        console.log(`DEBUG: Found ${realChapters.length} real chapters with content`);
+        console.log(`DEBUG: Found ${chapterOccurrences.length} chapters with validated content`);
 
-        // Process the real chapters
-        for (let chapterIdx = 0; chapterIdx < realChapters.length; chapterIdx++) {
-            const currentChapterOcc = realChapters[chapterIdx];
-            const nextChapterOcc = realChapters[chapterIdx + 1];
+        // Sort chapters by their line index to ensure proper order
+        chapterOccurrences.sort((a, b) => a.index - b.index);
+
+        // Process the selected chapters
+        for (let chapterIdx = 0; chapterIdx < chapterOccurrences.length; chapterIdx++) {
+            const currentChapterOcc = chapterOccurrences[chapterIdx];
+            const nextChapterOcc = chapterOccurrences[chapterIdx + 1];
 
             const startLine = currentChapterOcc.index;
             const endLine = nextChapterOcc ? nextChapterOcc.index : lines.length;
@@ -362,10 +358,12 @@ function detectChapters(text, config) {
                 const isPageNumber = /^\d+$/.test(line);
                 const isMetadata = /^(isbn|copyright|typeset|printed|published|all rights|first published|volume)/i.test(line);
 
-                if (line.length > 20 && !isPageNumber && !isMetadata) {
+                if (line.length > 10 && !isPageNumber && !isMetadata) {
                     chapterContent.push(line);
                 }
             }
+
+            console.log(`DEBUG: Chapter "${currentChapterOcc.line}" extracted ${chapterContent.length} content lines`);
 
             if (chapterContent.length > 0) {
                 chapters.push({
@@ -373,6 +371,9 @@ function detectChapters(text, config) {
                     title: currentChapterOcc.line,
                     content: chapterContent
                 });
+                console.log(`DEBUG: Added chapter "${currentChapterOcc.line}" to final list (total chapters: ${chapters.length})`);
+            } else {
+                console.log(`DEBUG: Skipped chapter "${currentChapterOcc.line}" - no valid content lines`);
             }
         }
     } else {

@@ -3,8 +3,7 @@ import {
     Box,
     IconButton,
     Typography,
-    LinearProgress,
-    CircularProgress
+    LinearProgress
 } from '@mui/material';
 import {
     PlayArrow,
@@ -241,46 +240,31 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     </IconButton>
 
                     {/* Play/Pause Button */}
-                    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                        <IconButton
-                            onClick={isPlaying ? onPause : onPlay}
-                            disabled={isCurrentChunkLoading}
-                            sx={{
+                    <IconButton
+                        onClick={isPlaying ? onPause : onPlay}
+                        disabled={isCurrentChunkLoading}
+                        sx={{
+                            backgroundColor: isCurrentChunkLoading
+                                ? '#ff9800'
+                                : isPlaying ? '#f44336' : '#4caf50',
+                            color: 'white',
+                            '&:hover': {
                                 backgroundColor: isCurrentChunkLoading
-                                    ? '#666'
-                                    : isPlaying ? '#f44336' : '#4caf50',
-                                color: 'white',
-                                '&:hover': {
-                                    backgroundColor: isCurrentChunkLoading
-                                        ? '#666'
-                                        : isPlaying ? '#d32f2f' : '#388e3c'
-                                },
-                                '&:disabled': {
-                                    backgroundColor: '#666',
-                                    color: 'rgba(255,255,255,0.6)'
-                                },
-                                width: 64,
-                                height: 64,
-                                mx: 1
-                            }}
-                            size="large"
-                        >
-                            {isPlaying ? <Pause sx={{ fontSize: 32 }} /> : <PlayArrow sx={{ fontSize: 32 }} />}
-                        </IconButton>
-                        {isCurrentChunkLoading && (
-                            <CircularProgress
-                                size={68}
-                                sx={{
-                                    color: '#4caf50',
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    zIndex: 1,
-                                }}
-                            />
-                        )}
-                    </Box>
+                                    ? '#f57c00'
+                                    : isPlaying ? '#d32f2f' : '#388e3c'
+                            },
+                            '&:disabled': {
+                                backgroundColor: '#ff9800',
+                                color: 'white'
+                            },
+                            width: 64,
+                            height: 64,
+                            mx: 1
+                        }}
+                        size="large"
+                    >
+                        {isPlaying ? <Pause sx={{ fontSize: 32 }} /> : <PlayArrow sx={{ fontSize: 32 }} />}
+                    </IconButton>
 
                     {/* Next Chunk Button */}
                     <IconButton
