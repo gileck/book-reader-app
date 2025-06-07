@@ -14,6 +14,7 @@ function convertBookToClient(book: any): BookClient {
         totalChapters: book.totalChapters,
         totalWords: book.totalWords,
         language: book.language,
+        imageBaseURL: book.imageBaseURL,
         createdAt: book.createdAt.toISOString(),
         updatedAt: book.updatedAt.toISOString(),
         isPublic: book.isPublic,

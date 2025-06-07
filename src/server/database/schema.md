@@ -44,6 +44,7 @@ interface Book {
   totalChapters: number;
   totalWords: number;
   language: string;         // Default: 'en-US'
+  imageBaseURL?: string;    // Relative path to book images folder (e.g., "/Transformer/images/")
   createdAt: Date;
   updatedAt: Date;
   isPublic: boolean;        // Whether book is publicly available
@@ -81,7 +82,7 @@ interface TextChunk {
   wordCount: number;
   type: 'text' | 'image';   // Support for embedded images
   pageNumber?: number;      // PDF page number for positioning (NEW)
-  imageUrl?: string;        // If type is 'image'
+  imageName?: string;       // Image filename (if type is 'image'), combined with S3_BASE + book.imageBaseURL
   imageAlt?: string;        // Alt text for images
 }
 ```
@@ -216,5 +217,18 @@ Chapter (1) ──> (N) ReadingProgress (via currentChapter)
 2. **Phase 2**: Add reading features (bookmarks, progress)
 3. **Phase 3**: Add user preferences (settings)
 4. **Phase 4**: Add audio caching optimization
+
+## Image URL Construction
+
+Images use a three-part URL construction system for maximum flexibility:
+
+1. **S3 Base Path** (hardcoded in app): `https://app-template-1252343.s3.amazonaws.com/Book_Reader_App/books`
+2. **Book Image Path** (stored in DB): `/Transformer/images/`
+3. **Image Filename** (stored in chunk): `page-005-image-1.jpg`
+
+**Full URL**: `S3_BASE_PATH + book.imageBaseURL + chunk.imageName`
+**Example**: `https://app-template-1252343.s3.amazonaws.com/Book_Reader_App/books/Transformer/images/page-005-image-1.jpg`
+
+This design allows easy migration of the entire image storage system by changing only the hardcoded base path.
 
 This schema supports all features outlined in the Product Definition Document while maintaining flexibility for future enhancements. 

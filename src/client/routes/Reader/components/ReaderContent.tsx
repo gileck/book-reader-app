@@ -2,9 +2,11 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { SimpleTextRenderer } from '../../../components/SimpleTextRenderer';
 import type { ChapterClient } from '../../../../apis/chapters/types';
+import type { BookClient } from '../../../../apis/books/types';
 
 interface ReaderContentProps {
     chapter: ChapterClient;
+    book: BookClient;
     scrollContainerRef: React.RefObject<HTMLDivElement | null>;
     currentChunkIndex: number;
     getWordStyle: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
@@ -18,6 +20,7 @@ interface ReaderContentProps {
 
 export const ReaderContent: React.FC<ReaderContentProps> = ({
     chapter,
+    book,
     scrollContainerRef,
     currentChunkIndex,
     getWordStyle,
@@ -32,6 +35,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
         <Box sx={{ mt: 4 }}>
             <SimpleTextRenderer
                 chapter={chapter}
+                book={book}
                 scrollContainerRef={scrollContainerRef}
                 currentChunkIndex={currentChunkIndex}
                 getWordStyle={getWordStyle}

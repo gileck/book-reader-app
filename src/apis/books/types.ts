@@ -10,6 +10,7 @@ export interface BookClient {
     totalChapters: number;
     totalWords: number;
     language: string;
+    imageBaseURL?: string;
     createdAt: string;
     updatedAt: string;
     isPublic: boolean;

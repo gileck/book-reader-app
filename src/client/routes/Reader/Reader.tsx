@@ -208,6 +208,7 @@ export const Reader = () => {
                     <ReaderHeader book={book} chapter={chapter} />
                     <ReaderContent
                         chapter={chapter}
+                        book={book}
                         scrollContainerRef={scrollContainerRef}
                         currentChunkIndex={currentChunkIndex}
                         getWordStyle={getOptimizedWordStyle}

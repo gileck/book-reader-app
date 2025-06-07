@@ -9,6 +9,7 @@ export interface Book {
     totalChapters: number;
     totalWords: number;
     language: string;
+    imageBaseURL?: string;
     createdAt: Date;
     updatedAt: Date;
     isPublic: boolean;

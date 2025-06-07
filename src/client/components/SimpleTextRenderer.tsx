@@ -3,9 +3,12 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useUserTheme } from './UserThemeProvider';
 import type { ChapterClient } from '../../apis/chapters/types';
+import type { BookClient } from '../../apis/books/types';
+import { S3_IMAGES_BASE_PATH } from '../../common/constants';
 
 interface SimpleTextRendererProps {
     chapter: ChapterClient;
+    book: BookClient;
     scrollContainerRef: React.RefObject<HTMLDivElement | null>;
     currentChunkIndex: number;
     getWordStyle: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
@@ -19,6 +22,7 @@ interface SimpleTextRendererProps {
 
 export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     chapter,
+    book,
     currentChunkIndex,
     getWordStyle,
     getWordClassName,
@@ -232,7 +236,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                             ) : chunk.type === 'image' ? (
                                 <Box textAlign="center" my={2}>
                                     <Image
-                                        src={chunk.imageUrl || ''}
+                                        src={book.imageBaseURL && chunk.imageName ? `${S3_IMAGES_BASE_PATH}${book.imageBaseURL}${chunk.imageName}` : ''}
                                         alt={chunk.imageAlt || 'Chapter image'}
                                         width={800}
                                         height={400}

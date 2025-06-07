@@ -5,7 +5,7 @@ export interface TextChunkClient {
     wordCount: number;
     type: 'text' | 'image' | 'header';
     pageNumber?: number;
-    imageUrl?: string;
+    imageName?: string;
     imageAlt?: string;
 }
 
