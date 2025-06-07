@@ -575,10 +575,15 @@ function mapChunksToChapters(allChunks, chapters) {
         console.log(`   📋 First header found: "${foundHeaders[0].title}" at chunk ${firstFoundChunkIndex}`);
 
         // Find chapters that appear before the first found header in config order
+        // Also include chapters found in bibliography (late occurrences) as missing
         const missingChaptersBeforeFirst = [];
         for (let i = 0; i < firstFoundChapterIndex; i++) {
-            if (chapterStartIndices[i] === -1) {
+            if (chapterStartIndices[i] === -1 || chapterStartIndices[i] > firstFoundChunkIndex) {
+                // Chapter either not found OR found after first real header (likely bibliography)
                 missingChaptersBeforeFirst.push(i);
+                if (chapterStartIndices[i] > firstFoundChunkIndex) {
+                    console.log(`   🔧 Treating "${chapters[i].title}" as missing (found in bibliography at chunk ${chapterStartIndices[i]})`);
+                }
             }
         }
 

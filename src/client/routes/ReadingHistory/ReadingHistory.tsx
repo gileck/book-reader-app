@@ -10,7 +10,6 @@ import {
     CircularProgress,
     Alert,
     Avatar,
-    IconButton,
     Collapse,
     useTheme,
     alpha
@@ -60,10 +59,6 @@ export const ReadingHistory: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleContinueReading = (session: ReadingSessionClient) => {
-        navigate(`/?bookId=${session.bookId}&chapter=${session.chapterNumber}`);
     };
 
     const handlePlayFromChunk = (session: ReadingSessionClient, chunkIndex: number) => {
@@ -255,25 +250,41 @@ export const ReadingHistory: React.FC = () => {
 
                                     <ListItemText
                                         primary={
-                                            <Typography
-                                                sx={{
-                                                    fontSize: 17,
-                                                    fontWeight: 400,
-                                                    lineHeight: 1.29,
-                                                    color: theme.palette.text.primary,
-                                                    mb: 0.25,
-                                                    overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                    whiteSpace: 'nowrap'
-                                                }}
-                                            >
-                                                {session.bookTitle}
-                                            </Typography>
+                                            <Box>
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 17,
+                                                        fontWeight: 400,
+                                                        lineHeight: 1.29,
+                                                        color: theme.palette.text.primary,
+                                                        mb: 0.25,
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        whiteSpace: 'nowrap'
+                                                    }}
+                                                >
+                                                    {session.bookTitle}
+                                                </Typography>
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 15,
+                                                        fontWeight: 400,
+                                                        lineHeight: 1.33,
+                                                        color: theme.palette.text.secondary,
+                                                        mb: 0.25,
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        whiteSpace: 'nowrap'
+                                                    }}
+                                                >
+                                                    Chapter {session.chapterNumber}: {session.chapterTitle}
+                                                </Typography>
+                                            </Box>
                                         }
                                         secondary={
                                             <Typography
                                                 sx={{
-                                                    fontSize: 15,
+                                                    fontSize: 13,
                                                     color: theme.palette.text.secondary,
                                                     lineHeight: 1.33
                                                 }}
@@ -283,25 +294,7 @@ export const ReadingHistory: React.FC = () => {
                                         }
                                     />
 
-                                    <Box display="flex" alignItems="center" gap={0.5}>
-                                        <IconButton
-                                            size="small"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleContinueReading(session);
-                                            }}
-                                            sx={{
-                                                color: '#007AFF',
-                                                minWidth: 32,
-                                                minHeight: 32,
-                                                '&:hover': {
-                                                    backgroundColor: alpha('#007AFF', 0.1)
-                                                }
-                                            }}
-                                        >
-                                            <PlayIcon sx={{ fontSize: 18 }} />
-                                        </IconButton>
-
+                                    <Box display="flex" alignItems="center">
                                         {expandedSession === session.sessionId ?
                                             <ExpandLess sx={{ color: theme.palette.text.secondary, fontSize: 20 }} /> :
                                             <ExpandMore sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
@@ -364,7 +357,7 @@ export const ReadingHistory: React.FC = () => {
                                         </Typography>
                                     </Box>
 
-                                    {/* Individual Sentences */}
+                                    {/* Individual Lines */}
                                     <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
                                         {session.logs.map((log, logIndex) => (
                                             <ListItem
