@@ -2,34 +2,228 @@ const fs = require('fs');
 const path = require('path');
 const pdfParse = require('pdf-parse');
 const { MongoClient, ObjectId } = require('mongodb');
+const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
+const { execSync } = require('child_process');
 
-// Load book configurations
+// Load book configurations (now optional)
 function loadBookConfig(configPath) {
+    // If no config path provided, return defaults
     if (!configPath) {
-        throw new Error('Config file path is required');
+        console.log('No config file provided, using defaults');
+        return getDefaultConfig();
     }
 
     if (!fs.existsSync(configPath)) {
-        throw new Error(`Config file not found: ${configPath}`);
+        console.log(`Config file not found: ${configPath}, using defaults`);
+        return getDefaultConfig();
     }
 
-    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    try {
+        const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        console.log('Loaded config file successfully');
 
-    // Set defaults for optional fields
+        // Merge with defaults
+        return {
+            ...getDefaultConfig(),
+            ...config,
+            metadata: { ...getDefaultConfig().metadata, ...(config.metadata || {}) }
+        };
+    } catch (error) {
+        console.log(`Error reading config file: ${error.message}, using defaults`);
+        return getDefaultConfig();
+    }
+}
+
+function getDefaultConfig() {
     return {
-        chapterNames: config.chapterNames || [],
-        chapterPatterns: config.chapterPatterns || [
+        chapterNames: [],
+        chapterPatterns: [
             "^chapter\\s+(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)\\b",
             "^(\\d+)\\.\\s+([A-Za-z][a-zA-Z\\s]{8,40})$",
             "^(introduction|conclusion|epilogue|prologue|preface|foreword|afterword)$",
             "^[A-Z\\s]{5,30}$"
         ],
-        excludePatterns: config.excludePatterns || [
+        excludePatterns: [
             "^(appendix|bibliography|index|notes|references|acknowledgements|about the author|glossary)$"
         ],
-        skipFrontMatter: config.skipFrontMatter !== undefined ? config.skipFrontMatter : true,
-        chapterNumbering: config.chapterNumbering || "sequential",
-        metadata: config.metadata || { title: null, author: null }
+        skipFrontMatter: true,
+        chapterNumbering: "sequential",
+        metadata: { title: null, author: null }
+    };
+}
+
+/**
+ * Extract embedded images from PDF and save to local folder
+ */
+async function extractImages(pdfPath, bookTitle, bookFolderPath) {
+    console.log('🖼️  Extracting embedded images from PDF...');
+
+    // Create images directory in the book folder
+    const bookFolderName = bookTitle.replace(/[^a-zA-Z0-9]/g, '-');
+    const imagesDir = path.join(bookFolderPath, 'images', bookFolderName);
+    if (!fs.existsSync(imagesDir)) {
+        fs.mkdirSync(imagesDir, { recursive: true });
+        console.log(`📁 Created images directory: ${imagesDir}`);
+    }
+
+    const images = [];
+
+    // Step 1: Use PDF.js to detect which pages have images and how many
+    console.log('   🔍 Scanning pages for image locations...');
+    const pdfBuffer = fs.readFileSync(pdfPath);
+    const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
+
+    const pageImageMap = []; // Array of { pageNumber, imageCount }
+    let totalImagesDetected = 0;
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        try {
+            const page = await pdf.getPage(pageNum);
+            const operatorList = await page.getOperatorList();
+
+            let imageCount = 0;
+            for (let i = 0; i < operatorList.fnArray.length; i++) {
+                const fn = operatorList.fnArray[i];
+                if (fn === pdfjsLib.OPS.paintImageXObject) {
+                    imageCount++;
+                }
+            }
+
+            if (imageCount > 0) {
+                pageImageMap.push({ pageNumber: pageNum, imageCount });
+                totalImagesDetected += imageCount;
+                console.log(`     📄 Page ${pageNum}: ${imageCount} image(s)`);
+            }
+        } catch (pageError) {
+            console.log(`     ⚠️ Error scanning page ${pageNum}: ${pageError.message}`);
+        }
+    }
+
+    console.log(`   📊 Detected ${totalImagesDetected} images across ${pageImageMap.length} pages`);
+
+    try {
+        // Step 2: Extract actual images using pdfimages
+        const tempDir = path.join(__dirname, '../temp/pdfimages-temp');
+        if (!fs.existsSync(tempDir)) {
+            fs.mkdirSync(tempDir, { recursive: true });
+        }
+
+        console.log('   🔧 Extracting embedded images using pdfimages...');
+        const tempPrefix = path.join(tempDir, 'image');
+        execSync(`pdfimages -all "${pdfPath}" "${tempPrefix}"`, { stdio: 'inherit' });
+
+        // Get list of extracted files
+        const extractedFiles = fs.readdirSync(tempDir).filter(file =>
+            file.startsWith('image') && /\.(jpg|jpeg|png|ppm|pbm)$/i.test(file)
+        );
+
+        console.log(`   📊 Extracted ${extractedFiles.length} image files`);
+
+        // Step 3: Correlate extracted images with page locations
+        if (extractedFiles.length === totalImagesDetected) {
+            console.log('   ✅ Perfect match: extracted files = detected images');
+
+            let imageFileIndex = 0;
+            let globalImageCounter = 1;
+
+            // Go through pages in order and assign extracted images
+            for (const pageInfo of pageImageMap) {
+                for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
+                    if (imageFileIndex < extractedFiles.length) {
+                        const file = extractedFiles[imageFileIndex];
+                        const tempFilePath = path.join(tempDir, file);
+                        const finalFileName = `page-${String(pageInfo.pageNumber).padStart(3, '0')}-image-${pageImageIndex + 1}.jpg`;
+                        const finalFilePath = path.join(imagesDir, finalFileName);
+
+                        // Copy file to final location
+                        fs.copyFileSync(tempFilePath, finalFilePath);
+
+                        images.push({
+                            pageNumber: pageInfo.pageNumber,
+                            imageName: finalFileName,
+                            imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber})`,
+                            originalName: file,
+                            extracted: true
+                        });
+
+                        console.log(`     ✅ Page ${pageInfo.pageNumber}: ${finalFileName}`);
+                        imageFileIndex++;
+                        globalImageCounter++;
+                    }
+                }
+            }
+        } else {
+            console.log(`   ⚠️ Mismatch: extracted ${extractedFiles.length} files but detected ${totalImagesDetected} images`);
+            console.log('   🔄 Using fallback approach...');
+
+            // Fallback: distribute extracted images across detected pages proportionally
+            let imageFileIndex = 0;
+            let globalImageCounter = 1;
+
+            for (const pageInfo of pageImageMap) {
+                for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
+                    if (imageFileIndex < extractedFiles.length) {
+                        const file = extractedFiles[imageFileIndex];
+                        const tempFilePath = path.join(tempDir, file);
+                        const finalFileName = `page-${String(pageInfo.pageNumber).padStart(3, '0')}-image-${pageImageIndex + 1}.jpg`;
+                        const finalFilePath = path.join(imagesDir, finalFileName);
+
+                        // Copy file to final location
+                        fs.copyFileSync(tempFilePath, finalFilePath);
+
+                        images.push({
+                            pageNumber: pageInfo.pageNumber,
+                            imageName: finalFileName,
+                            imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber})`,
+                            originalName: file,
+                            extracted: true
+                        });
+
+                        console.log(`     ✅ Page ${pageInfo.pageNumber}: ${finalFileName}`);
+                        imageFileIndex++;
+                        globalImageCounter++;
+                    } else {
+                        // Create placeholder for remaining detected images
+                        images.push({
+                            pageNumber: pageInfo.pageNumber,
+                            imageName: `page-${pageInfo.pageNumber}-image-${pageImageIndex + 1}.placeholder`,
+                            imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber}) - Not extracted`,
+                            placeholder: true
+                        });
+                        globalImageCounter++;
+                    }
+                }
+            }
+        }
+
+        // Clean up temp directory
+        fs.rmSync(tempDir, { recursive: true });
+
+    } catch (error) {
+        console.log(`     ❌ Error extracting images: ${error.message}`);
+        console.log('   🔄 Using PDF.js detection only...');
+
+        // Fallback to PDF.js detection with placeholders
+        let globalImageCounter = 1;
+        for (const pageInfo of pageImageMap) {
+            for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
+                images.push({
+                    pageNumber: pageInfo.pageNumber,
+                    imageName: `page-${pageInfo.pageNumber}-image-${pageImageIndex + 1}.placeholder`,
+                    imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber}) - Detection only`,
+                    placeholder: true
+                });
+                globalImageCounter++;
+            }
+        }
+    }
+
+    console.log(`✅ Processed ${images.length} images with correct page numbers`);
+
+    // Return both images and folder information
+    return {
+        images,
+        imagesFolderPath: `./images/${bookFolderName}`
     };
 }
 
@@ -203,8 +397,398 @@ function fuzzyMatch(pdfLine, configTitle) {
     return false;
 }
 
-// Generic chapter detection function
-function detectChapters(text, config) {
+// TOC Extraction Functions
+async function extractTOCFromPdf(pdfPath) {
+    try {
+        const data = new Uint8Array(fs.readFileSync(pdfPath));
+        const doc = await pdfjsLib.getDocument(data).promise;
+
+        console.log(`PDF has ${doc.numPages} pages`);
+
+        // Check for PDF bookmarks/outlines first
+        const outline = await doc.getOutline();
+        if (outline && outline.length > 0) {
+            console.log('Found PDF bookmarks/outline, extracting chapters...');
+            const chapters = await extractBookmarks(outline, doc);
+            return {
+                source: 'pdf_bookmarks',
+                chapters: chapters
+            };
+        }
+
+        // If no bookmarks, search for TOC pages
+        console.log('No PDF bookmarks found, searching for TOC pages...');
+
+        const tocPages = [];
+        const searchTerms = ['contents', 'table of contents', 'index'];
+
+        // Search first 20 pages for TOC
+        const pagesToSearch = Math.min(20, doc.numPages);
+
+        for (let i = 1; i <= pagesToSearch; i++) {
+            const page = await doc.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ').toLowerCase();
+
+            // Check if page contains TOC indicators
+            const hasTOC = searchTerms.some(term => pageText.includes(term));
+            if (hasTOC) {
+                console.log(`Found potential TOC on page ${i}`);
+                tocPages.push({
+                    pageNum: i,
+                    textItems: textContent.items
+                });
+            }
+        }
+
+        if (tocPages.length === 0) {
+            console.log('No TOC pages found');
+            return null;
+        }
+
+        // Parse TOC structure from found pages
+        const allChapters = [];
+
+        for (const tocPage of tocPages) {
+            console.log(`Parsing TOC from page ${tocPage.pageNum}:`);
+            const tocEntries = parseTOCEntries(tocPage.textItems);
+            allChapters.push(...tocEntries);
+        }
+
+        return {
+            source: 'text_parsing',
+            chapters: allChapters
+        };
+
+    } catch (error) {
+        console.error('Error extracting TOC:', error);
+        return null;
+    }
+}
+
+async function extractBookmarks(outline, doc, level = 0) {
+    const chapters = [];
+
+    for (const item of outline) {
+        // Skip non-chapter items like "Contents"
+        if (item.title.toLowerCase() === 'contents') {
+            continue;
+        }
+
+        const chapter = parseChapterFromBookmark(item.title);
+        if (chapter) {
+            // Try to get page number from destination
+            if (item.dest) {
+                try {
+                    const pageNum = await getPageNumberFromDest(item.dest, doc);
+                    chapter.startingPage = pageNum;
+                } catch (error) {
+                    console.log(`Could not get page number for "${item.title}": ${error.message}`);
+                }
+            }
+            chapters.push(chapter);
+        }
+
+        if (item.items && item.items.length > 0) {
+            const subChapters = await extractBookmarks(item.items, doc, level + 1);
+            chapters.push(...subChapters);
+        }
+    }
+
+    return chapters;
+}
+
+async function getPageNumberFromDest(dest, doc) {
+    try {
+        // dest is usually an array where the first element contains page reference
+        if (Array.isArray(dest) && dest.length > 0) {
+            const pageRef = dest[0];
+            if (pageRef && typeof pageRef === 'object' && pageRef.num !== undefined) {
+                // Get page index from reference
+                const pageIndex = await doc.getPageIndex(pageRef);
+                return pageIndex + 1; // Convert 0-based to 1-based page number
+            }
+        }
+    } catch (error) {
+        throw new Error(`Failed to resolve page reference: ${error.message}`);
+    }
+    return null;
+}
+
+function parseChapterFromBookmark(title) {
+    // Remove leading/trailing whitespace
+    title = title.trim();
+
+    // Pattern for numbered chapters: "1 The Search for Emotion's "Fingerprints""
+    const numberedChapterMatch = title.match(/^(\d+)\s+(.+)$/);
+    if (numberedChapterMatch) {
+        return {
+            chapterNumber: parseInt(numberedChapterMatch[1]),
+            chapterTitle: numberedChapterMatch[2].trim(),
+            startingPage: null, // Will be filled if we can extract from dest
+            originalTitle: title
+        };
+    }
+
+    // Pattern for introduction or other special chapters
+    if (title.toLowerCase().includes('introduction')) {
+        return {
+            chapterNumber: 0, // or null for Introduction
+            chapterTitle: title,
+            startingPage: null,
+            originalTitle: title
+        };
+    }
+
+    // Pattern for appendices: "Appendix A", "Appendix B", etc.
+    const appendixMatch = title.match(/^Appendix\s+([A-Z])/i);
+    if (appendixMatch) {
+        return {
+            chapterNumber: `Appendix ${appendixMatch[1]}`,
+            chapterTitle: title,
+            startingPage: null,
+            originalTitle: title
+        };
+    }
+
+    // Other sections (Acknowledgments, Bibliography, Notes, Index)
+    const otherSections = ['acknowledgments', 'bibliography', 'notes', 'index'];
+    if (otherSections.some(section => title.toLowerCase().includes(section))) {
+        return {
+            chapterNumber: null,
+            chapterTitle: title,
+            startingPage: null,
+            originalTitle: title
+        };
+    }
+
+    return null;
+}
+
+function parseTOCEntries(textItems) {
+    const entries = [];
+    let currentLine = '';
+    let currentY = null;
+
+    // Group text items by line (same Y coordinate)
+    const lines = [];
+
+    for (const item of textItems) {
+        const y = Math.round(item.transform[5]); // Y coordinate
+
+        if (currentY === null || Math.abs(y - currentY) > 5) {
+            // New line
+            if (currentLine.trim()) {
+                lines.push({
+                    text: currentLine.trim(),
+                    y: currentY
+                });
+            }
+            currentLine = item.str;
+            currentY = y;
+        } else {
+            // Same line
+            currentLine += item.str;
+        }
+    }
+
+    // Add last line
+    if (currentLine.trim()) {
+        lines.push({
+            text: currentLine.trim(),
+            y: currentY
+        });
+    }
+
+    // Parse each line for TOC patterns
+    for (const line of lines) {
+        const tocEntry = parseTOCLine(line.text);
+        if (tocEntry) {
+            entries.push(tocEntry);
+        }
+    }
+
+    return entries;
+}
+
+function parseTOCLine(text) {
+    // Skip common non-TOC text
+    const skipPatterns = [
+        /^contents?$/i,
+        /^table of contents$/i,
+        /^page$/i,
+        /^chapter$/i
+    ];
+
+    if (skipPatterns.some(pattern => pattern.test(text.trim()))) {
+        return null;
+    }
+
+    // Look for patterns like:
+    // "1. The Search for Emotion's "Fingerprints" 1"
+    // "Introduction: The Two-Thousand-Year-Old Assumption ix"
+    // "Appendix A: Brain Basics 302"
+
+    const patterns = [
+        // Numbered chapter: "1. Title 25" or "1 Title 25"
+        /^(\d+)\.?\s+(.+?)\s+(\d+)$/,
+        // Introduction or special chapters: "Introduction: Title ix" or "Introduction: Title 25"
+        /^(Introduction[:\s]*.*?)\s+([ivx]+|\d+)$/i,
+        // Appendix: "Appendix A: Title 302"
+        /^(Appendix\s+[A-Z][:\s]*.*?)\s+(\d+)$/i,
+        // Other sections: "Acknowledgments 293", "Bibliography 321"
+        /^([A-Za-z\s]+)\s+(\d+)$/
+    ];
+
+    for (const pattern of patterns) {
+        const match = text.match(pattern);
+        if (match) {
+            const titlePart = match[1].trim();
+            const pagePart = match[2];
+
+            // Parse chapter number and title
+            let chapterNumber = null;
+            let chapterTitle = titlePart;
+
+            // Extract chapter number if it's a numbered chapter
+            const numberedMatch = titlePart.match(/^(\d+)\.?\s*(.*)$/);
+            if (numberedMatch) {
+                chapterNumber = parseInt(numberedMatch[1]);
+                chapterTitle = numberedMatch[2].trim();
+            } else if (titlePart.toLowerCase().includes('introduction')) {
+                chapterNumber = 0;
+            } else if (titlePart.toLowerCase().includes('appendix')) {
+                const appendixMatch = titlePart.match(/appendix\s+([A-Z])/i);
+                if (appendixMatch) {
+                    chapterNumber = `Appendix ${appendixMatch[1]}`;
+                }
+            }
+
+            return {
+                chapterNumber: chapterNumber,
+                chapterTitle: chapterTitle,
+                startingPage: isNaN(parseInt(pagePart)) ? pagePart : parseInt(pagePart),
+                originalText: text
+            };
+        }
+    }
+
+    return null;
+}
+
+// Extract chapter content using TOC data
+async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath) {
+    try {
+        // Filter out non-content chapters (appendix, bibliography, etc.)
+        const contentChapters = tocChapters.filter(ch =>
+            typeof ch.chapterNumber === 'number' &&
+            ch.chapterNumber >= 0 &&
+            ch.startingPage
+        );
+
+        if (contentChapters.length === 0) {
+            console.log('No content chapters found in TOC');
+            return null;
+        }
+
+        console.log(`Extracting content for ${contentChapters.length} chapters using page-based extraction`);
+
+        // Use pdfjs to extract text page by page for precise chapter boundaries
+        const data = new Uint8Array(fs.readFileSync(pdfPath));
+        const doc = await pdfjsLib.getDocument(data).promise;
+
+        const chapters = [];
+
+        for (let i = 0; i < contentChapters.length; i++) {
+            const currentChapter = contentChapters[i];
+            const nextChapter = contentChapters[i + 1];
+
+            const startPage = currentChapter.startingPage;
+            const endPage = nextChapter ? nextChapter.startingPage - 1 : doc.numPages;
+
+            console.log(`Extracting "${currentChapter.chapterTitle}" from pages ${startPage} to ${endPage}`);
+
+            const chapterContent = [];
+
+            // Extract text from pages for this chapter
+            for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+                try {
+                    const page = await doc.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+
+                    // Combine text items from the page
+                    const pageText = textContent.items
+                        .map(item => item.str)
+                        .join(' ')
+                        .trim();
+
+                    if (pageText.length > 50) { // Only include pages with substantial content
+                        chapterContent.push(pageText);
+                    }
+                } catch (error) {
+                    console.log(`Error extracting page ${pageNum}: ${error.message}`);
+                }
+            }
+
+            if (chapterContent.length > 0) {
+                const combinedContent = chapterContent.join(' ')
+                    // Clean up the text
+                    .replace(/\s+/g, ' ')
+                    .trim();
+
+                // Split into reasonable chunks/paragraphs for content array
+                const contentLines = combinedContent
+                    .split(/[.!?]+\s+/)
+                    .filter(line => line.trim().length > 20)
+                    .map(line => line.trim() + (line.endsWith('.') ? '' : '.'));
+
+                chapters.push({
+                    chapterNumber: currentChapter.chapterNumber,
+                    title: currentChapter.chapterTitle,
+                    content: contentLines,
+                    startingPage: startPage,
+                    endingPage: endPage
+                });
+
+                console.log(`✅ Extracted ${contentLines.length} content segments for "${currentChapter.chapterTitle}"`);
+            } else {
+                console.log(`⚠️ No content found for "${currentChapter.chapterTitle}"`);
+            }
+        }
+
+        return chapters.length > 0 ? chapters : null;
+
+    } catch (error) {
+        console.error('Error extracting chapter content from TOC:', error);
+        return null;
+    }
+}
+
+// Generic chapter detection function with TOC support
+async function detectChapters(text, config, pdfPath = null) {
+    // Try TOC extraction first if PDF path is provided
+    if (pdfPath) {
+        console.log('🔍 Attempting TOC extraction...');
+        const tocData = await extractTOCFromPdf(pdfPath);
+
+        if (tocData && tocData.chapters && tocData.chapters.length > 0) {
+            console.log(`✅ Found ${tocData.chapters.length} chapters via ${tocData.source}`);
+
+            // Extract chapter content using TOC data and full text
+            const chapters = await extractChapterContentFromTOC(tocData.chapters, text, pdfPath);
+
+            if (chapters && chapters.length > 0) {
+                console.log(`✅ Successfully extracted content for ${chapters.length} chapters using TOC`);
+                return chapters;
+            } else {
+                console.log('⚠️ TOC found but failed to extract content, falling back to text-based detection');
+            }
+        } else {
+            console.log('⚠️ No TOC found, falling back to text-based chapter detection');
+        }
+    }
+
+    // Fallback to original text-based detection
     // DEBUG: Output raw text to file for inspection
     if (process.env.DEBUG_TEXT) {
         const fs = require('fs');
@@ -541,12 +1125,45 @@ function convertChaptersToDbFormat(chapters) {
         const chapterText = chapter.content.join(' ');
         const ttsChunks = chunkText(chapterText);
 
-        const dbChunks = ttsChunks.map((chunk, index) => ({
-            index,
-            text: chunk.text,
-            wordCount: chunk.words.length,
-            type: 'text'
-        }));
+        const dbChunks = ttsChunks.map((chunk, index) => {
+            let text = chunk.text;
+
+            // Clean the first chunk by removing chapter title
+            if (index === 0) {
+                const titleToRemove = chapter.title;
+                const chapterNum = chapter.chapterNumber;
+
+                // Try multiple patterns:
+                // 1. "1 The Search for Emotion's "Fingerprints" O nce upon..."
+                // 2. "Introduction: The Two-Thousand-Year-Old Assumption O n December..."
+                const patterns = [];
+
+                if (typeof chapterNum === 'number') {
+                    // For numbered chapters: try "1 Title" pattern
+                    patterns.push(`${chapterNum} ${titleToRemove}`);
+                }
+                // Also try just the title
+                patterns.push(titleToRemove);
+
+                for (const pattern of patterns) {
+                    if (text.startsWith(pattern)) {
+                        const cleaned = text.substring(pattern.length).trim();
+                        if (cleaned.length > 10) { // Make sure we don't remove too much
+                            text = cleaned;
+                            console.log(`✂️  Removed "${pattern}" from first chunk of "${chapter.title}"`);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return {
+                index,
+                text: text,
+                wordCount: chunk.words.length,
+                type: 'text'
+            };
+        });
 
         const totalWords = dbChunks.reduce((sum, chunk) => sum + chunk.wordCount, 0);
 
@@ -559,6 +1176,163 @@ function convertChaptersToDbFormat(chapters) {
             wordCount: totalWords
         };
     });
+}
+
+/**
+ * Create unified chunks with text and images, maintaining page correlation
+ */
+function createPageAwareChunksWithImages(chapters, images) {
+    console.log('🔗 Creating page-aware chunks with images...');
+
+    // Create a map of images by page for quick lookup
+    const imagesByPage = {};
+    images.forEach(image => {
+        if (!imagesByPage[image.pageNumber]) {
+            imagesByPage[image.pageNumber] = [];
+        }
+        imagesByPage[image.pageNumber].push(image);
+    });
+
+    // Process each chapter
+    const enhancedChapters = chapters.map(chapter => {
+        const allChunks = [];
+        let chunkIndex = 0;
+
+        // Get text chunks from the chapter content
+        const chapterText = chapter.content.join(' ');
+        const textChunks = chunkText(chapterText);
+
+        // Convert text chunks and intersperse with images
+        textChunks.forEach((chunk, index) => {
+            let text = chunk.text;
+
+            // Clean the first chunk by removing chapter title
+            if (index === 0) {
+                const titleToRemove = chapter.title;
+                const chapterNum = chapter.chapterNumber;
+
+                // Try multiple patterns:
+                // 1. "1 The Search for Emotion's "Fingerprints" O nce upon..."
+                // 2. "Introduction: The Two-Thousand-Year-Old Assumption O n December..."
+                const patterns = [];
+
+                if (typeof chapterNum === 'number') {
+                    // For numbered chapters: try "1 Title" pattern
+                    patterns.push(`${chapterNum} ${titleToRemove}`);
+                }
+                // Also try just the title
+                patterns.push(titleToRemove);
+
+                for (const pattern of patterns) {
+                    if (text.startsWith(pattern)) {
+                        const cleaned = text.substring(pattern.length).trim();
+                        if (cleaned.length > 10) { // Make sure we don't remove too much
+                            text = cleaned;
+                            console.log(`✂️  Removed "${pattern}" from first chunk of "${chapter.title}"`);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            allChunks.push({
+                index: chunkIndex++,
+                text: text,
+                wordCount: chunk.words.length,
+                type: 'text'
+            });
+        });
+
+        // Add images that belong to this specific chapter based on their actual page numbers
+        let addedImages = 0;
+
+        // Go through all images and add those that fall within this chapter's page range
+        images.forEach(image => {
+            const imagePage = image.pageNumber;
+
+            // Check if this image's page falls within this chapter's range
+            if (chapter.startingPage && chapter.endingPage) {
+                if (imagePage >= chapter.startingPage && imagePage <= chapter.endingPage) {
+                    allChunks.push({
+                        index: chunkIndex++,
+                        text: "",
+                        wordCount: 0,
+                        type: 'image',
+                        pageNumber: image.pageNumber,
+                        imageName: image.imageName,
+                        imageAlt: image.imageAlt
+                    });
+                    addedImages++;
+                }
+            }
+        });
+
+        if (addedImages > 0) {
+            console.log(`📸 Added ${addedImages} images to chapter ${chapter.chapterNumber} "${chapter.title}"`);
+        }
+
+        // Fallback for chapters without page ranges
+        if (!chapter.startingPage || !chapter.endingPage) {
+            // Fallback: distribute images proportionally for chapters without page ranges
+            const totalImagePages = Object.keys(imagesByPage).length;
+            if (totalImagePages > 0) {
+                const totalChapters = chapters.length;
+                const chapterIndex = chapter.chapterNumber - 1;
+
+                // Distribute images evenly across chapters
+                const imagesPerChapter = Math.ceil(totalImagePages / totalChapters);
+                const startImageIndex = chapterIndex * imagesPerChapter;
+                const endImageIndex = Math.min((chapterIndex + 1) * imagesPerChapter, totalImagePages);
+
+                // Get sorted page numbers
+                const allImagePages = Object.keys(imagesByPage).map(p => parseInt(p)).sort((a, b) => a - b);
+
+                // Assign images to this chapter
+                for (let i = startImageIndex; i < endImageIndex; i++) {
+                    if (i < allImagePages.length) {
+                        const pageNum = allImagePages[i];
+                        const pageImages = imagesByPage[pageNum] || [];
+                        pageImages.forEach(image => {
+                            allChunks.push({
+                                index: chunkIndex++,
+                                text: "",
+                                wordCount: 0,
+                                type: 'image',
+                                pageNumber: image.pageNumber,
+                                imageName: image.imageName,
+                                imageAlt: image.imageAlt
+                            });
+                        });
+                    }
+                }
+
+                if (endImageIndex > startImageIndex) {
+                    console.log(`📸 Added images from pages ${allImagePages[startImageIndex]}-${allImagePages[endImageIndex - 1]} to chapter ${chapter.chapterNumber} (fallback distribution)`);
+                }
+            }
+        }
+
+        const totalWords = allChunks
+            .filter(chunk => chunk.type === 'text')
+            .reduce((sum, chunk) => sum + chunk.wordCount, 0);
+
+        return {
+            chapterNumber: chapter.chapterNumber,
+            title: chapter.title,
+            content: {
+                chunks: allChunks
+            },
+            wordCount: totalWords
+        };
+    });
+
+    const textCount = enhancedChapters.reduce((sum, ch) =>
+        sum + ch.content.chunks.filter(c => c.type === 'text').length, 0);
+    const imageCount = enhancedChapters.reduce((sum, ch) =>
+        sum + ch.content.chunks.filter(c => c.type === 'image').length, 0);
+
+    console.log(`✅ Created chapters with ${textCount} text chunks and ${imageCount} image chunks`);
+    return enhancedChapters;
 }
 
 // Main parsing function
@@ -578,30 +1352,38 @@ async function parsePdfBook(pdfPath, configPath) {
     const filename = path.basename(pdfPath);
     const bookMetadata = extractBookMetadata(pdfData, filename, config);
 
-    // Detect chapters
-    const chapters = detectChapters(pdfData.text, config);
+    // Detect chapters (now supports TOC extraction)
+    const chapters = await detectChapters(pdfData.text, config, pdfPath);
     console.log(`Detected ${chapters.length} chapters`);
 
-    // Convert to database format
-    const dbChapters = convertChaptersToDbFormat(chapters);
+    // Extract images from PDF
+    const bookFolderPath = path.dirname(pdfPath);
+    const { images, imagesFolderPath } = await extractImages(pdfPath, bookMetadata.title, bookFolderPath);
+
+    // Convert to database format with image integration
+    const dbChapters = createPageAwareChunksWithImages(chapters, images);
 
     // Calculate totals
     const totalWords = dbChapters.reduce((sum, chapter) => sum + chapter.wordCount, 0);
     const totalChapters = dbChapters.length;
 
+    // Use first image as cover image
+    const coverImage = images.length > 0 ? images[0].imageName : null;
+
     const book = {
         ...bookMetadata,
         totalChapters,
         totalWords,
+        coverImage,
         createdAt: new Date(),
         updatedAt: new Date()
     };
 
-    return { book, chapters: dbChapters };
+    return { book, chapters: dbChapters, imagesFolderPath };
 }
 
 // Save to file
-function saveToFile(book, chapters, outputPath) {
+function saveToFile(book, chapters, outputPath, imagesFolderPath) {
     const output = {
         book,
         chapters,
@@ -609,7 +1391,11 @@ function saveToFile(book, chapters, outputPath) {
             parsedAt: new Date().toISOString(),
             totalChapters: chapters.length,
             totalWords: book.totalWords,
-            avgWordsPerChapter: Math.round(book.totalWords / chapters.length)
+            avgWordsPerChapter: Math.round(book.totalWords / chapters.length),
+            hasImages: chapters.some(ch => ch.content.chunks.some(chunk => chunk.type === 'image')),
+            totalImages: chapters.reduce((sum, ch) =>
+                sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0),
+            imagesFolderPath: imagesFolderPath || null
         }
     };
 
@@ -623,8 +1409,25 @@ async function main() {
         // Parse command line arguments
         const args = process.argv.slice(2);
         const pdfPath = args[0];
-        const configPath = args[1];
-        const outputPath = args[2];
+
+        // Smart argument parsing: if second arg looks like a path ending in .json and doesn't exist,
+        // or if it exists and looks like an output file, treat it as output path
+        let configPath = args[1];
+        let outputPath = args[2];
+
+        if (args[1] && !args[2]) {
+            // Only two arguments provided - determine if second is config or output
+            if (args[1].endsWith('.json') && !fs.existsSync(args[1])) {
+                // Looks like output path (doesn't exist yet)
+                outputPath = args[1];
+                configPath = null;
+            } else if (!args[1].endsWith('.json')) {
+                // Doesn't look like config file
+                outputPath = args[1];
+                configPath = null;
+            }
+            // Otherwise assume it's a config file
+        }
 
         if (!pdfPath) {
             console.error('❌ PDF file path is required');
@@ -632,13 +1435,9 @@ async function main() {
             process.exit(1);
         }
 
-        if (!configPath) {
-            console.error('❌ Config file path is required');
-            showHelp();
-            process.exit(1);
-        }
+        // Config file is now optional - we'll try TOC extraction first
 
-        const finalOutputPath = outputPath || path.join(path.dirname(pdfPath), 'parsed-book-output.json');
+        const finalOutputPath = outputPath || path.join(path.dirname(pdfPath), 'output.json');
 
         if (!fs.existsSync(pdfPath)) {
             console.error(`❌ PDF file not found: ${pdfPath}`);
@@ -646,16 +1445,23 @@ async function main() {
         }
 
         console.log('🚀 Starting PDF book parsing...');
+        console.log(`📁 PDF: ${pdfPath}`);
+        console.log(`⚙️  Config: ${configPath || 'None (using TOC extraction)'}`);
+        console.log(`📄 Output: ${finalOutputPath}`);
 
-        const { book, chapters } = await parsePdfBook(pdfPath, configPath);
+        const { book, chapters, imagesFolderPath } = await parsePdfBook(pdfPath, configPath);
 
-        saveToFile(book, chapters, finalOutputPath);
+        saveToFile(book, chapters, finalOutputPath, imagesFolderPath);
+
+        const totalImages = chapters.reduce((sum, ch) =>
+            sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
 
         console.log('✅ Book parsed and saved to file successfully!');
         console.log(`📖 Title: "${book.title}"`);
         console.log(`👤 Author: ${book.author}`);
         console.log(`📚 Chapters: ${chapters.length}`);
         console.log(`📝 Total words: ${book.totalWords.toLocaleString()}`);
+        console.log(`🖼️ Total images: ${totalImages}`);
         console.log(`📄 Output file: ${finalOutputPath}`);
 
     } catch (error) {
@@ -667,19 +1473,36 @@ async function main() {
 // CLI usage help
 function showHelp() {
     console.log(`
-Usage: node parse-pdf-book-generic.js PDF_PATH CONFIG_PATH [OUTPUT_PATH]
+Usage: node parse-pdf-book-generic.js PDF_PATH [CONFIG_PATH] [OUTPUT_PATH]
 
 Arguments:
   PDF_PATH    Path to the PDF file (required)
-  CONFIG_PATH Path to the book configuration JSON file (required)
+  CONFIG_PATH Path to the book configuration JSON file (optional)
   OUTPUT_PATH Output JSON file path (optional, defaults to same directory as PDF)
 
 Examples:
+  # Use TOC extraction with image support (recommended for books with bookmarks/outline)
+  node parse-pdf-book-generic.js ./my-book.pdf
+  node parse-pdf-book-generic.js ./my-book.pdf ./output.json
+  
+  # Use config file for custom chapter detection
   node parse-pdf-book-generic.js ./my-book.pdf ./my-book-config.json
   node parse-pdf-book-generic.js ./my-book.pdf ./my-book-config.json ./output.json
-  node parse-pdf-book-generic.js ../files/nick-lane__transformer.pdf ./book-config.json
 
-Each book should have its own configuration file defining chapter names and metadata.
+Features:
+  - TOC-based chapter detection from PDF bookmarks/outline
+  - Fallback to pattern-based chapter detection using config files
+  - Embedded image extraction using pdfimages
+  - Page-aware correlation of text and images
+  - Clean chapter title removal from content
+
+Output:
+  - Creates output.json with book metadata, chapters, and image references
+  - Creates images/ subfolder with extracted images organized by page
+
+The parser will first attempt to extract chapters from PDF bookmarks/table of contents.
+If no TOC is found, it will fall back to pattern-based detection using the config file.
+Images are extracted and correlated with appropriate pages for enhanced reading experience.
 `);
 }
 
@@ -694,4 +1517,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = { parsePdfBook, loadBookConfig, detectChapters }; 
+module.exports = { parsePdfBook, loadBookConfig, detectChapters, extractTOCFromPdf, extractImages }; 
