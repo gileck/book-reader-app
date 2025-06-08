@@ -519,8 +519,8 @@ function parseChapterFromBookmark(title) {
     // Remove leading/trailing whitespace
     title = title.trim();
 
-    // Pattern for numbered chapters: "1 The Search for Emotion's "Fingerprints""
-    const numberedChapterMatch = title.match(/^(\d+)\s+(.+)$/);
+    // Pattern for numbered chapters: "1. Title" or "1 Title"
+    const numberedChapterMatch = title.match(/^(\d+)\.?\s+(.+)$/);
     if (numberedChapterMatch) {
         return {
             chapterNumber: parseInt(numberedChapterMatch[1]),
@@ -540,11 +540,21 @@ function parseChapterFromBookmark(title) {
         };
     }
 
-    // Pattern for appendices: "Appendix A", "Appendix B", etc.
-    const appendixMatch = title.match(/^Appendix\s+([A-Z])/i);
+    // Pattern for appendices: "Appendix 1", "Appendix A", etc.
+    const appendixMatch = title.match(/^Appendix\s+([A-Z0-9]+)/i);
     if (appendixMatch) {
         return {
             chapterNumber: `Appendix ${appendixMatch[1]}`,
+            chapterTitle: title,
+            startingPage: null,
+            originalTitle: title
+        };
+    }
+
+    // Pattern for epilogue
+    if (title.toLowerCase().includes('epilogue')) {
+        return {
+            chapterNumber: 'Epilogue',
             chapterTitle: title,
             startingPage: null,
             originalTitle: title
@@ -562,7 +572,13 @@ function parseChapterFromBookmark(title) {
         };
     }
 
-    return null;
+    // Generic fallback: return any remaining title as a potential chapter
+    return {
+        chapterNumber: null,
+        chapterTitle: title,
+        startingPage: null,
+        originalTitle: title
+    };
 }
 
 function parseTOCEntries(textItems) {
@@ -770,6 +786,10 @@ async function detectChapters(text, config, pdfPath = null) {
     if (pdfPath) {
         console.log('🔍 Attempting TOC extraction...');
         const tocData = await extractTOCFromPdf(pdfPath);
+
+            // add tocData to debug file
+        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+        fs.writeFileSync(path.join(debugFolder, 'tocData.json'), JSON.stringify(tocData, null, 2), 'utf8');
 
         if (tocData && tocData.chapters && tocData.chapters.length > 0) {
             console.log(`✅ Found ${tocData.chapters.length} chapters via ${tocData.source}`);
@@ -1336,9 +1356,10 @@ function createPageAwareChunksWithImages(chapters, images) {
 }
 
 // Main parsing function
-async function parsePdfBook(pdfPath, configPath) {
+async function parsePdfBook(pdfPath, configPath, debugMode = false) {
     console.log(`Parsing PDF: ${pdfPath}`);
     console.log(`Using config: ${configPath}`);
+    if (debugMode) console.log(`🐛 Debug mode enabled`);
 
     const config = loadBookConfig(configPath);
 
@@ -1348,12 +1369,53 @@ async function parsePdfBook(pdfPath, configPath) {
 
     console.log(`Extracted ${pdfData.numpages} pages, ${pdfData.text.length} characters`);
 
+    // Debug: Save pdfData
+    if (debugMode) {
+        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+        if (!fs.existsSync(debugFolder)) {
+            fs.mkdirSync(debugFolder, { recursive: true });
+        }
+        
+        // 1. Raw pdfData from pdfParse - split into text and others
+        fs.writeFileSync(path.join(debugFolder, '1-pdfData-text.txt'), pdfData.text || '');
+        
+        const { text, ...pdfDataOthers } = pdfData;
+        fs.writeFileSync(path.join(debugFolder, '1-pdfData-others.json'), JSON.stringify(pdfDataOthers, null, 2));
+        
+        // 4. Raw result of pdfjsLib.getDocument
+        const doc = await pdfjsLib.getDocument(pdfBuffer).promise;
+        const docInfo = {
+            numPages: doc.numPages,
+            fingerprint: doc.fingerprint,
+            _pdfInfo: doc._pdfInfo
+        };
+        fs.writeFileSync(path.join(debugFolder, '4-raw-pdfjsDocument.json'), JSON.stringify(docInfo, null, 2));
+        
+        // 5. Raw outline content
+        const outline = await doc.getOutline();
+        fs.writeFileSync(path.join(debugFolder, '5-raw-outline.json'), JSON.stringify(outline, null, 2));
+        
+        console.log(`🐛 Debug files saved to: ${debugFolder}`);
+    }
+
     // Extract metadata
     const filename = path.basename(pdfPath);
     const bookMetadata = extractBookMetadata(pdfData, filename, config);
 
+    // Debug: Save bookMetadata
+    if (debugMode) {
+        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+        fs.writeFileSync(path.join(debugFolder, '2-raw-bookMetadata.json'), JSON.stringify(bookMetadata, null, 2));
+    }
+
     // Detect chapters (now supports TOC extraction)
     const chapters = await detectChapters(pdfData.text, config, pdfPath);
+
+    // Debug: Save chapters
+    if (debugMode) {
+        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+        fs.writeFileSync(path.join(debugFolder, '3-raw-chapters.json'), JSON.stringify(chapters, null, 2));
+    }
     console.log(`Detected ${chapters.length} chapters`);
 
     // Extract images from PDF
@@ -1410,20 +1472,24 @@ async function main() {
         const args = process.argv.slice(2);
         const pdfPath = args[0];
 
+        // Check for debug flag
+        const debugMode = args.includes('--debug') || args.includes('-d');
+        const filteredArgs = args.filter(arg => arg !== '--debug' && arg !== '-d');
+
         // Smart argument parsing: if second arg looks like a path ending in .json and doesn't exist,
         // or if it exists and looks like an output file, treat it as output path
-        let configPath = args[1];
-        let outputPath = args[2];
+        let configPath = filteredArgs[1];
+        let outputPath = filteredArgs[2];
 
-        if (args[1] && !args[2]) {
+        if (filteredArgs[1] && !filteredArgs[2]) {
             // Only two arguments provided - determine if second is config or output
-            if (args[1].endsWith('.json') && !fs.existsSync(args[1])) {
+            if (filteredArgs[1].endsWith('.json') && !fs.existsSync(filteredArgs[1])) {
                 // Looks like output path (doesn't exist yet)
-                outputPath = args[1];
+                outputPath = filteredArgs[1];
                 configPath = null;
-            } else if (!args[1].endsWith('.json')) {
+            } else if (!filteredArgs[1].endsWith('.json')) {
                 // Doesn't look like config file
-                outputPath = args[1];
+                outputPath = filteredArgs[1];
                 configPath = null;
             }
             // Otherwise assume it's a config file
@@ -1448,8 +1514,9 @@ async function main() {
         console.log(`📁 PDF: ${pdfPath}`);
         console.log(`⚙️  Config: ${configPath || 'None (using TOC extraction)'}`);
         console.log(`📄 Output: ${finalOutputPath}`);
+        if (debugMode) console.log(`🐛 Debug mode: ON`);
 
-        const { book, chapters, imagesFolderPath } = await parsePdfBook(pdfPath, configPath);
+        const { book, chapters, imagesFolderPath } = await parsePdfBook(pdfPath, configPath, debugMode);
 
         saveToFile(book, chapters, finalOutputPath, imagesFolderPath);
 
@@ -1473,12 +1540,13 @@ async function main() {
 // CLI usage help
 function showHelp() {
     console.log(`
-Usage: node parse-pdf-book-generic.js PDF_PATH [CONFIG_PATH] [OUTPUT_PATH]
+Usage: node parse-pdf-book-generic.js PDF_PATH [CONFIG_PATH] [OUTPUT_PATH] [--debug|-d]
 
 Arguments:
   PDF_PATH    Path to the PDF file (required)
   CONFIG_PATH Path to the book configuration JSON file (optional)
   OUTPUT_PATH Output JSON file path (optional, defaults to same directory as PDF)
+  --debug|-d  Enable debug mode to save raw parsing data
 
 Examples:
   # Use TOC extraction with image support (recommended for books with bookmarks/outline)
@@ -1488,6 +1556,10 @@ Examples:
   # Use config file for custom chapter detection
   node parse-pdf-book-generic.js ./my-book.pdf ./my-book-config.json
   node parse-pdf-book-generic.js ./my-book.pdf ./my-book-config.json ./output.json
+  
+  # Enable debug mode to save raw parsing data
+  node parse-pdf-book-generic.js ./my-book.pdf --debug
+  node parse-pdf-book-generic.js ./my-book.pdf ./output.json --debug
 
 Features:
   - TOC-based chapter detection from PDF bookmarks/outline
