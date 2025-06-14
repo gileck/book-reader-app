@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Box, Typography, CircularProgress, Paper } from '@mui/material';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
@@ -12,6 +12,7 @@ import { ReaderContent } from './components/ReaderContent';
 import { BookQAPanel } from './components/BookQAPanel';
 import { BookQAChatSettings } from './components/BookQAChatSettings';
 import { CostApprovalDialog } from './components/CostApprovalDialog';
+import { ChapterSelector } from './components/ChapterSelector';
 
 export const Reader = () => {
     const { navigate } = useRouter();
@@ -27,12 +28,16 @@ export const Reader = () => {
         progress
     } = useReader();
 
+    const [chapterDialogOpen, setChapterDialogOpen] = useState(false);
+
     // Navigate to book library if no books found
     useEffect(() => {
         if (!loading && error === 'No books found') {
             navigate('/book-library');
         }
     }, [loading, error, navigate]);
+
+
 
     // console.log('chapter', {chapter: chapter?.chapterNumber, loading});
 
@@ -247,6 +252,8 @@ export const Reader = () => {
                     totalChapters={book.totalChapters}
                     onNavigateToBookmark={navigation.handleNavigateToBookmark}
                     progressData={progress}
+                    onChapters={() => setChapterDialogOpen(true)}
+                    minChapterNumber={book?.chapterStartNumber ?? 1}
                 />
 
                 {/* Speed Control Modal */}
@@ -322,6 +329,15 @@ export const Reader = () => {
                     estimatedCost={bookQA.estimatedCost || 0}
                     onApprove={() => bookQA.handleCostApproval(true)}
                     onCancel={() => bookQA.handleCostApproval(false)}
+                />
+
+                {/* Chapter Selector Dialog */}
+                <ChapterSelector
+                    bookId={book?._id || ''}
+                    currentChapterNumber={chapter?.chapterNumber || 1}
+                    open={chapterDialogOpen}
+                    onClose={() => setChapterDialogOpen(false)}
+                    onChapterSelect={navigation.setCurrentChapterNumber}
                 />
             </Box>
         </UserThemeProvider>

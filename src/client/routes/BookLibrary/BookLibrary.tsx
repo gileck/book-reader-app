@@ -8,6 +8,7 @@ import styles from './BookLibrary.module.css';
 import { IMAGES_BASE_PATH } from '@/common/constants';
 import { Dialog, DialogTitle, DialogContent, Button, IconButton, Box, TextField } from '@mui/material';
 import { Close as CloseIcon, PlayArrow, Delete, Edit, Upload, Image } from '@mui/icons-material';
+import { useSettings } from '../../settings/SettingsContext';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -18,14 +19,14 @@ const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
 
 export const BookLibrary = () => {
     const { navigate } = useRouter();
+    const { settings, updateSettings } = useSettings();
     const [books, setBooks] = useState<BookWithProgress[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [sortBy, setSortBy] = useState<'title' | 'progress' | 'lastRead'>('title');
     const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<string | null>(null);
     const [showEditDialog, setShowEditDialog] = useState<string | null>(null);
-    const [editForm, setEditForm] = useState({ title: '', author: '', coverImage: '' });
+    const [editForm, setEditForm] = useState({ title: '', author: '', coverImage: '', chapterStartNumber: 1 });
     const [deletingBook, setDeletingBook] = useState<string | null>(null);
     const [uploadingImage, setUploadingImage] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -133,7 +134,8 @@ export const BookLibrary = () => {
             setEditForm({
                 title: book.title,
                 author: book.author || '',
-                coverImage: book.coverImage || ''
+                coverImage: book.coverImage || '',
+                chapterStartNumber: book.chapterStartNumber ?? 1
             });
             setShowEditDialog(bookId);
         }
@@ -141,7 +143,7 @@ export const BookLibrary = () => {
 
     const closeEditDialog = () => {
         setShowEditDialog(null);
-        setEditForm({ title: '', author: '', coverImage: '' });
+        setEditForm({ title: '', author: '', coverImage: '', chapterStartNumber: 1 });
     };
 
     const saveBookEdit = async () => {
@@ -151,12 +153,17 @@ export const BookLibrary = () => {
             const result = await updateBook(showEditDialog, {
                 title: editForm.title,
                 author: editForm.author,
-                coverImage: editForm.coverImage
+                coverImage: editForm.coverImage,
+                chapterStartNumber: editForm.chapterStartNumber
             });
 
             if (result.data) {
-                // Refresh the books list
-                await loadBooksWithProgress();
+                // Update only the specific book in local state
+                setBooks(books.map(book =>
+                    book._id === showEditDialog
+                        ? { ...book, ...result.data }
+                        : book
+                ));
                 closeEditDialog();
             } else {
                 console.error('Failed to update book');
@@ -256,7 +263,7 @@ export const BookLibrary = () => {
     };
 
     const sortedBooks = [...books].sort((a, b) => {
-        switch (sortBy) {
+        switch (settings.librarySortBy) {
             case 'progress':
                 return getProgressPercentage(b.progress) - getProgressPercentage(a.progress);
             case 'lastRead':
@@ -303,8 +310,8 @@ export const BookLibrary = () => {
                         <label htmlFor="sort-select" className="sr-only">Sort books</label>
                         <select
                             id="sort-select"
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value as 'title' | 'progress' | 'lastRead')}
+                            value={settings.librarySortBy}
+                            onChange={(e) => updateSettings({ librarySortBy: e.target.value as 'title' | 'progress' | 'lastRead' })}
                             className={styles.sortSelect}
                         >
                             <option value="title">Sort by Title</option>
@@ -670,6 +677,39 @@ export const BookLibrary = () => {
                             }}
                         />
 
+                        <TextField
+                            label="Chapter Start Number"
+                            type="number"
+                            value={editForm.chapterStartNumber}
+                            onChange={(e) => setEditForm({ ...editForm, chapterStartNumber: isNaN(parseInt(e.target.value)) ? 1 : parseInt(e.target.value) })}
+                            fullWidth
+                            variant="outlined"
+                            helperText="Set to 0 for books with Introduction chapters, 1 for regular books"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'var(--color-surface)',
+                                    '& fieldset': {
+                                        borderColor: 'var(--color-border)',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                },
+                                '& .MuiInputLabel-root': {
+                                    color: 'var(--color-text-secondary)',
+                                },
+                                '& .MuiOutlinedInput-input': {
+                                    color: 'var(--color-text-primary)',
+                                },
+                                '& .MuiFormHelperText-root': {
+                                    color: 'var(--color-text-secondary)',
+                                }
+                            }}
+                        />
+
                         <Box>
                             <TextField
                                 label="Cover Image URL"
@@ -719,7 +759,7 @@ export const BookLibrary = () => {
 
                                 <Button
                                     variant="outlined"
-                                    startIcon={<Image />}
+                                    startIcon={<Image />} // eslint-disable-line jsx-a11y/alt-text
                                     onClick={handlePasteImage}
                                     disabled={uploadingImage}
                                     sx={{

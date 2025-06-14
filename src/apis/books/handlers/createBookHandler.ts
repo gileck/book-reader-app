@@ -18,7 +18,8 @@ function convertBookToClient(book: any): BookClient {
         createdAt: book.createdAt.toISOString(),
         updatedAt: book.updatedAt.toISOString(),
         isPublic: book.isPublic,
-        uploadedBy: book.uploadedBy?.toString()
+        uploadedBy: book.uploadedBy?.toString(),
+        chapterStartNumber: book.chapterStartNumber ?? 1
     };
 }
 
@@ -33,6 +34,7 @@ export async function process(
     const now = new Date();
     const bookData = {
         ...payload,
+        chapterStartNumber: payload.chapterStartNumber ?? 1,
         uploadedBy: new ObjectId(context.userId),
         createdAt: now,
         updatedAt: now

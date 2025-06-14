@@ -13,6 +13,7 @@ export interface BookClient {
     updatedAt: string;
     isPublic: boolean;
     uploadedBy?: string;
+    chapterStartNumber: number;
 }
 
 // Request payloads
@@ -25,6 +26,7 @@ export interface CreateBookPayload {
     totalWords: number;
     language: string;
     isPublic: boolean;
+    chapterStartNumber?: number;
 }
 
 export interface UpdateBookPayload {
@@ -36,6 +38,7 @@ export interface UpdateBookPayload {
     totalWords?: number;
     language?: string;
     isPublic?: boolean;
+    chapterStartNumber?: number;
 }
 
 export interface GetBookPayload {

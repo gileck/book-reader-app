@@ -14,6 +14,7 @@ export interface Book {
     updatedAt: Date;
     isPublic: boolean;
     uploadedBy?: ObjectId;
+    chapterStartNumber: number;
 }
 
 export type BookCreate = Omit<Book, '_id'>;

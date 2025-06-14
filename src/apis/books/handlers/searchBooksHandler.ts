@@ -16,7 +16,8 @@ function convertBookToClient(book: any): BookClient {
         createdAt: book.createdAt.toISOString(),
         updatedAt: book.updatedAt.toISOString(),
         isPublic: book.isPublic,
-        uploadedBy: book.uploadedBy?.toString()
+        uploadedBy: book.uploadedBy?.toString(),
+        chapterStartNumber: book.chapterStartNumber ?? 1
     };
 }
 

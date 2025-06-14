@@ -330,12 +330,15 @@ export const useReader = () => {
     );
 
     // Chapter navigation functions
-    const handlePreviousChapter = useCallback(() => {
-        if (state.currentChapterNumber > 1) {
-            setCurrentChapterNumber(state.currentChapterNumber - 1);
+    const handlePreviousChapter = useCallback(async () => {
+        // Try to navigate to the previous chapter
+        const previousChapterNumber = state.currentChapterNumber - 1;
+        const minChapterNumber = state.book?.chapterStartNumber ?? 1;
+        if (previousChapterNumber >= minChapterNumber) {
+            setCurrentChapterNumber(previousChapterNumber);
             audioPlayback.handlePause();
         }
-    }, [state.currentChapterNumber, setCurrentChapterNumber, audioPlayback]);
+    }, [state.currentChapterNumber, state.book?.chapterStartNumber, setCurrentChapterNumber, audioPlayback]);
 
     const handleNextChapter = useCallback(() => {
         if (state.book && state.currentChapterNumber < state.book.totalChapters) {
@@ -444,7 +447,8 @@ export const useReader = () => {
             handlePreviousChapter,
             handleNextChapter,
             handleNavigateToBookmark,
-            setCurrentChunkIndex
+            setCurrentChunkIndex,
+            setCurrentChapterNumber
         }
     };
 }; 

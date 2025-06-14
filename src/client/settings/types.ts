@@ -2,6 +2,7 @@
 export interface Settings {
     aiModel: string;
     contextSentencesCount: number;
+    librarySortBy: 'title' | 'progress' | 'lastRead';
 }
 
 // Define the settings context type
@@ -15,4 +16,5 @@ export interface SettingsContextType {
 export const defaultSettings: Settings = {
     aiModel: '',
     contextSentencesCount: 3,
+    librarySortBy: 'title',
 }; 

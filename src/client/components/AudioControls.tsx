@@ -13,7 +13,8 @@ import {
     ChevronLeft,
     ChevronRight,
     Settings,
-    QuestionMark
+    QuestionMark,
+    List
 } from '@mui/icons-material';
 import { BookmarkDropdown } from './BookmarkDropdown';
 import type { BookmarkClient } from '../../apis/bookmarks/types';
@@ -32,6 +33,7 @@ interface AudioControlsProps {
     onSettings: () => void;
     onSpeedSettings: () => void;
     onAskAI: () => void;
+    onChapters?: () => void;
     isPlaying: boolean;
     isCurrentChunkLoading?: boolean;
     isBookmarked?: boolean;
@@ -41,6 +43,7 @@ interface AudioControlsProps {
     currentChapterNumber?: number;
     currentChunkIndex?: number;
     totalChapters?: number;
+    minChapterNumber?: number;
     onNavigateToBookmark?: (chapterNumber: number, chunkIndex: number) => void;
     // Enhanced progress data
     progressData?: {
@@ -66,6 +69,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onSettings,
     onSpeedSettings,
     onAskAI,
+    onChapters,
     isPlaying,
     isCurrentChunkLoading = false,
     isBookmarked = false,
@@ -75,6 +79,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     currentChapterNumber = 1,
     currentChunkIndex = 0,
     totalChapters = 1,
+    minChapterNumber = 1,
     onNavigateToBookmark
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
@@ -101,7 +106,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             }}>
                 <IconButton
                     onClick={onPreviousChapter}
-                    disabled={currentChapterNumber <= 1}
+                    disabled={currentChapterNumber <= minChapterNumber}
                     sx={{
                         color: 'white',
                         '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
@@ -113,18 +118,38 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     <ChevronLeft sx={{ fontSize: 24 }} />
                 </IconButton>
 
-                <Typography
-                    variant="body2"
-                    sx={{
-                        textAlign: 'center',
-                        fontWeight: 500,
-                        color: '#e0e0e0',
-                        flex: 1,
-                        fontSize: '1rem'
-                    }}
-                >
-                    {chapterTitle}
-                </Typography>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flex: 1,
+                    justifyContent: 'center',
+                    gap: 1
+                }}>
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            textAlign: 'center',
+                            fontWeight: 500,
+                            color: '#e0e0e0',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        {chapterTitle}
+                    </Typography>
+                    {onChapters && (
+                        <IconButton
+                            onClick={onChapters}
+                            sx={{
+                                color: 'white',
+                                '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
+                                p: 0.5
+                            }}
+                            size="small"
+                        >
+                            <List sx={{ fontSize: 18 }} />
+                        </IconButton>
+                    )}
+                </Box>
 
                 <IconButton
                     onClick={onNextChapter}
