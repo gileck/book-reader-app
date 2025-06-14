@@ -125,7 +125,7 @@ async function uploadParsedBook(bookFolderPath, force = false) {
             title: bookData.book.title,
             author: bookData.book.author,
             description: bookData.book.description,
-            coverImage: bookData.book.coverImage || null,
+            coverImage: bookData.book.coverImage ? `/${bookData.book.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-')}/images/${bookData.book.coverImage}` : null,
             totalChapters: bookData.book.totalChapters,
             totalWords: bookData.book.totalWords,
             language: bookData.book.language || 'en-US',
@@ -153,7 +153,7 @@ async function uploadParsedBook(bookFolderPath, force = false) {
                     wordCount: chunk.wordCount,
                     type: chunk.type || 'text',
                     ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
-                    ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }),
+                    ...(chunk.imageName && { imageName: chunk.imageName }),
                     ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
                 }))
             },

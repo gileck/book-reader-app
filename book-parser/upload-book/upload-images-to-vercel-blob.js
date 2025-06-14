@@ -1,42 +1,29 @@
 const fs = require('fs');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { put } = require('@vercel/blob');
 
 require('dotenv').config();
 
-// S3 Configuration
-const AWS_BUCKET_NAME = "app-template-1252343";
-const APP_FOLDER_PREFIX = 'Book_Reader_App/';
-
-const createS3Client = () => {
-    const clientConfig = {
-        region: process.env.AWS_REGION || 'us-east-1',
-    };
-
-    if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
-        clientConfig.credentials = {
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        };
-    }
-
-    return new S3Client(clientConfig);
-};
+// Vercel Blob Configuration
+const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 
 /**
- * Upload a file to S3
+ * Upload a file to Vercel Blob
  */
-async function uploadFileToS3(s3Client, bucketName, key, content, contentType) {
-    const command = new PutObjectCommand({
-        Bucket: bucketName,
-        Key: key,
-        Body: content,
-        ContentType: contentType || 'application/octet-stream',
+async function uploadFileToBlob(key, content, contentType) {
+    if (!BLOB_READ_WRITE_TOKEN) {
+        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    }
+
+    const blob = await put(key, content, {
+        access: 'public',
+        contentType: contentType || 'application/octet-stream',
+        token: BLOB_READ_WRITE_TOKEN,
+        allowOverwrite: true
     });
 
-    await s3Client.send(command);
-    return key;
+    return blob.url;
 }
 
 /**
@@ -55,11 +42,11 @@ function getContentType(filename) {
 }
 
 /**
- * Upload book images to S3 and update database
+ * Upload book images to Vercel Blob and update database
  * @param {string} bookFolderPath - Path to the book folder containing images
  * @param {string} bookTitle - Title of the book to find in database
  */
-async function uploadImagesToS3(bookFolderPath, bookTitle) {
+async function uploadImagesToBlob(bookFolderPath, bookTitle) {
     const uri = 'mongodb+srv://gileck:jfxccnxeruiowqrioqsdjkla@cluster0.frtddwb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
     const dbName = 'book_reader_db';
 
@@ -105,9 +92,6 @@ async function uploadImagesToS3(bookFolderPath, bookTitle) {
 
     console.log(`📸 Found ${imageFiles.length} image files`);
 
-    // Initialize S3 client
-    const s3Client = createS3Client();
-
     // Connect to MongoDB
     const client = new MongoClient(uri);
 
@@ -130,32 +114,32 @@ async function uploadImagesToS3(bookFolderPath, bookTitle) {
 
         console.log(`📖 Found book: "${book.title}" (ID: ${book._id})`);
 
-        // Create S3 folder path for this book
+        // Create folder path for this book
         const bookFolderName = book.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
-        const s3BookPrefix = `${APP_FOLDER_PREFIX}books/${bookFolderName}/images/`;
+        const blobPrefix = `books/${bookFolderName}/images/`;
 
-        console.log(`☁️  Uploading images to S3 folder: ${s3BookPrefix}`);
+        console.log(`☁️  Uploading images to Vercel Blob: ${blobPrefix}`);
 
-        // Upload each image to S3
+        // Upload each image to Vercel Blob
         const uploadPromises = imageFiles.map(async (imageFile) => {
-            const s3Key = `${s3BookPrefix}${imageFile.filename}`;
+            const blobKey = `${blobPrefix}${imageFile.filename}`;
             const fileContent = fs.readFileSync(imageFile.localPath);
             const contentType = getContentType(imageFile.filename);
 
             console.log(`   📤 Uploading: ${imageFile.filename}`);
 
-            await uploadFileToS3(s3Client, AWS_BUCKET_NAME, s3Key, fileContent, contentType);
+            const blobUrl = await uploadFileToBlob(blobKey, fileContent, contentType);
 
             return {
                 filename: imageFile.filename,
-                s3Key: s3Key
+                blobUrl: blobUrl
             };
         });
 
         const uploadedImages = await Promise.all(uploadPromises);
-        console.log(`✅ Successfully uploaded ${uploadedImages.length} images to S3`);
+        console.log(`✅ Successfully uploaded ${uploadedImages.length} images to Vercel Blob`);
 
-        // Update book with relative imageBaseURL
+        // Update book with relative imageBaseURL path
         const relativeImagePath = `/${bookFolderName}/images/`;
 
         await booksCollection.updateOne(
@@ -208,12 +192,17 @@ async function uploadImagesToS3(bookFolderPath, bookTitle) {
             }
         }
 
+        // Get the full base URL for display purposes only
+        const fullBaseUrl = uploadedImages.length > 0
+            ? uploadedImages[0].blobUrl.substring(0, uploadedImages[0].blobUrl.lastIndexOf('/') + 1)
+            : '';
+
         console.log('✅ Image upload and database update completed successfully!');
         console.log(`📊 Summary:`);
         console.log(`   📖 Book: "${book.title}"`);
         console.log(`   📸 Images uploaded: ${uploadedImages.length}`);
         console.log(`   📁 Relative path: ${relativeImagePath}`);
-        console.log(`   ☁️  S3 folder: ${s3BookPrefix}`);
+        console.log(`   ☁️  Full Blob URL: ${fullBaseUrl}`);
 
     } catch (error) {
         console.error('❌ Error:', error);
@@ -227,15 +216,15 @@ async function uploadImagesToS3(bookFolderPath, bookTitle) {
 // CLI usage help
 function showHelp() {
     console.log(`
-Usage: node upload-images-to-s3.js BOOK_FOLDER_PATH BOOK_TITLE
+Usage: node upload-images-to-vercel-blob.js BOOK_FOLDER_PATH BOOK_TITLE
 
 Arguments:
   BOOK_FOLDER_PATH   Path to the book folder containing images/ subfolder (required)
   BOOK_TITLE         Exact title of the book as stored in the database (required)
 
 Examples:
-  node upload-images-to-s3.js ../files/MyBook/ "The Great Book"
-  node upload-images-to-s3.js ./books/transformers/ "Transformer"
+  node upload-images-to-vercel-blob.js ../files/MyBook/ "The Great Book"
+  node upload-images-to-vercel-blob.js ./books/transformers/ "Transformer"
 
 Book folder structure:
   MyBook/
@@ -246,51 +235,44 @@ Book folder structure:
   └── config.json       # Book configuration
 
 Environment Variables Required:
-  AWS_ACCESS_KEY_ID     AWS access key for S3 uploads
-  AWS_SECRET_ACCESS_KEY AWS secret key for S3 uploads
-  AWS_REGION            AWS region (default: us-east-1)
+  BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for uploads
 
 The script will:
-1. Upload all images from the images/ folder to S3
-2. Update the book record with imageBaseURL
+1. Upload all images from the images/ folder to Vercel Blob
+2. Update the book record with relative imageBaseURL
 3. Update chapter chunks to use imageName instead of imageUrl
 `);
 }
 
 // Main execution
 async function main() {
-    const args = process.argv.slice(2);
-
-    if (args.length === 0) {
-        console.log(`
-Usage: node upload-images-to-s3.js <book-folder-path> [book-title]
-
-Examples:
-  node upload-images-to-s3.js /path/to/book-folder
-  node upload-images-to-s3.js /path/to/book-folder "Custom Book Title"
-        `);
-        process.exit(1);
-    }
-
-    const bookFolderPath = args[0];
-    const bookTitle = args[1];
-
     try {
-        // Validate book folder path
-        if (!fs.existsSync(bookFolderPath)) {
-            console.error('❌ Book folder path does not exist:', bookFolderPath);
+        const args = process.argv.slice(2);
+
+        // Show help if requested
+        if (args.includes('--help') || args.includes('-h')) {
+            showHelp();
+            process.exit(0);
+        }
+
+        const bookFolderPath = args[0];
+        const bookTitle = args[1];
+
+        if (!bookFolderPath || !bookTitle) {
+            console.error('❌ Both book folder path and book title are required');
+            showHelp();
             process.exit(1);
         }
 
         // Check for required environment variables
-        if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
-            console.error('❌ AWS credentials not found in environment variables');
-            console.error('   Please set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in .env file');
+        if (!process.env.BLOB_READ_WRITE_TOKEN) {
+            console.error('❌ BLOB_READ_WRITE_TOKEN not found in environment variables');
+            console.error('   Please set BLOB_READ_WRITE_TOKEN in .env file');
             process.exit(1);
         }
 
-        console.log('🚀 Starting image upload to S3...');
-        await uploadImagesToS3(bookFolderPath, bookTitle);
+        console.log('🚀 Starting image upload to Vercel Blob...');
+        await uploadImagesToBlob(bookFolderPath, bookTitle);
 
     } catch (error) {
         console.error('❌ Error:', error);
@@ -303,4 +285,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = { uploadImagesToS3 }; 
+module.exports = { uploadImagesToBlob }; 

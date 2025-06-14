@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useUserTheme } from './UserThemeProvider';
 import type { ChapterClient } from '../../apis/chapters/types';
 import type { BookClient } from '../../apis/books/types';
-import { S3_IMAGES_BASE_PATH } from '../../common/constants';
+import { IMAGES_BASE_PATH } from '../../common/constants';
 
 interface SimpleTextRendererProps {
     chapter: ChapterClient;
@@ -235,12 +235,21 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                 </>
                             ) : chunk.type === 'image' ? (
                                 <Box textAlign="center" my={2}>
-                                    <Image
-                                        src={book.imageBaseURL && chunk.imageName ? `${S3_IMAGES_BASE_PATH}${book.imageBaseURL}${chunk.imageName}` : ''}
+                                    <img
+                                        src={book.imageBaseURL && chunk.imageName
+                                            ? `${IMAGES_BASE_PATH}${book.imageBaseURL}${chunk.imageName}`.replace(/\s+/g, '')
+                                            : '/placeholder.png'}
                                         alt={chunk.imageAlt || 'Chapter image'}
                                         width={800}
                                         height={400}
-                                        style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain' }}
+                                        style={{
+                                            maxWidth: '100%',
+                                            height: 'auto',
+                                            objectFit: 'contain',
+                                            backgroundColor: 'white',
+                                            padding: '20px',
+                                            borderRadius: '8px'
+                                        }}
                                     />
                                     {chunk.imageAlt && (
                                         <Typography variant="caption" display="block" mt={1}>

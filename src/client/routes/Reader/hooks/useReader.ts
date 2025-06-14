@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
 import { getBook, getBooks } from '../../../../apis/books/client';
-import { getChapterByNumber } from '../../../../apis/chapters/client';
+import { getChapterByNumber, getChaptersByBook } from '../../../../apis/chapters/client';
 import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
@@ -142,7 +142,7 @@ export const useReader = () => {
                 }));
 
                 // Step 2: Load reading progress to get current position
-                let currentChapter = 1;
+                let currentChapter = 0;
                 let currentChunk = 0;
 
                 try {
@@ -167,30 +167,60 @@ export const useReader = () => {
                     return;
                 }
 
-                // Step 4: Load the correct chapter based on reading progress
-                const chapterResult = await getChapterByNumber({
-                    bookId,
-                    chapterNumber: currentChapter
-                });
+                // Step 4: Check if chapter 0 (introduction) exists
+                let startingChapter = currentChapter;
 
-                if (!chapterResult.data || !chapterResult.data.chapter) {
+                // If we're starting from the beginning (no saved progress), check for chapter 0
+                if (currentChapter === 1 && currentChunk === 0 && bookId) {
+                    try {
+                        const chapterZeroResult = await getChapterByNumber({
+                            bookId,
+                            chapterNumber: 0
+                        });
+
+                        if (chapterZeroResult.data?.chapter) {
+                            // Chapter 0 exists, start from there
+                            startingChapter = 0;
+                        }
+                    } catch (error) {
+                        console.log('No chapter 0 (introduction) found, starting from chapter 1');
+                        // Continue with chapter 1
+                    }
+                }
+
+                // Step 5: Load the correct chapter based on reading progress or chapter 0 check
+                if (bookId) {
+                    const chapterResult = await getChapterByNumber({
+                        bookId,
+                        chapterNumber: startingChapter
+                    });
+
+                    if (!chapterResult.data || !chapterResult.data.chapter) {
+                        setState(prev => ({
+                            ...prev,
+                            error: 'Chapter not found',
+                            loading: false
+                        }));
+                        return;
+                    }
+
+                    // Step 6: Set all data to state
+                    setState({
+                        book: bookResult.data.book,
+                        chapter: chapterResult.data.chapter,
+                        currentChapterNumber: startingChapter,
+                        currentChunkIndex: startingChapter === currentChapter ? currentChunk : 0,
+                        loading: false,
+                        error: null
+                    });
+                } else {
                     setState(prev => ({
                         ...prev,
-                        error: 'Chapter not found',
+                        error: 'Book ID is required',
                         loading: false
                     }));
                     return;
                 }
-
-                // Step 5: Set all data to state
-                setState({
-                    book: bookResult.data.book,
-                    chapter: chapterResult.data.chapter,
-                    currentChapterNumber: currentChapter,
-                    currentChunkIndex: currentChunk,
-                    loading: false,
-                    error: null
-                });
 
             } catch (error) {
                 console.error('Error loading reader data:', error);
@@ -212,17 +242,31 @@ export const useReader = () => {
         try {
             setState(prev => ({ ...prev, loading: true }));
 
-            const chapterResult = await getChapterByNumber({
-                bookId,
-                chapterNumber
-            });
+            if (bookId && chapterNumber !== undefined) {
+                const chapterResult = await getChapterByNumber({
+                    bookId,
+                    chapterNumber
+                });
 
-            if (chapterResult.data?.chapter) {
+                if (chapterResult.data?.chapter) {
+                    setState(prev => ({
+                        ...prev,
+                        chapter: chapterResult.data!.chapter,
+                        currentChapterNumber: chapterNumber,
+                        currentChunkIndex: 0, // Reset to beginning of new chapter
+                        loading: false
+                    }));
+                } else {
+                    setState(prev => ({
+                        ...prev,
+                        error: 'Chapter not found',
+                        loading: false
+                    }));
+                }
+            } else {
                 setState(prev => ({
                     ...prev,
-                    chapter: chapterResult.data!.chapter,
-                    currentChapterNumber: chapterNumber,
-                    currentChunkIndex: 0, // Reset to beginning of new chapter
+                    error: 'Book ID and chapter number are required',
                     loading: false
                 }));
             }

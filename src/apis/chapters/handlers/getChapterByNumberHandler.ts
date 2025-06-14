@@ -7,7 +7,7 @@ export async function process(
     try {
         const { bookId, chapterNumber } = params;
 
-        if (!bookId || !chapterNumber) {
+        if (!bookId || chapterNumber === undefined) {
             throw new Error('Book ID and chapter number are required');
         }
 

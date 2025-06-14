@@ -6,6 +6,7 @@ import { getReadingProgress } from '../../../apis/readingProgress/client';
 import { BookClient } from '../../../apis/books/types';
 import { ReadingProgressClient } from '../../../apis/readingProgress/types';
 import styles from './BookLibrary.module.css';
+import { IMAGES_BASE_PATH } from '@/common/constants';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -214,12 +215,15 @@ export const BookLibrary = () => {
                                 <div className={styles.bookCardInner}>
                                     <div className={styles.bookCoverContainer}>
                                         {book.coverImage ? (
-                                            <Image
-                                                src={book.coverImage}
+                                            <img
+                                                src={
+                                                    book.coverImage
+                                                        ? `${IMAGES_BASE_PATH}${book.coverImage}`.replace(/\s+/g, '')
+                                                        : '/placeholder.png'
+                                                }
                                                 alt={`${book.title} cover`}
                                                 className={styles.bookCover}
-                                                fill
-                                                style={{ objectFit: 'cover' }}
+                                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                             />
                                         ) : (
                                             <div className={styles.bookCoverPlaceholder}>

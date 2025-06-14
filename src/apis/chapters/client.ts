@@ -31,6 +31,10 @@ export async function getChapter(payload: GetChapterPayload): Promise<CacheResul
 }
 
 export async function getChapterByNumber(payload: GetChapterByBookAndNumberPayload): Promise<CacheResult<GetChapterResponse>> {
+    if (!payload.bookId || payload.chapterNumber === undefined) {
+        throw new Error('Book ID and chapter number are required');
+    }
+
     return apiClient.call(API_GET_CHAPTER_BY_BOOK_NUMBER, payload);
 }
 
