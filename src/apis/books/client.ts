@@ -6,7 +6,8 @@ import {
     API_GET_BOOKS,
     API_UPDATE_BOOK,
     API_SEARCH_BOOKS,
-    API_DELETE_BOOK
+    API_DELETE_BOOK,
+    API_UPLOAD_COVER_IMAGE
 } from './index';
 import {
     CreateBookPayload,
@@ -20,7 +21,9 @@ import {
     SearchBooksPayload,
     SearchBooksResponse,
     DeleteBookPayload,
-    DeleteBookResponse
+    DeleteBookResponse,
+    UploadCoverImagePayload,
+    UploadCoverImageResponse
 } from './types';
 
 export async function createBook(payload: CreateBookPayload): Promise<CacheResult<CreateBookResponse>> {
@@ -48,4 +51,11 @@ export async function searchBooks(payload: SearchBooksPayload): Promise<CacheRes
 
 export async function deleteBook(payload: DeleteBookPayload): Promise<CacheResult<DeleteBookResponse>> {
     return apiClient.call(API_DELETE_BOOK, payload);
+}
+
+export async function uploadCoverImage(
+    bookId: string,
+    payload: UploadCoverImagePayload
+): Promise<CacheResult<UploadCoverImageResponse>> {
+    return apiClient.call(API_UPLOAD_COVER_IMAGE, { ...payload, bookId });
 } 

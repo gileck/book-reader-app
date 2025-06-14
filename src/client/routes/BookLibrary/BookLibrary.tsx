@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from '../../router';
-import { getBooks, deleteBook } from '../../../apis/books/client';
+import { getBooks, deleteBook, updateBook, uploadCoverImage } from '../../../apis/books/client';
 import { getReadingProgress } from '../../../apis/readingProgress/client';
 import { BookClient } from '../../../apis/books/types';
 import { ReadingProgressClient } from '../../../apis/readingProgress/types';
 import styles from './BookLibrary.module.css';
 import { IMAGES_BASE_PATH } from '@/common/constants';
+import { Dialog, DialogTitle, DialogContent, Button, IconButton, Box, TextField } from '@mui/material';
+import { Close as CloseIcon, PlayArrow, Delete, Edit, Upload, Image } from '@mui/icons-material';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -23,7 +24,11 @@ export const BookLibrary = () => {
     const [sortBy, setSortBy] = useState<'title' | 'progress' | 'lastRead'>('title');
     const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<string | null>(null);
+    const [showEditDialog, setShowEditDialog] = useState<string | null>(null);
+    const [editForm, setEditForm] = useState({ title: '', author: '', coverImage: '' });
     const [deletingBook, setDeletingBook] = useState<string | null>(null);
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         loadBooksWithProgress();
@@ -118,12 +123,125 @@ export const BookLibrary = () => {
         }
     };
 
-    const toggleOptionsMenu = (bookId: string) => {
-        setShowOptionsMenu(showOptionsMenu === bookId ? null : bookId);
-    };
-
     const closeOptionsMenu = () => {
         setShowOptionsMenu(null);
+    };
+
+    const handleEditBook = (bookId: string) => {
+        const book = books.find(b => b._id === bookId);
+        if (book) {
+            setEditForm({
+                title: book.title,
+                author: book.author || '',
+                coverImage: book.coverImage || ''
+            });
+            setShowEditDialog(bookId);
+        }
+    };
+
+    const closeEditDialog = () => {
+        setShowEditDialog(null);
+        setEditForm({ title: '', author: '', coverImage: '' });
+    };
+
+    const saveBookEdit = async () => {
+        if (!showEditDialog) return;
+
+        try {
+            const result = await updateBook(showEditDialog, {
+                title: editForm.title,
+                author: editForm.author,
+                coverImage: editForm.coverImage
+            });
+
+            if (result.data) {
+                // Refresh the books list
+                await loadBooksWithProgress();
+                closeEditDialog();
+            } else {
+                console.error('Failed to update book');
+            }
+        } catch (error) {
+            console.error('Error updating book:', error);
+        }
+    };
+
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && showEditDialog) {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const imageData = e.target?.result as string;
+                await uploadImageData(imageData);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handlePasteImage = async () => {
+        try {
+            const clipboardItems = await navigator.clipboard.read();
+            for (const clipboardItem of clipboardItems) {
+                for (const type of clipboardItem.types) {
+                    if (type.startsWith('image/')) {
+                        const blob = await clipboardItem.getType(type);
+                        const reader = new FileReader();
+                        reader.onload = async (e) => {
+                            const imageData = e.target?.result as string;
+                            await uploadImageData(imageData);
+                        };
+                        reader.readAsDataURL(blob);
+                        return;
+                    }
+                }
+            }
+            alert('No image found in clipboard');
+        } catch (error) {
+            console.error('Error accessing clipboard:', error);
+            alert('Failed to paste image from clipboard');
+        }
+    };
+
+    const uploadImageData = async (imageData: string) => {
+        if (!showEditDialog) return;
+
+        try {
+            setUploadingImage(true);
+            const result = await uploadCoverImage(showEditDialog, { imageData });
+
+            if (result.data?.success) {
+                setEditForm(prev => ({ ...prev, coverImage: result.data!.coverImageUrl }));
+            } else {
+                console.error('Failed to upload image');
+                alert('Failed to upload image');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Failed to upload image');
+        } finally {
+            setUploadingImage(false);
+        }
+    };
+
+    const uploadImageFromUrl = async () => {
+        if (!showEditDialog || !editForm.coverImage) return;
+
+        try {
+            setUploadingImage(true);
+            const result = await uploadCoverImage(showEditDialog, { imageUrl: editForm.coverImage });
+
+            if (result.data?.success) {
+                setEditForm(prev => ({ ...prev, coverImage: result.data!.coverImageUrl }));
+            } else {
+                console.error('Failed to upload image from URL');
+                alert('Failed to upload image from URL');
+            }
+        } catch (error) {
+            console.error('Error uploading image from URL:', error);
+            alert('Failed to upload image from URL');
+        } finally {
+            setUploadingImage(false);
+        }
     };
 
     const getProgressPercentage = (progress?: ReadingProgressClient): number => {
@@ -136,8 +254,6 @@ export const BookLibrary = () => {
         if (progress.bookProgress > 0) return 'Reading';
         return 'Not Started';
     };
-
-
 
     const sortedBooks = [...books].sort((a, b) => {
         switch (sortBy) {
@@ -217,13 +333,11 @@ export const BookLibrary = () => {
                                         {book.coverImage ? (
                                             <img
                                                 src={
-                                                    book.coverImage
-                                                        ? `${IMAGES_BASE_PATH}${book.coverImage}`.replace(/\s+/g, '')
-                                                        : '/placeholder.png'
+                                                    book.coverImage && book.coverImage.startsWith('http') ?
+                                                        book.coverImage : `${IMAGES_BASE_PATH}${book.coverImage}`.replace(/\s+/g, '')
                                                 }
                                                 alt={`${book.title} cover`}
                                                 className={styles.bookCover}
-                                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                             />
                                         ) : (
                                             <div className={styles.bookCoverPlaceholder}>
@@ -240,76 +354,447 @@ export const BookLibrary = () => {
                                                 ></div>
                                             </div>
                                         )}
-
-                                        {/* Options button */}
-                                        <button
-                                            className={styles.bookOptionsBtn}
-                                            onClick={() => toggleOptionsMenu(book._id)}
-                                            aria-label="Book options"
-                                        >
-                                            ⋯
-                                        </button>
-
-                                        {/* Options menu */}
-                                        {showOptionsMenu === book._id && (
-                                            <>
-                                                <div className={styles.optionsMenuOverlay} onClick={closeOptionsMenu}></div>
-                                                <div className={styles.optionsMenu}>
-                                                    <button
-                                                        className={`${styles.optionsMenuItem} ${styles.primary}`}
-                                                        onClick={() => {
-                                                            handleOpenBook(book._id);
-                                                            closeOptionsMenu();
-                                                        }}
-                                                    >
-                                                        <span>📖</span>
-                                                        {book.progress ? 'Continue Reading' : 'Start Reading'}
-                                                    </button>
-                                                    {!book.isActive && (
-                                                        <button
-                                                            className={styles.optionsMenuItem}
-                                                            onClick={() => {
-                                                                handleSetActiveBook(book._id);
-                                                                closeOptionsMenu();
-                                                            }}
-                                                        >
-                                                            <span>⭐</span>
-                                                            Set as Active Book
-                                                        </button>
-                                                    )}
-                                                    <button
-                                                        className={`${styles.optionsMenuItem} ${styles.danger}`}
-                                                        onClick={() => {
-                                                            handleRemoveBook(book._id);
-                                                            closeOptionsMenu();
-                                                        }}
-                                                    >
-                                                        <span>🗑️</span>
-                                                        Remove Book
-                                                    </button>
-                                                </div>
-                                            </>
-                                        )}
                                     </div>
 
                                     <div className={styles.bookInfo}>
-                                        <div className={styles.bookMeta}>
-                                            <span className={`${styles.statusBadge} ${styles[getReadingStatus(book.progress).toLowerCase().replace(' ', '-') as keyof typeof styles] || ''}`}>
-                                                {getReadingStatus(book.progress)}
-                                            </span>
-                                            {book.progress && book.progress.bookProgress > 0 && (
-                                                <span className={styles.progressText}>
-                                                    {Math.round(book.progress.bookProgress)}%
-                                                </span>
-                                            )}
+                                        <div className={styles.bookHeader}>
+                                            <div className={styles.bookTitleSection}>
+                                                <h3 className={styles.bookTitle}>{book.title}</h3>
+                                                <p className={styles.bookAuthor}>{book.author || 'Unknown Author'}</p>
+                                                <p className={styles.bookDateAdded}>
+                                                    Added {new Date(book.createdAt).toLocaleDateString()}
+                                                </p>
+                                            </div>
+                                            <div className={styles.bookActions}>
+                                                <button
+                                                    className={`${styles.bookActionBtn} ${styles.play}`}
+                                                    onClick={() => handleOpenBook(book._id)}
+                                                    aria-label={book.progress ? 'Continue reading' : 'Start reading'}
+                                                >
+                                                    ▶
+                                                </button>
+                                                <button
+                                                    className={`${styles.bookActionBtn} ${styles.menu}`}
+                                                    onClick={() => setShowOptionsMenu(showOptionsMenu === book._id ? null : book._id)}
+                                                    aria-label="Book options"
+                                                >
+                                                    ⋯
+                                                </button>
+                                            </div>
                                         </div>
+
+                                        {book.progress && book.progress.bookProgress > 0 && (
+                                            <div className={styles.progressSection}>
+                                                <div className={styles.bookMeta}>
+                                                    <span className={`${styles.statusBadge} ${styles[getReadingStatus(book.progress).toLowerCase().replace(' ', '-') as keyof typeof styles] || ''}`}>
+                                                        {getReadingStatus(book.progress)}
+                                                    </span>
+
+                                                </div>
+
+                                                <div className={styles.progressBar}>
+                                                    <div
+                                                        className={styles.progressFill}
+                                                        style={{ width: `${book.progress.bookProgress}%` }}
+                                                    ></div>
+                                                </div>
+                                                <div className={styles.progressDetails}>
+                                                    <span>Chapter {book.progress.currentChapter || 1} of {book.totalChapters || 'N/A'}</span>
+                                                    <span>{Math.round(book.progress.bookProgress)}% complete</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
+
+
                                 </div>
                             </div>
                         ))}
                     </div>
                 )}
             </section>
+
+            {/* Options Menu Dialog */}
+            <Dialog
+                open={!!showOptionsMenu}
+                onClose={closeOptionsMenu}
+                sx={{
+                    '& .MuiDialog-paper': {
+                        backgroundColor: 'var(--color-background)',
+                        color: 'var(--color-text-primary)',
+                    }
+                }}
+            >
+                <DialogTitle sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid var(--color-border)',
+                    fontSize: '24px',
+                    fontWeight: 700,
+                    color: 'var(--color-text-primary)'
+                }}>
+                    Book Options
+                    <IconButton
+                        onClick={closeOptionsMenu}
+                        sx={{
+                            color: 'var(--color-text-primary)',
+                            backgroundColor: 'var(--color-background-secondary)',
+                            '&:hover': {
+                                backgroundColor: 'var(--color-border)',
+                                transform: 'scale(1.05)'
+                            }
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+
+                <DialogContent sx={{ padding: 'var(--spacing-2xl)' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
+                        <Button
+                            variant="contained"
+                            startIcon={<PlayArrow />}
+                            onClick={() => {
+                                if (showOptionsMenu) {
+                                    handleOpenBook(showOptionsMenu);
+                                    closeOptionsMenu();
+                                }
+                            }}
+                            sx={{
+                                backgroundColor: 'var(--color-primary)',
+                                color: 'white',
+                                fontSize: '18px',
+                                fontWeight: 500,
+                                padding: 'var(--spacing-lg)',
+                                borderRadius: 'var(--border-radius-lg)',
+                                minHeight: '60px',
+                                boxShadow: 'var(--shadow-xs)',
+                                '&:hover': {
+                                    backgroundColor: 'var(--color-primary)',
+                                    opacity: 0.9,
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: 'var(--shadow-md)'
+                                }
+                            }}
+                        >
+                            {books.find(b => b._id === showOptionsMenu)?.progress ? 'Continue Reading' : 'Start Reading'}
+                        </Button>
+
+                        <Button
+                            variant="outlined"
+                            startIcon={<Edit />}
+                            onClick={() => {
+                                if (showOptionsMenu) {
+                                    handleEditBook(showOptionsMenu);
+                                    closeOptionsMenu();
+                                }
+                            }}
+                            sx={{
+                                backgroundColor: 'var(--color-background-secondary)',
+                                color: 'var(--color-text-primary)',
+                                borderColor: 'var(--color-border)',
+                                fontSize: '18px',
+                                fontWeight: 500,
+                                padding: 'var(--spacing-lg)',
+                                borderRadius: 'var(--border-radius-lg)',
+                                minHeight: '60px',
+                                boxShadow: 'var(--shadow-xs)',
+                                '&:hover': {
+                                    backgroundColor: 'var(--color-border)',
+                                    borderColor: 'var(--color-border)',
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: 'var(--shadow-md)'
+                                }
+                            }}
+                        >
+                            Edit Book
+                        </Button>
+
+                        {!books.find(b => b._id === showOptionsMenu)?.isActive && (
+                            <Button
+                                variant="outlined"
+                                onClick={() => {
+                                    if (showOptionsMenu) {
+                                        handleSetActiveBook(showOptionsMenu);
+                                        closeOptionsMenu();
+                                    }
+                                }}
+                                sx={{
+                                    backgroundColor: 'var(--color-background-secondary)',
+                                    color: 'var(--color-text-primary)',
+                                    borderColor: 'var(--color-border)',
+                                    fontSize: '18px',
+                                    fontWeight: 500,
+                                    padding: 'var(--spacing-lg)',
+                                    borderRadius: 'var(--border-radius-lg)',
+                                    minHeight: '60px',
+                                    boxShadow: 'var(--shadow-xs)',
+                                    '&:hover': {
+                                        backgroundColor: 'var(--color-border)',
+                                        borderColor: 'var(--color-border)',
+                                        transform: 'translateY(-2px)',
+                                        boxShadow: 'var(--shadow-md)'
+                                    }
+                                }}
+                            >
+                                Set as Active Book
+                            </Button>
+                        )}
+
+                        <Button
+                            variant="contained"
+                            startIcon={<Delete />}
+                            onClick={() => {
+                                if (showOptionsMenu) {
+                                    handleRemoveBook(showOptionsMenu);
+                                    closeOptionsMenu();
+                                }
+                            }}
+                            sx={{
+                                backgroundColor: 'var(--color-error)',
+                                color: 'white',
+                                fontSize: '18px',
+                                fontWeight: 500,
+                                padding: 'var(--spacing-lg)',
+                                borderRadius: 'var(--border-radius-lg)',
+                                minHeight: '60px',
+                                boxShadow: 'var(--shadow-xs)',
+                                '&:hover': {
+                                    backgroundColor: 'var(--color-error)',
+                                    opacity: 0.9,
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: 'var(--shadow-md)'
+                                }
+                            }}
+                        >
+                            Remove Book
+                        </Button>
+                    </Box>
+                </DialogContent>
+            </Dialog>
+
+            {/* Edit Book Dialog */}
+            <Dialog
+                open={!!showEditDialog}
+                onClose={closeEditDialog}
+                maxWidth="sm"
+                fullWidth
+                sx={{
+                    '& .MuiDialog-paper': {
+                        backgroundColor: 'var(--color-background)',
+                        color: 'var(--color-text-primary)',
+                    }
+                }}
+            >
+                <DialogTitle sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid var(--color-border)',
+                    fontSize: '20px',
+                    fontWeight: 600,
+                    color: 'var(--color-text-primary)'
+                }}>
+                    Edit Book
+                    <IconButton
+                        onClick={closeEditDialog}
+                        sx={{
+                            color: 'var(--color-text-primary)',
+                            backgroundColor: 'var(--color-background-secondary)',
+                            '&:hover': {
+                                backgroundColor: 'var(--color-border)',
+                                transform: 'scale(1.05)'
+                            }
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+
+                <DialogContent sx={{ padding: 'var(--spacing-xl)' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+                        <TextField
+                            label="Title"
+                            value={editForm.title}
+                            onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'var(--color-surface)',
+                                    '& fieldset': {
+                                        borderColor: 'var(--color-border)',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                },
+                                '& .MuiInputLabel-root': {
+                                    color: 'var(--color-text-secondary)',
+                                },
+                                '& .MuiOutlinedInput-input': {
+                                    color: 'var(--color-text-primary)',
+                                }
+                            }}
+                        />
+
+                        <TextField
+                            label="Author"
+                            value={editForm.author}
+                            onChange={(e) => setEditForm({ ...editForm, author: e.target.value })}
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'var(--color-surface)',
+                                    '& fieldset': {
+                                        borderColor: 'var(--color-border)',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                },
+                                '& .MuiInputLabel-root': {
+                                    color: 'var(--color-text-secondary)',
+                                },
+                                '& .MuiOutlinedInput-input': {
+                                    color: 'var(--color-text-primary)',
+                                }
+                            }}
+                        />
+
+                        <Box>
+                            <TextField
+                                label="Cover Image URL"
+                                value={editForm.coverImage}
+                                onChange={(e) => setEditForm({ ...editForm, coverImage: e.target.value })}
+                                fullWidth
+                                variant="outlined"
+                                sx={{
+                                    '& .MuiOutlinedInput-root': {
+                                        backgroundColor: 'var(--color-surface)',
+                                        '& fieldset': {
+                                            borderColor: 'var(--color-border)',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'var(--color-primary)',
+                                        },
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        color: 'var(--color-text-secondary)',
+                                    },
+                                    '& .MuiOutlinedInput-input': {
+                                        color: 'var(--color-text-primary)',
+                                    }
+                                }}
+                            />
+
+                            <Box sx={{ display: 'flex', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-sm)' }}>
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<Upload />}
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={uploadingImage}
+                                    sx={{
+                                        color: 'var(--color-text-primary)',
+                                        borderColor: 'var(--color-border)',
+                                        '&:hover': {
+                                            backgroundColor: 'var(--color-background-secondary)',
+                                            borderColor: 'var(--color-border)',
+                                        }
+                                    }}
+                                >
+                                    Upload File
+                                </Button>
+
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<Image />}
+                                    onClick={handlePasteImage}
+                                    disabled={uploadingImage}
+                                    sx={{
+                                        color: 'var(--color-text-primary)',
+                                        borderColor: 'var(--color-border)',
+                                        '&:hover': {
+                                            backgroundColor: 'var(--color-background-secondary)',
+                                            borderColor: 'var(--color-border)',
+                                        }
+                                    }}
+                                >
+                                    Paste Image
+                                </Button>
+
+                                {editForm.coverImage && (
+                                    <Button
+                                        variant="outlined"
+                                        onClick={uploadImageFromUrl}
+                                        disabled={uploadingImage}
+                                        sx={{
+                                            color: 'var(--color-text-primary)',
+                                            borderColor: 'var(--color-border)',
+                                            '&:hover': {
+                                                backgroundColor: 'var(--color-background-secondary)',
+                                                borderColor: 'var(--color-border)',
+                                            }
+                                        }}
+                                    >
+                                        Upload from URL
+                                    </Button>
+                                )}
+                            </Box>
+
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileUpload}
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                            />
+                        </Box>
+
+                        <Box sx={{ display: 'flex', gap: 'var(--spacing-md)', justifyContent: 'flex-end', marginTop: 'var(--spacing-lg)' }}>
+                            <Button
+                                variant="outlined"
+                                onClick={closeEditDialog}
+                                sx={{
+                                    color: 'var(--color-text-primary)',
+                                    borderColor: 'var(--color-border)',
+                                    '&:hover': {
+                                        backgroundColor: 'var(--color-background-secondary)',
+                                        borderColor: 'var(--color-border)',
+                                    }
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={saveBookEdit}
+                                sx={{
+                                    backgroundColor: 'var(--color-primary)',
+                                    color: 'white',
+                                    '&:hover': {
+                                        backgroundColor: 'var(--color-primary)',
+                                        opacity: 0.9,
+                                    }
+                                }}
+                            >
+                                Save Changes
+                            </Button>
+                        </Box>
+                    </Box>
+                </DialogContent>
+            </Dialog>
 
             {/* Delete Confirmation Modal */}
             {showDeleteConfirm && (

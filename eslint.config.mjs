@@ -48,6 +48,7 @@ const eslintConfig = [
     rules: {
       "restrict-api-routes/no-direct-api-routes": "error",
       "react-hooks/exhaustive-deps": "off",
+      "@next/next/no-img-element": "off",
       // Add API Guidelines rules
       "api-guidelines/no-server-import-in-client": ["warn", {
         // Import type imports from server are fine

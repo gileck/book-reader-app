@@ -1,5 +1,3 @@
-
-
 // Client-facing DTOs (database types converted for client consumption)
 export interface BookClient {
     _id: string;
@@ -59,6 +57,11 @@ export interface DeleteBookPayload {
     bookId: string;
 }
 
+export interface UploadCoverImagePayload {
+    imageUrl?: string;
+    imageData?: string;
+}
+
 // Response payloads
 export interface CreateBookResponse {
     book: BookClient;
@@ -82,4 +85,9 @@ export interface SearchBooksResponse {
 
 export interface DeleteBookResponse {
     success: boolean;
+}
+
+export interface UploadCoverImageResponse {
+    success: boolean;
+    coverImageUrl: string;
 } 

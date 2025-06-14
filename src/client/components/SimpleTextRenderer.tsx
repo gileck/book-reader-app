@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import Image from 'next/image';
 import { useUserTheme } from './UserThemeProvider';
 import type { ChapterClient } from '../../apis/chapters/types';
 import type { BookClient } from '../../apis/books/types';

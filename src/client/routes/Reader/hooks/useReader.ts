@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
 import { getBook, getBooks } from '../../../../apis/books/client';
-import { getChapterByNumber, getChaptersByBook } from '../../../../apis/chapters/client';
+import { getChapterByNumber } from '../../../../apis/chapters/client';
 import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
@@ -182,7 +182,7 @@ export const useReader = () => {
                             // Chapter 0 exists, start from there
                             startingChapter = 0;
                         }
-                    } catch (error) {
+                    } catch {
                         console.log('No chapter 0 (introduction) found, starting from chapter 1');
                         // Continue with chapter 1
                     }

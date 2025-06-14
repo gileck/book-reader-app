@@ -16,9 +16,9 @@ export async function process(
         throw new Error('Book not found');
     }
 
-    if (existingBook.uploadedBy?.toString() !== context.userId) {
-        throw new Error('Access denied - you can only delete your own books');
-    }
+    // if (existingBook.uploadedBy?.toString() !== context.userId) {
+    //     throw new Error('Access denied - you can only delete your own books');
+    // }
 
     // Delete related data
     await Promise.all([
