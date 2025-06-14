@@ -236,7 +236,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                 <Box textAlign="center" my={2}>
                                     <img
                                         src={book.imageBaseURL && chunk.imageName
-                                            ? `${IMAGES_BASE_PATH}${book.imageBaseURL}${chunk.imageName}`.replace(/\s+/g, '')
+                                            ? `${IMAGES_BASE_PATH}${book.imageBaseURL.startsWith('/') ? book.imageBaseURL.slice(1) : book.imageBaseURL}${chunk.imageName}`.replace(/\s+/g, '')
                                             : '/placeholder.png'}
                                         alt={chunk.imageAlt || 'Chapter image'}
                                         width={800}

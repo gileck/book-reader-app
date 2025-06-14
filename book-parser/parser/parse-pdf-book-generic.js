@@ -716,16 +716,30 @@ function parseTOCLine(text) {
 }
 
 // Extract chapter content using TOC data
-async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath) {
+async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, config = null) {
     try {
         // Filter out non-content chapters (appendix, bibliography, etc.)
-        const contentChapters = tocChapters.filter(ch =>
-            ch.startingPage && (
-                (typeof ch.chapterNumber === 'number' && ch.chapterNumber >= 0) ||
+        const contentChapters = tocChapters.filter(ch => {
+            if (!ch.startingPage) return false;
+
+            // Original numeric chapter logic (preserve existing functionality)
+            if ((typeof ch.chapterNumber === 'number' && ch.chapterNumber >= 0) ||
                 ch.chapterNumber === 'Epilogue' ||
-                (typeof ch.chapterNumber === 'string' && ch.chapterNumber.toLowerCase().includes('epilogue'))
-            )
-        );
+                (typeof ch.chapterNumber === 'string' && ch.chapterNumber.toLowerCase().includes('epilogue'))) {
+                return true;
+            }
+
+            // NEW: If config has chapterNames, also include chapters that match those names
+            if (config && config.chapterNames && config.chapterNames.length > 0) {
+                return config.chapterNames.some(configName =>
+                    ch.chapterTitle === configName ||
+                    ch.chapterTitle.includes(configName) ||
+                    configName.includes(ch.chapterTitle)
+                );
+            }
+
+            return false;
+        });
 
         if (contentChapters.length === 0) {
             console.log('No content chapters found in TOC');
@@ -787,8 +801,13 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath) {
                     .filter(line => line.trim().length > 20)
                     .map(line => line.trim() + (line.endsWith('.') ? '' : '.'));
 
+                // Assign sequential chapter numbers when using config-based extraction
+                const assignedChapterNumber = (config && config.chapterNames && config.chapterNames.length > 0)
+                    ? i + 1  // Sequential numbering for config-based chapters
+                    : currentChapter.chapterNumber; // Preserve original for TOC-only extraction
+
                 chapters.push({
-                    chapterNumber: currentChapter.chapterNumber,
+                    chapterNumber: assignedChapterNumber,
                     title: currentChapter.chapterTitle,
                     content: contentLines,
                     pages: chapterPages, // Add page-by-page data
@@ -817,15 +836,20 @@ async function detectChapters(text, config, pdfPath = null) {
         console.log('🔍 Attempting TOC extraction...');
         const tocData = await extractTOCFromPdf(pdfPath);
 
-        // add tocData to debug file
-        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
-        fs.writeFileSync(path.join(debugFolder, 'tocData.json'), JSON.stringify(tocData, null, 2), 'utf8');
+        // add tocData to debug file (only in debug mode)
+        if (process.env.DEBUG_TEXT || process.argv.includes('--debug') || process.argv.includes('-d')) {
+            const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+            if (!fs.existsSync(debugFolder)) {
+                fs.mkdirSync(debugFolder, { recursive: true });
+            }
+            fs.writeFileSync(path.join(debugFolder, 'tocData.json'), JSON.stringify(tocData, null, 2), 'utf8');
+        }
 
         if (tocData && tocData.chapters && tocData.chapters.length > 0) {
             console.log(`✅ Found ${tocData.chapters.length} chapters via ${tocData.source}`);
 
             // Extract chapter content using TOC data and full text
-            const chapters = await extractChapterContentFromTOC(tocData.chapters, text, pdfPath);
+            const chapters = await extractChapterContentFromTOC(tocData.chapters, text, pdfPath, config);
 
             if (chapters && chapters.length > 0) {
                 console.log(`✅ Successfully extracted content for ${chapters.length} chapters using TOC`);

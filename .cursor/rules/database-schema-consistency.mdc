@@ -1,0 +1,86 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Database Schema Documentation Consistency
+
+## Rule: Always Update Schema Documentation When Modifying Database Structure
+
+### When This Rule Applies
+This rule must be followed whenever you:
+- Add, remove, or modify fields in any MongoDB collection
+- Create new collections
+- Change field types or constraints
+- Add or remove indexes
+- Modify collection relationships
+
+### Required Actions
+
+#### 1. Update Schema Documentation
+Always update [src/server/database/schema.md](mdc:src/server/database/schema.md) when making database changes:
+
+- **Adding Fields**: Add the new field to the appropriate interface with proper TypeScript types and comments
+- **Removing Fields**: Remove the field from the interface and update any related documentation
+- **New Collections**: Add complete collection schema with interfaces, indexes, and relationships
+- **Field Type Changes**: Update TypeScript types and add migration notes if needed
+
+#### 2. Verify Database-Schema Consistency
+Before completing any database-related feature:
+
+1. **Check MongoDB Collections**: Use MongoDB tools to inspect actual collection schemas
+2. **Compare with Documentation**: Ensure [src/server/database/schema.md](mdc:src/server/database/schema.md) accurately reflects the database
+3. **Validate API Types**: Ensure API type definitions in `src/apis/*/types.ts` match schema interfaces
+4. **Test Data Flow**: Verify data flows correctly from database through APIs to frontend
+
+#### 3. Schema Validation Checklist
+- [ ] All collections in database are documented in schema.md
+- [ ] All fields in database collections are present in schema interfaces
+- [ ] TypeScript interfaces match actual MongoDB document structure
+- [ ] Indexes documentation reflects actual database indexes
+- [ ] Data relationships are correctly documented
+- [ ] Size estimates and performance notes are updated if needed
+
+#### 4. Common Scenarios
+
+**Adding New Fields**:
+```typescript
+// Update interface in schema.md
+interface Book {
+  // ... existing fields ...
+  newField?: string;  // Add with proper type and comment
+}
+```
+
+**Creating New Collections**:
+- Add collection to overview list
+- Create complete interface definition
+- Document indexes and relationships
+- Update data relationships section
+
+**Migration Notes**:
+- Document any breaking changes
+- Add migration strategy notes
+- Update size estimates if collection structure changes significantly
+
+### Files to Always Check
+- [src/server/database/schema.md](mdc:src/server/database/schema.md) - Primary schema documentation
+- `src/apis/*/types.ts` - API type definitions that should match schema
+- `src/server/database/collections/*/index.ts` - Collection implementation files
+
+### Verification Command
+Run this to verify schema consistency:
+```bash
+# Connect to MongoDB and inspect collections
+# Compare with schema.md documentation
+# Ensure all fields and types match
+```
+
+### Why This Matters
+- Prevents confusion between documented and actual database structure
+- Ensures reliable API development
+- Maintains system integrity during migrations
+- Helps new developers understand data models
+- Prevents bugs from schema mismatches
+
+**Remember**: The schema.md file is the single source of truth for database structure documentation. Keep it accurate and up-to-date with every database change.

@@ -341,7 +341,7 @@ export const BookLibrary = () => {
                                             <img
                                                 src={
                                                     book.coverImage && book.coverImage.startsWith('http') ?
-                                                        book.coverImage : `${IMAGES_BASE_PATH}${book.coverImage}`.replace(/\s+/g, '')
+                                                        book.coverImage : `${IMAGES_BASE_PATH}${book.coverImage.startsWith('/') ? book.coverImage.slice(1) : book.coverImage}`.replace(/\s+/g, '')
                                                 }
                                                 alt={`${book.title} cover`}
                                                 className={styles.bookCover}

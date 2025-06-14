@@ -11,6 +11,7 @@ The database consists of the following collections:
 - `bookmarks` - User bookmarks with custom names and positions
 - `readingProgress` - User reading progress and history
 - `userSettings` - User preferences and configuration
+- `readingLogs` - Detailed reading activity logs
 
 ## Collection Schemas
 
@@ -45,6 +46,7 @@ interface Book {
   totalWords: number;
   language: string;         // Default: 'en-US'
   imageBaseURL?: string;    // Relative path to book images folder (e.g., "/Transformer/images/")
+  chapterStartNumber?: number; // Starting chapter number (0 or 1), default: 1
   createdAt: Date;
   updatedAt: Date;
   isPublic: boolean;        // Whether book is publicly available
@@ -121,19 +123,8 @@ interface ReadingProgress {
   bookId: ObjectId;         // Reference to Book
   currentChapter: number;   // Last read chapter
   currentChunk: number;     // Last read chunk within chapter
-  totalChaptersRead: number;
-  totalWordsRead: number;
   lastReadAt: Date;
-  createdAt: Date;
   updatedAt: Date;
-  sessionHistory: ReadingSession[];
-}
-
-interface ReadingSession {
-  startTime: Date;
-  endTime: Date;
-  chaptersRead: number[];   // Chapters accessed in this session
-  wordsRead: number;        // Words read in this session
 }
 ```
 
@@ -160,6 +151,7 @@ interface UserSettings {
   sentenceHighlightColor: string; // Hex color for sentence highlighting, default: '#e3f2fd'
   fontSize: number;         // Font size multiplier, default: 1.0
   lineHeight: number;       // Line height multiplier, default: 1.5
+  fontFamily: string;       // Font family selection
   
   // Reading Preferences
   autoAdvance: boolean;     // Auto-advance to next chapter, default: true
@@ -173,6 +165,25 @@ interface UserSettings {
 **Indexes:**
 - `userId` (unique)
 
+### 7. Reading Logs Collection
+
+```typescript
+interface ReadingLog {
+  _id: ObjectId;
+  userId: ObjectId;         // Reference to User
+  bookId: ObjectId;         // Reference to Book
+  chapterNumber: number;    // Chapter being read
+  chunkIndex: number;       // Chunk position within chapter
+  chunkText: string;        // Text content of the chunk
+  timestamp: Date;          // When this chunk was read
+}
+```
+
+**Indexes:**
+- `userId + timestamp` (compound)
+- `bookId + timestamp` (compound)
+- `userId`
+
 ## Data Relationships
 
 ```
@@ -180,13 +191,16 @@ User (1) ──> (N) Bookmarks
 User (1) ──> (N) ReadingProgress  
 User (1) ──> (1) UserSettings
 User (1) ──> (N) Books (uploadedBy)
+User (1) ──> (N) ReadingLogs
 
 Book (1) ──> (N) Chapters
 Book (1) ──> (N) Bookmarks
 Book (1) ──> (N) ReadingProgress
+Book (1) ──> (N) ReadingLogs
 
 Chapter (1) ──> (N) Bookmarks (via chapterNumber)
 Chapter (1) ──> (N) ReadingProgress (via currentChapter)
+Chapter (1) ──> (N) ReadingLogs (via chapterNumber)
 ```
 
 ## Storage Considerations
@@ -197,6 +211,7 @@ Chapter (1) ──> (N) ReadingProgress (via currentChapter)
 - **Bookmarks**: ~200 bytes per bookmark
 - **ReadingProgress**: ~500 bytes per user-book combination
 - **UserSettings**: ~300 bytes per user
+- **ReadingLogs**: ~150 bytes per reading activity entry
 
 ### Performance Optimizations
 - Use compound indexes for common query patterns
@@ -222,13 +237,59 @@ Chapter (1) ──> (N) ReadingProgress (via currentChapter)
 
 Images use a three-part URL construction system for maximum flexibility:
 
-1. **S3 Base Path** (hardcoded in app): `https://app-template-1252343.s3.amazonaws.com/Book_Reader_App/books`
-2. **Book Image Path** (stored in DB): `/Transformer/images/`
+1. **Vercel Blob Base Path** (hardcoded in app): `https://zdllzsw6qffmlxhs.public.blob.vercel-storage.com/books`
+2. **Book Image Path** (stored in DB): `/The-Daily-Stoic/images/`
 3. **Image Filename** (stored in chunk): `page-005-image-1.jpg`
 
-**Full URL**: `S3_BASE_PATH + book.imageBaseURL + chunk.imageName`
-**Example**: `https://app-template-1252343.s3.amazonaws.com/Book_Reader_App/books/Transformer/images/page-005-image-1.jpg`
+**Full URL**: `VERCEL_BLOB_BASE_PATH + book.imageBaseURL + chunk.imageName`
+**Example**: `https://zdllzsw6qffmlxhs.public.blob.vercel-storage.com/books/The-Daily-Stoic/images/page-005-image-1.jpg`
 
 This design allows easy migration of the entire image storage system by changing only the hardcoded base path.
+
+## Book Upload Process
+
+The complete book upload workflow consists of:
+
+### 1. Parse Book Content
+```bash
+# From book-parser/parser/ directory
+node parse-pdf-book-generic.js "/path/to/book.pdf" "/path/to/config.json" "/path/to/output.json"
+```
+
+### 2. Upload Book Content to MongoDB
+```bash
+# From book-parser/upload-book/ directory  
+node upload-parsed-book.js "/path/to/book/folder/" [--force]
+```
+
+### 3. Upload Images to Vercel Blob
+```bash
+# From book-parser/upload-book/ directory
+node upload-images-to-vercel-blob.js "/path/to/book/folder/" "Book Title"
+```
+
+### Required Environment Variables
+```bash
+MONGODB_URI=mongodb://localhost:27017/book-reader-app
+BLOB_READ_WRITE_TOKEN=vercel_blob_token_here
+```
+
+### Book Folder Structure
+```
+book-folder/
+├── book.pdf          # Original PDF file
+├── config.json       # Book configuration (metadata + chapter definitions)
+├── output.json       # Generated by parser (book + chapters data)
+└── images/           # Generated by parser
+    └── Book-Title/
+        ├── page-001-image-1.jpg
+        ├── page-005-image-1.jpg
+        └── ...
+```
+
+### Database Updates After Upload
+- **Books collection**: Record created with `imageBaseURL` field
+- **Chapters collection**: Records created with text chunks and image references
+- **Image chunks**: Use `imageName` field (filename only) for Vercel Blob integration
 
 This schema supports all features outlined in the Product Definition Document while maintaining flexibility for future enhancements. 
