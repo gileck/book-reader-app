@@ -5,6 +5,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 
 export const navItems: NavItem[] = [
   { path: '/', label: 'Reader', icon: <MenuBookIcon /> },
@@ -12,6 +13,7 @@ export const navItems: NavItem[] = [
   { path: '/ai-chat', label: 'AI Chat', icon: <ChatIcon /> },
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
+  { path: '/tts-usage', label: 'TTS Usage', icon: <RecordVoiceOverIcon /> },
   { path: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
 
@@ -21,5 +23,6 @@ export const menuItems: NavItem[] = [
   { path: '/ai-chat', label: 'AI Chat', icon: <ChatIcon /> },
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
+  { path: '/tts-usage', label: 'TTS Usage', icon: <RecordVoiceOverIcon /> },
   { path: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];

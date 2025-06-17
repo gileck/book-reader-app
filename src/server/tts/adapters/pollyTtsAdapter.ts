@@ -1,5 +1,6 @@
 import { PollyClient, SynthesizeSpeechCommand } from '@aws-sdk/client-polly';
 import { BaseTtsAdapter, TTSResult, TTSConfig, TTSTimepoint } from './baseTtsAdapter';
+import { addTtsUsageRecord } from '../../tts-usage-monitoring';
 
 export class PollyTtsAdapter extends BaseTtsAdapter {
     name = 'polly';
@@ -102,14 +103,42 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             const audioBuffer = await this.streamToBuffer(audioResponse.AudioStream);
             const audioContent = audioBuffer.toString('base64');
 
-            return {
+            const result = {
                 audioContent,
                 timepoints
             };
+
+            // Track usage async (don't await)
+            const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
+            const cost = this.calculateCost(text.length, audioLength, config.voiceTier || 'standard');
+            addTtsUsageRecord('polly', config.voiceId, text.length, audioLength, cost, 'tts-api')
+                .catch(error => console.error('Error tracking TTS usage:', error));
+
+            return result;
         } catch (error) {
             console.error('Polly TTS synthesis error:', error);
             return null;
         }
+    }
+
+    private calculateCost(textLength: number, audioLength: number, voiceTier: string): number {
+        // Amazon Polly pricing (approximate)
+        let costPerCharacter: number;
+        switch (voiceTier) {
+            case 'neural':
+                costPerCharacter = 0.000025; // $25 per 1M characters
+                break;
+            case 'long-form':
+                costPerCharacter = 0.00010; // $100 per 1M characters
+                break;
+            case 'generative':
+                costPerCharacter = 0.00020; // $200 per 1M characters
+                break;
+            default: // standard
+                costPerCharacter = 0.000004; // $4 per 1M characters
+                break;
+        }
+        return textLength * costPerCharacter;
     }
 
     async getSupportedVoices(): Promise<string[]> {

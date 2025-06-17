@@ -7,6 +7,7 @@ import { Reader } from './Reader';
 import { Bookmarks } from './Bookmarks';
 import { ReadingHistory } from './ReadingHistory';
 import { BookLibrary } from './BookLibrary';
+import { TtsUsage } from './TtsUsage';
 import { createRoutes } from '../router';
 
 // Define routes
@@ -18,6 +19,7 @@ export const routes = createRoutes({
   '/bookmarks': Bookmarks,
   '/reading-history': ReadingHistory,
   '/settings': Settings,
+  '/tts-usage': TtsUsage,
   '/not-found': NotFound,
   '/profile': Profile,
 });

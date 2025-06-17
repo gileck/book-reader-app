@@ -1,5 +1,6 @@
 import * as textToSpeech from '@google-cloud/text-to-speech';
 import { BaseTtsAdapter, TTSResult, TTSConfig } from './baseTtsAdapter';
+import { addTtsUsageRecord } from '../../tts-usage-monitoring';
 
 export class GoogleTtsAdapter extends BaseTtsAdapter {
     name = 'google';
@@ -58,16 +59,30 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
             })) || [];
 
             const audioContent = response.audioContent;
-            return {
+            const result = {
                 audioContent: audioContent instanceof Uint8Array
                     ? Buffer.from(audioContent).toString('base64')
                     : audioContent?.toString() || '',
                 timepoints
             };
+
+            // Track usage async (don't await)
+            const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
+            const cost = this.calculateCost(text.length, audioLength, config.voiceTier || 'standard');
+            addTtsUsageRecord('google', config.voiceId, text.length, audioLength, cost, 'tts-api')
+                .catch(error => console.error('Error tracking TTS usage:', error));
+
+            return result;
         } catch (error) {
             console.error('Google TTS synthesis error:', error);
             return null;
         }
+    }
+
+    private calculateCost(textLength: number, audioLength: number, voiceTier: string): number {
+        // Google TTS pricing (approximate)
+        const costPerCharacter = voiceTier === 'neural' ? 0.000016 : 0.000004;
+        return textLength * costPerCharacter;
     }
 
     async getSupportedVoices(): Promise<string[]> {
