@@ -18,7 +18,8 @@ import {
     Checkbox,
     TextField
 } from '@mui/material';
-import { getAllModels } from '../../../../server/ai/models';
+import { getAllModels } from '../../../../../server/ai/models';
+import { AnswerLength, AnswerLevel, AnswerStyle } from '../../hooks/useBookQA';
 
 interface BookQAChatSettingsProps {
     open: boolean;
@@ -29,6 +30,12 @@ interface BookQAChatSettingsProps {
     onEstimateBeforeSendChange: (value: boolean) => void;
     costApprovalThreshold: number;
     onCostApprovalThresholdChange: (value: number) => void;
+    answerLength: AnswerLength;
+    answerLevel: AnswerLevel;
+    answerStyle: AnswerStyle;
+    onAnswerLengthChange: (value: AnswerLength) => void;
+    onAnswerLevelChange: (value: AnswerLevel) => void;
+    onAnswerStyleChange: (value: AnswerStyle) => void;
 }
 
 export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
@@ -39,11 +46,20 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
     estimateBeforeSend,
     onEstimateBeforeSendChange,
     costApprovalThreshold,
-    onCostApprovalThresholdChange
+    onCostApprovalThresholdChange,
+    answerLength,
+    answerLevel,
+    answerStyle,
+    onAnswerLengthChange,
+    onAnswerLevelChange,
+    onAnswerStyleChange
 }) => {
     const [localModelId, setLocalModelId] = useState(selectedModelId);
     const [localEstimateBeforeSend, setLocalEstimateBeforeSend] = useState(estimateBeforeSend);
     const [localCostApprovalThreshold, setLocalCostApprovalThreshold] = useState(costApprovalThreshold);
+    const [localAnswerLength, setLocalAnswerLength] = useState(answerLength);
+    const [localAnswerLevel, setLocalAnswerLevel] = useState(answerLevel);
+    const [localAnswerStyle, setLocalAnswerStyle] = useState(answerStyle);
     const availableModels = getAllModels();
     const theme = useTheme();
 
@@ -51,7 +67,10 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
         setLocalModelId(selectedModelId);
         setLocalEstimateBeforeSend(estimateBeforeSend);
         setLocalCostApprovalThreshold(costApprovalThreshold);
-    }, [selectedModelId, estimateBeforeSend, costApprovalThreshold]);
+        setLocalAnswerLength(answerLength);
+        setLocalAnswerLevel(answerLevel);
+        setLocalAnswerStyle(answerStyle);
+    }, [selectedModelId, estimateBeforeSend, costApprovalThreshold, answerLength, answerLevel, answerStyle]);
 
     const handleModelChange = (modelId: string) => {
         setLocalModelId(modelId);
@@ -66,6 +85,21 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
     const handleCostApprovalThresholdChange = (value: number) => {
         setLocalCostApprovalThreshold(value);
         onCostApprovalThresholdChange(value);
+    };
+
+    const handleAnswerLengthChange = (value: AnswerLength) => {
+        setLocalAnswerLength(value);
+        onAnswerLengthChange(value);
+    };
+
+    const handleAnswerLevelChange = (value: AnswerLevel) => {
+        setLocalAnswerLevel(value);
+        onAnswerLevelChange(value);
+    };
+
+    const handleAnswerStyleChange = (value: AnswerStyle) => {
+        setLocalAnswerStyle(value);
+        onAnswerStyleChange(value);
     };
 
     const handleClose = () => {
@@ -277,6 +311,101 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
                             }
                         }}
                     />
+
+                    <Divider sx={{ my: 3, opacity: 0.6 }} />
+
+                    {/* Answer Customization Settings */}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontSize: '1.125rem',
+                            fontWeight: 600,
+                            mb: 1
+                        }}
+                    >
+                        Answer Customization
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            mb: 3,
+                            lineHeight: 1.5
+                        }}
+                    >
+                        Customize how the AI responds to your questions about the book.
+                    </Typography>
+
+                    {/* Answer Length */}
+                    <FormControl
+                        fullWidth
+                        sx={{
+                            mb: 2,
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '12px',
+                                backgroundColor: alpha(theme.palette.background.default, 0.6),
+                            }
+                        }}
+                    >
+                        <InputLabel sx={{ fontWeight: 500 }}>Answer Length</InputLabel>
+                        <Select
+                            value={localAnswerLength}
+                            label="Answer Length"
+                            onChange={(e) => handleAnswerLengthChange(e.target.value as AnswerLength)}
+                        >
+                            <MenuItem value="brief">Brief (1-2 sentences)</MenuItem>
+                            <MenuItem value="short">Short (1 paragraph)</MenuItem>
+                            <MenuItem value="medium">Medium (2-3 paragraphs)</MenuItem>
+                            <MenuItem value="detailed">Detailed (comprehensive)</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    {/* Answer Level */}
+                    <FormControl
+                        fullWidth
+                        sx={{
+                            mb: 2,
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '12px',
+                                backgroundColor: alpha(theme.palette.background.default, 0.6),
+                            }
+                        }}
+                    >
+                        <InputLabel sx={{ fontWeight: 500 }}>Answer Level</InputLabel>
+                        <Select
+                            value={localAnswerLevel}
+                            label="Answer Level"
+                            onChange={(e) => handleAnswerLevelChange(e.target.value as AnswerLevel)}
+                        >
+                            <MenuItem value="simple">Simple (easy to understand)</MenuItem>
+                            <MenuItem value="intermediate">Intermediate (general audience)</MenuItem>
+                            <MenuItem value="advanced">Advanced (academic level)</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    {/* Answer Style */}
+                    <FormControl
+                        fullWidth
+                        sx={{
+                            mb: 3,
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '12px',
+                                backgroundColor: alpha(theme.palette.background.default, 0.6),
+                            }
+                        }}
+                    >
+                        <InputLabel sx={{ fontWeight: 500 }}>Answer Style</InputLabel>
+                        <Select
+                            value={localAnswerStyle}
+                            label="Answer Style"
+                            onChange={(e) => handleAnswerStyleChange(e.target.value as AnswerStyle)}
+                        >
+                            <MenuItem value="casual">Casual (friendly, conversational)</MenuItem>
+                            <MenuItem value="professional">Professional (formal, academic)</MenuItem>
+                            <MenuItem value="tutoring">Tutoring (patient, educational)</MenuItem>
+                            <MenuItem value="analytical">Analytical (critical thinking)</MenuItem>
+                        </Select>
+                    </FormControl>
 
                     <Divider sx={{ my: 3, opacity: 0.6 }} />
 

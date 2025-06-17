@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { askBookContentQuestion, estimateBookContentQuestionCost } from '../../../../apis/bookContentChat/client';
-import { ChatMessage } from '../../../../apis/bookContentChat/types';
+import { ChatMessage, AnswerLength, AnswerLevel, AnswerStyle } from '../../../../apis/bookContentChat/types';
 import { getAllModels } from '../../../../server/ai/models';
 
 interface UseBookQAProps {
@@ -11,6 +11,8 @@ interface UseBookQAProps {
     currentSentence: string;
     getLastSentences: () => string;
 }
+
+export type { AnswerLength, AnswerLevel, AnswerStyle };
 
 interface UseBookQAState {
     isOpen: boolean;
@@ -29,6 +31,9 @@ interface UseBookQAState {
         messageIndex: number;
         messageContent: string;
     } | null;
+    answerLength: AnswerLength;
+    answerLevel: AnswerLevel;
+    answerStyle: AnswerStyle;
 }
 
 const DEFAULT_MODEL_ID = 'gemini-1.5-flash-8b'; // Default model
@@ -54,7 +59,10 @@ export const useBookQA = ({
         pendingQuestion: null,
         estimatedCost: null,
         showCostApprovalDialog: false,
-        replyContext: null
+        replyContext: null,
+        answerLength: 'medium',
+        answerLevel: 'intermediate',
+        answerStyle: 'casual'
     });
 
     // Load conversation history and settings from localStorage on mount
@@ -78,6 +86,9 @@ export const useBookQA = ({
             const contextLines = settings.contextLines || 3;
             const estimateBeforeSend = settings.estimateBeforeSend || false;
             const costApprovalThreshold = settings.costApprovalThreshold || 0.01;
+            const answerLength = settings.answerLength || 'medium';
+            const answerLevel = settings.answerLevel || 'intermediate';
+            const answerStyle = settings.answerStyle || 'casual';
 
             setState(prev => ({
                 ...prev,
@@ -85,7 +96,10 @@ export const useBookQA = ({
                 selectedModelId,
                 contextLines,
                 estimateBeforeSend,
-                costApprovalThreshold
+                costApprovalThreshold,
+                answerLength,
+                answerLevel,
+                answerStyle
             }));
         } catch (error) {
             console.error('Error loading conversation/settings from localStorage:', error);
@@ -104,7 +118,7 @@ export const useBookQA = ({
         }
     }, [state.messages, bookId]);
 
-    // Save settings to localStorage whenever selectedModelId, contextLines, or cost settings change
+    // Save settings to localStorage whenever selectedModelId, contextLines, cost settings, or prompt settings change
     useEffect(() => {
         const settingsKey = 'bookQA_settings';
         try {
@@ -112,13 +126,16 @@ export const useBookQA = ({
                 selectedModelId: state.selectedModelId,
                 contextLines: state.contextLines,
                 estimateBeforeSend: state.estimateBeforeSend,
-                costApprovalThreshold: state.costApprovalThreshold
+                costApprovalThreshold: state.costApprovalThreshold,
+                answerLength: state.answerLength,
+                answerLevel: state.answerLevel,
+                answerStyle: state.answerStyle
             };
             localStorage.setItem(settingsKey, JSON.stringify(settings));
         } catch (error) {
             console.error('Error saving settings to localStorage:', error);
         }
-    }, [state.selectedModelId, state.contextLines, state.estimateBeforeSend, state.costApprovalThreshold]);
+    }, [state.selectedModelId, state.contextLines, state.estimateBeforeSend, state.costApprovalThreshold, state.answerLength, state.answerLevel, state.answerStyle]);
 
     const updateState = useCallback((partialState: Partial<UseBookQAState>) => {
         setState(prev => ({ ...prev, ...partialState }));
@@ -158,6 +175,18 @@ export const useBookQA = ({
 
     const handleCostApprovalThresholdChange = useCallback((value: number) => {
         updateState({ costApprovalThreshold: value });
+    }, [updateState]);
+
+    const handleAnswerLengthChange = useCallback((value: AnswerLength) => {
+        updateState({ answerLength: value });
+    }, [updateState]);
+
+    const handleAnswerLevelChange = useCallback((value: AnswerLevel) => {
+        updateState({ answerLevel: value });
+    }, [updateState]);
+
+    const handleAnswerStyleChange = useCallback((value: AnswerStyle) => {
+        updateState({ answerStyle: value });
     }, [updateState]);
 
     const setReplyContext = useCallback((messageIndex: number, messageContent: string) => {
@@ -223,7 +252,12 @@ export const useBookQA = ({
                 chapterTitle,
                 currentSentence,
                 lastSentences: getLastSentences(),
-                conversationHistory
+                conversationHistory,
+                customization: {
+                    answerLength: state.answerLength,
+                    answerLevel: state.answerLevel,
+                    answerStyle: state.answerStyle
+                }
             });
 
             if (result.data?.error) {
@@ -350,7 +384,12 @@ export const useBookQA = ({
                     chapterTitle,
                     currentSentence,
                     lastSentences: getLastSentences(),
-                    conversationHistory: potentialNewMessages.slice(-4)
+                    conversationHistory: potentialNewMessages.slice(-4),
+                    customization: {
+                        answerLength: state.answerLength,
+                        answerLevel: state.answerLevel,
+                        answerStyle: state.answerStyle
+                    }
                 });
 
                 if (estimateResult.data?.error) {
@@ -413,6 +452,9 @@ export const useBookQA = ({
         estimatedCost: state.estimatedCost,
         pendingQuestion: state.pendingQuestion,
         replyContext: state.replyContext,
+        answerLength: state.answerLength,
+        answerLevel: state.answerLevel,
+        answerStyle: state.answerStyle,
 
         // Actions
         togglePanel,
@@ -428,6 +470,9 @@ export const useBookQA = ({
         clearHistory,
         submitQuestion,
         setReplyContext,
-        clearReplyContext
+        clearReplyContext,
+        handleAnswerLengthChange,
+        handleAnswerLevelChange,
+        handleAnswerStyleChange
     };
 }; 

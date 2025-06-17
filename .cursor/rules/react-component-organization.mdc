@@ -13,6 +13,7 @@ This rule documents the pattern for organizing React components in our codebase,
 2. **Separation of Logic and UI**: Separate business logic from UI rendering
 3. **Composition over Complexity**: Compose small components rather than creating large monolithic ones
 4. **Consistent Folder Structure**: Organize related components in logical folder structures
+5. **Component Libraries**: Group related components into dedicated libraries/directories
 
 ## Implementation Pattern
 
@@ -67,7 +68,44 @@ Build UI through composition:
 3. **Section Components**: Logical sections of a page or feature
 4. **Page Components**: Compose sections into complete pages
 
-### 4. File Organization
+### 4. Component Libraries and Dedicated Directories
+
+When you have multiple related components that work together as a cohesive feature, organize them into dedicated component libraries:
+
+#### Feature-Based Component Libraries
+
+Create dedicated directories for complex features with multiple components:
+
+```
+src/client/routes/[ROUTE_NAME]/components/[FEATURE_NAME]/
+├── index.ts                 # Main exports for the library
+├── types.ts                 # Shared TypeScript types
+├── README.md               # Documentation for the library
+├── MainContainer.tsx        # Primary container component
+├── SettingsDialog.tsx       # Feature configuration
+├── ContentDisplay.tsx       # Content presentation
+├── InputControls.tsx        # User input handling
+├── ItemRenderer.tsx         # Individual item display
+└── LoadingIndicator.tsx     # Loading states
+```
+
+#### Library Benefits
+
+- **Cohesive Organization**: Related components grouped together
+- **Single Entry Point**: Import multiple components from one location
+- **Shared Types**: Common interfaces defined once
+- **Documentation**: README explaining the library structure and usage
+- **Encapsulation**: Internal components can remain private to the library
+
+#### Library Creation Guidelines
+
+Create a component library when:
+- You have 4+ related components working together
+- Components share common types and interfaces  
+- The feature has distinct boundaries from other functionality
+- Components are primarily used together as a unit
+
+### 5. File Organization
 
 #### Route-Specific Components
 
@@ -77,6 +115,7 @@ src/client/routes/[ROUTE_NAME]/
 ├── [ROUTE_NAME].tsx     // Main route component 
 ├── index.ts             // Exports the route
 ├── components/          // UI components specific to this route
+│   ├── [FEATURE_LIB]/   // Feature-specific component libraries
 │   ├── Header.tsx       // Route-specific header
 │   ├── ContentSection.tsx 
 │   └── ListItem.tsx     
@@ -100,13 +139,36 @@ src/client/components/Feature/
 └── types.ts             // Shared types and interfaces
 ```
 
-### 5. Split Files at These Boundaries
+### 6. Component Library Structure
+
+Each component library should follow this pattern:
+
+```typescript
+// index.ts - Clean exports
+export { MainComponent } from './MainComponent';
+export { SettingsDialog } from './SettingsDialog';
+export { InputControls } from './InputControls';
+export * from './types';
+
+// types.ts - Shared interfaces
+export interface MainComponentProps {
+  // Shared types and interfaces
+}
+
+// README.md - Documentation
+# Feature Component Library
+This library contains components for [feature description]
+...
+```
+
+### 7. Split Files at These Boundaries
 
 Consider splitting components into separate files when:
 - A component exceeds 150 lines
 - A component has multiple complex sub-components
 - Logic and UI would be clearer if separated
 - A component is reused in multiple places
+- You have 3+ related components that could form a library
 
 ## File Size Guidelines
 
@@ -114,12 +176,13 @@ Consider splitting components into separate files when:
 - If a component file exceeds 200 lines, it should definitely be split
 - Container components should focus on logic and delegate rendering to presentation components
 - Main page components should primarily compose other components rather than implementing complex rendering logic
+- Component libraries should have clear boundaries and documentation
 
 ## Example Component Structure
 
 For a typical feature or page:
 
-```
+```typescript
 // FeaturePage.tsx - Main page component
 const FeaturePage = () => {
   const { data, actions } = useFeatureLogic(); // Custom hook for logic
@@ -135,3 +198,29 @@ const FeaturePage = () => {
 ```
 
 Each component referenced above would live in its own file with focused responsibility.
+
+## Implementation Process
+
+1. **Identify Related Components**: Look for components that work together as a feature
+2. **Create Component Library**: Move related components to a dedicated directory
+3. **Create Index File**: Export all public components from a single entry point
+4. **Add Shared Types**: Define common interfaces in `types.ts`
+5. **Update Import Paths**: Fix all imports to use the new library structure
+6. **Add Documentation**: Create README explaining the library purpose and usage
+7. **Validate Implementation**: Run checks to ensure everything works correctly
+
+## Validation
+
+After implementing component organization changes, always run:
+
+```bash
+yarn checks
+```
+
+This command runs both TypeScript compilation and ESLint to ensure:
+- All import paths are correct
+- No TypeScript errors exist
+- Code follows established linting rules
+- Components are properly exported and accessible
+
+The implementation is not complete until `yarn checks` passes with zero errors.

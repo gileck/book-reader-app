@@ -11,7 +11,7 @@ import { UserThemeProvider } from '../../components/UserThemeProvider';
 import { ReaderHeader } from './components/ReaderHeader';
 import { ReaderContent } from './components/ReaderContent';
 import { BookQAPanel } from './components/BookQAPanel';
-import { BookQAChatSettings } from './components/BookQAChatSettings';
+import { BookQAChatSettings } from './components/BookQAPanel/BookQAChatSettings';
 import { CostApprovalDialog } from './components/CostApprovalDialog';
 import { ChapterSelector } from './components/ChapterSelector';
 
@@ -320,6 +320,10 @@ export const Reader = () => {
                     selectedModelId={bookQA.selectedModelId}
                     onModelChange={bookQA.handleModelChange}
                     onSetReplyContext={bookQA.setReplyContext}
+                    getLastSentences={() => getLastSentences}
+                    answerLength={bookQA.answerLength}
+                    answerLevel={bookQA.answerLevel}
+                    answerStyle={bookQA.answerStyle}
                 />
 
                 {/* Book Q&A Chat Settings */}
@@ -332,6 +336,12 @@ export const Reader = () => {
                     onEstimateBeforeSendChange={bookQA.handleEstimateBeforeSendChange}
                     costApprovalThreshold={bookQA.costApprovalThreshold}
                     onCostApprovalThresholdChange={bookQA.handleCostApprovalThresholdChange}
+                    answerLength={bookQA.answerLength}
+                    answerLevel={bookQA.answerLevel}
+                    answerStyle={bookQA.answerStyle}
+                    onAnswerLengthChange={bookQA.handleAnswerLengthChange}
+                    onAnswerLevelChange={bookQA.handleAnswerLevelChange}
+                    onAnswerStyleChange={bookQA.handleAnswerStyleChange}
                 />
 
                 {/* Cost Approval Dialog */}

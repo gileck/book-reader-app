@@ -1,3 +1,13 @@
+export type AnswerLength = 'brief' | 'short' | 'medium' | 'detailed';
+export type AnswerLevel = 'simple' | 'intermediate' | 'advanced';
+export type AnswerStyle = 'casual' | 'professional' | 'tutoring' | 'analytical';
+
+export interface PromptCustomization {
+    answerLength?: AnswerLength;
+    answerLevel?: AnswerLevel;
+    answerStyle?: AnswerStyle;
+}
+
 export interface BookContentChatRequest {
     modelId: string;
     question: string;
@@ -8,6 +18,7 @@ export interface BookContentChatRequest {
     currentSentence: string;
     lastSentences: string;
     conversationHistory?: ChatMessage[];
+    customization?: PromptCustomization;
 }
 
 export interface BookContentChatResponse {
@@ -28,6 +39,7 @@ export interface BookContentChatCostEstimateRequest {
     currentSentence: string;
     lastSentences: string;
     conversationHistory?: ChatMessage[];
+    customization?: PromptCustomization;
 }
 
 export interface BookContentChatCostEstimateResponse {
