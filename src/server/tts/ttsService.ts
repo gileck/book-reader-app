@@ -1,4 +1,4 @@
-import * as textToSpeech from '@google-cloud/text-to-speech';
+import { TtsAdapterFactory, TtsProvider } from './adapters/ttsAdapterFactory';
 
 export interface TTSTimepoint {
     markName: string;
@@ -10,84 +10,57 @@ export interface TTSResult {
     timepoints: TTSTimepoint[];
 }
 
-function getClient() {
-    try {
-        const keyBase64 = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-        if (!keyBase64) {
-            throw new Error('GOOGLE_APPLICATION_CREDENTIALS not found');
-        }
-        const credentials = JSON.parse(Buffer.from(keyBase64, 'base64').toString('utf-8'));
-        const client = new textToSpeech.v1beta1.TextToSpeechClient({
-            credentials,
-        });
-        return client;
-    } catch (e) {
-        console.error('Failed to initialize TTS client:', e);
-        return null;
-    }
-}
-
-function generateSSMLWithMarks(text: string): string {
-    const words = text.split(' ').filter(word => word.length > 0);
-    let ssml = '<speak>';
-
-    words.forEach((word, index) => {
-        ssml += ` <mark name="${word}-${index}"/> ${word}`;
-    });
-
-    ssml += '</speak>';
-    return ssml;
-}
-
-// Text chunking removed - chunks are pre-processed during PDF import and stored in database
-
 export async function synthesizeSpeechWithTiming(
     text: string,
-    voiceId: string = 'en-US-Neural2-F'
+    voiceId: string = 'en-US-Neural2-F',
+    provider?: TtsProvider
 ): Promise<TTSResult | null> {
-    const client = getClient();
-    if (!client) {
-        return null;
-    }
-
     try {
-        const ssmlText = generateSSMLWithMarks(text);
+        const adapter = await TtsAdapterFactory.getAdapter(provider);
+        if (!adapter) {
+            console.error('No TTS adapter available');
+            return null;
+        }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const request: any = {
-            enableTimePointing: ['SSML_MARK'],
-            input: { ssml: ssmlText },
-            voice: {
-                languageCode: 'en-US',
-                name: voiceId
-            },
-            audioConfig: {
-                audioEncoding: 'MP3',
-                speakingRate: 1.0,
-                pitch: 0.0,
-                volumeGainDb: 0.0
-            }
+        // Determine voice tier from voiceId
+        const getVoiceTier = (voiceId: string): 'standard' | 'neural' | 'long-form' | 'generative' => {
+            const longFormVoices = ['Danielle', 'Gregory', 'Burrow'];
+            const neuralVoices = ['Emma', 'Olivia', 'Aria', 'Ayanda', 'Ivy'];
+            const standardVoices = ['Joanna', 'Matthew', 'Amy', 'Brian', 'Joey', 'Justin', 'Kendra', 'Kimberly', 'Salli', 'Kevin', 'Stephen'];
+            
+            if (longFormVoices.includes(voiceId)) return 'long-form';
+            if (neuralVoices.includes(voiceId)) return 'neural';
+            if (standardVoices.includes(voiceId)) return 'standard';
+            
+            // For Google voices or fallback
+            if (voiceId.includes('Neural2')) return 'neural';
+            return 'standard';
         };
 
-        const [response] = await client.synthesizeSpeech(request);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const timepoints: TTSTimepoint[] = (response as any)?.timepoints?.map((tp: any) => ({
-            markName: tp.markName,
-            timeSeconds: tp.timeSeconds
-        })) || [];
-
-        const audioContent = response.audioContent;
-        return {
-            audioContent: audioContent instanceof Uint8Array
-                ? Buffer.from(audioContent).toString('base64')
-                : audioContent?.toString() || '',
-            timepoints
-        };
+        return await adapter.synthesizeSpeech(text, {
+            voiceId,
+            languageCode: 'en-US',
+            speakingRate: 1.0,
+            pitch: 0.0,
+            volumeGainDb: 0.0,
+            voiceTier: getVoiceTier(voiceId)
+        });
     } catch (error) {
         console.error('TTS synthesis error:', error);
         return null;
     }
+}
+
+export async function getAvailableTtsProviders(): Promise<TtsProvider[]> {
+    return await TtsAdapterFactory.getAvailableProviders();
+}
+
+export function setTtsProvider(provider: TtsProvider): void {
+    TtsAdapterFactory.setProvider(provider);
+}
+
+export function getCurrentTtsProvider(): TtsProvider {
+    return TtsAdapterFactory.getProvider();
 }
 
 // processTextForTTS removed - text is pre-chunked during PDF import 

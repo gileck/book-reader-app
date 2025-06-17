@@ -1,0 +1,14 @@
+{"time":125,"type":"ssml","start":8,"end":30,"value":"Hello-0"}
+{"time":375,"type":"ssml","start":37,"end":60,"value":"world!-1"}
+{"time":900,"type":"ssml","start":68,"end":89,"value":"This-2"}
+{"time":1605,"type":"ssml","start":95,"end":114,"value":"is-3"}
+{"time":1705,"type":"ssml","start":118,"end":136,"value":"a-4"}
+{"time":1792,"type":"ssml","start":139,"end":160,"value":"test-5"}
+{"time":2105,"type":"ssml","start":166,"end":185,"value":"of-6"}
+{"time":2330,"type":"ssml","start":189,"end":212,"value":"Amazon-7"}
+{"time":2780,"type":"ssml","start":220,"end":242,"value":"Polly-8"}
+{"time":3167,"type":"ssml","start":249,"end":272,"value":"speech-9"}
+{"time":3480,"type":"ssml","start":280,"end":307,"value":"synthesis-10"}
+{"time":4080,"type":"ssml","start":318,"end":340,"value":"with-11"}
+{"time":4242,"type":"ssml","start":346,"end":368,"value":"word-12"}
+{"time":4480,"type":"ssml","start":374,"end":399,"value":"timing.-13"}

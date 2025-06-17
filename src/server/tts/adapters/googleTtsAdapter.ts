@@ -1,0 +1,90 @@
+import * as textToSpeech from '@google-cloud/text-to-speech';
+import { BaseTtsAdapter, TTSResult, TTSConfig } from './baseTtsAdapter';
+
+export class GoogleTtsAdapter extends BaseTtsAdapter {
+    name = 'google';
+    private client: textToSpeech.v1beta1.TextToSpeechClient | null = null;
+
+    private getClient() {
+        if (this.client) return this.client;
+        
+        try {
+            const keyBase64 = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+            if (!keyBase64) {
+                throw new Error('GOOGLE_APPLICATION_CREDENTIALS not found');
+            }
+            const credentials = JSON.parse(Buffer.from(keyBase64, 'base64').toString('utf-8'));
+            this.client = new textToSpeech.v1beta1.TextToSpeechClient({
+                credentials,
+            });
+            return this.client;
+        } catch (e) {
+            console.error('Failed to initialize Google TTS client:', e);
+            return null;
+        }
+    }
+
+    async synthesizeSpeech(text: string, config: TTSConfig): Promise<TTSResult | null> {
+        const client = this.getClient();
+        if (!client) {
+            return null;
+        }
+
+        try {
+            const ssmlText = this.generateSSMLWithMarks(text);
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const request: any = {
+                enableTimePointing: ['SSML_MARK'],
+                input: { ssml: ssmlText },
+                voice: {
+                    languageCode: config.languageCode || 'en-US',
+                    name: config.voiceId
+                },
+                audioConfig: {
+                    audioEncoding: 'MP3',
+                    speakingRate: config.speakingRate || 1.0,
+                    pitch: config.pitch || 0.0,
+                    volumeGainDb: config.volumeGainDb || 0.0
+                }
+            };
+
+            const [response] = await client.synthesizeSpeech(request);
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const timepoints = (response as any)?.timepoints?.map((tp: any) => ({
+                markName: tp.markName,
+                timeSeconds: tp.timeSeconds
+            })) || [];
+
+            const audioContent = response.audioContent;
+            return {
+                audioContent: audioContent instanceof Uint8Array
+                    ? Buffer.from(audioContent).toString('base64')
+                    : audioContent?.toString() || '',
+                timepoints
+            };
+        } catch (error) {
+            console.error('Google TTS synthesis error:', error);
+            return null;
+        }
+    }
+
+    async getSupportedVoices(): Promise<string[]> {
+        return [
+            'en-US-Neural2-A',
+            'en-US-Neural2-C',
+            'en-US-Neural2-D',
+            'en-US-Neural2-E',
+            'en-US-Neural2-F',
+            'en-US-Neural2-G',
+            'en-US-Neural2-H',
+            'en-US-Neural2-I',
+            'en-US-Neural2-J'
+        ];
+    }
+
+    async isAvailable(): Promise<boolean> {
+        return this.getClient() !== null;
+    }
+} 

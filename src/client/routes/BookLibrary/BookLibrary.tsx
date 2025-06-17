@@ -29,6 +29,9 @@ export const BookLibrary = () => {
     const [editForm, setEditForm] = useState({ title: '', author: '', coverImage: '', chapterStartNumber: 1 });
     const [deletingBook, setDeletingBook] = useState<string | null>(null);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [savingBook, setSavingBook] = useState(false);
+    const [saveSuccess, setSaveSuccess] = useState(false);
+    const [saveError, setSaveError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -144,12 +147,18 @@ export const BookLibrary = () => {
     const closeEditDialog = () => {
         setShowEditDialog(null);
         setEditForm({ title: '', author: '', coverImage: '', chapterStartNumber: 1 });
+        setSaveSuccess(false);
+        setSaveError(null);
     };
 
     const saveBookEdit = async () => {
         if (!showEditDialog) return;
 
         try {
+            setSavingBook(true);
+            setSaveError(null);
+            setSaveSuccess(false);
+
             const result = await updateBook(showEditDialog, {
                 title: editForm.title,
                 author: editForm.author,
@@ -164,12 +173,20 @@ export const BookLibrary = () => {
                         ? { ...book, ...result.data }
                         : book
                 ));
-                closeEditDialog();
+                setSaveSuccess(true);
+                
+                // Close dialog after showing success message briefly
+                setTimeout(() => {
+                    closeEditDialog();
+                }, 1500);
             } else {
-                console.error('Failed to update book');
+                setSaveError('Failed to update book - no data returned');
             }
         } catch (error) {
             console.error('Error updating book:', error);
+            setSaveError(error instanceof Error ? error.message : 'Failed to update book');
+        } finally {
+            setSavingBook(false);
         }
     };
 
@@ -801,10 +818,38 @@ export const BookLibrary = () => {
                             />
                         </Box>
 
+                        {/* Success/Error Messages */}
+                        {saveSuccess && (
+                            <Box sx={{ 
+                                padding: 'var(--spacing-md)', 
+                                backgroundColor: 'var(--color-success)', 
+                                color: 'white', 
+                                borderRadius: 'var(--border-radius-md)',
+                                textAlign: 'center',
+                                fontWeight: 500
+                            }}>
+                                ✓ Book updated successfully!
+                            </Box>
+                        )}
+                        
+                        {saveError && (
+                            <Box sx={{ 
+                                padding: 'var(--spacing-md)', 
+                                backgroundColor: 'var(--color-error)', 
+                                color: 'white', 
+                                borderRadius: 'var(--border-radius-md)',
+                                textAlign: 'center',
+                                fontWeight: 500
+                            }}>
+                                ✗ {saveError}
+                            </Box>
+                        )}
+
                         <Box sx={{ display: 'flex', gap: 'var(--spacing-md)', justifyContent: 'flex-end', marginTop: 'var(--spacing-lg)' }}>
                             <Button
                                 variant="outlined"
                                 onClick={closeEditDialog}
+                                disabled={savingBook}
                                 sx={{
                                     color: 'var(--color-text-primary)',
                                     borderColor: 'var(--color-border)',
@@ -819,16 +864,17 @@ export const BookLibrary = () => {
                             <Button
                                 variant="contained"
                                 onClick={saveBookEdit}
+                                disabled={savingBook || saveSuccess}
                                 sx={{
-                                    backgroundColor: 'var(--color-primary)',
+                                    backgroundColor: saveSuccess ? 'var(--color-success)' : 'var(--color-primary)',
                                     color: 'white',
                                     '&:hover': {
-                                        backgroundColor: 'var(--color-primary)',
+                                        backgroundColor: saveSuccess ? 'var(--color-success)' : 'var(--color-primary)',
                                         opacity: 0.9,
                                     }
                                 }}
                             >
-                                Save Changes
+                                {savingBook ? 'Saving...' : saveSuccess ? 'Saved!' : 'Save Changes'}
                             </Button>
                         </Box>
                     </Box>

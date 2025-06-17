@@ -16,6 +16,9 @@ import {
     IconButton
 } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
+import { TtsProviderSelector } from './TtsProviderSelector';
+import { getTtsProviders } from '../../apis/tts/client';
+import type { TtsProvider } from '../../server/tts/adapters/ttsAdapterFactory';
 
 interface SpeedControlModalProps {
     open: boolean;
@@ -29,17 +32,51 @@ interface SpeedControlModalProps {
     onPreviewVoice: (voice: string) => void;
 }
 
-const AVAILABLE_VOICES = [
-    { id: 'en-US-Neural2-A', name: 'Emma (Female)', gender: 'Female' },
-    { id: 'en-US-Neural2-C', name: 'Brian (Male)', gender: 'Male' },
-    { id: 'en-US-Neural2-D', name: 'Jenny (Female)', gender: 'Female' },
-    { id: 'en-US-Neural2-E', name: 'Davis (Male)', gender: 'Male' },
-    { id: 'en-US-Neural2-F', name: 'Clara (Female)', gender: 'Female' },
-    { id: 'en-US-Neural2-G', name: 'Jason (Male)', gender: 'Male' },
-    { id: 'en-US-Neural2-H', name: 'Tony (Male)', gender: 'Male' },
-    { id: 'en-US-Neural2-I', name: 'Nancy (Female)', gender: 'Female' },
-    { id: 'en-US-Neural2-J', name: 'Aaron (Male)', gender: 'Male' }
-];
+interface Voice {
+    id: string;
+    name: string;
+    gender: string;
+    tier: 'standard' | 'neural' | 'long-form' | 'generative';
+}
+
+const VOICE_MAPPINGS: Record<TtsProvider, Voice[]> = {
+    google: [
+        // Google TTS Neural2 voices (all neural tier)
+        { id: 'en-US-Neural2-A', name: 'Emma', gender: 'Female', tier: 'neural' },
+        { id: 'en-US-Neural2-C', name: 'Brian', gender: 'Male', tier: 'neural' },
+        { id: 'en-US-Neural2-D', name: 'Jenny', gender: 'Female', tier: 'neural' },
+        { id: 'en-US-Neural2-E', name: 'Davis', gender: 'Male', tier: 'neural' },
+        { id: 'en-US-Neural2-F', name: 'Clara', gender: 'Female', tier: 'neural' },
+        { id: 'en-US-Neural2-G', name: 'Jason', gender: 'Male', tier: 'neural' },
+        { id: 'en-US-Neural2-H', name: 'Tony', gender: 'Male', tier: 'neural' },
+        { id: 'en-US-Neural2-I', name: 'Nancy', gender: 'Female', tier: 'neural' },
+        { id: 'en-US-Neural2-J', name: 'Aaron', gender: 'Male', tier: 'neural' }
+    ],
+    polly: [
+        // Standard voices ($4/1M chars, 5M free/month)
+        { id: 'Joanna', name: 'Joanna', gender: 'Female', tier: 'standard' },
+        { id: 'Matthew', name: 'Matthew', gender: 'Male', tier: 'standard' },
+        { id: 'Amy', name: 'Amy', gender: 'Female', tier: 'standard' },
+        { id: 'Brian', name: 'Brian', gender: 'Male', tier: 'standard' },
+        { id: 'Joey', name: 'Joey', gender: 'Male', tier: 'standard' },
+        { id: 'Justin', name: 'Justin', gender: 'Male', tier: 'standard' },
+        { id: 'Kendra', name: 'Kendra', gender: 'Female', tier: 'standard' },
+        { id: 'Kimberly', name: 'Kimberly', gender: 'Female', tier: 'standard' },
+        { id: 'Salli', name: 'Salli', gender: 'Female', tier: 'standard' },
+        { id: 'Kevin', name: 'Kevin', gender: 'Male', tier: 'standard' },
+        { id: 'Stephen', name: 'Stephen', gender: 'Male', tier: 'standard' },
+        // Neural voices ($16/1M chars, 1M free/month)
+        { id: 'Emma', name: 'Emma', gender: 'Female', tier: 'neural' },
+        { id: 'Olivia', name: 'Olivia', gender: 'Female', tier: 'neural' },
+        { id: 'Aria', name: 'Aria', gender: 'Female', tier: 'neural' },
+        { id: 'Ayanda', name: 'Ayanda', gender: 'Female', tier: 'neural' },
+        { id: 'Ivy', name: 'Ivy', gender: 'Female', tier: 'neural' },
+        // Long-form voices ($100/1M chars, 500K free/month)
+        { id: 'Danielle', name: 'Danielle', gender: 'Female', tier: 'long-form' },
+        { id: 'Gregory', name: 'Gregory', gender: 'Male', tier: 'long-form' },
+        { id: 'Burrow', name: 'Burrow', gender: 'Male', tier: 'long-form' }
+    ]
+};
 
 export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     open,
@@ -55,6 +92,35 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     const [localSpeed, setLocalSpeed] = useState(currentSpeed);
     const [localVoice, setLocalVoice] = useState(currentVoice);
     const [localOffset, setLocalOffset] = useState(wordTimingOffset);
+    const [currentProvider, setCurrentProvider] = useState<TtsProvider>('google');
+    const [availableVoices, setAvailableVoices] = useState<Voice[]>(VOICE_MAPPINGS.google);
+
+    // Load current provider and update voices
+    useEffect(() => {
+        const loadCurrentProvider = async () => {
+            try {
+                const result = await getTtsProviders();
+                if (result.data?.success && result.data.currentProvider) {
+                    const provider = result.data.currentProvider;
+                    setCurrentProvider(provider);
+                    const newVoices = VOICE_MAPPINGS[provider] || VOICE_MAPPINGS.google;
+                    setAvailableVoices(newVoices);
+                    
+                    // Debug logging
+                    console.log('Current provider:', provider);
+                    console.log('Available voices:', newVoices.map(v => `${v.id} (${v.tier})`));
+                    console.log('Current voice:', currentVoice);
+                    console.log('Local voice:', localVoice);
+                }
+            } catch (error) {
+                console.error('Failed to load current TTS provider:', error);
+            }
+        };
+        
+        if (open) {
+            loadCurrentProvider();
+        }
+    }, [open, currentVoice, localVoice]);
 
     useEffect(() => {
         setLocalSpeed(currentSpeed);
@@ -62,12 +128,41 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
         setLocalOffset(wordTimingOffset);
     }, [currentSpeed, currentVoice, wordTimingOffset]);
 
+    // Auto-select default voice if current voice is not available
+    useEffect(() => {
+        if (availableVoices.length > 0 && !availableVoices.some(v => v.id === localVoice)) {
+            const defaultVoice = currentProvider === 'polly' ? 'Joanna' : 'en-US-Neural2-A';
+            const voiceToUse = availableVoices.find(voice => voice.id === defaultVoice)?.id || availableVoices[0].id;
+            setLocalVoice(voiceToUse);
+            onVoiceChange(voiceToUse);
+        }
+    }, [availableVoices, localVoice, currentProvider, onVoiceChange]);
+
+    // Handle provider change from TtsProviderSelector
+    const handleProviderChange = (provider: TtsProvider) => {
+        setCurrentProvider(provider);
+        const newVoices = VOICE_MAPPINGS[provider] || VOICE_MAPPINGS.google;
+        setAvailableVoices(newVoices);
+        
+        // If current voice is not available in new provider, switch to default voice for that provider
+        const currentVoiceExists = newVoices.some(voice => voice.id === localVoice);
+        if (!currentVoiceExists && newVoices.length > 0) {
+            // Use preferred default voices for each provider
+            const defaultVoice = provider === 'polly' ? 'Joanna' : 'en-US-Neural2-A';
+            const voiceToUse = newVoices.find(voice => voice.id === defaultVoice)?.id || newVoices[0].id;
+            setLocalVoice(voiceToUse);
+            onVoiceChange(voiceToUse);
+        }
+    };
+
     const handleSpeedChange = (value: number) => {
         setLocalSpeed(value);
         onSpeedChange(value);
     };
 
     const handleVoiceChange = (voice: string) => {
+        console.log('Voice change requested:', voice);
+        console.log('Available voices:', availableVoices.map(v => v.id));
         setLocalVoice(voice);
         onVoiceChange(voice);
     };
@@ -165,25 +260,135 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
 
                     <Divider sx={{ my: 3 }} />
 
+                    {/* TTS Provider Selection */}
+                    <Typography variant="h6" gutterBottom>
+                        TTS Provider
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Choose your text-to-speech provider. Note: Changing provider will clear audio cache.
+                    </Typography>
+                    <Box sx={{ mb: 3 }}>
+                        <TtsProviderSelector onProviderChange={handleProviderChange} />
+                    </Box>
+
+                    <Divider sx={{ my: 3 }} />
+
                     {/* Voice Selection */}
                     <Typography variant="h6" gutterBottom>
                         Voice Selection
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Choose your preferred voice. Note: Changing voice will clear audio cache.
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                        Choose your preferred voice for {currentProvider === 'google' ? 'Google TTS' : 'Amazon Polly'}. Note: Changing voice will clear audio cache.
+                    </Typography>
+                    <Typography variant="caption" color="primary" sx={{ mb: 2, display: 'block' }}>
+                        Showing {availableVoices.length} voices available for {currentProvider === 'google' ? 'Google TTS' : 'Amazon Polly'}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
+                        Current selection: {localVoice || 'None'} | Valid: {availableVoices.some(v => v.id === localVoice) ? 'Yes' : 'No'}
                     </Typography>
                     <FormControl fullWidth sx={{ mb: 2 }}>
                         <InputLabel>Voice</InputLabel>
                         <Select
-                            value={localVoice}
+                            value={availableVoices.some(v => v.id === localVoice) ? localVoice : ''}
                             label="Voice"
-                            onChange={(e) => handleVoiceChange(e.target.value)}
+                            onChange={(e) => {
+                                console.log('Select onChange triggered:', e.target.value);
+                                handleVoiceChange(e.target.value);
+                            }}
                         >
-                            {AVAILABLE_VOICES.map((voice) => (
-                                <MenuItem key={voice.id} value={voice.id}>
-                                    {voice.name} ({voice.gender})
-                                </MenuItem>
-                            ))}
+                            {(() => {
+                                const menuItems = [];
+                                
+                                // Standard Voices
+                                const standardVoices = availableVoices.filter(voice => voice.tier === 'standard');
+                                if (standardVoices.length > 0) {
+                                    menuItems.push(
+                                        <MenuItem key="standard-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+                                            Standard Voices - $4/1M chars (5M free/month)
+                                        </MenuItem>
+                                    );
+                                    standardVoices.forEach(voice => {
+                                        menuItems.push(
+                                            <MenuItem 
+                                                key={voice.id} 
+                                                value={voice.id} 
+                                                sx={{ pl: 3 }}
+                                                onClick={() => console.log('MenuItem clicked:', voice.id)}
+                                            >
+                                                {voice.name} ({voice.gender})
+                                            </MenuItem>
+                                        );
+                                    });
+                                }
+                                
+                                // Neural Voices
+                                const neuralVoices = availableVoices.filter(voice => voice.tier === 'neural');
+                                if (neuralVoices.length > 0) {
+                                    menuItems.push(
+                                        <MenuItem key="neural-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary', mt: 1 }}>
+                                            Neural Voices - $16/1M chars (1M free/month)
+                                        </MenuItem>
+                                    );
+                                    neuralVoices.forEach(voice => {
+                                        menuItems.push(
+                                            <MenuItem 
+                                                key={voice.id} 
+                                                value={voice.id} 
+                                                sx={{ pl: 3 }}
+                                                onClick={() => console.log('MenuItem clicked:', voice.id)}
+                                            >
+                                                {voice.name} ({voice.gender})
+                                            </MenuItem>
+                                        );
+                                    });
+                                }
+                                
+                                // Long-Form Voices
+                                const longFormVoices = availableVoices.filter(voice => voice.tier === 'long-form');
+                                if (longFormVoices.length > 0) {
+                                    menuItems.push(
+                                        <MenuItem key="long-form-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary', mt: 1 }}>
+                                            Long-Form Voices - $100/1M chars (500K free/month)
+                                        </MenuItem>
+                                    );
+                                    longFormVoices.forEach(voice => {
+                                        menuItems.push(
+                                            <MenuItem 
+                                                key={voice.id} 
+                                                value={voice.id} 
+                                                sx={{ pl: 3 }}
+                                                onClick={() => console.log('MenuItem clicked:', voice.id)}
+                                            >
+                                                {voice.name} ({voice.gender})
+                                            </MenuItem>
+                                        );
+                                    });
+                                }
+                                
+                                // Generative Voices
+                                const generativeVoices = availableVoices.filter(voice => voice.tier === 'generative');
+                                if (generativeVoices.length > 0) {
+                                    menuItems.push(
+                                        <MenuItem key="generative-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary', mt: 1 }}>
+                                            Generative Voices - $30/1M chars (100K free/month)
+                                        </MenuItem>
+                                    );
+                                    generativeVoices.forEach(voice => {
+                                        menuItems.push(
+                                            <MenuItem 
+                                                key={voice.id} 
+                                                value={voice.id} 
+                                                sx={{ pl: 3 }}
+                                                onClick={() => console.log('MenuItem clicked:', voice.id)}
+                                            >
+                                                {voice.name} ({voice.gender})
+                                            </MenuItem>
+                                        );
+                                    });
+                                }
+                                
+                                return menuItems;
+                            })()}
                         </Select>
                     </FormControl>
                     <Button

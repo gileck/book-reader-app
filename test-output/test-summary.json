@@ -1,0 +1,67 @@
+{
+  "testText": "Hello world! This is a test of Amazon Polly speech synthesis with word timing.",
+  "voice": "Joanna",
+  "ssml": "<speak> <mark name=\"Hello-0\"/> Hello <mark name=\"world!-1\"/> world! <mark name=\"This-2\"/> This <mark name=\"is-3\"/> is <mark name=\"a-4\"/> a <mark name=\"test-5\"/> test <mark name=\"of-6\"/> of <mark name=\"Amazon-7\"/> Amazon <mark name=\"Polly-8\"/> Polly <mark name=\"speech-9\"/> speech <mark name=\"synthesis-10\"/> synthesis <mark name=\"with-11\"/> with <mark name=\"word-12\"/> word <mark name=\"timing.-13\"/> timing.</speak>",
+  "wordCount": 14,
+  "timepointCount": 14,
+  "timepoints": [
+    {
+      "markName": "Hello-0",
+      "timeSeconds": 0.125
+    },
+    {
+      "markName": "world!-1",
+      "timeSeconds": 0.375
+    },
+    {
+      "markName": "This-2",
+      "timeSeconds": 0.9
+    },
+    {
+      "markName": "is-3",
+      "timeSeconds": 1.605
+    },
+    {
+      "markName": "a-4",
+      "timeSeconds": 1.705
+    },
+    {
+      "markName": "test-5",
+      "timeSeconds": 1.792
+    },
+    {
+      "markName": "of-6",
+      "timeSeconds": 2.105
+    },
+    {
+      "markName": "Amazon-7",
+      "timeSeconds": 2.33
+    },
+    {
+      "markName": "Polly-8",
+      "timeSeconds": 2.78
+    },
+    {
+      "markName": "speech-9",
+      "timeSeconds": 3.167
+    },
+    {
+      "markName": "synthesis-10",
+      "timeSeconds": 3.48
+    },
+    {
+      "markName": "with-11",
+      "timeSeconds": 4.08
+    },
+    {
+      "markName": "word-12",
+      "timeSeconds": 4.242
+    },
+    {
+      "markName": "timing.-13",
+      "timeSeconds": 4.48
+    }
+  ],
+  "audioSizeKB": 29.9970703125,
+  "timestamp": "2025-06-17T18:09:22.621Z"
+}
