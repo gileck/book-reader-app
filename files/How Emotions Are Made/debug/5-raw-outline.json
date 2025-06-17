@@ -1,0 +1,554 @@
+[
+  {
+    "dest": [
+      {
+        "num": 50,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      185.188,
+      491.255,
+      0
+    ],
+    "url": null,
+    "title": "Contents",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 60,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      172.006,
+      504.755,
+      0
+    ],
+    "url": null,
+    "title": "Introduction: The Two-Thousand-Year-Old Assumption",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 104,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      209.697,
+      519.35,
+      0
+    ],
+    "url": null,
+    "title": "1 The Search for Emotion’s “Fingerprints”",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 248,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      208.745,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "2 Emotions Are Constructed",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 345,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      216.378,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "3 The Myth of Universal Emotions",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 427,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      216.04,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "4 The Origin of Feeling",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 596,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      216.363,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "5 Concepts, Goals, and Words",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 757,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      216.056,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "6 How the Brain Makes Emotions",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 852,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      216.288,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "7 Emotions as Social Reality",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 994,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      216.206,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "8 A New View of Human Nature",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1124,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      208.572,
+      516.35,
+      0
+    ],
+    "url": null,
+    "title": "9 Mastering Your Emotions",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1257,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      206.037,
+      517.35,
+      0
+    ],
+    "url": null,
+    "title": "10 Emotion and Illness",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1365,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      207.169,
+      518.35,
+      0
+    ],
+    "url": null,
+    "title": "11 Emotion and the Law",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1545,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      213.723,
+      518.85,
+      0
+    ],
+    "url": null,
+    "title": "12 Is a Growling Dog Angry?",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1694,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      213.85,
+      518.45,
+      0
+    ],
+    "url": null,
+    "title": "13 From Brain to Mind: The New Frontier",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1778,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      156.569,
+      491.255,
+      0
+    ],
+    "url": null,
+    "title": "Acknowledgments",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1826,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      183.401,
+      491.85,
+      0
+    ],
+    "url": null,
+    "title": "Appendix A",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1862,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      176.637,
+      491.85,
+      0
+    ],
+    "url": null,
+    "title": "Appendix B",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1874,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      176.06,
+      491.85,
+      0
+    ],
+    "url": null,
+    "title": "Appendix C",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1886,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      175.535,
+      491.85,
+      0
+    ],
+    "url": null,
+    "title": "Appendix D",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 1947,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      173.925,
+      491.255,
+      0
+    ],
+    "url": null,
+    "title": "Bibliography",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 2217,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      202.445,
+      491.255,
+      0
+    ],
+    "url": null,
+    "title": "Notes",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  },
+  {
+    "dest": [
+      {
+        "num": 2481,
+        "gen": 0
+      },
+      {
+        "name": "XYZ"
+      },
+      202.575,
+      491.255,
+      0
+    ],
+    "url": null,
+    "title": "Index",
+    "color": {
+      "0": 0,
+      "1": 0,
+      "2": 0
+    },
+    "bold": false,
+    "italic": false,
+    "items": []
+  }
+]

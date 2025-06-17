@@ -1,0 +1,131 @@
+{
+  "source": "pdf_bookmarks",
+  "chapters": [
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Praise for Transformer",
+      "startingPage": 2,
+      "originalTitle": "Praise for Transformer"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Title Page",
+      "startingPage": 4,
+      "originalTitle": "Title Page"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Copyright",
+      "startingPage": 5,
+      "originalTitle": "Copyright"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Dedication",
+      "startingPage": 6,
+      "originalTitle": "Dedication"
+    },
+    {
+      "chapterNumber": 0,
+      "chapterTitle": "Introduction: Life itself",
+      "startingPage": 9,
+      "originalTitle": "Introduction: Life itself"
+    },
+    {
+      "chapterNumber": 1,
+      "chapterTitle": "Discovering the nanocosm",
+      "startingPage": 28,
+      "originalTitle": "1. Discovering the nanocosm"
+    },
+    {
+      "chapterNumber": 2,
+      "chapterTitle": "The path of carbon",
+      "startingPage": 63,
+      "originalTitle": "2. The path of carbon"
+    },
+    {
+      "chapterNumber": 3,
+      "chapterTitle": "From gases to life",
+      "startingPage": 92,
+      "originalTitle": "3. From gases to life"
+    },
+    {
+      "chapterNumber": 4,
+      "chapterTitle": "Revolutions",
+      "startingPage": 125,
+      "originalTitle": "4. Revolutions"
+    },
+    {
+      "chapterNumber": 5,
+      "chapterTitle": "To the dark side",
+      "startingPage": 151,
+      "originalTitle": "5. To the dark side"
+    },
+    {
+      "chapterNumber": 6,
+      "chapterTitle": "The flux capacitor",
+      "startingPage": 182,
+      "originalTitle": "6. The flux capacitor"
+    },
+    {
+      "chapterNumber": "Epilogue",
+      "chapterTitle": "Epilogue: Self",
+      "startingPage": 212,
+      "originalTitle": "Epilogue: Self"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Envoi: ‘Like Most Revelations’",
+      "startingPage": 220,
+      "originalTitle": "Envoi: ‘Like Most Revelations’"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "The forward Krebs cycle",
+      "startingPage": 221,
+      "originalTitle": "The forward Krebs cycle"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "The reverse Krebs cycle",
+      "startingPage": 222,
+      "originalTitle": "The reverse Krebs cycle"
+    },
+    {
+      "chapterNumber": "Appendix 1",
+      "chapterTitle": "Appendix 1: Red protein mechanics",
+      "startingPage": 223,
+      "originalTitle": "Appendix 1: Red protein mechanics"
+    },
+    {
+      "chapterNumber": "Appendix 2",
+      "chapterTitle": "Appendix 2: The Krebs line",
+      "startingPage": 228,
+      "originalTitle": "Appendix 2: The Krebs line"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "List of abbreviations",
+      "startingPage": 234,
+      "originalTitle": "List of abbreviations"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Further reading",
+      "startingPage": 237,
+      "originalTitle": "Further reading"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Acknowledgements",
+      "startingPage": 283,
+      "originalTitle": "Acknowledgements"
+    },
+    {
+      "chapterNumber": null,
+      "chapterTitle": "Index",
+      "startingPage": 289,
+      "originalTitle": "Index"
+    }
+  ]
+}

@@ -18,7 +18,8 @@ import {
     MenuItem,
     Chip,
     Stack,
-    Button
+    Button,
+    InputAdornment
 } from '@mui/material';
 import {
     Close,
@@ -26,7 +27,9 @@ import {
     Fullscreen,
     FullscreenExit,
     Settings,
-    DeleteSweep
+    DeleteSweep,
+    Clear,
+    OpenInNew
 } from '@mui/icons-material';
 import { TransitionProps } from '@mui/material/transitions';
 import { ChatMessage } from '../../../../apis/bookContentChat/types';
@@ -64,6 +67,56 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
+function buildContextPrompt(
+    bookTitle: string,
+    chapterTitle: string,
+    chapterNumber: number,
+    currentSentence: string,
+    lastSentences: string,
+    question: string,
+    conversationHistory?: Array<{ role: 'user' | 'assistant'; content: string; chapterContext: { number: number; title: string; } }>,
+    externalPrompt?: boolean
+): string {
+    let prompt = `You are a helpful reading assistant for the book "${bookTitle}". The reader is currently in Chapter ${chapterNumber}: "${chapterTitle}".
+
+`;
+
+    // Check if this is a reply to a specific AI message (based on question prefix)
+    const isReply = question.startsWith('Reply to:');
+
+    if (!isReply) {
+        prompt += `Current reading context:
+Previous sentences: ${lastSentences}
+Current sentence: ${currentSentence}
+
+`;
+    }
+
+    // Include conversation history (last 4 messages) if available and not external prompt
+    if (!externalPrompt && conversationHistory && conversationHistory.length > 0) {
+        prompt += "Previous conversation:\n";
+        const recentHistory = conversationHistory.slice(-4); // Last 4 messages
+
+        for (const message of recentHistory) {
+            const roleLabel = message.role === 'user' ? 'Reader' : 'Assistant';
+            prompt += `${roleLabel} (Chapter ${message.chapterContext.number}): ${message.content}\n`;
+        }
+        prompt += "\n";
+    }
+
+    if (isReply) {
+        prompt += `Reader's follow-up question: ${question}
+
+Please provide a helpful response to this follow-up question about your previous response.`;
+    } else {
+        prompt += `Reader's question about the current text: ${question}
+
+Please provide a helpful response based on the current reading context above. The reader is asking about the text they are currently reading.`;
+    }
+
+    return prompt;
+}
+
 export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     open,
     fullScreen,
@@ -74,7 +127,6 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     onSubmitQuestion,
     onClearHistory,
     onOpenSettings,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     currentBookTitle,
     currentChapterTitle,
     currentChapterNumber,
@@ -290,6 +342,11 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                         onContextLinesChange={onContextLinesChange}
                         selectedModelId={selectedModelId}
                         onModelChange={onModelChange}
+                        currentBookTitle={currentBookTitle}
+                        currentChapterTitle={currentChapterTitle}
+                        currentChapterNumber={currentChapterNumber}
+                        currentSentence={currentSentence}
+                        messages={messages}
                     />
                 </Box>
             </Dialog>
@@ -436,6 +493,11 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                 onContextLinesChange={onContextLinesChange}
                 selectedModelId={selectedModelId}
                 onModelChange={onModelChange}
+                currentBookTitle={currentBookTitle}
+                currentChapterTitle={currentChapterTitle}
+                currentChapterNumber={currentChapterNumber}
+                currentSentence={currentSentence}
+                messages={messages}
             />
         </Paper>
     );
@@ -788,6 +850,11 @@ interface ChatInputProps {
     onContextLinesChange: (lines: number) => void;
     selectedModelId: string;
     onModelChange: (modelId: string) => void;
+    currentBookTitle: string;
+    currentChapterTitle: string;
+    currentChapterNumber: number;
+    currentSentence: string;
+    messages: ChatMessage[];
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -800,13 +867,18 @@ const ChatInput: React.FC<ChatInputProps> = ({
     contextLines,
     onContextLinesChange,
     selectedModelId,
-    onModelChange
+    onModelChange,
+    currentBookTitle,
+    currentChapterTitle,
+    currentChapterNumber,
+    currentSentence,
+    messages
 }) => {
     const theme = useTheme();
 
     const quickQuestions = [
         'Explain Simply',
-        'Explain Why'
+        'Summarize the last few sentences',
     ];
 
     const handleQuickQuestion = (quickQuestion: string) => {
@@ -814,6 +886,41 @@ const ChatInput: React.FC<ChatInputProps> = ({
             ? `${quickQuestion}: ${question.trim()}`
             : quickQuestion;
         onQuestionChange(fullQuestion);
+    };
+    
+    const handleClearInput = () => {
+        onQuestionChange('');
+    };
+
+    const handleOpenInChatGPT = () => {
+        if (!question.trim()) return;
+
+        // Generate the same context as the server would
+        const conversationHistory = messages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+            chapterContext: {
+                number: msg.chapterContext.number,
+                title: msg.chapterContext.title
+            }
+        }));
+
+        // Use current sentence as last sentences since we don't have access to the full context
+        const lastSentences = currentSentence;
+
+        const prompt = buildContextPrompt(
+            currentBookTitle,
+            currentChapterTitle,
+            currentChapterNumber,
+            currentSentence,
+            lastSentences,
+            question.trim(),
+            conversationHistory,
+            true
+        );
+
+        const chatGPTUrl = `https://chatgpt.com/?model=gpt-4o&q=${encodeURIComponent(prompt)}`;
+        window.open(chatGPTUrl, '_blank');
     };
 
     return (
@@ -861,7 +968,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 sx={{
                     display: 'flex',
                     gap: 2,
-                    alignItems: 'flex-end',
+                    alignItems: 'center',
                     mb: 2
                 }}
             >
@@ -876,6 +983,25 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     onKeyPress={onKeyPress}
                     disabled={loading}
                     variant="outlined"
+                    InputProps={{
+                        endAdornment: question && (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    size="small"
+                                    onClick={handleClearInput}
+                                    disabled={loading}
+                                    sx={{
+                                        color: alpha(theme.palette.text.secondary, 0.7),
+                                        '&:hover': {
+                                            color: theme.palette.text.primary,
+                                        }
+                                    }}
+                                >
+                                    <Clear fontSize="small" />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                     sx={{
                         '& .MuiInputBase-root': {
                             fontSize: fullScreen ? '1rem' : '0.875rem',
@@ -906,6 +1032,36 @@ const ChatInput: React.FC<ChatInputProps> = ({
                         }
                     }}
                 />
+
+                {/* ChatGPT Button */}
+                <IconButton
+                    onClick={handleOpenInChatGPT}
+                    disabled={!question.trim() || loading}
+                    title="Open in ChatGPT"
+                    sx={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: '8px',
+                        backgroundColor: alpha(theme.palette.text.secondary, 0.08),
+                        color: question.trim() && !loading
+                            ? theme.palette.text.secondary
+                            : theme.palette.action.disabled,
+                        transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
+                        '&:hover': {
+                            backgroundColor: alpha(theme.palette.text.secondary, 0.15),
+                            transform: question.trim() && !loading ? 'scale(1.05)' : 'none'
+                        },
+                        '&:active': {
+                            transform: question.trim() && !loading ? 'scale(0.95)' : 'none'
+                        },
+                        '&:disabled': {
+                            backgroundColor: alpha(theme.palette.action.disabled, 0.12),
+                            color: theme.palette.action.disabled
+                        }
+                    }}
+                >
+                    <OpenInNew sx={{ fontSize: 16 }} />
+                </IconButton>
 
                 {/* Send Button */}
                 <IconButton

@@ -1,0 +1,172 @@
+{
+  "bookInfo": {
+    "title": "How emotions are made",
+    "author": "SPDF",
+    "parsedAt": "2025-06-17T11:27:07.959Z"
+  },
+  "overview": {
+    "totalChapters": 14,
+    "totalWords": 178399,
+    "totalTextChunks": 8896,
+    "totalImageChunks": 124,
+    "totalChunks": 9020,
+    "averageWordsPerChapter": 12743,
+    "averageChunksPerChapter": 644
+  },
+  "chapters": [
+    {
+      "chapterNumber": 0,
+      "chapterName": "Introduction: The Two-Thousand-Year-Old Assumption",
+      "wordCount": 2641,
+      "textChunks": 127,
+      "imageChunks": 0,
+      "totalChunks": 127,
+      "pageRanges": "From 12 to 18",
+      "numberOfPages": 7,
+      "previewText": "On December 14, 2012, the deadliest school shooting in U.S. history took place at Sandy Hook Elementary School in Newtown, Connecticut. Twenty-six people inside the school, including twenty children, were mas- sacred by a lone gunman. Several weeks after this horror, I watched the gov- ernor of Connecticut, Dannel Malloy, give his annual “State of the State” speech on television. He spoke in a strong and animated voice for the first three minutes, thanking individuals for their service. And then he began to address the Newtown tragedy: We have all walked a very long and very dark road together."
+    },
+    {
+      "chapterNumber": 1,
+      "chapterName": "The Search for Emotion’s “Fingerprints”",
+      "wordCount": 8844,
+      "textChunks": 400,
+      "imageChunks": 7,
+      "totalChunks": 407,
+      "pageRanges": "From 20 to 43",
+      "numberOfPages": 24,
+      "previewText": "Once upon a time, in the 1980s, I thought I would be a clinical psycholo- gist. Iheaded into a Ph.D. program at the University of Waterloo, expecting to learn the tools of the trade as a psychotherapist and one day treat patients in a stylish yet tasteful office. Iwas going to be a consumer of science, not a producer. Icertainly had no intention of joining a revolution to unseat ba- sic beliefs about the mind that have existed since the days of Plato. But life sometimes tosses little surprises in your direction."
+    },
+    {
+      "chapterNumber": 2,
+      "chapterName": "Emotions Are Constructed",
+      "wordCount": 6974,
+      "textChunks": 323,
+      "imageChunks": 1,
+      "totalChunks": 324,
+      "pageRanges": "From 44 to 60",
+      "numberOfPages": 17,
+      "previewText": "Please take a look at the black splotches in figure 2-1. If this is your first time viewing these blobs, your brain is working hard to make sense of them. Neurons in your visual cortex are processing the lines and edges. Your amygdala is firing rapidly because the input is novel. Other brain regions are sifting through your past experiences to determine if you’ve encountered anything like this input before and are conversing Figure 2-1: Mystery blobs how emotions are made 26 with your body to prepare it for an as-yet-undetermined action."
+    },
+    {
+      "chapterNumber": 3,
+      "chapterName": "The Myth of Universal Emotions",
+      "wordCount": 5092,
+      "textChunks": 228,
+      "imageChunks": 5,
+      "totalChunks": 233,
+      "pageRanges": "From 61 to 74",
+      "numberOfPages": 14,
+      "previewText": "Take a look at the woman in figure 3-1, who is screaming in terror. Most people who were born and raised in a Western culture can effortlessly see this emotion in her face, even with no other context in the photograph. Except . . . she isn’t feeling terror. This photograph actually shows Serena Williams immediately after she beat her sister Venus in the 2008 U.S. Open Figure 3-1: Perceiving terror in a woman’s face"
+    },
+    {
+      "chapterNumber": 4,
+      "chapterName": "The Origin of Feeling",
+      "wordCount": 10675,
+      "textChunks": 524,
+      "imageChunks": 7,
+      "totalChunks": 531,
+      "pageRanges": "From 75 to 102",
+      "numberOfPages": 28,
+      "previewText": "Think about the last time you were awash in pleasure. Idon’t necessarily mean sexual pleasure but everyday delights: gazing at a vivid sunrise, sip- ping a cold glass of water when you are hot and sweaty, or enjoying a brief moment of peace at the end of a troubling day. Now contrast this with feeling unpleasant, like the last time you were sick with a cold, or just after an argument with a close friend. Pleasure and dis- pleasure feel qualitatively different. You and I might not agree that a specific object or event produces pleasure or displeasure — I find walnuts delicious whereas my husband calls them an offense against nature — but each of us can, in principle, distinguish one from the other."
+    },
+    {
+      "chapterNumber": 5,
+      "chapterName": "Concepts, Goals, and Words",
+      "wordCount": 11454,
+      "textChunks": 501,
+      "imageChunks": 3,
+      "totalChunks": 504,
+      "pageRanges": "From 103 to 130",
+      "numberOfPages": 28,
+      "previewText": "When you look at a rainbow, you see discrete stripes of color, roughly like the drawing on the left side of figure 5-1. But in nature, a rainbow has no stripes — it’s a continuous spectrum of light, with wavelengths that range from approximately 400 to 750 nanometers. This spectrum has no borders or bands of any kind. Why do you and I see stripes? Because we have mental concepts for col- ors like “Red,” “Orange,” and “Yellow.” Your brain automatically uses these concepts to group together the wavelengths in certain ranges of the spec- trum, categorizing them as the same color."
+    },
+    {
+      "chapterNumber": 6,
+      "chapterName": "How the Brain Makes Emotions",
+      "wordCount": 6003,
+      "textChunks": 253,
+      "imageChunks": 2,
+      "totalChunks": 255,
+      "pageRanges": "From 131 to 146",
+      "numberOfPages": 16,
+      "previewText": "Have you ever wanted to punch your boss? Iwould never advocate work- place violence, of course, and many bosses are terrific work partners. But sometimes we are blessed with supervisors who personify the German emotion word Backpfeifengesicht, meaning “a face in need of a fist.” Suppose you have such a boss, and he’s been handing you extra proj- ects for almost a year. You’ve been expecting a promotion for all your good work, but he has just informed you that the promotion went to someone else. How would you feel? If you live in a Western culture, you’d likely feel angry."
+    },
+    {
+      "chapterNumber": 7,
+      "chapterName": "Emotions as Social Reality",
+      "wordCount": 10043,
+      "textChunks": 488,
+      "imageChunks": 2,
+      "totalChunks": 490,
+      "pageRanges": "From 147 to 170",
+      "numberOfPages": 24,
+      "previewText": "If a tree falls in the forest and no one is present to hear it, does it make a sound? This clichéd question has been asked to death by philosophers and grade-school teachers, but it also reveals something critical about human experience and, in particular, how we experience and perceive emotion. The common-sense answer to this riddle is yes, of course a falling tree makes a sound. If you and I were walking in the forest at the time, we would clearly hear the cracking of the wood, the rustling of the leaves, and the monstrous thud as the trunk slammed into the forest floor. It seems obvious that this sound would be present even if you and I were not."
+    },
+    {
+      "chapterNumber": 8,
+      "chapterName": "A New View of Human Nature",
+      "wordCount": 9608,
+      "textChunks": 421,
+      "imageChunks": 0,
+      "totalChunks": 421,
+      "pageRanges": "From 171 to 193",
+      "numberOfPages": 23,
+      "previewText": "The theory of constructed emotion is not just a modern explanation of how emotions are made. It’s also an ambassador for a radically different view of what it means to be a human being. This view is consistent with the latest research in neuroscience. It also gives you more control over your feelings and behavior than the classical view does, and it has deep impli- cations for how to live your life. You are not a reactive animal, wired to re- spond to events in the world."
+    },
+    {
+      "chapterNumber": 9,
+      "chapterName": "Mastering Your Emotions",
+      "wordCount": 10085,
+      "textChunks": 465,
+      "imageChunks": 0,
+      "totalChunks": 465,
+      "pageRanges": "From 194 to 217",
+      "numberOfPages": 24,
+      "previewText": "Every time you bite into a juicy peach or munch a bag of crunchy potato chips, you’re not simply replenishing your energy. You’re having an experi- ence that is pleasant, unpleasant, or something in between. You bathe not only to stave off disease but also to enjoy warm water against your skin. You seek out other people not to stand in a herd for protection from preda- tors but to feel the glow of friendship or to unload when you’re feeling bur- dened. And sex is clearly for more than propagating your genes."
+    },
+    {
+      "chapterNumber": 10,
+      "chapterName": "Emotion and Illness",
+      "wordCount": 8344,
+      "textChunks": 395,
+      "imageChunks": 0,
+      "totalChunks": 395,
+      "pageRanges": "From 218 to 237",
+      "numberOfPages": 20,
+      "previewText": "Think about the last time you had a cold. You probably had a runny nose, cough, fever, and other diverse symptoms. Most people attribute colds to a single cause, namely, a cold virus. And yet, when scientists place a cold vi- rus into the noses of one hundred people, only 25–40 percent get sick. So a cold virus cannot be the essence of a cold — something more complex must be going on."
+    },
+    {
+      "chapterNumber": 11,
+      "chapterName": "Emotion and the Law",
+      "wordCount": 14458,
+      "textChunks": 685,
+      "imageChunks": 0,
+      "totalChunks": 685,
+      "pageRanges": "From 238 to 270",
+      "numberOfPages": 33,
+      "previewText": "Every society has rules for which emotions are acceptable, when they are acceptable, and how to express them. In my American culture, it’s appropri- ate to feel grief when someone dies, and inappropriate to chuckle as the cas- ket is lowered into the ground. Asurprise party is a time to feel surprised and then joyful, and if you know about your own party in advance, it’s ap- propriate to feign surprise when you arrive. Members of the Ilongot tribe in the Philippines may feel the emotion liget when acting as a team to behead an enemy, in celebration of a job well done. 1 If you violate your culture’s rules of social reality, punishment may fol- low."
+    },
+    {
+      "chapterNumber": 12,
+      "chapterName": "Is a Growling Dog Angry?",
+      "wordCount": 10994,
+      "textChunks": 536,
+      "imageChunks": 2,
+      "totalChunks": 538,
+      "pageRanges": "From 271 to 296",
+      "numberOfPages": 26,
+      "previewText": "12 Is a Growling Dog Angry? Idon’t have a dog, but several friends’ dogs are part of my extended fam- ily. One of my favorites is Rowdy, part Golden Retriever and part Bernese Mountain Dog, who is an energetic, playful mutt, always ready for action. True to his name, Rowdy is a barker and a jumper, and he’s known to growl when other dogs or strangers come near. In other words, he’s a dog."
+    },
+    {
+      "chapterNumber": 13,
+      "chapterName": "From Brain to Mind: The New Frontier",
+      "wordCount": 63184,
+      "textChunks": 3550,
+      "imageChunks": 95,
+      "totalChunks": 3645,
+      "pageRanges": "From 297 to 447",
+      "numberOfPages": 151,
+      "previewText": "The human brain is a master of deception. It creates experiences and di- rects actions with a magician’s skill, never revealing how it does so, all the while giving us a false sense of confidence that its products — our day-to- day experiences — reveal its inner workings. Joy, sadness, surprise, fear, and other emotions seem so distinct and feel so built-in that we assume they have separate causes inside us. When you have a brain that essentializes, it’s easy to come up with a wrong theory of the mind. We are, after all, a bunch of brains trying to figure out how brains work."
+    }
+  ]
+}

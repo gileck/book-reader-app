@@ -229,16 +229,33 @@ async function extractImages(pdfPath, bookTitle, bookFolderPath) {
 
 // Text chunking function (preserved from original)
 function chunkText(text, minWords = 5, maxWords = 15) {
-    const sentencePattern = /([.!?]+)/;
-    const parts = text.split(sentencePattern);
+    // Split by sentence endings, but be smarter about abbreviations
     const sentences = [];
-
-    for (let i = 0; i < parts.length; i += 2) {
-        const sentence = parts[i]?.trim();
-        const punctuation = parts[i + 1] || '';
-        if (sentence) {
-            sentences.push(sentence + punctuation);
+    let currentSentence = '';
+    const words = text.split(/\s+/);
+    
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        currentSentence += (currentSentence ? ' ' : '') + word;
+        
+        // Check if this word ends a sentence
+        if (/[.!?]+$/.test(word)) {
+            // Don't split if it's a common abbreviation and next word is lowercase
+            const nextWord = words[i + 1];
+            const isAbbreviation = endsWithAbbreviation(currentSentence);
+            const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
+            
+            if (!isAbbreviation || !nextIsLowercase) {
+                // This is a real sentence ending
+                sentences.push(currentSentence.trim());
+                currentSentence = '';
+            }
         }
+    }
+    
+    // Add any remaining text as a sentence
+    if (currentSentence.trim()) {
+        sentences.push(currentSentence.trim());
     }
 
     const chunks = [];
@@ -343,6 +360,44 @@ function chunkText(text, minWords = 5, maxWords = 15) {
 }
 
 /**
+ * Clean page numbers from text - uses the observed pattern that book internal page numbers
+ * are typically 1 less than the PDF page number (e.g., PDF page 10 contains book page "9")
+ */
+function cleanPageNumbers(text, pageNumber = null) {
+    if (!pageNumber) {
+        return text; // If no page number provided, don't clean anything
+    }
+    
+    // Use the observed pattern: book page number = PDF page number - 1
+    const bookPageNumber = pageNumber - 1;
+    if (bookPageNumber >= 1) {
+        const bookPageRegex = new RegExp(`^\\s*${bookPageNumber}\\s+`, '');
+        if (bookPageRegex.test(text)) {
+            text = text.replace(bookPageRegex, '');
+        }
+    }
+    
+    // Handle Roman numerals for front matter pages (i, ii, iii, etc.)
+    // These usually appear in the first few pages where the pattern might not apply
+    if (pageNumber <= 20) {
+        const romanNumerals = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x', 'xi', 'xii', 'xiii', 'xiv', 'xv'];
+        for (const roman of romanNumerals) {
+            const romanRegex = new RegExp(`^\\s*${roman}\\s+`, 'i');
+            if (romanRegex.test(text)) {
+                // Only remove if what follows looks like content
+                const afterRoman = text.replace(romanRegex, '');
+                if (afterRoman.match(/^[A-Z]/) || afterRoman.match(/^(the|and|or|but|in|on|at|to|for|of|with|by)/i)) {
+                    text = afterRoman;
+                    break;
+                }
+            }
+        }
+    }
+    
+    return text;
+}
+
+/**
  * Chunk text with page information preserved
  */
 function chunkTextWithPages(pages, minWords = 5, maxWords = 15) {
@@ -354,15 +409,207 @@ function chunkTextWithPages(pages, minWords = 5, maxWords = 15) {
 
         // Add page information to each chunk
         for (const chunk of pageChunks) {
+            // Clean page numbers from beginning of chunks - pass the actual page number
+            let cleanedText = cleanPageNumbers(chunk.text, page.pageNumber);
+            
             allChunks.push({
                 ...chunk,
+                text: cleanedText,
                 pageNumber: page.pageNumber,
                 index: chunkIndex++
             });
         }
     }
 
-    return allChunks;
+    // Merge chunks where sentences are split across pages
+    const mergedChunks = mergeSplitSentences(allChunks);
+
+    return mergedChunks;
+}
+
+/**
+ * Merge text chunks where sentences are split across page boundaries
+ * This improves readability and TTS quality by keeping complete sentences together
+ */
+function mergeSplitSentences(chunks) {
+    if (chunks.length === 0) return chunks;
+
+    const mergedChunks = [];
+    let i = 0;
+
+    while (i < chunks.length) {
+        const currentChunk = chunks[i];
+        
+        // Check if this chunk ends with an incomplete sentence (no proper sentence ending)
+        // and the next chunk is from a different page
+        if (i < chunks.length - 1) {
+            const nextChunk = chunks[i + 1];
+            
+            // Only merge if chunks are from consecutive pages
+            if (nextChunk.pageNumber === currentChunk.pageNumber + 1) {
+                const shouldMerge = shouldMergeSentence(currentChunk.text, nextChunk.text);
+                
+                if (shouldMerge) {
+                    // Find where the sentence ends in the next chunk
+                    const sentenceEndMatch = nextChunk.text.match(/^([^.!?]*[.!?])\s*(.*)/);
+                    
+                    if (sentenceEndMatch) {
+                        const sentenceEnd = sentenceEndMatch[1];
+                        const remainingText = sentenceEndMatch[2].trim();
+                        
+                        // Create merged chunk with complete sentence
+                        const mergedText = currentChunk.text + ' ' + sentenceEnd;
+                        const mergedChunk = {
+                            ...currentChunk,
+                            text: mergedText,
+                            wordCount: mergedText.split(/\s+/).filter(w => w.length > 0).length,
+                            // Keep the original page number of where the sentence started
+                            index: currentChunk.index
+                        };
+                        
+                        mergedChunks.push(mergedChunk);
+                        
+                        // If there's remaining text in the next chunk, create a new chunk for it
+                        if (remainingText.length > 0) {
+                            const remainingChunk = {
+                                ...nextChunk,
+                                text: remainingText,
+                                wordCount: remainingText.split(/\s+/).filter(w => w.length > 0).length,
+                                index: nextChunk.index
+                            };
+                            mergedChunks.push(remainingChunk);
+                        }
+                        
+                        console.log(`🔗 Merged split sentence across pages ${currentChunk.pageNumber}-${nextChunk.pageNumber}`);
+                        i += 2; // Skip both chunks as they've been processed
+                        continue;
+                    }
+                }
+            }
+        }
+        
+        // No merge needed, add chunk as-is
+        mergedChunks.push(currentChunk);
+        i++;
+    }
+
+    // Reindex the chunks
+    mergedChunks.forEach((chunk, index) => {
+        chunk.index = index;
+    });
+
+    return mergedChunks;
+}
+
+/**
+ * List of common abbreviations that end with periods but don't end sentences
+ */
+const COMMON_ABBREVIATIONS = [
+    'Ph.D', 'M.D', 'Ph.D.', 'M.D.', 'B.A', 'B.A.', 'M.A', 'M.A.', 
+    'B.S', 'B.S.', 'M.S', 'M.S.', 'U.S', 'U.S.', 'U.K', 'U.K.',
+    'Dr', 'Dr.', 'Mr', 'Mr.', 'Mrs', 'Mrs.', 'Ms', 'Ms.',
+    'Prof', 'Prof.', 'vs', 'vs.', 'etc', 'etc.', 'i.e', 'i.e.',
+    'e.g', 'e.g.', 'Inc', 'Inc.', 'Co', 'Co.', 'Corp', 'Corp.',
+    'Ltd', 'Ltd.', 'St', 'St.', 'Ave', 'Ave.', 'Blvd', 'Blvd.'
+];
+
+/**
+ * Check if text ends with a common abbreviation
+ */
+function endsWithAbbreviation(text) {
+    const trimmed = text.trim();
+    return COMMON_ABBREVIATIONS.some(abbrev => 
+        trimmed.toLowerCase().endsWith(abbrev.toLowerCase())
+    );
+}
+
+/**
+ * Fix spaced first letter issue (e.g., "O   nce upon a time" -> "Once upon a time")
+ */
+function fixSpacedFirstLetter(text) {
+    // Look for pattern: single capital letter followed by one or more spaces and lowercase letter
+    // This handles PDF formatting artifacts where the first letter is separated
+    return text.replace(/^([A-Z])\s+([a-z])/, '$1$2');
+}
+
+/**
+ * Clean chapter heading from the beginning of text
+ * Handles various patterns like "INTRODUCTION LIFE ITSELF", "1 DISCOVERING THE NANOCOSM", etc.
+ */
+function cleanChapterHeading(text, chapterTitle, chapterNumber) {
+    let cleanedText = text;
+    
+    // Create patterns to try
+    const patterns = [];
+    
+    // Pattern 1: "CHAPTER_NUMBER CHAPTER_TITLE" (e.g., "1 DISCOVERING THE NANOCOSM")
+    if (typeof chapterNumber === 'number') {
+        patterns.push(`${chapterNumber}\\s+${chapterTitle.toUpperCase()}`);
+        patterns.push(`${chapterNumber}\\s+${chapterTitle}`);
+    }
+    
+    // Pattern 2: Just the title in uppercase (e.g., "INTRODUCTION LIFE ITSELF")
+    patterns.push(chapterTitle.toUpperCase());
+    
+    // Pattern 3: Title with extra spaces (common in PDFs)
+    patterns.push(chapterTitle.toUpperCase().replace(/\s+/g, '\\s+'));
+    
+    // Pattern 4: Original title as-is
+    patterns.push(chapterTitle);
+    
+    // Try each pattern
+    for (const pattern of patterns) {
+        const regex = new RegExp(`^\\s*${pattern}\\s*`, 'i');
+        if (regex.test(cleanedText)) {
+            const afterRemoval = cleanedText.replace(regex, '').trim();
+            if (afterRemoval.length > 10) { // Make sure we don't remove too much
+                cleanedText = afterRemoval;
+                console.log(`✂️  Removed chapter heading "${pattern}" from beginning of text`);
+                break;
+            }
+        }
+    }
+    
+    return cleanedText;
+}
+
+/**
+ * Determine if two text chunks should be merged because they contain a split sentence
+ * Uses simple character-based detection: last char + first char analysis
+ */
+function shouldMergeSentence(firstText, secondText) {
+    const first = firstText.trim();
+    const second = secondText.trim();
+    
+    if (first.length === 0 || second.length === 0) return false;
+    
+    const lastChar = first.slice(-1);
+    const firstChar = second.charAt(0);
+    
+    // Core logic: not sentence ending + lowercase start
+    const notSentenceEnding = !/[.!?;:]$/.test(lastChar);
+    const startsWithLowercase = /[a-z]/.test(firstChar);
+    
+    if (notSentenceEnding && startsWithLowercase) {
+        return true;
+    }
+    
+    // Enhancement: handle common abbreviations
+    // If ends with period but might be abbreviation (like "U.S. government")
+    if (lastChar === '.' && startsWithLowercase) {
+        // Check if it's likely an abbreviation (short word before period)
+        const beforePeriod = first.match(/\b(\w{1,3})\.$$/);
+        if (beforePeriod && beforePeriod[1].length <= 3) {
+            return true; // Likely abbreviation, merge
+        }
+        
+        // Also check against our hardcoded list
+        if (endsWithAbbreviation(first)) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 /**
@@ -772,10 +1019,13 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                     const textContent = await page.getTextContent();
 
                     // Combine text items from the page
-                    const pageText = textContent.items
+                    let pageText = textContent.items
                         .map(item => item.str)
                         .join(' ')
                         .trim();
+
+                    // Clean page number from beginning of page text - pass the actual page number
+                    pageText = cleanPageNumbers(pageText, pageNum);
 
                     if (pageText.length > 50) { // Only include pages with substantial content
                         chapterPages.push({
@@ -1298,28 +1548,16 @@ function createPageAwareChunksWithImages(chapters, images) {
                 pageChunks.forEach((chunk, index) => {
                     let text = chunk.text;
 
-                    // Clean the first chunk of the first page by removing chapter title
-                    if (pageNum === pageNumbers[0] && index === 0) {
-                        const titleToRemove = chapter.title;
-                        const chapterNum = chapter.chapterNumber;
+                    // Clean page numbers from beginning of text - pass the actual page number
+                    text = cleanPageNumbers(text, chunk.pageNumber);
 
-                        const patterns = [];
-                        if (typeof chapterNum === 'number') {
-                            patterns.push(`${chapterNum} ${titleToRemove}`);
-                        }
-                        patterns.push(titleToRemove);
-
-                        for (const pattern of patterns) {
-                            if (text.startsWith(pattern)) {
-                                const cleaned = text.substring(pattern.length).trim();
-                                if (cleaned.length > 10) {
-                                    text = cleaned;
-                                    console.log(`✂️  Removed "${pattern}" from first chunk of "${chapter.title}"`);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                                    // Clean the first chunk of the first page by removing chapter title
+                if (pageNum === pageNumbers[0] && index === 0) {
+                    text = cleanChapterHeading(text, chapter.title, chapter.chapterNumber);
+                }
+                
+                // Fix spaced first letter issue (e.g., "O   nce upon a time")
+                text = fixSpacedFirstLetter(text);
 
                     allChunks.push({
                         index: chunkIndex++,
@@ -1358,29 +1596,17 @@ function createPageAwareChunksWithImages(chapters, images) {
             // Convert text chunks
             textChunks.forEach((chunk, index) => {
                 let text = chunk.text;
+                
+                // Note: In fallback mode we don't have individual page numbers for chunks,
+                // so we skip page number cleaning to avoid removing legitimate content numbers
 
                 // Clean the first chunk by removing chapter title
                 if (index === 0) {
-                    const titleToRemove = chapter.title;
-                    const chapterNum = chapter.chapterNumber;
-
-                    const patterns = [];
-                    if (typeof chapterNum === 'number') {
-                        patterns.push(`${chapterNum} ${titleToRemove}`);
-                    }
-                    patterns.push(titleToRemove);
-
-                    for (const pattern of patterns) {
-                        if (text.startsWith(pattern)) {
-                            const cleaned = text.substring(pattern.length).trim();
-                            if (cleaned.length > 10) {
-                                text = cleaned;
-                                console.log(`✂️  Removed "${pattern}" from first chunk of "${chapter.title}"`);
-                                break;
-                            }
-                        }
-                    }
+                    text = cleanChapterHeading(text, chapter.title, chapter.chapterNumber);
                 }
+                
+                // Fix spaced first letter issue (e.g., "O   nce upon a time")
+                text = fixSpacedFirstLetter(text);
 
                 allChunks.push({
                     index: chunkIndex++,
@@ -1554,6 +1780,97 @@ function saveToFile(book, chapters, outputPath, imagesFolderPath) {
 
     fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
     console.log(`📄 Output saved to: ${outputPath}`);
+
+    // Generate parser summary file automatically
+    const outputDir = path.dirname(outputPath);
+    const summaryPath = path.join(outputDir, 'parser-summary.json');
+    generateParserSummary(book, chapters, summaryPath);
+}
+
+// Generate parser summary file
+function generateParserSummary(book, chapters, summaryPath) {
+    const chapterSummaries = chapters.map((chapter, index) => {
+        const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
+        const imageChunks = chapter.content.chunks.filter(chunk => chunk.type === 'image');
+        
+        // Get first 5 text chunks combined for preview
+        const firstFiveTextChunks = textChunks.slice(0, 5);
+        const previewText = firstFiveTextChunks.map(chunk => chunk.text).join(' ');
+        
+        // Extract page information from chunks that have pageNumber
+        const chunksWithPages = chapter.content.chunks.filter(chunk => chunk.pageNumber);
+        let pageRanges = 'Unknown';
+        let numberOfPages = 0;
+        
+        if (chunksWithPages.length > 0) {
+            const pageNumbers = chunksWithPages.map(chunk => chunk.pageNumber).sort((a, b) => a - b);
+            const firstPage = pageNumbers[0];
+            const lastPage = pageNumbers[pageNumbers.length - 1];
+            pageRanges = `From ${firstPage} to ${lastPage}`;
+            numberOfPages = lastPage - firstPage + 1;
+        }
+        
+        return {
+            chapterNumber: chapter.chapterNumber,
+            chapterName: chapter.title,
+            wordCount: chapter.wordCount,
+            textChunks: textChunks.length,
+            imageChunks: imageChunks.length,
+            totalChunks: chapter.content.chunks.length,
+            pageRanges: pageRanges,
+            numberOfPages: numberOfPages,
+            previewText: previewText
+        };
+    });
+
+    const totalTextChunks = chapters.reduce((sum, ch) => 
+        sum + ch.content.chunks.filter(chunk => chunk.type === 'text').length, 0);
+    const totalImageChunks = chapters.reduce((sum, ch) => 
+        sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
+    const totalChunks = totalTextChunks + totalImageChunks;
+
+    const summary = {
+        bookInfo: {
+            title: book.title,
+            author: book.author,
+            parsedAt: new Date().toISOString()
+        },
+        overview: {
+            totalChapters: chapters.length,
+            totalWords: book.totalWords,
+            totalTextChunks: totalTextChunks,
+            totalImageChunks: totalImageChunks,
+            totalChunks: totalChunks,
+            averageWordsPerChapter: Math.round(book.totalWords / chapters.length),
+            averageChunksPerChapter: Math.round(totalChunks / chapters.length)
+        },
+        chapters: chapterSummaries
+    };
+
+    fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
+    console.log(`📊 Parser summary saved to: ${summaryPath}`);
+    
+    // Also log a nice table to console
+    console.log('\n📊 PARSER SUMMARY:');
+    console.log('='.repeat(80));
+    console.log(`📖 Book: "${book.title}" by ${book.author}`);
+    console.log(`📚 Total Chapters: ${chapters.length}`);
+    console.log(`📝 Total Words: ${book.totalWords.toLocaleString()}`);
+    console.log(`🧩 Total Chunks: ${totalChunks.toLocaleString()} (${totalTextChunks.toLocaleString()} text + ${totalImageChunks.toLocaleString()} images)`);
+    console.log('='.repeat(80));
+    console.log('📚 CHAPTER BREAKDOWN:');
+    
+    chapterSummaries.forEach((ch, i) => {
+        const chNum = String(ch.chapterNumber).padStart(2);
+        const words = String(ch.wordCount).padStart(6);
+        const chunks = String(ch.totalChunks).padStart(4);
+        const images = String(ch.imageChunks).padStart(3);
+        const title = ch.chapterName.length > 40 ? 
+            ch.chapterName.substring(0, 37) + '...' : ch.chapterName;
+        
+        console.log(`${chNum}. ${title.padEnd(40)} ${words}w ${chunks}c ${images}i`);
+    });
+    console.log('='.repeat(80));
 }
 
 // Main execution
@@ -1590,8 +1907,6 @@ async function main() {
         console.error('❌ Error parsing book:', error);
         process.exit(1);
     }
-
-
 }
 
 async function parseBook(pdfPath, configPath, outputPath, debugMode) {
@@ -1690,4 +2005,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = { parseBook, parsePdfBook, loadBookConfig, detectChapters, extractTOCFromPdf, extractImages, chunkTextWithPages, createPageAwareChunksWithImages, extractChapterContentFromTOC }; 
+module.exports = { parseBook, parsePdfBook, loadBookConfig, detectChapters, extractTOCFromPdf, extractImages, chunkTextWithPages, createPageAwareChunksWithImages, extractChapterContentFromTOC, cleanPageNumbers }; 

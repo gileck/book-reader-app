@@ -17,11 +17,13 @@ interface SimpleTextRendererProps {
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
     handleSentenceClick: (chunkIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
+    onCurrentChunkVisibilityChange?: (isVisible: boolean) => void;
 }
 
 export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     chapter,
     book,
+    scrollContainerRef,
     currentChunkIndex,
     getWordStyle,
     getWordClassName,
@@ -29,13 +31,75 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     getSentenceClassName,
     handleWordClick,
     handleSentenceClick,
-    isChunkBookmarked
+    isChunkBookmarked,
+    onCurrentChunkVisibilityChange
 }) => {
     const { fontSize, lineHeight, fontFamily, textColor } = useUserTheme();
     const chunkRefs = useRef<Map<number, HTMLDivElement>>(new Map());
     const previousChunkIndex = useRef<number>(currentChunkIndex);
     const hasScrolledToInitialPosition = useRef<boolean>(false);
     const [isContentVisible, setIsContentVisible] = useState(currentChunkIndex === 0);
+    const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
+
+    // Track current chunk visibility with intersection observer
+    useEffect(() => {
+        if (!onCurrentChunkVisibilityChange || !scrollContainerRef.current) return;
+
+        // Clean up previous observer
+        if (intersectionObserverRef.current) {
+            intersectionObserverRef.current.disconnect();
+        }
+
+        // Create new intersection observer
+        intersectionObserverRef.current = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const chunkIndex = parseInt(entry.target.getAttribute('data-chunk-index') || '0');
+                    if (chunkIndex === currentChunkIndex) {
+                        onCurrentChunkVisibilityChange(entry.isIntersecting);
+                    }
+                });
+            },
+            {
+                root: scrollContainerRef.current,
+                rootMargin: '-20% 0px -20% 0px', // Consider visible when at least 60% of viewport height
+                threshold: 0.1
+            }
+        );
+
+        // Observe current chunk
+        const currentChunkElement = chunkRefs.current.get(currentChunkIndex);
+        if (currentChunkElement) {
+            intersectionObserverRef.current.observe(currentChunkElement);
+        }
+
+        return () => {
+            if (intersectionObserverRef.current) {
+                intersectionObserverRef.current.disconnect();
+                intersectionObserverRef.current = null;
+            }
+        };
+    }, [currentChunkIndex, onCurrentChunkVisibilityChange, scrollContainerRef]);
+
+    // Expose method to scroll to current chunk
+    useEffect(() => {
+        const scrollToCurrentChunk = () => {
+            const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
+            if (currentChunkRef) {
+                currentChunkRef.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        };
+
+        // Attach to window for external access
+        (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk = scrollToCurrentChunk;
+
+        return () => {
+            delete (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
+        };
+    }, [currentChunkIndex]);
 
     // Handle initial positioning when chapter loads with a saved position
     useEffect(() => {
@@ -123,6 +187,17 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
             return () => clearTimeout(safetyTimeout);
         }
     }, [isContentVisible]);
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (intersectionObserverRef.current) {
+                intersectionObserverRef.current.disconnect();
+                intersectionObserverRef.current = null;
+            }
+                         delete (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
+        };
+    }, []);
 
     return (
         <Box

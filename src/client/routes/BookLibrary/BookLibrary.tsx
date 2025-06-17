@@ -304,7 +304,6 @@ export const BookLibrary = () => {
     return (
         <div className={styles.bookLibrary}>
             <header className={styles.libraryHeader}>
-                <h1>My Library</h1>
                 <div className={styles.libraryControls}>
                     <div className={styles.sortDropdown}>
                         <label htmlFor="sort-select" className="sr-only">Sort books</label>

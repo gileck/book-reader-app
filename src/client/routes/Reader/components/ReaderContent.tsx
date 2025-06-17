@@ -16,6 +16,7 @@ interface ReaderContentProps {
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
     handleSentenceClick: (chunkIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
+    onCurrentChunkVisibilityChange?: (isVisible: boolean) => void;
 }
 
 export const ReaderContent: React.FC<ReaderContentProps> = ({
@@ -29,7 +30,8 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     getSentenceClassName,
     handleWordClick,
     handleSentenceClick,
-    isChunkBookmarked
+    isChunkBookmarked,
+    onCurrentChunkVisibilityChange
 }) => {
     return (
         <Box sx={{ mt: 4 }}>
@@ -45,6 +47,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 handleWordClick={handleWordClick}
                 handleSentenceClick={handleSentenceClick}
                 isChunkBookmarked={isChunkBookmarked}
+                onCurrentChunkVisibilityChange={onCurrentChunkVisibilityChange}
             />
         </Box>
     );

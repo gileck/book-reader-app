@@ -1,5 +1,6 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
-import { Box, Typography, CircularProgress, Paper } from '@mui/material';
+import { Box, Typography, CircularProgress, Paper, Fab } from '@mui/material';
+import { CenterFocusStrong as CenterIcon } from '@mui/icons-material';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
@@ -29,6 +30,7 @@ export const Reader = () => {
     } = useReader();
 
     const [chapterDialogOpen, setChapterDialogOpen] = useState(false);
+    const [isCurrentChunkVisible, setIsCurrentChunkVisible] = useState(true);
 
     // Navigate to book library if no books found
     useEffect(() => {
@@ -157,6 +159,14 @@ export const Reader = () => {
         return lastSentences;
     }, [chapter, audio.textChunks, audio.currentChunkIndex, bookQA.contextLines]);
 
+    // Handle scrolling to current chunk
+    const handleScrollToCurrentChunk = () => {
+        const scrollFunction = (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
+        if (scrollFunction) {
+            scrollFunction();
+        }
+    };
+
     if (loading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
@@ -223,6 +233,7 @@ export const Reader = () => {
                         handleWordClick={handleOptimizedWordClick}
                         handleSentenceClick={handleOptimizedSentenceClick}
                         isChunkBookmarked={bookmarks.isChunkBookmarked}
+                        onCurrentChunkVisibilityChange={setIsCurrentChunkVisible}
                     />
                 </Paper>
 
@@ -339,6 +350,24 @@ export const Reader = () => {
                     onClose={() => setChapterDialogOpen(false)}
                     onChapterSelect={navigation.setCurrentChapterNumber}
                 />
+
+                {/* Floating scroll to current chunk button */}
+                {!isCurrentChunkVisible && (
+                    <Fab
+                        color="primary"
+                        onClick={handleScrollToCurrentChunk}
+                        sx={{
+                            position: 'fixed',
+                            bottom: { xs: 100, sm: 80 },
+                            right: 20,
+                            zIndex: 1000,
+                            opacity: 0.9
+                        }}
+                        size="medium"
+                    >
+                        <CenterIcon />
+                    </Fab>
+                )}
             </Box>
         </UserThemeProvider>
     );
