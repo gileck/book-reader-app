@@ -539,34 +539,29 @@ function fixSpacedFirstLetter(text) {
 function cleanChapterHeading(text, chapterTitle, chapterNumber) {
     let cleanedText = text;
     
-    // Create patterns to try
-    const patterns = [];
+    // Step 1: Remove ":" from chapter name and normalize it to uppercase
+    const normalizedChapterTitle = chapterTitle.replace(/[:\?]/g, '').toUpperCase();
     
-    // Pattern 1: "CHAPTER_NUMBER CHAPTER_TITLE" (e.g., "1 DISCOVERING THE NANOCOSM")
-    if (typeof chapterNumber === 'number') {
-        patterns.push(`${chapterNumber}\\s+${chapterTitle.toUpperCase()}`);
-        patterns.push(`${chapterNumber}\\s+${chapterTitle}`);
-    }
+    // Step 2: Normalize the text to uppercase for comparison
+    const normalizedText = text.toUpperCase();
     
-    // Pattern 2: Just the title in uppercase (e.g., "INTRODUCTION LIFE ITSELF")
-    patterns.push(chapterTitle.toUpperCase());
-    
-    // Pattern 3: Title with extra spaces (common in PDFs)
-    patterns.push(chapterTitle.toUpperCase().replace(/\s+/g, '\\s+'));
-    
-    // Pattern 4: Original title as-is
-    patterns.push(chapterTitle);
-    
-    // Try each pattern
-    for (const pattern of patterns) {
-        const regex = new RegExp(`^\\s*${pattern}\\s*`, 'i');
-        if (regex.test(cleanedText)) {
-            const afterRemoval = cleanedText.replace(regex, '').trim();
-            if (afterRemoval.length > 10) { // Make sure we don't remove too much
-                cleanedText = afterRemoval;
-                console.log(`✂️  Removed chapter heading "${pattern}" from beginning of text`);
-                break;
-            }
+    // Step 3: Find and remove ONLY the normalized chapter name from the text
+    const chapterIndex = normalizedText.indexOf(normalizedChapterTitle);
+    if (chapterIndex !== -1 && chapterIndex < 200) { // Only look in first 200 chars
+        // Remove ONLY the chapter title, keeping everything before and after
+        const beforeChapter = text.substring(0, chapterIndex);
+        const afterChapter = text.substring(chapterIndex + normalizedChapterTitle.length);
+        
+        // Combine before + after, removing the chapter heading
+        const combined = (beforeChapter + afterChapter).trim();
+        
+        if (combined.length > 10) { // Make sure we don't remove too much
+            // Step 4: Remove extra spaces ONLY at the very beginning (fix split words like "I n" → "In")
+            cleanedText = combined
+                .replace(/^([A-Za-z])\s+([a-z])/, '$1$2') // Fix split words only at the beginning
+                .trim();
+            
+            console.log(`✂️  Removed chapter heading "${normalizedChapterTitle}" from text`);
         }
     }
     
@@ -796,6 +791,24 @@ function parseChapterFromBookmark(title) {
             chapterNumber: parseInt(numberedChapterMatch[1]),
             chapterTitle: numberedChapterMatch[2].trim(),
             startingPage: null, // Will be filled if we can extract from dest
+            originalTitle: title
+        };
+    }
+
+    // Pattern for word-numbered chapters: "Chapter One:", "Chapter Two:", etc.
+    const wordNumberedChapterMatch = title.match(/^Chapter\s+(One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|Eleven|Twelve|Thirteen|Fourteen|Fifteen|Sixteen|Seventeen|Eighteen|Nineteen|Twenty)[:]\s*(.+)$/i);
+    if (wordNumberedChapterMatch) {
+        const wordToNumber = {
+            'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
+            'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
+            'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15,
+            'sixteen': 16, 'seventeen': 17, 'eighteen': 18, 'nineteen': 19, 'twenty': 20
+        };
+        const chapterNum = wordToNumber[wordNumberedChapterMatch[1].toLowerCase()];
+        return {
+            chapterNumber: chapterNum,
+            chapterTitle: title, // Keep full title
+            startingPage: null,
             originalTitle: title
         };
     }

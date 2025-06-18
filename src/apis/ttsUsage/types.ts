@@ -3,6 +3,7 @@ export interface TtsUsageRecord {
   timestamp: string;
   provider: 'google' | 'polly';
   voiceId: string;
+  voiceType: 'standard' | 'neural' | 'long-form' | 'generative';
   textLength: number;
   audioLength: number;
   cost: number;
@@ -19,6 +20,12 @@ export interface TtsUsageSummary {
     totalCalls: number;
     totalTextLength: number;
     totalAudioLength: number;
+    usageByVoiceType: Record<string, {
+      totalCost: number;
+      totalCalls: number;
+      totalTextLength: number;
+      totalAudioLength: number;
+    }>;
   }>;
   usageByDay: Record<string, {
     totalCost: number;

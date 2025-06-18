@@ -1,0 +1,275 @@
+{
+  "bookInfo": {
+    "title": "Mitochondria and the Future of Medicine",
+    "author": "Lee Know",
+    "parsedAt": "2025-06-18T11:26:24.573Z"
+  },
+  "overview": {
+    "totalChapters": 3,
+    "totalWords": 57828,
+    "totalTextChunks": 2683,
+    "totalImageChunks": 0,
+    "totalChunks": 2683,
+    "averageWordsPerChapter": 19276,
+    "averageChunksPerChapter": 894
+  },
+  "chapters": [
+    {
+      "chapterNumber": 1,
+      "chapterName": "The Force: The Origins and Evolution of Mitochondria in Human Physiology",
+      "wordCount": 1720,
+      "textChunks": 79,
+      "imageChunks": 0,
+      "totalChunks": 79,
+      "sections": [
+        {
+          "title": "The Force: The Origins and Evolution of Mitochondria in Human Physiology",
+          "page": 1
+        },
+        {
+          "title": "Let's Review Some Cell Biology",
+          "page": 6
+        },
+        {
+          "title": "The Evolution of the Eukaryotic Cell",
+          "page": 9
+        },
+        {
+          "title": "Mitochondria: They Are the Force",
+          "page": 12
+        },
+        {
+          "title": "The Basics of Mitochondria",
+          "page": 15
+        },
+        {
+          "title": "The Basics of Cellular Respiration and Oxidative Phosphorylation",
+          "page": 17
+        },
+        {
+          "title": "A Game of Hot Potato: The Electron Transport Chain (ETC)",
+          "page": 19
+        },
+        {
+          "title": "ATP Synthase: Coupling the ETC with Oxidative Phosphorylation",
+          "page": 26
+        },
+        {
+          "title": "Mitochondrial DNA: A Curious Relic of Ancient History",
+          "page": 28
+        },
+        {
+          "title": "A Radical Signal: The Positive Side of Free Radicals",
+          "page": 34
+        },
+        {
+          "title": "Mitochondrial Mutations: The Beginning of the End",
+          "page": 37
+        },
+        {
+          "title": "Discarded Theories of Aging",
+          "page": 43
+        },
+        {
+          "title": "The Mitochondrial Theory of Aging",
+          "page": 47
+        },
+        {
+          "title": "Extending Maximum Life Span in Mammals",
+          "page": 53
+        },
+        {
+          "title": "Degenerative Diseases and the Eventual End",
+          "page": 54
+        },
+        {
+          "title": "It's Getting Hot in Here: Uncoupling the Proton Gradient",
+          "page": 57
+        }
+      ],
+      "previewText": "The origins and evolution of mitochondria in human physiology. Without the midichlorians, life could not exist and we would have no knowledge of the Force. They continually speak to us, telling us the..."
+    },
+    {
+      "chapterNumber": 2,
+      "chapterName": "The Dark Side of the Force: Health Conditions Linked to Mitochondrial Dysfunction",
+      "wordCount": 2537,
+      "textChunks": 130,
+      "imageChunks": 0,
+      "totalChunks": 130,
+      "sections": [
+        {
+          "title": "The Dark Side of the Force: Health Conditions Linked to Mitochondrial Dysfunction",
+          "page": 63
+        },
+        {
+          "title": "A Review of Bioenergetics",
+          "page": 64
+        },
+        {
+          "title": "Food and Oxygen: The Ingredients for Producing Energy",
+          "page": 66
+        },
+        {
+          "title": "ATP Production and Turnover",
+          "page": 68
+        },
+        {
+          "title": "The Role of Mitochondria in Cardiovascular Disease",
+          "page": 71
+        },
+        {
+          "title": "The Role of Mitochondria in the Nervous System, Brain, and Cognitive Health",
+          "page": 75
+        },
+        {
+          "title": "Mitochondrial Involvement in Neurodegeneration",
+          "page": 78
+        },
+        {
+          "title": "Depression",
+          "page": 85
+        },
+        {
+          "title": "Attention-Deficit/Hyperactivity Disorder: Pay Attention to the Mitochondria",
+          "page": 86
+        },
+        {
+          "title": "Chronic Fatigue Syndrome, Myalgic Encephalomyelitis, and Fibromyalgia",
+          "page": 89
+        },
+        {
+          "title": "Type 2 Diabetes",
+          "page": 90
+        },
+        {
+          "title": "Mitochondrial Diabetes",
+          "page": 94
+        },
+        {
+          "title": "Medication-Induced Mitochondrial Damage and Disease",
+          "page": 94
+        },
+        {
+          "title": "Mitochondrial Disease",
+          "page": 98
+        },
+        {
+          "title": "When Mitochondrial Disease Is the Primary Disease",
+          "page": 105
+        },
+        {
+          "title": "Treating Mitochondrial Disease",
+          "page": 107
+        },
+        {
+          "title": "Age-Related Hearing Loss",
+          "page": 110
+        },
+        {
+          "title": "Mitochondria, Aging Skin, and Wrinkles",
+          "page": 111
+        },
+        {
+          "title": "Infertility and Mitochondria",
+          "page": 113
+        },
+        {
+          "title": "Eye-Related Diseases",
+          "page": 117
+        },
+        {
+          "title": "Stem Cells Require Healthy Mitochondria",
+          "page": 119
+        },
+        {
+          "title": "Cancers: Understanding the Causes Brings Us One Step Closer to Cures",
+          "page": 120
+        },
+        {
+          "title": "Aging as a Disease",
+          "page": 123
+        }
+      ],
+      "previewText": "Chapter 2, Infertility and Mitochondria. Let's review some cell biology. So now I must forewarn you, this is where it starts to get a little heavy, especially if you don't have a science or biology ba..."
+    },
+    {
+      "chapterNumber": 3,
+      "chapterName": "Nurturing the Force: Nutritional and Lifestyle Factors to Improve Mitochondrial Health",
+      "wordCount": 53571,
+      "textChunks": 2474,
+      "imageChunks": 0,
+      "totalChunks": 2474,
+      "sections": [
+        {
+          "title": "Nurturing the Force: Nutritional and Lifestyle Factors to Improve Mitochondrial Health",
+          "page": 127
+        },
+        {
+          "title": "How Do the Birds Do It?",
+          "page": 127
+        },
+        {
+          "title": "D-Ribose",
+          "page": 132
+        },
+        {
+          "title": "Pyrroloquinoline Quinone (PQQ)",
+          "page": 139
+        },
+        {
+          "title": "Coenzyme Q10",
+          "page": 144
+        },
+        {
+          "title": "L-Carnitine",
+          "page": 153
+        },
+        {
+          "title": "Magnesium",
+          "page": 157
+        },
+        {
+          "title": "Alpha-Lipoic Acid",
+          "page": 159
+        },
+        {
+          "title": "Creatine",
+          "page": 161
+        },
+        {
+          "title": "B Vitamins",
+          "page": 163
+        },
+        {
+          "title": "Iron",
+          "page": 167
+        },
+        {
+          "title": "Resveratrol and Pterostilbene",
+          "page": 168
+        },
+        {
+          "title": "Ketogenic Diets and Calorie Restriction",
+          "page": 170
+        },
+        {
+          "title": "Massage and Hydrotherapy",
+          "page": 177
+        },
+        {
+          "title": "Cannabis and Phytocannabinoids",
+          "page": 178
+        },
+        {
+          "title": "Exercise and Physical Activity",
+          "page": 180
+        },
+        {
+          "title": "Pulling It All Together",
+          "page": 185
+        }
+      ],
+      "previewText": "Chapter 3, Pyrrolequinoline quinone, PQQ, has been found in interstellar dust, it seems that the seeds of life were planted on Earth from the cosmos. We truly are children of the stars. I suppose this..."
+    }
+  ]
+}

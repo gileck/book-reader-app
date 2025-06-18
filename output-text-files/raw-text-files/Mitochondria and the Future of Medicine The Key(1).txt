@@ -1,0 +1,888 @@
+Chapter 1 The Force
+
+The origins and evolution of mitochondria in human physiology.
+
+Without the midichlorians, life could not exist and we would have no knowledge of the Force.
+
+They continually speak to us, telling us the will of the Force.
+
+When you learn to quiet your mind, you'll hear them speaking to you.
+
+Star Wars Episode 1 The Phantom Menace Qui-Gon Jinn to Anakin Skywalker
+
+A long time ago, in a galaxy far, far away, there were intelligent microscopic life forms called "midichlorians" that lived symbiotically inside the cells of all living things.
+
+When present insufficient numbers, they allowed their symbiotic hosts to detect the pervasive energy field known as the Force.
+
+Mitochlorian counts were linked to one's potential in the Force, ranging from normal human levels of 2,500 per cell to the much higher levels in a Jedi.
+
+The highest known Mitochlorian count, over 20,000 per cell, belonged to Jedi Anakin Skywalker.
+
+Present in all life, Mitochlorians are the same on every world that supports life.
+
+In fact, Mitochlorians are necessary for life to exist.
+
+Insufficient numbers, Mitochlorians will allow their host organism to detect the Force, and this connection can be strengthened by quieting one's mind, allowing the Mitochlorians to speak to their host and communicate the will of the Force.
+
+For many listening to this audiobook, I'm sure you're thinking, "What the... has he gone completely sideways? What the heck am I talking about?"
+
+Well, science fiction fans and the generations who grew up in the era of Star Wars might have a better chance at guessing that Mitochlorians are a creation of George Lucas.
+
+Or are they?
+
+Mitochlorians were first conceived by George Lucas as early as 1977.
+
+At this time, Lucas sat down with a member of his staff to dictate a number of guidelines for these works, explaining various concepts of his universe.
+
+Among them was an explanation of Mitochlorians, even though Lucas did not feel he had the time or opportunity to introduce the concept until 1999, when it was first mentioned during Star Wars Episode 1, The Phantom Menace.
+
+Explaining why some were sensitive to the Force while others were not was an issue that he needed to address, an issue that he had left unresolved since the original film Star Wars.
+
+Mitochlorians in Star Wars Episode 1, The Phantom Menace, are part of a recurring theme throughout the movie, that of symbiotic relationships.
+
+What's fascinating to me is that Mitochlorians were loosely based on mitochondria, organelles that provide energy for cells on our non-science fiction real-world planet.
+
+Like Mitochlorians, mitochondria are believed to have once been separate organisms that inhabited living cells and to have since become part of them.
+
+Even now, mitochondria act in some ways as independent lifeforms, with their own DNA.
+
+Most readers might remember mitochondria from high school cell biology class, described as the powerhouses of the cell, the tiny generators that live inside cells and produce almost all the energy cells need to live.
+
+Depending on the type of cell, there are usually hundreds to thousands of mitochondria in each cell.
+
+They use the oxygen from the air we breathe to burn up the food we eat to produce useful energy.
+
+Some people might have heard of mitochondrial Eve.
+
+Since mitochondria are inherited maternally, if we trace our genetic lineage from child to mother to maternal grandmother and so on, mitochondrial Eve would be the mother of all mothers.
+
+She is thought to have lived in Africa approximately 170,000 years ago.
+
+This does not necessarily mean she was the first human. It only means that she is the most recent ancestor common to all humans living today.
+
+The reason we can trace our ancestry this way is because all mitochondria have their own DNA, the genes, which are normally passed on to our children only in the mother's egg, not in the father's sperm.
+
+This means that mitochondrial DNA, or MT DNA, act like a genetic surname.
+
+However, unlike typical Western surnames passed down the paternal line, which can change for any reason, including marriage, MT DNA is fairly constant and unchanging, which allows us to trace our ancestry down the female line.
+
+This fact also means that it is usually possible to confirm or disprove familial relationships.
+
+It also makes MT DNA of great use in forensics to identify people or corpses.
+
+One reason why MT DNA is so useful in forensics is that there is a lot of genetic material in each cell.
+
+Whereas there are only two copies of the DNA in the nucleus, called nuclear DNA or NDNA, the control center of the cell, each mitochondrion contains five to ten copies of its genes.
+
+While there is only one nucleus per cell, there are usually several hundred to a couple thousands of mitochondria, meaning there are many thousands of copies of the same MT DNA in each cell.
+
+On the medical side of the story, there is the mitochondrial theory of aging.
+
+I'll discuss this in depth later, but basically, this theory argues that aging and many of the diseases that come with it is caused by a slow degeneration in the quality of mitochondria.
+
+This is because, during normal cellular respiration, the process where the mitochondria burn up the food we eat using the oxygen we breathe, reactive molecules called free radicals are created.
+
+These free radicals then go on to inflict damage to adjacent structures, including the DNA in both the mitochondria and nucleus.
+
+Free radicals attack the DNA in each of our cells tens of thousands of times daily.
+
+Much of the resulting damage is fixed silently by the extensive repair machinery within the cells, but sometimes these attacks can cause irreversible damage, permanent mutations in the DNA.
+
+As the onslaught of free radicals continues day in and day out, these mutations build up over a lifetime.
+
+Once the damage reaches a threshold, the cell dies, and slowly, over time, tissues start to degenerate with each dying cell.
+
+This steady erosion is what's responsible for many age-related degenerative diseases and even the aging process itself.
+
+There are also mitochondrial diseases, some of which might be known by the listener, whether inherited or acquired, that typically affect metabolically active tissues such as the muscles, heart, and brain.
+
+This leads to a wide assortment of symptoms depending on the location of the most affected tissues.
+
+The United Kingdom voted in 2015 to legalize a controversial fertility treatment, a technique called nuclear genome transfer, a type of mitochondrial replacement therapy.
+
+This is where the nucleus is removed from an egg cell called oocyte of a healthy and fertile female donor, leaving all other components, including the healthy mitochondria, and then the nucleus from the zygote, the fertilized egg, of the infertile woman is transferred into the healthy donor egg.
+
+Both ethical and practical concerns have kept this process outlawed throughout the rest of the world, but the United Kingdom continues to push forward, allowing babies to be born with three genetic parents, NDNA from the mother and father, and empty DNA from the donor or third parent.
+
+At the end of 2016, the United Kingdom granted its first license, and the first legal baby using this technique will be born in 2017.
+
+I used the term legal baby because this technique was used in 2015 in Mexico, where there were no regulations regarding it, with its three parent baby born in 2016.
+
+However, over the last couple decades, one of the most important aspects of the mitochondria has been something that didn't get a lot of media coverage, and that is its role in apoptosis, which is programmed cell death or cell suicide.
+
+Apoptosis is when individual cells commit suicide for the greater good of the body as a whole.
+
+Previously, apoptosis was thought to be governed by the genes in the nucleus.
+
+However, in an eye-opening turn of events starting around the mid-1990s, researchers discovered that apoptosis is actually governed by the mitochondria.
+
+The implications for the medical field are profound, especially related to cancer research.
+
+Cells are constantly aging or being attacked, resulting in mutations of their DNA.
+
+When mutations result in a cell that wants to replicate out of control, it ultimately leads to the dreaded "C" word, cancer.
+
+Cells failing to commit suicide when directed to do so is now considered the root cause of cancers.
+
+However, the implications run even deeper. Without programmed cell death, complex multicellular organisms might never have had the direction and organization required to evolve in a controlled manner, and the world we know would likely look completely unrecognizable.
+
+Sounds confusing, I know. It'll make a lot more sense after I explain it further in "The Evolution of the Eukaryotic Cell".
+
+This is in addition to the fact that cells in multicellular organisms, called eukaryotic cells, are orders of magnitude larger than single-celled bacteria.
+
+There is just no possible way that the energy needs of a eukaryotic cell could be met without mitochondria, as you'll realize shortly.
+
+Although I won't get into the evolution of the two sexes, male and female, mitochondria even help answer the question, "Why do we have two sexes?"
+
+Sex between a male and female, while providing intense pleasure for the participants, is actually an inefficient method of procreation.
+
+For humans, it requires two parents to produce a single child. Most of the time, of course, there are variants here.
+
+Clonal reproduction, on the other hand, requires just a mother. The father is not only useless, but actually a waste of resources.
+
+Coincidentally, I was editing this line on Father's Day weekend.
+
+Moreover, having two sexes means that only half the population is available to procreate, which is mathematically inefficient.
+
+Logically, a better scenario would be if we could procreate with anyone, either because everybody was the same sex or because there was an infinite number of sexes.
+
+But there is a reason why we only have two sexes, and it's mitochondria, now seen as central to the most widely accepted explanation of why.
+
+In fact, one sex is specialized in passing on its mitochondria to the offspring, eggs from the female, while the other is specialized in making sure its mitochondria are not passed on, sperm from the male.
+
+I'll elaborate on this when I discuss fertility, infertility, and conception in Chapter 2, Infertility and Mitochondria.
+
+Let's review some cell biology.
+
+So now I must forewarn you, this is where it starts to get a little heavy, especially if you don't have a science or biology background.
+
+In order to effectively communicate the importance of the mitochondria and the significance of the research contained in this book, I have to discuss a few technical details and ensure all listeners have at least a basic understanding of cell biology.
+
+Therefore, I feel a quick and dirty review is well worth the few extra minutes of listening.
+
+If I lose you with the details, don't get tied up in a knot. Just try to understand the big picture.
+
+Some level of detail is provided, however, so that those with some science background can start to understand the complexity of the picture.
+
+So, here we go.
+
+The cell is the simplest form of life capable of independent existence, and because of this, it makes up the most basic unit of biology.
+
+Single celled organisms, such as bacteria, are the simplest of cells.
+
+They are extremely small and rarely more than a few thousandths of a millimeter in diameter.
+
+Their shapes vary, but are typically either spherical or rod-like in appearance.
+
+They are protected from their external environment by a strong yet permeable cell wall.
+
+Within this wall is the cell membrane, an incredibly thin and delicate, but relatively impermeable membrane.
+
+Bacteria use this membrane to generate their energy.
+
+This same membrane is what has become the inner membrane of the mitochondria, arguably the most important membrane in the human body.
+
+Inside the bacterial cell is the cytoplasm, the gel-like mass that contains countless biological molecules.
+
+Some of these large molecules are barely visible through a powerful microscope, even when amplified a million fold.
+
+Among these molecules is the long, coiled structure of DNA, the legendary double helix that was first described by Watson and Crick more than half a century ago.
+
+Beyond this, there is not much else we can see.
+
+Yet biochemical analysis shows that bacteria, the simplest of life forms, are actually so complex that we still don't know much about their indiscernible organization.
+
+Humans, on the other hand, are composed of different types of cells.
+
+Although cells are considered the simplest basic unit of life,
+
+the volume of these types of cells is often a hundred thousand times that of bacteria, and this allows us to see much more inside.
+
+There are great structures made of elaborate membranes, called organelles, with all sorts of embedded proteins.
+
+The organelles are to the cell what organs are to our bodies, discrete entities that are responsible for certain tasks.
+
+Also, within the cytoplasm are all kinds of large and small vesicles, and a dense network of fibers called the cytoskeleton, which gives the cell structural support.
+
+Finally, there is the nucleus, what most of us would consider the control center of the cell.
+
+All these make up the cells that make up the world as we know it, and they are called eukaryotic cells.
+
+Small plants, animals, algae, indeed, essentially every living thing we can see with the naked eye, is composed of eukaryotic cells, each one harboring its own nucleus.
+
+Contained within the nucleus, you'll find the DNA.
+
+Although the DNA in a eukaryotic cell has the exact same double-helix structure as found in bacteria, the way it's organized is very different.
+
+In bacteria, the DNA is found as long, twisted loops, known as circular DNA.
+
+Don't let its name fool you, however, for it's not circular by any means. It looks more like a tangled mess of a ball.
+
+The name indicates that there is no beginning or end, just like a circle.
+
+There are often numerous copies of this circular DNA in each bacterium, but all are copies of the same genes.
+
+In eukaryotic cells, there are usually a number of different chromosomes, which are linear, not circular.
+
+Again, this doesn't mean that DNA makes a straight line, but rather that each has two separate and distinct ends.
+
+Also, unlike circular DNA, each chromosome contains different genes.
+
+Humans have 23 chromosomes, but because we keep two copies of each, we have a total of 46.
+
+During cell division, these pair up, being joined at the middle, giving them the familiar X shape we know from science class.
+
+Chromosomes are not just composed of DNA. They are coated with specialized proteins.
+
+Among them are the histones, which not only shield the DNA from harm, but also act as gatekeepers to the genes.
+
+Histones distinguish eukaryotic chromosomes from that of bacteria, whose DNA is not protected by histones, and therefore is said to be naked.
+
+Each of the two strands of the double helix acts as a template for the other.
+
+When they are pulled apart during cell division, each strand provides the information needed to reconstruct the full double helix, once again giving two identical copies.
+
+The information encoded in DNA is organized into genes, which in turn spell out the molecular structure of proteins.
+
+Just as all our English words are a sequence of only 26 letters, all the genes are a sequence of just four molecular letters, where the sequence of letters dictates the structure of the protein.
+
+The genome, which can be over a billion letters long, is the complete collection of genes in an organism.
+
+Each gene, usually thousands of letters, is essentially the code for a single protein.
+
+Each protein is a string of subunits called amino acids, and it's the precise order of these amino acids that determines the functional properties of that particular protein.
+
+A mutation arises when the sequence of letters is changed. This might change the amino acid or the structure of the protein.
+
+Thankfully, nature has built in a certain level of redundancy. Since several different combinations of letters can code for the same amino acid, these mutations don't always result in a structural or functional change in the protein.
+
+This is important because proteins are the fulcrum of life. Their forms and functions are almost limitless, and life as we know it is only made possible because of them.
+
+Understanding their function allows us to organize them into several broad categories, such as enzymes, hormones, antibodies, and neurotransmitters.
+
+The whole process of building proteins is controlled by a number of other proteins, with transcription factors being the most important.
+
+While DNA contains these genes, it's actually inactive, and transcription factors are what regulate the expression of genes.
+
+Transcription factors do this by telling the cell to take a particular inactive section of DNA and convert it to an active protein.
+
+However, instead of using DNA directly, the cell relies on disposable copies called RNA. There are different types of RNA, and each fulfills different tasks.
+
+First is messenger RNA, mRNA. Its sequence is an exact copy of the corresponding DNA gene sequence.
+
+As its name implies, this messenger passes through the pores in the nuclear membrane and out into the cytoplasm.
+
+From there, it finds one of the many thousands of protein-building factories called ribosomes.
+
+It is the job of the ribosomes to translate the information encrypted in mRNA into a sequence of amino acids, which make up a particular protein.
+
+Hope you're still with me. As simply as I've tried to describe this, it has taken and will take hundreds of scientists their entire careers to tease out the details of an incomprehensibly tiny portion of one sentence in the biology lesson above.
+
+This level of understanding, however, should give most readers the ability to understand the significance and inner workings of the mitochondria.
+
+Okay, so let's keep going.
+
+The Evolution of the Eukaryotic Cell
+
+Although the Greek origin of the word eukaryotic means "true nucleus," eukaryotic cells actually contain many other things besides the nucleus, including the mitochondria.
+
+Mitochondria were originally independent bacterial entities, which eventually entered other bacterial cells, but instead of becoming digested as they did under typical conditions, they became a symbiont, or a partner in a relationship where both benefit in some way from the presence of the other.
+
+You could say that the mitochondria were the original probiotic, a microorganism that provides a benefit to its host.
+
+The theory says that one day, about two billion years ago, one bacterium engulfed another.
+
+Initially, each organism was totally autonomous and contained all the genes for independent life.
+
+However, after one engulfed the other without disintegrating it, the two experimented with countless different biochemical and genomic arrangements.
+
+This process of trial and error occurred over a mind-boggling expanse of 1.2 billion years.
+
+But finally, the engulfed bacterium became specialized in energy production.
+
+They became the mitochondria, and the rest of this primitive new eukaryotic cell became specialized in structure and function.
+
+The acquisition of mitochondria seems to have been the decisive moment in the history of life as we know it.
+
+If this is true, then the mitochondria deserve all the credit for the abundance of life on Earth as we know it.
+
+If not for the mitochondria, the world would not have evolved beyond single-celled bacteria.
+
+Even though mitochondria were once bacteria, the eukaryotic cells they created became vastly different compared to their bacterial origins, and in a number of interesting ways.
+
+First, most eukaryotic cells are gigantic when compared to tiny bacteria.
+
+Most eukaryotic cells have a cell volume about 10,000 to 100,000 times that of bacteria.
+
+Second, as mentioned earlier, eukaryotic cells have a nucleus.
+
+This is usually a spherical double membrane that houses the compact mass of DNA, which is wrapped in protective proteins.
+
+Bacteria, by contrast, lack a nucleus, and their DNA is in a rather primitive and unprotected form.
+
+The third difference is the size of their genomes, the total number of genes.
+
+Bacteria typically have far less DNA than eukaryotic cells do.
+
+Further, eukaryotic cells have far more non-coding DNA, parts of DNA that don't code for genes than bacteria do.
+
+We previously thought all this non-coding DNA was junk DNA, without purpose.
+
+Newer research, however, is showing that there is a lot more to DNA than just genes coding for proteins, and that these vast arrays of non-coding DNA, or at least parts of them, actually have numerous functions.
+
+Regardless, the huge amount of extra DNA in eukaryotic cells requires much more energy than bacterial cells require to copy and to ensure it is copied accurately.
+
+The last major difference I'll discuss is the organization of DNA.
+
+As mentioned earlier, bacterial DNA is organized into a single circular chromosome.
+
+Although it's anchored to the cell wall, it basically floats freely within the cell.
+
+Since bacterial DNA is not covered by a protective protein wrap, it's easily and quickly accessible when needed for replication.
+
+Bacterial genes also tend to be organized in functional groups with a similar purpose.
+
+Bacteria also carry extra DNA material in the form of tiny rings called plasmids.
+
+These little rings replicate independently and can be transferred from bacteria to bacteria relatively quickly.
+
+Eukaryotic genes, on the other hand, do not seem to be organized by any identifiable order, and the flow is often broken into many short sections with long stretches of non-coding DNA.
+
+In order to build a particular protein, many times a large expanse of DNA needs to be read, then spliced apart before the coding sections are fused together to form an understandable gene that codes for the protein.
+
+Further, just getting to these genes is rather complex because the chromosomes are tightly wrapped in the proteins called histones.
+
+While histones offer a certain degree of protection to the DNA from potential damage, they also block easy access to the genes.
+
+When the genes need to be replicated for cell division or to make copies for building proteins, the structure of the histones must be transformed to allow access to the DNA itself.
+
+This is the job of another set of proteins, also mentioned earlier, the transcription factors.
+
+Without dragging this discussion on, the most important message I want to get across is that bacteria evolved to be brutally efficient, while most eukaryotic cells are gigantic and incredibly complex beings, and all this complexity comes with an energetic cost.
+
+Many other aspects of the eukaryotic cell also demand great amounts of energy. One example is the internal cytoskeleton of a eukaryotic cell versus the cell wall of a bacterial or prokaryotic cell.
+
+While they have similar functions to provide structural support, they are totally different conceptions. The difference is similar to the internal skeleton in a human versus the external shell or exoskeleton of an insect or crustacean.
+
+Bacterial walls vary in structure and composition, but in general they provide rigid exterior support that maintains the shape of the bacterium, preventing it from bursting or collapsing if and when its environment suddenly changes.
+
+In contrast, eukaryotic cells usually have a flexible outer membrane, which is given structural stability by the internal cytoskeleton.
+
+This cytoskeleton is a highly dynamic structure, constantly being remodeled, which itself requires a significant energy source.
+
+This gives eukaryotic cells a huge advantage, as they can change shape and often do so quite vigorously.
+
+A classic example of this is a macrophage, a type of white blood cell engulfing harmful foreign particles, bacteria, or scraps left over from a dead cell.
+
+In fact, virtually every aspect of a eukaryotic cell's life, shape-shifting, growing large, building a nucleus, hoarding reams of DNA, multicellularity, requires large amounts of energy and thus depends on the existence of mitochondria.
+
+Without mitochondria, higher animals would likely not exist, because their cells would only be able to obtain energy from anaerobic respiration, energy production in the absence of oxygen, a process that is much less efficient than the aerobic respiration that occurs in the mitochondria.
+
+In fact, mitochondria enable cells to produce 15 times more energy as adenosine triphosphate, the cell's energy currency, than they could otherwise, and complex animals, like humans, need large amounts of energy in order to survive.
+
+A Spiritual Twist
+
+The fact that, over billions of years, the formation of the eukaryotic cell happened only once, a chance event, really does make one wonder if it was guided by a higher power.
+
+Indeed, it's possible for science and spirituality, and maybe even some religions, to coexist, as suggested by many academic and philosophical works.
+
+Nevertheless, it's important to note that based on the theory of convergent evolution, if we pressed "reset" and started all over again, given enough time, measured in billions of years, many things would happen in a similar way to how they already have.
+
+This is because we would run into the same bottlenecks and problems, and with natural selection offering a finite number of ideal solutions to a given adaptation problem, there is a high likelihood solutions would be found in a very familiar way.
+
+This idea makes me wonder if life on other planets is biochemically similar based on the convergent evolution theory.
+
+While that's a discussion for an entirely different book, the fact that amino acids, the building blocks of life, have been found in meteorites that are older than our solar system, and that PQQ, a nutrient I'll discuss in Chapter 3, Pyrrolequinoline quinone, PQQ, has been found in interstellar dust, it seems that the seeds of life were planted on Earth from the cosmos.
+
+We truly are children of the stars.
+
+I suppose this is a bit difficult to accept for some.
+
+From an egocentric view, humans seem special.
+
+Our conscious experience separates us from the mechanical world of physics and chemistry, and perhaps even from the lower forms of life.
+
+However, it's a fact that the fundamental similarities between all living things outnumber the differences.
+
+I write this with full appreciation and acknowledgement of the controversy surrounding the theory of evolution by natural selection and religion.
+
+While I prefer to avoid the topic altogether, it's impossible to discuss evolution without acknowledging that massive force of religion pushing back.
+
+However, in the face of overwhelming evidence collected over centuries, refuting the reality of evolution is really quite a hollow position to guard.
+
+Further, taking such a stance shuts the mind to its amazing story.
+
+Of course, there are many unknowns, and many parts of science are speculative, but that is nothing to be ashamed of or dismissed.
+
+Certainly all science is provisional, and we are by no means anywhere near the point of knowing all.
+
+But when observations of nature contradict a theory, no matter how revered, ancient, or popular, the theory will be unceremoniously abandoned,
+
+and the hunt for a new and more accurate theory will be intensified.
+
+In fact, this is how we ended up with our current understanding of mitochondria.
+
+Many theories have been proposed, challenged, tested, and either made stronger or abandoned.
+
+This is what science is, a constantly changing base of knowledge.
+
+For traditional religions, it's important to evolve themselves and develop a new paradigm where evolution is woven into the teachings,
+
+where, as I alluded to, that evolution was guided by a higher power.
+
+However, for hardcore scientists, it's equally important to recognize that even though we think we know lots, we really don't know much at all.
+
+It's humbling to remember that everything we know regarding the known universe and our reality, from the most fundamental chemistry to incomprehensibly complex quantum physics,
+
+everything is estimated to be only about 4%, at least according to Neil deGrasse Tyson.
+
+We don't know about, let alone understand, 96% of our universe and our current reality.
+
+Thinking we truly know up from down puts us at the same level as those who believed the world was flat.
+
+Is what's written in this book the final word?
+
+Likely not.
+
+Just about everything else we thought to be true in the past has turned out to be completely false or not entirely accurate.
+
+But this is the state of our knowledge at this point in time, and I eagerly await more evidence to strengthen our current knowledge base or send us on a completely or just slightly different path.
+
+Mitochondria. They are the force.
+
+Mitochondria evolved to be the powerhouses or energy factories of the cell.
+
+They are organelles that act like a cellular digestive system that takes in nutrients, breaks them down, and creates energy for the cell.
+
+The process of creating cell energy is known as cellular respiration, and most of the chemical reactions involved in cellular respiration happen in the mitochondria.
+
+The mitochondria are very small organelles, yet are shaped perfectly to maximize their hard work.
+
+As mentioned, each cell contains hundreds to several thousand mitochondria.
+
+The number depends on what the cell needs to do.
+
+For example, large numbers are found in heart and skeletal muscle, which require large amounts of energy for mechanical work.
+
+In most organs, such as the pancreas, with its biosynthesis of insulin and the liver, where detoxification takes place, and in the brain, tremendous amounts of energy are required by the nerve cells.
+
+Any form of life that can't generate its own energy is essentially dead. There is no life without energy.
+
+Breathing supplies the blood with oxygen, which in turn gets transported to just about every one of the trillion cells in the body.
+
+The cell delivers this oxygen to the mitochondria, where it is used to turn glucose, fatty acids, and sometimes amino acids into energy via cellular respiration,
+
+or more specifically, aerobic respiration, producing energy by the use of oxygen.
+
+Although it's hard to believe, gram for gram, we are likely the most powerful energy producers in the universe.
+
+In fact, in an interesting calculation outlined by Nick Lane in his book, "Power, Sex, Suicide,"
+
+it seems we produce 10,000 times more energy per gram than the sun every second.
+
+This calls for another quick aside on popular culture, this time the Matrix, not Star Wars.
+
+In this film, the machines meet their energy needs by harvesting the energy produced in vast human energy farms.
+
+From Lane's calculations, this would make sense. He also points out that some energetic bacteria, such as azotobacter, outperformed the sun by a factor of 50 million.
+
+Which begs the question, why hasn't someone taken azotobacter and created a source of clean, organic energy?
+
+I can't be the only one with these trillion dollar ideas.
+
+The Basics of Mitochondria
+
+Most illustrations depict mitochondria as rod-like, even though they are able to make many different shapes.
+
+They are indeed quite flexible, can divide in two like bacteria, or fuse together to form complex structures.
+
+Studies show they don't lie still, but constantly move around to the areas they are needed.
+
+Their movements appear to be linked to the network of microtubules.
+
+Think of these as the bones of the cell, the cytoskeleton that gives shape to the cell, and are likely transported along the network by motor proteins.
+
+Metabolically active cells, such as those in the heart, muscles, and brain, have thousands of mitochondria.
+
+The egg cell, oocyte, has a whopping 100,000 mitochondria.
+
+In contrast, sperm usually have fewer than 100.
+
+Red blood cells and skin cells have very few, if any, at all.
+
+By weight, up to 10% of the human body is mitochondria.
+
+In numbers, they are about 10 million billion.
+
+The saying "power in numbers" seems rather fitting.
+
+They were once bacteria, and their appearance and size still resemble those of bacteria.
+
+However, unlike bacteria, mitochondria are separated from the rest of the cell by a smooth and continuous outer membrane, instead of a cell wall.
+
+Their inner membrane is similar to the bacterial membrane, but convoluted into folds called "crystee".
+
+See figure 1.1 in your PDF supplement.
+
+The "crystee" vastly increase the inner membrane's surface area inside the organelle.
+
+Since this membrane represents the principal site of energy production, the structure of "crystee" maximizes the area where energy can be produced.
+
+On this membrane, energy is produced by transferring electrons down a chain of molecules.
+
+This respiratory chain, descriptively known as the "electron transport chain", "ETC", and the various enzymes responsible for energy synthesis are all located in and on the inner membrane.
+
+The space inside, the matrix, no, not the film, but the innermost part of the mitochondria, contains the enzymes of the tricarboxylic acid, TCA cycle, also known as the Krebs cycle or citric acid cycle.
+
+The resulting molecules produced by the TCA cycle, NADH and FADH2, are fed into the ETC, and the two enzyme systems are located in close proximity to each other so that it can all happen smoothly without lag.
+
+Basics of cellular respiration and oxidative phosphorylation
+
+Of course, every child knows we've got to breathe and eat to live, but the real question is why?
+
+Why or how does supplying our body with oxygen and fuel endow us with this life-giving energy?
+
+Cellular respiration is the most important job the mitochondria have.
+
+The enzymes of the TCA cycle and the ETC take the molecules resulting from the breakdown of food and combine them with oxygen, and this results in the production of energy.
+
+The mitochondria are the only places in the cell where oxygen can be combined with the food molecules to keep the cell full of energy.
+
+While this explanation would be sufficient for most, we need to understand this to a much greater depth to appreciate the implications related to health and disease, which, after all, is likely why you're reading this book.
+
+Let's begin with the initial stages of glucose metabolism, called glycolysis, which occurs in the cytosol.
+
+This is where glucose is converted to a compound called pyruvate through a series of chemical reactions.
+
+Pyruvate is then transported into the mitochondrial matrix, where another set of reactions convert it to acetyl-CoA.
+
+Then the real magic can begin, because acetyl-CoA is the start of the TCA cycle, where the final extraction of energy from food is optimized, yielding carbon dioxide (CO2) which we will exhale, and two types of energy molecules, NADH and FADH2.
+
+Similarly, the breakdown of fatty acids also yields acetyl-CoA, which again goes through the TCA cycle.
+
+The next phase is called oxidative phosphorylation, which takes place in the inner mitochondrial membrane.
+
+The high-energy electrons from NADH and FADH2 are transferred through a series of carriers in the ETC, and ultimately react with oxygen to yield water.
+
+With each step in the ETC, the energy released from these electron transfer reactions is used to pump protons, hydrogen atoms, from the matrix to the intermembrane space.
+
+This creates a high concentration of protons between the membranes and a low concentration in the matrix.
+
+This concentration difference, called gradient, is stored potential energy.
+
+The high concentration of protons in the intermembrane space wants to flow downstream into the matrix and does so through specialized channels, which then create adenosine triphosphate (ATP), the universal energy molecule that all cells use to do their work.
+
+Think of this as pumping water, protons, into a reservoir, intermembrane space, contained by a dam, inner membrane.
+
+As water flows out through a channel in the dam, it is used to drive turbines to create hydroelectric energy. See Figure 1.2 in your supplement.
+
+This is a very efficient process for taking the energy stored in food to make ATP. Basically, all the absolutely essential things our bodies do to stay alive, example breathing and eating, are to provide the mitochondria with the compounds they need to produce energy.
+
+You could say, from a depressing reductionist view, that we live only to support our mitochondria.
+
+A Game of Hot Potato. The electron transport chain, ETC.
+
+Four membrane-bound complexes have been identified in the mitochondria. Three of them are what we call proton pumps.
+
+Each is an extremely complex structure that is embedded in the inner membrane. If you refer to Figure 1.3 in your supplement, you'll see the various components of the ETC.
+
+By following the flow of electrons, E-, down the ETC, you can see where the protons, H-positive, are pumped.
+
+Complex 1 accepts electrons from NADH and passes them to coenzyme Q10, CoQ10, denoted in the Figure's Q. CoQ10 also receives electrons from Complex 2.
+
+From there, CoQ10 passes electrons to Complex 3, which passes them to Cytochrome C.
+
+Cytochrome C passes electrons to Complex 4, which takes the electrons and to hydrogen ions and reacts them with oxygen to form water.
+
+Carbon Monoxide Poisoning.
+
+In carbon monoxide poisoning, this toxin displaces oxygen as the final acceptor of the electrons coming down the ETC.
+
+The final destination for electrons is no longer available, and when this happens, cellular respiration stops because the electrons no longer have their exit.
+
+Unless the carbon monoxide is removed, the mitochondria will die, causing the cells to die and ultimately killing the person who has been exposed to carbon monoxide.
+
+However, it's critical to understand that the passage of electrons down this chain is not always 100% efficient.
+
+A small percentage of electrons are fumbled in this molecular game of hot potato, and these leak into the matrix.
+
+The rogue electrons then prematurely react with oxygen, resulting in the formation of superoxide, a potentially dangerous free radical.
+
+Free radicals are highly reactive molecules that contribute to oxidative stress.
+
+This process has been implicated in a number of diseases and even aging itself, as I'll discuss shortly.
+
+In fact, those familiar with the concept of free radicals might be interested to know that the ETC is the main site for endogenous free radical production.
+
+Free radicals produced within us, as opposed to ones generated by other sources, like environmental pollutants.
+
+All this will make more sense in a bit.
+
+For now, let's finish discussing the ETC and its components.
+
+Complex 1 - The First Step of the ETC
+
+Also known as NADHD hydrogenase, Complex 1 is a large molecule made of 46 protein subunits.
+
+It removes two electrons from NADH and transfers them to a lipid-soluble carrier, ubiquinone, oxidized CoQ10, or simply Q.
+
+In a two-step process, this reduces the CoQ10 to ubiquinol, QH2, and pumps four protons, H+, across the membrane, creating a proton gradient.
+
+This is the primary site within the ETC where electrons leak to produce harmful superoxide free radicals.
+
+Complex 2 - The Second Step and a Shortcut to the ETC
+
+This unique complex, also known as succinate dehydrogenase, is directly involved in both the TCA cycle and ETC.
+
+It's a small complex consisting of only four protein subunits and the only complex in the ETC that does not pump protons.
+
+Its purpose is to deliver additional electrons from succinate to CoQ10 via FADH2.
+
+Other electron donors, such as fatty acids, also enter the ETC at Complex 2 via FADH2.
+
+Complex 3 - The Twins that Are Master Jugglers of Electrons
+
+Complex 3, also known as cytochrome BC1 complex, is actually a dimer, which basically means that it consists of two identical, simpler complexes.
+
+Each part of the dimer comprises of 11 protein subunits, giving 22 in total.
+
+This is where the Q-cycle occurs, which is a multi-step process whereby ubiquinol, reduced CoQ10, is converted to ubiquinone, oxidized CoQ10.
+
+In the process, a net of four protons is pumped to contribute to the proton gradient.
+
+This is the second most prevalent site in the ETC where electrons can fall out and react with oxygen to form superoxide free radicals.
+
+Complex 4 - The Creator of Water
+
+Complex 4, also called cytochrome C oxidase, is made up of 13 protein subunits.
+
+There, four electrons are removed from four molecules of cytochrome C and transferred to molecular oxygen, producing two molecules of water.
+
+This results in four protons being pumped across the membrane, contributing to the proton gradient.
+
+How Camels Store their Water in the Desert
+
+This is a good time to discuss that camels don't actually store water in their humps, as commonly believed by children.
+
+Their humps are large deposits of fat.
+
+This fat not only serves as a large store of energy, but when this fat is metabolized through oxidative phosphorylation, water is generated at Complex 4 as just described, approximately 1 gram or 1 milliliter of water for every 1 gram of fat burned.
+
+This is partially why camels can go so long without drinking water, along with other adaptations.
+
+Cyanide Poisoning and Suicide
+
+Cyanide, the familiar poison, implicated in the mass suicide in Jonestown, Guyana, and historically given to certain military personnel to ingest in the event of capture, kills by shutting down the ETC.
+
+Specifically, it inhibits the activity of Complex 4 by binding the iron-FE component, which stops the flow of electrons.
+
+The newest approved antidote, at least in the United States, is Hydroxocobalamin, a form of vitamin B12, which reacts with the cyanide to form cyanocobalamin, a form of B12 that can be found in most nutritional supplements, which can then be safely eliminated by the kidneys.
+
+Super Complexes
+
+Optimizing the Speed of Electron Flow
+
+I should point out that what I just described is how we were taught about the ETC in high school and university biology courses.
+
+In addition to the four complexes described previously, there is ATP synthase, discussed next, and what some have referred to as Complex 5.
+
+So, in total, we can think of the mitochondrial ETC chain consisting of five enzyme complexes that are responsible for ATP generation.
+
+However, this paradigm of the ETC, as discrete enzymes diffused in the inter-miticondrial membrane, has been recently replaced by the solid-state Super Complex model, wherein the respiratory complexes associate with one another to form supramolecular complexes.
+
+This arrangement allows for highly efficient electron transfer, with the distance an electron must travel between complexes being reduced to several nanometers.
+
+To make matters even more complicated, not only is the existence of super complexes debated, but it looks like there could be varying formations of these super complexes.
+
+For example, the one called Respirosome includes complexes 1, 3, and 4.
+
+However, there are super complexes of just complexes 1 and 3, and complexes 3 and 4.
+
+These associations will also dictate the pool of CoQ10 and cytochrome C available to these super complexes.
+
+Also, there is evidence that certain health conditions are linked to disassociation of the components of these super complexes.
+
+And while I won't talk specifically about the health conditions this has been linked to, this model is new and therefore it hasn't been investigated enough.
+
+I mention it quickly as a way to illustrate how our knowledge on this is constantly evolving and expanding.
+
+ATP synthase, coupling the ETC with oxidative phosphorylation.
+
+ATP synthase, also known as ATPase or complex 5, is an important enzyme as it is the final step in the long chain of events that culminate in the synthesis of ATP.
+
+This enzyme is what connects the proton gradient created by the ETC made possible by the presence of oxygen to phosphorylation.
+
+The process of adding a phosphate to a denazine diphosphate, or ADP, which creates ATP, all in all known as oxidative phosphorylation.
+
+This large enzyme is the smallest known machine.
+
+There are some really cool animations on the internet that show it visually, and I encourage you to check them out when you have some time.
+
+This rotary motor, constructed from many tiny moving protein parts, has two main components.
+
+The driveshaft that is inserted straight through the membrane from one side to the other, and a very large rotating head that is attached to the driveshaft.
+
+The high concentration of protons on the outside of the membrane wants to flow downstream and does so by passing through the driveshaft to rotate the head.
+
+In humans, a full rotation of the head requires 10 protons and releases three molecules of ATP.
+
+The use of proton pumps to store potential energy in the form of an electrochemical gradient and then harnessing that energy as it comes across a membrane to create chemical energy might seem like a strange way to create energy, yet this seems to be similar across all forms of life on Earth.
+
+Photosynthesis in plants happens in a similar way. However, in that case, the sun's energy is used to pump protons across the membrane in chloroplasts, what the mitochondria have evolved into in plant form.
+
+Bacteria, being the ancestor to mitochondria, also function in the same way, by generating a proton gradient across their cell membrane and loosely contained with the help of their cell wall.
+
+However, in contrast to humans and mammals, the electrons in plants pass down the ETC to a terminal electron acceptor that can be one of many different molecules, not just oxygen.
+
+Nevertheless, in every case, the energy extracted from the ETC is used to move protons across a membrane. This concept is so universal, it seems that pumping protons across a membrane is a central signature of life on Earth.
+
+Mitochondrial DNA, a curious relic of ancient history.
+
+After the initial bacterial merger that created the eukaryotic cell, the engulfed parasitic bacterium that eventually went on to form the mitochondria lived in the lap of luxury.
+
+The host bacterium provided many of what it needed to survive, and therefore it got lazy, so to speak.
+
+Many functions were carried out by the host, so there was little need to keep its lumbering and redundant DNA.
+
+Why would it need to code for proteins that the host's DNA also coded for? Nature thought the same, and because nature is relentlessly efficient, the parasitic bacteria began to shed the excessive and redundant genes.
+
+This is no big deal with the genes that are lost or not critical ones. On the flip side, however, cells will surely die if they lose essential genes.
+
+The example Lane uses in his book is how our primate ancestors lost the gene for making vitamin C a few million years ago.
+
+Thankfully, their diet was rich in fruit, which is a great source of vitamin C, so losing this gene was not catastrophic, and they survived and flourished.
+
+How do we know we once had this gene, but then lost it? Most of the gene is still there in our junk DNA, and the remaining sequence parallels the functional gene for vitamin C production in other species.
+
+The loss of genes in the name of efficiency is quite common, and in fact, bacteria can lose unnecessary genes in a matter of hours or days.
+
+Why is this efficient? Cell division, which is how bacteria reproduce, is highly energy-intensive, and bacteria, relative to eukaryotic cells, produce very little energy.
+
+The smaller bacteria's DNA is, the less energy it needs to copy all that DNA for its daughter cells.
+
+The efficiency of this gene loss on the main bacterial chromosome is illustrated by their low amount of junk DNA.
+
+You might be thinking this is not efficient because the bacteria could end up needing their lost genes down the road.
+
+However, throwing away genes is not as reckless as it might first seem. Why?
+
+Bacteria can also pick up the same genes again, as well as others, when they need to at a later point, when a concept called lateral gene transfer comes into play.
+
+A bacterium will pick up DNA from its surroundings, from dead cells or other bacteria, by a form of copulation known as bacterial conjugation, not so different from the transfer of DNA when humans copulate.
+
+Well, okay, maybe it's a little different, but my point is that bacteria can and do accumulate new genes.
+
+The fact that bacteria acquire genes through lateral gene transfer is why I think big agra and the biotech industries need to do far more research before genetically engineered crops and animals are entered into the food chain.
+
+The engineered genes can be picked up by the bacteria in our gut, or the bacteria in our livestock's gut, and there are countless other ways those genes could escape and wreak irreversible havoc throughout the animal and plant kingdoms.
+
+All this gaining and losing genes keeps things in a constant state of flux, which is a good thing, because at any given moment in time, it's unlikely that all redundant genes will be lost from a given community of bacteria.
+
+At least a fraction of the bacteria in a particular community is likely to have retained a fully functional copy of that redundant gene.
+
+When the surrounding environmental conditions change and the need for that gene becomes important, those bacteria with the gene can pass them around to the other bacteria by lateral gene transfer.
+
+Such willingness to share genes explains how things like antibiotic resistance can spread so quickly throughout an entire population of bacteria,
+
+and the reason why regulatory bodies, such as Health Canada and the U.S. Food and Drug Administration, require proof that probiotic strains used in supplements do not display antibiotic resistance, because those genes can easily be passed to potential pathogenic bacteria in the gut.
+
+The speed of lateral gene transfer is much faster with the tiny chromosome rings called plasmins, which I discussed earlier, but bacteria can also transfer genes that are part of their main chromosomes. It just happens more slowly.
+
+Any gene that is not used regularly or not needed at that point in time will tend to be cast aside in favor of more rapid and efficient replication.
+
+As descendants of bacteria, mitochondria lost most of their genes through this process, but if the mitochondrion was a spoon-fed parasite living in its host, why did it need to retain any genes at all?
+
+That's a good question, especially when considering that each cell has several hundreds to thousands of mitochondria, and each mitochondrion has five to ten copies of its DNA, and Lane offers an in-depth discussion of this question.
+
+The amount of mitochondrial DNA in each cell is a heavy burden when it comes time to divide. When the mitochondria divide, called mitochondrial fission or mitochondrial biogenesis, or when the cell divides, all those mitochondrial genes must be copied.
+
+Further, every mitochondrion must maintain its own genetic translation apparatus and protein-building ribosomes. This process doesn't seem efficient for descendants of bacteria, which thrive on uncompromising efficiency.
+
+Further, there are potentially catastrophic consequences when mitochondria with different genomes are present within the same cell. For example, when paternal mitochondria from sperm survive and coexist with the maternal mitochondria from the egg, which usually results in termination of the pregnancy.
+
+This could be avoided altogether if all the mitochondrial genes had been transferred to and contained within the nucleus.
+
+Another liability is that the exposed and defenseless genetic material in the mitochondria is located right next to the ETCs, from which destructive free radicals are generated and released.
+
+These free radicals can damage the MTDNA and cause mutations, potentially resulting in the demise of the mitochondria, and this can result in numerous health conditions, including cancers, as I'll discuss later.
+
+So why didn't all the mitochondrial genes get transferred to the nucleus? The fact that they still remain in the mitochondria, despite nearly two billion years of evolution and many good and logical reasons why they should have been transferred to the nucleus, gives us a clear indication that there must be a reason, and it must be a convincingly fantastic reason.
+
+The reason for retaining some genes seems to be tied to the control over oxidative phosphorylation. The speed of oxidative phosphorylation is very sensitive to the constantly changing situation in energy demands, often fluctuating from minute to minute, depending on whether we're awake, sleeping, exercising, sedentary, fighting an infection, writing an exam, digesting food, reading a book, and so on.
+
+These rapidly changing scenarios require the mitochondria to adapt their energy production at a cellular level, and each cell, depending on whether it's a muscle cell, brain cell, white blood cell, intestinal cell, liver cell, and so on, needs to respond individually.
+
+In order to respond efficiently to these swift changes in energy demand, the mitochondria need to maintain a certain level of on-site control, and this control comes in the form of the empty DNA retaining certain genes.
+
+The reactions that take place in the ETCs in the inner mitochondrial membrane must be tightly regulated locally at the level of each individual mitochondrion. It would not be efficient, nor would the cell be able to respond quickly to abrupt changes in energy demand if the entire process were controlled at a distance by the genes tucked far away in the nucleus.
+
+Make sense so far? Good. Now let's talk about supply and demand before I go deeper into answering the question of why mitochondria retained some genes.
+
+Remember, the entire process from the individual complexes in the ETC to ATP production by ATPase is coupled like the gears in a machine, where the speed of one gear controls the speed of the next.
+
+When the energy demand is high, electrons flow down the ETC rapidly, the protons are pumped swiftly, and the proton gradient rises quickly. The proton reservoir fills up.
+
+The greater the proton gradient, the greater the pressure to form ATP quickly as protons are forced through the ATPase.
+
+However, in a situation where there is no demand for ATP, oxidative phosphorylation will continue to turn all the ATP and phosphate into ATP.
+
+Because the cell is not using the ATP, which would convert it back to ADP and phosphate, the ATPase is forced to shut down due to lack of raw materials.
+
+When this shutdown happens, protons can no longer pass through the ATPase, and the proton reservoir fills up.
+
+When the proton gradient is too high, the small amount of energy released as electrons flow through the ETC is no longer sufficient to pump the protons against this strong gradient.
+
+This lack of proton pumping causes the electron flow down the chain to slow and stop.
+
+Don't worry though, things pick up again once the energy demand increases and the cell uses up some ATP, resulting in more ADP and phosphate raw materials for the ATPase.
+
+This slow down is why exercise, using up the ATP, is so important. I'll discuss exercise later too.
+
+There could also be a shortage of oxygen supply, for example during a stroke when the blood flow to the brain cells is cut off.
+
+When this oxygen shortage happens, there is nothing to remove the electrons at the end of the ETC, and therefore the electrons back up, a traffic jam, so to speak, and oxidative phosphorylation stops.
+
+In any of these situations, when electrons back up, they can leak and create free radicals.
+
+However, in addition to supply and demand, we also need to consider the various components of the ETC.
+
+Each component can either be reduced, they have an electron, or oxidized, they don't have an electron, but they can't be both at the same time.
+
+For example, if complex one already has an electron, it can't take on another one until it has passed on the first to the next carrier in the chain, ubiquinone.
+
+The ETC will be held up until it has passed on this electron. Similarly, if complex one doesn't have an electron, it can't pass on anything to ubiquinone until it has received an electron from NADH.
+
+The ETC will be held up until it receives one.
+
+This reduction oxidation, or redox, as it's more commonly known, is an important emerging field of medical study.
+
+There are thousands of ETCs in each mitochondrion, approximately 10,000 ETCs per mitochondrion, an astonishing number, and oxidative phosphorylation will proceed most efficiently when there is a balanced 50/50 ratio between
+
+oxidized and reduced electron carriers.
+
+However, losing this balance not only slows down oxidative phosphorylation and energy production, but it can also wreak havoc in the mitochondria.
+
+This is because each electron carrier in the chain is reactive.
+
+If electron flow is progressing normally, each carrier will likely pass on its electrons to the next carrier, which has a slightly greater desire for that electron than did its predecessor.
+
+However, because carriers cannot be both oxidized and reduced at the same time, if the next carrier already has an electron, then the ETC becomes blocked, and there is a chance that the electron will be prematurely transferred to oxygen instead.
+
+When oxygen receives an electron from any carrier other than complex 4, the last carrier in the ETC, it forms the toxic free radical superoxide.
+
+This is not necessarily a bad thing, as I'll discuss later, but for now let's just consider that superoxide typically goes on to inflict damage to all sorts of biological molecules.
+
+We normally don't want this. It's just like trains traveling down a railroad. If a train doesn't leave a particular station in time, the next train can't arrive.
+
+In the best case scenario, this causes a backup. However, if an approaching train didn't get the message that the station is occupied and doesn't hit the brakes soon enough, there is a good chance that a crash will result, and the train's cars will derail causing all sorts of damage.
+
+So, maintaining the 50/50 redox balance allows both a speedy and efficient electron flow down the ETC, but also minimizes the risk of superoxide free radical formation.
+
+However, maintaining this balance also depends on the number of electron carriers within the ETC relative to one another.
+
+For example, if a mitochondrion has an abundance of complex one that have accepted an electron from NADH but not enough ubiquinone, many of those full complex one entities will fumble their electron, only to be picked up by oxygen.
+
+And just like everything else in the body, the relative number of each component of the ETC is in a state of constant flux, constantly being degraded and replaced.
+
+[BLANK_AUDIO]
+

@@ -1,6 +1,167 @@
 const fs = require('fs');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
+const { put } = require('@vercel/blob');
+
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
+
+// Vercel Blob Configuration
+const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+
+/**
+ * Upload a file to Vercel Blob
+ */
+async function uploadFileToBlob(key, content, contentType) {
+    if (!BLOB_READ_WRITE_TOKEN) {
+        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    }
+
+    const blob = await put(key, content, {
+        access: 'public',
+        contentType: contentType || 'application/octet-stream',
+        token: BLOB_READ_WRITE_TOKEN,
+        allowOverwrite: true
+    });
+
+    return blob.url;
+}
+
+/**
+ * Get content type based on file extension
+ */
+function getContentType(filename) {
+    const ext = path.extname(filename).toLowerCase();
+    const types = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp'
+    };
+    return types[ext] || 'application/octet-stream';
+}
+
+/**
+ * Upload book images to Vercel Blob and update database
+ * @param {Object} book - Book document from database
+ * @param {string} imagesPath - Path to images folder
+ * @param {Object} db - MongoDB database connection
+ */
+async function uploadImagesToBlob(book, imagesPath, db) {
+    if (!imagesPath || !fs.existsSync(imagesPath)) {
+        console.log('⚠️  No images folder found, skipping image upload');
+        return;
+    }
+
+    // Get list of image files
+    const imageFiles = [];
+    function findImageFiles(dir, relativePath = '') {
+        const files = fs.readdirSync(dir);
+        for (const file of files) {
+            const fullPath = path.join(dir, file);
+            const relativeFilePath = path.join(relativePath, file);
+
+            if (fs.statSync(fullPath).isDirectory()) {
+                findImageFiles(fullPath, relativeFilePath);
+            } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file)) {
+                imageFiles.push({
+                    localPath: fullPath,
+                    relativePath: relativeFilePath,
+                    filename: file
+                });
+            }
+        }
+    }
+
+    findImageFiles(imagesPath);
+
+    if (imageFiles.length === 0) {
+        console.log('⚠️  No image files found, skipping image upload');
+        return;
+    }
+
+    console.log(`☁️  Uploading ${imageFiles.length} images to Vercel Blob...`);
+
+    // Create folder path for this book
+    const bookFolderName = book.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+    const blobPrefix = `books/${bookFolderName}/images/`;
+
+    // Upload each image to Vercel Blob
+    const uploadPromises = imageFiles.map(async (imageFile) => {
+        const blobKey = `${blobPrefix}${imageFile.filename}`;
+        const fileContent = fs.readFileSync(imageFile.localPath);
+        const contentType = getContentType(imageFile.filename);
+
+        console.log(`   📤 Uploading: ${imageFile.filename}`);
+
+        const blobUrl = await uploadFileToBlob(blobKey, fileContent, contentType);
+
+        return {
+            filename: imageFile.filename,
+            blobUrl: blobUrl
+        };
+    });
+
+    const uploadedImages = await Promise.all(uploadPromises);
+    console.log(`✅ Successfully uploaded ${uploadedImages.length} images to Vercel Blob`);
+
+    // Update book with relative imageBaseURL path
+    const relativeImagePath = `/${bookFolderName}/images/`;
+    const booksCollection = db.collection('books');
+    const chaptersCollection = db.collection('chapters');
+
+    await booksCollection.updateOne(
+        { _id: book._id },
+        {
+            $set: {
+                imageBaseURL: relativeImagePath,
+                updatedAt: new Date()
+            }
+        }
+    );
+
+    console.log(`📚 Updated book with relative imageBaseURL: ${relativeImagePath}`);
+
+    // Update chapters to use imageName instead of imageUrl
+    const chapters = await chaptersCollection.find({ bookId: book._id }).toArray();
+
+    for (const chapter of chapters) {
+        let hasUpdates = false;
+        const updatedChunks = chapter.content.chunks.map(chunk => {
+            if (chunk.type === 'image' && chunk.imageUrl) {
+                // Extract filename from imageUrl
+                const imageName = path.basename(chunk.imageUrl);
+
+                // Check if this image was uploaded
+                const uploadedImage = uploadedImages.find(img => img.filename === imageName);
+                if (uploadedImage) {
+                    hasUpdates = true;
+                    return {
+                        ...chunk,
+                        imageName: imageName,
+                        imageUrl: undefined // Remove the old imageUrl field
+                    };
+                }
+            }
+            return chunk;
+        });
+
+        if (hasUpdates) {
+            await chaptersCollection.updateOne(
+                { _id: chapter._id },
+                {
+                    $set: {
+                        'content.chunks': updatedChunks,
+                        updatedAt: new Date()
+                    }
+                }
+            );
+            console.log(`   📝 Updated Chapter ${chapter.chapterNumber} with image references`);
+        }
+    }
+
+    console.log(`📊 Image upload summary: ${uploadedImages.length} images uploaded to ${relativeImagePath}`);
+}
 
 /**
  * Find output.json file in a book folder
@@ -35,7 +196,7 @@ function findImagesFolder(bookFolderPath) {
 }
 
 /**
- * Upload parsed book data to MongoDB database
+ * Upload parsed book data to MongoDB database and upload images to Vercel Blob
  * If a book with the same title exists, it will be updated with new content (keeping same ID)
  * @param {string} bookFolderPath - Path to the book folder containing output.json and images
  */
@@ -171,6 +332,7 @@ async function uploadParsedBook(bookFolderPath) {
                     wordCount: chunk.wordCount,
                     type: chunk.type || 'text',
                     ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
+                    ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }), // Keep imageUrl for now, will be converted to imageName
                     ...(chunk.imageName && { imageName: chunk.imageName }),
                     ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
                 }))
@@ -212,6 +374,21 @@ async function uploadParsedBook(bookFolderPath) {
             );
         }
 
+        // Get the updated book document for image upload
+        const finalBook = await booksCollection.findOne({ _id: bookId });
+
+        // Upload images to Vercel Blob if available and not skipped
+        const skipImages = process.argv.includes('--skip-images');
+        
+        if (skipImages) {
+            console.log('⏭️  Skipping image upload (--skip-images flag provided)');
+        } else if (BLOB_READ_WRITE_TOKEN && imagesPath) {
+            await uploadImagesToBlob(finalBook, imagesPath, db);
+        } else if (!BLOB_READ_WRITE_TOKEN && imagesPath) {
+            console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
+            console.log('   Images remain in local folder and imageUrl references are preserved');
+        }
+
         console.log(`✅ Book ${isUpdate ? 'updated' : 'uploaded'} successfully!`);
         console.log(`📖 Title: "${bookData.book.title}"`);
         console.log(`👤 Author: ${bookData.book.author}`);
@@ -239,23 +416,25 @@ async function uploadParsedBook(bookFolderPath) {
 // CLI usage help
 function showHelp() {
     console.log(`
-Usage: node upload-parsed-book.js BOOK_FOLDER_PATH
+Usage: node upload-parsed-book.js BOOK_FOLDER_PATH [OPTIONS]
 
 Arguments:
   BOOK_FOLDER_PATH   Path to the book folder containing output.json and images/ (required)
 
+Options:
+  --skip-images      Skip uploading images to Vercel Blob (only upload book content)
+
 Examples:
   node upload-parsed-book.js ../files/MyBook/
+  node upload-parsed-book.js ../files/MyBook/ --skip-images
   node upload-parsed-book.js ./books/transformers/
-  node upload-parsed-book.js /path/to/book-folder/
+  node upload-parsed-book.js /path/to/book-folder/ --skip-images
 
 Book folder structure:
   MyBook/
   ├── output.json       # Generated by parser (required)
   ├── images/           # Generated by parser (optional)
-  │   └── Book-Title/
-  │       ├── page-001-image-1.jpg
-  │       └── ...
+  │   └── *.jpg, *.png, etc.
   ├── book.pdf          # Original PDF file
   └── config.json       # Book configuration
 
@@ -263,13 +442,13 @@ Behavior:
   - If a book with the same title already exists in the database, the script will update it
     with the new content, keeping the same book ID
   - If no book with that title exists, a new book will be created
+  - Images will be automatically uploaded to Vercel Blob if BLOB_READ_WRITE_TOKEN is set
   - This allows for re-parsing and updating books without losing bookmarks, reading progress, etc.
 
-The script will automatically find output.json and images/ folder in the specified directory.
-
 Environment Variables:
-  MONGODB_URI     MongoDB connection string (default: mongodb://localhost:27017)
-  DATABASE_NAME   Database name (default: book_reader)
+  BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for image uploads (optional)
+  
+If BLOB_READ_WRITE_TOKEN is not set, book content will be uploaded but images will remain local.
 `);
 }
 

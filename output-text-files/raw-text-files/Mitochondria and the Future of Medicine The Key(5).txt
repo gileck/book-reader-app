@@ -1,0 +1,881 @@
+Chapter 3.
+
+Nurturing the Fores.
+
+Nutritional and Lifestyle Factors to Improve Mitochondrial Health What can we do to preserve our mitochondria and cellular bioenergetics?
+
+While most mammals rely heavily on antioxidants to neutralize the free radicals produced within their mitochondria, as Lane discussed in his book, birds slow down the rate of free radical leakage.
+
+Understanding the differences between birds and mammals might help us gain insight into the best way to approach aging and its related to generative diseases.
+
+So let's see how and if we can be more like the birds.
+
+How do the birds do it?
+
+It's now confirmed that the majority of free radicals are produced from Complex 1 of the ETC.
+
+The various subunits from which the free radicals leak are positioned in such a way that they leak directly into the matrix, which is where the empty DNA resides.
+
+Just about every antioxidant supplement has failed to deliver on its promises, because it needs to be targeted to this specific complex with astonishing precision.
+
+The next best target would be the matrix to protect the empty DNA.
+
+However, the antioxidants would alter the cell's free radical signaling.
+
+Birds have evolved to approach it from a different, more efficient angle.
+
+We already know they have low levels of antioxidants, but how do they reduce free radical leakage in the first place?
+
+We don't know the definitive answer, at this point, but birds might lower their free radical leakage by uncoupling their ETCs.
+
+As I previously mentioned, uncoupling is where electron flow is disconnected from ATP production, and instead, the proton gradient that is created by the electron flow is dissipated as heat.
+
+The benefit of uncoupling is that the electrons can continue flowing, they don't get backed up, and this flow in turn reduces free radical leakage.
+
+Uncoupling the proton gradient, in theory, has profound benefits for slowing the progression of all age-related degenerative diseases and also aging itself.
+
+It could also help us to burn more calories and lose weight.
+
+The promise is promising indeed.
+
+Salicylic acid, or its derivatives, such as aspirin, is a mitochondrial uncoupler, and it has been shown to reduce the risk of a number of degenerative diseases and even cancers.
+
+Because it is a mitochondrial uncoupler, it is also often a part of stack formulas frequently used in the fitness and weight loss industries.
+
+However, there are downsides to chronic administration of even low-dose salicylic acid.
+
+Gastrointestinal ulcers are among the more commonly reported adverse effects.
+
+Other uncouplers of note are the recreational drug MDMA, more commonly known as MOLLE, ecstasy, or E, notoriously known for inducing excessive heat production in its users, and Metformin, the popular anti-diabetes drug, which is now being investigated against a host of other diseases.
+
+A thought-provoking study published in June of 2014 demonstrated that Metformin consistently benefited African Americans more than their Caucasian counterparts with respect to blood sugar control.
+
+Based on our earlier discussion regarding tight mitochondria in people with equatorial origins, it's predictable this uncoupler would have benefited these individuals to a significantly greater extent.
+
+Although it seems there are pharmacological interventions that can induce the production of uncoupling proteins, it's important to be mindful of their numerous adverse effects.
+
+Then there's always the hope that a spontaneous genetic mutation could lead to the same benefits.
+
+In fact, a study published in the late 1990s found that nearly two-thirds of Japanese individuals who were over 100 years old shared the same mutation within their MTDNA.
+
+This single-letter change in the gene for a particular subunit of Complex 1 meant these lucky individuals were 50% more likely to live to 100 years of age than those without the mutation, the general population.
+
+Further, the researchers discovered these individuals were 50% less likely to end up in the hospital for any reason at all in the latter half of their lives, and less likely to experience any age-related degenerative disease.
+
+An investigation into the effect of this genetic mutation showed that it resulted in a small reduction in the rate of free radical leakage.
+
+Though not hugely significant at any given moment, this small reduction over the course of a lifetime ultimately led to a considerable benefit.
+
+This kind of evidence supports the mitochondrial theory of aging and the premise that all age-related degenerative diseases can be addressed by targeting the health of mitochondria.
+
+This beneficial genetic mutation is found only in Japan though, so our only hope of replicating this study is the genetic modification of our own genes.
+
+However, there are obviously serious ethical and moral issues related to modification of genes, so we're left with a hunt for other alternatives.
+
+Genetic modification is not the only possibility.
+
+If escaping electrons are responsible for free radical production, the best way to prevent it would be to minimize the number of electrons passing through any given ETC.
+
+If there are relatively few electrons hanging out, they are less likely to leak to form free radicals.
+
+Having fewer electrons pass through any given ETC seems to be how the birds do it.
+
+The question is, how can humans minimize electron passage through ETCs?
+
+We can increase the number of ETCs per given mitochondrion to spread out the electron load.
+
+However, this number seems to be under genetic control, so it's probably not the lowest hanging fruit.
+
+Conversely, we could reduce the number of electrons, which is how caloric restriction works.
+
+Caloric restriction is currently the only proven method to extend lifespan in numerous mammals.
+
+More on this in ketogenic diets and calorie restriction.
+
+There are also numerous other ways we can optimize the health of our mitochondria.
+
+We can create more mitochondria.
+
+We can ensure electrons are removed from the complexes quickly to make room for the next incoming electrons.
+
+We can dissipate the proton gradient as heat, and so on.
+
+The question is, how do we do these things?
+
+We know that most cells generate 60-70% of all their energy from the metabolism of fatty acids.
+
+However, without adequate supply of nutrients such as L-carnitine to transport fatty acids into the mitochondria and also remove toxic metabolites, cellular energy production will be inefficient, which I've already established as being the start of the end.
+
+The same is true for CoQ10.
+
+Steven Sinatra, a cardiologist and one of the leaders in the field of metabolic cardiology, has tracked CoQ10 levels in hundreds of patients over 20 years and has found that levels of this critical component of the ETC are dangerously low in many more people than initially thought.
+
+Further, statin medications, the best-selling drugs prescribed in order to lower cholesterol levels, block the body's synthesis of CoQ10.
+
+So as more people are placed on these controversial drugs, we can logically predict that major deficiencies of CoQ10 will become more common.
+
+As previously discussed, other drugs such as beta blockers, hypoglycemic, diabetic medications, and tricyclic antidepressants can further depress CoQ10 levels.
+
+This is all on top of the natural decline in CoQ10 production by the body as we age.
+
+In addition, vegetarians and vegans, in most cases, don't get enough CoQ10 and L-carnitine through their diets because the primary dietary sources of numerous mitochondrial nutrients are meat.
+
+We consume the animal's mitochondria and its components when we eat meat.
+
+Plants have chloroplasts that are similar to mitochondria, but they are not quite the same.
+
+Table 3.1 in your PDF supplement lists the nutrients required for mitochondrial components.
+
+You'll soon see how other nutrients, such as D-ribos, fit into this picture and why they are so critical for those affected by health conditions with decreased mitochondrial energy production.
+
+I'll also discuss the importance of magnesium, a popular mineral supplement, because a magnesium ion is almost always attached to ATP in the cells.
+
+It reduces the electrical charge of ATP and helps it move around the cell.
+
+A lot of what I'll discuss comes from synodorous teachings and the field of metabolic cardiology.
+
+I will address questions such as why heart disease patients feel worse for several days following a stress test.
+
+In such a test, a patient is placed on a treadmill to increase the demand for oxygen and create a state of temporary hypoxia, lack of oxygen relative to demand.
+
+When the treadmill stops and demand for oxygen returns to normal, hypoxia should resolve.
+
+But why, then, do patients experience fatigue, weakness, and shortness of breath for several days afterward?
+
+As you might have guessed, it all relates to mitochondrial energy.
+
+What follows is a discussion of the various nutritional and lifestyle factors that can boost energy production and improve mitochondrial health.
+
+Of course, this is by no means an exhaustive list.
+
+In fact, I was forced to minimize the breadth of nutrients and therapies included in order to publish this book in a timely fashion, and it still took over two years to research.
+
+D-Ribos In the 1940s and 1950s, research showed that D-Ribos, a simple five-carbon sugar, was the primary intermediate in an important metabolic pathway called the pentose phosphate pathway.
+
+Prior to this discovery, this unique sugar was thought to only be used as a structural component of the genetic molecules of DNA and RNA.
+
+While D-Ribos is important for energy synthesis as a structural component of ATP, it wasn't until the 1970s that researchers discovered that with supplemental D-Ribos, when given prior to or immediately after ischemia in the heart, energy-deficient hearts could recover their cellular energy levels.
+
+In 1991, the first clinical study of D-Ribos in cardiology was published.
+
+The researchers theorized that parts of the heart affected by ischemia and hypoxia were just hibernating and not actually dead.
+
+They were lying dormant and conserving energy until they had enough blood flow and oxygen to ramp up energy production and function properly once again.
+
+The purpose of this study was to help doctors determine what areas of the heart needed to be supplied with a new blood supply through bypass surgery.
+
+If a segment was just hibernating, a surgeon could run a new blood vessel to that area.
+
+However, if an area was dead, there was no need to reroute blood to the dead zone.
+
+What they discovered had repercussions that were significant, not only for those with ischemia and hypoxia, but also for the general population.
+
+By administering D-Ribos and replenishing the purine pool and energy reserves, the researchers found they could wake up dormant sections of the heart, proving their hypothesis.
+
+Since then, many more studies have been conducted and the benefits of D-Ribos supplementation include improved recovery from cardiac surgery, improved function of the heart and congestive heart failure, restored energy in depleted skeletal muscles, and others.
+
+Restored energy to depleted skeletal muscles is important because while D-Ribos, at this time, is underutilized for cardiology, it has gained significant traction among athletes.
+
+Between 2002 and 2004, significant studies were conducted that showed D-Ribos supplementation resulted in a lower heart rate for a set amount of work on a stationary bike, improved diastolic function in the heart, increased exercise tolerance, and accelerated recovery of the energy pool of stressed skeletal muscles.
+
+Athletic Heart Syndrome These results from studies of D-Ribos are highly significant because they give us a possible explanation for the diagnosis of an athletic heart.
+
+Athletic heart syndrome, also known as athlete's heart or athletic bradycardia, is a condition commonly seen in sports medicine in which the human heart is enlarged and the resting heart rate is lower than normal.
+
+It is caused by significant amounts of aerobic exercise performed over a period of at least several months.
+
+Athlete's heart is common in athletes who routinely exercise more than an hour a day and occurs primarily in endurance athletes, though it can occasionally arise in heavy weight trainers.
+
+When the condition is generally believed to be benign, it might sometimes be hard to distinguish from other serious medical conditions, and it has caused the sudden cardiac death of many highly trained and seemingly healthy athletes.
+
+Why?
+
+Let's think back to the process here.
+
+Remember that if ATP cannot be generated fast enough, two ADPs will combine to produce ATP and AMP.
+
+This AMP will be broken down and eliminated from the cell, reducing the purine pool.
+
+It takes significant time for the purine pool to recover naturally, but instead of resting and allowing the heart to recover, the athlete goes out the next day, or even later that same day, and does more exercise, which further depletes the purine pool.
+
+As the energy pool gets minimized by successive bouts of exercise with little chance to recover, the heart starts to enlarge, referred to as hypertrophy, to increase the muscle mass to compensate for its inefficiency.
+
+Eventually, the straw that breaks the camel's back is not any one particular intense bout of exercise, although we've seen many cases of healthy athletes experiencing a sudden cardiac arrest during an intense event such as a marathon, but just another regular exercise session.
+
+The threshold is breached, and the heart can no longer compensate through any mechanism for the energy demands placed on it by the physical activity.
+
+The heart stops, not because of a heart attack in the traditional sense, a blockage cutting off blood flow, but because the heart just simply runs out of steam.
+
+While athletic heart syndrome is typically thought of as a non-pathological condition, it's plausible, based on bio-energetic chemistry, that pathological effects, and even death, might occur in extreme situations.
+
+D-ribose is likely one of the most important nutrients for elite athletes who want to maximize the benefits of training, but minimize its health risks.
+
+It is possible to consume D-ribose naturally from some foods, such as milk and dairy products, eggs, and mushrooms, but you can't get enough from these food sources to realize the benefits seen in the above-mentioned D-ribostudies.
+
+Cardiovascular Diseases Essentially everyone with a cardiovascular disease will have some degree of energy deficiency.
+
+The heart is one of the most metabolically active tissues in the body, and because its energy production is almost entirely aerobically produced through oxidative phosphorylation, it requires a large and constant supply of oxygenated blood.
+
+Perhaps this is why the heart is the first organ blood flows to after picking up fresh oxygen from the lungs.
+
+The heart's energy demand makes it particularly vulnerable to ischemia and hypoxia, and although it does have various mechanisms in place to help maintain its energy production when faced with oxygen deprivation, in reality these quickly run dry, literally in seconds, which is the reason why every second counts during a heart attack.
+
+Although ATP levels have been shown to decrease by up to 30% in failing hearts, the loss of the purine pool is hard to detect until the heart's function is severely affected.
+
+Due in part to reduced oxygen levels and resulting loss of mitochondria, there is no need for mitochondria if there is no oxygen, the heart shifts energy metabolism to the less efficient pathway of glycolysis.
+
+Not only does this result in lactic acid buildup, but with reduced energy efficiency, there is a progressive loss in contractility.
+
+The heart tries to compensate by enlarging its size, and this in turn worsens the ejection fraction and diastolic function, which in turn further deprives the heart of oxygenated blood.
+
+It's a vicious cycle that continues unless nutritional intervention takes place.
+
+The same situation is true for those undergoing medical intervention.
+
+After heart surgery or after a clot busting therapy, in cases of a heart attack or stroke, there is a rush of freshly oxygenated blood.
+
+However, during the preceding ischemia, the purine energy pool was significantly reduced and the electrons backed up in the ETC.
+
+With reperfusion, we have lots of oxygen, but not enough mitochondria or enough ETC within each mitochondrion.
+
+Further, with all the excess electrons primed for free radical production, introducing oxygen-rich blood is a prescription for disaster.
+
+The result is a burst of superoxide free radicals, caused within the remaining mitochondria, the opening of the MPTP, and eventually the death of mitochondria and ultimately the cells.
+
+Sound familiar?
+
+It should.
+
+This is ischemia reperfusion injury, or IRI, which we already discussed, in the role of mitochondria in the nervous system, brain, and cognitive health.
+
+D-ribose is finding utility and acceptance in cardiac surgery.
+
+The heart is one of the organs that respond most favorably to D-ribose supplementation.
+
+Supporting the heart's ability to preserve and rebuild its energy pool by supplementing with D-ribose is one of the first steps in restoring energy efficiency in any cardiovascular condition.
+
+Studies have shown it is effective in improving cellular energetics in congestive heart failure, coronary artery disease, and angina.
+
+Fibromyalgia.
+
+Discussed earlier, fibromyalgia is a common chronic syndrome in which the person has long term body-wide pain and tenderness in the joints, muscles, tendons, and other soft tissues.
+
+Many times patients become so sore, weak, and fatigued that they are not able to do basic tasks, and this can be compounded by sleep problems, headaches, depression, and anxiety.
+
+Research has revealed that in fibromyalgia patients, the lining of the capillaries, the tiny vessels that supply blood and oxygen to the muscles, becomes thickened.
+
+When this happens, oxygen cannot cross the blood tissue barrier, and without enough oxygen to adequately supply the tissues, localized ischemia develops and drains the energy pool in the affected muscles.
+
+Without oxygen, the cells shift energy production from oxidative phosphorylation to anaerobic glycolysis.
+
+This results in lactic acid production and buildup, which aggravate symptoms of severe pain, muscle stiffness, soreness, and overwhelming fatigue.
+
+Also, as muscle relaxation takes more ATP than muscle contraction, the cell sustains a contraction and keeps the muscle tense.
+
+Of course, there is more to the story.
+
+For example, the sustained increase in intracellular calcium during a contraction also causes potassium ions to rush out of the cell, activating pain receptors.
+
+Regardless, the point is that D.
+
+Ribos administration in these patients would help rebuild the cellular energy pool, allowing the calcium pumps to work better, which would help manage the cell's calcium load, reducing the outflow of potassium ions and resulting pain, and relaxing the muscle.
+
+Many fibromyalgia patients who use D.
+
+Ribos to support cellular bioenergetics report that they are able to become involved in the normal activities of daily life again, supplementing with D.
+
+Ribos.
+
+D.
+
+Ribos is naturally present in food, but dietary intake is insufficient to provide any meaningful impact on purine pools, especially in cases of chronic illnesses.
+
+Our main source of D.
+
+Ribos is our body's own production, which occurs in every cell of the body, beginning with glucose through the pentose phosphate pathway.
+
+However, because this pathway occurs slowly, the best way to quickly replenish D.
+
+Ribos is to supplement.
+
+When administered, a whopping 97% approximately is absorbed into the blood and eventually moves into tissues without any difficulty.
+
+Since in the cells, D.
+
+Ribos is used by the body to synthesize and salvage the energy pool to produce RNA and DNA and to manufacture other critical molecules used by the cell.
+
+Of all the naturally occurring sugars found in nature, D.
+
+Ribos is the only sugar that functions in these essential metabolic processes.
+
+While there is technically no such thing as a D.
+
+Ribos deficiency in the traditional sense, it's obvious that in certain circumstances there is deficiency relative to the demand or speed at which we need it to be available.
+
+For example, ischemic hearts can lose up to 50% of their energy pool.
+
+Assuming blood flow and oxygen supply are restored, it might take up to 10 days for the heart to rebuild its energy pool naturally and restore diastolic function, and this assumes the heart is allowed to rest.
+
+Without supplemental D.
+
+Ribos, the heart is forced to create it from glucose, again through the pentose phosphate pathway.
+
+However, the problem is that under ischemic conditions, when oxygen is in short supply, the mitochondria cannot produce ATP through oxidative phosphorylation, and the cell must rely more heavily on anaerobic metabolism or glycolysis, which uses glucose.
+
+Glycolysis is great because it's fast, but the process needs a constant supply of glucose to ensure quick energy turnover.
+
+The downside of this is that the cell does not want to sacrifice or donate any glucose to the pentose phosphate pathway to produce D.
+
+Ribos, making recovery in the absence of surgical or nutritional intervention highly unlikely.
+
+When supplemental D.
+
+Ribos is given, the energy pool and diastolic function can return to normal within one or two days.
+
+Who Should Supplement?
+
+Depletion of energy pools can happen for many reasons, and can also be highly variable between people, so it's not easy to generalize who should supplement with D.
+
+Ribos.
+
+For example, any type of exercise can cause energy pools to be depleted, but for highly trained athletes, it might take hours of exercise, while it only takes a few minutes for sedentary people to reach the same level of depletion.
+
+One generalization we can make, however, is that physical activity depletes energy pools, and D.
+
+Ribos supplementation becomes progressively important with frequency and intensity of physical activity.
+
+Further, CoQ10 levels naturally decrease as we age, discussed in coenzyme Q10 later in this chapter, with related symptoms typically presenting starting in our 40s.
+
+CoQ10 is an essential component of oxidative phosphorylation, and those in their 40s and beyond typically show signs of mitochondrial dysfunction, making the cells rely more on glycolysis, tying up the available glucose for energy production.
+
+Therefore, without glucose readily available for the pentose phosphate pathway, supplemental D.
+
+Ribos becomes increasingly important as we age.
+
+D.
+
+Ribos is also useful and sometimes critical for those using a ketogenic diet, discussed in more detail in ketogenic diets and calorie restriction, or those who have dramatically reduced carbohydrate intake.
+
+Certain drugs can increase the need for D.
+
+Ribos.
+
+For example, drugs that help the heart contract more forcefully will eventually deplete the heart's energy pool.
+
+Those with fibromyalgia, as we already discussed, as well as those with a host of other health conditions, will also benefit from supplementation.
+
+How to supplement with D.
+
+Ribos Any amount of D.
+
+Ribos given to energy-depleted cells will help.
+
+Even doses as low as 500 milligrams could be beneficial, although likely are not nearly enough to make a real improvement in health.
+
+Standard dosages range from 3 to 5 grams per day.
+
+For healthy people and athletes, a dose taken before exercise helps the cell with the process of purine salvage as purines are broken down.
+
+A dose after exercise helps speed the de novo process to aid recovery.
+
+For people with a chronic health condition, an adequate dose will usually result in symptom improvement, typically within a few days.
+
+If a standard dose doesn't help, increase the dose until an effect is noticed, for example, relief of symptoms.
+
+D.
+
+Ribos is safe, even at large doses, and many clinical trials have studied amounts ranging from 10 to 15 grams per day, with one study of McCartle's disease using 60 grams per day.
+
+If you think this is an extremely high load of sugar, note that D.
+
+Ribos does an impact blood glucose or insulin levels like glucose does.
+
+It's completely safe for diabetics, even at these high doses.
+
+Since it is blood that delivers D.
+
+Ribos to the tissues in need, for some with blood flow issues, the dose might need to be substantial in order for the D.
+
+Ribos to work its way through areas of reduced blood flow in sufficient quantities to have a noticeable impact on symptoms.
+
+Further, because the energy pool will continue to be drained, it's important to ensure continual supply of D.
+
+Ribos to the cells.
+
+This means daily supplementation is usually in order, though more so for those with chronic health conditions than for healthy individuals.
+
+Perola Quinoline Quinone, PQQ Traditionally, it was believed that generating new mitochondria, mitochondrial biogenesis, could only occur as a result of strenuous exercise or extreme calorie restriction, which is why research on PQQ, perola quinoline quinone, is so exciting.
+
+Early in 2010, researchers found PQQ not only protected mitochondria from oxidative damage, it also stimulated the growth of new mitochondria.
+
+Mechanisms and Functions in Humans and Animals A number of physiological properties have been attributed to PQQ, ranging from classic water-soluble vitamin and cofactor functions to protection of nerve cells, promotion of nerve growth, and mitochondrial biogenesis.
+
+While a role as a vitamin in animal or human nutrition might or not be possible pending further research, at this time, similar to other related compounds, there is strong evidence PQQ might play an important role in pathways important to cell signaling.
+
+The importance of PQQ to mammalian health is evident when it is omitted from chemically defined diets, resulting in a wide range of systemic responses, including growth impairment, comprised immune responsiveness, and abnormal reproductive performance in experimental mouse and rat models.
+
+Further, varying PQQ levels in diets cause modulation in mitochondrial content, alter lipid metabolism, and reverse the negative effects of complex 1 inhibitors.
+
+Under appropriate conditions, PQQ is capable of catalyzing continuous redox cycling, the ability to catalyze repeated oxidation and reduction reactions, which is a novel chemical property in many respects.
+
+For example, in chemical assays, PQQ stability renders it capable of carrying out thousands of redox catalytic cycles, whereas other bioactive quinones capable of redox cycling, for example, epichetikin in green tea, tend to self-oxidize or form polymers, for example, tannins, rendering them useless in further redox reactions.
+
+PQQ and its principal derivative, IPQ, are widely distributed in animal and plant tissues ranging from Pico to Nanomolar concentrations.
+
+From an evolutionary perspective, current evidence suggests PQQ is a component of interstellar dust, and since it's been postulated that strong redox catalysts were required to trigger the earliest chemical evolutionary steps, the extraterrestrial origin of PQQ raises the question of its evolutionary importance to simpler life forms.
+
+This theory is especially interesting when you consider PQQ's wide range of chemical properties, such as a redox catalyst and the ability to modify amino acids, for example, oxidative deamination reactions.
+
+Could PQQ be our common point of origin with life in other areas of the galaxy?
+
+Mitochondrial Biogenesis and PQQ Improvements in mitochondrial energy production are potentially important for treating a number of health issues, as previously discussed, so increasing the number of mitochondria in any given cell can have far-reaching benefits ranging from increased longevity to improved energy utilization and protection from free radicals.
+
+Many mitochondrial-related events are regulated by peroxazone proliferator activator receptor gamma coactivator 1-alpha, PGC1-alpha, and nuclear respiratory factors.
+
+PGC1-alpha is a transcriptional coactivator that regulates genes involved in energy metabolism.
+
+An interaction with this protein and its resulting association with multiple transcription factors can provide a direct link between an external physiological stimulus, such as PQQ, and the regulation of mitochondrial biogenesis.
+
+Indeed, such interactions have recently been reported.
+
+PGC1-alpha is also a major factor that regulates muscle fiber type and appears to be involved in the control of blood pressure, the regulation of cellular cholesterol homeostasis, and the development of obesity.
+
+Moreover, PGC1-alpha is associated with a reduction in free radicals and protection against various mitochondrial toxins.
+
+In addition to interacting with PGC1-alpha, PQQ can also reduce cancer risk by mechanisms separate from mitochondrial biogenesis.
+
+For example, PQQ has been shown to affect the activity of RAS, a gene that can potentially cause cancers.
+
+PQQ administration has been shown to activate other transcription factors, such as nuclear respiratory factors (NRF1 and 2) and mitochondrial transcription factors (for example, T-FAM, which lead to increased mitochondrial biogenesis).
+
+PQQ also has another beneficial effect on mitochondria.
+
+It appears that PQQ might be an essential cofactor in one of the many protein subunits that make up complex 1 of the ETC.
+
+With the bulk of endogenous free radicals produced at complex 1, you can see why having an abundance of PQQ is important to mitochondrial health.
+
+Given its powerful effects on mitochondrial biogenesis, it makes sense that PQQ would result in powerful effects on various health conditions.
+
+Studies in both animals and humans have shown that PQQ improves reproduction, early development, growth, and immune function.
+
+It has protected nerve cells from degeneration and damage, and even promoted the growth of nerve cells and helped form new synapses, connections between nerve cells, important in the brain for memory.
+
+For cardiovascular health, it has reduced the damage from ischemia reperfusion injury, heart attacks, and stroke.
+
+Is PQQ the latest new vitamin?
+
+In 2003, Japanese scientists made a significant announcement in the prestigious journal Nature.
+
+They had discovered direct molecular evidence that PQQ was in fact a previously unidentified B vitamin.
+
+A vitamin by definition is a compound that human bodies can't make.
+
+We must get it from dietary sources and is an absolute necessity to carry out at least one essential biochemical function.
+
+The first and most obvious evidence of its vitamin role came from animal studies where researchers found that in mice, eating a PQQ-free diet led to impaired reproductive and immune function.
+
+Further, the growth of the mice was impaired and their skin became thin and fragile.
+
+Their offspring were less likely to survive the first few days after birth.
+
+However, and most importantly, PQQ-deficient mice had 30-40% fewer mitochondria.
+
+Further, the mitochondria they did have were abnormally small and did not appear to function properly.
+
+None of these signs and symptoms occurred in the mice that ate the same diet supplemented with PQQ.
+
+However, proving a chemical compound is a vitamin is a complex task, and it was a serendipitous discovery by the Japanese researchers that gave the most direct evidence of PQQ's role as a vitamin.
+
+The discovery was made while the researchers were investigating whether bipolar disorder, previously known as manic depression, involved abnormalities in mitochondrial calcium transport.
+
+They were looking for the genes responsible for building the proteins that controlled the transport of calcium into the mitochondria.
+
+Although their work on bipolar disorder wasn't completed as planned, what they discovered was how PQQ is involved in activating a key enzyme in collagen production, the basic structural protein in skin, bone, and connective tissue, a connection previously suggested by the brittle skin and dysfunctional connective tissue of PQQ-deficient animals.
+
+This same PQQ-dependent enzyme is found in humans.
+
+More recent evidence is thrown into question whether PQQ is a vitamin, but research is ongoing, and at this time it seems a little too early to make a conclusion either way.
+
+Other Roles of PQQ Studies suggest that PQQ might also, 1) have anti-inflammatory effects, 2) be an effective neuroprotectant, reducing brain damage during simulated stroke and protecting brain cells against excitotoxic overstimulation, and 3) be a stimulator of nerve growth factor, and 4) a key protein involved in the growth and survival of nerve cells.
+
+Related to this is cognitive function.
+
+As we discussed, the brain uses an incredible amount of energy, and it is utterly dependent on the mitochondria for fuel.
+
+A double-blind, randomized, placebo-controlled human clinical trial found that 20 mg of oral PQQ taken daily improved short-term memory, attention and concentration, information identification, and processing ability in healthy adults.
+
+Effects were greatly enhanced with the addition of CoQ-10 supplementation, which makes sense because Complex 1 transfers its electrons to CoQ-10 in the ETC.
+
+If PQQ is stimulating the production of more mitochondria, and there is a corresponding increase in the number of Complex 1 units, we need to increase the concentration of CoQ-10 to ensure that all the ETCs in all those mitochondria are passing their electrons down the chain uninhibited.
+
+Dark Chalk Lent Table 3.2 in your PDF supplement shows the high content of PQQ in cocoa powder.
+
+Perhaps this is one reason for the many health benefits associated with chocolate consumption.
+
+Of course there are plenty of other health-giving compounds in chocolate, such as flavonols, theobromine, and epicatechin.
+
+But we should definitely not discount the high concentration of PQQ.
+
+In fact, research into the health benefits of chocolate compounds has shown cardiovascular and neurological/cognitive health benefits, improved exercise performance and endurance, and even weight loss benefits.
+
+When you consider the benefits of mitochondrial biogenesis, it's logical to see how PQQ could be the link that explains these effects.
+
+More research should be done to clarify PQQ's contribution to the health benefits of chocolate, but in the meantime, moderate consumption of dark chocolate would seem to be a great way to treat yourself.
+
+Personally, I usually overdo it with this therapy.
+
+Feed me chocolate and I'll do whatever you say.
+
+Coenzyme Q10 Coenzyme Q10, CoQ10, is an antioxidant, a membrane stabilizer, and a vital component in the mitochondrial ETC.
+
+It also regulates gene expression and apoptosis, is an essential cofactor of uncoupling proteins and permeability transition pores, and has anti-inflammatory, redox modulatory, and neuroprotective effects.
+
+CoQ10 is a vitamin-like molecule that is naturally present in just about every single cell in our body.
+
+Like vitamins, it is absolutely essential to life.
+
+However, since our bodies produce CoQ10, it's not technically a vitamin.
+
+In order to produce CoQ10, the cell needs an amino acid called tyrosine, at least eight different vitamins, and several trace minerals.
+
+A deficiency of any of these impairs the cell's ability to produce CoQ10.
+
+Despite the fact that we can produce it, CoQ10 becomes more vitamin-like as we age, because we produce less and less with advancing age, with the body slowing its production starting in our late 20s or early 30s.
+
+Many believe this is by design, because by our late 20s, our prime reproductive years are behind us, and as we raise our children to take our spot on this finite planet, reduction of CoQ10 is nature's way of preparing us for our eventual exit.
+
+Considering how important mitochondria and oxidative phosphorylation are to our health and longevity, by reducing the production of this one molecule, the body can start winding things down to make room and free up resources for the next generation.
+
+Although we do get small amounts of CoQ10 from our food, it's literally a few milligrams daily, not nearly enough for our bodies to benefit clinically, and supplementation becomes increasingly important the older we get.
+
+Unfortunately, absorption of this rather large fat-soluble molecule is challenging, which is a main factor limiting its therapeutic use.
+
+Research has shown that oil-based formulations, typically soft gels, are much better absorbed, and water-dispersible liposomal or pre-emulsified formulations are even better.
+
+Ubiquanol, reduced CoQ10, seems to offer much better absorption than ubiquinone.
+
+Oxidized CoQ10 and water-soluble soluble-ized Ubiquanol is even better absorbed.
+
+Many familiar with CoQ10 also know it as an antioxidant, and its antioxidant properties are directly related to its primary function in the ETC, where it participates in redox, reduction oxidation reactions.
+
+When it picks up an electron from complex 1 or 2, CoQ10 becomes reduced.
+
+For this reason, CoQ10 is arguably the single most important nutrient for mitochondrial health.
+
+If the bulk of free radicals are formed at complex 1, we could probably guess that the next step in the chain would be the bottleneck.
+
+In fact, this has not only been confirmed by many studies, but therapeutically, CoQ10 supplementation has been shown to dramatically improve the status of patients with all sorts of health conditions.
+
+In a sense, CoQ10 supplementation essentially rescues failing bioenergetics and targets the main site of free radical production.
+
+CoQ10 can even take free radicals and put them, or more specifically, their electrons, to good use, as it can bring those rogue electrons back into the ETC for energy production.
+
+But even more importantly, this antioxidant activity will help prevent the associated damage typically caused by free radicals by protecting MTDNA, membranes, and other peptides and enzymes.
+
+Although 80% of CoQ10 is found in mitochondria, its presence in microzomes, Golgi apparatus, and plasma membranes indicates its importance as an endogenously produced lipid phase antioxidant.
+
+Mammaline in mitochondria, up to a third of CoQ10, is bound to mitochondrial membrane proteins, apparently to serve primarily as an antioxidant.
+
+Long-lived mammalian species show a greater proportion of mitochondrial membrane-associated CoQ10 than short-lived species.
+
+Congestive Heart Failure and CoQ10 Congestive heart failure, CHF, and dilated cardiomyopathy are both conditions where the heart muscle is so weak that it can't contract and pump blood effectively, which causes the blood to back up or become congested, especially in the legs and the lungs.
+
+This congestion sets up a chain reaction, because the blood can't be oxygenated properly, inefficient flow to the lungs, and without oxygen as the final acceptor of electrons at complex 4, the ETC backs up and starts to spill free radicals, aggravating that vicious cycle that you're probably sick of hearing about by now.
+
+One of the greatest natural tools the medical community has against CHF is CoQ10, and its benefit to CHF is due to multiple actions.
+
+Medical literature is overflowing with studies showing the benefits of CoQ10 for CHF, but the dosages typically used in those studies, especially the earlier studies, were too low to provide a benefit, compounded by the fact that early formulations were difficult to absorb.
+
+New research using higher doses and highly absorbable formulations is proving CoQ10 could very well be one of the single most important nutrients for mitochondrial health in CHF.
+
+Hypertension CoQ10's effectiveness in lowering blood pressure has been known since the 1970s.
+
+It does so in a number of ways.
+
+First, as an antioxidant, it can neutralize peroxynitrite free radicals.
+
+Peroxynitrites are generated from an important molecule called nitric oxide.
+
+The benefit of nitric oxide is that it can help dilate, relax blood vessels, and reduce the platelet stickiness which ultimately lowers blood pressure.
+
+In fact, many medical therapies for blood pressure, both conventional and traditional, target the nitric oxide pathways.
+
+Unfortunately, as nothing is 100% good and nothing is 100% bad, an overabundance of nitric oxide results in peroxynitrites that can damage the blood vessels, both the endothelial cells that line the blood vessels and the smooth muscle cells surrounding them.
+
+Thankfully, in normal, healthy individuals, over 90% of the circulating CoQ10 in the blood is found as ubiquinol, the powerful antioxidant form that can help minimize the damage and maximize the benefits of nitric oxide to the cardiovascular system.
+
+Second, it can prevent the oxidation of LDL, bad cholesterol, which, when oxidized, can lead to plaque buildup and hardening of the blood vessels, called atherosclerosis.
+
+As long as LDL is not oxidized, it's actually not a bad thing, contrary to what many people think based on conventional medicine.
+
+Third, remember that muscle relaxation takes more ATP than muscle contraction.
+
+Remember our discussion of rigor mortis.
+
+ATP is critical for relaxation, and this becomes especially important for the smooth muscles that line the blood vessels.
+
+Without enough energy, these muscles remain tenser than they should, increasing blood pressure.
+
+By supplying CoQ10 and improving the energy efficiency of the mitochondria, muscles have the ATP they need to relax, thereby normalizing blood pressure.
+
+I specifically say normalize as opposed to lower blood pressure, because clinical trials have shown that CoQ10 can lower high blood pressure, but will not lower normal or low blood pressures.
+
+I should quickly mention, however, that those taking blood pressure medications should know that additive effects have been reported, and supplementing with CoQ10 without adjusting medications sometimes can result in blood pressure that is too low.
+
+While most people with high blood pressure who supplement with CoQ10 are able to lower the dose of their medication, or even stop in some cases, it's always best to discuss how to take advantage of this effect with your healthcare practitioner.
+
+Lastly, research has shown that CoQ10 can indirectly influence blood vessel function by improving blood sugar control.
+
+High blood sugar increases oxidative stress, which, as described previously, damages the blood vessels and makes them stiffer.
+
+Heart Protection During Cardiac Surgery There are three main types of heart surgery, all intended to restore blood flow to an ischemic heart.
+
+Regardless of the surgical procedure, the result is that blood flow is restored.
+
+Sounds great, right?
+
+Wrong.
+
+Remember reperfusion injury, which we discussed earlier?
+
+When reperfusion, restoring blood flow, allows oxygenated blood to finally reach the areas of the heart that were hypoxic/ischemic for a long period of time, the cells that were once starved of oxygen have a fresh supply of highly oxygenated blood delivered directly to them, and the result is a burst in superoxide free radicals.
+
+Reprefusion injury is one of the main side effects of these life-saving surgical procedures.
+
+However, as a powerful antioxidant, CoQ10 minimizes the damage caused by these superoxide free radicals, thereby improving the results of heart surgery and speeding recovery.
+
+CoQ10 As Adjunct to Staten Therapy Staten are a class of prescription drugs that are widely used to treat high cholesterol levels.
+
+In fact, they are among the most over-prescribed drugs in the world.
+
+This highly controversial group of drugs lower cholesterol by blocking the key enzyme, HMG-COA reductase, in our body's own production of cholesterol.
+
+This enzyme is targeted because approximately 80% of the cholesterol in our bodies is made internally, not obtained from diet.
+
+This same enzyme, however, is involved in making CoQ10, and also vitamin D, all the sex hormones, and so on.
+
+Many of the adverse side effects associated with statins, such as muscle pain and muscle damage, are theorized to be caused by an induced deficiency of CoQ10.
+
+Patients performing endurance exercise while taking a statin have had significantly more muscle damage compared with patients not taking a statin, which further suggests that the side effects of statins are due to this induced CoQ10 deficiency.
+
+Muscles require high amounts of ADP, and therefore, CoQ10 during physical activity.
+
+There are also at least two randomized controlled trials that showed significant lowering of the severity of muscle pain with the use of CoQ10 in patients taking statins.
+
+Thus, it is reasonable to recommend that almost everyone taking a statin medication, especially if experiencing muscle pains, should supplement with CoQ10.
+
+Many progressive cardiologists and pharmacists are now recommending CoQ10 anytime a statin prescription is filled.
+
+In fact, the rationale for using CoQ10 to treat statin-induced muscle pain was so overwhelming that Merckin Company, Inc., decided to pursue a patent for a CoQ10 statin combination product.
+
+Merckin Company, Inc. was eventually issued two patents for this combination for counteracting the statin-associated disease of the muscle cells.
+
+Other Drug Interactions CoQ10 is likely one of the safest nutrients to take with pharmaceutical drugs, which is great because the people who need it the most are likely on a cocktail of different drugs.
+
+In fact, there are certain instances where CoQ10 is highly recommended with certain drugs, but other situations where some caution must be exercised.
+
+Beta blockers are a group of drugs typically prescribed for hypertension and arrhythmias that have been shown to deplete CoQ10 levels, meaning for those who take beta blockers, CoQ10 supplementation is recommended, as it is in statin therapy.
+
+In fact, CoQ10, when given concomitantly with beta blockers, was shown to reduce the fatigue that is usually induced by these drugs.
+
+However, people taking beta blockers should be aware that there could be possible additive effects, as there sometimes are when CoQ10 is taken with blood pressure medications.
+
+The main drug that is of concern when supplementing with CoQ10 is Warfarin, a blood thinner.
+
+Until recently, Warfarin was considered first line therapy for atrial fibrillation, fluttering of the heart, when the heart flutters and creates turbulence in blood flow, there is a greater risk of clots forming.
+
+Warfarin is a vitamin K antagonist, and it thins the blood by blocking vitamin K's ability to activate clotting factors, which is why anyone taking Warfarin must watch their intake of vitamin K, even from foods.
+
+The chemical structure of CoQ10 and vitamin K is very similar, they're both quinones, so there is a potential for CoQ10 to decrease the effectiveness of Warfarin.
+
+However, CoQ10 will not have a negative impact on other classes of blood thinners, only Warfarin, and CoQ10 will not thicken blood.
+
+Knowledge of the biochemistry of clotting is required to understand this, but that is beyond the scope of this book.
+
+On the other hand, CoQ10 can have antiplatelet action, similar to that of another class of blood thinners called antiplatelet agents.
+
+It seems that CoQ10 can reduce the stickiness of platelets and can help prevent clots from forming.
+
+Neurodegenerative diseases Research has also shown that CoQ10 might help neurodegenerative diseases, such as Huntington's disease and amyotrophic lateral sclerosis, ALS or Lou Gehrig's disease.
+
+Additional research findings suggest that CoQ10's supplementation might also help various forms of ataxia, reduced control over voluntary movement, particularly cases that show a decreased level of CoQ10 in their muscles.
+
+For example, scientists found marked improvements in mitochondrial defects among Friedrich's ataxia patients, which involve a deficiency of a mitochondrial protein called frataxin.
+
+The bioenergetic effect of oral CoQ10 supplements in people with Parkinson's disease has also been studied.
+
+Researchers found that CoQ10 restored the depressed activity of Complex 1 to approximately normal levels.
+
+Following the stress recovery response The capacity to respond to stress declines with age.
+
+Younger patients, for example, recover faster from a heart attack or heart surgery than older patients.
+
+Studies have demonstrated that tissues from older patients show significantly less recovery following the stresses of hypoxia and ischemia.
+
+Further, there is a significant correlation between the integrity of MTDNA and the ability of tissues to recover from stress.
+
+Not surprisingly, CoQ10 is able to minimize, even abolish, these differences.
+
+These studies link the mitochondrial theory of aging to the stress response in heart tissue, and they demonstrate how CoQ10 can restore energy levels and stress recovery in the aged heart to youthful levels.
+
+Why supplement with CoQ10 As mentioned earlier, the production of CoQ10 within our cells requires numerous other nutrients, and this is a significant challenge, especially in a society where food quality and dietary choices are far from optimal.
+
+In his book, The Sinatra Solution, Sinatra describes a study where hospitalized patients were on total intravenous nutrition without vitamin and mineral support, and the CoQ10 levels in their blood collapsed by 50% in just one week.
+
+Also, consider that the older we get, the less efficient our digestive system becomes at extracting nutrients from our food, so this becomes a concern for all cognizant of their CoQ10 status.
+
+Second, as we enter our 30s, we're naturally not producing as much CoQ10 as we did in our younger years, and our production continues to decline as the years pass us by.
+
+Even though this is a natural phenomenon, and while some would question why we would want to mess with nature, I'm pretty sure few would willingly suffer through the host of degenerative diseases associated with dysfunctional mitochondria brought about by CoQ10 deficiency.
+
+I'm sure most readers would like to live their lives, whether long or short, in the best health possible.
+
+Thus, preventive use of CoQ10 could possibly start in our late 30s.
+
+Third, there are numerous medications that can deplete CoQ10 levels.
+
+As I previously described, the most recognized of these are the statins.
+
+Also, as mentioned, at least two clinical studies have shown that people who cannot tolerate statin medications due to their side effects can tolerate them when they are supplemented with CoQ10.
+
+This data is where I get a little puzzled.
+
+CoQ10 is essential for heart muscle function.
+
+We know this.
+
+The heart requires vast amounts of energy to repetitively contract and relax and pump blood 24 hours a day for the duration of a life.
+
+It seems illogical to prescribe a drug that, while effective in lowering cholesterol, can actually promote dysfunction in the heart muscle and set one up for a future cardiovascular disease.
+
+It's also important to remember that CoQ10 is an important antioxidant that prevents oxidation of LDL cholesterol, predominantly as ubiquinol when found in the blood.
+
+If CoQ10 is one of the primary antioxidants that keep LDL from oxidation and statins deplete CoQ10 levels, again, you can see the paradox in prescribing statins.
+
+Studies have clearly shown that if CoQ10 is made available to the cells, the cells will take it up, increasing their CoQ10 levels and levels of mitochondria as well.
+
+Further, studies have shown we can significantly increase our CoQ10 level when we take it as a supplement, as long as a high quality and absorbable formulation is used.
+
+Could you choose to supplement with this critical nutrient?
+
+The ideal dose for cardiovascular benefits would be one that raises blood levels above a minimum of 2.5 micrograms per milliliter, but ideally over 3.5 micrograms per milliliter.
+
+Unfortunately, taking regular blood tests to determine a suitable dose is not only inconvenient, it's not readily available through most labs.
+
+For neurological conditions, such as Parkinson's, Huntington's, or Alzheimer's diseases, the dose will need to be significantly higher because the blood levels need to be saturated to force it past the blood-brain barrier, but blood levels needed for therapeutic benefits in these conditions haven't been determined at this point.
+
+The next best way to determine a good dose is symptom relief.
+
+For example, someone experiencing high blood pressure can start with 100 milligrams daily for a few weeks.
+
+If blood pressure doesn't come down, increase the dose to 200 milligrams daily for another couple weeks, then 300 milligrams daily and so on until the desired effects are seen.
+
+This process works well for most, but the problem with this approach is that it assumes a 100% success rate, and nothing, whether nutritional supplements, drugs, or surgery has a 100% success rate.
+
+There could be some people who will continue to take higher and higher doses, but who will continue to experience their disease symptoms.
+
+Therefore, the easiest approach, although the least individualized, is to work in typical dosage ranges.
+
+For example, cardiovascular conditions are typically dosed between 200 and 600 milligrams per day.
+
+Doses for neurological conditions range from 600 to 3000 milligrams per day.
+
+No, that's not a typo, and even that high dose was perfectly safe.
+
+However, large daily doses should be divided up into multiple smaller doses taken throughout the day, and unless a solubilized formulation is used, should be taken with food.
+
+Once a therapeutic dose is achieved, it must be maintained or the symptoms will return.
+
+This is because our bodies won't miraculously start producing copious amounts of CoQ10 again, as we did in our teenage years.
+
+In fact, there's a possibility that as time goes on, the dosage might need to be increased as the body continues to naturally decrease its own production.
+
+Lastly, it's important to point out that there are big differences in the quality and effectiveness of CoQ10 formulations on the market.
+
+While I mentioned earlier that oil-based formulations are better absorbed, and that water dispersible or pre-emulsified formulations are best, in general, ubiquinol seems to be the ideal form to take as a supplement.
+
+L-Carnitine L-Carnitine, Levo-Carnitine is similar to CoQ10 that our bodies produce a significant amount, but its production is also thought to decrease as we age, so it becomes more vitamin-like in our elder years.
+
+There is considerable positive research supporting L-Carnitine's use supplementally in numerous health conditions.
+
+Functions of L-Carnitine L-Carnitine is a naturally occurring compound found in all mammalian species.
+
+The most important biological function of L-Carnitine is in the transport of long-chain fatty acids into the mitochondria for subsequent beta-oxidation to produce ATP.
+
+For most of us, just about all of our dietary fatty acids are long-chain fatty acids.
+
+In order to transport these fatty acids into the mitochondria, L-Carnitine attaches to them to form acyl-carnitine derivatives.
+
+The acyl just means something is attached to the L-Carnitine molecule.
+
+The physiological importance of L-Carnitine and its obligatory role in the mitochondrial metabolism of fatty acids have been clearly established.
+
+However, more recently, additional functions of the carnitine system have been described, including the removal of excess acyl groups from the body, an important detoxifying role, and the modulation of intracellular coenzyme A homeostasis, which is critical in the TCA cycle.
+
+The concentrations of L-Carnitine and its acyl-carnitines are maintained within relatively narrow limits for normal biological functioning in their pivotal roles in fatty acid oxidation and maintenance of free coenzyme A, coA, availability.
+
+The homeostasis of carnitine is multifaceted, with concentrations achieved and maintained by a combination of oral absorption, biosynthesis, carrier-mediated distribution into tissues, and extensive kidney reabsorption.
+
+This role of L-Carnitine in buffering the ratio of free coA to acyl-coA is a function that is particularly important under conditions of stress.
+
+Under normal conditions, short and medium-chained acyl-coA, formed as a result of various mitochondrial pathways, is further metabolized to generate free coA.
+
+However, under abnormal conditions in which excess molecules of acyl-coA are formed within the mitochondria, acyl-coA can react with L-Carnitine to form acyl-carnitines, thereby freeing coA for use in other mitochondrial reactions.
+
+This reversible exchange, in combination with the ability of the resultant acyl-carnitine to cross the mitochondrial membrane, means that the intramiticondrial relationship between free coA and acyl-coA is reflected in the extra-mitochondrial ratio of acyl-carnitine to L-carnitine, an indicator of mitochondrial metabolic health.
+
+Various disorders of carnitine insufficiency have been described, but ultimately all result in impaired entry of fatty acids into the mitochondria and consequently disturbed lipid oxidation.
+
+Mitochondrial Fatty Acid Oxidation The mitochondria's preferred source of fuel is fatty acids.
+
+Remember, fatty acids are so dense in energy that approximately 60 to 70% of the total amount of ATP our bodies produce originates from fatty acids.
+
+The mitochondrial metabolism of cytosolic fatty acids begins with the formation acyl-coA.
+
+In this case, the acyl is the long-chain fatty acid.
+
+This acyl-coA then combines with carnitine to create acyl-carnitine and a free coA.
+
+This acyl-carnitine is then able to cross the outer mitochondrial membrane into the intramembrane space.
+
+From there, acyl-carnitine needs the help of a specific transport enzyme embedded in the intramembrane membrane, which works by exchanging a free carnitine from within the matrix with an acyl-carnitine from the intramembrane space.
+
+Once inside the matrix, the reactions are reversed.
+
+Acyl-carnitine reacts with free coA to form the corresponding acyl-coA and free carnitine.
+
+Then the long-chain fatty acid, as acyl-coA, can enter the fatty acid beta-oxidation pathway to produce acetyl-coA, which ultimately produces ATP.
+
+See Figure 3.1 in your supplement.
+
+Given that neither acyl-coA nor free fatty acids are able to move across the inner mitochondrial alone, the role of L-carnitine and carnitine acyl-transferases in fatty acid metabolism is vital.
+
+Lactic acid metabolism Another important role for L-carnitine is clearing lactic acid buildup.
+
+As previously discussed, lactic acid, or lactate, is a byproduct of anaerobic metabolism when there isn't enough oxygen for oxidative phosphorylation or when energy production needs to proceed super fast.
+
+Many readers will have experienced lactic acid burn in their muscles during strenuous physical activity.
+
+Unfortunately, high levels of lactic acid damage tissues, evidenced by the muscle damage and resulting pain that usually followed the day after strenuous exercise.
+
+In a study where one group was given L-carnitine, the rise in lactic acid in response to exercise was significantly lower than that in the control group.
+
+L-carnitine also helps speed recovery by helping to restore the ratio of lactate to pyruvate, which means less burning during exercise and less pain afterward.
+
+Other Benefits and Uses L-carnitine has also been well researched for numerous health conditions, for example, peripheral vascular disease, angina, congestive heart failure, arrhythmias, infertility, fatty liver and other hepatic disorders, diabetes, exercise tolerance, weight loss.
+
+But ultimately, its benefits all related back to the biochemical roles discussed previously.
+
+Dietary Intake and Absorption Dietary L-carnitine intake is largely achieved via consumption of animal-based products, including red meats, poultry, fish, and dairy products, while negligible quantities are available from plant-derived foods.
+
+Given the broad range of nutritional choices, dietary L-carnitine intake can vary considerably, with the standard omnivorous diet providing 6 to 15 millimoles per kilogram a day and the standard vegetarian diet providing less than 1 millimole per kilogram a day.
+
+However, despite substantial differences in L-carnitine intake, previous research has established that a vegetarian diet does not result in a significant deficit in the body's carnitine concentrations.
+
+In fact, on average, plasma L-carnitine, total carnitine, and estimated acylcarnitine concentrations for vegetarian adult subjects, were only 10 to 20% lower compared to adults consuming an omnivorous diet.
+
+On the other hand, urinary carnitine excretion for L-carnitine was 85 to 95% lower, and acylcarnitine was 40 to 50% lower for vegetarians than for non-vegetarians.
+
+These findings indicate that compensatory mechanisms, including conservation by the kidneys in conjunction with biosynthesis, are effective in maintaining carnitine homeostasis when dietary L-carnitine intake is low.
+
+[BLANK_AUDIO]

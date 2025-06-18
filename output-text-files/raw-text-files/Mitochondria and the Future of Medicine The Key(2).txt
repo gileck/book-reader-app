@@ -1,0 +1,961 @@
+A radical signal.
+
+The positive side of free radicals.
+
+Now, after this roundabout detour of a discussion, we can progress to the next step in answering the original question.
+
+Why do mitochondria need any genes at all?
+
+Let's consider a hypothetical scenario and imagine that there are 1,000 mitochondria in a particular cell, each with about 10,000 ETCs.
+
+It happens that one of these mitochondria does not have enough complex for the last electron carrier in the ETC.
+
+As a result, in this particular mitochondrion, oxidative phosphorylation slows down and electrons back up in the ETCs.
+
+This causes the electrons to escape and form superoxide free radicals.
+
+This mitochondrion is in jeopardy of damaging itself beyond repair.
+
+The logical solution to this scenario would be to manufacture more complex for.
+
+But how does the mitochondrion signal that it needs to build more complex for?
+
+The signal seems to be free radicals themselves.
+
+Although the free radicals can inflict much damage, they can also control the action of redox-sensitive transcription factors which are activated in response to oxidation by free radicals.
+
+In turn, these transcription factors go on to alter gene activity to make more complex for.
+
+Some listeners might ask, how does the cell know to interpret this free radical signal as a message that more complex for is needed?
+
+After all, low energy demand or a shortage of oxygen supply can also produce free radicals as discussed earlier, where neither situation would be improved by building new complexes.
+
+The cell does this by putting the free radical message into context, just as we humans do in any conversation.
+
+In order to put a message into the context of what's happening, it needs other pieces of information.
+
+For example, in this case it might be the levels of ATP.
+
+If there were too few complex for entities in the mitochondrion, then ATP levels would fall, the ETC would get bunged up as electron flow slows down.
+
+So the burst in free radicals would be laid on a backdrop of low ATP, signaling the transcription factors to activate the genes for complex for production.
+
+On the other hand, if the cell detected high ATP levels, the burst in free radicals might signal that the proton gradient needed to be dissipated and possibly more uncoupling proteins needed to be produced.
+
+More on this later.
+
+Assume for a moment that all the genes are in the nucleus.
+
+The free radical message arrives and the nucleus sends orders to make more complex for.
+
+It then tags these new proteins with other proteins, an address tag, so that they can find their way back to the mitochondrion.
+
+However, the only thing these address tags do is tell the proteins that their destination is a mitochondrion, but they can't tell which specific mitochondrion is in need of the new complex for.
+
+This is analogous to me sending a package to a friend in a city when I don't know the specific address.
+
+There was a very slim chance the package would get to my friend.
+
+Further, considering that mitochondria are in a constant state of flux, being degraded, splitting into two through fission, or merging into one through fusion, the system wouldn't be too efficient even if the nucleus could tag the newly constructed proteins with a specific address.
+
+That address might no longer exist.
+
+So all those new complex for entities would get distributed evenly to all 1000 mitochondria in the cell.
+
+The mitochondrion needed it, the one that sent the original signal doesn't get nearly enough complex for, while the rest received too much, and send a corresponding message back to the nucleus instructing it to stop producing more complex for.
+
+It's easy to see the problems with this situation.
+
+Here's what's most important.
+
+When the mitochondria are not in control of their own destiny, the entire cell will inevitably have problems with energy production.
+
+Now, let's consider the same scenario, but the genes for complex for are retained in the mitochondria, as they are in reality.
+
+When the free radical signal to produce more complex for is sent, it goes straight to the empty DNA, which also happens to be in the immediate vicinity of the origin of the free radical signal itself.
+
+So the response can also be very fast.
+
+The locally retained genes instruct the mitochondrion's own ribosomes to make more complex for, and these are immediately incorporated into the ETCs, clearing the backlog in electron flow and restoring efficient oxidative phosphorylation.
+
+Similarly, if and when the message to stop producing complex for is sent, its specific to that mitochondrion and the response is immediate.
+
+This rapid and localized response happens in each of the 1000 mitochondria in the cell, some requiring more complex one, others more complex three, while others need to dissipate their proton gradient.
+
+So while it is extremely costly for the cell to maintain tens of thousands of copies of empty DNA, the alternative, only a single copy in the nucleus, is ultimately far more costly and detrimental.
+
+Allow me just one last detour down the deeply scientific path.
+
+The respiratory complexes are constructed from a number of separate protein subunits, and not all subunits are coded by the empty DNA.
+
+In fact, out of the 46 subunits in complex one, four subunits in complex two, eleven in a complex three dimer, and thirteen in complex four, a total of 74 different protein subunits, only 13 are coded for by the empty DNA.
+
+The rest are coded for by the genes in the nucleus.
+
+The complexes of the ETC are a blend of proteins encoded by two separate genomes.
+
+So, if this is the case, how does a mitochondrion, which only retained a fraction of the total number of genes needed for the ETC complex, maintain control over its own destiny?
+
+Well, it seems that the respiratory complexes assemble themselves around a few crucial subunits.
+
+Once these critical subunits have been embedded in the inner mitochondrial membrane, they act as a magnet that attracts the rest of the subunits to self-assemble appropriately.
+
+Thankfully, these crucial subunits are the ones encoded by the mitochondrial genes, and therefore, the mitochondrion is able to retain control over the number of new complexes being built.
+
+Because a cell has hundreds to thousands of mitochondria at any given time, the total number of these crucial subunits embedded in the inner mitochondrial membrane might remain fairly constant.
+
+So, the nuclear genes and the overall rate of transcription could remain fairly constant, allowing individual mitochondria to control their own rate of oxidative phosphorylation, while the nucleus could control the overall rate of energy production in the cell as a whole.
+
+There is the fact, however, that all protein subunits in Complex 2, which, by the way, is made of only four subunits, are coded for by the nuclear genes.
+
+However, this fact doesn't detract from the preceding discussion, because both Complex 1 and Complex 2 pass on their electrons to Complex 3.
+
+To a large extent, a mitochondrion can still control its own rate of oxidative phosphorylation by controlling the production of just complexes 1, 3, and 4.
+
+Further, when you consider that Complex 2 is the only one that doesn't pump protons, it would make sense that at some point in the billions of years of evolution, the genes for all four protein subunits of Complex 2 were transferred to the nucleus, unloading a little bit of genetic burden and gaining a tiny bit of genetic efficiency.
+
+Mitochondrial Mutations - The Beginning of the End Mutations to empty DNA accumulate with the passage of time.
+
+Other than random mutations back to the original sequence or recombination with an original DNA strand, the original sequence is lost, and this incorrect set of instructions will lead to defective proteins that don't function the way they are supposed to.
+
+If the mutations affect any one of the many protein subunits in the mitochondrial ETC, the rate of free radical leakage increases, and the situation can spiral out of control quite rapidly.
+
+Unfortunately, the odds are in favor of free radicals damaging the genes for ETC proteins.
+
+This is because empty DNA is stored next to the cell's primary site of free radical generation.
+
+Mitochondrial DNA also doesn't have the protective histone proteins that N-DNA does.
+
+Its repair mechanisms are severely deficient, and there is no junk DNA.
+
+The genes are packed tightly together so that a mutation anywhere is likely to result in a negative effect.
+
+So, it's only a matter of time before these genes are damaged, which would undermine the function of the ETC and oxidative phosphorylation.
+
+A Radical Signal for Death Intuitively, it seems that the rate of free radical leakage from the respiratory chain would correspond with the rate of respiration, but it is not.
+
+Of course, energy demand and use, uncoupling, and other variables will be contributing factors to the rate of leakage, factors tied to the rate of respiration, but ultimately it depends on the availability of electrons and oxygen.
+
+We know the primary cause of mitochondrial damage is the free radicals generated by the mitochondria themselves.
+
+Current evidence suggests that the majority are generated by complexes 1 and 3.
+
+Complex 1 seems to generate free radicals if there is too much fuel relative to demand, and Complex 3 seems to generate them if ATP isn't being used up fast enough.
+
+During normal oxidative phosphorylation, 0.4 to 4.0% of all the oxygen consumed is converted in mitochondria to superoxide free radicals.
+
+Superoxide is transformed to hydrogen peroxide by superoxide dismutase.
+
+Hydrogen peroxide is then converted to water by glutathione peroxidase, one of the body's primary antioxidant enzymes, or peroxyrhodoxin-3.
+
+However, when these enzymes cannot convert superoxide free radicals to water fast enough, or when superoxide generation greatly increases for one reason or another, oxidative damage occurs and accumulates in the mitochondria.
+
+In laboratory studies, superoxide has been shown to damage the iron sulfur cluster that resides in the TCA entity called achonitase.
+
+This exposes iron, which reacts with hydrogen peroxide to produce hydroxyl radicals.
+
+Further, nitric oxide, NO, is produced within the mitochondria by mitochondrial NO synthase, and also freely diffuses into the mitochondria from the cytosol.
+
+NO reacts with oxygen to produce another free radical called peroxynitrite.
+
+Together, these two radicals, as well as others, can do great damage to mitochondria and other cellular components.
+
+However, all this depends on the availability of both fuel and oxygen.
+
+For example, consider a person in a developing country during a period of famine.
+
+This person has a shortage of fuel, and therefore, hardly any electrons flowing down the ETC.
+
+Even though there might be plenty of oxygen available, very few free radicals leak simply because of a lack of electrons.
+
+Then, consider a well-fed, elite athlete in training.
+
+This person's muscle cells have plenty of fuel, but also a high demand for energy.
+
+Electrons flow smoothly down the ETC to oxygen, and relatively few free radicals leak because ATP is constantly used up.
+
+However, what about a well-fed sedentary person?
+
+In this case, the mitochondria have plenty of fuel, but the cells don't use the ATP that's been generated.
+
+ATP levels remain high with little turnover.
+
+With this low demand for ATP, the ETCs become backed up with excessive electrons.
+
+There is still plenty of oxygen as well as an abundance of highly reactive electrons, so there is a high rate of free radical leakage.
+
+This burst of free radicals will exceed the built-in antioxidant defense system and oxidize the lipids in the mitochondrial membranes.
+
+This oxidation releases cytochrome C, which normally transfers electrons from complex 3 to complex 4, from the inner mitochondrial membrane and into the intermembrane space.
+
+At this point, electron flow down the ETC is completely stopped.
+
+The upstream sections of the ETC become full with electrons, and these electrons continue to leak and form more free radicals.
+
+Once this stress crosses a threshold, pores in the outer mitochondrial membrane open up and initiate the first steps of cellular suicide.
+
+Dead or Alive, Mitochondrial Control Over Life and Death After energy production, perhaps the next most critical function of mitochondria is regulating death.
+
+When cells become worn out or damaged beyond repair, they are forced to commit cellular suicide or apoptosis.
+
+If the mechanisms regulating apoptosis fail, the one serious consequence is cancer, which is why apoptosis is critical for the integrity and organization of multicellular organisms.
+
+This process is controlled by the mitochondria.
+
+Genetically, multicellular organisms are composed of identical cells that perform dedicated tasks for the benefit of the organism as a whole.
+
+This concept is unique because all life has an innate desire to survive at all costs.
+
+So then, why and how did cells in a multicellular organism get to the point where they obediently follow directions, in most cases to commit suicide for the greater good of the whole organism?
+
+The process likely evolved over hundreds of millions of years, and the enforcement of such altruistic behavior became the domain of the mitochondria, without which multicellular organisms would develop massive amounts of tumors everywhere and likely succumb to cancer very early in life.
+
+In order to live in a community and receive all the benefits that come with it, individuals need to commit to living in a manner that benefits the greater good, and some self-serving interests need to be forfeited.
+
+Unfortunately, cancers are common because selfish cells occasionally escape surveillance and skirt their death sentence.
+
+These cancer cells replicate feverishly without regard to the consequences of their actions on the community.
+
+In an obvious twist of fate, however, these delinquent cells eventually bring about the death of their own community, and in the end, as a result, themselves.
+
+To prevent this, the mitochondria has evolved to play a central role in the civilized death of a cell.
+
+They do this by assimilating various signals from different sources.
+
+If the overall picture painted by the various signals indicates that the cell is no longer functioning properly or within the confines of the greater good, then the mitochondria initiate the cell's suicide program.
+
+It begins with the activation of certain membrane receptors and pathways that involve another organelle called the endoplasmic reticulum, in addition to the mitochondria.
+
+A central event in many forms of apoptosis is activation of the mitochondrial apoptosis channel, MAC, by certain stimuli.
+
+Immersion of the MAC causes the mitochondrial outer membrane to become highly permeable, and therefore loses its electrical charge and proton gradient.
+
+This leads to a sudden burst in free radicals that oxidize various lipids of the inner membrane.
+
+For example, when cardiolipin becomes oxidized, it can bind to complex IV, which is in turn released from its position in the inner membrane, shutting down the ETC.
+
+This free radical burst also releases cytochrome C and other molecules that joins with other components in the cytoplasm to form the apoptosome, which then activates the enzymes of cellular death, the caspases.
+
+Remember, cytochrome C is responsible for shuttling electrons from complex III to complex IV.
+
+Under normal circumstances, it is secured to the outside of the inner mitochondrial membrane.
+
+However, once free in the cell, it binds to several other molecules to form a complex that activates the caspases.
+
+The release of cytochrome C from its position on the inner membrane is seen as a critical step in apoptosis.
+
+Essentially, it pushes the process of apoptosis beyond the point of no return.
+
+What's interesting, however, is that simply injecting cytochrome C into a healthy cell will also cause it to die.
+
+This is a perfect example of the wise saying, "A little bit of knowledge is a dangerous thing."
+
+There are two components of the ETC that are not complex as themselves, CoQ10 and cytochrome C.
+
+CoQ10 is an amazing therapeutic natural health product and supplementation has been shown to be beneficial for many health conditions.
+
+However, if we assumed the same for cytochrome C, thinking it would help shuttle electrons to complex IV, we'd be killing ourselves, and this is the reason why there are no cytochrome C supplements.
+
+Once the caspase enzymes are activated, they break down the cell in an orderly fashion.
+
+As the cell shrinks and then fragments, its organelles remain relatively intact and enclosed by membranes.
+
+Neighboring cells or macrophages safely digest the fragments and recycle the components for reuse.
+
+When executed properly, apoptosis is a well-orchestrated process of cellular self-destruction.
+
+Silently, in the human body, about 10 billion cells are lost by this process every day.
+
+The regulation of apoptosis is complex.
+
+Many checkpoints must be triggered before the apparatus of death is put into motion.
+
+Virtually all these steps are opposed by other proteins that counteract apoptosis, thereby preventing a false alarm.
+
+However, once the caspases have been activated, there is little chance of stopping the process.
+
+There is no doubt that there are thousands of ways a cell can be told to die.
+
+For example, activated immune cells send chemical signals to initiate apoptosis in cancer cells, DNA mutations from UV radiation, environmental toxins and pollutants, viruses and bacteria, various physical stresses and trauma, and inflammation, to name a few.
+
+However, all these diverse triggers activate the caspase cascade.
+
+In other words, all these signals somehow converge at the stage of the caspase enzymes.
+
+These enzymes, in turn, are activated by the burst in free radicals that follow the depolarization of the inner mitochondrial membrane and the release of cytochrome C.
+
+Numerous studies show the value of apoptosis outside of controlling cancer growth and balancing cell division.
+
+It's also a key occurrence that happens all throughout nature.
+
+For example, during embryonic development in humans, vast amounts of neurons die in waves.
+
+In some areas of the brain, more than 80% of the nerve cells formed during the early phases of development disappear before birth, a rate similar to the loss of oocytes from the embryonic development to birth.
+
+The death of all these neurons allows the brain to be wired with great precision.
+
+Functional connections are made between specific neurons, enabling the formation of neuronal networks, while others are eliminated.
+
+When some of these connections are not eliminated, there may be some unusual connections between different areas of the brain that normally do not communicate directly with one another.
+
+The result may explain some cases of autism, where some higher-functioning individuals on the spectrum see colors and textures when reading numbers, or where specific numbers are connected to specific emotions.
+
+An example from Lane's book describes how we don't form distinct extensions from our hands to form fingers.
+
+Instead, after the hand develops, apoptosis takes hold to eliminate the cells in between the digits.
+
+When this fails, the result is webbed hands.
+
+The shaping of the body is brought about by subtraction, not addition.
+
+By contrast, necrotic cell death, or necrosis, is where the cell swells and ruptures, organelles disintegrate, and inflammation tends to occur.
+
+This process can also begin with the opening of a channel in the inner mitochondrial membrane of the mitochondria called the megachannel, also called the mitochondrial permeability transition pore, or MPTP.
+
+And there is a more recently discovered third mechanism of death that falls between apoptosis and necrosis, aptly called necroptosis, a programmed form of necrosis, which can involve the MPTP.
+
+The study of cell death is complex in itself, and it is even further complicated by studies showing that apoptosis is closely followed by necrosis and vice versa, so it seems as if these separate cellular processes happen almost simultaneously.
+
+However, regardless of the pathway taken to cell death, in each case it's the mitochondria that play the central role.
+
+Discarded Theories of Aging No matter the lifespan, all animals age in a similar fashion, just at different rates.
+
+Those with a fast metabolic rate age more quickly and yield to degenerative diseases in a short period of time.
+
+Those with a slow metabolic rate will follow the exact same chain of events, but just spread over a longer period of time.
+
+In general, the larger the animal, the slower the metabolic rate and the longer the lifespan.
+
+The exception to this is birds, as Lane discusses, because they have a fast metabolic rate but also a long lifespan with a lower risk of age-related degenerative diseases.
+
+Their mitochondria leak far fewer free radicals, and this fact, as I'll discuss shortly, has direct implications for aging, the risk of degenerative diseases, and death itself.
+
+If we were to plot animals on a lifespan graph based on their resting metabolic rate, on average, a bird will outlive a mammal with a similar resting metabolic rate by a factor of three or four, at least.
+
+In his book, Lane compares a pigeon to a rat.
+
+Both have similar resting metabolic rates, but the pigeon will live about 35 years while the rat will only live three or four years.
+
+However, a pigeon hasn't slowed down its pace of life to live that much longer than a rat.
+
+It maintains the same pace of living.
+
+Lane also points out that we humans live longer than we should.
+
+We apparently live three or four times longer than other mammals with comparable resting metabolic rates.
+
+It's also important to disassociate aging and degenerative diseases.
+
+While most warm-blooded mammals suffer an increasing number of degenerative diseases as they age, not all do, which is a small relief, for it helps us imagine a long life with the potential for little or no degenerative diseases.
+
+A long, healthy life.
+
+Isn't that what we all want?
+
+If and when a mammal does develop these diseases, the development is not dependent on a fixed passage of time, but instead is relative to the lifespan of the mammal, and that itself is somewhat fixed for each species.
+
+For this reason, rats are used as models for human disease in the laboratory.
+
+They suffer similar diseases of old age, but all within two or three years, not over decades.
+
+They can get diabetes, become obese, and develop cancers, heart disease, blindness, and dementia.
+
+Many birds also suffer from these diseases, but they only do so after a couple decades, which is why they aren't used as models for humans in laboratories.
+
+Interestingly, long before I decided to write this book, I wrote an essay during my first year in medical school.
+
+The topic was a theory I had put together, without any evidence, I should add, that death and age-related degenerative diseases were not "normal" and humans are, in fact, meant to live indefinitely in great health.
+
+The premise was that death and disease were an invention or creation of evolution to ensure the survival of the human species at the expense of the individuals.
+
+The faster we age and die, the faster we must reproduce.
+
+If we didn't age or die, there would be no motivation to reproduce.
+
+Lack of aging or death would put the survival of the species as a whole at risk.
+
+We would not be well adapted to a changing environment.
+
+Also, the longer a species lives, the longer the period of time between successive generations.
+
+The more generations a species can produce in a given period of time, the higher the likelihood of a beneficial combination of assembled genes from mother and father, and the greater likelihood that a random beneficial mutation is introduced to the gene pool, and this increased gene diversity improves the likelihood that some within the population will survive any given change in our environment.
+
+Hence, in my theory, aging took hold as a beneficial mutation that motivated us to reproduce every fifteen to thirty years.
+
+I know there are countless holes in this theory, which is probably why I was barely given a passing grade.
+
+Yet, who would have guessed that a dozen years later I'd be writing this book with a related train of thought, but this time learning from my mistakes, backed by significant scientific evidence spanning decades and many academic disciplines.
+
+There have been countless theories on why we age.
+
+For example, the endocrine theory says that aging is caused by a fall in the circulating levels of a hormone, such as testosterone or estrogen.
+
+However, is this really a cause of aging, or just a consequence?
+
+Why do levels of these hormones start to fall in the first place?
+
+Another is the wear and tear theory, which stipulates that cells naturally just deteriorate over many years.
+
+Since this makes sense, it is a popular theory, but why do cells deteriorate?
+
+Why do different species accumulate wear and tear at such different rates?
+
+What about the telomere theory?
+
+The telomeres, the caps at the end of chromosomes that slowly wear down over our lives, exhibit such varying patterns across species and even within different tissues of a human body that they can't possibly be the primary cause of aging.
+
+Besides, there are just too many holes in the theory at this point.
+
+If you always ask why, it'll be evident that most theories fail the test of causality or fall victim to assuming what they're attempting to prove.
+
+A good theory must overcome a number of apparent discrepancies, paradoxes, and gaps in logic.
+
+It must also explain any contradictory observations between different species.
+
+This brings us to the free radical theory, which says that the damage from free radicals is what causes aging and determines lifespan.
+
+This does indeed explain many discrepancies and paradoxes, even why birds live so much longer than other mammals despite their fast metabolic rate.
+
+While this theory recognizes that free radicals come from the mitochondrial ETCs, it also recognizes that those free radicals enter the body from outside sources.
+
+As with all theories, the free radical theory has been challenged repeatedly, and with each challenge the theory has changed shape and become stronger.
+
+However, this theory fails to explain the exercise paradox, the observation that athletes seem to live longer and healthier lives, although they consume far more oxygen and generate far more free radicals than sedentary individuals.
+
+This theory also fails in its application.
+
+If free radical leakage from the ETC causes aging, then logically it makes sense that boosting the antioxidant defense system would prevent the damage in the first place and extend lifespan.
+
+Therefore, mammals with a long lifespan must inherently have a better antioxidant defense system.
+
+Based on this, birds must have high levels of antioxidants and rats very little.
+
+It's therefore plausible that if we want to live longer and healthier ourselves, all we have to do is boost our own antioxidant protection.
+
+However, subsequent studies have disproved this theory.
+
+Birds have very low levels of antioxidants and live a long time, and rats have an abundance of them yet have very short lives.
+
+Further, antioxidant supplementation has failed to extend lifespan in laboratory settings.
+
+For several decades, researchers have administered countless antioxidants to all sorts of deteriorating biological systems without success.
+
+At best, they might reduce the risk of certain diseases or even improve symptoms of other diseases, but none have ever lengthened maximum lifespan.
+
+Of course, an argument could be made that maybe the dose of the antioxidant was wrong, or the specific type was wrong, or the distribution was wrong, or the timing was wrong.
+
+The fact is, however, that antioxidants just aren't the cure-all we previously thought they might be.
+
+A number of independent studies have advocated that there is actually a negative correlation between endogenous antioxidant levels and maximum lifespan.
+
+Simply put, the higher the antioxidant concentration, the shorter the lifespan.
+
+And, in fact, numerous studies have shown oxidative stress can actually prolong lifespan.
+
+Thankfully, the dietary supplement industry has recognized this, and we no longer hear much about antioxidants the way we used to.
+
+Even up to a few years ago, oxygen radical absorption capacity, a measure of a substance's antioxidant power in a test tube, was flaunted by savvy marketers as the cure for everything.
+
+But we know that we can't measure the effect of substances in a biological system by using test tubes as the measuring device.
+
+Newer research is showing that many antioxidants still do have therapeutic benefits.
+
+However, the mechanism is not due to their antioxidant effects, but due to their ability to modify the expression of certain genes related to the conditions being targeted, i.e., turning relevant genes on or off.
+
+While I find this extremely fascinating, and I will discuss this in passing, a full discussion is beyond the scope of this book.
+
+However, it remains that it's very difficult to target antioxidants to the mitochondria, and this is an active area of pharmaceutical research.
+
+This has given birth to the mitochondrial theory of aging, which itself has transformed significantly since its inception in the early 1970s.
+
+It is currently the strongest theory that explains aging.
+
+It also explains why we suffer from degenerative diseases later in life, explains the exercise paradox, and sidesteps all the other pitfalls that have consumed the other theories.
+
+The Mitochondrial Theory of Aging A modern version of the mitochondrial theory of aging was initially put forth by Anthony Lanane, an Australian professor and scientist, back in the late 1980s.
+
+The theory has gone through some further modifications since then, but it essentially ignores exogenous sources of free radicals.
+
+The theory's main point is that the mitochondria are the body's main source of free radicals that are linked to aging.
+
+Free radicals don't damage the cell as much as we think.
+
+We produce a number of antioxidant enzymes that mop them up, and of course, if the cell does get damaged, there are repair mechanisms, and these are constantly at work.
+
+But the free radicals linked to aging do specifically damage the mitochondria, and especially their vulnerable DNA, which doesn't have the repair mechanisms the rest of the cell has.
+
+When the damage accumulates faster than a mitochondrion can repair itself, it becomes dysfunctional, the first step in aging.
+
+In essence, this theory says the mitochondria are the biological clock.
+
+The chain of events would look like this.
+
+Free radicals escape the respiratory chains in different scenarios, some already discussed, and attack the empty DNA in its immediate proximity, which leads to mutations that might compromise mitochondrial function.
+
+As the mitochondria start to weaken and eventually die, the functioning and viability of the cell as a whole decline.
+
+As cells lose their ability to produce energy, they commit apoptosis, which then compromises the functioning and viability of the tissue or organ.
+
+As random mutations in mitochondria accumulate, a bioenergetic mosaic develops, where cells all produce a drastically differing amount of energy, depending upon their degree of mitochondrial damage.
+
+Some produce relatively little energy, some produce moderate amounts, and some produce a large amount of energy.
+
+In a healthy toddler, we do not see this mosaic because energy production is high in nearly all cells.
+
+However, a noticeable mosaic effect develops after about age 40, and the extent of this effect depends upon the rate of bioenergetic aging in a particular tissue.
+
+From a bioenergetic perspective, some tissues appear to age very quickly, others at a moderate rate, and some quite slowly.
+
+This effect also illustrates why the biological age of two people could vary significantly, even though they might be the same chronological age.
+
+Lenaine's theory holds that this mutation-driven bioenergetic decline is a major factor in the rapid degenerative diseases and general frailty of old age.
+
+Recent research from numerous disciplines has converged on the mitochondria as the center of cellular aging, giving more weight to the theory and enhancing it.
+
+If the mitochondrial theory of aging is correct, the foundation of cellular vitality lies in the mitochondria.
+
+However, through evolution, the rate of free radical leakage has been set at the optimal level for each species.
+
+A bird, as Lenaine discusses, leaks fewer free radicals and therefore has a long lifespan, despite a fast metabolic rate.
+
+So then he asks the question, "Why don't all species have well-sealed mitochondria?"
+
+A rat would surely benefit from reducing free radical leakage in the first place rather than spending copious amounts of resources to produce large quantities of antioxidants.
+
+Makes sense to me.
+
+However, the answer is what makes the mitochondrial theory of aging radically pun intended, as you'll see, different from the free radical theory.
+
+Remember the reason why we have a separate copy of DNA in the mitochondria?
+
+It is to balance the requirements of oxidative phosphorylation, because an imbalance in the components of the ETC can lead to unproductive respiration and free radical leakage.
+
+By keeping a local set of important genes, each mitochondrion retains control over its own respiration, based on its own need, and not that of other mitochondria.
+
+Also, remember that the signal to produce more componentry for the ETC comes from the free radicals themselves.
+
+This could be why a rat might need the excessive free radical leakage.
+
+If it were to have more tightly sealed mitochondria, its free radical signal would be weakened by the high amounts of antioxidants and so require a more refined detection system.
+
+So, just as we typically view a forest fire as a bad thing, just like free radicals, in moderate amounts it serves a vital role in the maintenance of the ecosystem.
+
+Fires break down organic material in a matter of minutes to hours, which would otherwise take years or decades to decompose.
+
+They clear the ground to make room for new growth, and some plants, such as the jack pine, require fire to melt the protective resin that prevents them from germinating.
+
+At the same time, firefighters, the antioxidants, do have their role, but if they are too vigilant, a forest would never get the chance to regenerate and renew itself.
+
+Then there is fighting fire with fire, such as using a pro-oxidant or promoting oxidation.
+
+When used properly, it can be a valuable tool, i.e. the controlled use of oxidants can be used therapeutically, such as in treatment of cancers, high dose intravenous vitamin C treatment, and so on.
+
+However, used improperly, it can become an uncontrolled fire itself.
+
+While it's not known exactly how free radical signals work, we do know that the system behaves like a thermostat, and it requires a certain degree of fluctuation in free radicals.
+
+If the rate of free radical leakage from ETC didn't fluctuate, there would be no self-correction.
+
+Just like if temperature in a room didn't fluctuate, self-correction wouldn't happen.
+
+However, when the free radical signal fails, or indicates an uncorrectable problem, then the free radicals initiate the apoptosis program.
+
+When this happens in just one or a few mitochondria, the signal isn't strong enough for the cell to commit apoptosis.
+
+However, if a large number of mitochondria collapse simultaneously, then the signal crosses the threshold and the cell knows its time has come.
+
+So whereas the free radical theory and the early renditions of the mitochondrial theory of aging both suggested that free radicals were purely detrimental, the modern version of the mitochondrial theory of aging appreciates that free radicals carry out an essential signaling role.
+
+Nonetheless, this doesn't detract from the point that free radical leakage is correlated with aging and lifespan.
+
+It's known that mitochondrial mutations in the control region of MD-DNA accumulate with age.
+
+This accumulation is significant to note because mutations in the control area in one cell can often spread to all the cells in the tissue.
+
+When a mutation is in this control region, it might affect the binding of transcription or replication factors, but it doesn't affect gene sequence.
+
+Depending on the resulting effects of this mutation, it will tend to copy itself either more often or less often.
+
+So for example, if the mutation makes a mitochondrion respond more sluggishly to a given signal to replicate, when the signal to divide does come, the normal mitochondrion would divide and replicate, but the defective mitochondrion might not, or might to a far lesser degree.
+
+Relative to the normal mitochondria, the number of defective mitochondria would continually decrease, and eventually they would be displaced completely with the regular turnover of cellular constituents.
+
+If the mutation made the mitochondria swifter in their response to the same signal, their DNA would proliferate, and eventually they would displace the normal mitochondria in the cell.
+
+It's important to note that such mutations are more likely to take over all cells in a tissue if they're not particularly detrimental to mitochondrial function.
+
+Example, the ETC components are still normal.
+
+Otherwise, the cells would just die.
+
+By contrast, mitochondrial mutations in the coding regions can be amplified within particular cells, but rarely spread beyond 1% of the cells in a tissue.
+
+The reason is that these mutations will likely affect mitochondrial respiration because they code for the critical protein subunits of the ETC.
+
+The result would be an increase in free radical leakage, but unlike any normal circumstance, the signal to build more new complexes would not correct the deficit because all the new proteins would be defective as well.
+
+This sounds catastrophic, doesn't it?
+
+Thankfully, under the modern version of the mitochondrial theory of aging, it is not.
+
+Instead, the defective mitochondria signal their deficiency to the nucleus, which then allows the cell to adapt.
+
+This signaling from mitochondria to nucleus is called the retrograde response because it's opposite to the normal chain of command, from the nucleus to the rest of the cell.
+
+The overall intention is to correct the metabolic deficiency.
+
+Retrograde signaling switches energy generation toward anaerobic respiration, energy production without using mitochondria and oxygen.
+
+And this switch stimulates the genesis of more mitochondria or mitochondrial biogenesis, which also protects the cell against future metabolic stress, which in the long run is the only option a cell really has to correct any bio-energetic deficiency.
+
+The population of mitochondria is in continuous flux.
+
+Mitochondria will divide if the energy deficit is fairly mild, and cells will amplify the least damaged mitochondria, simply because these work the best, and defective ones will eventually die out.
+
+The mitochondria that die will be broken down in an orderly mitochondrial version of apoptosis called mitophagy, and their components will be recycled.
+
+Ultimately, the most damaged and dysfunctional mitochondria are continuously eradicated from the population.
+
+In this fashion, most cells can theoretically extend their life almost indefinitely by persistently correcting the deficit.
+
+You might think I've just revealed the fountain of youth.
+
+Perhaps.
+
+But if it were as simple as that, my physicality would still be that of a physically fit 20-something-year-old, at least by choice, and it's definitely not.
+
+While the most destructive mitochondrial mutations can be eliminated, there is no way of restoring them to their original youthful state, at least not naturally.
+
+Maybe in the future we'll be able to extract undamaged dormant mitochondria from our stem cells and have them infiltrate every other cell, but I'd say we're a few years away from that.
+
+What does seem possible, however, is the ability to slow the aging process and delay or even prevent diseases connected to age-related mitochondrial decay.
+
+As we age, the cells rely more and more on defective mitochondria.
+
+Things don't spiral quickly out of control, however.
+
+The cell and its mitochondria retain control by adapting their behavior, establishing a new equilibrium.
+
+Most studies searching for evidence of damaged proteins, lipids, and carbohydrates have failed to find any serious difference between young and old cells.
+
+Instead, we find evidence that the spectrum of operative genes is what's affected, and this hinges on the activity of transcription factors.
+
+The activity of some of the most important transcription factors depends on their redox state, whether they're oxidized or reduced, many of which are oxidized by free radicals and reduced again by dedicated enzymes.
+
+It's this delicate balance between the two redox states that determines their activity.
+
+The field of redox medicine is also a growing discipline of study.
+
+Redox-sensitive transcription factors can behave like radar, alerting the cell to imminent threats and enabling it to take appropriate action.
+
+Their oxidation initiates the changes that will prevent any further oxidation.
+
+For example, NRF1 is a nuclear, meaning from the nucleus, transcription factor that coordinates the expression of genes needed for mitochondrial biogenesis.
+
+If the conditions in the cell become more oxidized, NRF1 is activated, and in turn, it stimulates mitochondria to divide in an attempt to restore balance in the redox state.
+
+NRF1 also induces the expression of numerous other genes that protect the cell until more mitochondria are generated.
+
+The more oxidizing the cell's internal environment becomes, the more these redox-sensitive transcription factors shift the activity of nuclear genes away from the day-to-day administrative work and toward crisis management that protects the cell from stress.
+
+This shift establishes a new equilibrium in the cell, one where more resources are dedicated to crisis management instead of their original tasks.
+
+This new equilibrium can be stable for years, even decades.
+
+Only the least damaged mitochondria tend to replicate, so there is usually no obvious sign of mitochondrial mutations or damage.
+
+We do not die right away, but we might notice we fatigue more easily or take longer to recover from illnesses or forget more things.
+
+The mitochondrial theory of aging explains why we don't see the spiraling, catastrophic damage predicted by the free radical theory or the other original mitochondrial theories.
+
+Free radicals are used to signal danger, which allows the cell to adapt.
+
+The mitochondrial theory of aging also explains why the cell doesn't have more antioxidants than it needs.
+
+If there were too many, it wouldn't be sensitive to changes in the redox state.
+
+Without free radicals, the whole system would fail and the mitochondria would fail to adapt to their changing environment or demands.
+
+Surely this would lead to a high rate of mutations and result in a quick end to us all.
+
+Unfortunately, after numerous decades of constantly adapting to a new equilibrium, cells eventually run out of healthy and normal mitochondria.
+
+After this happens, when the cell signals mitochondria to replicate, there is no choice but to amplify the defective mitochondria.
+
+Ultimately, cells are overtaken by these defective mitochondria.
+
+Interestingly, if we examined a dysfunctional organ or tissue, we wouldn't actually see an abundance of cells with defective mitochondria.
+
+We would only see a few affected cells at any given time.
+
+When cells finally get to the point where they are packed full of defective mitochondria, they are given the signal to remove themselves from the community by apoptosis.
+
+While this fact means we don't find high levels of defective mitochondria in aging tissues, it does result in the slow but steady loss of tissue density and function.
+
+Osteoporosis or sarcopenia, for example, the prerequisite for aging, disease, and ultimately, death.
+
+To make matters even more complicated and to give a shred of hope, it's been recently shown that mitochondria are better at repairing damage to MTDNA than previously thought.
+
+The five to ten copies of MTDNA usually present in every mitochondrion means that, at any given point in time, a good copy of a particular gene is still in working order.
+
+That copy is used as a template for recombination, repairing of the damaged gene.
+
+However, the significance of this discovery to the newest rendition of the mitochondrial theory of aging is yet to be determined.
+
+Nevertheless, beyond being consistent with the emerging scientific data, the modern mitochondrial theory of aging provides profound insight into the pathology of age-related degenerative diseases and how to prevent or maybe even cure them.
+
+Extending Maximum Lifespan in Mammals Each species of mammal has a theoretical maximum lifespan potential, MLP.
+
+While significant medical and public health advances have produced staggering increases in average lifespan, the MLP of about 120 years for humans has yet to be extended.
+
+Nor has the species' specific MLP been convincingly extended in other mammals, the exception being studies on caloric restriction.
+
+The increase in MLP caused by caloric restriction and the fact that calorie-restricted animals are biologically younger at any given age suggests that at least some basic aging processes are decelerated by caloric restriction.
+
+Thus far, only caloric restriction has been shown to extend MLP in nearly all species tested, including invertebrates, fish, and warm-blooded vertebrates such as mammals.
+
+The studies on caloric restriction have added even more weight to the mitochondrial theory of aging.
+
+Why is this the case?
+
+Look back to the example I used earlier.
+
+A person in a developing country during a period of famine who experiences a shortage of fuel and therefore has hardly any electrons flowing down the ETC.
+
+Even though there might be plenty of oxygen available, very few free radicals leak simply because of the lack of electrons.
+
+However, in famine there is also malnutrition.
+
+Caloric restriction differs from famine because a person might significantly lower the calories they consume, but they ensure that the foods they do consume are nutrient-dense.
+
+The result is that very few free radicals leak due to a reduced amount of electrons.
+
+This concept also helps explain the opposite.
+
+Excessive caloric intake introduces an excessive amount of fuel into the body and ultimately excessive electrons into the mitochondrial ETCs.
+
+An overabundance of electrons causes leakage at a very high rate, which might be why obesity, when a person consumes far more calories than they expend, is linked to countless degenerative diseases.
+
+Although an increase in the MLP hasn't yet been achieved for humans, based on what I just discussed, there's a great deal of hope that it will happen soon.
+
+If indeed mitochondria are at the crux of aging, the fact that the best mitochondria with the best MTDNA are used as templates for the generation of more mitochondria, that the cell is better at repairing damage to the MTDNA than previously thought, and that defective mitochondria are constantly eliminated, at least theoretically the cell should be able to go on doing this indefinitely.
+
+Degenerative Diseases and the eventual end We still don't know exactly what the signal for apoptosis is, but two related factors are probably involved, the percentage of dysfunctional mitochondria and the total ATP level in the cell relative to its demand.
+
+As a cell gets the signal for apoptosis, what happens to the tissue and eventually the whole organ is dependent on the type of cell it's composed of.
+
+If it's a type of cell that is regularly replaced by stem cells that have preserved its mitochondria in an untarnished state, then there won't be any negative effect.
+
+However, if it's a type of cell that's typically irreplaceable, such as a nerve cell, then with each cell death, the tissue starts to atrophy and the remaining cells are under greater pressure to meet the functional demands of the organ.
+
+As the surviving cells get pushed closer to their own metabolic threshold, they are more likely to be negatively affected by the countless number of external factors that could place additional strain on them.
+
+As we age, the process accelerates as fewer and fewer cells are left to do the work of many.
+
+Remember, this explains why we don't see mitochondrial mutations spiraling out of control.
+
+Defective mitochondria and the cells that contain them are constantly eliminated.
+
+However, the number of functional cells in any particular organ will decrease, which is known as atrophy.
+
+This is how degenerative diseases take hold.
+
+As the quality of beta cells in the pancreas decreases, insulin levels fall off.
+
+As the heart loses its muscle cells, its contraction becomes less efficient.
+
+As the neurons in the brain start to die off, dementia sets in.
+
+In each case, there is a threshold.
+
+Losing a few cells in the heart is unlikely to result in heart failure, but lose enough and the function of the heart will be compromised.
+
+If you think this discussion of the degenerative disease process sounds very familiar to the discussion of aging, you're right.
+
+The process is the same and shows how aging and degenerative diseases are linked.
+
+More importantly, if we could target the underlying process of aging, we could theoretically extend our MLP and delay all age-related degenerative diseases.
+
+What's important to note is that while the rate of free radical leakage correlates very closely with lifespan, it's how free radical production influences the threshold for apoptosis that really matters.
+
+Some species, such as rats, have cells that leak large amounts of free radicals quickly.
+
+These cells are closer to their threshold, so it won't take long before they get the signal for apoptosis.
+
+For humans, it will take many, many more years for our cells to reach their threshold.
+
+If we could just slow down the rate of free radical leakage from the mitochondria even further, we could significantly delay the onset of degenerative diseases or perhaps even eliminate them altogether.
+
+At this point in time, improving mitochondrial function and slowing their decay appear to be the most promising and realistic way to address both degenerative diseases and aging.
+
+It's spine-tingling to think that we're so close to potentially finding the answer to a long and healthy life.
+
+The pharmaceutical industry spends many billions of dollars annually for research, but nothing more than symptom management comes of it.
+
+The paradigm under which that industry operates is likely one of its many problems.
+
+Drugs are almost exclusively used after a disease has manifested its physical symptoms.
+
+They are rarely, if ever, used to prevent diseases in the first place.
+
+If it's true that the quality of our mitochondria is the single most important factor in aging and degenerative diseases, and if we can't turn back the clock on our mitochondria, then we should start in childhood.
+
+As I noted previously in Discarded Theories of Aging, even the dietary supplements industry is on the wrong path with all its marketing of antioxidants.
+
+The antioxidant craze promotes these supplements as the cure for most ailments, and although it seems to be losing some steam, antioxidant is still a buzzword thrown around excessively to hopeful consumers.
+
+Also, as mentioned earlier, while antioxidants do have some benefits in certain diseases, according to some studies, other studies have found that large amounts can potentially do some harm.
+
+Just because they're marketed as natural and healthy, this doesn't mean it's good for you to use them indiscriminately or in excessive amounts.
+
+If you mess with the mitochondrial thermostat, the cell can't calibrate its response to stress appropriately.
+
+In the long run, this can't be good, and it undermines nature's protective processes.
+
+This mitochondrial thermostat also explains why, while antioxidants might extend life in a sick population relative to people with the same condition who are not receiving antioxidants, they fail to extend the MLP of a species.
+
+Antioxidants are likely beneficial to extracellular components at membrane surfaces, and maybe even in the cytoplasm of ourselves, but it is highly unlikely they will be able to quench the free radicals leaking into the mitochondrial matrix.
+
+Yet all the expanding knowledge about mitochondria gives us new hope and insight for treating illnesses.
+
+If all the genetic and environmental factors that lead to age-related degenerative diseases converge at the mitochondria, we just need to focus on one organelle.
+
+While newer research is revealing the intricate interaction between mitochondria and other organelles, such as peroxisomes and endoplasmic reticulum, we seem to be one big step closer to targeting the underlying mechanism behind many diseases at once.
+
+It's getting hot in here, uncoupling the proton gradient.
+
+Lastly, no discussion on mitochondria would be complete without understanding their role in heat production.
+
+The proton gradient is not just used to produce energy.
+
+Sometimes it is uncoupled from energy production, and the gradient is dissipated as heat.
+
+Specifically, the electron flow and proton pumping continue normally, but the protons don't flow back through the ATPase, and thus ATP is not produced.
+
+Instead, the protons pass back through other pores in the membrane, descriptively called uncoupling proteins, where the energy contained in the proton gradient is released as heat.
+
+In fact, this process is how warm-bloodedness evolved, and it is the source of non-shivering thermogenesis, production of heat without shivering, which happens predominantly in what's called brown adipose tissue, or more commonly known as brown fat.
+
+In contrast to cold-blooded animals such as reptiles, warm-blooded birds and mammals can generate their heat internally, which is called endothermy.
+
+In fact, this is the definition of warm-blooded, the ability to generate heat internally, the actual temperature of blood can be similar in warm and cold-blooded animals.
+
+Many organisms, including snakes, sharks, and even some insects, are endothermic.
+
+They generally use their muscles to generate heat during physical activity.
+
+In mammals such as humans, muscles contribute to endothermy by shivering in intense cold or during vigorous physical activity.
+
+However, animals and mammals can also generate heat based on the activity of their internal organs, such as the brain and heart.
+
+How this came to be is another interesting discussion you can read in Lane's book, but the conclusion is that endothermy, outside of the obvious advantages of physical performance, i.e. warm muscles react more quickly and adaptability to cold environments, protects mitochondria from damage by maintaining electron flow during times of low energy demand.
+
+But how?
+
+If ATP isn't used due to low energy demand, a DP becomes scarce and the ATPase grinds to a halt.
+
+This is when electrons running down the ETC are inclined to escape and react with oxygen, producing the destructive super-oxide-free radicals.
+
+Let's go back to our analogy of a hydroelectric dam on a river.
+
+During times of energy low demand, water flow, protons through the turbines, ATPase, is reduced and the reservoir behind the dam is at risk of flooding, free radical generation.
+
+The risk of flooding can be minimized by opening the overflow channels with uncoupling proteins.
+
+To illustrate further, let's look at an example of an athlete who just trained, gobbled down a meal, and then sat down to rest.
+
+The act of training required a significant spend in energy, but the reserves quickly get replenished as glycogen and fat are extracted from the food.
+
+There is little need to expend more energy and the mitochondria fill up with electrons extracted from the food.
+
+From our previous discussion, we know this is a treacherous situation.
+
+When the ETCs become full with electrons due to slow electron flow from lack of energy demand, the electrons can easily escape to form reactive free radicals, which can go on to damage the cell.
+
+To minimize this situation, the athlete could get up and start moving again to use up some of that excess energy, but the other option is to dissipate that energy, which can keep the whole system from overflowing.
+
+This is accomplished through the use of uncoupling proteins, which act as the overflow valves or channels.
+
+This uncouples the proton gradient, so electron flow is no longer linked to ATP production.
+
+When protons travel through these uncoupling proteins, the energy stored in the proton gradient is dissipated as heat.
+
+By dissipating the proton gradient in this way, electron flow down the ETC is maintained because proton pumping can continue without overflowing the gradient.
+
+The result is less free radical formation.
+
+In resting mammals, up to 25% of the proton gradient is dissipated as heat.
+
+In fact, small mammals such as rats and even human infants need to supplement their normal heat production with brown fat.
+
+Brown fat has lots of mitochondria and lots of uncoupling proteins, and because nearly all the protons leak back through uncoupling proteins to generate heat, it becomes increasingly essential as the surface area to volume ratio of a mammal increases.
+
+Smaller mammals and human infants lose heat much faster than larger animals.
+
+Being able to manipulate brown fat, uncoupling proteins, and metabolic rate in general, while simultaneously minimizing free radical production, has significant importance for preventing numerous health conditions, as I'll discuss in Chapter 3, Massage and Hydrotherapy.
+
+At the very least, manipulating brown fat would be a great way to help people prevent obesity.
+
+Nonetheless, I still find it captivating to think that without mitochondria and its uncoupling of the proton gradient, warm-bloodedness would have never evolved, and we'd likely all be enjoying a reptilian lifestyle, with all its limitations.
+
+It's also interesting to note that this is how animals such as polar bears, who live in the extreme opposite of environments as camels, discussed in A Game of Hot Potato, the electron transport chain, ETC, survive.
+
+Polar bears live only in the northern Arctic, where they spend most of their time on ice flows.
+
+They are found in the United States, Alaska, Canada, Russia, Greenland, and Norway, areas that are viciously cold, with temperatures as low as -55 degrees Celsius, -67 degrees Fahrenheit, and wind speeds of up to 50 kilometers per hour, 31 miles per hour.
+
+By having a thick layer of fat, also known as blubber, under their skin, the bears are not only great swimmers, because they use their fat in two layers of dense, oily, water-repellent fur to help keep them afloat.
+
+But with plenty of brown fat, they're able to generate lots of heat to keep themselves warm.
+
+Because they have such large amounts of brown fat, about half of the food polar bears eat is used for the sole purpose of keeping them warm.
+
+The colder the Arctic gets, the more they must eat to keep warm.
+
+All this accumulated fat, fat consumption, mainly seal blubber, and fat burning to keep warm, means polar bears rarely need to drink water.
+
+Instead, they meet their water demand from their food and through burning the accumulated fat, which ultimately results in water production.
+
+At Complex 4, part of the ETC where water is generated, which is similar to camels.
+
+Research has shown that if you see a polar bear drinking water, it means it's suffering from extreme exhaustion and starvation.
+
+It's also interesting to note that with global warming and climate change, and the resulting loss of their sea ice habitat, polar bears are having to spend more energy swimming farther distances offshore between ice flows to hunt seals, leaving less fat for heat production.
+
+Further, scientists have also observed that they are, in the absence of sea ice, foraging on land where they have difficulty finding prey and therefore they are eating bird eggs that don't provide nearly enough fat for them to sustain themselves.
+
+Brown fat, according to Lane, also helps explain some differences in health risks between different racial groups.
+
+As I discussed, mitochondria occupy the crux of degenerative diseases and aging, and the degree of uncoupling has evolved differently between ethnic groups.
+
+When we look at an Inuit population in the far north, for example, we see they have relatively large amounts of brown fat.
+
+It doesn't take a rocket scientist to see why.
+
+The constant exposure to cold temperatures necessitates that these individuals are able to produce vast amounts of heat to stay warm, just like the polar bears.
+
+Due to their large amounts of brown fat, the Inuit mitochondria don't leak as many free radicals, and consequently, this population is known to have a low incidence of degenerative diseases, such as heart failure, which is so common in western populations.
+
+On the other hand, those of African descent whose mitochondria have evolved in the blistering heat of the equatorial sun would not benefit from excessive heat production, and therefore, they have relatively small amounts of brown fat.
+
+Their mitochondria are tight, and more of the proton gradient is used to generate ATP and energy, not heat.
+
+Unfortunately, there is also a larger amount of free radical generation, and studies show that African Americans have a much higher risk of degenerative diseases than most other populations.
+
+These and physical activity are critical for individuals whose maternal lineage can be traced back to equatorial cultures.
+
+Remember, mitochondria are inherited through the maternal line.
+
+These individuals must ensure they are using up their ATP constantly.
+
+Of course, mitochondria are just part of the picture, as there are many other physiological, epigenetic, and socioeconomic factors that lead to higher risk of degenerative diseases in this population.
+
+But, it is eye-opening to see how at least some of these observations can be explained by looking at the differences in mitochondrial genetics.
+
+I can't speak for anyone else but myself, but I find this stuff incredibly fascinating.
+
+I hope you do too.
+
+So, now that you've been introduced to the history, evolution, and significance of mitochondria, let's discuss what we've discovered in terms of its involvement in human diseases.
+
+[BLANK_AUDIO]

@@ -1,0 +1,957 @@
+Chronic Fatigue Syndrome, Myalgic Encephalomyelitis, and Fibromyalgia Although chronic fatigue syndrome, CFS, Myalgic Encephalomyelitis, ME, and Fibromyalgia are all distinct and separate conditions, due to their similarity and significant overlap in symptomatology, they are often discussed together.
+
+For the purposes of this book, I'll also group them together.
+
+In terms of diagnosing these disorders, however, pain is the main factor for fibromyalgia, specifically pain and tenderness in certain areas of the body when pressure is applied to them.
+
+These are called tender points.
+
+Most of the other symptoms, such as fatigue, cognitive dysfunction, headaches, and sleep disturbances, are common to all three.
+
+We know by now that problems arise when the production of cellular energy is stressed.
+
+Unfortunately, most people with CFS are constantly in a state where demand outstrips supply.
+
+Investigations by Dr.
+
+Sarah Mayhill and colleagues who have studied various possible root causes of CFS have concluded that CFS is a result of mitochondrial dysfunction.
+
+In a state of constant under supply of energy, some ADP is combined together to form ATP, but this combination also creates a MP, as discussed earlier.
+
+Remember, AMP is eventually eliminated from the cell, which means a critical building block of ATP is lost.
+
+In order to rapidly meet the energy demands of the cell in the presence of a reduced energy pool, the body will make very small amounts of ATP directly from glucose through glycolysis, or anaerobic metabolism, which is much faster in generating energy, but far less efficient than aerobic metabolism.
+
+Switching to this anaerobic state is exactly what most people with CFS do.
+
+Unfortunately, as Mayhill points out, this switch results in two serious problems.
+
+First, lactic acid, the product of anaerobic metabolism, quickly builds up, as it also does in someone who is sprinting, where energy production must be fast, resulting in aches and pains known as the lactic acid burn.
+
+The person switches to anaerobic metabolism to meet the high energy demands in the short term, but pays for it later with this lactic acid buildup.
+
+Second, using glucose in this way means very little if any is available to make deribos, so people with CFS are never fully able to recover and get ahead in the progress of rebuilding their energy pool and capacity.
+
+For those wanting to dive deeper into CFS, I encourage you to read more on Mayhill's website, which is full of great information, in addition to her book, "Diagnosis and Treatment of Chronic Fatigue Syndrome and Myalgic Encephalitis".
+
+It's fascinating to learn that when you follow the trail of evidence, mitochondrial dysfunction explains not only the muscle soreness and tenderness and intense ongoing fatigue, but also how and why people who have CFS experience poor cardiovascular function, why they can't tolerate heat yet don't sweat as they should, why digestion is a mess and why brain fog is a common complaint.
+
+One domino knocking down the next, it all starts with mitochondrial dysfunction.
+
+Type 2 Diabetes Commonly referred to as just diabetes, this metabolic disorder is characterized by high blood sugar over a prolonged period of time.
+
+Previously, a diagnosis of diabetes meant a death sentence, but with advancing medical research, it's no longer the scary disease it used to be.
+
+Yet, it's important to remember that if left untreated, diabetes can lead to many complications, including cardiovascular diseases, neurological disorders, stroke, kidney failure, and even coma.
+
+There are two main types of diabetes, type 1 and type 2.
+
+Type 1 occurs when the body's immune system inappropriately attacks and destroys the insulin-producing cells in the pancreas.
+
+Type 1 is an autoimmune disease, and as a result of this destruction, the lack of insulin can no longer keep blood sugar levels in check.
+
+Type 2, on the other hand, occurs when the body can't effectively utilize the insulin that is produced and released.
+
+Most of our discussion here will focus on type 2, which also happens to account for about 95% of the cases of diabetes.
+
+While the management of diabetes has come a long way, recent evidence suggesting mitochondrial dysfunction lies at the heart of this disorder has given us insight into how to stop its progression, and even reverse it.
+
+The reversal of diabetes, which I'll discuss in chapter 3, see ketogenic diets and calorie restriction, is our generation's best example of how focusing on mitochondrial function and health can have tremendous benefits to what was previously thought to be an irreversible disorder.
+
+Mitochondrial damage in type 2 diabetes Recently, mitochondria have been identified as playing an important role in pathogenesis of type 2 diabetes, which is associated with both impaired insulin release and impaired insulin action at targeted tissues.
+
+Evidence suggests that mitochondria play a role in both processes, and defects are evident early in the course of the disorder.
+
+On the flip side, type 1 diabetes results mainly from the autoimmune destruction of beta cells in the pancreas.
+
+Mitochondria also are important in this situation, possibly in the pathogenesis, but certainly in the treatment and prevention of long-term consequences of type 1 diabetes.
+
+Regardless of the cause, both types of diabetes, and less common forms such as mitochondrial diabetes discussed in the next section, are associated with similar long-term complications, because they appear to result from pathogenic processes at the mitochondrial level.
+
+Mitochondrial function has different implications for diabetes in different cells and tissues, but at this point, the scientific community places emphasis on the major cell types responsible for insulin secretion, pancreatic beta cells, the targets of insulin's action, skeletal and cardiac muscle cells and liver cells, as well as target organs for the major complications of diabetes, kidneys, retina, nerves, and vascular cells.
+
+Type 2 diabetes is well known to be a progressive disorder, and the general consensus is that a target cell's insulin sensitivity is substantially impaired, referred to as insulin resistance, early in the course of the disease, whereas worsening of blood sugar over time is related to beta cell dysfunction.
+
+The result is a diminished ability to secrete enough insulin to keep up with the demand imposed by insulin resistance.
+
+Inability to keep up with the demand, in turn, leads to hyperglycemia, or high blood sugar, which is a major medical concern.
+
+Research has shown that hyperglycemia induces mitochondrial superoxide production in the endothelial cells, the cells that line the blood vessels, which is an important mediator of diabetic complications such as cardiovascular diseases.
+
+Endothelial superoxide production also contributes to atherosclerosis, hypertension, heart failure, aging, and sepsis.
+
+Further, the high glucose levels seen in diabetes will glycate proteins known as AGEs, advanced glycated end products.
+
+These proteins have altered functions from simply no longer working, which is still quite dangerous, even though it sounds benign, to, worse, harming the cell's function.
+
+These glycated proteins also bind to mitochondria and compromise their function.
+
+In addition, the skeletal muscles of people with type 2 diabetes have shown a reduced capacity of the ETC, and the mitochondria are smaller than normal.
+
+Mitochondrial damage also appears to be a major cause of lipid accumulation in these cells.
+
+PPArgCoactivator 1, PGC1, is a key factor located in the mitochondrial matrix for lipidoxidation, and the expression of PGC1 is reduced in type 2 diabetes patients.
+
+The accumulated lipids turn into cytotoxic compounds, damaging the mitochondria and leading to insulin resistance.
+
+Lipotoxicity is when accumulated lipids lead to functional impairment of certain cells.
+
+Compared with other types of lipids, free fatty acids are more toxic to the cells.
+
+Several researchers have identified that lipotoxicity and lipid accumulation can promote the progression of type 2 diabetes.
+
+Defects in the capacity to metabolize fatty acids in skeletal muscles are a common characteristic of type 2 diabetes.
+
+Under normal physiological conditions, lipids are metabolized through beta-oxidation in mitochondria.
+
+However, with mitochondrial damage, lipids cannot be metabolized normally, and so fatty acids accumulate.
+
+Fatty acids are particularly prone to oxidative damage, resulting in the formation of lipid peroxides, or fatty free radicals.
+
+These lipid peroxides are toxic to the cell and highly reactive, leading to free radical damage of proteins and MTDNA.
+
+Here, the positive feedback loop rears its ugly head again.
+
+Lipid accumulation is a cause of lipotoxicity and leads to mitochondrial dysfunction through oxidative damage.
+
+On the other hand, mitochondrial damage promotes the accumulation of lipids, which cannot be metabolized, and promotes further lipid accumulation.
+
+To prevent the development of this positive feedback loop, a protective mechanism is normally present in healthy cells.
+
+Uncoupling protein 3, located on the mitochondrial membrane, plays a major role, essentially acting as an overflow valve, so that an excessive proton gradient doesn't slow down the ETC.
+
+However, research shows dysfunctional uncoupling protein 3 leads to free radical damage in cells, which is associated with insulin resistance and type 2 diabetes.
+
+This is an active area of diabetes research.
+
+So, at this point, the chain of events looks something like this.
+
+1.
+
+Mitochondrial damage in the target cells, such as muscles, results in lipid accumulation.
+
+2.
+
+Lipid accumulation results in insulin resistance.
+
+3.
+
+Due to insulin resistance, the beta cells in the pancreas must increase their metabolism to create more insulin, and then package it up and secrete it, all of which takes energy.
+
+4.
+
+While this metabolism increase helps control blood sugar to some degree in the short term, over time, these beta cells accumulate damage to their mitochondria due to chronically high metabolism and energetic demand.
+
+And finally, 5.
+
+The beta cells start to die off, resulting in a drop in insulin and a spike in blood glucose, which is what is typically seen in long-standing uncontrolled type 2 diabetes.
+
+5.
+
+Mitochondrial diabetes.
+
+Typically presenting at middle age, mitochondrial diabetes is a form that originates from an MT-DNA defect, so this diabetes is maternally transmitted, and, interestingly, often associated with hearing loss, particularly for high tones.
+
+This type of diabetes is characterized by decreased insulin secretion, but not insulin resistance, suggesting that the major problem is with the mitochondria of pancreatic beta cells.
+
+The underlying clinical pathology of mitochondrial diabetes might seem to resemble that of type 1 diabetes, but in this case, the immune system doesn't destroy beta cells.
+
+Instead, this type of diabetes results from MT-DNA mutations.
+
+The most common mutation leading to mitochondrial diabetes is one that encodes for "transfer RNA."
+
+The defect in transfer RNA leads to impaired synthesis of multiple mitochondrial proteins, and ultimately, mitochondrial dysfunction.
+
+Although rare, its presentation will often resemble that of type 2 diabetes, and it must be diagnosed properly in order to treat it properly.
+
+You can see why this is often misdiagnosed when its pathology resembles that of type 1 diabetes, while its symptoms resemble those of type 2 diabetes.
+
+Medication-Induced Mitochondrial Damage and Disease With the increasing use of pharmaceutical medications, there has been a rise in health conditions linked to mitochondrial dysfunction, and mitochondrial dysfunction is increasingly implicated in the etiology of drug-induced toxicities.
+
+Despite this, testing for mitochondrial toxicity is still not required by the Food and Drug Administration of the United States, Health Canada, or any other regulatory body responsible for drug approval.
+
+Medications can damage the mitochondria both directly and indirectly.
+
+See Table 2.1 in your PDF supplement.
+
+They can directly inhibit MTDNA transcription of ETC complexes, the 13 key subunits, damage ETC components through other mechanisms, or inhibit enzymes required for any of the steps of glycolysis and beta-oxidation.
+
+Indirectly, medications could cause mitochondrial damage through the production of free radicals by decreasing the quantity of endogenous antioxidants such as superoxide dismutase and glutathione, or by depleting the body of nutrients required for the creation or proper function of ETC complexes or mitochondrial enzymes.
+
+In fact, damage to mitochondria might explain the side effects of many medications.
+
+Barbiturates, used as sedatives or anti-anxiety drugs, were the first medications noted to impede mitochondrial function by inhibiting Complex 1.
+
+This same mechanism also explains how rotonone, an agricultural pesticide, causes mitochondrial damage, which, incidentally, happens to make this a useful chemical for inducing Parkinson's disease in animals, so we can study them.
+
+Other drugs can sequester coenzyme A, for example aspirin, valproic acid, inhibit biosynthesis of CoQ10, for example statins, deplete antioxidant defenses, for example acetaminophen, inhibit mitochondrial beta-oxidation enzymes, for example tetracycline, several anti-inflammatory drugs, or inhibit both mitochondrial beta-oxidation and oxidative phosphorylation, for example amiodarone.
+
+Other substances impair MTDNA transcription or replication.
+
+In severe cases, impairment of energy production could contribute to liver failure, coma, and even death.
+
+Many psychotropic medications also damage mitochondrial function.
+
+These drugs include antidepressants, antipsychotics, dementia medications, seizure medications, mood stabilizers such as lithium, and Parkinson's disease medications.
+
+Adverse effects of the antiretroviral drugs for treating AIDS result from inhibition of the enzyme responsible for MTDNA replication.
+
+Inhibiting this enzyme can lead to a decrease in MTDNA, the 13 critical subunits of the ETC, and ultimately cellular energy production.
+
+Mitochondrial dysfunction induced by these drugs explains the many adverse reactions reported for them, including polyneuropathy, myopathy, cardiomyopathy, steatosis, lactic acidosis, pancreatitis, pansytopenia, and proximal renal tubule dysfunction.
+
+Acetaminophen, the popular over-the-counter pain reliever and anti-fever medication, is the active ingredient in more than 100 products.
+
+This drug is the leading cause of drug-induced liver failure in the United States.
+
+Each year, more than 450 deaths are caused by acute and chronic acetaminophen toxicity.
+
+Acetaminophen is metabolized in the liver, and when acetaminophen passes through the enzyme that starts its elimination, it is metabolized to a toxic intermediate that is subsequently neutralized by glutathione before finally being excreted in urine.
+
+Therefore, the earliest effect of acetaminophen poisoning is a depletion of the liver's glutathione, the accumulation of free radicals, and decreased mitochondrial function.
+
+Because glutathione depletion is a mechanism by which acetaminophen causes death of liver cells, it is not surprising that the antidote for acetaminophen poisoning is a common nutritional supplement called an acetylsistiene, the precursor of glutathione, which increases glutathione.
+
+The exact mechanism of mitochondrial damage and the tissues affected depend on the medication.
+
+For example, valproic acid depletes l-carnitine, which causes a decrease in beta-oxidation in the liver, thereby contributing to fatty liver.
+
+The antipsychotic medications listed in table 2.1 of your supplement inhibit ETC function.
+
+The anti-exiety medication diazepam was shown to inhibit mitochondrial function in the brain, while aprazolem does so in the liver.
+
+Long-term administration of corticosteroids has been shown to result in mitochondrial dysfunction and oxidative damage to MTDNA and NDNA as well.
+
+If I had my way, all medications would be studied for their effect on mitochondrial function.
+
+In fact, all chemicals, whether they're pesticides, food additives, or personal care products, and everything else should be.
+
+For example, the artificial blue color often used in candies and men's shaving gels inhibits oxidative phosphorylation.
+
+Table 2.1 lists medications documented to induce mitochondrial damage to date.
+
+Mitochondrial disease While I'm embarrassed to admit that I used to be an avid viewer of the television show, The Bachelor, it was exciting to see that on season 17, episode 3, air January 2013, Sean, The Bachelor, and Ashley, a contestant, went on a date with two girls with mitochondrial disease.
+
+For many of you, if you watched the show, it might have been the first time you heard of mitochondrial disease.
+
+However, this group of illnesses is becoming more and more recognized as genetic testing and genetic sequencing technology become easier, cheaper, and more readily available.
+
+Before the human mitochondrial genome was completely sequenced in the early 1980s, reports of mitochondrial diseases were rare.
+
+Since then, it's become possible to sequence the MTDNA of many patients.
+
+This has resulted in the number of cases skyrocketing with about 1 in 5,000, or even one in every 2,500 people reportedly born with a mitochondrial disease, which might actually be an underestimation because many are mild forms that don't need medical intervention.
+
+Further, the number of conditions recognized as mitochondrial diseases has also skyrocketed and is revealing the bizarre nature of the disease.
+
+Mitochondrial diseases present extraordinarily complicated genetic and clinical pictures that cut across an extremely broad range of established diagnostic categories.
+
+The patterns of inheritance do not follow Mendel's laws, although sometimes they do.
+
+Mendel's laws govern the pattern of inheritance of normal nuclear genes.
+
+The likelihood of a genetic trait or disease being inherited is easily calculated based on the probability of inheriting one of two random copies of the same gene from each parent, giving everyone two copies of each gene.
+
+When mitochondrial diseases are a result of defective nuclear genes, the inheritance patterns do follow Mendel's laws.
+
+However, there are two sets of genomes involved in making mitochondrial work.
+
+MTDNA, inherited only from the mother, and NDNA, inherited from both parents.
+
+So inheritance patterns can range greatly from autosomal recessive to autosomal dominant to maternal inheritance.
+
+Making matters more complicated.
+
+There are countless interactions between the MTDNA and NDNA in a cell.
+
+The result is that the same MTDNA mutations can produce remarkably different symptoms between siblings in the same family.
+
+They will have different NDNA, even though they might all share the same MTDNA, while different mutations can produce the same symptoms.
+
+Even twins with the same disease can have a radically diverse symptom picture.
+
+The symptoms are related to what tissues are affected, while individuals with different mutations might present with the same symptoms and disease.
+
+However, the variation in MTDNA in the mother's eggs is surprisingly high, and this fact throws a wrench in any predictions of inheritance.
+
+To illustrate the bizarre nature of this group of diseases, the onset of symptoms can vary by decades, and even between siblings with the identical genetic mitochondrial mutation.
+
+Moreover, occasionally the disease might even disappear in an individual who had, or should have, inherited them.
+
+This individual is a lucky one, however, because in general, mitochondrial diseases become progressively worse with time.
+
+Tables 2.2 and 2.3 in your PDF supplement outline the symptoms and diseases associated with mitochondrial dysfunction, as well as inherited conditions that implicate it.
+
+Currently, there are over 200 known types of mitochondrial mutations, and a wide range of common degenerative diseases has been found to involve one or more of these mutations, indicating we might need to reclassify a very large number of diseases as mitochondrial diseases.
+
+As we know, these mutations cause the mitochondria to fail in their task of making energy.
+
+When less and less energy is made in the cells, the cells might stop working or die.
+
+All cells, except red blood cells, contain mitochondria, so mitochondrial diseases tend to affect multiple body systems, either at the same time or progressively at different times.
+
+Of course, some organs and tissues require more energy than others.
+
+When an organ's energy requirements can no longer be fully met, the symptoms of mitochondrial disease manifest.
+
+They primarily affect the brain, nerves, muscles, heart, kidneys, and endocrine system, all organs with high demand for cellular energy.
+
+At the genetic level, it gets increasingly complex.
+
+An individual's bio-energetic baseline might be established by understanding the level of inherited defects in MTDNA.
+
+As additional MTDNA defects develop over the course of a lifetime, their bio-energetic capacity might decline until an organ's threshold is crossed, where the organ begins to malfunction or becomes susceptible to degeneration.
+
+Each organ has a different threshold, which I'll discuss in a moment.
+
+Another genetic complication is that each mitochondrion contains up to 10 copies of MTDNA, and each cell and tissue contains many mitochondria, which means there could be countless different defects in the countless different copies of MTDNA in each cell, tissue, or organ.
+
+For a particular tissue or organ to become dysfunctional, a critical number of its MTDNAs must be defective.
+
+This is called the threshold effect.
+
+Each organ or tissue is more susceptible to some mutations than others, and has its own particular mutational threshold, energy requirement, and sensitivity to free radical damage.
+
+All these factors combine to determine how it will respond to genetic damage.
+
+For example, if only 10% of the mitochondria are dysfunctional, the 90% that are healthy might mask the effects of their defective counterparts, or perhaps it's a minor less serious mutation, but present in a larger percentage of mitochondria.
+
+In that case, the cell might still be able to operate normally.
+
+Then there is the concept of segregation.
+
+When a cell divides, its mitochondria are distributed at random between the two daughter cells.
+
+One might inherit all the defective mitochondria, and the other might get all the healthy ones, or any combination in between.
+
+The cell with the defective mitochondria will die by apoptosis, leaving the healthy cell, which could explain how mitochondrial disease can sometimes randomly and unexpectedly disappear.
+
+This phenomenon, where not all of the MTDNA copies within a cell are the same, is known as heteroplasmy, meaning mixed MTDNA.
+
+The degree of heteroplasmy will differ from person to person, even within a family.
+
+The degree of heteroplasmy within a person might also differ from organ system to organ system, and even cell to cell, leading to a vast array of possible disease presentations and symptoms.
+
+In a developing embryo, as cells divide, different mitochondria with different mutations will eventually populate different tissues with different metabolic requirements.
+
+If the defective mitochondria happen to get distributed to cells that eventually develop into metabolically active tissues, such as the heart or brain, these individuals will likely have a poor quality of life, if any.
+
+On the flip side, if the defective mitochondria end up in less metabolically active cells, such as skin cells that are also constantly shed, then the individual might never know they have the genetic imprint for a mitochondrial disease.
+
+This was evident on The Bachelor when one of the girls affected by mitochondrial disease appeared on the surface to be normal, while the other was affected to a very noticeable degree.
+
+Some specific mitochondrial mutations develop spontaneously with age, due to free radical production from normal metabolism, which generates a heterogeneous population of mitochondria in the affected cell.
+
+What happens next depends on a number of factors.
+
+For example, if the affected cell were a rapidly dividing one, such as a stem cell that regenerates tissue, the defective mitochondria would be replicated and its prominence would spread.
+
+If the affected cell were one that was no longer active in cell division, such as a nerve cell, then the mutation would be contained to that one cell.
+
+I shouldn't rule out the possibility that a random mutation could be beneficial, which does happen occasionally.
+
+However, the genetic complexity of mitochondrial disease helps explain how bio-energetic decline, driven by mitochondrial mutations, can have such varied and complex effects over the course of aging.
+
+We must also remember that there are numerous other genes involved in the proper functioning of mitochondria.
+
+If a mutation affects a gene coding for RNA, the consequences are usually serious.
+
+If a mutation affects a mitochondrial transcription factor in the end-DNA inherited from either parent-ec conception, then the effects could affect all the mitochondria in the body.
+
+Yet, if the mutation affects certain mitochondrial transcription factors that are only activated in a particular tissue, or in response to a particular hormone, the effects would be tissue-specific.
+
+Given this wide degree of variance, the incredibly broad spectrum of mitochondrial diseases is a problem in and of itself, and makes it almost impossible to predict how the disease will progress in any one individual.
+
+Also, there are so many types of mitochondrial disease, it would be difficult to name them all, and many have yet to be discovered.
+
+Even many common degenerative diseases, for example various cardiovascular diseases, cancers, various forms of dementia, are now being seen as specific mitochondrial diseases.
+
+While there is no cure for genetic mitochondrial disease, many people, especially those with milder forms, might have a normal quality of life and lifespan if their disease can be well managed.
+
+When mitochondrial disease is the primary disease?
+
+When mitochondrial disease exists right from birth, it is said to be the primary disease.
+
+In mild cases, young people might learn to cope and adapt to the amount of energy they have, and don't realize they even have mitochondrial disease.
+
+Mildly affected adults might say that they had a very normal and healthy life as a child, although they were never really good at sports or activities that required endurance.
+
+Some common symptoms of more noticeable mitochondrial disease include developmental delay or regression and development, seizures, migraine headaches, muscle weakness, might be only occasional, poor muscle tone, hypotonia, poor balance, a taxia, painful muscle cramps, inability to keep up with peers in physical activities, low endurance, chronic fatigue, stomach problems, vomiting, constipation, pain, temperature problems from too little or too much sweating, breathing problems, eyes that are not straight, strabismus, decreased eye movement, ophthalmoplegia, loss of vision or blindness, droopy eyelids, ptosis, loss of hearing or deafness, heart, liver, kidney disease at a young age, and shaky parts of the body, tremors.
+
+Although some of these symptoms are common in the general population, people with mitochondrial diseases are usually affected with multiple symptoms at a young age.
+
+Similarly, many common health conditions can be misdiagnosed.
+
+While the diagnosis could be relevant to the symptomatology, the underlying condition might actually be mitochondrial disease.
+
+For example, mitochondrial defects could contribute to a diagnosis of heart disease in some patients.
+
+A recent study of dilated cardiomyopathy found that about one in four patients, 25%, had MTDNA mutations in the heart tissue.
+
+Other patients might have had a genetic CoQ10 deficiency and suffered dysfunctions in the brain, nerves, and muscles, often including fatigue on exertion and seizures.
+
+Such patients appear to respond to CoQ10 supplementation, but observations are limited because diagnosis of this disorder is in its infancy.
+
+Primary CoQ10 deficiency is one of the mitochondrial diseases caused by mutations in NDNA.
+
+Table 2.4 in your supplement outlines the features of mitochondrial disorders caused by MTDNA mutations in children and adults.
+
+Treating Mitochondrial Disease Recent advances in medicine, science, and genetics have helped us gain a better understanding of the diagnosis and treatment of mitochondrial diseases.
+
+Unfortunately, there is still no cure, and current treatments cannot guarantee symptom relief or improvement in quality of life.
+
+The effectiveness of treatment varies depending on the exact disorder affecting a person and its severity.
+
+Also, treatment cannot reverse any existing damage, such as brain malformations or damage from a stroke.
+
+Generally, those with a mild form of the disease tend to respond to treatment better than those with a severe form.
+
+Recent research has shown that several nutritional supplements can help relieve symptoms and improve function.
+
+Case reports and pilot studies have found that some patients with mitochondrial diseases respond to long-term CoQ10 therapy, and promising results have been reported in mitochondrial encephalomyopathy, lactic acidosis, and stroke-like syndrome, MELAS, Kerns-Sair syndrome, and maternally inherited diabetes with deafness.
+
+An Italian study of patients with mitochondrial disease measured the bio-energetic activity in their brain and skeletal muscles, and demonstrated the positive impact of CoQ10 therapy.
+
+After six months of CoQ10 therapy, at only 150 mg daily, brain bio-energetics returned to normal in all patients, and skeletal muscle energetics improved significantly.
+
+A number of other studies have also confirmed the value of CoQ10 in mitochondrial disease.
+
+Typically, it's prescribed in combination with other nutrients, in what's often called the mitochondrial cocktail, and a knowledgeable and progressive doctor might recommend some or all of these supplements.
+
+Creatine monohydrate, vitamin C, vitamin E, alpha-lipoic acid, thiamine, vitamin B1, riboflavin, B2, niacin, B3, L-carnitine, or L-arginine.
+
+Others include D-ribose, PQQ, magnesium, and medium-chain fatty acids.
+
+Regular exercise and physical activity provide immense benefits for the body, mind, and spirit for everyone.
+
+However, for those with mitochondrial disease, physical activity becomes extremely important as a way to build more mitochondria in the cells.
+
+Mitochondrial biogenesis, which generates more energy for the cells, resulting in increased tolerance to physical activity.
+
+Ultimately, exercise can improve the quality of life for anyone with a mitochondrial disease.
+
+Examples of inherited disorders caused by MTDNA mutations The following disorders have been shown to be caused by mutations in MTDNA, which means they will typically follow maternal inheritance patterns.
+
+Mitochondrial encephalomyopathy, lactic acidosis, and stroke-like syndrome.
+
+Myoclonic epilepsy associated with ragged red fibers.
+
+Neuropathy, ataxia, and retinitis pigmentosa.
+
+Maternally-inherited Ly syndrome.
+
+Libre hereditary optic neuropathy.
+
+Chronic progressive external ophthalmoplegia.
+
+Maternally-inherited diabetes and deafness.
+
+Nonsyndromic maternally-inherited deafness.
+
+Kern-Ser syndrome.
+
+Pearson syndrome.
+
+Examples of mitochondrial disorders caused by NDNA mutations These disorders are known to be caused by mutations in NDNA, which means they can be inherited either maternally or paternally, and will typically follow Mendel's inheritance pattern.
+
+Autosomal recessive external ophthalmoplegia, paralysis of muscles that control eye movements.
+
+Hypertrophic cardiomyopathy, large damaged heart.
+
+Myoneuro-gastrointestinal encephalomyopathy.
+
+Ly syndrome.
+
+Mitochondrial depletion syndrome.
+
+Dominant optic atrophy.
+
+Age-related hearing loss.
+
+Age-related hearing loss, or presbycusis, affects approximately one-third of all people aged 65 and older, and is due to the changes that occur in the aging body.
+
+Circulatory disorders, for example, which limit the flow of blood throughout the body, as well as to the brain and auditory system, are common in later years.
+
+There are many reasons why circulation slows down as the body grows older, among them heart disease, hardening of the arteries, diabetes, and sedentary lifestyles.
+
+Alarmingly, nearly half of all baby boomers today suffer from some degree of hearing loss.
+
+While its onset can be almost imperceptible, the end result is an impaired ability to interact with the world that significantly detracts from quality of life.
+
+In fact, cognitive load is a possible explanation from newer research that shows that hearing loss is linked to cognitive decline.
+
+It's possible that as hearing becomes worse, a person's perceived intelligence decreases because, during a conversation, the brain spends more resources just trying to hear what's being said, rather than processing the contents of what's been spoken.
+
+But how do mitochondria fit into this explanation?
+
+A growing body of evidence from animal studies has suggested that the cumulative effect of free radicals could induce damage to empty DNA, which can result in the eventual apoptosis of the cochlear cells of the ear.
+
+Exposure to noise is known to induce excess generation of free radicals in the cochlea, and genetic investigation has identified several genes that mutate, including those related to antioxidant defense and atherosclerosis.
+
+Genetic variation in the antioxidant defense system might also help explain the large variations in the onset and extent of age-related hearing loss among elderly subjects.
+
+What's fascinating is that the research and clinical work of a leading autolaryngologist has shown that it is possible to slow the progression of, and sometimes, even reverse, hearing loss, using an integrative approach that includes optimal nutritional and lifestyle choices.
+
+In his book, "Save Your Hearing Now," Michael Seidman revealed that age-related hearing loss is linked to free radical damage and mitochondrial dysfunction.
+
+After establishing this link, Seidman tested the theory using caloric restriction in rats.
+
+A calorie-restricted diet, which I will detail later in Chapter 3, ketogenic diets and calorie restriction, is proven to reduce free radical production and reduce mitochondrial damage.
+
+Compared to rats that were allowed to eat freely, the calorie-restricted rats and another group treated with antioxidants, including melatonin and vitamins E and C, had decreased progression of age-related hearing loss.
+
+Another study showed that elderly rats, given either acetyl-L-carnitine or alphalopoic acid, saw an improvement in hearing, compared to the placebo group, which saw further decrease in hearing over the study period.
+
+Our understanding of how these nutrients function in relation to mitochondria indirectly confirms the organelles' involvement in age-related hearing loss.
+
+Along with improved hearing in the supplemented rats, the researchers found a much lower level of mitochondrial damage all throughout the body.
+
+The supplements actually reduced the amount of free radical damage everywhere, creating an anti-aging effect that not only improved hearing, but also carried over to other cells throughout the body.
+
+A study published in 2013 looked at a Hungarian family with numerous members suffering from unexplained hearing loss.
+
+Based on the matrilineal inheritance of this condition, the researchers analyzed the family's MTDNA to discover what was leading to this hearing impairment.
+
+It was a genetic mutation within MTDNA, which adds significant weight to the theories about mitochondria's role in at least a portion of those with hearing loss.
+
+Mitochondria, Aging Skin, and Wrinkles It might seem politically incorrect or superficial to say it, but your face is one of your most precious assets.
+
+Unfortunately, as we age, most people will display a face ravaged by time, free radical damage, and excessive sun exposure.
+
+And while some might feel young and vibrant, their face might communicate a very different state of affairs.
+
+The skin is not only the body's largest organ, it is also one of the most complex, comprising multiple layers of epithelial tissues that protect underlying muscles and organs.
+
+The skin also has a multitude of functions.
+
+It protects against pathogens, provides insulation, temperature regulation, and sensation, and helps synthesize vitamin D.
+
+The epidermis, the outermost layer of skin, provides a waterproof barrier against the external environment, and largely contains keratin, a fibrous protein made by keratinocyte cells, and melanin, the skin's main pigment, which is produced by melanocyte cells.
+
+Below the epidermis is the dermis.
+
+In addition to providing essential support to the epidermis, the dermis contains nerves, glands, and essential proteins called collagen and elastin.
+
+Collagen is the skin's main structural protein, while elastin provides elasticity to the skin.
+
+This layer also contains essential fats and glycosaminoglycans, which are large, sugar-like molecules that bind and hold water, all helping to keep moisture in the skin.
+
+Emerging research now suggests that impaired mitochondrial energy production plays an important role in aging of the skin.
+
+For example, in aging adults, fibroblast cells demonstrate dramatic mitochondrial dysfunction.
+
+Fibroblasts are cells essential to youthful, healthy skin.
+
+They produce collagen and elastin.
+
+With mitochondrial dysfunction, fibroblasts are less capable of producing the energy required to carry out their essential skin-related functions of manufacturing collagen and elastin.
+
+Scientists believe that this energy deficit in fibroblast cells contributes to the visible signs of skin aging, which might be why so many anti-aging creams and concoctions now contain CoQ10, an essential component of the ETC.
+
+Further, years of cumulative free radical damage from whatever source, including ultraviolet radiation from excessive sun exposure, can induce mitochondrial dysfunction.
+
+This dysfunction eventually leads to dramatic changes in the skin's health and appearance.
+
+The epidermis becomes less capable of tissue repair and renewal.
+
+Collagen becomes sparser and less soluble.
+
+Elastin fibers are slowly degraded and damaged, and areas of sun-damaged skin accrue abnormally structured elastin.
+
+Glycosaminoglycans can no longer properly interact with water, while lipid content decreases with age.
+
+The end result of these age-related changes is that skin becomes prone to wrinkling, dryness, sagging, decreased flexibility, dullness, and poor healing responses.
+
+Infertility and mitochondria As discussed in general for most organisms, including mammals, MTDNA from the father is not transmitted to the offspring.
+
+Only maternal mitochondria already present in the oocyte remain.
+
+Therefore, the study of mitochondria in women has provided incredible insight into mitochondrial dysfunction and its consequences.
+
+It's well established that as women age, the risk of infertility increases.
+
+Further, should a woman get pregnant at an older age, there is a much higher risk of birth defects.
+
+Unfortunately, older with respect to fertility means over 35 years of age, although still young by any other account.
+
+The reason why mitochondria are so important in fertility is that each oocyte contains about 100,000 mitochondria.
+
+A huge number, despite the lack of demand, most oocytes are dormant for the majority of their existence, presumably to protect mitochondria from damage for as long as possible.
+
+In contrast, a sperm cell only has a few hundred mitochondria.
+
+To be modal, sperm need to have very high metabolisms.
+
+Unfortunately, this results in significant free radical damage in their very short lifespans, and sperm have been known to quickly accumulate mutations in their MTDNA.
+
+By eliminating this potential source of defective DNA, the oocyte prevents such mutations from being passed on and affecting the offspring.
+
+Within minutes after fertilization, if and when sperm-derived mitochondria enter the oocyte, a localized reaction is triggered around the sperm's mitochondria, where the autophagyzomes engulf the paternal mitochondria, resulting in their degradation, referred to as autophagy.
+
+This ensures only maternal inheritance of MTDNA.
+
+However, in a situation where autophagy is impaired, paternal mitochondria and their genome remain even in the first stages of embryonic development.
+
+Another reason why this mixing of MTDNA is so disastrous, and why the oocyte eliminates the paternal MTDNA, lies in the way proteins responsible for energy production are created.
+
+Remember that the MTDNA encodes for only 13 proteins related to the ETC.
+
+By comparison, the DNA in the nucleus codes for over 800 proteins involved in the respiratory chain.
+
+Further, even if the MTDNA is "normal", the newly created NDNA, which never existed before and is a mix of both parents and DNA, must not only be normal itself, but must also communicate efficiently with its MTDNA counterpart.
+
+For example, for a complex one to be built properly, there needs to be clear communication between the MTDNA and NDNA.
+
+However, it's the MTDNA that's in charge, because it codes for the critical subunits of the complexes, which get embedded into the inner mitochondrial membrane.
+
+Once there, it acts as a beacon that attracts the other subunits encoded by NDNA.
+
+If the MTDNA and NDNA are a good fit, the complexes get built properly and in sufficient quantities.
+
+This allows the production of sufficient energy that's clean, meaning there's minimal free radical leakage, and the mitochondria survive.
+
+As long as there are enough of these types of mitochondria in a cell, the cell survives.
+
+On the flip side, if they are not a good fit and energy production is suboptimal, the mitochondria die.
+
+If there are enough of these types of mitochondria in a cell, the cell dies.
+
+For this reason, ensuring only one set of MTDNA survives in the fertilized egg makes this whole process smooth.
+
+Oocytes from women of advanced reproductive age show accumulations of MTDNA mutations that impair function.
+
+Vast amounts of energy are needed for the rapid cell division in the embryo, so MTDNA mutations aren't compatible with the prospects of normal and healthy fertility, and any fertilization of these eggs will quickly be terminated, i.e. result in a miscarriage.
+
+Based on this, infertile women in their 30s or even 40s who were otherwise healthy could be candidates for a procedure called nuclear genome transfer.
+
+Remember, this is where an oocyte from a healthy and fertile female donor has its nucleus removed, leaving all other components, including the healthy mitochondria, and then the nucleus from the fertilized egg of the infertile woman is transferred into the healthy donor egg.
+
+As mentioned previously, due to ethical issues regarding children born with three parents, this procedure is banned throughout most of the world.
+
+Although recent evidence suggests that mitochondrial disease can still creep back in, even if a mother's defective mitochondria are virtually eliminated, one benefit that arose from this experiment in human reproduction was that it essentially confirmed the role of age-related mitochondrial dysfunction as a key contributor to infertility.
+
+The importance of this confirmation is that scientists now have a target to focus on, the mitochondria, and can begin the search for suitable pharmacological compounds that could improve cellular bioenergetics, something that could revive the youthful integrity of healthy mitochondria without using donor mitochondria.
+
+The Purge - Selecting Only the Highest Quality Eggs and Mitochondria After the sperm fertilizes the oocyte, the resulting zygote goes through tremendous growth through cell division.
+
+As previously mentioned, this requires incredible amounts of energy.
+
+However, while the cells divide, the mitochondria do not.
+
+Instead, the initial number of mitochondria, about 100,000, gets partitioned with each division, so that, by a couple weeks after conception, each cell only has about 200 mitochondria.
+
+Again, this is by design.
+
+Whereas defective mitochondria could hide and coast by in a sea of healthy mitochondria, when their numbers are reduced to about 200 per cell, each mitochondrion had better be pulling its own weight.
+
+Defective ones can no longer coast alongside their harder-working comrades.
+
+When exposed, these dysfunctional mitochondria will be eliminated, which is probably not a big deal if this results in only one cell dying.
+
+But when enough mitochondria are defective in enough cells, the pregnancy is terminated.
+
+After all, the defective mitochondria and cells have been eliminated, and if that hasn't resulted in a miscarriage, the number of mitochondria per cell can multiply in normal fashion as the embryo grows.
+
+If the embryo is female, she will start to produce her own oocytes at an alarming rate.
+
+In fact, at five months gestation, she has already produced about 7 million oocytes.
+
+From this crest, the body starts its purging.
+
+By the time she's born, she's already down to about 2 million oocytes.
+
+Why?
+
+Natural selection.
+
+The natural process where only the most able to flourish will survive.
+
+During the development of the fetus, the body is comparing its empty DNA to the new end DNA to ensure that any incompatible oocyte is eliminated.
+
+It doesn't stop there, though.
+
+The purging continues.
+
+By puberty, when she is biologically mature enough to bear her own children, she's down to about 300,000 oocytes.
+
+By this point, only the cream of the crop in terms of healthy oocytes remains.
+
+Her body, from gestation to puberty, has selected only the healthiest oocytes that will give her the best chance for conceiving her own healthy offspring.
+
+From there, the cycle of life repeats itself.
+
+Fertile Coenzyme Q10.
+
+CoQ10.
+
+Biologically, we are most fertile in our adolescents and early 20s.
+
+After these optimal reproductive years, there are other things that happen to our bodies that prepare us for eventual exit from this world, to make room for the next generation and free up valuable resources.
+
+One of the things that happens is our body starts to produce less and less CoQ10.
+
+Remember, CoQ10 is the compound that shuttles electrons from Complex 1 or 2 to Complex 3 in the ETC.
+
+As we produce less of this essential compound, we produce less and less cellular energy, starting the chain of events that will ultimately lead to our demise.
+
+However, before our eventual demise, we'll experience various symptoms, and for women, one of them is infertility.
+
+If there is a relative deficiency of CoQ10, the eggs cannot produce enough energy, and as a result, when they are fertilized by sperm, the zygote, embryo, is aborted.
+
+In cases where there might be sufficient cellular energy production to stay above the threshold for miscarriage, the embryo will continue to develop and mature.
+
+Yet, in some cases that evade miscarriage, there is still insufficient cellular energy to properly separate the chromosomes during cell division.
+
+An example of this is Trisomy 21, more commonly known as Down syndrome, where there are three copies of chromosome 21.
+
+This example demonstrates why older women have a higher chance of bearing children with birth defects.
+
+CoQ10 deficiency, either a lone or in combination with MTDNA mutations or a mismatch between MTDNA and NDNA, is thought to be responsible for a significant percentage of age-related infertility cases in women.
+
+Animal studies have shown promising results, and based on this, it is recommended that women with age-related infertility undergoing various fertility treatments supplement with CoQ10, even in the absence of human studies.
+
+As I write this book, however, I'm aware of at least one human clinical trial underway in Toronto, Canada.
+
+Eye-related diseases As we age, we're at a higher risk of developing age-related eye diseases, and we might predict that these conditions have mitochondrial components to them.
+
+These conditions include age-related macular degeneration, cataract, glaucoma, diabetic eye disease, and others.
+
+I'll discuss a couple of them here.
+
+Age-related macular degeneration Free radical damage seems to be the most important factor in the pathogenesis of age-related macular degeneration, AMD, a condition affecting many elderly people in the developed world and the leading cause of blindness.
+
+Several studies have found an increase in MTDNA damage and a concurrent decrease in the efficacy of DNA repair, and both these factors are correlated with the occurrence and the stage of AMD.
+
+Considering that MTDNA repair is executed by proteins encoded by NDNA, certain mutations in the nucleus might affect the ability to repair MTDNA.
+
+It's been suggested that this poor DNA repair, combined with the enhanced sensitivity of retinal cells to environmental stress factors, for example, ultraviolet light, light in the blue spectrum, air pollution, contributes to the development of AMD.
+
+Collectively, the scientific data suggests that the cellular response to both mitochondrial and nuclear DNA damage might play an important role in AMD pathogenesis.
+
+Further, the retina requires proportionally more energy per cell than any other tissue in the body, and the retina is also where the density and number of mitochondria per cell are among the highest found in the body.
+
+Both of these facts have significant implications for AMD.
+
+With age, the high energy demand and constant assault from ultraviolet and blue light produce debris and significant free radical damage.
+
+In humans, this can result in a decline of up to 30% in the numbers of light-receptive cells in the eye by the time we are 70 and can lead to progressively poorer vision.
+
+Glaucoma Glaucoma is the second leading cause of blindness.
+
+It often progresses without symptoms until it succeeds in damaging the optic nerve.
+
+Up to 50% of people with glaucoma remain undiagnosed, and as many as one in 10 individuals aged 80 or older are afflicted by it.
+
+Mitochondrial-associated free radical damage affects the eye's drainage system, where tissue integrity is essential to maintaining normal pressure and fluid flow out of the eye.
+
+Encouraging research has shown that several of glaucoma's underlying causative factors might be prevented and even reversed through natural interventions, offering new hope to the millions at risk for this widespread, debilitating condition.
+
+The picture is even more encouraging with studies that suggest a common link between glaucoma and Alzheimer's disease.
+
+Why?
+
+Because as we discussed earlier, Alzheimer's disease has known deficits in mitochondrial function, and targeting bioenergetics in this cognitive disorder has shown improvements in symptoms and disease progression.
+
+So if we can do that for Alzheimer's disease, we should be able to do the same with glaucoma.
+
+Stem cells require healthy mitochondria.
+
+Our bodies possess remarkable abilities for sustained tissue renewal throughout our lifetimes.
+
+This continuous self-renewal process is dependent on reservoirs of stem cells.
+
+A report published a few years ago describes how mitochondrial function is crucial for maintenance of stem cells.
+
+As age-related mitochondrial dysfunction becomes more prominent, damaging free radicals increase and are accompanied by stem cell compromise.
+
+Interestingly, researchers have discovered that stem cell populations do not necessarily decline with advancing age, but instead they lose their restorative potential.
+
+This functional stem cell decline is accompanied by eventual organ malfunction and increased incidence of disease, which bears some resemblance to oocytes and female infertility, where the number of oocytes doesn't fall off with advancing age, but instead they lose their reproductive potential due to declining cellular energy production.
+
+A study published in 2015 by Cato Histo and colleagues proved this by observing how mitochondria are portioned off during the formulation of daughter cells.
+
+The researchers followed the fates of old and young organelles during division of stem-like cells and saw that aged mitochondria were distributed asymmetrically between daughter cells.
+
+Daughter cells that received fewer old mitochondria maintained stem cell traits, or stemness.
+
+Further, inhibition of mitochondrial fission disrupted various processes and caused loss of stem cell properties in the daughter cells.
+
+From this study, it appears there might be built-in mechanisms for stem-like cells to asymmetrically sort aged and young mitochondria, allowing at least one daughter cell to maintain a large pool of healthy mitochondria and, as a result, to keep its stemness going as long as possible.
+
+Mitochondrial dysfunction thus underlies a degenerative cycle that robs aging humans of the renewal benefits of their own stem cells.
+
+The integration of mitochondria into stem cell research has led scientists to propose that improvements in mitochondrial health, along with other cellular modulations, could yield advanced therapeutic strategies designed to rejuvenate tissues of the aged.
+
+Cancers.
+
+Understanding the causes brings us one step closer to cures.
+
+No discussion of mitochondria is complete without a discussion of cancers.
+
+As Nick Lane said in Power, Sex, Suicide, a cancer is the most extreme example of conflict within an individual.
+
+A single cell becomes selfish, escapes the body's systematic control, and multiplies like a bacterium.
+
+Cancers are usually the result of genetic mutations, although there are exceptions.
+
+Typically, a cell must accumulate 8-10 mutations in specific genes before it can transform into a malignant cell.
+
+A single mutation is rarely enough.
+
+Upon transformation to a malignant cell, its own interests are put before those of its community, the body.
+
+There are also several checkpoints in the cells, which is why it takes an average of 8-10 particular mutations before a cell becomes malignant.
+
+Some people might inherit some of these mutations from their parents, leaving them with a lower threshold of new mutations that must accumulate before the onset of cancer.
+
+They have a genetic predisposition to cancer.
+
+Normally, defective cells no longer working toward the greater good are eliminated via apoptosis.
+
+Apoptosis is critical to immune function and helps enable the immune system to distinguish between self and non-self, where cells that could react against our own body tissues commit apoptosis.
+
+Immune system cells can also exert many of their own effects by inducing apoptosis on damaged or infected cells.
+
+This kind of active screening by immune cells removes damaged cells before they get a chance to get a foothold and proliferate.
+
+In apoptosis, the chain of events is perfectly coordinated and leaves no evidence that the cell ever existed.
+
+However, there is a price to pay for such a coordinated series of events.
+
+All steps along the way require ATP.
+
+If the supply of ATP fails to meet the cell's demand, the cell cannot commit apoptosis, and the defective cell is given a chance to run wild.
+
+Deficient ATP production can happen for many reasons, but two of them are due to gene mutations that either the MTDNA or NDNA that, one, no longer produce functional proteins involved in energy production, or two, result in defects in any of the many, many proteins involved in the apoptosis cascade.
+
+Thus, mitochondrial function is in absolute control over apoptosis and prevention of cancers, and, in addition, illustrates how NDNA mutations are in play, because it encodes many mitochondrial proteins.
+
+Many people just learning about the importance of mitochondria to human health and aging are shocked to find mitochondria's critical part in cancer formation.
+
+What's even more shocking is that this association between mitochondrial dysfunction and cancers was made as early as 1930, when German scientist Otto Warburg first hypothesized that the increased rates of aerobic glycolysis, which he observed in a variety of tumor cell types, might be due to an impaired respiratory capacity in these cells.
+
+He was later awarded the Nobel Prize for his research.
+
+This increase in aerobic glycolysis changes the bioenergetics of the cell, and the shift has been confirmed by studies showing reduced activity of the TCA cycle and oxidative phosphorylation, increased gluconeogenesis, increased lactic acid production, and reduced fatty acid oxidation.
+
+There are some excellent references that summarize the totality of evidence, and these are concluding what Warburg knew nearly a century ago.
+
+Cancers are a metabolic disorder, just like everything else we're talking about in this book.
+
+If this is an area of interest for further reading, I suggest the book Tripping Over the Truth by Travis Christofferson.
+
+Mitochondria as Clinical Markers for Cancers The abundance of mitochondria and their DNA makes them an attractive molecular marker of cancers.
+
+Cancer cells have been found to have 220 more mutated MT DNA than mutated ND DNA.
+
+Mutant MT DNA is readily detectable in urine, blood, and saliva samples from patients with various cancers, and has been used as a marker in hepatocellular carcinoma and breast cancer.
+
+Recently, rapid sequencing protocols have been developed to detect MT DNA variants in tumor and blood samples taken from patients.
+
+Over 1,000 different proteins are found in mitochondria, and the advances in proteomic technologies have made the quantitative analysis of mitochondrial protein expression possible.
+
+In fact, the U.S.
+
+National Institutes of Standards and Technology has recently established a mitochondrial proteomic database, and research into mitochondrial protein profiles in normal cells versus cancer cells will hopefully lead to identification of markers for clinical detection of cancers, and contribute to an understanding of how differential protein expression might influence the development of these diseases.
+
+Mitochondria as a Therapeutic Target There are many distinct differences between the normal structure and function of MT DNA and those of cancer cells, and this fact opens the possibility of targeting cancer cells with anti-cancer agents.
+
+One chemotherapeutic approach utilizes delocalized lipophilic cations, DLCs, that selectively accumulate in cancer cells in response to the increased mitochondrial membrane potential.
+
+Several of these compounds have exhibited at least some degree of efficacy in killing cancer cells in the laboratory and in biological systems.
+
+Certain DLCs have been employed in photochemotherapy, PCT, an investigational cancer treatment involving light activation of a photoreactive drug, also known as a photosensitizer that is selectively taken up or retained by cancer cells.
+
+There has been considerable interest in PCT as a form of treatment for cancers of the skin, lung, breast, bladder, brain, or any other tissue accessible to light transmitted either through the body surface or internally via fiber optic endoscopes.
+
+Cationic or positively charged photosensitizers are particularly promising as potential PCT agents.
+
+Like other DLCs, these compounds are concentrated into the mitochondria of cancerous cells in response to the negative charge inside the matrix.
+
+In response to localized photo radiation, the photosensitizer can be converted to a more reactive and highly toxic species, thus enhancing the selective toxicity to carcinoma cells and providing a means of highly specific tumor cell killing without injury to normal cells.
+
+An alternative strategy employs the mitochondrial protein import machinery to deliver macromolecules to mitochondria.
+
+For example, certain short peptides with functional domains act as a sort of homing device that, when internalized into the target cells, readily penetrates the mitochondrial membrane and becomes toxic by disrupting the proton gradient.
+
+Researchers are also attempting to develop drug and DNA delivery systems attracted to mitochondria.
+
+Recent data demonstrates that a liposome, a tiny vesicle composed of a phospholipid membrane surrounding another molecule, in this case a chemotherapeutic drug, can be rendered mitochondria specific via the attachment of known residues to its surface.
+
+The goal of this type of research is to someday create mitochondria specific vehicles that will effectively deliver drugs into the organelle to destroy dysfunctional mitochondria or to replenish mitochondria with healthy copies of the genome.
+
+Another shot at the fountain of youth?
+
+Aging as a disease I conclude this section with aging.
+
+Yes, I've talked about this previously, but I want to include it here with all the other diseases.
+
+Why?
+
+Because if mitochondrial dysfunction is at the heart of all these age-related degenerative diseases, and I've previously established that deteriorating mitochondrial function is at the fulcrum of the aging process, does it not make sense that aging itself is a disease, just as I wrote in my medical school essay?
+
+What makes this train of thought even more exciting is that if it's a disease, we should be able to cure it, right?
+
+In fact, aging can be considered the ultimate disease because it claims 100% of the population if we don't die from other causes first.
+
+Unfortunately, the mechanisms related to all these degenerative diseases and aging are complex and numerous.
+
+For example, there can be mutations in the protein subunits of the complexes, either in the NDNA or MTDNA, super complex disassociation, defective autophagy, defective fission or fusion, defective transcription, defective protein transport or channels, defective protein assembly or folding, defective permeability transition pores, defective caspase or apatotic enzymes.
+
+Mutations in any of the enzymes of the TCA cycle or beta-oxidation, mutations in uncoupling proteins, defects in the peroxisomes or endoplasmic reticulum, or communication errors between these organelles and the mitochondria, inefficient mitochondrial movement, and the list goes on.
+
+So while it seems we can fantasize about the fountain of youth, we are still a ways from finding it.
+
+The good news is that in the last decade we've made incredible strides and we don't need to solve the puzzle in one go.
+
+To start, all we need to do is extend lifespan and delay aging.
+
+Instead of discovering the fountain of youth right off the bat, we just need to make incremental steps toward it.
+
+Why?
+
+The rate of scientific progress is accelerating.
+
+This increases exponentially as technology gives birth to greater technology, and as we are able to slowly extend lifespan to say 150 or 160 years, by the time we actually reach that age, science and medical research will have figured out how to get us through the next several centuries.
+
+Research in Life Extension received a significant boost in September 2013, when Google Incorporated announced it was forming and funding a company dedicated to researching aging and age-related diseases.
+
+While many people listening to this audiobook might say this aspect, Life Extension is pretty much impossible.
+
+If any organization is going to push the boundaries of what is or isn't possible, at least within our lifetime, Google, with its seemingly bottomless pit of funds and its creative and scientific geniuses, is humankind's best shot.
+
+Google refers to these projects as "moon shots."
+
+While they are not part of its main business, moon shots embody the company's philosophy of questioning what's possible and 10 times thinking, creating things that are at least an order of magnitude better than what already exists.
+
+So for Google, these side projects indicate that nothing is off limits, not even death is safe.
+
+There is, of course, debate over how far we would want to extend life.
+
+Just extending old age would not be much of an achievement, and it would place a heavy burden on society.
+
+The goal should rather be to extend the healthy and vital years of life, or, as a quote I once read said, "The goal is to die young as late as possible."
+
+And if we could manage that, there would still be practical questions.
+
+For example, the world is already struggling with overpopulation and aging societies.
+
+Extending life could exacerbate the situation.
+
+To keep population growth at net zero, previous generations had to have families with many children.
+
+As mortality rates dropped with improved sanitation and healthcare, we have been able to maintain a slow growth of the population with families having fewer and fewer children.
+
+However, even in developed countries, we still find countless families with more than two children.
+
+So you can see it would take a significant shift in thinking to keep population growth under control, and it might even require government intervention, such as we saw in China, and you can see how well that worked.
+
+Badly.
+
+However, before we get into the numerous ethical debates on this topic, let's move on.
+
+It is fascinating to discuss, if anything, just from a philosophical point of view, but you should know that there are very good and meaningful debates already in progress among the life extension community.
+
+While knowledge is power, there is hope in the unknown, and there is just so much we still don't know.
+
+[BLANK_AUDIO]

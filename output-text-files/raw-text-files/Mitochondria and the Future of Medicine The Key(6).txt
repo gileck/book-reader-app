@@ -1,0 +1,865 @@
+The Body Synthesis of L-Carnitine While in omnivorous humans the majority of total body carnitine concentrations is achieved from dietary sources, approximately 25% comes from our own biosynthesis.
+
+On the other hand, strict vegetarians obtain very little L-carnitine from dietary sources, and consequently, in order to maintain carnitine homeostasis, biosynthesis accounts for up to 90% of total body carnitine concentrations in this group.
+
+L-carnitine is synthesized from the amino acid precursors lysine and methionine, both essential amino acids, with lysine providing the carbon backbone and methionine acting as the methyl donor.
+
+The biosynthesis of L-carnitine involves other nutrients, including iron, vitamin C, oxygen, pyridoxal-5-phosphate, the biologically active form of vitamin B6, and B3 as NAD-positive.
+
+Magnesium Magnesium is likely one of the most underrated minerals, and most people are just not consuming enough of it.
+
+One reason most are deficient in this mineral is that water softeners, while great for making your faucets shiny, has reduced the water's hardness by removing minerals such as magnesium.
+
+Further, high intake of calcium can reduce the absorption of dietary magnesium, and with the conventional medicine focus on calcium intake for bone health, we've seen a corresponding general decrease in magnesium levels.
+
+Then there's our rising caffeine intake, which increases the amount of magnesium we lose through urine, and our rising use of antacids and proton pump inhibitors, drugs that can reduce the absorption of magnesium.
+
+All these factors contribute to the alarming statistic that 70-80% of the developed world population is deficient in magnesium.
+
+And that's only part of the picture.
+
+Regardless, it all equals bad news, because magnesium is a critical co-factor in over 300 biochemical reactions in the body, including the production of ATP.
+
+Further, we've known since at least 1976 that mitochondria act as our intracellular magnesium stores, and a lot of the magnesium in the body is found bound to ATP, which helps stabilize ATP and make it usable by the body.
+
+In fact, when we talk about ATP in biology, we're actually talking about magnesium ATP.
+
+That's how important magnesium is.
+
+Magnesium and cardiovascular disease Due to its role in energy production and metabolism, magnesium has countless benefits to just about every physiological system in the body.
+
+However, most people know it as a heart-healthy mineral because of its role in muscle relaxation.
+
+Remember that muscle contraction is initiated when calcium rushes into the cell.
+
+For muscles to relax, they not only require ATP, in which magnesium plays a role, but the enzymes involved in this relaxation process also require magnesium as a co-factor.
+
+Without magnesium, calcium cannot be removed from the muscle cell, and the muscle remains in a contracted state.
+
+Magnesium has been labeled as "Nature's Calcium Channel Blocker."
+
+Calcium channel blockers are a class of drugs commonly used to treat hypertension.
+
+For the smooth muscles that surround the blood vessels, a magnesium deficiency means that they remain tenser than they should, a condition called vasoconstriction.
+
+Vasoconstriction can further aggravate any health condition because it restricts blood flow to a tissue and its cells.
+
+With less blood flow, there is less oxygen delivery.
+
+With less oxygen, oxidative phosphorylation in the mitochondria can't operate at top speed.
+
+Similarly, a deficiency of magnesium doesn't allow the heart to fully relax between contractions.
+
+We discussed this diastolic dysfunction previously in Chapter 2, The Basics of Cardiac Physiology.
+
+Magnesium deficiency has been implicated in hypertension, ischemic heart disease, congestive heart failure, arrhythmias, angina, sudden cardiac death, atherosclerosis, mitral valve prolapse, cerebrovascular disease, and stroke.
+
+It's also been linked to preeclampsia and eclampsia, asthma, insulin resistance and diabetes, metabolic syndrome, osteoporosis, and even colon cancer.
+
+Alpha-Lapoic Acid Alpha-Lapoic acid, ALA, is a molecule found in the mitochondria.
+
+Under optimal conditions, the body can manufacture sufficient amounts for its metabolic functions.
+
+It's a cofactor for the enzymes catalyzing the final stages of glycolysis, from which the resulting compounds can enter the TCA cycle.
+
+However, additional ALA provided by supplements allows it to circulate in a free state, where it has the ability to function as both a water and fat-soluble antioxidant.
+
+This is unique because most antioxidants are effective in only one area or the other.
+
+Vitamin C, for example, is usually restricted to the interior cytosolic, watery, compartment of cells, while vitamin E works at the level of the fatty cell membranes.
+
+Further, ALA has an important role in the production of glutathione, one of the primary antioxidants produced directly by the body.
+
+Where ALA surpasses other conventional antioxidants is that it is targeted to the mitochondria.
+
+Most other antioxidants can't effectively concentrate at the level of the mitochondrion, and so are almost meaningless in their ability to support the most important generator of free radicals.
+
+ALA and its role in NAD biology Another benefit of ALA is its ability to modulate the state of the energy carrier nicotinamide adenidinucleotide, NAD.
+
+For example, when exposed to high levels of glucose, cells are not able to properly discharge NADH, the electron-carrying form, to NAD positive, its free form.
+
+The resulting imbalance of NADH to NAD positive creates an undesirable situation in the cell.
+
+First, the cell is denied access to the free NAD positive.
+
+It needs this for a number of essential functions, including the proper uptake and utilization of glucose and protein for fuel.
+
+Second, the excess NADH leads to free radical damage through two distinct mechanisms.
+
+Excess NADH causes a breakdown of the cell's iron stores, accelerating the production of free radicals.
+
+However, even more concerning is that excess NADH, in the absence of sufficient numbers of ETCs, causes the mitochondria to become backed up with excessive electrons.
+
+Remember, NADH enters the ETC at complex one, and this is the primary location where excess electrons are fumbled, react with oxygen, and generate superoxide radicals.
+
+ALA resolves this metabolic mess by helping to restore the balance of the two forms of NAD.
+
+There's also another way that ALA can modulate the NADH-NAD-positive ratio and even influence the aging process at the cellular level, through the activation of a class of genes known as sirtuins.
+
+These genes have been shown to be important anti-aging genes in a wide range of organisms, including humans.
+
+Sirtuins are involved in the regulation of energy metabolism and longevity.
+
+In fact, the activation of sirtuins might be responsible for the broad-acting anti-aging effects of calorie restriction, which is so far the only proven way to slow down biological aging in mammals.
+
+As it turns out, the availability of NAD-positive is critical to the anti-aging effects of sirtuins, while excessive NADH inhibits them.
+
+If ALA can boost the cellular levels of free NAD-positive while lowering NADH, it might be able to facilitate sirtuins' anti-aging activity, providing a second pathway whereby ALA could influence the aging process.
+
+Further, some exciting animal research has shown that supplementing the diet with ALA, especially when combined with acetyl-l-carnitine, can have profound anti-aging benefits by restoring youthful activity levels, cognitive performance, and heart function.
+
+R-positive alpha-lipoic acid and its stability I'll add just a couple of quick notes on the types of nutritional supplements you will find on the market.
+
+The body can only use one form, what we call the R-positive form.
+
+Many commercial ALA products are synthetic, and they contain the inactive S-negative isomer in equal parts to the biologically active R-positive isomer, which means you're only getting 50% of the possible biological activity from the product.
+
+Also, ALA is not stable at room temperature for long.
+
+What happens is that elevated temperatures cause ALA molecules to polymerize, link together to form chains, and this form doesn't seem to be absorbable.
+
+For this reason, a stabilized R-positive ALA product, or one that is sold from the fridge and stored in the fridge at home, is best.
+
+At the very least, definitely avoid exposing ALA to any sources of heat, such as leaving the bottle in your car on a hot summer day.
+
+Creatine Most people think of creatine simply as a supplement that bodybuilders and other athletes use to gain strength and muscle mass.
+
+While it does provide these benefits, a substantial body of evidence has found that it has a wide variety of other health benefits too.
+
+In fact, creatine is being studied as a nutritional therapy that might help with diseases affecting the neuromuscular system, such as muscular dystrophy, Huntington's disease, Parkinson's disease, and even ALS.
+
+Other studies suggest creatine might have therapeutic benefits for wasting syndromes and muscle atrophy in the aging population, fatigue and fibromyalgia, and some brain-related disorders.
+
+What is creatine?
+
+The human body creates creatine from the amino acids methionine, glycine, and arginine.
+
+On average, a person's body contains about 120 grams of creatine stored in the form of creatine phosphate, also known as phosphocreatine.
+
+Certain foods, such as beef and fish, have a relatively high creatine content.
+
+Creatine is directly related to ATP.
+
+When a cell uses ATP, it loses a phosphate molecule and becomes ADP, which must be converted back to ATP for useful energy cycling.
+
+Because creatine is stored in the body as creatine phosphate, it can donate a phosphate molecule to ADP to regenerate ATP.
+
+This process is very speedy and is the main source of cellular energy production at the start of high-intensity anaerobic activity, such as a 100-meter sprint or lifting heavy weights.
+
+Having a large pool of creatine phosphate means this fast pathway of ATP regeneration can be sustained longer, which is exactly why creatine has been so beneficial for athletes.
+
+A significant body of research has shown that administering supplemental creatine, usually as creatine monohydrate, can increase the total body pool of creatine phosphate.
+
+Although this increase leads to positive outcomes for energy generation and performance during explosive anaerobic forms of exercise, the benefits of creatine in longer duration activities and sports, such as long-distance running, rowing, and swimming, are questionable at this time.
+
+Of course, when you consider the biochemistry, creatine's benefits and lack of benefits in certain situations make sense.
+
+Creatine and the Brain Because the brain and nervous system require such high amounts of energy, it's logical to assume the neurological system can benefit greatly from creatine, and this is being corroborated by clinical research.
+
+A growing number of studies have found that creatine can protect the brain from neurotoxic agents and certain forms of brain injury.
+
+Studies have found creatine to be highly neuroprotective against various neurotoxic agents, including MPTP, a chemical that impairs energy production in brain cells, and has been used in lab animals to induce Parkinson's.
+
+Other studies have found that creatine protected nerve cells from ischemia-related damage similar to what is often seen after a stroke.
+
+Impressive?
+
+The neurological benefits don't stop there.
+
+As mentioned earlier, other studies have found that creatine can play a therapeutic or protective role in Huntington's disease and ALS.
+
+Research is promising.
+
+All this could be just the tip of the iceberg.
+
+Creatine and Neuromuscular Diseases One of the most promising areas of research for creatine is its effect on neuromuscular diseases such as muscular dystrophy, where researchers found a mild but significant improvement in muscle strength.
+
+Patients' everyday activities were also generally improved, and the supplemental creatine was well tolerated.
+
+Creatine and Heart Health Cardiac cells are also dependent on large amounts of ATP to function properly, and studies show that creatine levels are depressed in patients with heart failure.
+
+It is well known that people suffering from chronic heart failure have limited endurance and strength and tire easily, which greatly limits their ability to function in everyday life.
+
+Therefore, researchers have looked at supplemental creatine to improve heart function and overall endurance in certain forms of heart disease.
+
+While the results are not entirely conclusive at this point, clinical studies have shown increases in strength and endurance in heart failure patients.
+
+B vitamins Of all the nutrients defined as true vitamins, the ones that have the greatest direct impact on cellular metabolism and energy production are collectively known as the B vitamins.
+
+This group is made up of numerous distant nutrients, and each is either a cofactor in an important metabolic process or a precursor of an important energy-related molecule.
+
+Vitamin B1 Vitamin B1 is also known as thiamine, and the active form is called thiamine pyrophosphate, TPP.
+
+TPP functions in carbohydrate metabolism to help convert pyrophate to acetyl-CoA for entry to the TCA cycle and subsequent steps to generate ATP.
+
+Because of this role, thiamine also functions in maintaining the nervous system, memory, and heart muscle health.
+
+A deficiency of thiamine causes a condition known as berry-berry, which is now predominantly seen only in alcoholics.
+
+Thiamine deficiency also results from excessive vomiting and often goes unrecognized until the symptoms are dramatic, and by then might be irreversible.
+
+The major symptoms of berry-berry involve the brain and nervous system, heart, and muscles, all energy-intense organs.
+
+Brain-related effects include sensory disturbances and impaired memory.
+
+When berry-berry affects the heart, symptoms are shortness of breath, palpitations, and eventually, heart failure.
+
+Dietary thiamine requirements are based on coloreal intake.
+
+Those individuals who consume more calories, such as athletes, are likely to require a higher-than-average intake of thiamine to help convert the extra carbohydrates into energy.
+
+Vitamin B2 Riboflavin, also known as vitamin B2, is a major component of the cofactors FMN, also known as riboflavin-5-phosphate in complex 1, and FAD in complex 2.
+
+The major role of FAD in the mitochondria is to shuttle energy electrons from the TCA cycle and beta-oxidation to complex 2 of the ETC.
+
+Because both complex 1 and 2 pass their electrons to complex 3 via CoQ10, for patients with a complex 1 deficiency, riboflavin might theoretically help bypass this problem by channeling the flow of electrons through complex 2.
+
+Vitamin B3 Vitamin B3 comes in different forms.
+
+Niacinamide, also called nicotinamide, and niacin, nicotinic acid, are the predominant forms found in supplements.
+
+Based on numerous clinical trials, niacin, but not niacinamide, appears to be a relatively safe, inexpensive, and effective treatment for high LDL and low HDL cholesterol.
+
+On the other hand, niacinamide, but not niacin, has been investigated for the prevention and delay of type 1 diabetes and as a treatment for osteoarthritis.
+
+Back in 2001, NASA scientists found traces of vitamin B3 in meteorites, adding support to the theory that life on Earth was seeded by extraterrestrial sources.
+
+Vitamin B3's importance to life is apparent when we consider that it is the precursor of the biological molecules NAD-positive and NADH, see alphalopoic acid.
+
+Without NAD-positive and NADH, mitochondria would not function in the way they do, and a major percentage of ATP would not be produced.
+
+As a precursor to NAD-positive, vitamin B3 is perhaps the single greatest nutrient for NAD biology.
+
+As the rate limiting co-substrate for the certuant enzymes, NAD modulation is emerging as a valuable tool in regulating certuant fluctuation, and, consequently, oxidative metabolism and protection against metabolic diseases.
+
+Recently, more biologically efficient forms of vitamin B3 have emerged.
+
+For example, nicotinamide riboside currently appears as the most efficient precursor of NAD-positive and NADH.
+
+Nicotinamide riboside is found naturally in trace amounts in milk and other foods, and is a more potent version of niacin and niacinamide, because it enters the biochemical pathway after the rate limiting step in NAD synthesis.
+
+Related to its role in energy metabolism and increased activity of mitochondria, interest is growing in the use of vitamin B3 for the treatment of neuropathies and neurodegenerative diseases, diabetes, cancers, and inflammation.
+
+Other benefits include increased fatty acid oxidation, resistance to the negative consequences of high-fat diets, antioxidant protection, prevention of peripheral neuropathy, and reduction of muscle degeneration.
+
+Vitamin B5 Vitamin B5 is known as pantothenic acid, or pantothene, the latter being the coenzyme form.
+
+It has a very important role in the body as a precursor of coenzyme A, coA, which is essential for the metabolism of carbohydrates, the synthesis/degradation of fats, and the synthesis of sterols, which produce steroid hormones, including melatonin.
+
+It is also important for the synthesis of the neurotransmitter acetylcholine, important for memory, and heme, a component of hemoglobin, which carries oxygen for oxidative phosphorylation to the cells, which I will discuss in the next section, iron.
+
+Detoxification of many drugs and toxins requires coA in the liver.
+
+However, specific to cellular energy metabolism, coA is what allows the end product of glycolysis, pyruvate, to enter the cycle.
+
+Therefore, as a precursor of coA, vitamin B5 plays a critical role in allowing energy production to occur through aerobic metabolism in the mitochondria, and not just anaerobic metabolism in the cytosol.
+
+Vitamin B6 Vitamin B6 is also known as pyridoxine, and pyridoxyl-5-phosphate is its active form.
+
+It's necessary for the proper function of over 70 different enzymes that participate in energy metabolism, among other things.
+
+It is also involved in the synthesis of neurotransmitters in the brain and nerve cells, and it might support mental function, mood, and nerve conduction.
+
+It might also improve emotional outlook and mood through serotonin synthesis.
+
+It is necessary for hemoglobin synthesis and red blood cell growth, which is critical for proper delivery of oxygen to the mitochondria.
+
+Vitamin B12 Vitamin B12, also known as cobalamin, is the only vitamin containing a trace mineral, cobalt.
+
+The two metabolically active forms are methylcobalamin and adenosylcobalamin.
+
+The latter is the predominant form found in the mitochondria.
+
+Cobalamin owes its name to the cobalt at the center of its molecular structure.
+
+Although humans require cobalt, it's only assimilated in the form of vitamin B12, not free cobalt, which can be toxic.
+
+Cobalamin is found in a variety of foods, such as fish, shellfish, meat, eggs, and dairy products.
+
+But negligible amounts are found in vegetarian sources, which is why it's important for strict vegetarians and vegans to be aware of their vitamin B12 status.
+
+Also, the absorption of vitamin B12 requires another compound called intrinsic factor for absorption.
+
+Vitamin B12 plays an important role in supplying essential methyl groups for protein and DNA synthesis, and has numerous functions.
+
+However, for the mitochondria, vitamin B12 is involved in several important metabolic processes, including the generation of S. adenosylmethionine, SAME, which is important for cell function and survival.
+
+In turn, SAME has a number of functions itself, but also supports the formation of creatine, the precursor of creatine phosphate, as discussed earlier.
+
+It's also a part of various protein subunits that make up the complexes in the ETC.
+
+These last two reasons are likely why many people who receive vitamin B12 injections often report increased levels of energy afterward.
+
+Iron Iron is an essential mineral and an important component of proteins involved in oxygen transport and metabolism.
+
+Heme, which is the major functional form of iron, is synthesized by the mitochondria.
+
+Heme is a critical component of hemoglobin, which is present in red blood cells and picks up oxygen as it travels through the lungs, delivering it to the cells.
+
+Heme also makes up myoglobin, which is similar to hemoglobin but is found in skeletal muscles.
+
+Heme is also an essential component of various proteins within the complexes of the ETC, along with cobalt, discussed in vitamin B12.
+
+Studies have shown that when heme metabolism is disrupted, the result is mitochondrial decay, oxidative stress, and iron accumulation, all of which are hallmarks of aging.
+
+Biosynthesis of heme requires vitamin B2, B5, B6, biotin, alpha-lipoic acid, and the minerals zinc, iron, and copper.
+
+These nutrients are essential for the production of succinyl-CoA, the precursor of heme, by the TCA cycle.
+
+Therefore, the mitochondrial pool of succinyl-CoA might limit heme biosynthesis when nutrient deficiencies exist, especially iron.
+
+The World Health Organization considers iron deficiency to be the largest international nutritional disorder.
+
+Approximately 50% of anemia worldwide is attributable to iron deficiency, and it's particularly common among women of childbearing ages.
+
+If you're deficient in iron, not only do you have reduced capacity in the blood to deliver a critical substrate of oxidative phosphorylation, oxygen, but the functioning of your mitochondria in general could be compromised due to a potential reduction in the number of ETC complexes in operation.
+
+Iron deficient people often report an increase in energy once their deficiency is corrected.
+
+A word of caution, and a critical one at that, don't supplement with iron unless you need to take iron according to a blood test.
+
+Too much iron can increase the free radical burden within the body and lead to a number of health conditions.
+
+Iron accumulation has been linked to neurodegenerative diseases such as Parkinson's and Alzheimer's, and can even result in death.
+
+It is not uncommon for children to overdose on iron.
+
+Just like everything else in life, moderation is key.
+
+Resveratrol and Terastilbine Resveratrol, the compound made famous by the French paradox, has been receiving significant interest from the scientific community for its anti-aging benefits.
+
+While its popularity as a supplement has decreased since its peak, the scientific community continues its investigations.
+
+Scientists have also discovered another closely related compound called Terastilbine, and this is likely the next resveratrol that will be highly sought after at your local health food store.
+
+Terastilbine is mainly found in blueberries, but also in grapes and the bark of the Indian Keno tree used for centuries in Ayurvedic medicine, traditional medicine in India.
+
+Resveratrol and Terastilbine are closely related and classified as "still-bean" compounds.
+
+Due to the similarity in their chemical structure, they have similar functions, but they are not identical.
+
+What's interesting, however, is that these two compounds work in a synergistic fashion.
+
+Terastilbine produces its beneficial effects on gene expression in ways that enhance those produced by resveratrol.
+
+One of the major benefits of resveratrol and terastilbine is the ability to mimic many of the beneficial effects of calorie restriction, discussed in the following section in detail by favorably regulating genes involved in the development of cancers, atherosclerosis, diabetes, and the system-wide inflammation that underlies a variety of age-related disorders.
+
+Research has found that resveratrol activates genes near the start of the molecular cascade precipitated by caloric restriction, while terastilbine directly activates genes downstream from resveratrol's action.
+
+This synergistic and complementary action might help prevent cancers and diabetes, support healthy blood lipids, and produce longevity-promoting effects across the cycle of gene expression.
+
+Whether we're talking about the fat-sensing complexes found to favorably affect lipid profiles, modifying several vital glucose-regulating enzymes, which help to control blood sugar, reducing the production of inflammatory mediators, or upregulating specific brain proteins associated with improved memory, terastilbine produces beneficial changes almost identical to those seen in calorie restriction.
+
+Of course, many of these benefits relate back to the humble mitochondria.
+
+Turning on or off our genetic light switches.
+
+Promising research into resveratrol and terastilbine has revealed that their benefits are not due to their being antioxidants, although they seem to have this effect in a test tube, but instead are due to their ability to turn on or off certain genes.
+
+Many people who learned about genetics decades ago still view genes as fixed units of information that are inherited from our parents and determine physical characteristics, such as eye color.
+
+As our understanding of genetics expands rapidly, what's apparent is that we can actually modify the meaning behind those genes.
+
+This process is known as gene expression, the study of which is called epigenetics.
+
+The process occurs when stimuli originating from within or outside our bodies, for example diet, environmental toxins, or endogenous factors such as stress, sleep patterns, switch certain genes on or off.
+
+In epigenetics, the goal of manipulating various nutrients and lifestyle factors is to switch on protective genes and switch off harmful ones.
+
+This is one of the most exciting areas of medical research today.
+
+Ketogenic diets and calorie restriction.
+
+Ketone bodies, herein also referred to simply as ketones, are three water soluble compounds that are produced as byproducts when fatty acids are broken down for energy in the liver.
+
+These ketones can be used as a source of energy themselves, especially in the heart and brain, where they are a vital source of energy during periods of fasting.
+
+The three endogenous ketones produced by the body are acetone, acetoacetic acid, and beta-hydroxybutyric acid, which is the only one that's not technically a ketone, chemically speaking.
+
+They can be converted to acetyl-CoA, which then enters the TCA cycle to produce energy.
+
+Fatty acids are so dense in energy, and the heart is one of the most energy-intensive organs, so under normal physiologic conditions, it preferentially uses fatty acids as its fuel source.
+
+However, under ketonic conditions, the heart can effectively utilize ketone bodies for energy.
+
+The brain is also extremely energy-intensive and usually relies on glucose for its energy.
+
+However, when glucose is in short supply, it gets a portion of its energy from ketone bodies.
+
+For example, during fasting, strenuous exercise, low-carbohydrate, ketogenic diet, and in neonates.
+
+While most other tissues have alternate fuel sources besides ketone bodies when blood glucose is low, the brain does not.
+
+For the brain, this is when ketones become essential.
+
+After three days of low blood glucose, the brain gets 25% of its energy from ketone bodies.
+
+After about four days, this jumps to 70%.
+
+In normal healthy individuals, there is a constant production of ketone bodies by the liver and utilization by other tissues.
+
+Their excretion in urine is normally very low and undetectable by routine urine tests.
+
+However, as blood glucose falls, the synthesis of ketones increases, and when it exceeds the rate of utilization, their blood concentration increases, followed by increased excretion in urine.
+
+This state is commonly referred to as ketosis, and the sweet, fruity smell of acetone in the breath is a common feature of ketosis.
+
+Historically, the sweet smell was linked to diabetes, and ketones were first discovered in the urine of diabetic patients in the mid-19th century.
+
+For almost 50 years thereafter, they were thought to be abnormal and undesirable byproducts of incomplete fat oxidation.
+
+In the early 20th century, however, they were recognized as normal circulating metabolites produced by the liver and readily utilized by the body's tissues.
+
+In the 1920s, a drastic, hyperketogenic diet was found to be remarkably effective for treating drug-resistant epilepsy in children.
+
+In 1967, circulating ketones were discovered to replace glucose as the brain's major fuel during prolonged fasting.
+
+Until then, the adult human brain was thought to be entirely dependent upon glucose.
+
+During the 1990s, diet-induced hyperketonymia, commonly called nutritional ketosis, was found to be therapeutically effective for treating several rare genetic disorders involving impaired glucose utilization by nerve cells.
+
+Now, growing evidence suggests that mitochondrial dysfunction and reduced bio-energetic efficiency occur in brains of patients with Parkinson's disease and Alzheimer's disease.
+
+Since ketones are efficiently used by brain mitochondria for ATP generation and might also help protect vulnerable neurons from free radical damage, ketogenic diets are being evaluated for their ability to benefit patients with Parkinson's and Alzheimer's diseases and various other neurodegenerative disorders, with some cases reporting remarkable success.
+
+There are various ways to induce ketosis, some easier than others.
+
+The best way is to use one of the various ketogenic diets, for example, classic, modified Atkins, MCT or coconut oil, low glycemic index diet, but calorie restriction is also proving its ability to achieve the same end results when carbohydrates are limited.
+
+Features of Chloric Restriction There are a number of important pieces to Chloric Restriction.
+
+First and the most obvious is that Chloric Intake is most critical.
+
+Typically, calories are restricted to about 40% of what a person would consume if food intake was unrestricted.
+
+For mice and rats, calorie restriction to this degree results in very different physical characteristics, size and body composition, then those of their control-fed counterparts.
+
+Regarding life extension, even smaller levels of Chloric Restriction, a reduction of only 10-20% of unrestricted calorie intake, produced longer-lived animals and disease prevention effects.
+
+In April of 2014, a 25-year longitudinal study on resus monkeys showed positive results.
+
+The benefit of this study was that it was a long-term study done in primates, humans closest relatives, and confirms positive data we previously saw from yeasts, insects and rodents.
+
+The research team reported that monkeys in the control group, allowed to eat as much as they wanted, had a 2.9-fold increased risk of disease, for example diabetes, and a 3-fold increased risk of premature death compared to calorie-restricted monkeys who consumed a diet with 30% less calories.
+
+If other data from studies on yeasts, insects and rodents can be confirmed in primates, it would indicate that calorie restriction could extend lifespan by up to 60%, making a human lifespan of 130 to 150 years a real possibility, without fancy technology or supplements or medications.
+
+The clear inverse relationship between energy intake and longevity links its mechanisms to mitochondria, energy metabolism and free radical production.
+
+Second, simply restricting the intake of fat, protein or carbohydrates without overall calorie reduction does not increase the maximum lifespan of rodents.
+
+It's the calories that count, not necessarily the type of calories, with the exception of those trying to reach ketosis, where type of calorie does count.
+
+Third, calorie restriction has been shown to be effective in disease prevention and longevity in diverse species.
+
+Although most caloric restriction studies have been conducted on small mammals like rats or mice, caloric restriction also extends lifespan in singled cell protozoans, water fleas, fruit flies, spiders and fish.
+
+It's the only method of life extension that consistently achieves similar results across various species.
+
+Fourth, these calorie restricted animals stay biologically younger, longer.
+
+Experimental mice and rats extended their youth and delayed even prevented most major diseases, for example, cancers, cardiovascular diseases.
+
+About 90% of the age-related illnesses studied remained in a younger state for a longer period in calorie restricted animals.
+
+Calorie restriction also greatly delayed cancers, including breast, colon, prostate, lymphoma, renal diseases, diabetes, hypertension, hyperlipidemia, lupus, and autoimmune hemolytic anemia and a number of others.
+
+Fifth, calorie restriction does not need to be started in early age to reap its benefits.
+
+Initiating it in middle-aged animals also slowed aging.
+
+This is good news for humans because middle age is when most of us begin to think about our own health and longevity.
+
+Of course, the benefits of calorie restriction relate back to mitochondria.
+
+Fewer calories mean less fuel as electrons entering the ETC and a corresponding reduction in free radicals.
+
+As you know by now, that's a good thing.
+
+Health Benefits As just discussed, new research is showing that judicious calorie restriction and ketogenic diets, while preserving optimal nutritional intake, might slow down the normal aging process and in turn boost cardiovascular, brain, and cellular health.
+
+But how?
+
+We can theorize that the restriction results in fewer free radicals, but one step in confirming a theory is finding its mechanism.
+
+In particular, researchers have identified the beneficial role of beta-hydroxybutyric acid, the one ketone body that's not actually a ketone.
+
+It is produced by a low-calorie diet and might be the key to the reduced risk of age-related diseases seen with calorie restriction.
+
+Over the years, studies have found that restricting calories slows aging and increases longevity, but the mechanism behind this remained elusive.
+
+New studies are showing that beta-hydroxybutyric acid can block a class of enzymes called histone deacetylases, which would otherwise promote free radical damage.
+
+While additional studies need to be conducted, it is known that those following calorie-restricted or ketogenic diets have lower blood pressure, heart rate, and glucose levels than the general population.
+
+More recently, there has been a lot of excitement around intermittent fasting as an abbreviated method of achieving the same end results.
+
+However, self-prescribing a calorie-restricted or ketogenic diet is not recommended unless you've done a lot of research on the topic and know what to do.
+
+If not done properly, these diets can potentially increase mental and physical stress on the body.
+
+Health status should be improving, not declining, as a result of these types of diets, and when not done properly, these diets could lead to malnutrition and starvation.
+
+Healthcare practitioners also need to properly differentiate a patient who is in a deficiency state of anorexia or bulimia versus someone in a healthy state of ketosis or caloric restriction.
+
+I'll add a final word of caution.
+
+While ketogenic diets can be indispensable tools in treating certain diseases, their use in the presence of mitochondrial disease at this point is controversial and depends on the individual's specific mitochondrial disease.
+
+In some cases, a ketogenic diet can help; in others, it can be deleterious.
+
+So, of all the therapies listed in this book, the one for which I recommend specific expertise in its application is this diet and only after a proper diagnosis.
+
+Diabetes As previously discussed, diabetes and insulin resistance are huge and growing problems in our society, and new research on them points back to the mitochondria.
+
+As we age, our mitochondria deteriorate, which means that the rates of fat oxidation and subsequent production of energy also slow down.
+
+This slow down predisposes us to fat accumulation in muscle and, possibly, in the liver, two organs sensitive to insulin.
+
+It also means the mitochondria in the beta cells, the cells in the pancreas responsible for insulin production and secretion, slow down and diminish in health over time.
+
+Beta cell dysfunction then results in impaired glucose tolerance and then, ultimately, type 2 diabetes.
+
+The great news is that this downward spiral can be stopped, perhaps even reversed, by a combination of calorie restriction and exercise.
+
+A study published in 2007 found that middle-aged obese diabetics who cut their calorie intake by 25% and did moderate intensity exercise, like walking, on most days for four months, boosted their mitochondrial density by 67%, which ultimately improved their insulin sensitivity by 59%.
+
+Another pilot study published in 2011 showed that an extreme calorie-restricted diet, only 600 kilocalories per day, for eight weeks reversed diabetes in 100% of the study's participants.
+
+This pilot study has single-handedly altered our understanding of type 2 diabetes, which was thought to be a lifelong, irreversible condition.
+
+What's more is that 64% of the subjects in the study remained diabetes-free three months after the end of dietary intervention.
+
+Perhaps as a consequence of the reduction in fat content, the pancreas was found to regain its normal ability to produce insulin and muscles and liver once again became sensitive to insulin.
+
+As a result, blood sugar levels after meals began to improve steadily.
+
+Additionally, a study out of Hamilton, Ontario, Canada, published in March 2017 confirmed these results.
+
+This study, involving 83 diabetic participants, found that just four months of intensive metabolic intervention, calorie restriction and exercise, not only resulted in amazing results to blood sugar and body weight during the study's intervention period, but over 40% of participants continued to be diabetes-free 12 weeks after the end of the metabolic intervention.
+
+Given these results in a growing number of studies, it appears that soon we might need to reclassify diabetes as a metabolic disease rather than an endocrine disorder.
+
+It's not insulin resistance that's the root of the problem, but poor mitochondrial health and metabolism.
+
+This gives immeasurable hope to those with the condition.
+
+Of course, the results of these pilot studies need to be replicated in much larger clinical trials, but the new data we're seeing is extremely exciting and potentially paradigm-shifting.
+
+Ketones and Cancer Exciting research also continues into the use of a ketogenic diet as a drug-free cancer treatment, or an adjunct to conventional treatment.
+
+The diet calls for eliminating carbohydrates and replacing them with healthy fats and proteins, a modified Atkins diet.
+
+The premise is that because cancer cells need glucose and carbohydrates to thrive, eliminating these two things literally starves the cancer cells.
+
+Calorie restriction also works to reduce cancer risk in the first place.
+
+Though there are other ways calorie restriction works to improve mitochondrial and cellular health, such as by activating CER2-1, blocking histone deacetylases, the simplest way to explain how it reduces cancer risk is that less calories consumed means less electrons entering the ETC.
+
+This area is seeing a significant amount of scientific and clinical attention, and the sections I dedicated to these two diets obviously don't do it justice, and thus I encourage you to learn more on your own.
+
+Most people eat more calories daily than physiologically necessary, so dropping some calories from the diet should be a real consideration for most.
+
+While many scientists have believed for many years that adopting a low-calorie diet while still maintaining proper nutrition could delay the effects of aging, they've only recently found out why.
+
+Expect more studies to be published focused on this topic.
+
+Be mindful of your standard diet and consider cutting things back slowly while continuing to ensure all your nutritional needs are met.
+
+It's never too late to start, although the earlier, the better.
+
+Besides, I think everyone would welcome a 30% savings off their grocery bill, and side benefits to the planet also include better food security and less need for genetically modified organisms if you believe Big Agra's propaganda that GMOs are the answer to feeding a ballooning global population.
+
+For those who are interested in more information, I'd suggest the books The Alzheimer's antidote, using a low-carb high-fat diet to fight Alzheimer's disease, memory loss, and cognitive decline by Amy Berger, Chelsea Green 2017, and Keto for Cancer, Ketogenic Metabolic Therapy as a Targeted Nutritional Strategy by Miriam Kolomian, Chelsea Green 2017.
+
+Massage and Hydrotherapy An interesting study from Hamilton, Ontario, Canada, found that therapeutic massage can increase the biomarkers of mitochondrial biogenesis.
+
+In addition, it was previously thought impossible to increase brown adipose tissue, BAT, because we assumed only newborns and young children had it.
+
+This has changed as we recently discovered that BAT is present and active in adults, where it is situated predominantly around the aorta and in the supraclavicular area, neck area.
+
+BAT volume and activity are lower in individuals who are obese, which might confirm the theory that BAT significantly contributes to total energy expenditure.
+
+What's more, however, is that various ways in which BAT can be manipulated to increase the expenditure of energy have been identified.
+
+It has been shown that white adipose tissue, WAT, can undergo a process known as browning, where it takes on characteristics of BAT.
+
+This happens with physiological or biochemical stimulation, such as chronic cold exposure, hormonal stimuli, or pharmacological treatment.
+
+These inducible brown fat cells, also known as beige fat, normally have low thermogenesis activity and a lower number of mitochondria.
+
+However, once activated, they possess many biochemical and morphological features of BAT, such as the presence of multicellular lipid droplets, an abundance of mitochondria, mitochondrial biogenesis, and higher levels of uncoupling protein 1.
+
+Methods on how to achieve this include repeated and/or chronic exposure to cold temperatures, such as being out in the cold more during winter months, turning down the thermostat in your home in the winter, or a number of other methods, such as are traditionally done in hydrotherapy.
+
+A study published in the summer of 2014 found that sleeping with the temperature set at 19 degrees Celsius (66 degrees Fahrenheit) versus 24 degrees Celsius (75 degrees Fahrenheit) induced BAT in an adult population, and consequently improved insulin sensitivity and glucose metabolism.
+
+What an easy way to save on your winter heating bills and simultaneously do something great for your health.
+
+Going from hot sauna to cold shower repeatedly could increase BAT over time.
+
+Similarly, just finishing your shower with a cold rinse could do the same.
+
+However, neither of these suggestions has been specifically proven in a clinical setting, and I think more research needs to be done to confirm hydrotherapy's effects on mitochondria and BAT, or uncoupling protein 1 production.
+
+But it does seem encouraging.
+
+In fact, I expect lots of research to be done in this area in the coming years as inducing BAT is a major target in anti-obesity research.
+
+Cannabis and Phytocannabinoids I believe science and research are finally shifting people's opinion about cannabis, and with legalization efforts in Canada and a number of U.S. states, we're seeing a much greater acceptance of this botanical.
+
+After many decades of prohibition-style propaganda, the truth is bubbling to the top, and I expect a significant amount of research on the health benefits of cannabis to come to light.
+
+For mitochondrial health, the research on cannabis is still in its early stages, but it shows great promise.
+
+Present in all mammals, the endocannabinoid system, ECS, is considered the master regulator of homeostasis in the body, and we all produce our own cannabinoid compounds called endocannabinoids.
+
+These compounds work in the same way as the phytocannabinoids found in nature, such as those in the cannabis plant.
+
+When our body can't produce enough endocannabinoids to meet its needs, phytocannabinoids become increasingly important.
+
+In 2012, French scientists discovered that mitochondria contained cannabinoid receptors on their membranes.
+
+This revelation laid the groundwork for successive investigations into the role of the ECS in regulating mitochondrial activity.
+
+Since the ability to conduct research into this incredible plant has become easier, scientific evidence is showing that cannabidiol, CBD, and tetrahydrocannabinol, THC, the two main phytocannabinoids from the cannabis plant, can directly and indirectly impact the mitochondria.
+
+It is not that many of the biological processes that involve mitochondria are modulated by endo- and phytocannabinoids.
+
+On the surface, research on cannabinoids often shows contradictory results.
+
+Cannabinoids are notorious for exerting opposite effects under different situations.
+
+CBD and THC have been shown to balance physiological excesses as well as deficiencies.
+
+A small dose of cannabis stimulates while a large dose tends to sedate.
+
+Phytocannabinoids can destroy cancer cells but leave healthy cells alone.
+
+While these aspects might be expected by those who know the modulating or balancing effects of cannabinoids, newer research is revealing how the mitochondria can answer these and other confusing aspects of the ECS.
+
+Cannabinoids are known to promote homeostasis through various bi-directional pathways.
+
+While most drugs have a fairly linear dose response curve, a higher dose causes a stronger effect.
+
+Cannabinoids have a biphasic dose response curve.
+
+A biphasic effect means two opposite responses are possible from a single compound.
+
+This is not uncommon, especially among cannabinoids.
+
+For example, low doses of THC tend to increase mitochondrial activity while higher doses tend to decrease mitochondrial activity.
+
+Typically, these biphasic effects of cannabinoids depend on the strength of the signal, dose, as well as the context in which the signal is overlaid, what else is going on in the mitochondria and cell.
+
+This might seem reminiscent of the free radical signal discussion earlier in the book, in the section "A Radical Signal".
+
+In fact, growing evidence suggests that crosstalk between the ECS and the free radical signaling systems acts to modulate functionality of both the ECS and Redox homeostasis.
+
+Further, as just discussed, studies reveal that interactions between the ECS and free radical signaling systems can be both stimulatory and inhibitory, depending on cell stimulus, the source of free radicals, and cell context.
+
+While such crosstalk might act to maintain cell function, abnormalities in either system could propagate and undermine the stability of both systems, thereby contributing to various pathologies associated with their dysregulation.
+
+Other research suggests that THC can inhibit the formation of amyloid plaques in the brain by enhancing mitochondrial function.
+
+Further, CBD has been shown to induce mitochondrial biogenesis and reverse memory loss in animals.
+
+Investigations into CBD's effect on mitochondria have shed light on how it can protect against brain injury by regulating fluctuations in intracellular calcium.
+
+These results could be good news for future stroke victims and might suggest that CBD could reduce the severity of ischemic damage by modulating intracellular calcium ions.
+
+Further, in 2017, a study found that an imbalance of calcium ions in the mitochondria might drive Alzheimer's disease, further strengthening the connection between the benefits of cannabis and this debilitating disease.
+
+The preceding discussion is just a glimpse into some of the research on the two most prominent cannabinoids.
+
+Yet there are many more cannabinoids found in cannabis, as well as many terpenes, another large class of compounds that give cannabis its therapeutic benefits.
+
+In reality, as with all botanical medicines, the whole is greater than the sum of its parts, so I'm excited to see more sophisticated research on the entire plant with its full spectrum of beneficial compounds, including terpenes, instead of just isolated compounds such as THC or CBD.
+
+Epidemiological studies can help and possibly hint at what's going on.
+
+For example, a study published in 2013 confirmed cannabis's benefits to cardiovascular health, insulin levels, HDL cholesterol, and waste circumference, adding significance to previous epidemiological studies that found lower rates of obesity and diabetes in cannabis users.
+
+When we consider the importance of mitochondrial function in these health conditions, and with the new research showing the intricate relationship between the ECS and mitochondria, it's time we shed the stigma around cannabis and embrace it for its health-supportive properties.
+
+Exercise and Physical Activity Exercise and physical activity are the final topic I'll cover, but it is probably the most important when it comes to mitochondrial health.
+
+There is an intriguing paradox here, however.
+
+In recent years, strenuous physical sports such as the ultramarathon, cross-country running, and Ironman triathlon have become increasingly popular around the world.
+
+We've been beaten to death over recent years with the "exercise is healthy" message, and together with our natural predisposition to assume more of something healthy is better, the increasing popularity of these sports should be welcome news.
+
+Unfortunately, that's not the case.
+
+Strenuous or exhaustive exercise-related muscle damage has been associated with a high degree of oxygen consumption and free radical damage, and an increase in the pro-inflammatory mediators as indicated by muscle soreness, swelling, prolonged loss of muscle function, and leakage of muscle proteins and nucleotides, the energy pool into circulation, among other effects.
+
+In addition to the muscles, during exercise, many other tissues can produce high amounts of free radicals, such as the heart, the lungs, and even blood.
+
+So if strenuous exhaustive exercise is not good, and being sedentary is no better, it's sensible that a moderate amount of non-exhaustive exercise is the ticket.
+
+Just as moderation is the key to many, if not all things deemed healthy, exercise is no different.
+
+The beneficial effects of exercise are lost with strenuous or exhaustive exercise, and if inadequate time is given for recovery, things get even worse.
+
+Some scenarios specific to loss of the energy pool were discussed in D-ribos.
+
+The beneficial effects of regular, non-exhaustive physical activity have been known for a long time.
+
+Regular exercise is associated with diverse health benefits, such as reduced threat of cardiovascular diseases, cancers, diabetes, and, in general, a lower risk of all-cause mortality.
+
+An interesting study published in 2014 also showed exercise can lower the risk of age-related macular degeneration.
+
+A separate study also published in 2014 showed that being sedentary ranks higher than smoking, obesity, or high blood pressure as a risk factor for heart disease.
+
+What this latter study would suggest is that a physically active smoker is actually healthier than a sedentary non-smoker.
+
+Yes, exercise is that important.
+
+Yet the problem still remains.
+
+Even moderate intensity, non-exhaustive exercise increases the rate at which free radicals are produced in the mitochondria.
+
+So at least on the surface, all physical activity should be minimized.
+
+Unfortunately, no such luck for the couch potatoes.
+
+The fact that exercise promotes health and longevity is what's been called the exercise paradox.
+
+It is a paradox because exercise induces significant amounts of free radical production.
+
+While this free radical production should have negative effects on the health of mitochondria, it does not.
+
+Moderate levels of physical activity result in moderate levels of free radicals.
+
+Not only does exercise increase the energy demand, which results in mitochondrial fission and biogenesis through signaling from the relative abundance of AMP versus ATP, and various other mechanisms, such as increased expression of PGC1-alpha and PPAR-gamma, but the free radicals that are produced send a signal to the cell, indicating it needs to produce more complexes for the ETC.
+
+As I discussed near the beginning of this book, sometimes free radicals play a key role in cell signaling, as discussed in a radical signal.
+
+In response to this oxidation, the cell realizes that it needs more mitochondria and more ETC within each mitochondrion to be able to meet the energy demands placed on it.
+
+After repeated bouts of moderate intensity exercise, the number of mitochondria per cell has increased, and each mitochondrion has a higher number of ETCs.
+
+The end result of this process is that at rest, which makes up the vast bulk of our modern day, we have an abundant amount of spare capacity in each mitochondrion and in each cell, just like birds.
+
+And so, at rest, those who are physically fit and active produce far fewer free radicals in the mitochondria than sedentary individuals do.
+
+During physical activity, physically fit and active people also produce more energy, translated as improved physical performance, while producing much fewer free radicals.
+
+It's a real-life cellular example of needing to take a step back, oxidation, to take two steps forward, improved mitochondrial function and capacity.
+
+And so we have found the best way to be more like birds, discussed in How Did the Birds Do It earlier in Chapter 3.
+
+Flight requires incredible amounts of energy, and over time, birds have developed the bio-energetic capacity to generate that enormous amount of energy.
+
+At rest, they have a vast amount of spare capacity, and because of this, they produce far, far fewer free radicals during the majority of their lives.
+
+The other benefit is that all this physical activity also uses up the ATP.
+
+If we don't use up the ATP, we end up with a backlog of energy, and the electrons in ETC will overflow and create free radicals.
+
+However, unlike a situation where free radicals are produced in the presence of abundant ATP that's not being used, which has no benefit in stimulating mitochondrial biogenesis, free radicals produced in combination with insufficient ATP does trigger mitochondrial biogenesis.
+
+So ensuring regular physical activity addresses both sides of the coin, increasing the number of mitochondria to create spare capacity, and using up ATP to prevent a backlog and overflow of electrons in the ETC.
+
+The resulting mitochondrial biogenesis is the reason exercise has been linked to improvements in cardiovascular health, cognitive health, psychological well-being, lower diabetes risk, healthy muscles and bones, cancer prevention, reduced risk of premature death from all-cause mortality, and longevity.
+
+Movement is medicine is a catchphrase we should all live by.
+
+Cognitive Health and the New Frontier for Physical Activity While much research has been conducted over the years on the cardiovascular benefits of exercise, so much, in fact, that I've decided against discussing in here.
+
+Recent years have seen a focus on brain and cognitive function take center stage with an aging population.
+
+Both resistance and aerobic training have been shown to improve different types of memory, executive functioning and functional plasticity.
+
+It's been known for decades that aerobic exercise can increase the number of mitochondria in your muscle cells by up to 50% in as little as six weeks.
+
+To get the benefit, however, you need to do aerobic exercises such as running, cycling, swimming or walking briskly at an intensity that's at least half of your maximum capacity.
+
+This intensity needs to be sustained for at least 15 to 20 minutes per session, three to four times a week.
+
+One of the most powerful studies on this was published in 2011, where the results showed that aerobic exercise can modify the gene responsible for producing brain-derived neurotrophic factor, BDNF.
+
+The researchers looked at 120 non-demented elderly individuals over a one-year period who either stretched or did aerobics.
+
+Three variables were measured, serum BDNF levels, memory function and an analysis of the size of the hippocampus, part of the brain important for memory and one of the first regions in the brain suffering damage in Alzheimer's.
+
+After one year, the group that did the aerobic exercise had an increase in hippocampus size by about 1%, improvement of memory function and higher levels of serum BDNF.
+
+There is no pharmaceutical that can come even close to providing that much improvement.
+
+Just plain old aerobic exercise improved memory, regenerated the hippocampus and raised BDNF levels, which beyond stimulating nerve growth also stimulates neuroplasticity, fundamental for learning new things and adapting to stress.
+
+In 2013, the Obama administration dedicated $33 million to help pharmaceutical companies develop a drug for Alzheimer's disease prevention.
+
+Little did they know, that drug already exists and it's called aerobic exercise.
+
+Use that $33 million and buy every adult a nice pair of running shoes and send them on a run around their neighborhood, a better spend of tax dollars with an unbelievably high return on investment.
+
+It reminds me of a comic I read where the doctor handed a patient a pill and said, "To prevent a heart attack, take one pill every day and take it out for a run.
+
+Then take it to the gym, then take it for a bike ride."
+
+In an interesting recent study of rats, researchers even found that pregnant rats who swam improved the mitochondrial biogenesis in the brain of their offspring.
+
+It's reasonable to expect this effect would be seen in humans as well, which could have profound benefits in protecting our children from future cognitive decline and cerebral damage.
+
+On the other hand, at least currently, the evidence is inconclusive with respect to the mitochondrial benefits of resistance exercises, such as lifting weights.
+
+In younger individuals, resistance exercises don't seem to result in increased numbers of mitochondria, but a higher mitochondrial count might be seen in older people according to at least one study.
+
+Regardless, resistance exercises have many other benefits, such as preventing sarcopenia or age-related muscle wasting, which is a big concern in older age.
+
+However, the point here is to improve cellular bioenergetics and optimize the mitochondria.
+
+For this reason, aerobic exercise is a must, with resistance exercise highly recommended the older we get.
+
+High-intensity interval training, HIIT, is an exciting area of research.
+
+HIIT is characterized by repeated bursts of intense exercise alternating with brief periods of recovery.
+
+Sports such as hockey, lacrosse, and soccer are great examples of the HIIT style.
+
+HIIT has been shown to be much better and efficient in increasing muscle mitochondrial production and endurance per given volume of exercise when compared to typical aerobic exercises.
+
+Putting it all together So you can see there are many options readily available to most individuals who want to improve the health of their mitochondria.
+
+Not any one therapy is ideal, however, and it seems that the best outcomes are from a combination of numerous therapeutic agents and exercise.
+
+Exercise must always be included in any program targeting mitochondria, especially HIIT.
+
+Other areas getting some current research attention include intermittent hypoxia and intermittent fasting.
+
+We can expect some eye-opening results to come from these studies, and their recommendations are sure to make their way into my personal mitochondrial regimen.
+
+There are many ways to approach developing a mitochondrial regimen, depending on what health objectives you're trying to achieve and what medical history or pre-existing conditions are factors.
+
+Even then, as research shapes my approach, my recommendations and personal mitochondrial regimen could change, and likely will have changed by the time you listen to this.
+
+Mitochondrial medicine is a constantly evolving body of knowledge, and we're learning more about the mitochondrial benefits of different nutrients and botanicals every day.
+
+For example, a really interesting botanical I'm looking into at the moment, gyneostema pentafilum, seems to have powerful benefits for mitochondria by activating AMPK.
+
+G-pentafilum has been shown to enhance mitochondrial biogenesis, reduce body fat and blood sugar, and modulate inflammation.
+
+The field of mitochondrial medicine is exploding, and around the time of writing this book, there seem to be between 200 and 300 related studies published every week, as there were consistently over the last five to six years I've been researching this book.
+
+The trouble is, the more we investigate, the more complex the field gets.
+
+More recent studies are looking into the interaction of mitochondria with other cellular organelles, such as the peroxazomes and endoplasmic reticulum, both of which play a part in the health of mitochondria.
+
+In biology, there is never just one thing.
+
+For every rule that we have, we find a bunch of exceptions, and exceptions to the exceptions.
+
+As we dig deeper, we reveal a picture of complexity rather than simplicity.
+
+Mitochondrial medicine is a fascinating field that has real-life implications for countless health conditions, and indeed for life itself.
+
+With greater knowledge in the coming years, we might be able to nurture the force to the level of Anakin or Luke Skywalker.
+
+Just make sure you use your newfound power for good, peace, and love.
+
+Resist the dark side.
+
+[BLANK_AUDIO]

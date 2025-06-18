@@ -110,8 +110,14 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
 
             // Track usage async (don't await)
             const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
-            const cost = this.calculateCost(text.length, audioLength, config.voiceTier || 'standard');
-            addTtsUsageRecord('polly', config.voiceId, text.length, audioLength, cost, 'tts-api')
+            
+            // Amazon Polly billing: "SSML tags are not counted as billed characters"
+            // Remove all SSML tags from text for accurate billing count
+            const billableText = ssmlText.replace(/<[^>]*>/g, '');
+            const billableCharCount = billableText.length;
+            
+            const cost = this.calculateCost(billableCharCount, audioLength, config.voiceTier || 'standard');
+            addTtsUsageRecord('polly', config.voiceId, billableCharCount, audioLength, cost, 'tts-api', config.voiceTier)
                 .catch(error => console.error('Error tracking TTS usage:', error));
 
             return result;

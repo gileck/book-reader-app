@@ -5,13 +5,32 @@ import type { TtsProvider } from '../tts/adapters/ttsAdapterFactory';
 
 const TTS_USAGE_PREFIX = 'tts-usage/';
 
+// Helper function to determine voice type from voiceId
+function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'neural' | 'long-form' | 'generative' {
+  if (provider === 'polly') {
+    const longFormVoices = ['Danielle', 'Gregory', 'Burrow'];
+    const neuralVoices = ['Emma', 'Olivia', 'Aria', 'Ayanda', 'Ivy'];
+    const standardVoices = ['Joanna', 'Matthew', 'Amy', 'Brian', 'Joey', 'Justin', 'Kendra', 'Kimberly', 'Salli', 'Kevin', 'Stephen'];
+    
+    if (longFormVoices.includes(voiceId)) return 'long-form';
+    if (neuralVoices.includes(voiceId)) return 'neural';
+    if (standardVoices.includes(voiceId)) return 'standard';
+  } else if (provider === 'google') {
+    // Google voices - all Neural2 voices are neural tier
+    if (voiceId.includes('Neural2')) return 'neural';
+  }
+  
+  return 'standard'; // fallback
+}
+
 export const addTtsUsageRecord = async (
   provider: TtsProvider,
   voiceId: string,
   textLength: number,
   audioLength: number,
   cost: number,
-  endpoint: string = 'unknown'
+  endpoint: string = 'unknown',
+  voiceType?: 'standard' | 'neural' | 'long-form' | 'generative'
 ): Promise<TtsUsageRecord> => {
   try {
     const record: TtsUsageRecord = {
@@ -19,6 +38,7 @@ export const addTtsUsageRecord = async (
       timestamp: new Date().toISOString(),
       provider,
       voiceId,
+      voiceType: voiceType || getVoiceType(voiceId, provider),
       textLength,
       audioLength,
       cost,
@@ -51,6 +71,12 @@ export const getAllTtsUsageRecords = async (): Promise<TtsUsageRecord[]> => {
         const fileName = `${TTS_USAGE_PREFIX}${recordId}.json`;
         const content = await getFileAsString(fileName);
         const record = JSON.parse(content) as TtsUsageRecord;
+        
+        // Migration: Add voiceType if missing
+        if (!record.voiceType) {
+          record.voiceType = getVoiceType(record.voiceId, record.provider);
+        }
+        
         records.push(record);
       } catch (error) {
         console.error(`Error retrieving TTS record from file ${file.key}:`, error);
@@ -87,7 +113,8 @@ export const getTtsUsageSummary = async (): Promise<TtsUsageSummary> => {
         totalCost: 0,
         totalCalls: 0,
         totalTextLength: 0,
-        totalAudioLength: 0
+        totalAudioLength: 0,
+        usageByVoiceType: {}
       };
     }
     const providerStats = summary.usageByProvider[record.provider];
@@ -95,6 +122,21 @@ export const getTtsUsageSummary = async (): Promise<TtsUsageSummary> => {
     providerStats.totalCalls += 1;
     providerStats.totalTextLength += record.textLength;
     providerStats.totalAudioLength += record.audioLength;
+    
+    // Track usage by voice type within provider
+    if (!providerStats.usageByVoiceType[record.voiceType]) {
+      providerStats.usageByVoiceType[record.voiceType] = {
+        totalCost: 0,
+        totalCalls: 0,
+        totalTextLength: 0,
+        totalAudioLength: 0
+      };
+    }
+    const voiceTypeStats = providerStats.usageByVoiceType[record.voiceType];
+    voiceTypeStats.totalCost += record.cost;
+    voiceTypeStats.totalCalls += 1;
+    voiceTypeStats.totalTextLength += record.textLength;
+    voiceTypeStats.totalAudioLength += record.audioLength;
     
     const day = record.timestamp.split('T')[0];
     if (!summary.usageByDay[day]) {

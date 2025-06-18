@@ -1,0 +1,829 @@
+Chapter 2 The Dark Side of the Force Health Conditions Linked to Mitochondrial Dysfunction In the previous chapter we examined how energy production by the mitochondria is a foundation for health and well-being, and is necessary for physical strength, stamina, and even consciousness.
+
+We know subtle deficits in mitochondrial function can cause weakness, fatigue, and cognitive difficulties, and we know that certain chemicals that interfere with mitochondrial function are known to be potent poisons.
+
+Indeed, compromised mitochondrial function is now seen as one of the leading causes of a wide range of seemingly unconnected degenerative diseases, and even the aging process itself.
+
+In this section, I will elaborate more on this dark side, the health consequences associated with defective or compromised mitochondria.
+
+I should make it clear, however, that my discussion will not be anywhere near comprehensive.
+
+In fact, only a fraction of what I've researched actually made it into this book.
+
+This is only the tip of the iceberg.
+
+The conditions I discuss are wide-ranging, which will hopefully give you an appreciation for the importance and central role that mitochondria play in our lives, in both health and sickness.
+
+Some of the diseases I cover here are genetic, and comprise the group of conditions collectively known as mitochondrial diseases, while others are acquired through epigenetics, from viral infections, exposure to environmental toxins, excess caloric intake, the natural aging process, and everything in between.
+
+A review of bioenergetics.
+
+Bioenergetics is the study of energy in the human body, and it is critically important that we understand this concept, because problems with energy production and use are at the heart of many diseases where mitochondria play a central role, as I'll soon discuss.
+
+While scientists know a great deal about ATP, there is a general lack of understanding by physicians and other health care practitioners about how to apply bioenergetics in practice.
+
+Let's look at just the heart for starters, which contains approximately 0.7 gram of ATP, just enough to fuel the heart to contract at a rate about 60 times a minute, or about one contraction per second.
+
+At this rate, which is relatively slow for even healthy people, a heart will beat 86,400 times a day, so the heart needs 6,000 grams of ATP in a day, replenishing its energy pool 10,000 times.
+
+But how does the heart manage this incredible production of ATP?
+
+We need to understand ATP first, before we can understand the process of its recycling.
+
+ATP is composed of three major chemical groups, adenine, a purine base, D-ribos, apentos, or 5-carbon sugar, and three phosphate groups.
+
+Energy is released to the cell when an enzyme removes a phosphate from ATP and converts the chemical energy stored in the bond into mechanical energy.
+
+After the phosphate is removed, what remains is ADP.
+
+You might recall from our earlier discussion in Chapter 1 in ATP synthase, coupling the ETC with oxidative phosphorylation, that through the use of ATPase in the inner mitochondrial membrane, the phosphate is reattached to ATP to reform ATP.
+
+As long as each cell is provided with two basic ingredients, electrons from food and oxygen from the air we breathe, this cycle occurs unimpeded millions of times per second in every cell of the body.
+
+This continual recycling keeps the cell fully charged with energy.
+
+However, if either of these two basic ingredients is in short supply relative to demand, cell function is compromised.
+
+One good example is the oxygen deprivation experienced after a heart attack, or what the medical community calls a myocardial infarction, MI.
+
+An MI occurs when an artery that supplies fuel and oxygen to the heart muscle cells becomes blocked.
+
+The heart muscle continues to use energy at its regular pace, but it has no oxygen, a dangerous mismatch in supply versus demand.
+
+While it's not possible to determine accurately if ATP pools are compartmentalized or if they flow around freely, scientific evidence strongly suggests that there are localized areas of higher concentrations to perform specific tasks, such as contraction in heart muscles or movement of ions across membranes.
+
+However, no matter where ATP is found, once the ATP releases its energy and is converted to ADP, it must be recycled back to ATP, where it once again leaves the mitochondria to where it's needed.
+
+A small amount of ADP remains in the cytosol, the fluid part of the cell, where it is converted to ATP instead of entering the mitochondria for recycling.
+
+This ATP is generally associated with cellular membranes and provides the energy needed to control the movement of ions across membranes.
+
+If mitochondria produce 90% of the energy that the cell needs, how does the ATP get transported to the rest of the cell itself?
+
+ATP formed within the mitochondria must be moved back to the cytosol of the cell so that its energy can be used.
+
+At the same time, ADP from the cytosol must be moved back into the mitochondria to be recycled back to ATP.
+
+However, the mitochondrial membrane is impermeable to both ATP and ADP, so these compounds are traded across the mitochondrial membrane through the use of another enzyme called ATP-ADP translocase.
+
+This enzyme keeps ATP flowing out of the mitochondria to where its energy can be put to good use and keeps ADP flowing into the mitochondria.
+
+This process is like any manufacturing plant that uses recycled materials, recycled paper, for example, where the new paper is made from old paper.
+
+In order to keep the whole system running smoothly, the new paper has to be shipped out so that it can be used and then make its way back to once again create new paper.
+
+If there isn't used paper coming back to be recycled, we run out of our raw material.
+
+If we don't ship out the newly created paper, it can't be used to create more of our raw material.
+
+We could use virgin paper pulp if we didn't have enough recycled material, but creating it is a long and intensive process that requires years to grow a tree and extensive resources to turn the tree into our raw material for creating paper.
+
+In a similar way, we need ATP to be used and broken down to ADP.
+
+We need this ADP to come back to the mitochondria and serve as our raw material to create new ATP.
+
+It's true we can build more ADP from scratch, but just like growing a new tree, it's a slow and inefficient process.
+
+Food and Oxygen - The Ingredients for Producing Energy The basic requirements for life, the food we eat and the air we breathe, ultimately serve to provide mitochondria with the ingredients they need to produce energy.
+
+The most readily available and main source of fuel is glucose, which is a simple 6-carbon sugar extracted from the food we eat.
+
+When we've had enough food to satisfy our immediate need for energy, the rest is stored as glycogen.
+
+Most people don't eat constantly throughout the day, so this stored glycogen is drawn upon and broken down into glucose as needed.
+
+The first step in this process is called glycolysis, which takes place in the cytosol portion of the cell.
+
+Because much of this process occurs near the cell membrane, scientists believe this pathway is used primarily to generate ATP for the movement of ions across the cell membrane.
+
+And while glycolysis is capable of producing large amounts of ATP quickly, it cannot supply nearly enough energy to keep the cell functioning for long periods of time.
+
+Only two molecules of ATP are produced if we start the process directly from readily available glucose.
+
+If we start from the stored glycogen, three molecules of ATP are created.
+
+During normal carbohydrate metabolism, the 6-carbon glucose is converted to two, three-carbon molecules called pyruvate.
+
+Pyruvate can then enter the mitochondria and participate in the second pathway of energy production, the TCA or Krebs cycle.
+
+As long as the cell is supplied with sufficient oxygen, pyruvate is converted and broken down further by the TCA cycle, where the resulting compounds can enter the third pathway, the ETC, electron transport chain.
+
+However, if the cell is deprived of oxygen, such as during overly strenuous physical activity, or if there is significant blockage of an artery, then the TCA cycle doesn't function efficiently and pyruvate is converted to lactic acid, also called lactate.
+
+Lactic acid causes the pH of the cell to drop, meaning increasing acidity, which in turn signals to the cell that more energy is needed.
+
+However, if lactic acid levels build up too high, this causes cellular stress.
+
+On the macro level, we feel this as burning and pain in the case of physical activity, or chest pain and gyna, that can occur if there is decreased blood flow to the heart, called cardiac ischemia.
+
+So, while glycolysis is essential and glucose is readily available for most of the general population, it's not actually the most efficient pathway of energy production, and glucose is not the ideal source of fuel.
+
+Fatty acids are.
+
+Fatty acids are metabolized in a process called beta-oxidation, and the burning of fatty acids is responsible for 60 to 70% of all the energy our cells create.
+
+This is where L-carnitine, discussed in more detail in Chapter 3, L-carnitine, enters the picture.
+
+The inner mitochondrial membrane is impermeable to long-chain fatty acids, but the fatty acids must enter the mitochondrial matrix where beta-oxidation takes place.
+
+Interestingly, L-carnitine is the only molecule that can transport long-chain fatty acids into the matrix, and without L-carnitine, the body's ability to use long-chain fatty acids to create energy would not exist.
+
+The product of beta-oxidation enters the TCA cycle, just like pyruvate does from glucose metabolism.
+
+The role of the TCA cycle is to remove electrons from fatty acids and pyruvate and package them into other electron-carrying molecules, such as NADH and FADH2, which then enter the ETC.
+
+The net result is that each molecule of glucose forms a total of 38 ATP molecules, two from glycolysis, 36 from TCA/ETC.
+
+But each molecule of a 16-carbon fatty acid called palmitate produces 129 ATP molecules.
+
+You can clearly see why healthy, well-functioning cells prefer fatty acids as their source of fuel.
+
+Just from these numbers, it's clear that without L-carnitine transporting fatty acids, we'd only produce ATP from glucose, which supplies 38 ATP molecules.
+
+Without another key nutrient, CoQ10, the molecule that transfers electrons from complex 1 and 2 over to complex 3, and oxygen, we'd only produce two ATP molecules via glycolysis.
+
+This perhaps gives you a glimpse into the importance of specific nutrients in the optimal functioning of mitochondria, a bit of foreshadowing, if you will.
+
+Every step of ATP production can run optimally with the proper nutrients, or in their absence, the cell is forced to produce ATP in a less efficient manner, which compromises the viability of the entire cell.
+
+ATP Production and Turnover While CoQ10 and L-carnitine are a powerful nutrient combination for mitochondrial health, they can't make ATP if the body doesn't have enough ADP as a raw material.
+
+After all, ADP doesn't just appear out of thin air.
+
+Under normal circumstances, this turnover of ATP occurs millions of times in every cell each second.
+
+However, if oxygen supply is cut off or reduced, or if there is some other mitochondrial dysfunction, oxidative phosphorylation, ATP production in the mitochondria slows or stops, causing the cell to use ATP faster than it can be replaced.
+
+Remember, oxidative phosphorylation is the main producer of ATP.
+
+Only two ATP molecules are produced without it.
+
+When this happens, ATP concentrations in the cell decrease, while the ADP concentration increases.
+
+In an effort to continue to produce ATP and normalize the ratio of ADP to ATP, the cell combines two ADP molecules to produce one ATP and one AMP, adenosine monophosphate, in a process called the adenylate-canase reaction.
+
+However, while this reduces the amount of ADP buildup in the cell, it increases the amount of AMP, and to very high levels when the supply of oxygen is limited.
+
+The problem here is that the cell needs to maintain a relatively constant ratio of AMP to ADP to ATP.
+
+So, in order to reduce the amount of AMP relative to ADP and ATP, the cell must degrade and eliminate this excess AMP.
+
+This reduction occurs through two biochemical pathways, and the end products ultimately exit the cell, which is not necessarily a good thing.
+
+Although the removal of excess AMP restores the AMP/ADP/ATP ratio, the absolute amount of these components becomes much lower.
+
+In other words, the total amount of energy the cell can produce is lower because it has lost its important building blocks.
+
+The easy analogy here is a battery and its capacity.
+
+Two AAA batteries could power the same device because they are the same physical size and have essentially the same specifications needed to power that device.
+
+However, how long they lasted could vary greatly depending on their capacity.
+
+For example, a 1200 mAh battery has more capacity and will last longer than a 540 mAh battery, even if they are both AAA batteries.
+
+These building blocks are called purines, and their loss from the cell can be devastating.
+
+Thankfully, the body will immediately start to rebuild its stock of purines, but this is a slow process and can only start with the five carbon-sugar deribos.
+
+There are two biochemical pathways for deribos in restoring the purine pool.
+
+The first is called the de novo pathway, which is a very slow process.
+
+In fact, it's been calculated that it'd take over 100 days for the human heart to make all its ATP via this pathway.
+
+The body just can't make deribos, the starting point for this pathway, fast enough for this pathway to be of much use in diseased states.
+
+Remember our paper recycling analogy?
+
+Creating deribos from scratch is akin to planting a tree and harvesting it years later, versus recycling readily available used paper.
+
+The second pathway is called purine salvage.
+
+This happens when the cell, instead of eliminating the end products of AMP degradation, retains them as building blocks to accelerate the manufacture of deribos.
+
+However, even with this pathway, the rate limiting factor is again the availability of deribos.
+
+The easy solution is to administer deribos as a supplement.
+
+In this situation, the body isn't responsible for manufacturing its own deribos, and so this pathway, no longer limited by availability of deribos, can proceed at full speed.
+
+The importance of having a larger energy pool is that it helps to minimize the damage caused by oxygen deprivation, for example from reduced blood flow called ischemia, such as during a heart attack or stroke.
+
+As we know, cells die when the mitochondria malfunction and cannot produce enough energy.
+
+During ischemia, oxygen levels in the cell drop, and the mitochondria can no longer produce energy via oxidative phosphorylation.
+
+As the cell compensates by combining two ADP molecules to create an ATP molecule, the AMP concentration increases, and then the cell needs to break this down to eliminate it.
+
+If the energy pool is low to begin with, it's depleted rapidly during ischemia.
+
+If the energy pool is large, it takes longer to deplete it from the cell.
+
+The size of the energy pool determines the extent of permanent damage to an organ experiencing ischemia, whether it is the brain, heart, or any other body part.
+
+Restoring blood flow is absolutely the most important goal in cases of ischemia.
+
+The quicker the blood flow can be restored, and therefore, oxygen levels restored, the smaller the loss of purines from the energy pool.
+
+It is easy to understand this need in acute cases such as a heart attack or stroke, but many diseases result in a less severe restriction of blood flow, resulting in hypoxia or reduced oxygen levels.
+
+Hypoxia can happen due to plaque buildup in the heart's arteries, which restricts blood flow.
+
+When blood flow is restricted, ATP is not generated as quickly, and the cell depletes its energy pool at an accelerated rate, although to a lesser degree than outright ischemia.
+
+In these cases, the cells simply cannot supply enough energy to keep up with demand.
+
+We call these conditions by various names.
+
+For example, when this happens to the cardiovascular system, we call it coronary artery disease, CAD, angina, or congestive heart failure, CHF.
+
+Following this train of thought, I'll start my discussion on health conditions with cardiovascular disorders.
+
+The Role of Mitochondria in Cardiovascular Disease Cardiovascular disease is a broad category of health conditions and is likely of great interest to the majority listening to this audiobook, because it's a leading cause of death, globally, often alternating with cancer for the top two spots, depending on the country you're looking at.
+
+Conditions such as angina, hypertension, congestive heart failure, ischemia, and diastolic dysfunction all have their roots in mitochondrial energy.
+
+Not only can these conditions arise from a cellular energy deficiency, but they can also leak the purine building blocks of ATP out of the cell.
+
+Interestingly, when purine building blocks leak from the cell, they are metabolized to uric acid, and high uric acid in patients is often reflective of dysfunctional ATP metabolism, an important point to understand for clinicians treating gout, for example.
+
+It can take up to two weeks, and in some cases, months, for the heart to produce enough ATP by natural built-in mechanisms to offset the deficit caused by ischemia.
+
+Also, since the heart is constantly consuming ATP, it's difficult to make up for this energy deficit quickly, and most patients with ischemia will need to take targeted nutritional therapy to help restore the energy balance.
+
+I'll discuss these nutritional therapies in depth in Chapter 3.
+
+Understanding Smooth Muscles A large part of our cardiovascular system involves smooth muscles, muscles not under voluntary control.
+
+So let's review their significance and what their normal and abnormal functioning looks like.
+
+Smooth muscles are found in the blood vessels of the cardiovascular system, but are also contained within other organs and tubes in the body, including the stomach, intestines, bladder, airways, uterus, and the penile and clitoral cavernosal sinuses.
+
+Bundles of smooth muscle cells are also attached to the hairs of the skin and to the iris and lens of the eye.
+
+Smooth muscle cells receive input from the autonomic nervous system, which is the part of the nervous system not under voluntary control, for example, the part that digests food.
+
+In addition to the autonomic nervous system, smooth muscles are controlled by hormones and other local chemical signals.
+
+Smooth muscle cells also develop tonic and phasic contractions in response to changes in load or length.
+
+By contrast, skeletal muscles are under voluntary control, and these are the muscles we consciously contract and relax when we decide to move our arms or go for a walk.
+
+Contraction, shortening of muscle cells in smooth muscles is a highly regulated process.
+
+In some smooth muscle cells, the contraction is maintained at a low level in the absence of external stimuli.
+
+This activity results in what is known as smooth muscle tone, and its intensity can be varied.
+
+Keep this in mind when I discuss how this relates to conditions such as hypertension in coenzyme Q10 later in this reading.
+
+Regardless of the stimulus, a smooth muscle contraction is initiated by calcium ions entering the cytosol from the sarcoplasmic reticulum, a membrane-bound structure in muscle cells that stores calcium, and binding to a calcium-binding messenger protein called chalmodulin.
+
+This stimulates another protein called myosin, the protein that contracts and is dependent on ATP, to attach to actin in cross-bridge cycling.
+
+Initiation of relaxation, on the other hand, begins with the removal of calcium ions from the cytosol and stimulation of an enzyme that deactivates myosin, referred to as myosin phosphatase.
+
+The Importance of Smooth Muscle Relaxation Many people don't realize that muscle relaxation, elongation of a muscle cell, requires considerable amounts of energy.
+
+Whether it is a conscious decision to relax skeletal muscles or the involuntary relaxation of smooth muscles, the process requires a decreased concentration of calcium ions.
+
+All this calcium must move out of the cytosol and into the sarcoplasmic reticulum.
+
+However, this process requires the use of a pump, because the calcium must move up the concentration gradient, and going against the gradient requires energy.
+
+That energy, of course, comes from ATP.
+
+The enzyme embedded in the membrane of the sarcoplasmic reticulum, called calcium magnesium ATPase, CAMGATPAs, when activated, binds two calcium ions, which are then transferred to the inner part of the sarcoplasmic reticulum and released, sequestered, ready for the next stimulus signaling of contraction.
+
+This pump also has two ATP binding sites, and both sites must have ATP attached for it to work.
+
+However, there are intricacies.
+
+The first ATP binding site has a high affinity for ATP, and therefore, any ATP in the vicinity binds to this site readily.
+
+Once bound to this site, ATP releases its energy and is turned into ADP.
+
+The second ATP binding site does not attract ATP so easily.
+
+In fact, the only way for ATP to bind to the second site is to ensure a high concentration of ATP so that hopefully one will just fall into the binding site.
+
+Building up this contraction obviously requires significant amounts of ATP to be produced.
+
+The state of rigor mortis, when our muscles become tense and rigid after death, is a good example of how relaxation requires more ATP than contraction.
+
+In death, fuel and oxygen are no longer delivered to the muscles, and ATP production stops.
+
+Without enough ATP, the calcium ions cannot be pumped out of the cell, and the muscles can no longer relax.
+
+Magnesium ions are also necessary for the activity of the calcium-magnesium ATPase.
+
+They bind to the catalytic site of this enzyme to mediate the reaction.
+
+Without magnesium, this enzyme cannot function, and relaxation of the smooth muscle cannot occur, which can lead to things like high blood pressure, heart problems, or restricted breathing.
+
+For those who might have heard magnesium is great for muscle function and relaxation, but didn't know how or why, now you know.
+
+The basics of cardiac physiology Now let's discuss the other part of the cardiovascular system, the heart itself.
+
+The human heart has four chambers, two upper chambers, called the left and right atria, and two lower chambers, called the left and right ventricles.
+
+In terms of heart function, systole describes the stage of a heartbeat when the ventricles contract, squeezing the blood out to the arteries.
+
+This contraction ejects most of the blood out of the ventricles, and the percent of blood that's pumped out, relative to its starting point when relaxed, is called the ejection fraction.
+
+Normal range is 50 to 70%.
+
+While it's easy to see how contraction of the heart requires energy, this stage requires the least amount of energy in the cycle of a heartbeat.
+
+Muscle cells in general, not just smooth muscle cells, including the heart, are able to contract even when energy levels are extremely low.
+
+They just might not be able to relax again.
+
+After this systolic phase is the diastole, or relaxation phase, when the ventricles fill up with blood.
+
+The diastole phase generally lasts less than a third of a second, but requires the most ATP.
+
+There are two reasons, both of which were just discussed.
+
+First, energy is required to separate the bonds formed during the contraction phase, which allows the muscle to return to its relaxed state.
+
+Second, the removal of calcium ions from the cell requires energy.
+
+Without enough ATP, the calcium ions cannot be pumped out of the heart muscle cells, and the heart can no longer relax and fill up with blood efficiently.
+
+This is called diastolic dysfunction.
+
+The beginning stages of diastolic dysfunction are characterized by a thickening, called hypertrophy, or enlarging of the heart muscle, usually specific to the left ventricle, and stiffening of the ventricular walls.
+
+The combination of hypertrophy and stiffening causes blood pressure to rise, reduces the amount of blood that's pumped out per contraction, lower ejection fraction, and makes it more difficult for the heart to relax and fill up properly, which propagates this progressive cycle.
+
+Despite seemingly normal systolic function, diastolic dysfunction is an early sign of serious heart problems around the corner, namely congestive heart failure.
+
+Preserving diastolic function in patients is a major goal for cardiologists, and the solution is to ensure an abundant pool of ATP energy.
+
+Another energy-intensive process in a heartbeat is maintaining a proper ionic balance.
+
+The proper flow of ions in and out of a heart muscle cell is essential to maintaining the normal electrochemical gradient across the cell membrane.
+
+This gradient is what's responsible for maintaining regular heart rhythm.
+
+When this gradient is disrupted, the result is irregular or skipped heartbeats, arrhythmia, or another type of abnormal contraction or rhythm.
+
+All of these high energy demands must be met by a small pool of ATP.
+
+As a result, the ATP supply must be continuously replenished, and again, that is the job of our mitochondria.
+
+I'm hoping that by now you can appreciate the important role mitochondria have in one of the leading causes of death, but you'll soon see that their importance goes far beyond the cardiovascular system, and plays a crucial role in essentially every functional system in the body.
+
+The role of mitochondria in the nervous system, brain, and cognitive health.
+
+Tissues with a high demand for energy are uniquely dependent on the energy delivered by mitochondria, and therefore also have the lowest threshold for displaying symptoms of mitochondrial dysfunction.
+
+Thus, the central nervous system is often one of the first systems to display outright symptoms of bio-energetic deficiencies.
+
+Large amounts of energy are required by neurons, nerve cells, to carry out their specialized functions.
+
+In fact, while the brain makes up only about 2% of a person's body weight, which of course varies depending on the person, at rest, it consumes about 20% of the total energy the body needs.
+
+The brain is a giant tangle of countless neurons, so it would stand to reason that this organ might suffer significantly from mitochondrial dysfunction and possibly respond best to mitochondrial nutrients.
+
+Stroke, suffocating the brain's mitochondria.
+
+The cycling of blood through the circulatory system delivers a constant supply of oxygen, glucose, and nutrients to every living cell.
+
+The brain consumes a disproportionate share of the body's circulating blood flow, 14%, and oxygen, 20%.
+
+Yet, despite its extraordinary energy demand, the brain's energy reserves are actually very small.
+
+The brain's metabolism can sustain energy production for only about one minute before it needs to be replenished.
+
+Thus, nerve cells are particularly vulnerable to ischemia, reduced blood flow, and hypoxia, reduced oxygen levels.
+
+When the steady flow of blood through a portion of brain tissue ceases, as from a clot or hemorrhage, metabolism rapidly fails in the brain cells.
+
+As the oxygen supply runs out, the cells shift to anaerobic metabolism for the short term, but after a few minutes without blood, neurons suffer irreversible injury.
+
+During a stroke, however, blood supply is not cut off uniformly.
+
+Instead, impairment in circulation is more severe toward the core of the affected area, where the lack of flow might be almost complete.
+
+Cells in the core tend to die quickly through necrosis.
+
+Remember, as opposed to apoptosis, programmed cell death that happens in an orderly fashion.
+
+Necrosis is messy.
+
+Cells break apart, spilling their contents into nearby tissue, which further aggravates the situation by causing inflammation.
+
+An important consequence of a stroke is that cells in the surrounding areas die off hours or days later.
+
+How and why this happens remains a mystery.
+
+However, this secondary brain damage is considered potentially preventable.
+
+A growing body of research suggests that the focus of both primary and secondary stroke damage and potential intervention or therapy lies in the mitochondria.
+
+What's interesting is that mitochondria might actually suffer greater injury when blood flow is reduced rather than when it stops altogether.
+
+Complete blockage of blood flow also cuts off the supply of oxygen, which in turn reduces oxidative stress and free radical production.
+
+When blood flow is merely reduced, a small amount of oxygen continues to flow, generating further free radicals in addition to those resulting from stroke-impaired cellular respiration.
+
+These additional free radicals could also explain the secondary damage that occurs days later.
+
+A paper published as early as 1992 suggested that the transition from reversible to irreversible ischemia depends on the functional state of the mitochondria.
+
+More specifically, their ability to restore oxidative phosphorylation determines functional recovery.
+
+With their high sensitivity to reduced blood flow, brain mitochondria exhibit the first signs of injury even during a moderate reduction of cerebral blood flow.
+
+Injury to mitochondria during and after a stroke has many consequences and includes impaired bioenergetics, free radical damage, calcium dysregulation, increased excitotoxicity, and promotion of programmed cell death.
+
+Unfortunately, as typical for mitochondrial impairment, mitochondrial brain injury causes further mitochondrial damage in those brain cells lacking blood flow, generating a vicious cycle of cellular injury after a stroke.
+
+Regardless, the primary goal is to restore blood flow and oxygen levels in the brain.
+
+Make sense, right?
+
+Well, not so fast.
+
+Restoring blood flow is the primary goal, but this can quickly turn into a very dangerous situation.
+
+When blood flow and oxygen is restored to the affected area, there is even greater injury to the mitochondria called ischemia reperfusion injury, IRI, or simply reperfusion injury.
+
+IRI is also frequently seen after cardiac surgery.
+
+In some cases, such as a planned cardiac surgery, we can prepare for IRI and take measures to reduce this damage by priming the cells and mitochondria for this added stress through interventions such as nutritional therapy.
+
+In most cases, such as a heart attack or stroke, there's no advance warning, so no protective preparations are in place.
+
+Let me explain how this all unfolds.
+
+With reduced blood flow in the brain, ATP is still being used as usual for regular cellular activity, but is not being produced, and so the cell combines two ADP molecules to form ATP.
+
+As discussed earlier, this results in an increasing concentration of AMP, which is then eliminated from the cell, reducing the overall energy pool of the cell.
+
+Further, the absence of oxygen and fuel creates a condition where the mitochondria go into a low-use state, much like hibernation.
+
+When blood flow is restored, we see a perfect storm of events.
+
+A rush of fuel and lots of oxygen to the brain, a lag period for the mitochondria to wake up, and a deficiency of the building blocks of ATP.
+
+They were eliminated from the cell as AMP.
+
+So even after the mitochondria wake up and are running at full speed, there is still an ATP deficiency because the purine nucleotides have been lost, which means ADP/ATP recycling is reduced.
+
+The result is a very high rate of free radical production, rather than restoration of normal function.
+
+This high rate of free radical production pushes any cells already close to their threshold for irreversible damage or death past that line, resulting in the damage that's typically seen with IRI.
+
+The extent of neurological damage caused by a stroke depends on this secondary brain damage that results from IRI.
+
+The question being debated in the field of medical research is whether this delayed death of neurons occurs through necrosis or apoptosis, or something in between.
+
+Much of the recent evidence suggests apoptosis as the major factor in delayed neuronal death.
+
+While this cellular suicide removes damaged cells in a neat, orderly way, a stroke might trigger it accidentally in healthy cells.
+
+Whatever the mode of cellular death, minimizing delayed neuronal death is critical in preserving brain function to the greatest extent possible.
+
+By nurturing our mitochondria, which is what I'll discuss in Chapter 3, we can prep them to have the greatest chance of survival in these types of events.
+
+Mitochondrial Involvement in Neurodegeneration As early as 1999, a series of published scientific reviews summarized the mounting body of evidence on the role of the mitochondria in neurodegeneration.
+
+One review by Casarino and colleagues stated, "It is becoming clear that subtle functional alterations in these essential cellular dynamos can lead to insidious pathological changes in neurons."
+
+The authors outlined a theory of neurodegeneration based upon a vicious cycle of MTDNA mutation, bio-energetic decline, and free radical damage, the same story now seen in a host of other disorders and confirmed by further studies over the last 20 years or so.
+
+These published studies now corroborate the role of abnormal mitochondrial dynamics in neuronal cell death and the onset of Alzheimer's, Parkinson's, and Huntington's disease and other neurodegenerative disorders.
+
+Although many health conditions, aging, and general neurodegeneration have similar basic causes, the physiology of the brain is unique in certain ways, and its pathologies present some interesting mechanisms and features.
+
+The brain is particularly vulnerable to free radical damage due to its rich oxygen supply and high fatty acid content, so it might seem logical to assume the brain's antioxidant defense system is especially powerful.
+
+Unfortunately, it is not, and this delicate organ is relatively under-defended against free radical damage.
+
+As a result, the cells of the brain gradually accumulate oxidative damage over time.
+
+This is true for everyone, but is of particular concern for those with a genetic or environmental predisposition to neurological degeneration.
+
+Most of the brain's fatty acid content is contained in the cell membranes, their extensions, such as axons and dendrites, and their mitochondria.
+
+As we age, more of these lipids become oxidized from being exposed to the brain's rich supply of oxygen and free radicals, and the brain's vulnerability to degenerative diseases increases.
+
+Maintaining mitochondrial health is an important strategy in preventing this slow decline in our mental faculties as we age.
+
+Excitotoxicity In the late 1980s, scientists at the National Institutes of Health proposed that excitotoxicity, toxicity from overstimulation of nerve cells, develops when the energy level of neurons declines.
+
+Subsequent research has confirmed this, as studies have shown that CoQ10, remember, this is the compound that shuttles electrons from complex 1 or 2 to complex 3, and can be found as a nutritional supplement, protects against excitotoxicity by raising energy levels in nerve cells.
+
+The neurotransmitter glutamate normally transmits excitatory impulses.
+
+In neurodegeneration, however, the brain becomes chronically oversensitive to glutamate, which then becomes a slow-acting excitatory toxin on brain cells.
+
+For mitochondria, this means that they are constantly under the direction to produce more energy, more energy than the neurons actually need.
+
+With this higher rate of activity comes a higher rate of free radical production, and, over time, comes the accelerated demise of these mitochondria.
+
+Ultimately, this chain of events results in dysfunction within the neurons.
+
+Mitochondria in Neuronal Signaling Brain cells talk to one another in a variety of strengths or intensities.
+
+Sometimes they speak loud and clear, but other times they whisper or mumble.
+
+For years, scientists questioned why and how neurons change their intensity so frequently.
+
+A study by Sun and colleagues published in the summer of 2013 showed that rapidly moving mitochondria emit bursts of energy, and this might regulate neuronal communication.
+
+The network of neurons throughout the body controls thoughts, movements, and all senses by sending and receiving thousands of neurotransmitters, the brain chemicals, at communication points between the cells called synapses.
+
+These neurotransmitters are sent from tiny protrusions found on the neurons, called presynaptic boutons, which are aligned along the axons.
+
+They help control the strength of the signals sent by regulating the amount of neurotransmitters released, as well as the manner in which they are released.
+
+The production of neurotransmitters, their packaging and release, and the reception or removal of these chemicals all require energy.
+
+Previous studies showed that mitochondria can move rapidly along axons, dancing, in a sense, from one buton to another.
+
+This study shows that these moving mitochondria might control the strength of the signals sent from butons.
+
+The researchers used advanced techniques to watch mitochondria move between butons while they released neurotransmitters, and found that butons only sent consistently strong signals when mitochondria were nearby.
+
+When the mitochondria were absent or moving away from butons, the signal strength fluctuated.
+
+These results suggest that the presence of stationary mitochondria at synapses improves the stability and strength of the nerve signals.
+
+This is the type of data we need to confirm mitochondrial involvement in pathogenesis of neurodegenerative diseases, and any neurological diseases that require efficient and appropriate transmission of nervous system signals, such as depression, ADHD, and so on.
+
+To test this further, the researchers manipulated mitochondrial movement by changing levels of centiphalin, a protein that helps anchor mitochondria to the cell cytoskeleton inside the axons.
+
+Removal of centiphalin resulted in mitochondria that moved quicker, and the electrical recordings from these neurons showed that the signals they sent fluctuated greatly.
+
+On the flip side, elevating centiphalin levels slowed mitochondrial movement and resulted in butons that sent signals with the same strength.
+
+Previously, it had been shown that about one-third of all mitochondria in axons move about, the rest are stationary.
+
+Nerve cell communication is obviously tightly controlled by highly dynamic events occurring at numerous synapses.
+
+The researchers also found that blocking ATP production in mitochondria reduced the strength of the signals sent, even if mitochondria were near the butons.
+
+Problems with mitochondrial energy production and movement throughout neurons have been implicated in Alzheimer's, Parkinson's, ALS, and other major neurodegenerative diseases.
+
+This 2013 research adds a key piece of the puzzle and gives us more reason to target mitochondria and cellular energy in these illnesses.
+
+Alzheimer's disease.
+
+Don't forget the mitochondria.
+
+Alzheimer's disease is the most common form of adult onset dementia.
+
+An 80-year-old has about a 30% chance of developing Alzheimer's.
+
+Its pathology is complex, and while we cannot yet clearly separate causes from effects, recent research has discovered many of the mechanisms involved in the disease.
+
+At the cellular level, there is an extensive loss of neurons and there are high levels of insoluble fibrous deposits known as senile plaques and neurofibrillary tangles.
+
+At the core of the plaques is a toxic protein called amyloid beta, the hallmark of Alzheimer's that attacks cells on several fronts.
+
+Amyloid beta generates free radicals, damages MTDNA, impairs cellular bioenergetics, and alters the proper folding of proteins so that they form neurofibrillary tangles.
+
+However, there is evidence to suggest that the formation of amyloid beta is the brain's way of defending against oxidative stress, a result of Alzheimer's, not a cause.
+
+In her recent book, The Alzheimer's Antidote, Amy Berger does an excellent job of assessing the current state of affairs and offers diet and lifestyle-related solutions based on the newest information and research.
+
+Despite some seemingly contradictory studies and insights, Berger's conclusion is that Alzheimer's is a metabolic disorder.
+
+Based on the research I've done for this book, I would agree that the long-held beliefs about Alzheimer's are falling apart and the most current research shows we need a greater focus on mitochondria in the prevention and treatment of the disease.
+
+According to the results of some studies, the degree of disability in Alzheimer's disease correlates with the level of bioenergetic impairment in the brain.
+
+In fact, a recent study suggests that cellular energy production might be a better indicator of Alzheimer's disease severity than senile plaques.
+
+In this particular study, degree of clinical disability did not correlate with the density of senile plaques, but did correlate with a mitochondrial abnormality involved in cellular energetics.
+
+Regardless of whether amyloid beta is a cause or result of oxidative stress, another potent-free radical called peroxynitrite formed from nitric oxide oxidizes lipids in the membranes of nerve cells.
+
+This generates the highly toxic byproduct hydroxynonenol, HNE, which is found in excess quantities in multiple brain regions of Alzheimer's patients.
+
+HNE kills brain cells not only directly, but also indirectly by making them more susceptible to excitotoxicity.
+
+As a quick side note, CoQ10 and vitamin E can protect cell membranes from lipid peroxidation, and CoQ10 has been found to reduce peroxynitrite damage and HNE formation in the bloodstream.
+
+Current research has not identified a single underlying cause of Alzheimer's disease, but an interesting multiple-factor theory was proposed by Wan Tao Ying in 1997.
+
+According to this theory, Alzheimer's disease develops from the interplay of four causes, imbalances in the APP, amyloid precursor protein, calcium, free radical damage, and bio-energetic deficit.
+
+Ying's site studies showing that each factor reinforces and is reinforced by each of the other factors.
+
+Overeating and Alzheimer's disease Data presented in 2012 by the Mayo Clinic study on aging suggested that consuming between 2100 to 6000 calories per day might double the risk for mild cognitive impairment.
+
+MCI, the precursor for Alzheimer's, in adults aged 70 years and older compared to those who consumed less than about 1500 calories daily.
+
+While previous studies noted an association between different dietary patterns and risk for MCI, for example, elderly individuals who follow a healthy Mediterranean diet are less likely to develop MCI and are also less likely to progress from MCI to Alzheimer's disease.
+
+This was the first study to find the association between excessive daily calorie consumption and MCI.
+
+All of these studies together suggest that we need to ensure we're eating a nutrient-dense diet and minimize empty calories that come from foods such as added sugar, white bread, and salty snacks.
+
+Excess calories have also been linked to countless other degenerative diseases.
+
+On the flip side, as previously discussed, caloric restriction, a reduction in calories while ensuring nutrient needs are met, has been linked to life extension and possibly a reduction in the risk of degenerative diseases.
+
+This adds weight to the free radical and bio-energetic components of Ying's multiple-factor theory.
+
+I'll discuss caloric restriction in further detail in Chapter 3, Ketogenic Diets and Calorie Restriction.
+
+There is a significant amount of current research in the area of Alzheimer's disease, and I hope we will soon have greater clarity over how we can help those who have this condition.
+
+Parkinson's Disease - Rethinking Eldopa Therapy Recent research in animal models of Parkinson's disease suggests that CoQ10 can protect brain cells from neurotoxicity and excitotoxicity, even in cases where other powerful antioxidants cannot.
+
+This finding is significant because it draws focus to the importance of mitochondrial dysfunction and cellular energy in Parkinson's disease.
+
+Subsequent research has further confirmed that dysfunctional cellular energy production plays a large role in the progression of Parkinson's disease.
+
+In Parkinson's disease, cell death is primarily targeted to the neurons in the substantia nigra, a part of the brain that coordinates movement.
+
+These neurons produce the neurotransmitter dopamine.
+
+The death of these cells depletes dopamine stores and ultimately leads to muscle rigidity, tremors, and difficulty-initiating movement.
+
+Research has shown that the substantia nigra is the part of the brain that has the greatest number of mutations in MTDNA, and human evidence reveals that the mitochondria of patients with Parkinson's disease exhibits several deficiencies.
+
+One of the most well-characterized deficiencies is diminished complex 1 activity, the first complex in the ETC.
+
+In rat studies, complex 1 inhibition has been observed to directly follow the administration of dopamine in a dose-dependent manner.
+
+Other rat studies have shown a dose-dependent increase in hydroxyl-free radicals in the mitochondria when administered dopamine.
+
+These studies were the first indication that perhaps increasing the amount of a substance that we think is deficient might not be the answer.
+
+As previously discussed, superoxide radicals are generated when electrons leak and react with oxygen.
+
+Deficits in complex 1 increase leakage of electrons, and in turn increase superoxide production and ultimately diminish ATP production.
+
+You might remember that complex 1 is the primary site for superoxide radicals.
+
+As superoxide is neutralized, hydrogen peroxide is generated in the interim.
+
+As hydrogen peroxide is broken down, hydroxyl radicals can be produced instead of water.
+
+This is consistent with the observation that hydroxyl radical production is increased when complex 1 is inhibited.
+
+The question is, why are hydroxyl radicals formed instead of water?
+
+The answer relates to iron in its reduced form, Fe2+ which catalyzes the breakdown of hydrogen peroxide into hydroxyl radicals.
+
+For this reason, the association between tissue iron stores and Parkinson's disease, incidence and progression, should receive more attention.
+
+Further, as alluded to earlier, research into mitochondrial dysfunction in Parkinson's disease has raised serious questions regarding the conventional use of L-dopa in the treatment of the disorder.
+
+L-dopa is prescribed in conventional medicine for its ability to improve the symptoms of Parkinson's, at least temporarily, but it does not improve the underlying disease pathology.
+
+There is growing evidence that L-dopa might actually aggravate some of the underlying causes of Parkinson's disease.
+
+As such, it might be time to reconsider the costs and benefits of L-dopa therapy.
+
+In fact, it's well known that L-dopa therapy eventually loses its effect and the symptoms return with vigor.
+
+Is short-term relief of symptoms worth accelerating the progression and increasing the severity of the disease?
+
+The mitochondria of Parkinson's patients also exhibits some, although milder, inhibition of complex 3 activity, the second most prominent side of superoxide generation.
+
+A relative deficit of alpha-ketoglutarate dehydrogenase complex, KGDHC, a key enzyme of the TCA cycle found in the mitochondrial matrix, has also been noticed.
+
+KGDHC produces NADH, the substrate for complex 1, and has been found to be significantly depleted in the lateral part of the substantia nigra regions of Parkinson's patients.
+
+Interestingly, reductions in KGDHC levels have been noted in the cortex of Alzheimer's patients as well.
+
+Mflint Beal, a prominent neurologist, has spent years proving that CoQ10 has neuroprotective properties that might help diseases such as Parkinson's and Huntington's, and a growing body of scientific evidence supports his hypothesis.
+
+Research has established that mitochondria from platelets in patients with early, untreated Parkinson's has reduced activities of complexes 1, 2, and 3, compared to age-matched controls.
+
+His research team also demonstrated that CoQ10 administration in middle-aged and old-aged rats could restore levels of the nutrient to those of younger rats.
+
+The results showed that CoQ10 levels rose by 10 to 40% in the mitochondria of the cerebral cortex region of the brain.
+
+In a later study of mice, oral supplementation with CoQ10 attenuated chemically-induced neurotoxicity, which had been shown to cause a Parkinsonian syndrome in test animals.
+
+After a number of weeks of exposure to the Parkinson's-inducing chemical, striatoldopamine concentrations and dopaminogenic axon density were reduced, but they were much higher, 37% and 62% respectively, in the group that was pre-treated with CoQ10, confirming a bio-energetic deficit is a component of the disease.
+
+Depression Up to 20% of the population will experience some form of a stress-associated disease, including depression, yet despite decades of research, we still do not completely understand this complex brain disorder.
+
+There is controversy about considering depression of physical illness, in part because a reproducible, sensitive, and specific biological marker is not available.
+
+However, there is evidence that mitochondrial dysfunction and free radicals might be associated with abnormal brain function and various mood disorders, such as depression.
+
+Evaluation of mitochondrial dysfunction in specific tissues could broaden the perspective of depression beyond theories about neurotransmitters or receptor sites and could explain the persistent signs and symptoms of depression.
+
+An increasing body of evidence implicates mitochondria in the etiology of depression.
+
+It has been proposed that the balance between stress response, the adaptation to our constantly changing environment, and available energy, our mitochondrial function, is crucial for mental health.
+
+More specifically, stress activates different areas of the brain and changes its structure and function, what is called neuroplasticity.
+
+This comes at a metabolic cost, and of course, it's the mitochondria that are responsible for meeting this additional energy demand.
+
+People with optimal mitochondrial function can cope with the energy demands of stress-induced neuroplasticity, which means that these individuals are at relatively low risk for depression.
+
+In individuals with mitochondrial dysfunction, on the other hand, stress-induced depletion of the brain's energy supply could ultimately compromise neuroplasticity, which in time could render an individual vulnerable to clinical depression as the adaptation response falters.
+
+I don't mean to imply that all mitochondrial disease patients suffer from depression, or that all depressed patients have underlying mitochondrial dysfunction.
+
+However, mitochondrial dysfunction could be a cause of depression in a subgroup of patients.
+
+If so, this will have a profound effect not only on our understanding of depression, but also on its treatment.
+
+Attention Deficit Hyperactivity Disorder Pay attention to the mitochondria.
+
+Attention Deficit Hyperactivity Disorder, ADHD, is a heterogeneous condition that affects a significant and growing proportion of the population.
+
+ADHD is defined by persisting, developmentally inappropriate, cross-situational, and impairing levels of inattention, impulsiveness, and hyperactivity.
+
+Several studies have linked ADHD with markers of elevated oxidative stress and free radical damage, and increasing evidence also documents that ADHD is linked to environmental pollutants that are known to adversely affect mitochondria.
+
+Whether induced by pollutants, illness, or predisposing genetics, elevated free radical damage and its effects upon mitochondria might be a significant factor in some, and potentially many, cases of ADHD.
+
+This indicates that treating mitochondrial dysfunction might be beneficial for some individuals who have ADHD.
+
+As we already know, the mitochondrial dysfunction that arises from free radical damage will result in an energy deficiency, which leads to inefficient and inconsistent neuronal transmission of information by the astrocyte, the major non-neuronal component of the central nervous system.
+
+Astrocytes play an important role in providing energy by supplying lactate to rapidly firing neurons.
+
+Astrocytes can also provide lactate to oligodendrocytes, where lactate is used as a substrate for myelin synthesis, and thus enables rapid neurotransmission.
+
+Myelin allows nerve signals to travel quickly, which is normal.
+
+The presence of receptors for the major brain neurotransmitters on astrocytes adds to the robust evidence for their direct involvement in neurotransmission.
+
+According to one bio-energetic theory called the energy deficiency model, the genesis of the behavioral symptoms in ADHD is directly linked to impairments in the astrocyte neuron lactate shuttle.
+
+This shuttle is based on the astrocytes uptake of glucose from the blood, its storage as glycogen, and its conversion to lactate.
+
+This is critical because, as I mentioned, the brain at rest uses about 20% of the body's energy.
+
+Its energy demands are massive.
+
+Neural activity triggers the uptake of glucose from the blood into the astrocytes.
+
+It also triggers the astrocytes to break down stored glycogen into glucose.
+
+This glucose, from both the blood and stored glycogen, gets metabolized to lactate, which in turn gets shuttled over to the neurons.
+
+The neurons then take this lactate into the TCA cycle and then on to oxidative phosphorylation to produce ATP.
+
+Lactate is the essential energy source for rapidly firing neurons, and is a more efficient fuel source than glucose.
+
+Why?
+
+Because it is metabolized to form ATP more rapidly, glycolysis has already occurred, and, unlike glucose, it does not require ATP for its metabolism.
+
+Remember, it takes two ATP molecules to convert glucose to lactate.
+
+Due to their high energy demands, it is imperative for neurons to make use of the most efficient energy supplies when rapid neural processing is required, and the brain has evolved ways to do so.
+
+However, in ADHD, this lactate production by astrocytes is not sufficient to supply rapidly firing neurons with energy during brief periods of increased demand.
+
+The insufficient amount of lactate leads to a localized and transient deficiency in ATP production, impaired restoration of ionic gradients across neuronal membranes, which requires energy to restore ions against a concentration gradient, and slowed neuronal firing.
+
+The consequence of all this is inconsistent performance of demanding cognitive tasks.
+
+These periods of rapid firing are then followed by slow, unsynchronized firing, which exerts less demand on energy resources.
+
+This allows replenishment of energy reserves and restoration of function.
+
+The brief periods of energy deficiency, followed by periods of normal supply, are suggested to account for the variability of behavioral response seen in patients diagnosed with ADHD when performing complex tasks that require speed and accuracy.
+
+Glutamate, a major excitatory neurotransmitter, stimulates glycolysis, glucose utilization and lactate production in astrocytes.
+
+However, there is a downside to glutamate, as anyone sensitive to MSG, monosodium glutamate, would know.
+
+While glutamate is excitatory to the neurons, long-term exposure quickly depletes energy stores.
+
+Many who are sensitive to MSG, and not just those with ADHD, report a racing heart and sweating, referred to as excitation, followed by extreme fatigue, energy depletion.
+
+Astrocytes normally maintain low extracellular levels of glutamate, and this is achieved with the help of the membrane potential, the electrochemical gradient across the neuronal membrane.
+
+However, due to the impaired ability to maintain electrochemical gradient in ADHD, removal of glutamate from the extracellular fluid is hampered.
+
+Failure to maintain low levels of extracellular glutamate not only impairs glutamate's neurotransmitter function, but also affects neuroplasticity, learning and memory.
+
+Cell death can also result from this overexcitation, which means the mitochondria are pushed to their limit in energy production, which subsequently results in excessive free radical damage, and the chain of events that leads to apoptosis.
+
+ADHD patients are known to have reduced gray matter in their brain.
+
+Cell death, due to mitochondrial dysfunction, eventually results in the atrophy of any affected organ.
+
+This process also helps explain why the conventional medical field prescribes amphetamines to patients who have ADHD.
+
+Methylphenidate, Ritalin, for example, has been shown to increase glucose utilization by astrocytes in brain regions.
+
+This drug helps ADHD patients who have decreased glucose utilization and impaired energy supply, and might also help others who have impaired myelination from a longer term lactate deficiency.
+
+Intrinsically, however, most would agree that administering amphetamines to children just doesn't sit well in the psyche, especially when schools consistently teach children how bad drugs are.
+
+It sends mixed and confusing messages.
+
+There is a better way, which I'll discuss in chapter 3.
+
+[BLANK_AUDIO]
