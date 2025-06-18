@@ -268,30 +268,34 @@ export function TtsUsage() {
               
               <div className={styles.detailCard}>
                 <h3 className={styles.cardTitle}>Recent Daily Usage (30 Days)</h3>
-                <div className={styles.chartContainer}>
+                <div className={styles.dailyUsageChart}>
                   {Object.entries(summary.usageByDay)
                     .sort(([a], [b]) => a.localeCompare(b))
                     .slice(-30)
                     .map(([day, stats]) => {
-                      const maxCalls = Math.max(...Object.values(summary.usageByDay).map(d => d.totalCalls), 1);
+                      const maxCost = Math.max(...Object.values(summary.usageByDay).map(d => d.totalCost), 0.001);
+                      const height = Math.max(5, (stats.totalCost / maxCost) * 100);
                       return (
-                        <div key={day} className={styles.barChartItem}>
-                          <div className={styles.barLabel}>
-                            <span className={styles.dateLabel}>{new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                            <span className={styles.barValue}>{stats.totalCalls} calls</span>
-                          </div>
+                        <div key={day} className={styles.dailyUsageBar}>
                           <div className={styles.barContainer}>
                             <div 
-                              className={styles.barFill}
-                              style={{ width: `${Math.max(2, (stats.totalCalls / maxCalls) * 100)}%` }}
+                              className={styles.costBar}
+                              style={{ height: `${height}%` }}
+                              title={`${new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}: ${formatCost(stats.totalCost)} (${stats.totalCalls} calls)`}
                             ></div>
                           </div>
-                          <div className={styles.barStats}>
+                          <div className={styles.barLabel}>
+                            <span className={styles.dateLabel}>{new Date(day).toLocaleDateString('en-US', { day: 'numeric' })}</span>
+                          </div>
+                          <div className={styles.costLabel}>
                             {formatCost(stats.totalCost)}
                           </div>
                         </div>
                       );
                     })}
+                </div>
+                <div className={styles.chartLegend}>
+                  <span className={styles.legendLabel}>Daily Total Cost</span>
                 </div>
               </div>
             </div>
