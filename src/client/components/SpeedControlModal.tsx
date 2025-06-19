@@ -13,11 +13,10 @@ import {
     MenuItem,
     Box,
     Divider,
-    IconButton
+    IconButton,
+    ButtonGroup
 } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
-import { TtsProviderSelector } from './TtsProviderSelector';
-import { getTtsProviders } from '../../apis/tts/client';
 import { VOICE_MAPPINGS, type Voice, type TtsProvider } from '../../common/tts/ttsUtils';
 
 interface SpeedControlModalProps {
@@ -25,58 +24,33 @@ interface SpeedControlModalProps {
     onClose: () => void;
     currentSpeed: number;
     currentVoice: string;
+    currentProvider: string;
     wordTimingOffset: number;
     onSpeedChange: (speed: number) => void;
     onVoiceChange: (voice: string) => void;
+    onProviderChange: (provider: string) => void;
     onWordTimingOffsetChange: (offset: number) => void;
-    onPreviewVoice: (voice: string) => void;
+    onPreviewVoice: (voice: string, provider: string) => void;
 }
-
-
 
 export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     open,
     onClose,
     currentSpeed,
     currentVoice,
+    currentProvider,
     wordTimingOffset,
     onSpeedChange,
     onVoiceChange,
+    onProviderChange,
     onWordTimingOffsetChange,
     onPreviewVoice
 }) => {
     const [localSpeed, setLocalSpeed] = useState(currentSpeed);
     const [localVoice, setLocalVoice] = useState(currentVoice);
     const [localOffset, setLocalOffset] = useState(wordTimingOffset);
-    const [currentProvider, setCurrentProvider] = useState<TtsProvider>('google');
-    const [availableVoices, setAvailableVoices] = useState<Voice[]>(VOICE_MAPPINGS.google);
-
-    // Load current provider and update voices
-    useEffect(() => {
-        const loadCurrentProvider = async () => {
-            try {
-                const result = await getTtsProviders();
-                if (result.data?.success && result.data.currentProvider) {
-                    const provider = result.data.currentProvider;
-                    setCurrentProvider(provider);
-                    const newVoices = VOICE_MAPPINGS[provider] || VOICE_MAPPINGS.google;
-                    setAvailableVoices(newVoices);
-                    
-                    // Debug logging
-                    console.log('Current provider:', provider);
-                    console.log('Available voices:', newVoices.map(v => `${v.id} (${v.tier})`));
-                    console.log('Current voice:', currentVoice);
-                    console.log('Local voice:', localVoice);
-                }
-            } catch (error) {
-                console.error('Failed to load current TTS provider:', error);
-            }
-        };
-        
-        if (open) {
-            loadCurrentProvider();
-        }
-    }, [open, currentVoice, localVoice]);
+    const [selectedProvider, setSelectedProvider] = useState<TtsProvider>(currentProvider as TtsProvider || 'google');
+    const [availableVoices, setAvailableVoices] = useState<Voice[]>(VOICE_MAPPINGS[currentProvider as TtsProvider] || VOICE_MAPPINGS.google);
 
     useEffect(() => {
         setLocalSpeed(currentSpeed);
@@ -84,34 +58,28 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
         setLocalOffset(wordTimingOffset);
     }, [currentSpeed, currentVoice, wordTimingOffset]);
 
-    // Auto-select default voice if current voice is not available
+    // Ensure we have a valid voice selected when modal opens
     useEffect(() => {
-        if (availableVoices.length > 0 && !availableVoices.some(v => v.id === localVoice)) {
-            const defaultVoice = currentProvider === 'polly' ? 'Joanna' : 
-                                currentProvider === 'elevenlabs' ? 'pNInz6obpgDQGcFmaJgB' : // Adam voice
-                                'en-US-Neural2-A'; // Google default
-            const voiceToUse = availableVoices.find(voice => voice.id === defaultVoice)?.id || availableVoices[0].id;
-            setLocalVoice(voiceToUse);
-            onVoiceChange(voiceToUse);
+        if (open && availableVoices.length > 0 && !availableVoices.some(v => v.id === localVoice)) {
+            const firstVoice = availableVoices[0].id;
+            setLocalVoice(firstVoice);
+            onVoiceChange(firstVoice);
         }
-    }, [availableVoices, localVoice, currentProvider, onVoiceChange]);
+    }, [open, availableVoices, localVoice, onVoiceChange]);
 
-    // Handle provider change from TtsProviderSelector
-    const handleProviderChange = (provider: TtsProvider) => {
-        setCurrentProvider(provider);
-        const newVoices = VOICE_MAPPINGS[provider] || VOICE_MAPPINGS.google;
-        setAvailableVoices(newVoices);
+    const handleProviderClick = (provider: TtsProvider) => {
+        setSelectedProvider(provider);
+        const voices = VOICE_MAPPINGS[provider];
+        setAvailableVoices(voices);
         
-        // If current voice is not available in new provider, switch to default voice for that provider
-        const currentVoiceExists = newVoices.some(voice => voice.id === localVoice);
-        if (!currentVoiceExists && newVoices.length > 0) {
-            // Use preferred default voices for each provider
-            const defaultVoice = provider === 'polly' ? 'Joanna' : 
-                                provider === 'elevenlabs' ? 'pNInz6obpgDQGcFmaJgB' : // Adam voice
-                                'en-US-Neural2-A'; // Google default
-            const voiceToUse = newVoices.find(voice => voice.id === defaultVoice)?.id || newVoices[0].id;
-            setLocalVoice(voiceToUse);
-            onVoiceChange(voiceToUse);
+        // Save provider change
+        onProviderChange(provider);
+        
+        // Auto-select the first voice when switching providers
+        if (voices.length > 0) {
+            const firstVoice = voices[0].id;
+            setLocalVoice(firstVoice);
+            onVoiceChange(firstVoice);
         }
     };
 
@@ -121,8 +89,6 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     };
 
     const handleVoiceChange = (voice: string) => {
-        console.log('Voice change requested:', voice);
-        console.log('Available voices:', availableVoices.map(v => v.id));
         setLocalVoice(voice);
         onVoiceChange(voice);
     };
@@ -133,7 +99,7 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     };
 
     const handlePreview = () => {
-        onPreviewVoice(localVoice);
+        onPreviewVoice(localVoice, selectedProvider);
     };
 
     const handleSpeedDecrease = () => {
@@ -220,173 +186,52 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
 
                     <Divider sx={{ my: 3 }} />
 
-                    {/* TTS Provider Selection */}
-                    <Typography variant="h6" gutterBottom>
-                        TTS Provider
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Choose your text-to-speech provider. Note: Changing provider will clear audio cache.
-                    </Typography>
-                    <Box sx={{ mb: 3 }}>
-                        <TtsProviderSelector onProviderChange={handleProviderChange} />
-                    </Box>
-
-                    <Divider sx={{ my: 3 }} />
-
                     {/* Voice Selection */}
                     <Typography variant="h6" gutterBottom>
                         Voice Selection
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                        Choose your preferred voice for {
-                            currentProvider === 'google' ? 'Google TTS' : 
-                            currentProvider === 'polly' ? 'Amazon Polly' : 
-                            currentProvider === 'elevenlabs' ? 'ElevenLabs' : 
-                            'TTS Provider'
-                        }. Note: Changing voice will clear audio cache.
+                    
+                    {/* Provider Selection */}
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Choose provider:
                     </Typography>
-                    <Typography variant="caption" color="primary" sx={{ mb: 2, display: 'block' }}>
-                        Showing {availableVoices.length} voices available for {
-                            currentProvider === 'google' ? 'Google TTS' : 
-                            currentProvider === 'polly' ? 'Amazon Polly' : 
-                            currentProvider === 'elevenlabs' ? 'ElevenLabs' : 
-                            'Provider'
-                        }
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
-                        Current selection: {localVoice || 'None'} | Valid: {availableVoices.some(v => v.id === localVoice) ? 'Yes' : 'No'}
-                    </Typography>
+                    <ButtonGroup variant="outlined" sx={{ mb: 3 }}>
+                        <Button 
+                            variant={selectedProvider === 'google' ? 'contained' : 'outlined'}
+                            onClick={() => handleProviderClick('google')}
+                        >
+                            Google
+                        </Button>
+                        <Button 
+                            variant={selectedProvider === 'polly' ? 'contained' : 'outlined'}
+                            onClick={() => handleProviderClick('polly')}
+                        >
+                            Polly
+                        </Button>
+                        <Button 
+                            variant={selectedProvider === 'elevenlabs' ? 'contained' : 'outlined'}
+                            onClick={() => handleProviderClick('elevenlabs')}
+                        >
+                            ElevenLabs
+                        </Button>
+                    </ButtonGroup>
+
+                    {/* Voice Dropdown */}
                     <FormControl fullWidth sx={{ mb: 2 }}>
                         <InputLabel>Voice</InputLabel>
                         <Select
-                            value={availableVoices.some(v => v.id === localVoice) ? localVoice : ''}
+                            value={availableVoices.some(v => v.id === localVoice) ? localVoice : (availableVoices[0]?.id || '')}
                             label="Voice"
-                            onChange={(e) => {
-                                console.log('Select onChange triggered:', e.target.value);
-                                handleVoiceChange(e.target.value);
-                            }}
+                            onChange={(e) => handleVoiceChange(e.target.value)}
                         >
-                            {(() => {
-                                const menuItems = [];
-                                
-                                // Handle ElevenLabs differently - all voices are neural tier with their pricing
-                                if (currentProvider === 'elevenlabs') {
-                                    const neuralVoices = availableVoices.filter(voice => voice.tier === 'neural');
-                                    if (neuralVoices.length > 0) {
-                                        menuItems.push(
-                                            <MenuItem key="elevenlabs-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-                                                ElevenLabs Voices - $0.18/1K chars (20K free/month)
-                                            </MenuItem>
-                                        );
-                                        neuralVoices.forEach(voice => {
-                                            menuItems.push(
-                                                <MenuItem 
-                                                    key={voice.id} 
-                                                    value={voice.id} 
-                                                    sx={{ pl: 3 }}
-                                                    onClick={() => console.log('MenuItem clicked:', voice.id)}
-                                                >
-                                                    {voice.name} ({voice.gender})
-                                                </MenuItem>
-                                            );
-                                        });
-                                    }
-                                } else {
-                                    // Handle Google and Polly voices with their existing pricing
-                                    
-                                    // Standard Voices
-                                    const standardVoices = availableVoices.filter(voice => voice.tier === 'standard');
-                                    if (standardVoices.length > 0) {
-                                        menuItems.push(
-                                            <MenuItem key="standard-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-                                                Standard Voices - $4/1M chars (5M free/month)
-                                            </MenuItem>
-                                        );
-                                        standardVoices.forEach(voice => {
-                                            menuItems.push(
-                                                <MenuItem 
-                                                    key={voice.id} 
-                                                    value={voice.id} 
-                                                    sx={{ pl: 3 }}
-                                                    onClick={() => console.log('MenuItem clicked:', voice.id)}
-                                                >
-                                                    {voice.name} ({voice.gender})
-                                                </MenuItem>
-                                            );
-                                        });
-                                    }
-                                    
-                                    // Neural Voices
-                                    const neuralVoices = availableVoices.filter(voice => voice.tier === 'neural');
-                                    if (neuralVoices.length > 0) {
-                                        menuItems.push(
-                                            <MenuItem key="neural-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary', mt: 1 }}>
-                                                Neural Voices - {currentProvider === 'google' ? '$16/1M chars' : '$16/1M chars (1M free/month)'}
-                                            </MenuItem>
-                                        );
-                                        neuralVoices.forEach(voice => {
-                                            menuItems.push(
-                                                <MenuItem 
-                                                    key={voice.id} 
-                                                    value={voice.id} 
-                                                    sx={{ pl: 3 }}
-                                                    onClick={() => console.log('MenuItem clicked:', voice.id)}
-                                                >
-                                                    {voice.name} ({voice.gender})
-                                                </MenuItem>
-                                            );
-                                        });
-                                    }
-                                    
-                                    // Long-Form Voices
-                                    const longFormVoices = availableVoices.filter(voice => voice.tier === 'long-form');
-                                    if (longFormVoices.length > 0) {
-                                        menuItems.push(
-                                            <MenuItem key="long-form-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary', mt: 1 }}>
-                                                Long-Form Voices - $100/1M chars (500K free/month)
-                                            </MenuItem>
-                                        );
-                                        longFormVoices.forEach(voice => {
-                                            menuItems.push(
-                                                <MenuItem 
-                                                    key={voice.id} 
-                                                    value={voice.id} 
-                                                    sx={{ pl: 3 }}
-                                                    onClick={() => console.log('MenuItem clicked:', voice.id)}
-                                                >
-                                                    {voice.name} ({voice.gender})
-                                                </MenuItem>
-                                            );
-                                        });
-                                    }
-                                    
-                                    // Generative Voices
-                                    const generativeVoices = availableVoices.filter(voice => voice.tier === 'generative');
-                                    if (generativeVoices.length > 0) {
-                                        menuItems.push(
-                                            <MenuItem key="generative-header" disabled sx={{ fontWeight: 'bold', color: 'text.primary', mt: 1 }}>
-                                                Generative Voices - $30/1M chars (100K free/month)
-                                            </MenuItem>
-                                        );
-                                        generativeVoices.forEach(voice => {
-                                            menuItems.push(
-                                                <MenuItem 
-                                                    key={voice.id} 
-                                                    value={voice.id} 
-                                                    sx={{ pl: 3 }}
-                                                    onClick={() => console.log('MenuItem clicked:', voice.id)}
-                                                >
-                                                    {voice.name} ({voice.gender})
-                                                </MenuItem>
-                                            );
-                                        });
-                                    }
-                                }
-                                
-                                return menuItems;
-                            })()}
+                            {availableVoices.map(voice => (
+                                <MenuItem key={voice.id} value={voice.id}>
+                                    {voice.name} ({voice.gender}) - {voice.tier}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
+                    
                     <Button
                         variant="outlined"
                         onClick={handlePreview}

@@ -273,9 +273,11 @@ export const Reader = () => {
                     onClose={settings.handleCloseSpeedModal}
                     currentSpeed={settings.playbackSpeed}
                     currentVoice={settings.selectedVoice}
+                    currentProvider={settings.selectedProvider}
                     wordTimingOffset={settings.wordSpeedOffset}
                     onSpeedChange={settings.handleSpeedChange}
                     onVoiceChange={settings.handleVoiceChange}
+                    onProviderChange={settings.handleProviderChange}
                     onWordTimingOffsetChange={settings.handleWordTimingOffsetChange}
                     onPreviewVoice={settings.handlePreviewVoice}
                 />

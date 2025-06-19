@@ -122,13 +122,13 @@ export const useUserSettings = (userId: string) => {
         }
     }, [userId, updateState]);
 
-    const handlePreviewVoice = useCallback(async (voice: string) => {
+    const handlePreviewVoice = useCallback(async (voice: string, provider: string) => {
         const previewText = "Hello! This is a preview of the selected voice.";
         try {
             const result = await generateTts({ 
                 text: previewText, 
                 voiceId: voice, 
-                provider: state.selectedProvider as 'google' | 'polly' | 'elevenlabs' 
+                provider: provider as 'google' | 'polly' | 'elevenlabs' 
             });
             if (result.data?.success && result.data.audioContent) {
                 const previewAudio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
@@ -137,7 +137,7 @@ export const useUserSettings = (userId: string) => {
         } catch (error) {
             console.error('Error generating voice preview:', error);
         }
-    }, [state.selectedProvider]);
+    }, []);
 
     const handleSpeedSettings = useCallback(() => {
         updateState({ speedModalOpen: true });
