@@ -4,9 +4,10 @@ This document explains the pricing structure and character counting logic implem
 
 ## Overview
 
-Our application supports two TTS providers with different pricing models and character counting rules:
+Our application supports three TTS providers with different pricing models and character counting rules:
 - **Amazon Polly** - AWS Text-to-Speech service
 - **Google Cloud Text-to-Speech** - Google Cloud TTS service
+- **ElevenLabs** - Premium AI voice synthesis service
 
 ## Amazon Polly Pricing
 
@@ -21,7 +22,7 @@ Our application supports two TTS providers with different pricing models and cha
 - **Neural Voices**: 1 million characters/month
 - **Long-Form Voices**: 500,000 characters/month
 - **Generative Voices**: 100,000 characters/month
-
+\
 ### Character Counting Rules
 According to Amazon Polly documentation:
 > "The size of the input text can be up to 3000 billed characters (6000 total characters). **SSML tags are not counted as billed characters.**"
@@ -54,6 +55,31 @@ const billableText = ssmlText.replace(/<mark[^>]*\/>/g, '');
 const billableCharCount = billableText.length;
 ```
 
+## ElevenLabs Pricing
+
+### Pricing Structure
+- **Free Tier**: 10,000 credits/month (20,000 characters)
+- **Flash/Turbo Models**: 0.5 credits per character
+- **Multilingual v2**: Higher quality, more credits per character
+- **Flash v2.5**: Low-latency, optimized for real-time applications
+
+### Free Tier (Monthly)
+- **Credits**: 10,000 credits/month
+- **Characters**: 20,000 characters/month (with Flash/Turbo models)
+- **Audio Duration**: ~10 minutes with Multilingual v2, ~20 minutes with Flash v2.5
+
+### Character Counting Rules
+ElevenLabs counts characters directly:
+- 1 character = 0.5 credits (Flash/Turbo models)
+- Approximately 1000 characters = 1 minute of audio
+- No SSML markup considerations (direct character count)
+
+**Implementation**: Direct character count of input text.
+```javascript
+// ElevenLabs billing: Direct character count
+const billableCharCount = text.length;
+```
+
 ## SSML Usage in Our Application
 
 Our application generates SSML with timing marks for audio synchronization:
@@ -78,6 +104,11 @@ For the text "Hello world" (11 characters):
 - SSML: `<speak> <mark name="word1-0"/> Hello <mark name="word2-1"/> world</speak>`
 - Billable text: `<speak>  Hello  world</speak>` (32 characters - excludes only `<mark>` tags)
 - Billed: 32 characters
+
+**ElevenLabs Billing**:
+- Text: `Hello world` (11 characters)
+- Billable text: `Hello world` (11 characters - direct count)
+- Billed: 11 characters (5.5 credits)
 
 ## Implementation Details
 
@@ -105,9 +136,18 @@ private calculateCost(textLength: number, audioLength: number, voiceTier: string
 }
 ```
 
+**ElevenLabs** (`src/server/tts/adapters/elevenLabsAdapter.ts`):
+```javascript
+private calculateCost(textLength: number, audioLength: number): number {
+    // ElevenLabs pricing: 0.5 credits per character
+    // Assuming $0.00018 per character (approximate cost)
+    return textLength * 0.00018;
+}
+```
+
 ### Usage Tracking
 
-Both adapters track usage with accurate character counts:
+All adapters track usage with accurate character counts:
 ```javascript
 addTtsUsageRecord(provider, voiceId, billableCharCount, audioLength, cost, 'tts-api', voiceTier)
 ```
@@ -126,19 +166,26 @@ The application includes free tier usage tracking in the TTS Usage Dashboard:
 - Separate limits for Standard vs Neural2/WaveNet voices
 - Resets monthly (no time limit)
 
+### ElevenLabs Free Tier
+- Tracks monthly character usage
+- 20,000 characters/month (10,000 credits)
+- Resets monthly (no time limit)
+
 ## Important Notes
 
-1. **Character counting differs between providers** - Amazon excludes all SSML, Google excludes only `<mark>` tags
+1. **Character counting differs between providers** - Amazon excludes all SSML, Google excludes only `<mark>` tags, ElevenLabs counts all characters
 2. **Free tier limits are separate** - Each voice type has independent monthly allowances
 3. **Billing accuracy** - Our implementation follows each provider's official documentation
 4. **Monthly resets** - Free tier usage resets at the beginning of each month
 5. **Cost estimates** - All pricing is approximate and based on current published rates
+6. **ElevenLabs credits** - Uses credit-based system where 1 character = 0.5 credits
 
 ## References
 
 - [Amazon Polly Pricing](https://aws.amazon.com/polly/pricing/)
 - [Amazon Polly Quotas Documentation](https://docs.aws.amazon.com/polly/latest/dg/limits.html)
 - [Google Cloud Text-to-Speech Pricing](https://cloud.google.com/text-to-speech/pricing)
+- [ElevenLabs Pricing](https://elevenlabs.io/pricing)
 
 ---
 

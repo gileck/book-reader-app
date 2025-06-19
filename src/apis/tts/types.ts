@@ -1,4 +1,4 @@
-import type { TtsProvider } from '../../server/tts/adapters/ttsAdapterFactory';
+import { type TtsProvider } from '../../common/tts/ttsUtils';
 
 export interface TTSTimepoint {
     markName: string;

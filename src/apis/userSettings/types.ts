@@ -4,6 +4,7 @@ import type { CacheResult } from '../../common/cache/types';
 export interface UserSettings {
     playbackSpeed: number;
     selectedVoice: string;
+    selectedProvider: string;
     wordTimingOffset: number;
     theme: 'light' | 'dark';
     highlightColor: string;
@@ -31,6 +32,7 @@ export interface UpdateUserSettingsPayload {
     // Audio Settings
     playbackSpeed?: number;
     voiceId?: string;
+    selectedProvider?: string;
     wordTimingOffset?: number;
 
     // Visual Settings

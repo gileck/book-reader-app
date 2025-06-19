@@ -292,6 +292,7 @@ export const useReader = () => {
     const audioPlayback = useAudioPlayback(
         state.chapter,
         userSettings.selectedVoice,
+        userSettings.selectedProvider,
         userSettings.playbackSpeed,
         userSettings.wordSpeedOffset,
         state.currentChapterNumber,
@@ -407,6 +408,7 @@ export const useReader = () => {
         settings: {
             playbackSpeed: userSettings.playbackSpeed,
             selectedVoice: userSettings.selectedVoice,
+            selectedProvider: userSettings.selectedProvider,
             wordSpeedOffset: userSettings.wordSpeedOffset,
             speedModalOpen: userSettings.speedModalOpen,
             themeModalOpen: userSettings.themeModalOpen,
@@ -419,6 +421,7 @@ export const useReader = () => {
             textColor: userSettings.textColor,
             handleSpeedChange,
             handleVoiceChange: userSettings.handleVoiceChange,
+            handleProviderChange: userSettings.handleProviderChange,
             handleWordTimingOffsetChange: userSettings.handleWordTimingOffsetChange,
             handlePreviewVoice: userSettings.handlePreviewVoice,
             handleSpeedSettings: userSettings.handleSpeedSettings,

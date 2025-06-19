@@ -1,6 +1,7 @@
 import { PollyClient, SynthesizeSpeechCommand } from '@aws-sdk/client-polly';
 import { BaseTtsAdapter, TTSResult, TTSConfig, TTSTimepoint } from './baseTtsAdapter';
 import { addTtsUsageRecord } from '../../tts-usage-monitoring';
+import { getAllVoiceIds } from '../../../common/tts/ttsUtils';
 
 export class PollyTtsAdapter extends BaseTtsAdapter {
     name = 'polly';
@@ -148,30 +149,7 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
     }
 
     async getSupportedVoices(): Promise<string[]> {
-        return [
-            // Standard voices
-            'Joanna',
-            'Matthew',
-            'Amy',
-            'Brian',
-            'Joey',
-            'Justin',
-            'Kendra',
-            'Kimberly',
-            'Salli',
-            'Kevin',
-            'Stephen',
-            // Neural voices
-            'Emma',
-            'Olivia',
-            'Aria',
-            'Ayanda',
-            'Ivy',
-            // Long-form voices
-            'Danielle',
-            'Gregory',
-            'Burrow'
-        ];
+        return getAllVoiceIds('polly');
     }
 
     async isAvailable(): Promise<boolean> {

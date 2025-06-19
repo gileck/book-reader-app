@@ -5,6 +5,7 @@ import { generateTts } from '../../../../apis/tts/client';
 interface UserSettingsState {
     playbackSpeed: number;
     selectedVoice: string;
+    selectedProvider: string;
     wordSpeedOffset: number;
     speedModalOpen: boolean;
     themeModalOpen: boolean;
@@ -20,6 +21,7 @@ interface UserSettingsState {
 const getDefaultUserSettingsState = (): UserSettingsState => ({
     playbackSpeed: 1.0,
     selectedVoice: 'en-US-Neural2-A',
+    selectedProvider: 'google',
     wordSpeedOffset: 0,
     speedModalOpen: false,
     themeModalOpen: false,
@@ -49,6 +51,7 @@ export const useUserSettings = (userId: string) => {
                     updateState({
                         playbackSpeed: settings.playbackSpeed,
                         selectedVoice: settings.selectedVoice,
+                        selectedProvider: settings.selectedProvider || 'google',
                         wordSpeedOffset: settings.wordTimingOffset,
                         theme: settings.theme,
                         highlightColor: settings.highlightColor,
@@ -93,6 +96,19 @@ export const useUserSettings = (userId: string) => {
         }
     }, [userId, updateState]);
 
+    const handleProviderChange = useCallback(async (provider: string) => {
+        updateState({ selectedProvider: provider });
+
+        try {
+            await updateUserSettings({
+                userId,
+                settings: { selectedProvider: provider }
+            });
+        } catch (error) {
+            console.error('Error updating provider selection:', error);
+        }
+    }, [userId, updateState]);
+
     const handleWordTimingOffsetChange = useCallback(async (offset: number) => {
         updateState({ wordSpeedOffset: offset });
 
@@ -109,7 +125,11 @@ export const useUserSettings = (userId: string) => {
     const handlePreviewVoice = useCallback(async (voice: string) => {
         const previewText = "Hello! This is a preview of the selected voice.";
         try {
-            const result = await generateTts({ text: previewText, voiceId: voice });
+            const result = await generateTts({ 
+                text: previewText, 
+                voiceId: voice, 
+                provider: state.selectedProvider as 'google' | 'polly' | 'elevenlabs' 
+            });
             if (result.data?.success && result.data.audioContent) {
                 const previewAudio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
                 previewAudio.play();
@@ -117,7 +137,7 @@ export const useUserSettings = (userId: string) => {
         } catch (error) {
             console.error('Error generating voice preview:', error);
         }
-    }, []);
+    }, [state.selectedProvider]);
 
     const handleSpeedSettings = useCallback(() => {
         updateState({ speedModalOpen: true });
@@ -229,6 +249,7 @@ export const useUserSettings = (userId: string) => {
     return {
         playbackSpeed: state.playbackSpeed,
         selectedVoice: state.selectedVoice,
+        selectedProvider: state.selectedProvider,
         wordSpeedOffset: state.wordSpeedOffset,
         speedModalOpen: state.speedModalOpen,
         themeModalOpen: state.themeModalOpen,
@@ -241,6 +262,7 @@ export const useUserSettings = (userId: string) => {
         textColor: state.textColor,
         handleSpeedChange,
         handleVoiceChange,
+        handleProviderChange,
         handleWordTimingOffsetChange,
         handlePreviewVoice,
         handleSpeedSettings,

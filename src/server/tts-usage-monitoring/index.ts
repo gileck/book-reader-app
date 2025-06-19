@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { uploadFile, getFileAsString, listFiles } from '../s3/sdk';
 import type { TtsUsageRecord, TtsUsageSummary } from '../../apis/ttsUsage/types';
-import type { TtsProvider } from '../tts/adapters/ttsAdapterFactory';
+import { type TtsProvider } from '../../common/tts/ttsUtils';
 
 const TTS_USAGE_PREFIX = 'tts-usage/';
 

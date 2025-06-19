@@ -1,8 +1,10 @@
 import { BaseTtsAdapter } from './baseTtsAdapter';
 import { GoogleTtsAdapter } from './googleTtsAdapter';
 import { PollyTtsAdapter } from './pollyTtsAdapter';
+import { ElevenLabsAdapter } from './elevenLabsAdapter';
+import { type TtsProvider } from '../../../common/tts/ttsUtils';
 
-export type TtsProvider = 'google' | 'polly';
+export type { TtsProvider };
 
 export class TtsAdapterFactory {
     private static adapters: Map<TtsProvider, BaseTtsAdapter> = new Map();
@@ -27,6 +29,8 @@ export class TtsAdapterFactory {
                 return new GoogleTtsAdapter();
             case 'polly':
                 return new PollyTtsAdapter();
+            case 'elevenlabs':
+                return new ElevenLabsAdapter();
             default:
                 console.error(`Unknown TTS provider: ${provider}`);
                 return null;
@@ -44,7 +48,7 @@ export class TtsAdapterFactory {
     static async getAvailableProviders(): Promise<TtsProvider[]> {
         const providers: TtsProvider[] = [];
         
-        for (const provider of ['google', 'polly'] as TtsProvider[]) {
+        for (const provider of ['google', 'polly', 'elevenlabs'] as TtsProvider[]) {
             const adapter = await this.createAdapter(provider);
             if (adapter && await adapter.isAvailable()) {
                 providers.push(provider);

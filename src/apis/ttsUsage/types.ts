@@ -1,7 +1,7 @@
 export interface TtsUsageRecord {
   id: string;
   timestamp: string;
-  provider: 'google' | 'polly';
+  provider: 'google' | 'polly' | 'elevenlabs';
   voiceId: string;
   voiceType: 'standard' | 'neural' | 'long-form' | 'generative';
   textLength: number;

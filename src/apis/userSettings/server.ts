@@ -19,6 +19,7 @@ export async function getUserSettings(params: GetUserSettingsRequest): Promise<G
             userId: userSettings.userId.toString(),
             playbackSpeed: userSettings.playbackSpeed,
             selectedVoice: userSettings.voiceId || 'en-US-Neural2-A',
+            selectedProvider: userSettings.selectedProvider || 'google',
             wordTimingOffset: userSettings.wordTimingOffset,
             theme: userSettings.theme,
             highlightColor: userSettings.highlightColor,
@@ -53,6 +54,9 @@ export async function updateUserSettings(params: UpdateUserSettingsRequest): Pro
         }
         if (params.settings.selectedVoice !== undefined) {
             serverSettings.voiceId = params.settings.selectedVoice;
+        }
+        if (params.settings.selectedProvider !== undefined) {
+            serverSettings.selectedProvider = params.settings.selectedProvider;
         }
         if (params.settings.wordTimingOffset !== undefined) {
             serverSettings.wordTimingOffset = params.settings.wordTimingOffset;
@@ -91,6 +95,7 @@ export async function updateUserSettings(params: UpdateUserSettingsRequest): Pro
             userId: updatedSettings.userId.toString(),
             playbackSpeed: updatedSettings.playbackSpeed,
             selectedVoice: updatedSettings.voiceId || 'en-US-Neural2-A',
+            selectedProvider: updatedSettings.selectedProvider || 'google',
             wordTimingOffset: updatedSettings.wordTimingOffset,
             theme: updatedSettings.theme,
             highlightColor: updatedSettings.highlightColor,

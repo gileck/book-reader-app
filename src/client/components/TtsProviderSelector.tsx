@@ -10,7 +10,7 @@ import {
     Chip
 } from '@mui/material';
 import { getTtsProviders, setTtsProvider } from '../../apis/tts/client';
-import type { TtsProvider } from '../../server/tts/adapters/ttsAdapterFactory';
+import { type TtsProvider } from '../../common/tts/ttsUtils';
 
 interface TtsProviderSelectorProps {
     onProviderChange?: (provider: TtsProvider) => void;
@@ -61,6 +61,8 @@ export const TtsProviderSelector: React.FC<TtsProviderSelectorProps> = ({
                 return 'Google Text-to-Speech';
             case 'polly':
                 return 'Amazon Polly';
+            case 'elevenlabs':
+                return 'ElevenLabs';
             default:
                 return provider;
         }
@@ -72,6 +74,8 @@ export const TtsProviderSelector: React.FC<TtsProviderSelectorProps> = ({
                 return 'High-quality neural voices with precise word timing';
             case 'polly':
                 return 'Natural-sounding AI voices with speech marks';
+            case 'elevenlabs':
+                return 'Premium AI voices with character-level alignment';
             default:
                 return '';
         }

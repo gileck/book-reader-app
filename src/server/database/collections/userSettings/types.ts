@@ -7,6 +7,7 @@ export interface UserSettings {
     // Audio Settings
     playbackSpeed: number;
     voiceId: string;
+    selectedProvider: string;
     wordTimingOffset: number;
 
     // Visual Settings
@@ -41,6 +42,7 @@ export interface UserSettingsFilter {
 export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'createdAt' | 'updatedAt'> = {
     playbackSpeed: 1.0,
     voiceId: 'en-US-Neural2-A',
+    selectedProvider: 'google',
     wordTimingOffset: 0,
     theme: 'light',
     highlightColor: '#ffeb3b',

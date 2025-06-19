@@ -116,6 +116,7 @@ const injectCSS = (css: string, id: string) => {
 export const useAudioPlayback = (
     chapter: ChapterClient | null,
     selectedVoice: string,
+    selectedProvider: string,
     playbackSpeed: number,
     wordSpeedOffset: number,
     currentChapterNumber: number,
@@ -188,7 +189,7 @@ export const useAudioPlayback = (
             pendingRequests.current.add(index);
 
             try {
-                const result = await generateTts({ text: chunk.text, voiceId: selectedVoice });
+                const result = await generateTts({ text: chunk.text, voiceId: selectedVoice, provider: selectedProvider as 'google' | 'polly' | 'elevenlabs' });
 
                 if (result.data?.success && result.data.audioContent && result.data.timepoints) {
                     const audio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
@@ -402,7 +403,7 @@ export const useAudioPlayback = (
         pendingRequests.current.add(index);
 
         try {
-            const result = await generateTts({ text: chunk.text, voiceId: selectedVoice });
+            const result = await generateTts({ text: chunk.text, voiceId: selectedVoice, provider: selectedProvider as 'google' | 'polly' | 'elevenlabs' });
 
             if (result.data?.success && result.data.audioContent && result.data.timepoints) {
                 const audio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
@@ -422,7 +423,7 @@ export const useAudioPlayback = (
         } finally {
             pendingRequests.current.delete(index);
         }
-    }, [chapter, textChunks, selectedVoice, state.audioChunks, updateState]);
+    }, [chapter, textChunks, selectedVoice, selectedProvider, state.audioChunks, updateState]);
 
     const getWordStyle = useCallback((chunkIndex: number, wordIndex: number) => {
         // CSS handles highlighting for current chunk with loaded audio

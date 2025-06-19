@@ -1,6 +1,7 @@
 import * as textToSpeech from '@google-cloud/text-to-speech';
 import { BaseTtsAdapter, TTSResult, TTSConfig } from './baseTtsAdapter';
 import { addTtsUsageRecord } from '../../tts-usage-monitoring';
+import { getAllVoiceIds } from '../../../common/tts/ttsUtils';
 
 export class GoogleTtsAdapter extends BaseTtsAdapter {
     name = 'google';
@@ -92,17 +93,7 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
     }
 
     async getSupportedVoices(): Promise<string[]> {
-        return [
-            'en-US-Neural2-A',
-            'en-US-Neural2-C',
-            'en-US-Neural2-D',
-            'en-US-Neural2-E',
-            'en-US-Neural2-F',
-            'en-US-Neural2-G',
-            'en-US-Neural2-H',
-            'en-US-Neural2-I',
-            'en-US-Neural2-J'
-        ];
+        return getAllVoiceIds('google');
     }
 
     async isAvailable(): Promise<boolean> {

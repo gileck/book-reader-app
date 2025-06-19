@@ -38,7 +38,14 @@ export function TtsUsage() {
 
   const formatCost = (cost: number) => `$${cost.toFixed(4)}`;
   const formatDuration = (seconds: number) => `${Math.round(seconds)}s`;
-  const formatProvider = (provider: string) => provider === 'google' ? 'Google TTS' : 'Amazon Polly';
+  const formatProvider = (provider: string) => {
+    switch (provider) {
+      case 'google': return 'Google TTS';
+      case 'polly': return 'Amazon Polly';
+      case 'elevenlabs': return 'ElevenLabs';
+      default: return provider;
+    }
+  };
 
     // Free tier limits (characters per month)
   const POLLY_FREE_TIER_LIMITS = {
@@ -50,6 +57,10 @@ export function TtsUsage() {
   const GOOGLE_FREE_TIER_LIMITS = {
     standard: 4000000,  // 4 million characters
     neural2: 1000000    // 1 million characters (Neural2 voices)
+  };
+
+  const ELEVENLABS_FREE_TIER_LIMITS = {
+    total: 20000  // 20,000 characters (10,000 credits)
   };
 
   // Calculate current month's usage for free tier tracking
@@ -100,7 +111,21 @@ export function TtsUsage() {
       }
     });
 
-    return { polly: pollyUsage, google: googleUsage };
+    // ElevenLabs usage
+    const elevenLabsRecords = records.filter(record => 
+      record.provider === 'elevenlabs' && 
+      record.timestamp.startsWith(currentMonth)
+    );
+
+    const elevenLabsUsage = {
+      total: 0
+    };
+
+    elevenLabsRecords.forEach(record => {
+      elevenLabsUsage.total += record.textLength;
+    });
+
+    return { polly: pollyUsage, google: googleUsage, elevenlabs: elevenLabsUsage };
   };
 
   const currentMonthUsage = getCurrentMonthUsage();
@@ -159,6 +184,21 @@ export function TtsUsage() {
             ? currentMonthUsage.google.standard 
             : currentMonthUsage.google.neural2;
           const exceededUsage = Math.max(0, monthlyUsage - freeLimit);
+          const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
+          const adjustedCost = exceededUsage * originalCostPerChar;
+
+          adjustedProviderStats.usageByVoiceType[voiceType] = {
+            ...voiceStats,
+            totalCost: adjustedCost
+          };
+          adjustedProviderStats.totalCost += adjustedCost;
+        });
+      } else if (provider === 'elevenlabs') {
+        // ElevenLabs free tier calculation
+        const monthlyUsage = currentMonthUsage.elevenlabs.total;
+        const exceededUsage = Math.max(0, monthlyUsage - ELEVENLABS_FREE_TIER_LIMITS.total);
+        
+        Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
           const adjustedCost = exceededUsage * originalCostPerChar;
 
@@ -433,16 +473,46 @@ export function TtsUsage() {
                   </div>
                 </div>
 
-                <div className={styles.freeTierNote}>
-                  <p>
-                    <strong>Amazon Polly:</strong> Free tier is available for the first 12 months starting from your first Polly request. 
-                    Usage tracking is based on the current month&apos;s Polly requests.
-                  </p>
-                  <p>
-                    <strong>Google TTS:</strong> Free tier is ongoing with monthly limits that reset each month. 
-                    No time restriction - available as long as you stay within monthly limits.
-                  </p>
+                                <h4 className={styles.serviceTitle}>ElevenLabs</h4>
+                <div className={styles.voiceTypeBreakdown}>
+                  <div className={styles.voiceTypeItem}>
+                    <div className={styles.voiceTypeHeader}>
+                      <span className={styles.voiceTypeName}>All Voices</span>
+                      <span className={styles.voiceTypeBadge}>20K chars/month (10K credits)</span>
+                    </div>
+                    <div className={styles.progressContainer}>
+                      <div className={styles.progressBar}>
+                        <div 
+                          className={styles.progressFill}
+                          style={{ width: `${formatPercentage(currentMonthUsage.elevenlabs.total, ELEVENLABS_FREE_TIER_LIMITS.total)}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        <span className={styles.usageText}>
+                          {formatNumber(currentMonthUsage.elevenlabs.total)} / {formatNumber(ELEVENLABS_FREE_TIER_LIMITS.total)} chars
+                        </span>
+                        <span className={styles.percentageText}>
+                          {formatPercentage(currentMonthUsage.elevenlabs.total, ELEVENLABS_FREE_TIER_LIMITS.total).toFixed(1)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                <div className={styles.freeTierNote}>
+                <p>
+                  <strong>Amazon Polly:</strong> Free tier is available for the first 12 months starting from your first Polly request. 
+                  Usage tracking is based on the current month&apos;s Polly requests.
+                </p>
+                <p>
+                  <strong>Google TTS:</strong> Free tier is ongoing with monthly limits that reset each month. 
+                  No time restriction - available as long as you stay within monthly limits.
+                </p>
+                <p>
+                  <strong>ElevenLabs:</strong> Free tier provides 10,000 credits monthly (20,000 characters with Flash/Turbo models). 
+                  Resets monthly with no time restrictions.
+                </p>
+              </div>
               </div>
             </div>
           </section>

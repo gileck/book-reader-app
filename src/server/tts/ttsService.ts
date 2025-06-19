@@ -1,4 +1,5 @@
 import { TtsAdapterFactory, TtsProvider } from './adapters/ttsAdapterFactory';
+import { getVoiceTier, isValidVoiceForProvider, getDefaultVoiceForProvider } from '../../common/tts/ttsUtils';
 
 export interface TTSTimepoint {
     markName: string;
@@ -16,26 +17,25 @@ export async function synthesizeSpeechWithTiming(
     provider?: TtsProvider
 ): Promise<TTSResult | null> {
     try {
-        const adapter = await TtsAdapterFactory.getAdapter(provider);
+        // Use the provider parameter or fallback to current provider
+        const targetProvider = provider || TtsAdapterFactory.getProvider();
+        
+        // Validate that the voice ID is compatible with the target provider
+        if (!isValidVoiceForProvider(targetProvider, voiceId)) {
+            console.warn(`Voice ID ${voiceId} is not valid for provider ${targetProvider}. Using default voice.`);
+            voiceId = getDefaultVoiceForProvider(targetProvider);
+        }
+        
+        const adapter = await TtsAdapterFactory.getAdapter(targetProvider);
         if (!adapter) {
             console.error('No TTS adapter available');
             return null;
         }
 
-        // Determine voice tier from voiceId
-        const getVoiceTier = (voiceId: string): 'standard' | 'neural' | 'long-form' | 'generative' => {
-            const longFormVoices = ['Danielle', 'Gregory', 'Burrow'];
-            const neuralVoices = ['Emma', 'Olivia', 'Aria', 'Ayanda', 'Ivy'];
-            const standardVoices = ['Joanna', 'Matthew', 'Amy', 'Brian', 'Joey', 'Justin', 'Kendra', 'Kimberly', 'Salli', 'Kevin', 'Stephen'];
-            
-            if (longFormVoices.includes(voiceId)) return 'long-form';
-            if (neuralVoices.includes(voiceId)) return 'neural';
-            if (standardVoices.includes(voiceId)) return 'standard';
-            
-            // For Google voices or fallback
-            if (voiceId.includes('Neural2')) return 'neural';
-            return 'standard';
-        };
+        // Determine voice tier from voiceId and the SAME provider being used for synthesis
+        const voiceTier = getVoiceTier(targetProvider, voiceId);
+
+        console.log(`TTS Synthesis - Provider: ${targetProvider}, Voice: ${voiceId}, Tier: ${voiceTier}`);
 
         return await adapter.synthesizeSpeech(text, {
             voiceId,
@@ -43,7 +43,7 @@ export async function synthesizeSpeechWithTiming(
             speakingRate: 1.0,
             pitch: 0.0,
             volumeGainDb: 0.0,
-            voiceTier: getVoiceTier(voiceId)
+            voiceTier: voiceTier
         });
     } catch (error) {
         console.error('TTS synthesis error:', error);

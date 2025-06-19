@@ -566,6 +566,12 @@
   border: 1px solid rgba(255, 149, 0, 0.2);
 }
 
+.providerElevenlabs {
+  background: rgba(138, 43, 226, 0.1);
+  color: #8A2BE2;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
 /* Cost Value Styling */
 .costValue {
   font-weight: 600;
@@ -842,6 +848,10 @@
 
 .barFill.providerGoogle {
   background: linear-gradient(90deg, #4285F4, #669DF6);
+}
+
+.barFill.providerElevenlabs {
+  background: linear-gradient(90deg, #8A2BE2, #9932CC);
 }
 
 .barStats {
