@@ -16,15 +16,15 @@ const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
 interface ReaderState {
     book: BookClient | null;
     chapter: ChapterClient | null;
-    currentChapterNumber: number;
-    currentChunkIndex: number;
+    currentChapterNumber: number | null;
+    currentChunkIndex: number | null;
     loading: boolean;
     error: string | null;
 }
 
 export const useReader = () => {
     const { queryParams } = useRouter();
-    const { bookId: queryBookId } = queryParams;
+    const { bookId: queryBookId, chapter: queryChapter, chunk: queryChunk } = queryParams;
 
     // Use bookId from query params, or fall back to active book from localStorage
     const [bookId, setBookId] = useState<string | undefined>(queryBookId);
@@ -34,8 +34,8 @@ export const useReader = () => {
     const [state, setState] = useState<ReaderState>({
         book: null,
         chapter: null,
-        currentChapterNumber: 1,
-        currentChunkIndex: 0,
+        currentChapterNumber: null,
+        currentChunkIndex: null,
         loading: true,
         error: null
     });
@@ -145,15 +145,22 @@ export const useReader = () => {
                 let currentChapter = 0;
                 let currentChunk = 0;
 
-                try {
-                    const progressResult = await getReadingProgress({ userId, bookId });
-                    if (progressResult.data?.success && progressResult.data.readingProgress) {
-                        currentChapter = progressResult.data.readingProgress.currentChapter;
-                        currentChunk = progressResult.data.readingProgress.currentChunk;
+                // First check if we have URL parameters for chapter/chunk navigation
+                if (queryChapter && queryChunk) {
+                    currentChapter = parseInt(queryChapter, 10);
+                    currentChunk = parseInt(queryChunk, 10);
+                } else {
+                    // Fall back to reading progress
+                    try {
+                        const progressResult = await getReadingProgress({ userId, bookId });
+                        if (progressResult.data?.success && progressResult.data.readingProgress) {
+                            currentChapter = progressResult.data.readingProgress.currentChapter;
+                            currentChunk = progressResult.data.readingProgress.currentChunk;
+                        }
+                    } catch (error) {
+                        console.error('Error loading reading progress, using defaults:', error);
+                        // Continue with defaults (chapter 1, chunk 0)
                     }
-                } catch (error) {
-                    console.error('Error loading reading progress, using defaults:', error);
-                    // Continue with defaults (chapter 1, chunk 0)
                 }
 
                 // Step 3: Load book data
@@ -170,8 +177,8 @@ export const useReader = () => {
                 // Step 4: Check if chapter 0 (introduction) exists
                 let startingChapter = currentChapter;
 
-                // If we're starting from the beginning (no saved progress), check for chapter 0
-                if (currentChapter === 1 && currentChunk === 0 && bookId) {
+                // If we're starting from the beginning (no saved progress) and no URL params, check for chapter 0
+                if (currentChapter === 1 && currentChunk === 0 && bookId && !queryChapter && !queryChunk) {
                     try {
                         const chapterZeroResult = await getChapterByNumber({
                             bookId,
@@ -188,7 +195,7 @@ export const useReader = () => {
                     }
                 }
 
-                // Step 5: Load the correct chapter based on reading progress or chapter 0 check
+                // Step 5: Load the correct chapter based on reading progress, URL params, or chapter 0 check
                 if (bookId) {
                     const chapterResult = await getChapterByNumber({
                         bookId,
@@ -209,7 +216,7 @@ export const useReader = () => {
                         book: bookResult.data.book,
                         chapter: chapterResult.data.chapter,
                         currentChapterNumber: startingChapter,
-                        currentChunkIndex: startingChapter === currentChapter ? currentChunk : 0,
+                        currentChunkIndex: currentChunk,
                         loading: false,
                         error: null
                     });
@@ -233,7 +240,7 @@ export const useReader = () => {
         };
 
         loadReaderData();
-    }, [bookId, bookIdResolved, userId]);
+    }, [bookId, bookIdResolved, userId, queryChapter, queryChunk]);
 
     // Function to change chapter (for navigation)
     const setCurrentChapterNumber = useCallback(async (chapterNumber: number) => {
@@ -295,7 +302,7 @@ export const useReader = () => {
         userSettings.selectedProvider,
         userSettings.playbackSpeed,
         userSettings.wordSpeedOffset,
-        state.currentChapterNumber,
+        state.currentChapterNumber || 1,
         setCurrentChunkIndex,
         userSettings.highlightColor,
         userSettings.sentenceHighlightColor
@@ -307,7 +314,8 @@ export const useReader = () => {
         bookId,
         currentChapterNumber: state.currentChapterNumber,
         currentChunkIndex: state.currentChunkIndex,
-        isPlaying: audioPlayback.isPlaying
+        isPlaying: audioPlayback.isPlaying,
+        isInitialLoadComplete: !state.loading && state.chapter !== null && state.currentChapterNumber !== null && state.currentChunkIndex !== null
     });
 
     // Reading logs hook - logs every chunk that is played
@@ -320,19 +328,20 @@ export const useReader = () => {
     });
 
     // Sync audio playback chunk index with our state
-    if (audioPlayback.currentChunkIndex !== state.currentChunkIndex && !state.loading) {
+    if (audioPlayback.currentChunkIndex !== state.currentChunkIndex && !state.loading && state.currentChunkIndex !== null) {
         audioPlayback.setCurrentChunkIndex(state.currentChunkIndex);
     }
 
     const bookmarks = useBookmarks(
         bookId,
         state.chapter,
-        state.currentChunkIndex
+        state.currentChunkIndex || 0
     );
 
     // Chapter navigation functions
     const handlePreviousChapter = useCallback(async () => {
         // Try to navigate to the previous chapter
+        if (state.currentChapterNumber === null) return;
         const previousChapterNumber = state.currentChapterNumber - 1;
         const minChapterNumber = state.book?.chapterStartNumber ?? 1;
         if (previousChapterNumber >= minChapterNumber) {
@@ -342,7 +351,7 @@ export const useReader = () => {
     }, [state.currentChapterNumber, state.book?.chapterStartNumber, setCurrentChapterNumber, audioPlayback]);
 
     const handleNextChapter = useCallback(() => {
-        if (state.book && state.currentChapterNumber < state.book.totalChapters) {
+        if (state.book && state.currentChapterNumber !== null && state.currentChapterNumber < state.book.totalChapters) {
             setCurrentChapterNumber(state.currentChapterNumber + 1);
             audioPlayback.handlePause();
         }
@@ -373,7 +382,7 @@ export const useReader = () => {
         chapter: state.chapter,
         loading: state.loading,
         error: state.error,
-        currentChapterNumber: state.currentChapterNumber,
+        currentChapterNumber: state.currentChapterNumber || 1,
 
         // Progress tracking
         progress: {
@@ -386,7 +395,7 @@ export const useReader = () => {
 
         // Audio playback
         audio: {
-            currentChunkIndex: state.currentChunkIndex,
+            currentChunkIndex: state.currentChunkIndex || 0,
             currentWordIndex: audioPlayback.currentWordIndex,
             isPlaying: audioPlayback.isPlaying,
             isCurrentChunkLoading: audioPlayback.isCurrentChunkLoading,

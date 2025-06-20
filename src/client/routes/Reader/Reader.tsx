@@ -39,8 +39,6 @@ export const Reader = () => {
         }
     }, [loading, error, navigate]);
 
-
-
     // console.log('chapter', {chapter: chapter?.chapterNumber, loading});
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -126,6 +124,18 @@ export const Reader = () => {
 
         return chunkIndexMapping.textToAbsolute.get(audio.currentChunkIndex) || 0;
     }, [audio.currentChunkIndex, chunkIndexMapping]);
+
+    // Handle scrolling to chunk when loaded from URL parameters
+    useEffect(() => {
+        if (!loading && chapter && currentChunkIndex > 0) {
+            // Small delay to ensure the component has rendered and scrolling function is available
+            const timeoutId = setTimeout(() => {
+                handleScrollToCurrentChunk();
+            }, 500);
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [loading, chapter, currentChunkIndex]);
 
     // Get current reading context for Q&A
     const getCurrentSentence = () => {

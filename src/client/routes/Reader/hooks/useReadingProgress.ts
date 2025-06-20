@@ -4,9 +4,10 @@ import { updateReadingPosition } from '../../../../apis/readingProgress/client';
 interface UseReadingProgressProps {
     userId: string;
     bookId: string | undefined;
-    currentChapterNumber: number;
-    currentChunkIndex: number;
+    currentChapterNumber: number | null;
+    currentChunkIndex: number | null;
     isPlaying?: boolean; // Track if audio is playing for session time
+    isInitialLoadComplete?: boolean; // Flag to indicate if initial reading position is loaded
 }
 
 export const useReadingProgress = ({
@@ -14,7 +15,8 @@ export const useReadingProgress = ({
     bookId,
     currentChapterNumber,
     currentChunkIndex,
-    isPlaying = false
+    isPlaying = false,
+    isInitialLoadComplete = false
 }: UseReadingProgressProps) => {
     const saveTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
     const sessionStartTime = useRef<number>(Date.now());
@@ -68,8 +70,8 @@ export const useReadingProgress = ({
             const result = await updateReadingPosition({
                 userId,
                 bookId,
-                currentChapter: currentChapterNumber,
-                currentChunk: currentChunkIndex,
+                currentChapter: currentChapterNumber!,
+                currentChunk: currentChunkIndex!,
                 sessionTimeMinutes: sessionTimeMinutes > 0 ? sessionTimeMinutes : undefined
             });
 
@@ -92,9 +94,11 @@ export const useReadingProgress = ({
         }
     }, [userId, bookId, currentChapterNumber, currentChunkIndex, getCurrentSessionTime]);
 
-    // Debounced save when position changes
+    // Debounced save when position changes - only after initial load is complete
     useEffect(() => {
-        if (!bookId) return;
+        // Don't save until initial reading position is loaded from database
+        // and we have valid chapter/chunk values (not null)
+        if (!bookId || !isInitialLoadComplete || currentChapterNumber === null || currentChunkIndex === null) return;
 
         if (saveTimeoutRef.current) {
             clearTimeout(saveTimeoutRef.current);
@@ -109,7 +113,7 @@ export const useReadingProgress = ({
                 clearTimeout(saveTimeoutRef.current);
             }
         };
-    }, [currentChapterNumber, currentChunkIndex, saveProgress, bookId]);
+    }, [currentChapterNumber, currentChunkIndex, saveProgress, bookId, isInitialLoadComplete]);
 
     // Save immediately when component unmounts
     useEffect(() => {
