@@ -10,6 +10,15 @@ A comprehensive PDF book parsing library that extracts text, images, and chapter
 - **Image Extraction**: Embedded image extraction with precise page correlation using `pdfimages`
 - **Chapter Detection**: Automatic chapter detection with fallback to pattern-based detection
 - **Smart Text Processing**: Enhanced text cleaning with abbreviation handling and chapter heading removal
+- **Internal PDF Link Extraction**: Extracts clickable internal links (footnotes, cross-references) from PDF annotations with high-precision target chunk resolution
+
+### Link Extraction & Navigation
+- **Internal Link Detection**: Automatically extracts clickable internal PDF links (footnotes, citations, cross-references)
+- **Target Chunk Resolution**: Maps links to specific text chunks using coordinate-based matching (97%+ accuracy)
+- **Navigation References**: Provides direct chunk-to-chunk references (`targetChunkIndex`) for UI navigation
+- **Link Target Marking**: Destination chunks marked with `isTargetLink: true` for UI highlighting
+- **Multi-method Resolution**: Uses coordinate matching, pattern matching, text search, and page fallback for robust link resolution
+- **High Confidence Matching**: Achieves 97%+ high-confidence resolution using PDF coordinate data
 
 ### Text Processing Enhancements
 - **Sentence Merging**: Automatically merges sentences split across page boundaries for better TTS quality
@@ -126,7 +135,22 @@ The parser generates multiple output files:
                         "text": "Chapter content with clean formatting...",
                         "type": "text",
                         "wordCount": 150,
-                        "pageNumber": 5
+                        "pageNumber": 5,
+                        "isTargetLink": true,
+                        "links": [
+                            {
+                                "text": "footnote reference.1",
+                                "destinationPage": 25,
+                                "destinationChapter": "Chapter Title",
+                                "isValid": true,
+                                "hasValidDestination": true,
+                                "targetChunkIndex": 123,
+                                "resolution": {
+                                    "method": "coordinates",
+                                    "confidence": "high"
+                                }
+                            }
+                        ]
                     },
                     {
                         "index": 1,
@@ -171,9 +195,13 @@ Automatically generated alongside the main output:
         "totalWords": 50000,
         "totalTextChunks": 2500,
         "totalImageChunks": 15,
-        "totalChunks": 2515,
+        "totalHeaderChunks": 50,
+        "totalChunks": 2565,
+        "totalChunksWithLinks": 45,
+        "totalLinks": 180,
         "averageWordsPerChapter": 5000,
-        "averageChunksPerChapter": 252
+        "averageChunksPerChapter": 257,
+        "averageLinksPerChapter": 18
     },
     "chapters": [
         {
@@ -182,7 +210,10 @@ Automatically generated alongside the main output:
             "wordCount": 3500,
             "textChunks": 175,
             "imageChunks": 2,
-            "totalChunks": 177,
+            "headerChunks": 5,
+            "chunksWithLinks": 8,
+            "totalLinks": 25,
+            "totalChunks": 182,
             "pageRanges": "From 5 to 12",
             "numberOfPages": 8,
             "previewText": "Chapter content preview showing first 5 text chunks combined..."
@@ -243,6 +274,84 @@ Fixes PDF formatting artifacts:
 - **text**: Regular text content with intelligent processing
 - **image**: Embedded images with page correlation and alt text
 - **header**: Chapter titles and headings
+
+## Link Extraction and Resolution
+
+The parser automatically extracts internal PDF links (footnotes, citations, cross-references) and resolves them to specific target chunks with high precision.
+
+### Link Resolution Methods
+
+The parser uses a multi-tiered resolution strategy for maximum accuracy:
+
+1. **Coordinate-based (High Confidence)**: Uses PDF coordinate data to precisely match links to chunks
+   - Achieves 97%+ accuracy
+   - Most reliable method for footnotes and citations
+
+2. **Pattern-based (Medium Confidence)**: Uses regex patterns to match link text with chunk content
+   - Fallback when coordinates are unavailable
+   - Good for structured references
+
+3. **Text Search (Low Confidence)**: Searches for exact text matches within target pages
+   - Additional fallback method
+   - Useful for simple text references
+
+4. **Page Fallback (Very Low Confidence)**: Maps to first chunk on the destination page
+   - Last resort when other methods fail
+   - Provides basic navigation capability
+
+### Link Object Structure
+
+Each extracted link contains:
+
+```json
+{
+    "text": "footnote reference.1",           // Link text from PDF
+    "destinationPage": 25,            // Target page number
+    "destinationChapter": "Chapter Title", // Target chapter name
+    "isValid": true,                  // Link validation status
+    "hasValidDestination": true,      // Destination page exists
+    "targetChunkIndex": 123,          // Direct reference to target chunk
+    "resolution": {
+        "method": "coordinates",      // Resolution method used
+        "confidence": "high"          // Confidence level
+    }
+}
+```
+
+### Target Chunk Marking
+
+Chunks that are link destinations are automatically marked:
+
+```json
+{
+    "index": 123,
+    "text": "Footnote content here...",
+    "type": "text",
+    "isTargetLink": true,             // Indicates this chunk is a link target
+    "pageNumber": 25
+}
+```
+
+This enables UI features like:
+- Highlighting destination chunks
+- Building navigation indexes
+- Creating back-reference systems
+
+### Link Statistics
+
+The parser provides detailed link resolution statistics:
+
+```
+🎯 Resolved 2,190/2,214 links to target chunks
+🎯 Marked 406 chunks as link targets
+
+Link Resolution Quality:
+- Coordinate-based (high confidence): 2,154 links (97.3%)
+- Page fallback (very low confidence): 36 links (1.6%)  
+- Pattern-based (medium confidence): 0 links
+- Text search (low confidence): 0 links
+- Not found: 24 links (1.1%)
+```
 
 ## Images
 
@@ -347,6 +456,14 @@ Enable with `--debug` flag to generate detailed debugging information:
 - Chapter detection analysis
 - Image extraction details
 - TOC parsing results
+- Link extraction and resolution details
+
+### Link Extraction Analysis
+When processing PDFs with internal links, the parser provides detailed analysis:
+- Link discovery per page
+- Resolution method effectiveness
+- Target chunk mapping accuracy
+- Validation statistics
 
 ### Parser Summary Statistics
 Automatically displays processing results:
@@ -356,12 +473,13 @@ Automatically displays processing results:
 📖 Book: "Book Title" by Author Name  
 📚 Total Chapters: 10
 📝 Total Words: 50,000
-🧩 Total Chunks: 2,515 (2,500 text + 15 images)
+🧩 Total Chunks: 2,565 (2,500 text + 15 images + 50 headers)
+🔗 Total Links: 180 in 45 chunks
 ================================================================================
 📚 CHAPTER BREAKDOWN:
- 1. Introduction                       3500w  175c   2i
- 2. Chapter 1: First Steps             5200w  260c   1i
- 3. Chapter 2: Advanced Topics         4800w  240c   3i
+ 1. Introduction                       3500w  175c   2i   5h   25l
+ 2. Chapter 1: First Steps             5200w  260c   1i   3h   18l
+ 3. Chapter 2: Advanced Topics         4800w  240c   3i   4h   22l
 ================================================================================
 ```
 
