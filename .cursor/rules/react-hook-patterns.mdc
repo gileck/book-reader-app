@@ -1,0 +1,221 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# React Hook Patterns - Codebase Standards
+
+## Established Patterns in This Codebase
+
+### 1. State Management with useRef for Current Values
+
+Pattern used in [useAudioPlayback.ts](mdc:src/client/routes/Reader/hooks/useAudioPlayback.ts):
+
+```typescript
+const [state, setState] = useState(initialState);
+const stateRef = useRef(state);
+
+// Keep stateRef in sync
+useEffect(() => {
+    stateRef.current = state;
+}, [state]);
+
+// Use stateRef.current in callbacks to avoid stale closures
+const someCallback = useCallback(() => {
+    const currentState = stateRef.current;
+    // Use currentState instead of state
+}, []); // No state dependency needed
+```
+
+**When to use this pattern:**
+- When you need current state values in async operations
+- When you want to avoid state dependencies in useEffect/useCallback
+- When dealing with event handlers that need fresh state
+
+### 2. Request Tracking Pattern
+
+Standard pattern for any async operations that could be duplicated:
+
+```typescript
+const pendingRequests = useRef<Set<identifier>>(new Set());
+const failedRequests = useRef<Set<identifier>>(new Set());
+
+const makeRequest = async (id: identifier) => {
+    // Always check these guards first
+    if (pendingRequests.current.has(id) || failedRequests.current.has(id)) {
+        return;
+    }
+    
+    pendingRequests.current.add(id);
+    try {
+        const result = await apiCall(id);
+        // Handle success
+    } catch (error) {
+        failedRequests.current.add(id);
+        // Handle error
+    } finally {
+        pendingRequests.current.delete(id);
+    }
+};
+```
+
+### 3. Complex Hook Composition
+
+Pattern used in [useReader.ts](mdc:src/client/routes/Reader/hooks/useReader.ts):
+
+```typescript
+export const useComplexFeature = () => {
+    // 1. Core state
+    const [state, setState] = useState(initialState);
+    
+    // 2. Composed hooks
+    const subFeature1 = useSubFeature1(state.param1);
+    const subFeature2 = useSubFeature2(state.param2);
+    
+    // 3. Derived state and callbacks
+    const derivedValue = useMemo(() => {
+        return computeFromState(state);
+    }, [state.relevantField]);
+    
+    // 4. Return organized interface
+    return {
+        // Data
+        mainData: state.data,
+        loading: state.loading,
+        
+        // Sub-features
+        feature1: {
+            data: subFeature1.data,
+            actions: subFeature1.actions
+        },
+        feature2: {
+            data: subFeature2.data,
+            actions: subFeature2.actions
+        },
+        
+        // Main actions
+        actions: {
+            doSomething: () => {},
+            doOtherThing: () => {}
+        }
+    };
+};
+```
+
+### 4. Settings Hook Pattern
+
+Pattern used in [useUserSettings](mdc:src/client/routes/Reader/hooks/useUserSettings.ts):
+
+```typescript
+export const useUserSettings = (userId: string) => {
+    const [settings, setSettings] = useState(defaultSettings);
+    const [modalStates, setModalStates] = useState(defaultModalStates);
+    
+    // Load settings on mount
+    useEffect(() => {
+        loadUserSettings(userId);
+    }, [userId]);
+    
+    // Setting change handlers
+    const handleSettingChange = useCallback(async (key: string, value: any) => {
+        setSettings(prev => ({ ...prev, [key]: value }));
+        await saveUserSetting(userId, key, value);
+    }, [userId]);
+    
+    // Modal handlers
+    const handleOpenModal = useCallback((modalType: string) => {
+        setModalStates(prev => ({ ...prev, [modalType]: true }));
+    }, []);
+    
+    return {
+        // Current values
+        ...settings,
+        
+        // Modal states
+        modalOpen: modalStates.main,
+        
+        // Actions
+        handleSettingChange,
+        handleOpenModal: () => handleOpenModal('main'),
+        handleCloseModal: () => setModalStates(prev => ({ ...prev, main: false }))
+    };
+};
+```
+
+### 5. Data Fetching with Error Handling
+
+Pattern for loading data with proper error states:
+
+```typescript
+const useDataLoader = (id: string) => {
+    const [state, setState] = useState({
+        data: null,
+        loading: true,
+        error: null
+    });
+    
+    useEffect(() => {
+        let cancelled = false;
+        
+        const loadData = async () => {
+            try {
+                setState(prev => ({ ...prev, loading: true, error: null }));
+                const result = await fetchData(id);
+                
+                if (!cancelled) {
+                    setState({
+                        data: result,
+                        loading: false,
+                        error: null
+                    });
+                }
+            } catch (error) {
+                if (!cancelled) {
+                    setState(prev => ({
+                        ...prev,
+                        loading: false,
+                        error: error.message
+                    }));
+                }
+            }
+        };
+        
+        loadData();
+        
+        return () => {
+            cancelled = true;
+        };
+    }, [id]);
+    
+    return state;
+};
+```
+
+## Hook Naming Conventions
+
+- **use[Feature]**: Main feature hooks (useReader, useAudioPlayback)
+- **use[Feature]Settings**: Settings management hooks
+- **use[DataType]**: Data loading/management hooks (useBookmarks)
+- **use[Action]**: Action-focused hooks (useReadingProgress)
+
+## Common Pitfalls to Avoid
+
+1. **Stale closures**: Use useRef for current values in async operations
+2. **Circular dependencies**: Never depend on state you're updating
+3. **Missing cleanup**: Always clean up async operations and listeners
+4. **Over-optimization**: Don't memo everything, profile first
+5. **Complex dependencies**: Keep useEffect dependencies simple and obvious
+
+## Testing Patterns
+
+```typescript
+// Mock hooks in tests
+jest.mock('./useAudioPlayback', () => ({
+    useAudioPlayback: jest.fn(() => ({
+        currentChunkIndex: 0,
+        isPlaying: false,
+        handlePlay: jest.fn(),
+        // ... other mocked values
+    }))
+}));
+```

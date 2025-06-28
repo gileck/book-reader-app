@@ -1,0 +1,168 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Expensive API Operations - Cost Protection Patterns
+
+## Critical Guidelines for TTS, AI, and Other Expensive APIs
+
+### 1. Always Implement Triple-Guard Pattern
+
+For ANY expensive API operation, implement these three safeguards:
+
+```typescript
+const pendingRequests = useRef<Set<string>>(new Set());
+const failedRequests = useRef<Set<string>>(new Set());
+const successfulResults = useRef<Map<string, ResultType>>(new Map());
+
+const expensiveApiCall = async (identifier: string) => {
+  // ✅ GUARD 1: Check if already successful
+  if (successfulResults.current.has(identifier)) {
+    return successfulResults.current.get(identifier);
+  }
+  
+  // ✅ GUARD 2: Check if currently pending
+  if (pendingRequests.current.has(identifier)) {
+    return;
+  }
+  
+  // ✅ GUARD 3: Check if previously failed
+  if (failedRequests.current.has(identifier)) {
+    return;
+  }
+  
+  pendingRequests.current.add(identifier);
+  
+  try {
+    const result = await expensiveApi.call(identifier);
+    successfulResults.current.set(identifier, result);
+    pendingRequests.current.delete(identifier);
+    return result;
+  } catch (error) {
+    failedRequests.current.add(identifier);
+    pendingRequests.current.delete(identifier);
+    throw error;
+  }
+};
+```
+
+### 2. TTS-Specific Patterns
+
+Reference: [useAudioPlayback.ts](mdc:src/client/routes/Reader/hooks/useAudioPlayback.ts)
+
+**Required for all TTS implementations:**
+
+```typescript
+// Track states for cost protection
+const pendingRequests = useRef<Set<number>>(new Set());
+const failedChunks = useRef<Set<number>>(new Set());
+const stateRef = useRef(state);
+
+// Effect should NEVER depend on state it updates
+useEffect(() => {
+  const fetchTts = async (index: number) => {
+    // Triple guard check
+    if (stateRef.current.audioChunks[index] || 
+        pendingRequests.current.has(index) || 
+        failedChunks.current.has(index)) {
+      return;
+    }
+    
+    pendingRequests.current.add(index);
+    
+    try {
+      const result = await generateTts(params);
+      // Handle success
+      setState(prev => ({ ...prev, audioChunks: { ...prev.audioChunks, [index]: result }}));
+    } catch (error) {
+      // ✅ CRITICAL: Mark as failed to prevent infinite retries
+      failedChunks.current.add(index);
+      // Handle error
+    } finally {
+      pendingRequests.current.delete(index);
+    }
+  };
+  
+  fetchTts(currentIndex);
+}, [currentIndex, voice, provider]); // ✅ Only external dependencies
+```
+
+### 3. Cost Protection Checklist
+
+Before deploying ANY expensive API integration:
+
+- [ ] **Deduplication**: Same request won't be made multiple times
+- [ ] **Failure tracking**: Failed requests don't retry automatically  
+- [ ] **Cache/storage**: Successful results are stored and reused
+- [ ] **Manual retry**: User can retry failed operations if desired
+- [ ] **Context clearing**: Caches clear when context changes
+- [ ] **Rate limiting**: No burst requests that could hit quotas
+- [ ] **Monitoring**: Track API usage and costs
+- [ ] **Fallback**: Graceful degradation when API fails
+
+### 4. Error Handling for Expensive APIs
+
+```typescript
+// ✅ Comprehensive error handling
+try {
+  const result = await expensiveApiCall(params);
+  // Success path
+} catch (error) {
+  // Log error details for monitoring
+  console.error('Expensive API failed:', {
+    operation: 'tts_generation',
+    params,
+    error: error.message,
+    timestamp: new Date().toISOString()
+  });
+  
+  // Mark as failed to prevent retries
+  failedOperations.current.add(operationId);
+  
+  // Update UI state
+  setError({
+    code: classifyError(error),
+    message: getUserFriendlyMessage(error),
+    canRetry: isRetryableError(error),
+    timestamp: new Date().toISOString()
+  });
+  
+  // Track for analytics/monitoring
+  trackApiFailure({
+    operation: 'tts_generation',
+    error: error.message,
+    cost_impact: 'prevented_infinite_retry'
+  });
+}
+```
+
+### 5. Monitoring and Alerts
+
+Implement monitoring for:
+
+- **Request volume**: Unusual spikes in API calls
+- **Error rates**: High failure rates that could indicate loops
+- **Cost tracking**: Monitor spend vs budget
+- **Retry patterns**: Detect potential infinite retry scenarios
+
+### 6. Development Testing
+
+Before production:
+
+1. **Simulate failures**: Test error flows extensively
+2. **Network testing**: Test with poor/intermittent connectivity  
+3. **Load testing**: Ensure no burst behavior under load
+4. **Cost calculation**: Calculate worst-case API costs
+5. **Circuit breaker**: Consider implementing circuit breaker pattern
+
+### 7. Code Review Checklist for Expensive APIs
+
+- [ ] Are there guards against duplicate requests?
+- [ ] Is failure state properly tracked?
+- [ ] Will failed requests retry infinitely?
+- [ ] Are successful results cached/stored?
+- [ ] Is there manual retry for user control?
+- [ ] Are dependencies in useEffect truly external?
+- [ ] Is error handling comprehensive?
+- [ ] Are costs bounded and predictable?

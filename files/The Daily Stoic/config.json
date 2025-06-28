@@ -1,0 +1,28 @@
+{
+    "metadata": {
+        "title": "The Daily Stoic",
+        "author": "Ryan Holiday & Stephen Hanselman"
+    },
+    "chapterNames": [
+        "INTRODUCTION",
+        "JANUARY: CLARITY",
+        "FEBRUARY: PASSIONS AND EMOTIONS",
+        "MARCH: AWARENESS",
+        "APRIL: UNBIASED THOUGHT",
+        "MAY: RIGHT ACTION",
+        "JUNE: PROBLEM SOLVING",
+        "JULY: DUTY",
+        "AUGUST: PRAGMATISM",
+        "SEPTEMBER: FORTITUDE AND RESILIENCE",
+        "OCTOBER: VIRTUE AND KINDNESS",
+        "NOVEMBER: ACCEPTANCE / AMOR FATI",
+        "DECEMBER: MEDITATION ON MORTALITY"
+    ],
+    "chapterPatterns": [
+        "^(INTRODUCTION|JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER):",
+        "^INTRODUCTION$"
+    ],
+    "excludePatterns": [
+        "^(ALSO BY|TITLE PAGE|COPYRIGHT|EPIGRAPH|ACKNOWLEDGMENTS|NOTES|ABOUT THE AUTHORS)$"
+    ]
+}

@@ -231,6 +231,7 @@ export const Reader = () => {
                     }}
                 >
                     <ReaderHeader book={book} chapter={chapter} />
+
                     <ReaderContent
                         chapter={chapter}
                         book={book}
@@ -275,6 +276,9 @@ export const Reader = () => {
                     progressData={progress}
                     onChapters={() => setChapterDialogOpen(true)}
                     minChapterNumber={book?.chapterStartNumber ?? 1}
+                    ttsServiceAvailable={audio.ttsServiceAvailable}
+                    ttsError={audio.ttsError}
+                    onDismissError={audio.clearTtsError}
                 />
 
                 {/* Speed Control Modal */}
