@@ -2,7 +2,7 @@
   "bookInfo": {
     "title": "Transformer: the deep chemistry of life and death",
     "author": "Nick Lane",
-    "parsedAt": "2025-06-28T13:53:41.953Z"
+    "parsedAt": "2025-06-28T18:11:31.548Z"
   },
   "overview": {
     "totalChapters": 8,
@@ -11,9 +11,12 @@
     "totalImageChunks": 56,
     "totalHeaderChunks": 140,
     "totalChunks": 5411,
+    "totalChunksWithLinks": 107,
+    "totalLinks": 942,
     "averageWordsPerChapter": 14349,
     "averageChunksPerChapter": 676,
-    "averageHeadersPerChapter": 18
+    "averageHeadersPerChapter": 18,
+    "averageLinksPerChapter": 118
   },
   "chapters": [
     {
@@ -23,6 +26,8 @@
       "textChunks": 346,
       "imageChunks": 0,
       "headerChunks": 7,
+      "chunksWithLinks": 1,
+      "totalLinks": 1,
       "headers": [
         "NTRODUCTION",
         "The dynamic side",
@@ -44,6 +49,8 @@
       "textChunks": 629,
       "imageChunks": 9,
       "headerChunks": 10,
+      "chunksWithLinks": 11,
+      "totalLinks": 11,
       "headers": [
         "DISCOVERING THE NANOCOSM",
         "Hans on board",
@@ -68,6 +75,8 @@
       "textChunks": 519,
       "imageChunks": 6,
       "headerChunks": 7,
+      "chunksWithLinks": 20,
+      "totalLinks": 20,
       "headers": [
         "THE PATH OF CARBON",
         "The advent of radioisotopes",
@@ -89,6 +98,8 @@
       "textChunks": 531,
       "imageChunks": 11,
       "headerChunks": 6,
+      "chunksWithLinks": 11,
+      "totalLinks": 11,
       "headers": [
         "FROM GASES TO LIFE",
         "Inevitable versus implausible",
@@ -109,6 +120,8 @@
       "textChunks": 487,
       "imageChunks": 4,
       "headerChunks": 8,
+      "chunksWithLinks": 15,
+      "totalLinks": 15,
       "headers": [
         "REVOLUTIONS",
         "Why oxygen is unique",
@@ -131,6 +144,8 @@
       "textChunks": 597,
       "imageChunks": 9,
       "headerChunks": 5,
+      "chunksWithLinks": 10,
+      "totalLinks": 10,
       "headers": [
         "TO THE DARK SIDE",
         "The Warburg effect",
@@ -150,6 +165,8 @@
       "textChunks": 594,
       "imageChunks": 1,
       "headerChunks": 6,
+      "chunksWithLinks": 6,
+      "totalLinks": 6,
       "headers": [
         "THE FLUX CAPACITOR",
         "Twin pillars of medicine",
@@ -170,6 +187,8 @@
       "textChunks": 1512,
       "imageChunks": 16,
       "headerChunks": 91,
+      "chunksWithLinks": 33,
+      "totalLinks": 868,
       "headers": [
         "E PILOGUE",
         "ENVOI",

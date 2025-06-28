@@ -1,5 +1,5 @@
 {
-  "totalHeaders": 142,
+  "totalHeaders": 140,
   "headers": [
     {
       "text": "NTRODUCTION",
@@ -71,7 +71,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 28,
-      "chunkIndex": 1
+      "chunkIndex": 354
     },
     {
       "text": "Hans on board",
@@ -80,7 +80,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 30,
-      "chunkIndex": 46
+      "chunkIndex": 399
     },
     {
       "text": "Slices and gases",
@@ -89,7 +89,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 32,
-      "chunkIndex": 78
+      "chunkIndex": 431
     },
     {
       "text": "Deep breathing",
@@ -98,7 +98,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 35,
-      "chunkIndex": 138
+      "chunkIndex": 491
     },
     {
       "text": "The fate of pyruvate",
@@ -107,7 +107,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 39,
-      "chunkIndex": 207
+      "chunkIndex": 560
     },
     {
       "text": "Pulling hydrogen",
@@ -116,7 +116,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 41,
-      "chunkIndex": 255
+      "chunkIndex": 608
     },
     {
       "text": "Circular reasoning",
@@ -125,7 +125,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 45,
-      "chunkIndex": 318
+      "chunkIndex": 671
     },
     {
       "text": "The living structure of cells",
@@ -134,7 +134,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 49,
-      "chunkIndex": 393
+      "chunkIndex": 746
     },
     {
       "text": "Separating charge",
@@ -143,7 +143,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 52,
-      "chunkIndex": 448
+      "chunkIndex": 801
     },
     {
       "text": "Bizarre contortions",
@@ -152,16 +152,7 @@
       "chapterNumber": 1,
       "chapterTitle": "Discovering the nanocosm",
       "pageNumber": 56,
-      "chunkIndex": 518
-    },
-    {
-      "text": "Wordsworth@cara.ngo)",
-      "wordCount": 1,
-      "context": "finalChunk",
-      "chapterNumber": 1,
-      "chapterTitle": "Discovering the nanocosm",
-      "pageNumber": 59,
-      "chunkIndex": 579
+      "chunkIndex": 871
     },
     {
       "text": "THE PATH OF CARBON",
@@ -170,7 +161,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 63,
-      "chunkIndex": 1
+      "chunkIndex": 1002
     },
     {
       "text": "The advent of radioisotopes",
@@ -179,7 +170,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 66,
-      "chunkIndex": 71
+      "chunkIndex": 1072
     },
     {
       "text": "The ‘Big Problem’",
@@ -188,7 +179,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 68,
-      "chunkIndex": 97
+      "chunkIndex": 1098
     },
     {
       "text": "Slow disintegration",
@@ -197,7 +188,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 71,
-      "chunkIndex": 155
+      "chunkIndex": 1156
     },
     {
       "text": "The one true path",
@@ -206,7 +197,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 74,
-      "chunkIndex": 211
+      "chunkIndex": 1212
     },
     {
       "text": "The reverse Krebs cycle",
@@ -215,7 +206,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 79,
-      "chunkIndex": 300
+      "chunkIndex": 1301
     },
     {
       "text": "How to power growth",
@@ -224,7 +215,7 @@
       "chapterNumber": 2,
       "chapterTitle": "The path of carbon",
       "pageNumber": 83,
-      "chunkIndex": 372
+      "chunkIndex": 1373
     },
     {
       "text": "FROM GASES TO LIFE",
@@ -233,7 +224,7 @@
       "chapterNumber": 3,
       "chapterTitle": "From gases to life",
       "pageNumber": 92,
-      "chunkIndex": 1
+      "chunkIndex": 1534
     },
     {
       "text": "Inevitable versus implausible",
@@ -242,7 +233,7 @@
       "chapterNumber": 3,
       "chapterTitle": "From gases to life",
       "pageNumber": 102,
-      "chunkIndex": 181
+      "chunkIndex": 1714
     },
     {
       "text": "Magic surfaces",
@@ -251,7 +242,7 @@
       "chapterNumber": 3,
       "chapterTitle": "From gases to life",
       "pageNumber": 106,
-      "chunkIndex": 251
+      "chunkIndex": 1784
     },
     {
       "text": "The driving force",
@@ -260,7 +251,7 @@
       "chapterNumber": 3,
       "chapterTitle": "From gases to life",
       "pageNumber": 113,
-      "chunkIndex": 338
+      "chunkIndex": 1871
     },
     {
       "text": "Small steps, giant leaps",
@@ -269,7 +260,7 @@
       "chapterNumber": 3,
       "chapterTitle": "From gases to life",
       "pageNumber": 115,
-      "chunkIndex": 392
+      "chunkIndex": 1925
     },
     {
       "text": "How to go forwards",
@@ -278,7 +269,7 @@
       "chapterNumber": 3,
       "chapterTitle": "From gases to life",
       "pageNumber": 119,
-      "chunkIndex": 456
+      "chunkIndex": 1989
     },
     {
       "text": "REVOLUTIONS",
@@ -287,7 +278,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 125,
-      "chunkIndex": 1
+      "chunkIndex": 2082
     },
     {
       "text": "Why oxygen is unique",
@@ -296,7 +287,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 127,
-      "chunkIndex": 34
+      "chunkIndex": 2115
     },
     {
       "text": "Plugging into the planet",
@@ -305,7 +296,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 129,
-      "chunkIndex": 86
+      "chunkIndex": 2167
     },
     {
       "text": "Structure of an energetically limited world",
@@ -314,7 +305,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 134,
-      "chunkIndex": 156
+      "chunkIndex": 2237
     },
     {
       "text": "The dawn of photosynthesis",
@@ -323,7 +314,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 137,
-      "chunkIndex": 224
+      "chunkIndex": 2305
     },
     {
       "text": "The soaring",
@@ -332,7 +323,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 141,
-      "chunkIndex": 302
+      "chunkIndex": 2383
     },
     {
       "text": "The Shuram conundrum",
@@ -341,7 +332,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 141,
-      "chunkIndex": 313
+      "chunkIndex": 2394
     },
     {
       "text": "The view from inside our cells",
@@ -350,7 +341,7 @@
       "chapterNumber": 4,
       "chapterTitle": "Revolutions",
       "pageNumber": 144,
-      "chunkIndex": 373
+      "chunkIndex": 2454
     },
     {
       "text": "TO THE DARK SIDE",
@@ -359,7 +350,7 @@
       "chapterNumber": 5,
       "chapterTitle": "To the dark side",
       "pageNumber": 151,
-      "chunkIndex": 1
+      "chunkIndex": 2581
     },
     {
       "text": "The Warburg effect",
@@ -368,7 +359,7 @@
       "chapterNumber": 5,
       "chapterTitle": "To the dark side",
       "pageNumber": 154,
-      "chunkIndex": 84
+      "chunkIndex": 2664
     },
     {
       "text": "Rewiring metabolism",
@@ -377,7 +368,7 @@
       "chapterNumber": 5,
       "chapterTitle": "To the dark side",
       "pageNumber": 159,
-      "chunkIndex": 166
+      "chunkIndex": 2746
     },
     {
       "text": "Another reversal",
@@ -386,7 +377,7 @@
       "chapterNumber": 5,
       "chapterTitle": "To the dark side",
       "pageNumber": 167,
-      "chunkIndex": 325
+      "chunkIndex": 2905
     },
     {
       "text": "The rising tide",
@@ -395,7 +386,7 @@
       "chapterNumber": 5,
       "chapterTitle": "To the dark side",
       "pageNumber": 177,
-      "chunkIndex": 505
+      "chunkIndex": 3085
     },
     {
       "text": "THE FLUX CAPACITOR",
@@ -404,7 +395,7 @@
       "chapterNumber": 6,
       "chapterTitle": "The flux capacitor",
       "pageNumber": 182,
-      "chunkIndex": 1
+      "chunkIndex": 3192
     },
     {
       "text": "Twin pillars of medicine",
@@ -413,7 +404,7 @@
       "chapterNumber": 6,
       "chapterTitle": "The flux capacitor",
       "pageNumber": 185,
-      "chunkIndex": 74
+      "chunkIndex": 3265
     },
     {
       "text": "Bringing balance to the force",
@@ -422,7 +413,7 @@
       "chapterNumber": 6,
       "chapterTitle": "The flux capacitor",
       "pageNumber": 193,
-      "chunkIndex": 235
+      "chunkIndex": 3426
     },
     {
       "text": "The age-old problem",
@@ -431,7 +422,7 @@
       "chapterNumber": 6,
       "chapterTitle": "The flux capacitor",
       "pageNumber": 197,
-      "chunkIndex": 316
+      "chunkIndex": 3507
     },
     {
       "text": "We’re all individuals",
@@ -440,7 +431,7 @@
       "chapterNumber": 6,
       "chapterTitle": "The flux capacitor",
       "pageNumber": 201,
-      "chunkIndex": 392
+      "chunkIndex": 3583
     },
     {
       "text": "Know thyself",
@@ -449,7 +440,7 @@
       "chapterNumber": 6,
       "chapterTitle": "The flux capacitor",
       "pageNumber": 205,
-      "chunkIndex": 469
+      "chunkIndex": 3660
     },
     {
       "text": "E PILOGUE",
@@ -458,7 +449,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 212,
-      "chunkIndex": 0
+      "chunkIndex": 3792
     },
     {
       "text": "ENVOI",
@@ -467,7 +458,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 220,
-      "chunkIndex": 163
+      "chunkIndex": 3955
     },
     {
       "text": "RED PROTEIN MECHANICS",
@@ -476,7 +467,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 223,
-      "chunkIndex": 169
+      "chunkIndex": 3961
     },
     {
       "text": "THE KREBS LINE",
@@ -485,7 +476,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 228,
-      "chunkIndex": 224
+      "chunkIndex": 4016
     },
     {
       "text": "ABBREVIATIONS",
@@ -494,7 +485,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 234,
-      "chunkIndex": 287
+      "chunkIndex": 4079
     },
     {
       "text": "FURTHER READING",
@@ -503,7 +494,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 237,
-      "chunkIndex": 333
+      "chunkIndex": 4125
     },
     {
       "text": "Introduction: Life itself",
@@ -512,7 +503,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 237,
-      "chunkIndex": 341
+      "chunkIndex": 4133
     },
     {
       "text": "The paradox of information in biology",
@@ -521,7 +512,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 237,
-      "chunkIndex": 352
+      "chunkIndex": 4144
     },
     {
       "text": "The dynamic side",
@@ -530,7 +521,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 238,
-      "chunkIndex": 363
+      "chunkIndex": 4155
     },
     {
       "text": "The unity of biochemistry",
@@ -539,7 +530,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 238,
-      "chunkIndex": 368
+      "chunkIndex": 4160
     },
     {
       "text": "The digital jungle",
@@ -548,7 +539,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 239,
-      "chunkIndex": 379
+      "chunkIndex": 4171
     },
     {
       "text": "The molecular genetic paradigm of medicine",
@@ -557,7 +548,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 239,
-      "chunkIndex": 395
+      "chunkIndex": 4187
     },
     {
       "text": "The Krebs cycle",
@@ -566,7 +557,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 240,
-      "chunkIndex": 408
+      "chunkIndex": 4200
     },
     {
       "text": "Chapter 1: Discovering the nanocosm",
@@ -575,7 +566,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 240,
-      "chunkIndex": 423
+      "chunkIndex": 4215
     },
     {
       "text": "Otto Warburg and respirometry",
@@ -584,7 +575,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 241,
-      "chunkIndex": 441
+      "chunkIndex": 4233
     },
     {
       "text": "Szent-Györgyi story",
@@ -593,7 +584,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 242,
-      "chunkIndex": 449
+      "chunkIndex": 4241
     },
     {
       "text": "Discovery of the Krebs cycle",
@@ -602,7 +593,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 242,
-      "chunkIndex": 465
+      "chunkIndex": 4257
     },
     {
       "text": "Fritz Lipmann and acetyl CoA",
@@ -611,7 +602,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 243,
-      "chunkIndex": 487
+      "chunkIndex": 4279
     },
     {
       "text": "Peter Mitchell and chemiosmotic coupling",
@@ -620,7 +611,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 244,
-      "chunkIndex": 499
+      "chunkIndex": 4291
     },
     {
       "text": "Mitchell and Moyle",
@@ -629,7 +620,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 244,
-      "chunkIndex": 515
+      "chunkIndex": 4307
     },
     {
       "text": "Paul Boyer and the ATP synthase",
@@ -638,7 +629,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 245,
-      "chunkIndex": 522
+      "chunkIndex": 4314
     },
     {
       "text": "The mechanism of proton pumping",
@@ -647,7 +638,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 245,
-      "chunkIndex": 528
+      "chunkIndex": 4320
     },
     {
       "text": "Evolution of the Krebs cycle",
@@ -656,7 +647,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 245,
-      "chunkIndex": 537
+      "chunkIndex": 4329
     },
     {
       "text": "Endosymbiosis and mitochondria",
@@ -665,7 +656,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 246,
-      "chunkIndex": 543
+      "chunkIndex": 4335
     },
     {
       "text": "Chapter 2: The path of carbon",
@@ -674,7 +665,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 246,
-      "chunkIndex": 551
+      "chunkIndex": 4343
     },
     {
       "text": "Lawrence and the Rad Lab",
@@ -683,7 +674,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 246,
-      "chunkIndex": 560
+      "chunkIndex": 4352
     },
     {
       "text": "Early carbon isotope work",
@@ -692,7 +683,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 247,
-      "chunkIndex": 568
+      "chunkIndex": 4360
     },
     {
       "text": "The path of carbon in photosynthesis",
@@ -701,7 +692,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 247,
-      "chunkIndex": 581
+      "chunkIndex": 4373
     },
     {
       "text": "Photophosphorylation",
@@ -710,7 +701,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 248,
-      "chunkIndex": 601
+      "chunkIndex": 4393
     },
     {
       "text": "Reverse Krebs cycle",
@@ -719,7 +710,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 248,
-      "chunkIndex": 606
+      "chunkIndex": 4398
     },
     {
       "text": "The problems with peer review",
@@ -728,7 +719,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 249,
-      "chunkIndex": 622
+      "chunkIndex": 4414
     },
     {
       "text": "Ferredoxin and photorespiration",
@@ -737,7 +728,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 249,
-      "chunkIndex": 629
+      "chunkIndex": 4421
     },
     {
       "text": "Widespread reverse Krebs cycle",
@@ -746,7 +737,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 249,
-      "chunkIndex": 637
+      "chunkIndex": 4429
     },
     {
       "text": "Chapter 3: From gases to life",
@@ -755,7 +746,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 250,
-      "chunkIndex": 646
+      "chunkIndex": 4438
     },
     {
       "text": "Reanalysis of early Earth hydrothermal systems",
@@ -764,7 +755,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 250,
-      "chunkIndex": 656
+      "chunkIndex": 4448
     },
     {
       "text": "Mike Russell and Gunter Wächtershäuser",
@@ -773,7 +764,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 251,
-      "chunkIndex": 671
+      "chunkIndex": 4463
     },
     {
       "text": "Discovery of Lost City",
@@ -782,7 +773,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 252,
-      "chunkIndex": 686
+      "chunkIndex": 4478
     },
     {
       "text": "Terrestrial geothermal systems",
@@ -791,7 +782,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 252,
-      "chunkIndex": 698
+      "chunkIndex": 4490
     },
     {
       "text": "Protometabolism using life as a guide",
@@ -800,7 +791,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 253,
-      "chunkIndex": 719
+      "chunkIndex": 4511
     },
     {
       "text": "The physiology of LUCA",
@@ -809,7 +800,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 254,
-      "chunkIndex": 748
+      "chunkIndex": 4540
     },
     {
       "text": "Acetyl CoA pathway",
@@ -818,7 +809,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 255,
-      "chunkIndex": 762
+      "chunkIndex": 4554
     },
     {
       "text": "Magic surfaces",
@@ -827,7 +818,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 256,
-      "chunkIndex": 791
+      "chunkIndex": 4583
     },
     {
       "text": "Methanogens as a guide",
@@ -836,7 +827,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 256,
-      "chunkIndex": 799
+      "chunkIndex": 4591
     },
     {
       "text": "Formation of protocells in hydrothermal vents",
@@ -845,7 +836,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 258,
-      "chunkIndex": 834
+      "chunkIndex": 4626
     },
     {
       "text": "Energy flow in hydrothermal vents",
@@ -854,7 +845,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 259,
-      "chunkIndex": 858
+      "chunkIndex": 4650
     },
     {
       "text": "Chapter 4: Revolutions",
@@ -863,7 +854,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 259,
-      "chunkIndex": 877
+      "chunkIndex": 4669
     },
     {
       "text": "Oxygen",
@@ -872,7 +863,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 260,
-      "chunkIndex": 889
+      "chunkIndex": 4681
     },
     {
       "text": "Electron bifurcation",
@@ -881,7 +872,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 261,
-      "chunkIndex": 903
+      "chunkIndex": 4695
     },
     {
       "text": "Margaret Dayhoff and Lynn Margulis",
@@ -890,7 +881,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 261,
-      "chunkIndex": 906
+      "chunkIndex": 4698
     },
     {
       "text": "Bacterial metabolism and syntrophy",
@@ -899,7 +890,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 262,
-      "chunkIndex": 926
+      "chunkIndex": 4718
     },
     {
       "text": "Dawn of photosynthesis",
@@ -908,7 +899,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 262,
-      "chunkIndex": 939
+      "chunkIndex": 4731
     },
     {
       "text": "Shurum conundrum",
@@ -917,7 +908,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 263,
-      "chunkIndex": 959
+      "chunkIndex": 4751
     },
     {
       "text": "Active ventilation in animals",
@@ -926,7 +917,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 264,
-      "chunkIndex": 974
+      "chunkIndex": 4766
     },
     {
       "text": "Forked Krebs cycle",
@@ -935,7 +926,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 264,
-      "chunkIndex": 988
+      "chunkIndex": 4780
     },
     {
       "text": "Chapter 5: To the dark side",
@@ -944,7 +935,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 265,
-      "chunkIndex": 1004
+      "chunkIndex": 4796
     },
     {
       "text": "Evidence against mutations driving cancer",
@@ -953,7 +944,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 265,
-      "chunkIndex": 1019
+      "chunkIndex": 4811
     },
     {
       "text": "Warburg",
@@ -962,7 +953,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 266,
-      "chunkIndex": 1040
+      "chunkIndex": 4832
     },
     {
       "text": "Warburg and his critics on cancer",
@@ -971,7 +962,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 267,
-      "chunkIndex": 1062
+      "chunkIndex": 4854
     },
     {
       "text": "Reinterpretation of the Warburg effect",
@@ -980,7 +971,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 268,
-      "chunkIndex": 1079
+      "chunkIndex": 4871
     },
     {
       "text": "Hypoxia in cancer",
@@ -989,7 +980,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 269,
-      "chunkIndex": 1107
+      "chunkIndex": 4899
     },
     {
       "text": "Glutamine in cancer",
@@ -998,7 +989,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 269,
-      "chunkIndex": 1118
+      "chunkIndex": 4910
     },
     {
       "text": "NADPH-linked power drivers",
@@ -1007,7 +998,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 270,
-      "chunkIndex": 1146
+      "chunkIndex": 4938
     },
     {
       "text": "Sirtuins and epigenetic shifts",
@@ -1016,7 +1007,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 271,
-      "chunkIndex": 1155
+      "chunkIndex": 4947
     },
     {
       "text": "Respiring with glycerol phosphate",
@@ -1025,7 +1016,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 271,
-      "chunkIndex": 1168
+      "chunkIndex": 4960
     },
     {
       "text": "Glutamine cycle in muscles",
@@ -1034,7 +1025,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 272,
-      "chunkIndex": 1178
+      "chunkIndex": 4970
     },
     {
       "text": "Ketogenic diet and cancer",
@@ -1043,7 +1034,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 272,
-      "chunkIndex": 1182
+      "chunkIndex": 4974
     },
     {
       "text": "Chapter 6: The flux capacitor",
@@ -1052,16 +1043,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 272,
-      "chunkIndex": 1188
-    },
-    {
-      "text": "Genome-wide association studies (GWAS)",
-      "wordCount": 4,
-      "context": "finalChunk",
-      "chapterNumber": "Epilogue",
-      "chapterTitle": "Epilogue: Self",
-      "pageNumber": 273,
-      "chunkIndex": 1200
+      "chunkIndex": 4980
     },
     {
       "text": "Missing heritability",
@@ -1070,7 +1052,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 273,
-      "chunkIndex": 1207
+      "chunkIndex": 4998
     },
     {
       "text": "Mitochondria in flies",
@@ -1079,7 +1061,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 275,
-      "chunkIndex": 1250
+      "chunkIndex": 5041
     },
     {
       "text": "Glutathione, redox stress and S-glutathionylation",
@@ -1088,7 +1070,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 276,
-      "chunkIndex": 1279
+      "chunkIndex": 5070
     },
     {
       "text": "Number of heartbeats",
@@ -1097,7 +1079,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 276,
-      "chunkIndex": 1290
+      "chunkIndex": 5081
     },
     {
       "text": "Antioxidants don’t work",
@@ -1106,7 +1088,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 277,
-      "chunkIndex": 1300
+      "chunkIndex": 5091
     },
     {
       "text": "Hyperfunction",
@@ -1115,7 +1097,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 277,
-      "chunkIndex": 1318
+      "chunkIndex": 5109
     },
     {
       "text": "Glycation damage",
@@ -1124,7 +1106,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 278,
-      "chunkIndex": 1329
+      "chunkIndex": 5120
     },
     {
       "text": "Variations in mitochondrial proteome between tissues",
@@ -1133,7 +1115,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 278,
-      "chunkIndex": 1333
+      "chunkIndex": 5124
     },
     {
       "text": "Insulin secretion depends on membrane potential",
@@ -1142,7 +1124,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 278,
-      "chunkIndex": 1338
+      "chunkIndex": 5129
     },
     {
       "text": "Links between diabetes and Alzheimer’s disease",
@@ -1151,7 +1133,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 278,
-      "chunkIndex": 1347
+      "chunkIndex": 5138
     },
     {
       "text": "Mitochondrial-associated membranes and Alzheimer’s disease",
@@ -1160,7 +1142,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 279,
-      "chunkIndex": 1360
+      "chunkIndex": 5151
     },
     {
       "text": "Biology by the numbers",
@@ -1169,7 +1151,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 279,
-      "chunkIndex": 1374
+      "chunkIndex": 5165
     },
     {
       "text": "Epilogue: Self",
@@ -1178,7 +1160,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 279,
-      "chunkIndex": 1379
+      "chunkIndex": 5170
     },
     {
       "text": "Anaesthetics and mitochondria",
@@ -1187,7 +1169,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 280,
-      "chunkIndex": 1380
+      "chunkIndex": 5171
     },
     {
       "text": "EEG and mitochondria",
@@ -1196,7 +1178,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 280,
-      "chunkIndex": 1393
+      "chunkIndex": 5184
     },
     {
       "text": "Electrical fields in development",
@@ -1205,7 +1187,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 280,
-      "chunkIndex": 1404
+      "chunkIndex": 5195
     },
     {
       "text": "Consciousness and self",
@@ -1214,7 +1196,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 281,
-      "chunkIndex": 1418
+      "chunkIndex": 5209
     },
     {
       "text": "ACKNOWLEDGEMENTS",
@@ -1223,7 +1205,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 283,
-      "chunkIndex": 1450
+      "chunkIndex": 5241
     },
     {
       "text": "INDEX",
@@ -1232,7 +1214,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 289,
-      "chunkIndex": 1576
+      "chunkIndex": 5367
     },
     {
       "text": "DNA",
@@ -1241,7 +1223,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 297,
-      "chunkIndex": 1589
+      "chunkIndex": 5380
     },
     {
       "text": "FeS see iron-sulfur",
@@ -1250,7 +1232,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 299,
-      "chunkIndex": 1593
+      "chunkIndex": 5384
     },
     {
       "text": "Krebs cycle, reverse see reverse Krebs",
@@ -1259,7 +1241,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 303,
-      "chunkIndex": 1599
+      "chunkIndex": 5390
     },
     {
       "text": "NADPH",
@@ -1268,7 +1250,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 307,
-      "chunkIndex": 1605
+      "chunkIndex": 5396
     },
     {
       "text": "Table of Contents",
@@ -1277,7 +1259,7 @@
       "chapterNumber": "Epilogue",
       "chapterTitle": "Epilogue: Self",
       "pageNumber": 317,
-      "chunkIndex": 1615
+      "chunkIndex": 5406
     }
   ],
   "summary": {
@@ -1301,8 +1283,7 @@
         "Circular reasoning",
         "The living structure of cells",
         "Separating charge",
-        "Bizarre contortions",
-        "Wordsworth@cara.ngo)"
+        "Bizarre contortions"
       ],
       "Ch2_The path of carbon": [
         "THE PATH OF CARBON",
@@ -1414,7 +1395,6 @@
         "Glutamine cycle in muscles",
         "Ketogenic diet and cancer",
         "Chapter 6: The flux capacitor",
-        "Genome-wide association studies (GWAS)",
         "Missing heritability",
         "Mitochondria in flies",
         "Glutathione, redox stress and S-glutathionylation",
@@ -1541,12 +1521,6 @@
       "56": [
         {
           "text": "Bizarre contortions",
-          "chapter": 1
-        }
-      ],
-      "59": [
-        {
-          "text": "Wordsworth@cara.ngo)",
           "chapter": 1
         }
       ],
@@ -2090,10 +2064,6 @@
       ],
       "273": [
         {
-          "text": "Genome-wide association studies (GWAS)",
-          "chapter": "Epilogue"
-        },
-        {
           "text": "Missing heritability",
           "chapter": "Epilogue"
         }
@@ -2220,7 +2190,7 @@
       ]
     },
     "byContext": {
-      "finalChunk": 142
+      "finalChunk": 140
     }
   }
 }
