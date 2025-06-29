@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Fab } from '@mui/material';
+import { HelpOutline as ExplainIcon } from '@mui/icons-material';
 import { useUserTheme } from './UserThemeProvider';
 import type { ChapterClient } from '../../apis/chapters/types';
 import type { BookClient } from '../../apis/books/types';
@@ -18,6 +19,7 @@ interface SimpleTextRendererProps {
     handleSentenceClick: (chunkIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
     onCurrentChunkVisibilityChange?: (isVisible: boolean) => void;
+    onExplainText?: (selectedText: string) => void;
 }
 
 export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
@@ -32,7 +34,8 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     handleWordClick,
     handleSentenceClick,
     isChunkBookmarked,
-    onCurrentChunkVisibilityChange
+    onCurrentChunkVisibilityChange,
+    onExplainText
 }) => {
     const { fontSize, lineHeight, fontFamily, textColor } = useUserTheme();
     const chunkRefs = useRef<Map<number, HTMLDivElement>>(new Map());
@@ -40,6 +43,9 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     const hasScrolledToInitialPosition = useRef<boolean>(false);
     const [isContentVisible, setIsContentVisible] = useState(currentChunkIndex === 0);
     const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
+    const [selectedText, setSelectedText] = useState('');
+    const [showExplainButton, setShowExplainButton] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Track current chunk visibility with intersection observer
     useEffect(() => {
@@ -188,6 +194,66 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
         }
     }, [isContentVisible]);
 
+    // Handle text selection
+    useEffect(() => {
+        const handleSelectionChange = () => {
+            const selection = window.getSelection();
+            if (!selection || selection.rangeCount === 0) {
+                setShowExplainButton(false);
+                setSelectedText('');
+                return;
+            }
+
+            const selectedText = selection.toString().trim();
+            if (!selectedText) {
+                setShowExplainButton(false);
+                setSelectedText('');
+                return;
+            }
+
+            // Check if selection is within our container
+            const range = selection.getRangeAt(0);
+            const containerElement = containerRef.current;
+            if (!containerElement || !containerElement.contains(range.commonAncestorContainer)) {
+                setShowExplainButton(false);
+                setSelectedText('');
+                return;
+            }
+
+            setSelectedText(selectedText);
+            setShowExplainButton(true);
+        };
+
+        document.addEventListener('selectionchange', handleSelectionChange);
+        return () => document.removeEventListener('selectionchange', handleSelectionChange);
+    }, []);
+
+    // Hide button when clicking elsewhere
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (showExplainButton && !(event.target as Element).closest('.explain-button')) {
+                const selection = window.getSelection();
+                if (!selection || !selection.toString().trim()) {
+                    setShowExplainButton(false);
+                    setSelectedText('');
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [showExplainButton]);
+
+    const handleExplainClick = () => {
+        if (selectedText && onExplainText) {
+            onExplainText(selectedText);
+            setShowExplainButton(false);
+            setSelectedText('');
+            // Clear selection
+            window.getSelection()?.removeAllRanges();
+        }
+    };
+
     // Cleanup on unmount
     useEffect(() => {
         return () => {
@@ -201,9 +267,11 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
 
     return (
         <Box
+            ref={containerRef}
             sx={{
                 opacity: isContentVisible ? 1 : 0,
-                transition: 'none' // No transition - instant visibility change
+                transition: 'none', // No transition - instant visibility change
+                position: 'relative'
             }}
         >
             {chapter.content.chunks.map((chunk, index) => {
@@ -285,6 +353,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                             color: textColor,
                                             wordSpacing: 'normal',
                                             cursor: 'pointer',
+                                            userSelect: 'text',
                                             ...getSentenceStyle(index)
                                         }}
                                     >
@@ -336,6 +405,30 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                     </React.Fragment>
                 );
             })}
+
+            {/* Floating Explain Button */}
+            {showExplainButton && (
+                <Fab
+                    className="explain-button"
+                    size="medium"
+                    color="primary"
+                    onClick={handleExplainClick}
+                    sx={{
+                        position: 'fixed',
+                        bottom: { xs: 160, sm: 180 }, // Well above AudioControls
+                        right: 20,
+                        zIndex: 1100, // Higher than AudioControls (1000)
+                        opacity: 0.95,
+                        boxShadow: 3,
+                        '&:hover': {
+                            opacity: 1,
+                            transform: 'scale(1.1)'
+                        }
+                    }}
+                >
+                    <ExplainIcon />
+                </Fab>
+            )}
         </Box>
     );
 }; 

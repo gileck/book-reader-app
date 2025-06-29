@@ -209,12 +209,14 @@ export const useBookQA = ({
         }
     }, [bookId, updateState]);
 
-    const submitQuestionWithoutEstimation = useCallback(async (question: string, estimatedCost?: number) => {
-        // Auto-expand chat to fullscreen when submitting question
-        updateState({
-            isOpen: true,
-            isFullScreen: true
-        });
+    const submitQuestionWithoutEstimation = useCallback(async (question: string, estimatedCost?: number, openPanel: boolean = true, customCustomization?: { answerLength?: AnswerLength; answerLevel?: AnswerLevel; answerStyle?: AnswerStyle }) => {
+        // Auto-expand chat to fullscreen when submitting question (if openPanel is true)
+        if (openPanel) {
+            updateState({
+                isOpen: true,
+                isFullScreen: true
+            });
+        }
 
         // Add user message immediately
         const userMessage: ChatMessage = {
@@ -253,7 +255,7 @@ export const useBookQA = ({
                 currentSentence,
                 lastSentences: getLastSentences(),
                 conversationHistory,
-                customization: {
+                customization: customCustomization || {
                     answerLength: state.answerLength,
                     answerLevel: state.answerLevel,
                     answerStyle: state.answerStyle
@@ -333,7 +335,7 @@ export const useBookQA = ({
         updateState
     ]);
 
-    const handleCostApproval = useCallback((approved: boolean) => {
+    const handleCostApproval = useCallback((approved: boolean, openPanel: boolean = true) => {
         if (approved && state.pendingQuestion && state.estimatedCost !== null) {
             // Proceed with the actual question submission, passing the estimated cost
             updateState({
@@ -342,7 +344,7 @@ export const useBookQA = ({
                 estimatedCost: null
             });
             // Call the actual submit function with estimated cost
-            submitQuestionWithoutEstimation(state.pendingQuestion, state.estimatedCost);
+            submitQuestionWithoutEstimation(state.pendingQuestion, state.estimatedCost, openPanel);
         } else {
             // Cancel the question
             updateState({
@@ -354,7 +356,7 @@ export const useBookQA = ({
         }
     }, [state.pendingQuestion, state.estimatedCost, submitQuestionWithoutEstimation, updateState]);
 
-    const submitQuestion = useCallback(async (question: string) => {
+    const submitQuestion = useCallback(async (question: string, openPanel: boolean = true, customCustomization?: { answerLength?: AnswerLength; answerLevel?: AnswerLevel; answerStyle?: AnswerStyle }) => {
         if (!question.trim() || state.isLoading) return;
 
         // Create user message for context (even if we're just estimating)
@@ -385,7 +387,7 @@ export const useBookQA = ({
                     currentSentence,
                     lastSentences: getLastSentences(),
                     conversationHistory: potentialNewMessages.slice(-4),
-                    customization: {
+                    customization: customCustomization || {
                         answerLength: state.answerLength,
                         answerLevel: state.answerLevel,
                         answerStyle: state.answerStyle
@@ -412,7 +414,7 @@ export const useBookQA = ({
                 }
 
                 // If below threshold, proceed with estimated cost
-                submitQuestionWithoutEstimation(question, estimatedCost);
+                submitQuestionWithoutEstimation(question, estimatedCost, openPanel, customCustomization);
                 return;
             } catch (error) {
                 console.error('Error estimating cost:', error);
@@ -422,7 +424,7 @@ export const useBookQA = ({
         }
 
         // Proceed with normal submission (no estimation)
-        submitQuestionWithoutEstimation(question);
+        submitQuestionWithoutEstimation(question, undefined, openPanel, customCustomization);
     }, [
         state.isLoading,
         state.messages,
