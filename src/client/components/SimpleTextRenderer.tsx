@@ -261,7 +261,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                 intersectionObserverRef.current.disconnect();
                 intersectionObserverRef.current = null;
             }
-                         delete (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
+            delete (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
         };
     }, []);
 
@@ -376,6 +376,28 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                         ))}
                                     </Typography>
                                 </>
+                            ) : chunk.type === 'header' ? (
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontWeight: 'bold',
+                                        fontSize: `${Math.max(fontSize * 1.3, 1.1)}rem`,
+                                        fontFamily: fontFamily,
+                                        color: textColor,
+                                        mt: 3,
+                                        mb: 2,
+                                        lineHeight: 1.3,
+                                        textAlign: 'left',
+                                        borderLeft: '4px solid',
+                                        borderColor: 'primary.main',
+                                        paddingLeft: 2,
+                                        paddingY: 1,
+                                        backgroundColor: 'action.hover',
+                                        borderRadius: '0px 4px 4px 0px'
+                                    }}
+                                >
+                                    {chunk.text}
+                                </Typography>
                             ) : chunk.type === 'image' ? (
                                 <Box textAlign="center" my={2}>
                                     <img

@@ -1,0 +1,179 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# React Infinite Loop Prevention Guidelines
+
+## Critical Patterns to Avoid
+
+### 1. useEffect Dependency Circular Dependencies
+
+**❌ NEVER DO THIS:**
+```typescript
+const [state, setState] = useState(initialState);
+
+const someFunction = useCallback(() => {
+  // Function that updates state
+  setState(newValue);
+}, [state]); // ❌ BAD: depends on state it updates
+
+useEffect(() => {
+  someFunction();
+}, [someFunction]); // ❌ Creates infinite loop
+```
+
+**✅ CORRECT PATTERNS:**
+
+**Option A: Remove state from dependencies**
+```typescript
+const someFunction = useCallback(() => {
+  setState(prev => ({ ...prev, newField: newValue }));
+}, []); // ✅ Use setState with function, no state dependency
+```
+
+**Option B: Use useRef for current state access**
+```typescript
+const stateRef = useRef(state);
+useEffect(() => { stateRef.current = state; }, [state]);
+
+const someFunction = useCallback(() => {
+  const currentState = stateRef.current;
+  // Use currentState instead of state
+}, []); // ✅ No state dependency
+```
+
+**Option C: Move logic directly into useEffect**
+```typescript
+useEffect(() => {
+  // Put the logic directly here instead of in a separate function
+  setState(newValue);
+}, [onlyExternalDependencies]); // ✅ Only external deps
+```
+
+### 2. Async Operations Error Handling
+
+**❌ NEVER DO THIS:**
+```typescript
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const result = await apiCall();
+      // Handle success
+    } catch (error) {
+      // ❌ BAD: No tracking of failed attempts
+      console.error(error);
+    }
+  };
+  
+  fetchData(); // Will retry infinitely if it fails
+}, [triggerState]);
+```
+
+**✅ CORRECT PATTERN:**
+```typescript
+const failedItems = useRef<Set<string>>(new Set());
+const pendingItems = useRef<Set<string>>(new Set());
+
+useEffect(() => {
+  const fetchData = async (id: string) => {
+    // ✅ GOOD: Check if already failed or pending
+    if (failedItems.current.has(id) || pendingItems.current.has(id)) {
+      return;
+    }
+    
+    pendingItems.current.add(id);
+    
+    try {
+      const result = await apiCall(id);
+      // Handle success
+      pendingItems.current.delete(id);
+    } catch (error) {
+      // ✅ GOOD: Mark as failed to prevent infinite retries
+      failedItems.current.add(id);
+      pendingItems.current.delete(id);
+      console.error(error);
+    }
+  };
+  
+  fetchData(itemId);
+}, [itemId]); // ✅ Only depends on external trigger
+```
+
+### 3. State Update Patterns in Effects
+
+**❌ AVOID:**
+```typescript
+useEffect(() => {
+  if (condition) {
+    setState(prev => ({ ...prev, field: newValue }));
+  }
+}, [state, otherDeps]); // ❌ BAD: state in deps when state is updated
+```
+
+**✅ BETTER:**
+```typescript
+useEffect(() => {
+  if (condition) {
+    setState(prev => ({ ...prev, field: newValue }));
+  }
+}, [otherDeps]); // ✅ GOOD: Only external dependencies
+```
+
+### 4. API Call Management
+
+**Always implement these safeguards for API calls:**
+
+1. **Track pending requests**
+2. **Track failed requests** 
+3. **Provide manual retry mechanism**
+4. **Clear tracking on context changes**
+
+```typescript
+// ✅ Complete API management pattern
+const pendingRequests = useRef<Set<string>>(new Set());
+const failedRequests = useRef<Set<string>>(new Set());
+
+// Clear on context changes
+useEffect(() => {
+  pendingRequests.current.clear();
+  failedRequests.current.clear();
+}, [contextChange]);
+
+// Safe API call pattern
+const makeApiCall = useCallback(async (id: string) => {
+  if (pendingRequests.current.has(id) || failedRequests.current.has(id)) {
+    return;
+  }
+  
+  pendingRequests.current.add(id);
+  
+  try {
+    const result = await api.call(id);
+    setState(prev => ({ ...prev, [id]: result }));
+    pendingRequests.current.delete(id);
+  } catch (error) {
+    failedRequests.current.add(id);
+    pendingRequests.current.delete(id);
+    // Handle error appropriately
+  }
+}, []);
+```
+
+## Debug Checklist
+
+When experiencing infinite loops or excessive API calls:
+
+1. **Check useEffect dependencies** - Are you depending on state you're updating?
+2. **Check useCallback dependencies** - Same issue as above
+3. **Add console.logs** - Track when effects run and why
+4. **Monitor network tab** - Look for repeated identical requests
+5. **Check error handling** - Are failed operations being retried infinitely?
+
+## Prevention During Code Review
+
+- [ ] All useEffect dependencies are truly external
+- [ ] No circular dependencies between state and functions
+- [ ] Error handling includes failure tracking
+- [ ] API calls have proper guards against duplicates
+- [ ] Manual retry mechanisms for failed operations

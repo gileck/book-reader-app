@@ -410,7 +410,12 @@ export const useReader = () => {
             getWordStyle: audioPlayback.getWordStyle,
             getSentenceStyle: audioPlayback.getSentenceStyle,
             getWordClassName: audioPlayback.getWordClassName,
-            getSentenceClassName: audioPlayback.getSentenceClassName
+            getSentenceClassName: audioPlayback.getSentenceClassName,
+            ttsError: audioPlayback.ttsError,
+            ttsServiceAvailable: audioPlayback.ttsServiceAvailable,
+            clearTtsError: audioPlayback.clearTtsError,
+            retryFailedChunk: audioPlayback.retryFailedChunk,
+            isChunkFailed: audioPlayback.isChunkFailed
         },
 
         // User settings

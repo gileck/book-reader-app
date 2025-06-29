@@ -3,7 +3,9 @@ import {
     Box,
     IconButton,
     Typography,
-    LinearProgress
+    LinearProgress,
+    Alert,
+    AlertTitle
 } from '@mui/material';
 import {
     PlayArrow,
@@ -14,10 +16,13 @@ import {
     ChevronRight,
     Settings,
     QuestionMark,
-    List
+    List,
+    Warning,
+    Close
 } from '@mui/icons-material';
 import { BookmarkDropdown } from './BookmarkDropdown';
 import type { BookmarkClient } from '../../apis/bookmarks/types';
+import type { TtsErrorDetail } from '../../apis/tts/types';
 
 interface AudioControlsProps {
     chapterTitle: string;
@@ -45,6 +50,9 @@ interface AudioControlsProps {
     totalChapters?: number;
     minChapterNumber?: number;
     onNavigateToBookmark?: (chapterNumber: number, chunkIndex: number) => void;
+    ttsServiceAvailable?: boolean;
+    ttsError?: TtsErrorDetail | null;
+    onDismissError?: () => void;
     // Enhanced progress data
     progressData?: {
         chapterProgress: number;
@@ -80,10 +88,16 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     currentChunkIndex = 0,
     totalChapters = 1,
     minChapterNumber = 1,
-    onNavigateToBookmark
+    onNavigateToBookmark,
+    ttsServiceAvailable = true,
+    ttsError,
+    onDismissError
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
     const displayProgress = progress;
+
+    // Determine if play button should be disabled
+    const hasError = !!ttsError || !ttsServiceAvailable;
 
     return (
         <Box sx={{
@@ -97,6 +111,51 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             paddingBottom: 'max(30px, env(safe-area-inset-bottom))',
             zIndex: 1000
         }}>
+            {/* Error Alert - Show when there's a TTS error */}
+            {hasError && (
+                <Box sx={{ mb: 2, mx: 'auto', maxWidth: 600 }}>
+                    <Alert
+                        severity="error"
+                        variant="filled"
+                        sx={{
+                            backgroundColor: '#d32f2f',
+                            color: 'white',
+                            '& .MuiAlert-icon': {
+                                color: 'white'
+                            }
+                        }}
+                        action={
+                            onDismissError && (
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={onDismissError}
+                                    sx={{
+                                        color: 'white',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                                        }
+                                    }}
+                                >
+                                    <Close fontSize="inherit" />
+                                </IconButton>
+                            )
+                        }
+                    >
+                        <AlertTitle sx={{ color: 'white', fontWeight: 'bold' }}>
+                            Audio Unavailable
+                        </AlertTitle>
+                        {ttsError?.message || 'Audio service is currently unavailable. Please check your TTS configuration.'}
+                        {ttsError?.provider && (
+                            <Box component="span" sx={{ display: 'block', mt: 0.5, fontSize: '0.875em', opacity: 0.9 }}>
+                                Provider: {ttsError.provider.charAt(0).toUpperCase() + ttsError.provider.slice(1)}
+                            </Box>
+                        )}
+                    </Alert>
+                </Box>
+            )}
+
             {/* Chapter Title and Navigation */}
             <Box sx={{
                 display: 'flex',
@@ -267,19 +326,34 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     {/* Play/Pause Button */}
                     <IconButton
                         onClick={isPlaying ? onPause : onPlay}
-                        disabled={isCurrentChunkLoading}
+                        disabled={isCurrentChunkLoading || hasError}
+                        title={
+                            hasError
+                                ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
+                                : isCurrentChunkLoading
+                                    ? 'Loading audio...'
+                                    : isPlaying
+                                        ? 'Pause'
+                                        : 'Play'
+                        }
                         sx={{
-                            backgroundColor: isCurrentChunkLoading
-                                ? '#ff9800'
-                                : isPlaying ? '#f44336' : '#4caf50',
+                            backgroundColor: hasError
+                                ? '#9e9e9e' // Gray when there's an error
+                                : isCurrentChunkLoading
+                                    ? '#ff9800'
+                                    : isPlaying ? '#f44336' : '#4caf50',
                             color: 'white',
                             '&:hover': {
-                                backgroundColor: isCurrentChunkLoading
-                                    ? '#f57c00'
-                                    : isPlaying ? '#d32f2f' : '#388e3c'
+                                backgroundColor: hasError
+                                    ? '#757575' // Darker gray on hover when there's an error
+                                    : isCurrentChunkLoading
+                                        ? '#f57c00'
+                                        : isPlaying ? '#d32f2f' : '#388e3c'
                             },
                             '&:disabled': {
-                                backgroundColor: '#ff9800',
+                                backgroundColor: hasError
+                                    ? '#9e9e9e' // Keep gray when disabled due to error
+                                    : '#ff9800',
                                 color: 'white'
                             },
                             width: 64,
@@ -288,7 +362,13 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         }}
                         size="large"
                     >
-                        {isPlaying ? <Pause sx={{ fontSize: 32 }} /> : <PlayArrow sx={{ fontSize: 32 }} />}
+                        {hasError ? (
+                            <Warning sx={{ fontSize: 32 }} />
+                        ) : isPlaying ? (
+                            <Pause sx={{ fontSize: 32 }} />
+                        ) : (
+                            <PlayArrow sx={{ fontSize: 32 }} />
+                        )}
                     </IconButton>
 
                     {/* Next Chunk Button */}

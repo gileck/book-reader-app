@@ -5,6 +5,9 @@ const { MongoClient, ObjectId } = require('mongodb');
 const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
 const { execSync } = require('child_process');
 
+// Global debug tracker for headers
+let headerTracker = [];
+
 // Load book configurations (now optional)
 function loadBookConfig(configPath) {
     // If no config path provided, return defaults
@@ -227,24 +230,55 @@ async function extractImages(pdfPath, bookTitle, bookFolderPath) {
     };
 }
 
-// Text chunking function (preserved from original)
+// Text chunking function (enhanced with heading detection)
 function chunkText(text, minWords = 5, maxWords = 15) {
+    // First, extract any marked headings from the text
+    const headingMarkers = [];
+    let processedText = text;
+
+    // Find all heading markers and extract them
+    const headingRegex = /⟨⟨HEADING⟩⟩(.*?)⟨⟨\/HEADING⟩⟩/g;
+    let match;
+    while ((match = headingRegex.exec(text)) !== null) {
+        headingMarkers.push({
+            fullMatch: match[0],
+            heading: match[1],
+            index: match.index
+        });
+    }
+
+    // Remove heading markers from text for processing
+    processedText = processedText.replace(headingRegex, '⟨⟨HEADING_PLACEHOLDER⟩⟩');
+
     // Split by sentence endings, but be smarter about abbreviations
     const sentences = [];
     let currentSentence = '';
-    const words = text.split(/\s+/);
-    
+    const words = processedText.split(/\s+/);
+
     for (let i = 0; i < words.length; i++) {
         const word = words[i];
+
+        // Check if this is a heading placeholder
+        if (word === '⟨⟨HEADING_PLACEHOLDER⟩⟩') {
+            // Finish current sentence if exists
+            if (currentSentence.trim()) {
+                sentences.push(currentSentence.trim());
+                currentSentence = '';
+            }
+            // Add the placeholder as its own sentence
+            sentences.push('⟨⟨HEADING_PLACEHOLDER⟩⟩');
+            continue;
+        }
+
         currentSentence += (currentSentence ? ' ' : '') + word;
-        
+
         // Check if this word ends a sentence
         if (/[.!?]+$/.test(word)) {
             // Don't split if it's a common abbreviation and next word is lowercase
             const nextWord = words[i + 1];
             const isAbbreviation = endsWithAbbreviation(currentSentence);
             const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
-            
+
             if (!isAbbreviation || !nextIsLowercase) {
                 // This is a real sentence ending
                 sentences.push(currentSentence.trim());
@@ -252,7 +286,7 @@ function chunkText(text, minWords = 5, maxWords = 15) {
             }
         }
     }
-    
+
     // Add any remaining text as a sentence
     if (currentSentence.trim()) {
         sentences.push(currentSentence.trim());
@@ -262,16 +296,59 @@ function chunkText(text, minWords = 5, maxWords = 15) {
     let currentChunk = '';
     let currentWords = [];
     let wordIndex = 0;
+    let headingIndex = 0;
 
-    for (const sentence of sentences) {
+    for (let i = 0; i < sentences.length; i++) {
+        const sentence = sentences[i];
+        const nextSentence = sentences[i + 1];
+
+        // Check if this is a heading placeholder
+        if (sentence === '⟨⟨HEADING_PLACEHOLDER⟩⟩') {
+            // If we have accumulated text, create a chunk for it first
+            if (currentChunk.trim().length > 0) {
+                chunks.push({
+                    text: currentChunk.trim(),
+                    words: [...currentWords],
+                    startIndex: wordIndex - currentWords.length,
+                    endIndex: wordIndex - 1,
+                    type: 'text'
+                });
+                currentChunk = '';
+                currentWords = [];
+            }
+
+            // Get the actual heading text from our markers
+            if (headingIndex < headingMarkers.length) {
+                const headingText = headingMarkers[headingIndex].heading;
+                const headingWords = headingText.trim().split(/\s+/).filter(w => w.length > 0);
+
+                // Create a header chunk
+                chunks.push({
+                    text: headingText.trim(),
+                    words: headingWords,
+                    startIndex: wordIndex,
+                    endIndex: wordIndex + headingWords.length - 1,
+                    type: 'header'
+                });
+
+                wordIndex += headingWords.length;
+                console.log(`📋 Created header chunk: "${headingText.trim()}"`);
+
+                headingIndex++;
+            }
+            continue;
+        }
+
         const sentenceWords = sentence.trim().split(/\s+/).filter(w => w.length > 0);
 
+        // Regular text processing (no longer checking isLikelyHeading here since we handle markers)
         if (currentWords.length > 0 && currentWords.length + sentenceWords.length > maxWords) {
             chunks.push({
                 text: currentChunk.trim(),
                 words: [...currentWords],
                 startIndex: wordIndex - currentWords.length,
-                endIndex: wordIndex - 1
+                endIndex: wordIndex - 1,
+                type: 'text'
             });
             currentChunk = '';
             currentWords = [];
@@ -289,7 +366,8 @@ function chunkText(text, minWords = 5, maxWords = 15) {
                 text: currentChunk.trim(),
                 words: [...currentWords],
                 startIndex: wordIndex - currentWords.length,
-                endIndex: wordIndex - 1
+                endIndex: wordIndex - 1,
+                type: 'text'
             });
             currentChunk = '';
             currentWords = [];
@@ -301,46 +379,60 @@ function chunkText(text, minWords = 5, maxWords = 15) {
             text: currentChunk.trim(),
             words: [...currentWords],
             startIndex: wordIndex - currentWords.length,
-            endIndex: wordIndex - 1
+            endIndex: wordIndex - 1,
+            type: 'text'
         });
     }
 
-    // Post-process to merge small chunks
+    // Post-process to merge small chunks - BUT NEVER MERGE HEADERS
     const mergedChunks = [];
     for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
+
+        // Never merge headers
+        if (chunk.type === 'header') {
+            mergedChunks.push(chunk);
+            continue;
+        }
 
         if (chunk.words.length < 10) {
             const isVerySmall = chunk.words.length <= 5;
             const maxAllowed = isVerySmall ? maxWords + 5 : maxWords;
 
-            if (i < chunks.length - 1 && chunk.words.length + chunks[i + 1].words.length <= maxAllowed) {
-                const nextChunk = chunks[i + 1];
+            // Check next chunk exists and is not a header
+            const nextChunk = chunks[i + 1];
+            if (i < chunks.length - 1 && nextChunk.type !== 'header' &&
+                chunk.words.length + nextChunk.words.length <= maxAllowed) {
+
                 const mergedChunk = {
                     text: chunk.text + ' ' + nextChunk.text,
                     words: [...chunk.words, ...nextChunk.words],
                     startIndex: chunk.startIndex,
-                    endIndex: nextChunk.endIndex
+                    endIndex: nextChunk.endIndex,
+                    type: 'text'
                 };
                 mergedChunks.push(mergedChunk);
                 i++;
-            } else if (mergedChunks.length > 0 && mergedChunks[mergedChunks.length - 1].words.length + chunk.words.length <= maxAllowed) {
+            } else if (mergedChunks.length > 0 &&
+                mergedChunks[mergedChunks.length - 1].type !== 'header' &&
+                mergedChunks[mergedChunks.length - 1].words.length + chunk.words.length <= maxAllowed) {
+
                 const prevChunk = mergedChunks[mergedChunks.length - 1];
                 prevChunk.text = prevChunk.text + ' ' + chunk.text;
                 prevChunk.words = [...prevChunk.words, ...chunk.words];
                 prevChunk.endIndex = chunk.endIndex;
             } else if (isVerySmall) {
-                if (i < chunks.length - 1) {
-                    const nextChunk = chunks[i + 1];
+                if (nextChunk && nextChunk.type !== 'header') {
                     const mergedChunk = {
                         text: chunk.text + ' ' + nextChunk.text,
                         words: [...chunk.words, ...nextChunk.words],
                         startIndex: chunk.startIndex,
-                        endIndex: nextChunk.endIndex
+                        endIndex: nextChunk.endIndex,
+                        type: 'text'
                     };
                     mergedChunks.push(mergedChunk);
                     i++;
-                } else if (mergedChunks.length > 0) {
+                } else if (mergedChunks.length > 0 && mergedChunks[mergedChunks.length - 1].type !== 'header') {
                     const prevChunk = mergedChunks[mergedChunks.length - 1];
                     prevChunk.text = prevChunk.text + ' ' + chunk.text;
                     prevChunk.words = [...prevChunk.words, ...chunk.words];
@@ -367,7 +459,7 @@ function cleanPageNumbers(text, pageNumber = null) {
     if (!pageNumber) {
         return text; // If no page number provided, don't clean anything
     }
-    
+
     // Use the observed pattern: book page number = PDF page number - 1
     const bookPageNumber = pageNumber - 1;
     if (bookPageNumber >= 1) {
@@ -376,7 +468,7 @@ function cleanPageNumbers(text, pageNumber = null) {
             text = text.replace(bookPageRegex, '');
         }
     }
-    
+
     // Handle Roman numerals for front matter pages (i, ii, iii, etc.)
     // These usually appear in the first few pages where the pattern might not apply
     if (pageNumber <= 20) {
@@ -393,8 +485,170 @@ function cleanPageNumbers(text, pageNumber = null) {
             }
         }
     }
-    
+
     return text;
+}
+
+/**
+ * Extract text content with coordinate information for each text item
+ */
+function extractTextContentWithCoordinates(textContent) {
+    const textItems = [];
+    let allText = '';
+
+    for (const item of textContent.items) {
+        const x = item.transform[4];
+        const y = item.transform[5];
+        const text = item.str;
+
+        textItems.push({
+            text: text,
+            x: x,
+            y: y,
+            width: item.width || 0,
+            height: item.height || 0
+        });
+
+        allText += text;
+    }
+
+    // Calculate page bounds if textItems exist
+    if (textItems.length === 0) {
+        return {
+            textItems,
+            combinedText: combineTextItemsPreservingStructure(textContent.items),
+            coordinateBounds: null
+        };
+    }
+
+    const coordinateBounds = {
+        minX: Math.min(...textItems.map(item => item.x)),
+        maxX: Math.max(...textItems.map(item => item.x + item.width)),
+        minY: Math.min(...textItems.map(item => item.y)),
+        maxY: Math.max(...textItems.map(item => item.y))
+    };
+
+    return {
+        textItems,
+        combinedText: combineTextItemsPreservingStructure(textContent.items),
+        coordinateBounds
+    };
+}
+
+/**
+ * Estimate coordinate bounds for a text chunk within a page
+ */
+function estimateChunkCoordinates(chunk, chunkIndex, totalChunks, pageCoordinateBounds) {
+    if (!pageCoordinateBounds) return null;
+
+    const { minX, maxX, minY, maxY } = pageCoordinateBounds;
+
+    // Estimate vertical position based on chunk position in page
+    const heightPerChunk = (maxY - minY) / totalChunks;
+    const estimatedMinY = minY + (chunkIndex * heightPerChunk);
+    const estimatedMaxY = estimatedMinY + heightPerChunk;
+
+    return {
+        minX,
+        maxX,
+        minY: estimatedMinY,
+        maxY: estimatedMaxY,
+        centerX: (minX + maxX) / 2,
+        centerY: (estimatedMinY + estimatedMaxY) / 2
+    };
+}
+
+/**
+ * Find text chunks that contain or are near the given coordinates
+ */
+function findChunksByCoordinates(chunks, targetX, targetY, tolerance = 50) {
+    const matchingChunks = [];
+
+    for (const chunk of chunks) {
+        if (!chunk.coordinateBounds) continue;
+
+        const { minX, maxX, minY, maxY } = chunk.coordinateBounds;
+
+        // Check if coordinates are within chunk bounds (with tolerance)
+        const withinX = targetX >= (minX - tolerance) && targetX <= (maxX + tolerance);
+        const withinY = targetY >= (minY - tolerance) && targetY <= (maxY + tolerance);
+
+        if (withinX && withinY) {
+            // Calculate distance from center for ranking
+            const distance = Math.sqrt(
+                Math.pow(targetX - chunk.coordinateBounds.centerX, 2) +
+                Math.pow(targetY - chunk.coordinateBounds.centerY, 2)
+            );
+
+            matchingChunks.push({
+                chunk,
+                distance
+            });
+        }
+    }
+
+    // Sort by distance (closest first)
+    return matchingChunks
+        .sort((a, b) => a.distance - b.distance)
+        .map(item => item.chunk);
+}
+
+/**
+ * Find the destination chunk for a link using coordinates and fallback methods
+ */
+function findDestinationChunk(link, chunks) {
+    const destinationChunks = chunks.filter(chunk => chunk.pageNumber === link.destinationPage);
+
+    if (destinationChunks.length === 0) {
+        return null;
+    }
+
+    // Method 1: Use coordinates if available
+    if (link.destinationCoordinates) {
+        const { x, y } = link.destinationCoordinates;
+        const coordMatches = findChunksByCoordinates(destinationChunks, x, y);
+
+        if (coordMatches.length > 0) {
+            return {
+                chunk: coordMatches[0],
+                method: 'coordinates',
+                confidence: 'high'
+            };
+        }
+    }
+
+    // Method 2: Use search pattern
+    if (link.navigation && link.navigation.searchPattern) {
+        const pattern = new RegExp(link.navigation.searchPattern, 'i');
+
+        for (const chunk of destinationChunks) {
+            if (pattern.test(chunk.text)) {
+                return {
+                    chunk,
+                    method: 'pattern',
+                    confidence: 'medium'
+                };
+            }
+        }
+    }
+
+    // Method 3: Simple text search
+    for (const chunk of destinationChunks) {
+        if (chunk.text.includes(link.text)) {
+            return {
+                chunk,
+                method: 'text_search',
+                confidence: 'low'
+            };
+        }
+    }
+
+    // Method 4: Return first chunk on page as fallback
+    return {
+        chunk: destinationChunks[0],
+        method: 'page_fallback',
+        confidence: 'very_low'
+    };
 }
 
 /**
@@ -407,16 +661,26 @@ function chunkTextWithPages(pages, minWords = 5, maxWords = 15) {
     for (const page of pages) {
         const pageChunks = chunkText(page.text, minWords, maxWords);
 
-        // Add page information to each chunk
-        for (const chunk of pageChunks) {
+        // Add page information and coordinate bounds to each chunk
+        for (let i = 0; i < pageChunks.length; i++) {
+            const chunk = pageChunks[i];
             // Clean page numbers from beginning of chunks - pass the actual page number
             let cleanedText = cleanPageNumbers(chunk.text, page.pageNumber);
-            
+
+            // Estimate coordinate bounds for this chunk within the page
+            const coordinateBounds = estimateChunkCoordinates(
+                chunk,
+                i,
+                pageChunks.length,
+                page.coordinateBounds
+            );
+
             allChunks.push({
                 ...chunk,
                 text: cleanedText,
                 pageNumber: page.pageNumber,
-                index: chunkIndex++
+                index: chunkIndex++,
+                coordinateBounds: coordinateBounds
             });
         }
     }
@@ -439,24 +703,43 @@ function mergeSplitSentences(chunks) {
 
     while (i < chunks.length) {
         const currentChunk = chunks[i];
-        
+
+        // Never merge headers
+        if (currentChunk.type === 'header') {
+            mergedChunks.push(currentChunk);
+            i++;
+            continue;
+        }
+
         // Check if this chunk ends with an incomplete sentence (no proper sentence ending)
         // and the next chunk is from a different page
         if (i < chunks.length - 1) {
             const nextChunk = chunks[i + 1];
-            
+
+            // Don't merge if next chunk is a header
+            if (nextChunk.type === 'header') {
+                mergedChunks.push(currentChunk);
+                i++;
+                continue;
+            }
+
             // Only merge if chunks are from consecutive pages
             if (nextChunk.pageNumber === currentChunk.pageNumber + 1) {
-                const shouldMerge = shouldMergeSentence(currentChunk.text, nextChunk.text);
-                
+                const shouldMerge = shouldMergeSentence(
+                    currentChunk.text,
+                    nextChunk.text,
+                    currentChunk.type || 'text',
+                    nextChunk.type || 'text'
+                );
+
                 if (shouldMerge) {
                     // Find where the sentence ends in the next chunk
                     const sentenceEndMatch = nextChunk.text.match(/^([^.!?]*[.!?])\s*(.*)/);
-                    
+
                     if (sentenceEndMatch) {
                         const sentenceEnd = sentenceEndMatch[1];
                         const remainingText = sentenceEndMatch[2].trim();
-                        
+
                         // Create merged chunk with complete sentence
                         const mergedText = currentChunk.text + ' ' + sentenceEnd;
                         const mergedChunk = {
@@ -464,22 +747,24 @@ function mergeSplitSentences(chunks) {
                             text: mergedText,
                             wordCount: mergedText.split(/\s+/).filter(w => w.length > 0).length,
                             // Keep the original page number of where the sentence started
-                            index: currentChunk.index
+                            index: currentChunk.index,
+                            type: currentChunk.type || 'text'
                         };
-                        
+
                         mergedChunks.push(mergedChunk);
-                        
+
                         // If there's remaining text in the next chunk, create a new chunk for it
                         if (remainingText.length > 0) {
                             const remainingChunk = {
                                 ...nextChunk,
                                 text: remainingText,
                                 wordCount: remainingText.split(/\s+/).filter(w => w.length > 0).length,
-                                index: nextChunk.index
+                                index: nextChunk.index,
+                                type: nextChunk.type || 'text'
                             };
                             mergedChunks.push(remainingChunk);
                         }
-                        
+
                         console.log(`🔗 Merged split sentence across pages ${currentChunk.pageNumber}-${nextChunk.pageNumber}`);
                         i += 2; // Skip both chunks as they've been processed
                         continue;
@@ -487,7 +772,7 @@ function mergeSplitSentences(chunks) {
                 }
             }
         }
-        
+
         // No merge needed, add chunk as-is
         mergedChunks.push(currentChunk);
         i++;
@@ -505,7 +790,7 @@ function mergeSplitSentences(chunks) {
  * List of common abbreviations that end with periods but don't end sentences
  */
 const COMMON_ABBREVIATIONS = [
-    'Ph.D', 'M.D', 'Ph.D.', 'M.D.', 'B.A', 'B.A.', 'M.A', 'M.A.', 
+    'Ph.D', 'M.D', 'Ph.D.', 'M.D.', 'B.A', 'B.A.', 'M.A', 'M.A.',
     'B.S', 'B.S.', 'M.S', 'M.S.', 'U.S', 'U.S.', 'U.K', 'U.K.',
     'Dr', 'Dr.', 'Mr', 'Mr.', 'Mrs', 'Mrs.', 'Ms', 'Ms.',
     'Prof', 'Prof.', 'vs', 'vs.', 'etc', 'etc.', 'i.e', 'i.e.',
@@ -514,11 +799,204 @@ const COMMON_ABBREVIATIONS = [
 ];
 
 /**
+ * Detect if text appears to be a heading/subtitle
+ * This function identifies standalone headings that should not be merged with following text
+ */
+function isLikelyHeading(text, nextText = null, previousText = null) {
+    const trimmed = text.trim();
+    const words = trimmed.split(/\s+/).filter(w => w.length > 0);
+
+    // Skip very short fragments (likely extraction artifacts)
+    if (trimmed.length < 3) return false;
+
+    // Filter out email addresses
+    if (/@/.test(trimmed)) {
+        return false;
+    }
+
+    // Basic filters - ALL must be true for consideration  
+    if (words.length > 10 || /[.!?;)@]$/.test(trimmed) || !/^[A-Z]/.test(trimmed)) {
+        return false;
+    }
+
+    // Check if previous text ends properly for a heading to follow
+    if (previousText && previousText.trim().length > 0) {
+        const prevTrimmed = previousText.trim();
+        const lastChar = prevTrimmed.slice(-1);
+
+        // Previous text must end with sentence-ending punctuation or a number
+        const endsWithPunctuation = /[.!?;]$/.test(lastChar);
+        const endsWithNumber = /\d$/.test(lastChar);
+
+        if (!endsWithPunctuation && !endsWithNumber) {
+            // Exception: Allow if previous text ends with common abbreviations
+            const commonAbbrevs = ['Dr', 'Mr', 'Mrs', 'Ms', 'Prof', 'etc', 'vs', 'cf'];
+            const endsWithAbbrev = commonAbbrevs.some(abbrev =>
+                prevTrimmed.toLowerCase().endsWith(abbrev.toLowerCase() + '.')
+            );
+
+            if (!endsWithAbbrev) {
+                return false;
+            }
+        }
+    }
+
+    // Filter out split chemical formulas and subscripts/superscripts
+    // Pattern: single letter/short word + lowercase continuation (e.g., "C on", "CO2", "H2O")
+    if (words.length >= 2) {
+        const firstWord = words[0];
+        const secondWord = words[1];
+
+        // Check for chemical formula patterns
+        if (firstWord.length <= 2 && /^[A-Z][a-z]?$/.test(firstWord) && /^[a-z]/.test(secondWord)) {
+            // Pattern like "C on", "Ca and", "Mg in" - likely split chemical formulas
+            return false;
+        }
+
+        // Check for split chemical formulas with numbers (CO 2, H 2)
+        if (firstWord.length <= 2 && /^[A-Z][a-z]?$/.test(firstWord) && /^\d+$/.test(secondWord)) {
+            return false;
+        }
+    }
+
+    // Filter out single letters followed by lowercase words (split subscripts)
+    if (words.length >= 1) {
+        const firstWord = words[0];
+        if (firstWord.length === 1 && /^[A-Z]$/.test(firstWord) && words.length > 1 && /^[a-z]/.test(words[1])) {
+            // Pattern like "C on a larger scale" - likely split from "14C on a larger scale"
+            return false;
+        }
+    }
+
+    // Filter out index entries (alphabetically sorted entries with page numbers)
+    // Pattern: name/term followed by page numbers like "Smith, John 45-46, 89" or "Smith, John 123"
+    if (/\b\d+[-–]\d+|\b\d+n\d+|\b\d+,\s*\d+|\s\d+$/.test(trimmed)) {
+        // Contains page number patterns: "45-46", "123n4", "45, 67", or ends with " 123"
+        return false;
+    }
+
+    // Filter out entries that start with single letter + parenthesis (likely index sub-entries)
+    if (/^[A-Z]\)\s/.test(trimmed)) {
+        // Pattern like "C) 178, 180–82"
+        return false;
+    }
+
+    // Strong indicators (immediate detection)
+    if (trimmed === trimmed.toUpperCase() ||    // "THE FATE OF PYRUVATE"
+        /:$/.test(trimmed) ||                   // "Introduction:"
+        /^\d+\.?\s+/.test(trimmed)) {           // "1. Chapter"
+        return true;
+    }
+
+    // Main pattern: short phrase + next text starts with capital or number
+    // This catches headings like "The fate of pyruvate", "Deep breathing", etc.
+    return words.length <= 6 && nextText && /^[A-Z0-9]/.test(nextText.trim());
+}
+
+/**
+ * Combine text items from PDF while preserving natural structure and line breaks
+ * This prevents headings from being merged with following text
+ */
+function combineTextItemsPreservingStructure(textItems) {
+    if (!textItems || textItems.length === 0) return '';
+
+    const lines = [];
+    let currentLine = [];
+    let lastY = null;
+
+    // Group text items by approximate Y position (line)
+    for (const item of textItems) {
+        const y = Math.round(item.transform[5]); // Y coordinate
+
+        // If this is a new line (significant Y change), start a new line
+        if (lastY !== null && Math.abs(y - lastY) > 5) {
+            if (currentLine.length > 0) {
+                lines.push(currentLine.join(' ').trim());
+                currentLine = [];
+            }
+        }
+
+        if (item.str.trim()) {
+            currentLine.push(item.str);
+        }
+        lastY = y;
+    }
+
+    // Add the last line
+    if (currentLine.length > 0) {
+        lines.push(currentLine.join(' ').trim());
+    }
+
+    // Join lines but preserve structure for heading detection
+    return lines.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
+}
+
+/**
+ * Preserve headings in page text by detecting them and adding special markers
+ * This happens at the page level before text chunking
+ */
+function preserveHeadingsInPageText(pageText) {
+    // First, split by our line break markers
+    const lines = pageText.split(' ⟨⟨LINE_BREAK⟩⟩ ');
+    const processedLines = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        const nextLine = lines[i + 1];
+        const previousLine = i > 0 ? lines[i - 1] : null;
+
+        if (line.length === 0) continue;
+
+        // Check if this line is likely a heading
+        if (isLikelyHeading(line, nextLine, previousLine)) {
+            // Add special markers around the heading
+            processedLines.push(`⟨⟨HEADING⟩⟩${line}⟨⟨/HEADING⟩⟩`);
+            console.log(`📋 Detected heading in page text: "${line}"`);
+        } else {
+            processedLines.push(line);
+        }
+    }
+
+    return processedLines.join(' ');
+}
+
+function preserveHeadingsInPageTextWithContext(pageText, nextPageText = '') {
+    // First, split by our line break markers
+    const lines = pageText.split(' ⟨⟨LINE_BREAK⟩⟩ ');
+    const nextPageLines = nextPageText ? nextPageText.split(' ⟨⟨LINE_BREAK⟩⟩ ') : [];
+    const processedLines = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        const nextLine = lines[i + 1];
+        const previousLine = i > 0 ? lines[i - 1] : null;
+
+        if (line.length === 0) continue;
+
+        // For the last line of the page, check next page's first line as context
+        const contextNextLine = (i === lines.length - 1 && nextPageLines.length > 0)
+            ? nextPageLines[0]?.trim()
+            : nextLine;
+
+        // Check if this line is likely a heading
+        if (isLikelyHeading(line, contextNextLine, previousLine)) {
+            // Add special markers around the heading
+            processedLines.push(`⟨⟨HEADING⟩⟩${line}⟨⟨/HEADING⟩⟩`);
+            console.log(`📋 Detected heading in page text: "${line}" (cross-page: ${!!contextNextLine && contextNextLine !== nextLine})`);
+        } else {
+            processedLines.push(line);
+        }
+    }
+
+    return processedLines.join(' ');
+}
+
+/**
  * Check if text ends with a common abbreviation
  */
 function endsWithAbbreviation(text) {
     const trimmed = text.trim();
-    return COMMON_ABBREVIATIONS.some(abbrev => 
+    return COMMON_ABBREVIATIONS.some(abbrev =>
         trimmed.toLowerCase().endsWith(abbrev.toLowerCase())
     );
 }
@@ -538,33 +1016,33 @@ function fixSpacedFirstLetter(text) {
  */
 function cleanChapterHeading(text, chapterTitle, chapterNumber) {
     let cleanedText = text;
-    
+
     // Step 1: Remove ":" from chapter name and normalize it to uppercase
     const normalizedChapterTitle = chapterTitle.replace(/[:\?]/g, '').toUpperCase();
-    
+
     // Step 2: Normalize the text to uppercase for comparison
     const normalizedText = text.toUpperCase();
-    
+
     // Step 3: Find and remove ONLY the normalized chapter name from the text
     const chapterIndex = normalizedText.indexOf(normalizedChapterTitle);
     if (chapterIndex !== -1 && chapterIndex < 200) { // Only look in first 200 chars
         // Remove ONLY the chapter title, keeping everything before and after
         const beforeChapter = text.substring(0, chapterIndex);
         const afterChapter = text.substring(chapterIndex + normalizedChapterTitle.length);
-        
+
         // Combine before + after, removing the chapter heading
         const combined = (beforeChapter + afterChapter).trim();
-        
+
         if (combined.length > 10) { // Make sure we don't remove too much
             // Step 4: Remove extra spaces ONLY at the very beginning (fix split words like "I n" → "In")
             cleanedText = combined
                 .replace(/^([A-Za-z])\s+([a-z])/, '$1$2') // Fix split words only at the beginning
                 .trim();
-            
+
             console.log(`✂️  Removed chapter heading "${normalizedChapterTitle}" from text`);
         }
     }
-    
+
     return cleanedText;
 }
 
@@ -572,23 +1050,33 @@ function cleanChapterHeading(text, chapterTitle, chapterNumber) {
  * Determine if two text chunks should be merged because they contain a split sentence
  * Uses simple character-based detection: last char + first char analysis
  */
-function shouldMergeSentence(firstText, secondText) {
+function shouldMergeSentence(firstText, secondText, firstType = 'text', secondType = 'text') {
+    // Never merge headers
+    if (firstType === 'header' || secondType === 'header') {
+        return false;
+    }
+
     const first = firstText.trim();
     const second = secondText.trim();
-    
+
     if (first.length === 0 || second.length === 0) return false;
-    
+
+    // Don't merge if second text looks like a heading (with first text as context)
+    if (isLikelyHeading(second, null, first)) {
+        return false;
+    }
+
     const lastChar = first.slice(-1);
     const firstChar = second.charAt(0);
-    
+
     // Core logic: not sentence ending + lowercase start
     const notSentenceEnding = !/[.!?;:]$/.test(lastChar);
     const startsWithLowercase = /[a-z]/.test(firstChar);
-    
+
     if (notSentenceEnding && startsWithLowercase) {
         return true;
     }
-    
+
     // Enhancement: handle common abbreviations
     // If ends with period but might be abbreviation (like "U.S. government")
     if (lastChar === '.' && startsWithLowercase) {
@@ -597,13 +1085,13 @@ function shouldMergeSentence(firstText, secondText) {
         if (beforePeriod && beforePeriod[1].length <= 3) {
             return true; // Likely abbreviation, merge
         }
-        
+
         // Also check against our hardcoded list
         if (endsWithAbbreviation(first)) {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -1031,11 +1519,27 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                     const page = await doc.getPage(pageNum);
                     const textContent = await page.getTextContent();
 
-                    // Combine text items from the page
-                    let pageText = textContent.items
-                        .map(item => item.str)
-                        .join(' ')
-                        .trim();
+                    // Extract text with coordinate information
+                    const textWithCoords = extractTextContentWithCoordinates(textContent);
+                    let pageText = textWithCoords.combinedText;
+
+                    // Get next page text for cross-page header detection
+                    let nextPageText = '';
+                    if (pageNum < endPage) {
+                        try {
+                            const nextPage = await doc.getPage(pageNum + 1);
+                            const nextTextContent = await nextPage.getTextContent();
+                            const nextRawText = combineTextItemsPreservingStructure(nextTextContent.items);
+                            // Take first few lines of next page
+                            const nextLines = nextRawText.split(' ⟨⟨LINE_BREAK⟩⟩ ').slice(0, 3);
+                            nextPageText = nextLines.join(' ⟨⟨LINE_BREAK⟩⟩ ');
+                        } catch (error) {
+                            // Ignore errors getting next page
+                        }
+                    }
+
+                    // Apply heading detection with cross-page context
+                    pageText = preserveHeadingsInPageTextWithContext(pageText, nextPageText);
 
                     // Clean page number from beginning of page text - pass the actual page number
                     pageText = cleanPageNumbers(pageText, pageNum);
@@ -1043,7 +1547,8 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                     if (pageText.length > 50) { // Only include pages with substantial content
                         chapterPages.push({
                             pageNumber: pageNum,
-                            text: pageText
+                            text: pageText,
+                            coordinateBounds: textWithCoords.coordinateBounds
                         });
                     }
                 } catch (error) {
@@ -1516,12 +2021,338 @@ function convertChaptersToDbFormat(chapters) {
 }
 
 /**
- * Create unified chunks with text and images, maintaining page correlation
+ * Extract internal links from PDF and correlate with text positions
  */
-function createPageAwareChunksWithImages(chapters, images) {
-    console.log('🔗 Creating page-aware chunks with images...');
+async function extractInternalLinks(pdfPath) {
+    console.log('🔗 Extracting internal links from PDF...');
 
-    // Create a map of images by page for quick lookup
+    try {
+        const pdfBuffer = fs.readFileSync(pdfPath);
+        const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
+
+        const allLinks = [];
+        let totalLinks = 0;
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            try {
+                const page = await pdf.getPage(pageNum);
+                const annotations = await page.getAnnotations();
+                const textContent = await page.getTextContent();
+
+                // Debug: Log ALL annotations found on this page
+                if (annotations.length > 0) {
+                    console.log(`   📄 Page ${pageNum}: Found ${annotations.length} annotation(s) of types: ${annotations.map(a => a.subtype || 'unknown').join(', ')}`);
+
+                    // Log details for pages 30-31 where we expect to find the footnote
+                    if (pageNum >= 30 && pageNum <= 31) {
+                        console.log(`   🔍 DEBUG Page ${pageNum} - All annotations:`);
+                        annotations.forEach((ann, idx) => {
+                            console.log(`     [${idx}] Type: ${ann.subtype}, ID: ${ann.id}, Rect: [${ann.rect}]`);
+                            console.log(`          Dest: ${JSON.stringify(ann.dest)}, URL: ${ann.url}`);
+                            if (ann.contents) console.log(`          Contents: "${ann.contents}"`);
+                        });
+                    }
+                }
+
+                // Filter for link annotations that are internal to the document
+                const linkAnnotations = annotations.filter(annotation => {
+                    return annotation.subtype === 'Link' &&
+                        annotation.dest && // Has internal destination
+                        !annotation.url;   // Not an external URL
+                });
+
+                if (linkAnnotations.length === 0) continue;
+
+                console.log(`   📄 Page ${pageNum}: Found ${linkAnnotations.length} internal link(s)`);
+
+                for (const annotation of linkAnnotations) {
+                    try {
+                        // Get destination page
+                        const destPageNum = await getPageNumberFromDest(annotation.dest, pdf);
+
+                        // Find the text that corresponds to this link
+                        const linkText = findTextForAnnotation(annotation, textContent);
+
+                        // Extract destination coordinates from the dest array
+                        const destinationCoordinates = extractDestinationCoordinates(annotation.dest);
+
+                        const linkInfo = {
+                            pageNumber: pageNum,
+                            linkText: linkText,
+                            destinationPage: destPageNum,
+                            destinationCoordinates: destinationCoordinates,
+                            rect: annotation.rect, // Position on source page
+                            annotationId: annotation.id,
+                            dest: annotation.dest,
+                            hasValidDestination: destPageNum !== null,
+                            navigationType: determineNavigationType(linkText, destinationCoordinates)
+                        };
+
+                        allLinks.push(linkInfo);
+                        totalLinks++;
+
+                        console.log(`     🔗 "${linkText}" → Page ${destPageNum}`);
+                    } catch (error) {
+                        console.log(`     ⚠️ Error processing link: ${error.message}`);
+                    }
+                }
+
+            } catch (pageError) {
+                console.log(`     ⚠️ Error scanning page ${pageNum}: ${pageError.message}`);
+            }
+        }
+
+        console.log(`✅ Extracted ${totalLinks} internal links across ${pdf.numPages} pages`);
+        return allLinks;
+
+    } catch (error) {
+        console.log(`❌ Error extracting links: ${error.message}`);
+        return [];
+    }
+}
+
+/**
+ * Validate link destinations against parsed chapter content
+ */
+function validateLinkDestinations(links, chapters) {
+    console.log('🔍 Validating link destinations...');
+
+    // Create a map of all pages with content in our chapters
+    const pagesWithContent = new Map();
+    const pageToChapter = new Map();
+
+    chapters.forEach(chapter => {
+        if (chapter.pages && chapter.pages.length > 0) {
+            chapter.pages.forEach(page => {
+                pagesWithContent.set(page.pageNumber, {
+                    hasContent: page.text && page.text.trim().length > 0,
+                    textLength: page.text ? page.text.length : 0,
+                    chapter: chapter
+                });
+                pageToChapter.set(page.pageNumber, chapter);
+            });
+        }
+    });
+
+    const validatedLinks = [];
+    let validCount = 0;
+    let invalidCount = 0;
+    let outOfRangeCount = 0;
+    let emptyPageCount = 0;
+
+    for (const link of links) {
+        const validation = {
+            ...link,
+            isValid: true,
+            validationFlags: [],
+            destinationChapter: null,
+            destinationHasContent: false
+        };
+
+        // Check if destination page exists in our parsed content
+        if (!pagesWithContent.has(link.destinationPage)) {
+            validation.isValid = false;
+            validation.validationFlags.push('DESTINATION_PAGE_NOT_FOUND');
+            outOfRangeCount++;
+        } else {
+            const destPageInfo = pagesWithContent.get(link.destinationPage);
+            validation.destinationHasContent = destPageInfo.hasContent;
+            validation.destinationChapter = destPageInfo.chapter.title;
+
+            // Check if destination page has meaningful content
+            if (!destPageInfo.hasContent) {
+                validation.validationFlags.push('DESTINATION_PAGE_EMPTY');
+                emptyPageCount++;
+            }
+
+            // Check if destination page has very little content (might be a page number only)
+            if (destPageInfo.textLength < 50) {
+                validation.validationFlags.push('DESTINATION_PAGE_MINIMAL_CONTENT');
+            }
+        }
+
+        // Check if link text is meaningful
+        if (!link.linkText || link.linkText.trim().length === 0) {
+            validation.validationFlags.push('EMPTY_LINK_TEXT');
+        }
+
+        // Check if it's a self-referencing link (same page)
+        if (link.pageNumber === link.destinationPage) {
+            validation.validationFlags.push('SELF_REFERENCING_LINK');
+        }
+
+        // Mark as invalid if there are critical validation issues
+        if (validation.validationFlags.includes('DESTINATION_PAGE_NOT_FOUND')) {
+            validation.isValid = false;
+            invalidCount++;
+        } else {
+            validCount++;
+        }
+
+        validatedLinks.push(validation);
+    }
+
+    // Log validation summary
+    console.log(`   ✅ Valid links: ${validCount}`);
+    console.log(`   ❌ Invalid links: ${invalidCount}`);
+    if (outOfRangeCount > 0) {
+        console.log(`   ⚠️ Links to pages outside parsed content: ${outOfRangeCount}`);
+    }
+    if (emptyPageCount > 0) {
+        console.log(`   ⚠️ Links to empty/minimal pages: ${emptyPageCount}`);
+    }
+
+    // Log some example validation issues for debugging
+    const invalidLinks = validatedLinks.filter(l => !l.isValid);
+    if (invalidLinks.length > 0) {
+        console.log('   🔍 Examples of invalid links:');
+        invalidLinks.slice(0, 3).forEach(link => {
+            console.log(`     "${link.linkText}" (Page ${link.pageNumber} → ${link.destinationPage}): ${link.validationFlags.join(', ')}`);
+        });
+    }
+
+    // Filter out invalid links or keep them with validation info
+    // For now, let's keep all links but mark their validation status
+    return validatedLinks;
+}
+
+/**
+ * Extract destination coordinates from PDF destination array
+ */
+function extractDestinationCoordinates(dest) {
+    if (!Array.isArray(dest) || dest.length < 5) {
+        return null;
+    }
+
+    // PDF destination format: [pageRef, viewType, x, y, zoom]
+    // Example: [{"num":954,"gen":0}, {"name":"XYZ"}, 76.502495, 554.54999, 0]
+    const viewType = dest[1];
+    if (viewType && viewType.name === 'XYZ' && typeof dest[2] === 'number' && typeof dest[3] === 'number') {
+        return {
+            x: dest[2],
+            y: dest[3],
+            zoom: dest[4] || 0
+        };
+    }
+
+    return null;
+}
+
+/**
+ * Determine the best navigation method based on link characteristics  
+ */
+function determineNavigationType(linkText, destinationCoordinates) {
+    // If we have precise coordinates, use them
+    if (destinationCoordinates) {
+        return 'coordinate';
+    }
+
+    // For short numeric/symbolic text (likely footnotes), use pattern matching
+    if (linkText && linkText.trim().length <= 3 && /^[0-9a-zA-Z\*\†\‡\§]+$/.test(linkText.trim())) {
+        return 'pattern';
+    }
+
+    // For longer text, use text search
+    return 'text-search';
+}
+
+/**
+ * Generate navigation data for app usage
+ */
+function generateNavigationData(linkText, destinationPage, destinationCoordinates, navigationType) {
+    const navData = {
+        destinationPage,
+        navigationType,
+        linkText
+    };
+
+    switch (navigationType) {
+        case 'coordinate':
+            navData.coordinates = destinationCoordinates;
+            navData.searchPattern = generateSearchPattern(linkText);
+            break;
+
+        case 'pattern':
+            navData.searchPattern = generateSearchPattern(linkText);
+            break;
+
+        case 'text-search':
+            navData.searchText = linkText;
+            navData.exactMatch = linkText.length < 50; // Shorter text = exact match
+            break;
+    }
+
+    return navData;
+}
+
+/**
+ * Generate smart search pattern for footnotes and references
+ */
+function generateSearchPattern(linkText) {
+    if (!linkText || linkText.trim().length === 0) {
+        return null;
+    }
+
+    const cleanText = linkText.trim();
+
+    // For single characters or short sequences (footnotes)
+    if (cleanText.length <= 3) {
+        // Match at start of line/paragraph: "1 " or "1." or "1)"
+        return `^\\s*${escapeRegExp(cleanText)}[\\s\\.\\)\\:]`;
+    }
+
+    // For longer text, use exact match
+    return escapeRegExp(cleanText);
+}
+
+/**
+ * Escape special regex characters
+ */
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Find the text content that corresponds to a link annotation
+ */
+function findTextForAnnotation(annotation, textContent) {
+    const rect = annotation.rect; // [x1, y1, x2, y2]
+    const [x1, y1, x2, y2] = rect;
+
+    // Find text items that overlap with the annotation rectangle
+    const overlappingItems = textContent.items.filter(item => {
+        const itemX = item.transform[4];
+        const itemY = item.transform[5];
+        const itemWidth = item.width || 0;
+        const itemHeight = item.height || 12; // Approximate height
+
+        // Check if text item overlaps with annotation rectangle
+        const overlapsX = itemX < x2 && (itemX + itemWidth) > x1;
+        const overlapsY = itemY < y2 && (itemY + itemHeight) > y1;
+
+        return overlapsX && overlapsY;
+    });
+
+    if (overlappingItems.length === 0) {
+        return "Link"; // Fallback for links without readable text
+    }
+
+    // Combine overlapping text items
+    const linkText = overlappingItems
+        .map(item => item.str)
+        .join('')
+        .trim();
+
+    return linkText || "Link";
+}
+
+/**
+ * Create unified chunks with text, images, and links, maintaining page correlation
+ */
+function createPageAwareChunksWithImages(chapters, images, links = []) {
+    console.log('📄 Creating page-aware chunks with images...');
+
+    // Create maps for quick lookup
     const imagesByPage = {};
     images.forEach(image => {
         if (!imagesByPage[image.pageNumber]) {
@@ -1531,9 +2362,9 @@ function createPageAwareChunksWithImages(chapters, images) {
     });
 
     // Process each chapter
+    let globalChunkIndex = 0; // Global index across all chapters
     const enhancedChapters = chapters.map(chapter => {
         const allChunks = [];
-        let chunkIndex = 0;
 
         // Use page-aware chunking if pages data is available
         if (chapter.pages && chapter.pages.length > 0) {
@@ -1557,35 +2388,51 @@ function createPageAwareChunksWithImages(chapters, images) {
             for (const pageNum of pageNumbers) {
                 const pageChunks = chunksByPage[pageNum];
 
-                // Add text chunks for this page
+                // Add text chunks for this page with link information
                 pageChunks.forEach((chunk, index) => {
                     let text = chunk.text;
 
                     // Clean page numbers from beginning of text - pass the actual page number
                     text = cleanPageNumbers(text, chunk.pageNumber);
 
-                                    // Clean the first chunk of the first page by removing chapter title
-                if (pageNum === pageNumbers[0] && index === 0) {
-                    text = cleanChapterHeading(text, chapter.title, chapter.chapterNumber);
-                }
-                
-                // Fix spaced first letter issue (e.g., "O   nce upon a time")
-                text = fixSpacedFirstLetter(text);
+                    // Clean the first chunk of the first page by removing chapter title
+                    if (pageNum === pageNumbers[0] && index === 0) {
+                        text = cleanChapterHeading(text, chapter.title, chapter.chapterNumber);
+                    }
 
-                    allChunks.push({
-                        index: chunkIndex++,
+                    // Fix spaced first letter issue (e.g., "O   nce upon a time")
+                    text = fixSpacedFirstLetter(text);
+
+                    const chunkData = {
+                        index: globalChunkIndex++,
                         text: text,
                         wordCount: chunk.words.length,
-                        type: 'text',
-                        pageNumber: chunk.pageNumber
-                    });
+                        type: chunk.type || 'text',
+                        pageNumber: chunk.pageNumber,
+                        coordinateBounds: chunk.coordinateBounds  // Preserve coordinate bounds for link matching
+                    };
+
+                    allChunks.push(chunkData);
+
+                    // Track headers in debug mode
+                    if (chunk.type === 'header') {
+                        headerTracker.push({
+                            text: text,
+                            wordCount: chunk.words.length,
+                            context: 'finalChunk',
+                            chapterNumber: chapter.chapterNumber,
+                            chapterTitle: chapter.title,
+                            pageNumber: chunk.pageNumber,
+                            chunkIndex: globalChunkIndex - 1
+                        });
+                    }
                 });
 
                 // Add images for this page at the end of the page
                 const pageImages = imagesByPage[pageNum] || [];
                 pageImages.forEach(image => {
                     allChunks.push({
-                        index: chunkIndex++,
+                        index: globalChunkIndex++,
                         text: "",
                         wordCount: 0,
                         type: 'image',
@@ -1609,7 +2456,7 @@ function createPageAwareChunksWithImages(chapters, images) {
             // Convert text chunks
             textChunks.forEach((chunk, index) => {
                 let text = chunk.text;
-                
+
                 // Note: In fallback mode we don't have individual page numbers for chunks,
                 // so we skip page number cleaning to avoid removing legitimate content numbers
 
@@ -1617,16 +2464,31 @@ function createPageAwareChunksWithImages(chapters, images) {
                 if (index === 0) {
                     text = cleanChapterHeading(text, chapter.title, chapter.chapterNumber);
                 }
-                
+
                 // Fix spaced first letter issue (e.g., "O   nce upon a time")
                 text = fixSpacedFirstLetter(text);
 
-                allChunks.push({
-                    index: chunkIndex++,
+                const chunkData = {
+                    index: globalChunkIndex++,
                     text: text,
                     wordCount: chunk.words.length,
-                    type: 'text'
-                });
+                    type: chunk.type || 'text'
+                };
+
+                allChunks.push(chunkData);
+
+                // Track headers in debug mode (fallback)
+                if (chunk.type === 'header') {
+                    headerTracker.push({
+                        text: text,
+                        wordCount: chunk.words.length,
+                        context: 'finalChunk_fallback',
+                        chapterNumber: chapter.chapterNumber,
+                        chapterTitle: chapter.title,
+                        pageNumber: 'unknown',
+                        chunkIndex: globalChunkIndex - 1
+                    });
+                }
             });
 
             // Add images that belong to this chapter based on page ranges (fallback)
@@ -1636,7 +2498,7 @@ function createPageAwareChunksWithImages(chapters, images) {
                     const imagePage = image.pageNumber;
                     if (imagePage >= chapter.startingPage && imagePage <= chapter.endingPage) {
                         allChunks.push({
-                            index: chunkIndex++,
+                            index: globalChunkIndex++,
                             text: "",
                             wordCount: 0,
                             type: 'image',
@@ -1672,9 +2534,78 @@ function createPageAwareChunksWithImages(chapters, images) {
         sum + ch.content.chunks.filter(c => c.type === 'text').length, 0);
     const imageCount = enhancedChapters.reduce((sum, ch) =>
         sum + ch.content.chunks.filter(c => c.type === 'image').length, 0);
+    const linkCount = enhancedChapters.reduce((sum, ch) =>
+        sum + ch.content.chunks.filter(c => c.links && c.links.length > 0).length, 0);
 
-    console.log(`✅ Created chapters with ${textCount} text chunks and ${imageCount} image chunks`);
+    console.log(`✅ Created chapters with ${textCount} text chunks, ${imageCount} image chunks, and ${linkCount} chunks with links`);
     return enhancedChapters;
+}
+
+/**
+ * Resolve target chunks for all links and enhance both links and chunks
+ */
+function resolveLinksToTargetChunks(links, allChunks) {
+    console.log('🎯 Resolving target chunks for all links...');
+
+    const enhancedLinks = [];
+    const targetChunkIds = new Set();
+
+    for (const link of links) {
+        const destinationInfo = findDestinationChunk(link, allChunks);
+
+        if (destinationInfo) {
+            // Create enhanced link with target chunk reference
+            const enhancedLink = {
+                text: link.linkText || link.text,
+                destinationPage: link.destinationPage,
+                destinationChapter: link.destinationChapter,
+                isValid: link.isValid,
+                validationFlags: link.validationFlags || [],
+                hasValidDestination: link.hasValidDestination,
+                targetChunkIndex: destinationInfo.chunk.index,
+                resolution: {
+                    method: destinationInfo.method,
+                    confidence: destinationInfo.confidence
+                }
+            };
+
+            enhancedLinks.push(enhancedLink);
+            targetChunkIds.add(destinationInfo.chunk.index);
+
+        } else {
+            // Link without valid target chunk
+            const enhancedLink = {
+                text: link.linkText || link.text,
+                destinationPage: link.destinationPage,
+                destinationChapter: link.destinationChapter,
+                isValid: link.isValid,
+                validationFlags: link.validationFlags || [],
+                hasValidDestination: link.hasValidDestination,
+                targetChunkIndex: null,
+                resolution: {
+                    method: 'not_found',
+                    confidence: 'none'
+                }
+            };
+
+            enhancedLinks.push(enhancedLink);
+        }
+    }
+
+    // Mark target chunks
+    allChunks.forEach(chunk => {
+        if (targetChunkIds.has(chunk.index)) {
+            chunk.isTargetLink = true;
+        }
+    });
+
+    const resolvedCount = enhancedLinks.filter(link => link.targetChunkIndex !== null).length;
+    const targetChunkCount = targetChunkIds.size;
+
+    console.log(`🎯 Resolved ${resolvedCount}/${enhancedLinks.length} links to target chunks`);
+    console.log(`🎯 Marked ${targetChunkCount} chunks as link targets`);
+
+    return enhancedLinks;
 }
 
 // Main parsing function
@@ -1720,6 +2651,9 @@ async function parsePdfBook(pdfPath, configPath, debugMode = false) {
         console.log(`🐛 Debug files saved to: ${debugFolder}`);
     }
 
+    // Reset header tracker for this parsing run
+    headerTracker = [];
+
     // Extract metadata
     const filename = path.basename(pdfPath);
     const bookMetadata = extractBookMetadata(pdfData, filename, config);
@@ -1741,19 +2675,122 @@ async function parsePdfBook(pdfPath, configPath, debugMode = false) {
         }
     }
 
-    // Debug: Save chapters
-    if (debugMode) {
-        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
-        fs.writeFileSync(path.join(debugFolder, '3-raw-chapters.json'), JSON.stringify(chapters, null, 2));
-    }
     console.log(`Detected ${chapters.length} chapters`);
 
     // Extract images from PDF
     const bookFolderPath = path.dirname(pdfPath);
     const { images, imagesFolderPath } = await extractImages(pdfPath, bookMetadata.title, bookFolderPath);
 
-    // Convert to database format with image integration
-    const dbChapters = createPageAwareChunksWithImages(chapters, images);
+    // Extract internal links from PDF
+    const links = await extractInternalLinks(pdfPath);
+
+    // Debug: Save chapters and links
+    if (debugMode) {
+        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+        fs.writeFileSync(path.join(debugFolder, '3-raw-chapters.json'), JSON.stringify(chapters, null, 2));
+        fs.writeFileSync(path.join(debugFolder, '7-extracted-links.json'), JSON.stringify(links, null, 2));
+    }
+
+    // Validate and filter links before integration
+    const validatedLinks = validateLinkDestinations(links, chapters);
+
+    // First, convert to database format without links
+    const dbChapters = createPageAwareChunksWithImages(chapters, images, []);
+
+    // Create a flat array of all chunks for link resolution
+    const allChunks = [];
+    dbChapters.forEach(chapter => {
+        allChunks.push(...chapter.content.chunks);
+    });
+
+    // Add navigation data to validated links before resolution
+    const linksWithNavigation = validatedLinks.map(link => {
+        const navData = generateNavigationData(
+            link.linkText || link.text,
+            link.destinationPage,
+            link.destinationCoordinates || null,
+            determineNavigationType(link.linkText || link.text, link.destinationCoordinates)
+        );
+
+        return {
+            ...link,
+            navigation: navData
+        };
+    });
+
+    // NOW resolve links using the FINAL chunk indices with proper navigation data
+    let enhancedLinks = [];
+    if (linksWithNavigation.length > 0) {
+        enhancedLinks = resolveLinksToTargetChunks(linksWithNavigation, allChunks);
+
+        // Save the link resolution results in debug mode
+        if (debugMode) {
+            const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+            fs.writeFileSync(path.join(debugFolder, '8-link-resolution.json'), JSON.stringify(enhancedLinks, null, 2));
+        }
+    }
+
+    // Now add the resolved links to the appropriate source chunks
+    // We need to map back to original link page information
+    enhancedLinks.forEach((enhancedLink, index) => {
+        const originalLink = linksWithNavigation[index];
+
+        // Find chunks that contain this link text and are on the source page
+        const sourceChunks = allChunks.filter(chunk =>
+            chunk.text.includes(enhancedLink.text) &&
+            chunk.pageNumber === originalLink.pageNumber
+        );
+
+        sourceChunks.forEach(chunk => {
+            if (!chunk.links) {
+                chunk.links = [];
+            }
+            chunk.links.push(enhancedLink);
+        });
+    });
+
+    // Debug: Save header tracker
+    if (debugMode) {
+        const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+        const headerDebugData = {
+            totalHeaders: headerTracker.length,
+            headers: headerTracker,
+            summary: {
+                byChapter: {},
+                byPage: {},
+                byContext: {}
+            }
+        };
+
+        // Generate summaries
+        headerTracker.forEach(header => {
+            // By chapter
+            const chapterKey = `Ch${header.chapterNumber}_${header.chapterTitle}`;
+            if (!headerDebugData.summary.byChapter[chapterKey]) {
+                headerDebugData.summary.byChapter[chapterKey] = [];
+            }
+            headerDebugData.summary.byChapter[chapterKey].push(header.text);
+
+            // By page
+            const pageKey = header.pageNumber || 'unknown';
+            if (!headerDebugData.summary.byPage[pageKey]) {
+                headerDebugData.summary.byPage[pageKey] = [];
+            }
+            headerDebugData.summary.byPage[pageKey].push({
+                text: header.text,
+                chapter: header.chapterNumber
+            });
+
+            // By context
+            if (!headerDebugData.summary.byContext[header.context]) {
+                headerDebugData.summary.byContext[header.context] = 0;
+            }
+            headerDebugData.summary.byContext[header.context]++;
+        });
+
+        fs.writeFileSync(path.join(debugFolder, '6-headers-debug.json'), JSON.stringify(headerDebugData, null, 2));
+        console.log(`🐛 Header debug file saved: ${headerTracker.length} headers found`);
+    }
 
     // Calculate totals
     const totalWords = dbChapters.reduce((sum, chapter) => sum + chapter.wordCount, 0);
@@ -1787,6 +2824,9 @@ function saveToFile(book, chapters, outputPath, imagesFolderPath) {
             hasImages: chapters.some(ch => ch.content.chunks.some(chunk => chunk.type === 'image')),
             totalImages: chapters.reduce((sum, ch) =>
                 sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0),
+            hasLinks: chapters.some(ch => ch.content.chunks.some(chunk => chunk.links && chunk.links.length > 0)),
+            totalLinks: chapters.reduce((sum, ch) =>
+                sum + ch.content.chunks.filter(chunk => chunk.links && chunk.links.length > 0).length, 0),
             imagesFolderPath: imagesFolderPath || null
         }
     };
@@ -1805,16 +2845,19 @@ function generateParserSummary(book, chapters, summaryPath) {
     const chapterSummaries = chapters.map((chapter, index) => {
         const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
         const imageChunks = chapter.content.chunks.filter(chunk => chunk.type === 'image');
-        
+        const headerChunks = chapter.content.chunks.filter(chunk => chunk.type === 'header');
+        const chunksWithLinks = chapter.content.chunks.filter(chunk => chunk.links && chunk.links.length > 0);
+        const totalLinkCount = chapter.content.chunks.reduce((sum, chunk) => sum + (chunk.links ? chunk.links.length : 0), 0);
+
         // Get first 5 text chunks combined for preview
         const firstFiveTextChunks = textChunks.slice(0, 5);
         const previewText = firstFiveTextChunks.map(chunk => chunk.text).join(' ');
-        
+
         // Extract page information from chunks that have pageNumber
         const chunksWithPages = chapter.content.chunks.filter(chunk => chunk.pageNumber);
         let pageRanges = 'Unknown';
         let numberOfPages = 0;
-        
+
         if (chunksWithPages.length > 0) {
             const pageNumbers = chunksWithPages.map(chunk => chunk.pageNumber).sort((a, b) => a - b);
             const firstPage = pageNumbers[0];
@@ -1822,13 +2865,17 @@ function generateParserSummary(book, chapters, summaryPath) {
             pageRanges = `From ${firstPage} to ${lastPage}`;
             numberOfPages = lastPage - firstPage + 1;
         }
-        
+
         return {
             chapterNumber: chapter.chapterNumber,
             chapterName: chapter.title,
             wordCount: chapter.wordCount,
             textChunks: textChunks.length,
             imageChunks: imageChunks.length,
+            headerChunks: headerChunks.length,
+            chunksWithLinks: chunksWithLinks.length,
+            totalLinks: totalLinkCount,
+            headers: headerChunks.map(chunk => chunk.text),
             totalChunks: chapter.content.chunks.length,
             pageRanges: pageRanges,
             numberOfPages: numberOfPages,
@@ -1836,11 +2883,17 @@ function generateParserSummary(book, chapters, summaryPath) {
         };
     });
 
-    const totalTextChunks = chapters.reduce((sum, ch) => 
+    const totalTextChunks = chapters.reduce((sum, ch) =>
         sum + ch.content.chunks.filter(chunk => chunk.type === 'text').length, 0);
-    const totalImageChunks = chapters.reduce((sum, ch) => 
+    const totalImageChunks = chapters.reduce((sum, ch) =>
         sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
-    const totalChunks = totalTextChunks + totalImageChunks;
+    const totalHeaderChunks = chapters.reduce((sum, ch) =>
+        sum + ch.content.chunks.filter(chunk => chunk.type === 'header').length, 0);
+    const totalChunksWithLinks = chapters.reduce((sum, ch) =>
+        sum + ch.content.chunks.filter(chunk => chunk.links && chunk.links.length > 0).length, 0);
+    const totalLinks = chapters.reduce((sum, ch) =>
+        sum + ch.content.chunks.reduce((linkSum, chunk) => linkSum + (chunk.links ? chunk.links.length : 0), 0), 0);
+    const totalChunks = totalTextChunks + totalImageChunks + totalHeaderChunks;
 
     const summary = {
         bookInfo: {
@@ -1853,35 +2906,43 @@ function generateParserSummary(book, chapters, summaryPath) {
             totalWords: book.totalWords,
             totalTextChunks: totalTextChunks,
             totalImageChunks: totalImageChunks,
+            totalHeaderChunks: totalHeaderChunks,
             totalChunks: totalChunks,
+            totalChunksWithLinks: totalChunksWithLinks,
+            totalLinks: totalLinks,
             averageWordsPerChapter: Math.round(book.totalWords / chapters.length),
-            averageChunksPerChapter: Math.round(totalChunks / chapters.length)
+            averageChunksPerChapter: Math.round(totalChunks / chapters.length),
+            averageHeadersPerChapter: Math.round(totalHeaderChunks / chapters.length),
+            averageLinksPerChapter: Math.round(totalLinks / chapters.length)
         },
         chapters: chapterSummaries
     };
 
     fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
     console.log(`📊 Parser summary saved to: ${summaryPath}`);
-    
+
     // Also log a nice table to console
     console.log('\n📊 PARSER SUMMARY:');
     console.log('='.repeat(80));
     console.log(`📖 Book: "${book.title}" by ${book.author}`);
     console.log(`📚 Total Chapters: ${chapters.length}`);
     console.log(`📝 Total Words: ${book.totalWords.toLocaleString()}`);
-    console.log(`🧩 Total Chunks: ${totalChunks.toLocaleString()} (${totalTextChunks.toLocaleString()} text + ${totalImageChunks.toLocaleString()} images)`);
+    console.log(`🧩 Total Chunks: ${totalChunks.toLocaleString()} (${totalTextChunks.toLocaleString()} text + ${totalImageChunks.toLocaleString()} images + ${totalHeaderChunks.toLocaleString()} headers)`);
+    console.log(`🔗 Total Links: ${totalLinks.toLocaleString()} in ${totalChunksWithLinks.toLocaleString()} chunks`);
     console.log('='.repeat(80));
     console.log('📚 CHAPTER BREAKDOWN:');
-    
+
     chapterSummaries.forEach((ch, i) => {
         const chNum = String(ch.chapterNumber).padStart(2);
         const words = String(ch.wordCount).padStart(6);
         const chunks = String(ch.totalChunks).padStart(4);
         const images = String(ch.imageChunks).padStart(3);
-        const title = ch.chapterName.length > 40 ? 
-            ch.chapterName.substring(0, 37) + '...' : ch.chapterName;
-        
-        console.log(`${chNum}. ${title.padEnd(40)} ${words}w ${chunks}c ${images}i`);
+        const headers = String(ch.headerChunks).padStart(3);
+        const links = String(ch.totalLinks).padStart(3);
+        const title = ch.chapterName.length > 30 ?
+            ch.chapterName.substring(0, 27) + '...' : ch.chapterName;
+
+        console.log(`${chNum}. ${title.padEnd(30)} ${words}w ${chunks}c ${images}i ${headers}h ${links}l`);
     });
     console.log('='.repeat(80));
 }
@@ -1951,6 +3012,8 @@ async function parseBook(pdfPath, configPath, outputPath, debugMode) {
 
         const totalImages = chapters.reduce((sum, ch) =>
             sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
+        const totalLinks = chapters.reduce((sum, ch) =>
+            sum + ch.content.chunks.filter(chunk => chunk.links && chunk.links.length > 0).length, 0);
 
         console.log('✅ Book parsed and saved to file successfully!');
         console.log(`📖 Title: "${book.title}"`);
@@ -1958,6 +3021,7 @@ async function parseBook(pdfPath, configPath, outputPath, debugMode) {
         console.log(`📚 Chapters: ${chapters.length}`);
         console.log(`📝 Total words: ${book.totalWords.toLocaleString()}`);
         console.log(`🖼️ Total images: ${totalImages}`);
+        console.log(`🔗 Total links: ${totalLinks}`);
         console.log(`📄 Output file: ${finalOutputPath}`);
 
     } catch (error) {
@@ -2018,4 +3082,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = { parseBook, parsePdfBook, loadBookConfig, detectChapters, extractTOCFromPdf, extractImages, chunkTextWithPages, createPageAwareChunksWithImages, extractChapterContentFromTOC, cleanPageNumbers }; 
+module.exports = { parseBook, parsePdfBook, loadBookConfig, detectChapters, extractTOCFromPdf, extractImages, extractInternalLinks, chunkTextWithPages, createPageAwareChunksWithImages, extractChapterContentFromTOC, cleanPageNumbers }; 

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getTtsUsageSummary, getTtsUsageRecords } from '../../../apis/ttsUsage/client';
-import type { TtsUsageSummary, TtsUsageRecord } from '../../../apis/ttsUsage/types';
+import { getTtsUsageSummary, getTtsUsageRecords, getTtsErrorSummary } from '../../../apis/ttsUsage/client';
+import type { TtsUsageSummary, TtsUsageRecord, TtsErrorSummary } from '../../../apis/ttsUsage/types';
 import styles from './TtsUsage.module.css';
 
 export function TtsUsage() {
   const [summary, setSummary] = useState<TtsUsageSummary | null>(null);
   const [records, setRecords] = useState<TtsUsageRecord[]>([]);
+  const [errorSummary, setErrorSummary] = useState<TtsErrorSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRecordsExpanded, setIsRecordsExpanded] = useState(false);
@@ -17,9 +18,10 @@ export function TtsUsage() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [summaryResult, recordsResult] = await Promise.all([
+      const [summaryResult, recordsResult, errorSummaryResult] = await Promise.all([
         getTtsUsageSummary(),
-        getTtsUsageRecords()
+        getTtsUsageRecords(),
+        getTtsErrorSummary()
       ]);
 
       if (summaryResult.data?.success && summaryResult.data.summary) {
@@ -29,6 +31,10 @@ export function TtsUsage() {
       if (recordsResult.data?.success && recordsResult.data.records) {
         setRecords(recordsResult.data.records);
       }
+
+      if (errorSummaryResult.data?.success && errorSummaryResult.data.summary) {
+        setErrorSummary(errorSummaryResult.data.summary);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load TTS usage data');
     } finally {
@@ -37,6 +43,7 @@ export function TtsUsage() {
   };
 
   const formatCost = (cost: number) => `$${cost.toFixed(4)}`;
+  const formatDailyCost = (cost: number) => `$${cost.toFixed(1)}`;
   const formatDuration = (seconds: number) => `${Math.round(seconds)}s`;
   const formatProvider = (provider: string) => {
     switch (provider) {
@@ -47,7 +54,7 @@ export function TtsUsage() {
     }
   };
 
-    // Free tier limits (characters per month)
+  // Free tier limits (characters per month)
   const POLLY_FREE_TIER_LIMITS = {
     standard: 5000000, // 5 million characters
     neural: 1000000,   // 1 million characters
@@ -66,10 +73,10 @@ export function TtsUsage() {
   // Calculate current month's usage for free tier tracking
   const getCurrentMonthUsage = () => {
     const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
-    
+
     // Polly usage
-    const pollyRecords = records.filter(record => 
-      record.provider === 'polly' && 
+    const pollyRecords = records.filter(record =>
+      record.provider === 'polly' &&
       record.timestamp.startsWith(currentMonth)
     );
 
@@ -91,8 +98,8 @@ export function TtsUsage() {
     });
 
     // Google usage
-    const googleRecords = records.filter(record => 
-      record.provider === 'google' && 
+    const googleRecords = records.filter(record =>
+      record.provider === 'google' &&
       record.timestamp.startsWith(currentMonth)
     );
 
@@ -112,8 +119,8 @@ export function TtsUsage() {
     });
 
     // ElevenLabs usage
-    const elevenLabsRecords = records.filter(record => 
-      record.provider === 'elevenlabs' && 
+    const elevenLabsRecords = records.filter(record =>
+      record.provider === 'elevenlabs' &&
       record.timestamp.startsWith(currentMonth)
     );
 
@@ -180,8 +187,8 @@ export function TtsUsage() {
             freeLimit = GOOGLE_FREE_TIER_LIMITS.neural2; // Neural2/WaveNet voices
           }
 
-          const monthlyUsage = voiceType === 'standard' 
-            ? currentMonthUsage.google.standard 
+          const monthlyUsage = voiceType === 'standard'
+            ? currentMonthUsage.google.standard
             : currentMonthUsage.google.neural2;
           const exceededUsage = Math.max(0, monthlyUsage - freeLimit);
           const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
@@ -197,7 +204,7 @@ export function TtsUsage() {
         // ElevenLabs free tier calculation
         const monthlyUsage = currentMonthUsage.elevenlabs.total;
         const exceededUsage = Math.max(0, monthlyUsage - ELEVENLABS_FREE_TIER_LIMITS.total);
-        
+
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
           const adjustedCost = exceededUsage * originalCostPerChar;
@@ -291,10 +298,10 @@ export function TtsUsage() {
                         <span className={styles.barValue}>{formatCost(stats.totalCost)}</span>
                       </div>
                       <div className={styles.barContainer}>
-                        <div 
+                        <div
                           className={`${styles.barFill} ${styles[`provider${provider.charAt(0).toUpperCase() + provider.slice(1)}`]}`}
-                          style={{ 
-                            width: `${Math.max(5, (stats.totalCost / Math.max(...Object.values(freeTierAdjustedCosts.usageByProvider).map(p => p.totalCost), 0.001)) * 100)}%` 
+                          style={{
+                            width: `${Math.max(5, (stats.totalCost / Math.max(...Object.values(freeTierAdjustedCosts.usageByProvider).map(p => p.totalCost), 0.001)) * 100)}%`
                           }}
                         ></div>
                       </div>
@@ -305,30 +312,30 @@ export function TtsUsage() {
                   ))}
                 </div>
               </div>
-              
+
               <div className={styles.detailCard}>
-                <h3 className={styles.cardTitle}>Recent Daily Usage (30 Days)</h3>
+                <h3 className={styles.cardTitle}>Recent Daily Usage (7 Days)</h3>
                 <div className={styles.dailyUsageChart}>
                   {Object.entries(summary.usageByDay)
                     .sort(([a], [b]) => a.localeCompare(b))
-                    .slice(-30)
+                    .slice(-7)
                     .map(([day, stats]) => {
                       const maxCost = Math.max(...Object.values(summary.usageByDay).map(d => d.totalCost), 0.001);
                       const height = Math.max(5, (stats.totalCost / maxCost) * 100);
                       return (
                         <div key={day} className={styles.dailyUsageBar}>
                           <div className={styles.barContainer}>
-                            <div 
+                            <div
                               className={styles.costBar}
                               style={{ height: `${height}%` }}
-                              title={`${new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}: ${formatCost(stats.totalCost)} (${stats.totalCalls} calls)`}
+                              title={`${new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}: ${formatDailyCost(stats.totalCost)} (${stats.totalCalls} calls)`}
                             ></div>
                           </div>
                           <div className={styles.barLabel}>
                             <span className={styles.dateLabel}>{new Date(day).toLocaleDateString('en-US', { day: 'numeric' })}</span>
                           </div>
                           <div className={styles.costLabel}>
-                            {formatCost(stats.totalCost)}
+                            {formatDailyCost(stats.totalCost)}
                           </div>
                         </div>
                       );
@@ -351,7 +358,7 @@ export function TtsUsage() {
                 <p className={styles.freeTierDescription}>
                   Free tier limits reset monthly. Amazon Polly includes millions of characters per month for the first 12 months from your first request. Google TTS provides ongoing monthly free tier allowances.
                 </p>
-                
+
                 <h4 className={styles.serviceTitle}>Amazon Polly</h4>
                 <div className={styles.voiceTypeBreakdown}>
                   <div className={styles.voiceTypeItem}>
@@ -361,7 +368,7 @@ export function TtsUsage() {
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${formatPercentage(currentMonthUsage.polly.standard, POLLY_FREE_TIER_LIMITS.standard)}%` }}
                         ></div>
@@ -384,7 +391,7 @@ export function TtsUsage() {
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${formatPercentage(currentMonthUsage.polly.neural, POLLY_FREE_TIER_LIMITS.neural)}%` }}
                         ></div>
@@ -407,7 +414,7 @@ export function TtsUsage() {
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${formatPercentage(currentMonthUsage.polly.longform, POLLY_FREE_TIER_LIMITS.longform)}%` }}
                         ></div>
@@ -433,7 +440,7 @@ export function TtsUsage() {
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${formatPercentage(currentMonthUsage.google.standard, GOOGLE_FREE_TIER_LIMITS.standard)}%` }}
                         ></div>
@@ -456,7 +463,7 @@ export function TtsUsage() {
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${formatPercentage(currentMonthUsage.google.neural2, GOOGLE_FREE_TIER_LIMITS.neural2)}%` }}
                         ></div>
@@ -473,7 +480,7 @@ export function TtsUsage() {
                   </div>
                 </div>
 
-                                <h4 className={styles.serviceTitle}>ElevenLabs</h4>
+                <h4 className={styles.serviceTitle}>ElevenLabs</h4>
                 <div className={styles.voiceTypeBreakdown}>
                   <div className={styles.voiceTypeItem}>
                     <div className={styles.voiceTypeHeader}>
@@ -482,7 +489,7 @@ export function TtsUsage() {
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${formatPercentage(currentMonthUsage.elevenlabs.total, ELEVENLABS_FREE_TIER_LIMITS.total)}%` }}
                         ></div>
@@ -500,28 +507,106 @@ export function TtsUsage() {
                 </div>
 
                 <div className={styles.freeTierNote}>
-                <p>
-                  <strong>Amazon Polly:</strong> Free tier is available for the first 12 months starting from your first Polly request. 
-                  Usage tracking is based on the current month&apos;s Polly requests.
-                </p>
-                <p>
-                  <strong>Google TTS:</strong> Free tier is ongoing with monthly limits that reset each month. 
-                  No time restriction - available as long as you stay within monthly limits.
-                </p>
-                <p>
-                  <strong>ElevenLabs:</strong> Free tier provides 10,000 credits monthly (20,000 characters with Flash/Turbo models). 
-                  Resets monthly with no time restrictions.
-                </p>
-              </div>
+                  <p>
+                    <strong>Amazon Polly:</strong> Free tier is available for the first 12 months starting from your first Polly request.
+                    Usage tracking is based on the current month&apos;s Polly requests.
+                  </p>
+                  <p>
+                    <strong>Google TTS:</strong> Free tier is ongoing with monthly limits that reset each month.
+                    No time restriction - available as long as you stay within monthly limits.
+                  </p>
+                  <p>
+                    <strong>ElevenLabs:</strong> Free tier provides 10,000 credits monthly (20,000 characters with Flash/Turbo models).
+                    Resets monthly with no time restrictions.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
         </>
       )}
 
-            <section className={styles.recordsSection}>
+      {/* Error Dashboard Section */}
+      {errorSummary && (
+        <section className={styles.errorSection}>
+          <div className={styles.errorCard}>
+            <h3 className={styles.cardTitle}>TTS Error Overview</h3>
+            <div className={styles.errorStatsGrid}>
+              <div className={styles.statCard}>
+                <div className={styles.statLabel}>Total Errors</div>
+                <div className={`${styles.statValue} ${styles.errorValue}`}>{errorSummary.totalErrors}</div>
+              </div>
+              {Object.entries(errorSummary.errorsByProvider).map(([provider, stats]) => (
+                <div key={provider} className={styles.statCard}>
+                  <div className={styles.statLabel}>{formatProvider(provider)} Errors</div>
+                  <div className={`${styles.statValue} ${styles.errorValue}`}>{stats.totalErrors}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Error Breakdown by Provider and Error Code */}
+            <div className={styles.errorBreakdown}>
+              {Object.entries(errorSummary.errorsByProvider).map(([provider, stats]) => (
+                <div key={provider} className={styles.errorProviderSection}>
+                  <h4 className={styles.errorProviderTitle}>{formatProvider(provider)}</h4>
+                  <div className={styles.errorCodesList}>
+                    {Object.entries(stats.errorsByCode).map(([code, errorStats]) => (
+                      <div key={code} className={styles.errorCodeItem}>
+                        <div className={styles.errorCodeHeader}>
+                          <span className={`${styles.errorCodeBadge} ${styles[`error${code.split('_')[0]}`]}`}>
+                            {code}
+                          </span>
+                          <span className={styles.errorCount}>{errorStats.count} errors</span>
+                        </div>
+                        <div className={styles.errorCodeDetails}>
+                          <div className={styles.errorMessage}>{errorStats.latestError}</div>
+                          <div className={styles.errorTimestamp}>
+                            Latest: {new Date(errorStats.latestTimestamp).toLocaleString()}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Recent Errors */}
+            {errorSummary.recentErrors.length > 0 && (
+              <div className={styles.recentErrorsSection}>
+                <h4 className={styles.recentErrorsTitle}>Recent Errors</h4>
+                <div className={styles.recentErrorsList}>
+                  {errorSummary.recentErrors.slice(0, 5).map((error) => (
+                    <div key={error.id} className={styles.recentErrorItem}>
+                      <div className={styles.recentErrorHeader}>
+                        <span className={`${styles.errorCodeBadge} ${styles[`error${error.errorCode.split('_')[0]}`]}`}>
+                          {error.errorCode}
+                        </span>
+                        <span className={styles.recentErrorProvider}>
+                          {formatProvider(error.provider)}
+                        </span>
+                        <span className={styles.recentErrorTimestamp}>
+                          {new Date(error.timestamp).toLocaleString()}
+                        </span>
+                      </div>
+                      <div className={styles.recentErrorMessage}>{error.errorMessage}</div>
+                      {error.originalError && (
+                        <div className={styles.recentErrorOriginal}>
+                          Original: {error.originalError}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section className={styles.recordsSection}>
         <div className={styles.recordsCard}>
-          <div 
+          <div
             className={styles.cardTitleClickable}
             onClick={() => setIsRecordsExpanded(!isRecordsExpanded)}
           >
@@ -530,7 +615,7 @@ export function TtsUsage() {
               {isRecordsExpanded ? '▼' : '▶'}
             </span>
           </div>
-          
+
           {isRecordsExpanded && (
             <>
               {/* Mobile Card View */}
@@ -542,12 +627,12 @@ export function TtsUsage() {
                         {formatProvider(record.provider)}
                       </span>
                       <span className={styles.recordTimestamp}>
-                        {new Date(record.timestamp).toLocaleString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric', 
-                          hour: '2-digit', 
+                        {new Date(record.timestamp).toLocaleString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
                           minute: '2-digit',
-                          hour12: false 
+                          hour12: false
                         })}
                       </span>
                     </div>
@@ -595,12 +680,12 @@ export function TtsUsage() {
                     <tbody>
                       {last24HoursRecords.map((record) => (
                         <tr key={record.id}>
-                          <td>{new Date(record.timestamp).toLocaleString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric', 
-                            hour: '2-digit', 
+                          <td>{new Date(record.timestamp).toLocaleString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
                             minute: '2-digit',
-                            hour12: false 
+                            hour12: false
                           })}</td>
                           <td>
                             <span className={`${styles.providerBadge} ${styles[`provider${record.provider.charAt(0).toUpperCase() + record.provider.slice(1)}`]}`}>

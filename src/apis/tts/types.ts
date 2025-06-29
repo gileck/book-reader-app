@@ -18,11 +18,23 @@ export interface GenerateTtsPayload {
     provider?: TtsProvider;
 }
 
+export interface TtsErrorDetail {
+    code: string;
+    message: string;
+    provider?: TtsProvider;
+    voiceId?: string;
+    textLength?: number;
+    originalError?: string;
+    timestamp: string;
+    userId?: string;
+}
+
 export interface GenerateTtsResponse {
     success: boolean;
     audioContent?: string; // base64 encoded audio
     timepoints?: TTSTimepoint[];
     error?: string;
+    errorDetail?: TtsErrorDetail;
 }
 
 export interface GetTtsProvidersResponse {

@@ -1,20 +1,24 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { generateTts } from '../../../../apis/tts/client';
 import type { ChapterClient } from '../../../../apis/chapters/types';
-import type { TTSTimepoint } from '../../../../apis/tts/types';
+import type { TTSTimepoint, TtsErrorDetail } from '../../../../apis/tts/types';
 
 interface AudioPlaybackState {
     currentChunkIndex: number;
     currentWordIndex: number;
     isPlaying: boolean;
     audioChunks: { [key: number]: { audio: HTMLAudioElement; timepoints: TTSTimepoint[] } };
+    ttsError: TtsErrorDetail | null;
+    ttsServiceAvailable: boolean;
 }
 
 const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
     currentChunkIndex: 0,
     currentWordIndex: 0,
     isPlaying: false,
-    audioChunks: {}
+    audioChunks: {},
+    ttsError: null,
+    ttsServiceAvailable: true
 });
 
 // CSS animation utilities
@@ -126,6 +130,13 @@ export const useAudioPlayback = (
 ) => {
     const [state, setState] = useState(getDefaultAudioPlaybackState());
     const pendingRequests = useRef<Set<number>>(new Set());
+    const failedChunks = useRef<Set<number>>(new Set());
+    const stateRef = useRef(state);
+
+    // Keep stateRef in sync
+    useEffect(() => {
+        stateRef.current = state;
+    }, [state]);
 
     const updateState = useCallback((partialState: Partial<AudioPlaybackState>) => {
         setState(prev => ({ ...prev, ...partialState }));
@@ -156,6 +167,7 @@ export const useAudioPlayback = (
             isPlaying: false
         });
         pendingRequests.current.clear();
+        failedChunks.current.clear();
     }, [selectedVoice, currentChapterNumber]);
 
     // Update CSS animation state when playing/paused
@@ -174,12 +186,12 @@ export const useAudioPlayback = (
         }
     }, [state.isPlaying, state.currentChunkIndex, state.audioChunks, highlightColor, wordSpeedOffset]);
 
-    // Audio generation effect
+    // Audio generation effect - triggered by chunk index changes only
     useEffect(() => {
         if (!chapter || state.currentChunkIndex >= textChunks.length) return;
 
         const fetchChunk = async (index: number) => {
-            if (state.audioChunks[index] || pendingRequests.current.has(index)) {
+            if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) {
                 return;
             }
 
@@ -200,7 +212,7 @@ export const useAudioPlayback = (
                         result.data.timepoints,
                         highlightColor || '#ff9800',
                         wordSpeedOffset,
-                        state.isPlaying
+                        false
                     );
                     injectCSS(wordCSS, `word-animation-chunk-${index}`);
 
@@ -211,18 +223,44 @@ export const useAudioPlayback = (
                     );
                     injectCSS(chunkCSS, `chunk-animation-chunk-${index}`);
 
-                    updateState({
+                    setState(prev => ({
+                        ...prev,
                         audioChunks: {
-                            ...state.audioChunks,
+                            ...prev.audioChunks,
                             [index]: {
                                 audio,
-                                timepoints: result.data.timepoints
+                                timepoints: result.data.timepoints!
                             }
-                        }
+                        },
+                        ttsError: null,
+                        ttsServiceAvailable: true
+                    }));
+                } else if (!result.data?.success) {
+                    // Handle TTS generation failure - mark chunk as failed to prevent infinite retries
+                    failedChunks.current.add(index);
+                    console.error('TTS generation failed:', result.data?.error, result.data?.errorDetail);
+                    updateState({
+                        ttsError: result.data?.errorDetail || {
+                            code: 'UNKNOWN_ERROR',
+                            message: result.data?.error || 'TTS generation failed',
+                            timestamp: new Date().toISOString()
+                        },
+                        ttsServiceAvailable: false
                     });
                 }
             } catch (error) {
+                // Mark chunk as failed to prevent infinite retries on network errors
+                failedChunks.current.add(index);
                 console.error('Error generating audio:', error);
+                updateState({
+                    ttsError: {
+                        code: 'NETWORK_ERROR',
+                        message: 'Network error while generating TTS audio. Please check your connection.',
+                        timestamp: new Date().toISOString(),
+                        originalError: error instanceof Error ? error.message : String(error)
+                    },
+                    ttsServiceAvailable: false
+                });
             } finally {
                 pendingRequests.current.delete(index);
             }
@@ -233,7 +271,7 @@ export const useAudioPlayback = (
         if (state.currentChunkIndex < textChunks.length - 1) {
             fetchChunk(state.currentChunkIndex + 1);
         }
-    }, [state.currentChunkIndex, textChunks, selectedVoice, currentChapterNumber, highlightColor, wordSpeedOffset, sentenceHighlightColor]);
+    }, [chapter, state.currentChunkIndex, textChunks, selectedVoice, selectedProvider, currentChapterNumber]);
 
     // Word highlighting logic
     useEffect(() => {
@@ -395,7 +433,7 @@ export const useAudioPlayback = (
 
     const preloadChunk = useCallback(async (index: number) => {
         if (!chapter || index >= textChunks.length || index < 0) return;
-        if (state.audioChunks[index] || pendingRequests.current.has(index)) return;
+        if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) return;
 
         const chunk = textChunks[index];
         if (!chunk) return;
@@ -408,22 +446,46 @@ export const useAudioPlayback = (
             if (result.data?.success && result.data.audioContent && result.data.timepoints) {
                 const audio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
 
-                updateState({
+                setState(prev => ({
+                    ...prev,
                     audioChunks: {
-                        ...state.audioChunks,
+                        ...prev.audioChunks,
                         [index]: {
                             audio,
-                            timepoints: result.data.timepoints
+                            timepoints: result.data.timepoints!
                         }
-                    }
+                    },
+                    ttsError: null,
+                    ttsServiceAvailable: true
+                }));
+            } else if (!result.data?.success) {
+                failedChunks.current.add(index);
+                console.error('TTS preload failed:', result.data?.error, result.data?.errorDetail);
+                updateState({
+                    ttsError: result.data?.errorDetail || {
+                        code: 'UNKNOWN_ERROR',
+                        message: result.data?.error || 'TTS generation failed',
+                        timestamp: new Date().toISOString()
+                    },
+                    ttsServiceAvailable: false
                 });
             }
         } catch (error) {
+            failedChunks.current.add(index);
             console.error('Error preloading audio chunk:', error);
+            updateState({
+                ttsError: {
+                    code: 'NETWORK_ERROR',
+                    message: 'Network error while preloading TTS audio. Please check your connection.',
+                    timestamp: new Date().toISOString(),
+                    originalError: error instanceof Error ? error.message : String(error)
+                },
+                ttsServiceAvailable: false
+            });
         } finally {
             pendingRequests.current.delete(index);
         }
-    }, [chapter, textChunks, selectedVoice, selectedProvider, state.audioChunks, updateState]);
+    }, [chapter, textChunks, selectedVoice, selectedProvider]);
 
     const getWordStyle = useCallback((chunkIndex: number, wordIndex: number) => {
         // CSS handles highlighting for current chunk with loaded audio
@@ -489,6 +551,22 @@ export const useAudioPlayback = (
     // Check if current chunk is loading
     const isCurrentChunkLoading = pendingRequests.current.has(state.currentChunkIndex);
 
+    const clearTtsError = useCallback(() => {
+        updateState({
+            ttsError: null,
+            ttsServiceAvailable: true
+        });
+    }, [updateState]);
+
+    const retryFailedChunk = useCallback((index: number) => {
+        failedChunks.current.delete(index);
+        // Clear any TTS error to allow retry
+        updateState({
+            ttsError: null,
+            ttsServiceAvailable: true
+        });
+    }, [updateState]);
+
     return {
         currentChunkIndex: state.currentChunkIndex,
         currentWordIndex: state.currentWordIndex,
@@ -505,6 +583,11 @@ export const useAudioPlayback = (
         getWordStyle,
         getSentenceStyle,
         getWordClassName, // New function for CSS classes
-        getSentenceClassName // New function for sentence CSS classes
+        getSentenceClassName, // New function for sentence CSS classes
+        ttsError: state.ttsError,
+        ttsServiceAvailable: state.ttsServiceAvailable,
+        clearTtsError,
+        retryFailedChunk,
+        isChunkFailed: (index: number) => failedChunks.current.has(index)
     };
 }; 
