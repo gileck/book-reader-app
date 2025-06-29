@@ -1,0 +1,82 @@
+{
+  "book": {
+    "title": "Transformer: The Deep Chemistry of Life and Death",
+    "author": "Nick Lane",
+    "pageCount": 317,
+    "filename": "book.pdf"
+  },
+  "processing": {
+    "timestamp": "2025-06-29T14:52:31.066Z",
+    "totalChapters": 8,
+    "totalChunks": 5178,
+    "totalWords": 115397,
+    "totalImages": 0,
+    "totalLinks": 28370
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Life itself",
+      "wordCount": 8102,
+      "chunkCount": 355,
+      "pageRange": "9-27",
+      "imageCount": 0,
+      "linkCount": 266
+    },
+    {
+      "title": "Discovering the nanocosm",
+      "wordCount": 14214,
+      "chunkCount": 642,
+      "pageRange": "28-61",
+      "imageCount": 0,
+      "linkCount": 535
+    },
+    {
+      "title": "The path of carbon",
+      "wordCount": 11689,
+      "chunkCount": 526,
+      "pageRange": "63-90",
+      "imageCount": 0,
+      "linkCount": 647
+    },
+    {
+      "title": "From gases to life",
+      "wordCount": 12734,
+      "chunkCount": 536,
+      "pageRange": "92-123",
+      "imageCount": 0,
+      "linkCount": 308
+    },
+    {
+      "title": "Revolutions",
+      "wordCount": 11152,
+      "chunkCount": 495,
+      "pageRange": "125-149",
+      "imageCount": 0,
+      "linkCount": 260
+    },
+    {
+      "title": "To the dark side",
+      "wordCount": 12411,
+      "chunkCount": 599,
+      "pageRange": "151-180",
+      "imageCount": 0,
+      "linkCount": 417
+    },
+    {
+      "title": "The flux capacitor",
+      "wordCount": 13148,
+      "chunkCount": 603,
+      "pageRange": "182-210",
+      "imageCount": 0,
+      "linkCount": 537
+    },
+    {
+      "title": "Epilogue: Self",
+      "wordCount": 31947,
+      "chunkCount": 1422,
+      "pageRange": "212-313",
+      "imageCount": 0,
+      "linkCount": 25400
+    }
+  ]
+}

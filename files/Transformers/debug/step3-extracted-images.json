@@ -1,0 +1,422 @@
+[
+  {
+    "pageNumber": 1,
+    "imageName": "page-001-image-1.jpg",
+    "imageAlt": "Figure 1 (Page 1)",
+    "originalName": "image-000.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 4,
+    "imageName": "page-004-image-1.jpg",
+    "imageAlt": "Figure 2 (Page 4)",
+    "originalName": "image-001.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 31,
+    "imageName": "page-031-image-1.jpg",
+    "imageAlt": "Figure 3 (Page 31)",
+    "originalName": "image-002.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 37,
+    "imageName": "page-037-image-1.jpg",
+    "imageAlt": "Figure 4 (Page 37)",
+    "originalName": "image-003.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 38,
+    "imageName": "page-038-image-1.jpg",
+    "imageAlt": "Figure 5 (Page 38)",
+    "originalName": "image-004.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 39,
+    "imageName": "page-039-image-1.jpg",
+    "imageAlt": "Figure 6 (Page 39)",
+    "originalName": "image-005.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 41,
+    "imageName": "page-041-image-1.jpg",
+    "imageAlt": "Figure 7 (Page 41)",
+    "originalName": "image-006.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 42,
+    "imageName": "page-042-image-1.jpg",
+    "imageAlt": "Figure 8 (Page 42)",
+    "originalName": "image-007.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 47,
+    "imageName": "page-047-image-1.jpg",
+    "imageAlt": "Figure 9 (Page 47)",
+    "originalName": "image-008.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 48,
+    "imageName": "page-048-image-1.jpg",
+    "imageAlt": "Figure 10 (Page 48)",
+    "originalName": "image-009.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 54,
+    "imageName": "page-054-image-1.jpg",
+    "imageAlt": "Figure 11 (Page 54)",
+    "originalName": "image-010.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 71,
+    "imageName": "page-071-image-1.jpg",
+    "imageAlt": "Figure 12 (Page 71)",
+    "originalName": "image-011.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 75,
+    "imageName": "page-075-image-1.jpg",
+    "imageAlt": "Figure 13 (Page 75)",
+    "originalName": "image-012.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 77,
+    "imageName": "page-077-image-1.jpg",
+    "imageAlt": "Figure 14 (Page 77)",
+    "originalName": "image-013.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 81,
+    "imageName": "page-081-image-1.jpg",
+    "imageAlt": "Figure 15 (Page 81)",
+    "originalName": "image-014.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 84,
+    "imageName": "page-084-image-1.jpg",
+    "imageAlt": "Figure 16 (Page 84)",
+    "originalName": "image-015.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 85,
+    "imageName": "page-085-image-1.jpg",
+    "imageAlt": "Figure 17 (Page 85)",
+    "originalName": "image-016.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 103,
+    "imageName": "page-103-image-1.jpg",
+    "imageAlt": "Figure 18 (Page 103)",
+    "originalName": "image-017.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 107,
+    "imageName": "page-107-image-1.jpg",
+    "imageAlt": "Figure 19 (Page 107)",
+    "originalName": "image-018.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 108,
+    "imageName": "page-108-image-1.jpg",
+    "imageAlt": "Figure 20 (Page 108)",
+    "originalName": "image-019.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 109,
+    "imageName": "page-109-image-1.jpg",
+    "imageAlt": "Figure 21 (Page 109)",
+    "originalName": "image-020.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 110,
+    "imageName": "page-110-image-1.jpg",
+    "imageAlt": "Figure 22 (Page 110)",
+    "originalName": "image-021.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 110,
+    "imageName": "page-110-image-2.jpg",
+    "imageAlt": "Figure 23 (Page 110)",
+    "originalName": "image-022.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 111,
+    "imageName": "page-111-image-1.jpg",
+    "imageAlt": "Figure 24 (Page 111)",
+    "originalName": "image-023.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 112,
+    "imageName": "page-112-image-1.jpg",
+    "imageAlt": "Figure 25 (Page 112)",
+    "originalName": "image-024.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 117,
+    "imageName": "page-117-image-1.jpg",
+    "imageAlt": "Figure 26 (Page 117)",
+    "originalName": "image-025.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 120,
+    "imageName": "page-120-image-1.jpg",
+    "imageAlt": "Figure 27 (Page 120)",
+    "originalName": "image-026.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 120,
+    "imageName": "page-120-image-2.jpg",
+    "imageAlt": "Figure 28 (Page 120)",
+    "originalName": "image-027.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 136,
+    "imageName": "page-136-image-1.jpg",
+    "imageAlt": "Figure 29 (Page 136)",
+    "originalName": "image-028.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 137,
+    "imageName": "page-137-image-1.jpg",
+    "imageAlt": "Figure 30 (Page 137)",
+    "originalName": "image-029.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 140,
+    "imageName": "page-140-image-1.jpg",
+    "imageAlt": "Figure 31 (Page 140)",
+    "originalName": "image-030.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 145,
+    "imageName": "page-145-image-1.jpg",
+    "imageAlt": "Figure 32 (Page 145)",
+    "originalName": "image-031.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 157,
+    "imageName": "page-157-image-1.jpg",
+    "imageAlt": "Figure 33 (Page 157)",
+    "originalName": "image-032.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 158,
+    "imageName": "page-158-image-1.jpg",
+    "imageAlt": "Figure 34 (Page 158)",
+    "originalName": "image-033.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 164,
+    "imageName": "page-164-image-1.jpg",
+    "imageAlt": "Figure 35 (Page 164)",
+    "originalName": "image-034.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 167,
+    "imageName": "page-167-image-1.jpg",
+    "imageAlt": "Figure 36 (Page 167)",
+    "originalName": "image-035.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 168,
+    "imageName": "page-168-image-1.jpg",
+    "imageAlt": "Figure 37 (Page 168)",
+    "originalName": "image-036.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 172,
+    "imageName": "page-172-image-1.jpg",
+    "imageAlt": "Figure 38 (Page 172)",
+    "originalName": "image-037.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 173,
+    "imageName": "page-173-image-1.jpg",
+    "imageAlt": "Figure 39 (Page 173)",
+    "originalName": "image-038.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 174,
+    "imageName": "page-174-image-1.jpg",
+    "imageAlt": "Figure 40 (Page 174)",
+    "originalName": "image-039.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 176,
+    "imageName": "page-176-image-1.jpg",
+    "imageAlt": "Figure 41 (Page 176)",
+    "originalName": "image-040.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 195,
+    "imageName": "page-195-image-1.jpg",
+    "imageAlt": "Figure 42 (Page 195)",
+    "originalName": "image-041.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 221,
+    "imageName": "page-221-image-1.jpg",
+    "imageAlt": "Figure 43 (Page 221)",
+    "originalName": "image-042.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 222,
+    "imageName": "page-222-image-1.jpg",
+    "imageAlt": "Figure 44 (Page 222)",
+    "originalName": "image-043.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 223,
+    "imageName": "page-223-image-1.jpg",
+    "imageAlt": "Figure 45 (Page 223)",
+    "originalName": "image-044.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 224,
+    "imageName": "page-224-image-1.jpg",
+    "imageAlt": "Figure 46 (Page 224)",
+    "originalName": "image-045.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 224,
+    "imageName": "page-224-image-2.jpg",
+    "imageAlt": "Figure 47 (Page 224)",
+    "originalName": "image-046.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 225,
+    "imageName": "page-225-image-1.jpg",
+    "imageAlt": "Figure 48 (Page 225)",
+    "originalName": "image-047.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 225,
+    "imageName": "page-225-image-2.jpg",
+    "imageAlt": "Figure 49 (Page 225)",
+    "originalName": "image-048.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 226,
+    "imageName": "page-226-image-1.jpg",
+    "imageAlt": "Figure 50 (Page 226)",
+    "originalName": "image-049.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 226,
+    "imageName": "page-226-image-2.jpg",
+    "imageAlt": "Figure 51 (Page 226)",
+    "originalName": "image-050.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 227,
+    "imageName": "page-227-image-1.jpg",
+    "imageAlt": "Figure 52 (Page 227)",
+    "originalName": "image-051.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 229,
+    "imageName": "page-229-image-1.jpg",
+    "imageAlt": "Figure 53 (Page 229)",
+    "originalName": "image-052.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 229,
+    "imageName": "page-229-image-2.jpg",
+    "imageAlt": "Figure 54 (Page 229)",
+    "originalName": "image-053.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 230,
+    "imageName": "page-230-image-1.jpg",
+    "imageAlt": "Figure 55 (Page 230)",
+    "originalName": "image-054.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 231,
+    "imageName": "page-231-image-1.jpg",
+    "imageAlt": "Figure 56 (Page 231)",
+    "originalName": "image-055.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 231,
+    "imageName": "page-231-image-2.jpg",
+    "imageAlt": "Figure 57 (Page 231)",
+    "originalName": "image-056.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 232,
+    "imageName": "page-232-image-1.jpg",
+    "imageAlt": "Figure 58 (Page 232)",
+    "originalName": "image-057.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 232,
+    "imageName": "page-232-image-2.jpg",
+    "imageAlt": "Figure 59 (Page 232)",
+    "originalName": "image-058.jpg",
+    "extracted": true
+  },
+  {
+    "pageNumber": 233,
+    "imageName": "page-233-image-1.jpg",
+    "imageAlt": "Figure 60 (Page 233)",
+    "originalName": "image-059.jpg",
+    "extracted": true
+  }
+]

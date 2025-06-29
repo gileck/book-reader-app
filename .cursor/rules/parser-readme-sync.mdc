@@ -1,0 +1,142 @@
+---
+description: 
+globs: book-parser/parser/*
+alwaysApply: false
+---
+# Parser README Synchronization Rule
+
+## Overview
+This rule ensures that the [README.md](mdc:book-parser/parser/README.md) file in the parser directory is always kept up-to-date whenever any changes are made to parser files.
+
+## When to Apply This Rule
+**ALWAYS** apply this rule when making changes to ANY file in the `book-parser/parser/` directory, including:
+
+- [parse-pdf-book-generic.js](mdc:book-parser/parser/parse-pdf-book-generic.js) - Main orchestrator
+- [config-loader.js](mdc:book-parser/parser/config-loader.js) - Configuration loading
+- [text-processor.js](mdc:book-parser/parser/text-processor.js) - Text processing and chunking
+- [image-extractor.js](mdc:book-parser/parser/image-extractor.js) - Image extraction
+- [toc-extractor.js](mdc:book-parser/parser/toc-extractor.js) - TOC extraction
+- [link-extractor.js](mdc:book-parser/parser/link-extractor.js) - Link extraction
+- [link-resolver.js](mdc:book-parser/parser/link-resolver.js) - Link resolution
+- [chapter-detector.js](mdc:book-parser/parser/chapter-detector.js) - Chapter detection
+
+## Required Actions
+
+### 1. Function Signature Changes
+When modifying function signatures, parameters, or return types:
+- Update the corresponding code examples in the README
+- Update the Input/Output examples to reflect new data structures
+- Update the JSDoc examples if applicable
+
+### 2. New Functions Added
+When adding new functions to any parser module:
+- Add the new function to the "Key Functions" section of the relevant step
+- Provide a code example showing the function usage
+- Update the Input/Output examples if the function changes the processing flow
+
+### 3. Processing Logic Changes
+When modifying the core processing logic:
+- Update the step-by-step explanations in the README
+- Update code examples to reflect new processing approaches
+- Update the "Complete Processing Flow" section if the orchestration changes
+
+### 4. New Modules Added
+When adding new parser modules:
+- Add the new module to the Architecture diagram
+- Create a new step section following the existing format
+- Update the main orchestrator documentation
+
+### 5. Configuration Changes
+When modifying configuration options in [config-loader.js](mdc:book-parser/parser/config-loader.js):
+- Update the configuration examples in Step 1
+- Update the Input/Output examples with new config options
+- Update the "Customization & Extension" section
+
+### 6. Output Format Changes
+When modifying the final output structure:
+- Update the "Output Format" section with the new JSON structure
+- Update all relevant Input/Output examples throughout the document
+- Update the processing flow documentation
+
+## Documentation Standards
+
+### Code Examples
+- Keep code examples concise (10-20 lines max)
+- Include relevant comments explaining key concepts
+- Use realistic variable names and values
+- Ensure all code examples are syntactically correct
+
+### Input/Output Examples
+- Use realistic data that matches actual parser output
+- Include all relevant fields that developers will encounter
+- Show both simple and complex examples where appropriate
+- Keep examples consistent across all steps
+
+### Step Format
+Each step must include:
+1. **File reference** with proper mdc link
+2. **Purpose** - Clear explanation of what the step does
+3. **Input/Output Example** - Realistic data structures
+4. **Key Functions** - Code snippets of main functions
+
+## Verification Checklist
+
+Before completing any parser modification, verify:
+
+- [ ] All function signatures in README match actual code
+- [ ] All Input/Output examples reflect current data structures
+- [ ] All file references use correct mdc: links
+- [ ] Code examples compile without errors
+- [ ] Processing flow documentation matches actual orchestration
+- [ ] Architecture diagram includes all current modules
+- [ ] Performance and dependency information is current
+
+## Examples of README Updates
+
+### Function Signature Change
+```javascript
+// OLD in README
+function chunkText(text, minWords = 5) { ... }
+
+// NEW in README (after adding maxWords parameter)
+function chunkText(text, minWords = 5, maxWords = 15) { ... }
+```
+
+### New Processing Step
+```javascript
+// Add to main orchestrator documentation
+async function parsePdfBook(pdfPath, configPath, debugMode = false) {
+    // ... existing steps ...
+    
+    // NEW: Step 8 - Validate output
+    const validatedOutput = await validateOutput(chapters, links);
+    
+    return { book, chapters, images, links: validatedOutput };
+}
+```
+
+### Output Format Change
+```javascript
+// Update Output Format section when adding new fields
+{
+  "book": { ... },
+  "chapters": [ ... ],
+  "images": [ ... ],
+  "links": [ ... ],
+  "validation": {           // NEW FIELD
+    "errors": [],
+    "warnings": [],
+    "score": 0.95
+  }
+}
+```
+
+## Critical Importance
+
+The [README.md](mdc:book-parser/parser/README.md) serves as the primary documentation for developers working with the parser. Outdated documentation leads to:
+- Developer confusion and wasted time
+- Incorrect usage of parser functions
+- Bugs introduced by misunderstanding the API
+- Difficulty onboarding new team members
+
+**NEVER** commit parser changes without updating the README to maintain documentation accuracy.
