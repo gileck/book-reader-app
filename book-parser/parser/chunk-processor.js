@@ -65,9 +65,8 @@ function createPageAwareChunksWithImages(chapters, images, links = []) {
                 const pageLinks = links.filter(link => link.pageNumber === chunk.pageNumber);
                 chunk.links = pageLinks.map(link => ({
                     text: link.text,
-                    targetPage: link.targetPage,
-                    navigationType: link.navigationType,
-                    searchPattern: link.searchPattern
+                    targetChunk: null, // Will be resolved later
+                    chapterNumber: chunk.chapterNumber
                 }));
             }
             
