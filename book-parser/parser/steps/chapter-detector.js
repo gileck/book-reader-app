@@ -59,6 +59,19 @@ async function detectChapters(text, config, pdfPath = null) {
  */
 async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, config = null) {
     try {
+        // Test debug output to verify function is called
+        try {
+            const fs = require('fs');
+            const debugDir = './debug';
+            if (!fs.existsSync(debugDir)) {
+                fs.mkdirSync(debugDir);
+            }
+            fs.writeFileSync('./debug/cross-page-debug.txt', 
+                `FUNCTION CALLED: extractChapterContentFromTOC with ${tocChapters.length} chapters\n\n`);
+        } catch (error) {
+            console.log('Debug file write error:', error);
+        }
+
         // Filter out non-content chapters (appendix, bibliography, etc.)
         const contentChapters = tocChapters.filter(ch => {
             if (!ch.startingPage) return false;
@@ -95,6 +108,19 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
         for (let i = 0; i < contentChapters.length; i++) {
             const currentChapter = contentChapters[i];
             const nextChapter = contentChapters[i + 1];
+
+            // Debug what chapter we're processing
+            try {
+                const fs = require('fs');
+                const debugDir = './debug';
+                if (!fs.existsSync(debugDir)) {
+                    fs.mkdirSync(debugDir);
+                }
+                fs.appendFileSync('./debug/cross-page-debug.txt', 
+                    `PROCESSING CHAPTER: "${currentChapter.chapterTitle}" (${currentChapter.chapterNumber})\n\n`);
+            } catch (error) {
+                // Ignore debug errors
+            }
 
             const startPage = currentChapter.startingPage;
             const endPage = nextChapter ? nextChapter.startingPage - 1 : doc.numPages;
@@ -147,18 +173,87 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             }
 
             if (chapterPages.length > 0) {
-                // Preserve original paragraph structure from page text
-                // Keep the line break markers intact instead of splitting them out
+                // Process pages to handle cross-page sentence continuation
                 const contentLines = [];
                 
-                for (const page of chapterPages) {
-                    // Instead of splitting and losing line breaks, just clean up the text
-                    // while preserving the ⟨⟨LINE_BREAK⟩⟩ markers
-                    const cleanedPageText = page.text.trim();
+                for (let pageIndex = 0; pageIndex < chapterPages.length; pageIndex++) {
+                    const page = chapterPages[pageIndex];
+                    let pageText = page.text.trim();
                     
-                    if (cleanedPageText.length > 50) { // Only include pages with substantial content
-                        contentLines.push(cleanedPageText);
+                    if (pageText.length <= 50) continue; // Skip pages with minimal content
+                    
+                    // Check if this page ends with an incomplete sentence
+                    // (doesn't end with sentence-ending punctuation)
+                    const pageEndsWithPunctuation = /[.!?;]$/.test(pageText);
+                    const hasNextPage = pageIndex < chapterPages.length - 1;
+                    
+                    // Debug all pages with relevant content or in Introduction chapter
+                    if (pageText.includes('If you shrink yourself') || pageText.includes('down to the size') || 
+                        pageText.includes('cityscape') || currentChapter.chapterTitle.includes('Introduction') ||
+                        pageText.includes('inorganic') || pageText.includes('Yet at night')) {
+                        try {
+                            const debugInfo = [
+                                `PAGE ${page.pageNumber} DEBUG (Chapter: ${currentChapter.chapterTitle}):`,
+                                `Page ends with punctuation: ${pageEndsWithPunctuation}`,
+                                `Has next page: ${hasNextPage}`,
+                                `Page text ends with: "${pageText.substring(Math.max(0, pageText.length - 100))}"`,
+                                `Page text length: ${pageText.length}`,
+                                ''
+                            ];
+                            
+                            const fs = require('fs');
+                            const debugDir = './debug';
+                            if (!fs.existsSync(debugDir)) {
+                                fs.mkdirSync(debugDir);
+                            }
+                            fs.appendFileSync('./debug/cross-page-debug.txt', debugInfo.join('\n') + '\n');
+                        } catch (error) {
+                            // Ignore debug errors
+                        }
                     }
+                    
+                    if (!pageEndsWithPunctuation && hasNextPage) {
+                        // This page ends without sentence punctuation, check next page
+                        const nextPage = chapterPages[pageIndex + 1];
+                        const nextPageText = nextPage.text.trim();
+                        
+                        if (nextPageText.length > 50) {
+                            // Find the first sentence boundary in the next page
+                            const firstSentenceEnd = nextPageText.search(/[.!?;]/);
+                            
+                            if (firstSentenceEnd !== -1) {
+                                // Extract the continuation part from next page
+                                const continuationPart = nextPageText.substring(0, firstSentenceEnd + 1);
+                                const remainingNextPageText = nextPageText.substring(firstSentenceEnd + 1).trim();
+                                
+                                // Additional debug for the specific cross-page case
+                                if (pageText.includes('If you shrink yourself') || continuationPart.includes('down to the size')) {
+                                    try {
+                                        const debugInfo = [
+                                            `CROSS-PAGE CONTINUATION DETECTED:`,
+                                            `Page ${page.pageNumber} ended with: "${pageText.substring(Math.max(0, pageText.length - 100))}"`,
+                                            `Continuation from page ${nextPage.pageNumber}: "${continuationPart}"`,
+                                            `Remaining next page: "${remainingNextPageText.substring(0, 100)}..."`,
+                                            `Combined result: "${(pageText + ' ' + continuationPart).substring(Math.max(0, pageText.length - 50))}"`,
+                                            ''
+                                        ];
+                                        
+                                        fs.appendFileSync('./debug/cross-page-debug.txt', debugInfo.join('\n') + '\n');
+                                    } catch (error) {
+                                        // Ignore debug errors
+                                    }
+                                }
+                                
+                                // Combine current page with continuation
+                                pageText = pageText + ' ' + continuationPart;
+                                
+                                // Update next page to remove the continuation part
+                                chapterPages[pageIndex + 1].text = remainingNextPageText;
+                            }
+                        }
+                    }
+                    
+                    contentLines.push(pageText);
                 }
 
                 // Assign sequential chapter numbers when using config-based extraction

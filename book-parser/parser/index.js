@@ -39,6 +39,48 @@ async function parsePdfBook(pdfPath, configPath, debugMode = false) {
         pdfData.text
     );
     
+    // Save detailed positioning data for text items
+    if (pdfData.text && typeof pdfData.text === 'object' && pdfData.text.items) {
+        const positioningData = [];
+        
+        for (let pageIndex = 0; pageIndex < pdfData.text.items.length; pageIndex++) {
+            const pageItems = pdfData.text.items[pageIndex];
+            
+            for (let itemIndex = 0; itemIndex < pageItems.length; itemIndex++) {
+                const item = pageItems[itemIndex];
+                
+                // Check if this item contains our target text
+                const isTargetText = item.str && (
+                    item.str.includes('metabolism') || 
+                    item.str.includes('turnover') || 
+                    item.str.includes('Are they alive') ||
+                    item.str.includes('No, of course not') ||
+                    item.str.includes('they are cities') ||
+                    item.str.includes('spreading') ||
+                    item.str.includes('Yet at night')
+                );
+                
+                if (isTargetText || positioningData.length < 50) { // Save first 50 items plus target text
+                    positioningData.push({
+                        pageIndex: pageIndex,
+                        itemIndex: itemIndex,
+                        text: item.str,
+                        x: item.transform ? item.transform[4] : null,
+                        y: item.transform ? item.transform[5] : null,
+                        width: item.width,
+                        height: item.height,
+                        transform: item.transform,
+                        isTargetText: isTargetText
+                    });
+                }
+            }
+        }
+        
+        fs.writeFileSync(
+            path.join(debugFolderPath, 'positioning-data.json'),
+            JSON.stringify(positioningData, null, 2)
+        );
+    }
     
     // Save step 1 debug output
     fs.writeFileSync(

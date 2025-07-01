@@ -398,40 +398,22 @@ function combineTextItemsPreservingStructure(textItems) {
     const lines = [];
     let currentLine = [];
     let lastY = null;
-    let lastLineStartX = null;
-    const allItemsDebug = [];
 
     // Group text items by approximate Y position (line)
     for (const item of textItems) {
         const y = Math.round(item.transform[5]); // Y coordinate
-        const x = Math.round(item.transform[4]); // X coordinate
-
-        // Debug ALL items around our problematic text
-        if (item.str.includes('structure') || item.str.includes('cell') || item.str.includes('building') || 
-            item.str.includes('inorganic') || item.str.includes('spreading') || item.str.includes('Yet at night')) {
-            allItemsDebug.push(`"${item.str}" | Y: ${y} | X: ${x} | LastY: ${lastY} | YDiff: ${lastY ? Math.abs(y - lastY) : 'N/A'} | WillBreak: ${lastY !== null && Math.abs(y - lastY) > 5}`);
-        }
 
         // If this is a new line (Y coordinate changed significantly)
         if (lastY !== null && Math.abs(y - lastY) > 5) {
             if (currentLine.length > 0) {
                 const lineText = currentLine.join(' ').trim();
-                lines.push({
-                    text: lineText,
-                    startX: lastLineStartX,
-                    y: lastY
-                });
+                lines.push(lineText);
                 currentLine = [];
             }
-            lastLineStartX = x; // Record the X position of the first item on this new line
         }
 
         if (item.str.trim()) {
             currentLine.push(item.str);
-            // If this is the first item on the line, record its X position
-            if (currentLine.length === 1) {
-                lastLineStartX = x;
-            }
         }
         lastY = y;
     }
@@ -439,100 +421,117 @@ function combineTextItemsPreservingStructure(textItems) {
     // Add the last line
     if (currentLine.length > 0) {
         const lineText = currentLine.join(' ').trim();
-        lines.push({
-            text: lineText,
-            startX: lastLineStartX,
-            y: lastY
-        });
+        lines.push(lineText);
     }
 
-    // Now intelligently combine lines based on indentation and sentence structure
+    // Smart paragraph detection: split on lines ending with sentence-ending punctuation
     const paragraphs = [];
     let currentParagraph = '';
     
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const nextLine = lines[i + 1];
+        const line = lines[i].trim();
         
-        // Add current line to paragraph
+        if (line.length === 0) continue;
+
+        // Add line to current paragraph
         if (currentParagraph.length > 0) {
             currentParagraph += ' ';
         }
-        currentParagraph += line.text;
+        currentParagraph += line;
         
-        // Decide whether to end the paragraph here
-        let shouldEndParagraph = false;
+        // Check if this line ends with sentence-ending punctuation
+        const endsWithSentenceEnd = /[.!?;]$/.test(line);
         
-        if (!nextLine) {
-            // Last line - always end paragraph
-            shouldEndParagraph = true;
-        } else {
-            // Check if next line starts a new paragraph based on:
-            // 1. Significant indentation difference (indicating new paragraph)
-            // 2. Current line ends with sentence-ending punctuation AND next line starts with capital letter
-            
-            const indentationDiff = Math.abs(nextLine.startX - line.startX);
-            const hasSignificantIndent = indentationDiff > 10; // Adjust threshold as needed
-            
-            const currentEndsWithPunctuation = /[.!?]$/.test(line.text.trim());
-            const nextStartsWithCapital = /^[A-Z]/.test(nextLine.text.trim());
-            
-            // End paragraph if:
-            // - Next line has significant indentation change, OR
-            // - Current line ends properly AND next line starts with capital (strong paragraph indicator)
-            shouldEndParagraph = hasSignificantIndent || (currentEndsWithPunctuation && nextStartsWithCapital);
-        }
-        
-        if (shouldEndParagraph) {
+        // If it ends with sentence punctuation, finish the paragraph
+        if (endsWithSentenceEnd) {
             paragraphs.push(currentParagraph.trim());
             currentParagraph = '';
         }
     }
+    
+    // Add any remaining text as final paragraph
+    if (currentParagraph.trim().length > 0) {
+        paragraphs.push(currentParagraph.trim());
+    }
+    
+    // Smart merging: merge short paragraphs with shorter neighboring paragraphs
+    const mergedParagraphs = smartMergeParagraphs(paragraphs);
 
-    // Write comprehensive debug info
-    try {
-        // Make sure the debug directory exists
-        const debugDir = './debug';
-        if (!fs.existsSync(debugDir)) {
-            fs.mkdirSync(debugDir);
-        }
-        
-        // Write all text items debug
-        if (allItemsDebug.length > 0) {
-            fs.writeFileSync('./debug/text-items-debug.txt', allItemsDebug.join('\n'));
-        }
-        
-        // Write paragraph analysis debug
-        const paragraphDebug = [];
-        paragraphDebug.push('PARAGRAPH ANALYSIS:');
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            const nextLine = lines[i + 1];
-            
-            if (line.text.includes('inorganic') || line.text.includes('Yet at night') || 
-                line.text.includes('structure') || line.text.includes('cell')) {
-                
-                const indentDiff = nextLine ? Math.abs(nextLine.startX - line.startX) : 0;
-                paragraphDebug.push(`Line ${i}: "${line.text}"`);
-                paragraphDebug.push(`  StartX: ${line.startX}, Y: ${line.y}`);
-                if (nextLine) {
-                    paragraphDebug.push(`  NextStartX: ${nextLine.startX}, IndentDiff: ${indentDiff}`);
-                    paragraphDebug.push(`  ShouldBreak: ${indentDiff > 10 || (/[.!?]$/.test(line.text.trim()) && /^[A-Z]/.test(nextLine.text.trim()))}`);
-                }
-                paragraphDebug.push('');
+    // Debug for problematic text
+    if (mergedParagraphs.some(p => p.includes('inorganic') || p.includes('Yet at night') || p.includes('The structure'))) {
+        try {
+            const fs = require('fs');
+            const debugDir = './debug';
+            if (!fs.existsSync(debugDir)) {
+                fs.mkdirSync(debugDir);
             }
+            
+            const debugInfo = [
+                'SMART PARAGRAPH DETECTION DEBUG:',
+                `Original lines: ${lines.length}`,
+                `Initial paragraphs: ${paragraphs.length}`,
+                `After merging: ${mergedParagraphs.length}`,
+                '',
+                'Paragraphs containing target text:',
+                ...mergedParagraphs.map((para, i) => {
+                    if (para.includes('inorganic') || para.includes('Yet at night') || para.includes('The structure')) {
+                        return `Paragraph ${i}: "${para.substring(0, 200)}${para.length > 200 ? '...' : ''}"`;
+                    }
+                    return null;
+                }).filter(Boolean),
+                ''
+            ];
+            
+            fs.writeFileSync('./debug/smart-paragraph-debug.txt', debugInfo.join('\n'));
+        } catch (error) {
+            // Ignore write errors
         }
-        
-        if (paragraphDebug.length > 1) {
-            fs.writeFileSync('./debug/paragraph-detection-debug.txt', paragraphDebug.join('\n'));
-        }
-        
-    } catch (error) {
-        // Ignore write errors
     }
 
     // Join paragraphs with line break markers
-    return paragraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
+    return mergedParagraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
+}
+
+/**
+ * Smart merging logic: merge short paragraphs with shorter neighboring paragraphs
+ * @param {Array} paragraphs - Array of paragraph strings
+ * @param {number} minWords - Minimum words for a paragraph to be considered complete (default: 8)
+ * @returns {Array} Array of merged paragraphs
+ */
+function smartMergeParagraphs(paragraphs, minWords = 8) {
+    if (paragraphs.length <= 1) return paragraphs;
+    
+    const result = [...paragraphs];
+    let i = 0;
+    
+    while (i < result.length) {
+        const currentWords = result[i].trim().split(/\s+/).length;
+        
+        // If current paragraph is too short, merge with shorter neighbor
+        if (currentWords < minWords) {
+            const prevWords = i > 0 ? result[i - 1].trim().split(/\s+/).length : Infinity;
+            const nextWords = i < result.length - 1 ? result[i + 1].trim().split(/\s+/).length : Infinity;
+            
+            if (prevWords <= nextWords && i > 0) {
+                // Merge with previous (shorter or equal)
+                result[i - 1] = result[i - 1] + ' ' + result[i];
+                result.splice(i, 1);
+                i--; // Check the merged paragraph again
+            } else if (i < result.length - 1) {
+                // Merge with next
+                result[i] = result[i] + ' ' + result[i + 1];
+                result.splice(i + 1, 1);
+                // Don't increment i, check the merged paragraph again
+            } else {
+                // Can't merge, move on
+                i++;
+            }
+        } else {
+            i++;
+        }
+    }
+    
+    return result;
 }
 
 /**
@@ -952,57 +951,129 @@ function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
     const chunks = [];
     let currentChunk = '';
     let currentWords = [];
-    let chunkId = 0;
+    let chunkIndex = 0;
 
-    for (const sentence of sentences) {
-        const sentenceWords = sentence.trim().split(/\s+/).filter(w => w.length > 0);
-
-        // If adding this sentence would exceed maxWords, finalize current chunk
-        if (currentWords.length > 0 && currentWords.length + sentenceWords.length > maxWords) {
+    for (let i = 0; i < sentences.length; i++) {
+        const sentence = sentences[i];
+        const sentenceWords = sentence.split(/\s+/).filter(w => w.length > 0);
+        
+        // Check if adding this sentence would exceed maxWords
+        if (currentWords.length > 0 && (currentWords.length + sentenceWords.length) > maxWords) {
+            // Create chunk with current content
             chunks.push({
-                id: chunkId++,
+                index: startingGlobalIndex + chunkIndex,
                 text: currentChunk.trim(),
-                globalIndex: startingGlobalIndex + chunks.length,
                 wordCount: currentWords.length,
-                links: []
+                type: 'text'
             });
+            
+            chunkIndex++;
             currentChunk = '';
             currentWords = [];
         }
-
+        
         // Add sentence to current chunk
-        if (currentChunk.length > 0) {
-            currentChunk += ' ';
-        }
+        if (currentChunk) currentChunk += ' ';
         currentChunk += sentence;
-        currentWords.push(...sentenceWords);
-
-        // If we have enough words, create a chunk
+        currentWords = currentWords.concat(sentenceWords);
+        
+        // Check if we have a complete chunk with enough words
         if (currentWords.length >= minWords) {
+            // Look ahead to see if the next sentence would create a very small chunk
+            const nextSentence = sentences[i + 1];
+            if (nextSentence) {
+                const nextSentenceWords = nextSentence.split(/\s+/).filter(w => w.length > 0);
+                // If next sentence would be very small and we're not too big, include it
+                if (nextSentenceWords.length < minWords && 
+                    (currentWords.length + nextSentenceWords.length) <= maxWords) {
+                    // Include next sentence
+                    currentChunk += ' ' + nextSentence;
+                    currentWords = currentWords.concat(nextSentenceWords);
+                    i++; // Skip next sentence since we've included it
+                }
+            }
+            
+            // Create chunk
             chunks.push({
-                id: chunkId++,
+                index: startingGlobalIndex + chunkIndex,
                 text: currentChunk.trim(),
-                globalIndex: startingGlobalIndex + chunks.length,
                 wordCount: currentWords.length,
-                links: []
+                type: 'text'
             });
+            
+            chunkIndex++;
             currentChunk = '';
             currentWords = [];
         }
     }
 
-    // Add any remaining text as final chunk
-    if (currentChunk.trim().length > 0) {
+    // Handle remaining content
+    if (currentChunk.trim()) {
         chunks.push({
-            id: chunkId++,
+            index: startingGlobalIndex + chunkIndex,
             text: currentChunk.trim(),
-            globalIndex: startingGlobalIndex + chunks.length,
             wordCount: currentWords.length,
-            links: []
+            type: 'text'
         });
     }
 
-    return chunks;
+    // Apply smart merging to the final chunks
+    const mergedChunks = smartMergeChunks(chunks, Math.max(minWords, 8)); // Use at least 8 words minimum
+    
+    // Re-index after merging
+    mergedChunks.forEach((chunk, idx) => {
+        chunk.index = startingGlobalIndex + idx;
+    });
+
+    return mergedChunks;
+}
+
+/**
+ * Smart merging logic for chunks: merge short chunks with shorter neighboring chunks
+ * @param {Array} chunks - Array of chunk objects
+ * @param {number} minWords - Minimum words for a chunk to be considered complete (default: 8)
+ * @returns {Array} Array of merged chunks
+ */
+function smartMergeChunks(chunks, minWords = 8) {
+    if (chunks.length <= 1) return chunks;
+    
+    const result = [...chunks];
+    let i = 0;
+    
+    while (i < result.length) {
+        const currentChunk = result[i];
+        const currentWords = currentChunk.wordCount;
+        
+        // If current chunk is too short, merge with shorter neighbor
+        if (currentWords < minWords) {
+            const prevChunk = i > 0 ? result[i - 1] : null;
+            const nextChunk = i < result.length - 1 ? result[i + 1] : null;
+            
+            const prevWords = prevChunk ? prevChunk.wordCount : Infinity;
+            const nextWords = nextChunk ? nextChunk.wordCount : Infinity;
+            
+            if (prevWords <= nextWords && prevChunk) {
+                // Merge with previous (shorter or equal)
+                prevChunk.text = prevChunk.text + ' ' + currentChunk.text;
+                prevChunk.wordCount = prevWords + currentWords;
+                result.splice(i, 1);
+                i--; // Check the merged chunk again
+            } else if (nextChunk) {
+                // Merge with next
+                currentChunk.text = currentChunk.text + ' ' + nextChunk.text;
+                currentChunk.wordCount = currentWords + nextWords;
+                result.splice(i + 1, 1);
+                // Don't increment i, check the merged chunk again
+            } else {
+                // Can't merge, move on
+                i++;
+            }
+        } else {
+            i++;
+        }
+    }
+    
+    return result;
 }
 
 module.exports = {

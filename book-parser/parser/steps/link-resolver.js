@@ -390,6 +390,61 @@ function extractTextContentWithCoordinates(textContent) {
 
         allText += text;
     }
+    
+    // Save positioning data for target text
+    const targetTexts = ['alive?', 'cities. We', 'spreading.', 'Yet at night', 'The structure.', 'A cell is a city'];
+    const hasTargetText = targetTexts.some(target => allText.includes(target));
+    
+    if (hasTargetText) {
+        try {
+            const fs = require('fs');
+            const path = require('path');
+            const debugDir = './debug';
+            if (!fs.existsSync(debugDir)) {
+                fs.mkdirSync(debugDir);
+            }
+            
+            const positioningData = textContent.items.map((item, index) => ({
+                index: index,
+                text: item.str,
+                x: item.transform[4],
+                y: item.transform[5],
+                width: item.width || 0,
+                height: item.height || 0,
+                transform: item.transform,
+                isTargetText: targetTexts.some(target => item.str && item.str.includes(target))
+            }));
+            
+            fs.writeFileSync(
+                path.join(debugDir, 'positioning-data.json'),
+                JSON.stringify(positioningData, null, 2)
+            );
+            
+            // Also save a summary focusing on target text
+            const targetItems = positioningData.filter(item => item.isTargetText);
+            const contextItems = [];
+            
+            // Add context around target items
+            targetItems.forEach(targetItem => {
+                const startIndex = Math.max(0, targetItem.index - 3);
+                const endIndex = Math.min(positioningData.length - 1, targetItem.index + 3);
+                
+                for (let i = startIndex; i <= endIndex; i++) {
+                    if (!contextItems.find(item => item.index === i)) {
+                        contextItems.push(positioningData[i]);
+                    }
+                }
+            });
+            
+            fs.writeFileSync(
+                path.join(debugDir, 'target-text-positioning.json'),
+                JSON.stringify(contextItems.sort((a, b) => a.index - b.index), null, 2)
+            );
+            
+        } catch (error) {
+            // Ignore write errors
+        }
+    }
 
     // Calculate page bounds if textItems exist
     if (textItems.length === 0) {
@@ -452,90 +507,109 @@ function combineTextItemsPreservingStructure(textItems) {
     const lines = [];
     let currentLine = [];
     let lastY = null;
-    let lastLineStartX = null;
 
     // Group text items by approximate Y position (line)
     for (const item of textItems) {
         const y = Math.round(item.transform[5]); // Y coordinate
-        const x = Math.round(item.transform[4]); // X coordinate
 
         // If this is a new line (Y coordinate changed significantly)
         if (lastY !== null && Math.abs(y - lastY) > 5) {
             if (currentLine.length > 0) {
-                lines.push({
-                    text: currentLine.join(' ').trim(),
-                    startX: lastLineStartX,
-                    y: lastY
-                });
+                const lineText = currentLine.join(' ').trim();
+                lines.push(lineText);
                 currentLine = [];
             }
-            lastLineStartX = x; // Record the X position of the first item on this new line
         }
 
         if (item.str.trim()) {
             currentLine.push(item.str);
-            // If this is the first item on the line, record its X position
-            if (currentLine.length === 1) {
-                lastLineStartX = x;
-            }
         }
         lastY = y;
     }
 
     // Add the last line
     if (currentLine.length > 0) {
-        lines.push({
-            text: currentLine.join(' ').trim(),
-            startX: lastLineStartX,
-            y: lastY
-        });
+        const lineText = currentLine.join(' ').trim();
+        lines.push(lineText);
     }
 
-    // Now intelligently combine lines based on indentation and sentence structure
+    // Smart paragraph detection: split on lines ending with sentence-ending punctuation
     const paragraphs = [];
     let currentParagraph = '';
     
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const nextLine = lines[i + 1];
+        const line = lines[i].trim();
         
-        // Add current line to paragraph
+        if (line.length === 0) continue;
+
+        // Add line to current paragraph
         if (currentParagraph.length > 0) {
             currentParagraph += ' ';
         }
-        currentParagraph += line.text;
+        currentParagraph += line;
         
-        // Decide whether to end the paragraph here
-        let shouldEndParagraph = false;
+        // Check if this line ends with sentence-ending punctuation
+        const endsWithSentenceEnd = /[.!?;]$/.test(line);
         
-        if (!nextLine) {
-            // Last line - always end paragraph
-            shouldEndParagraph = true;
-        } else {
-            // Check if next line starts a new paragraph based on:
-            // 1. Significant indentation difference (indicating new paragraph)
-            // 2. Current line ends with sentence-ending punctuation AND next line starts with capital letter
-            
-            const indentationDiff = Math.abs(nextLine.startX - line.startX);
-            const hasSignificantIndent = indentationDiff > 10; // Adjust threshold as needed
-            
-            const currentEndsWithPunctuation = /[.!?]$/.test(line.text.trim());
-            const nextStartsWithCapital = /^[A-Z]/.test(nextLine.text.trim());
-            
-            // End paragraph if:
-            // - Next line has significant indentation change, OR
-            // - Current line ends properly AND next line starts with capital (strong paragraph indicator)
-            shouldEndParagraph = hasSignificantIndent || (currentEndsWithPunctuation && nextStartsWithCapital);
-        }
-        
-        if (shouldEndParagraph) {
+        // If it ends with sentence punctuation, finish the paragraph
+        if (endsWithSentenceEnd) {
             paragraphs.push(currentParagraph.trim());
             currentParagraph = '';
         }
     }
+    
+    // Add any remaining text as final paragraph
+    if (currentParagraph.trim().length > 0) {
+        paragraphs.push(currentParagraph.trim());
+    }
+    
+    // Smart merging: merge short paragraphs with shorter neighboring paragraphs
+    const mergedParagraphs = smartMergeParagraphs(paragraphs);
 
     // Join paragraphs with line break markers
-    return paragraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
+    return mergedParagraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
+}
+
+/**
+ * Smart merging logic: merge short paragraphs with shorter neighboring paragraphs
+ * @param {Array} paragraphs - Array of paragraph strings
+ * @param {number} minWords - Minimum words for a paragraph to be considered complete (default: 8)
+ * @returns {Array} Array of merged paragraphs
+ */
+function smartMergeParagraphs(paragraphs, minWords = 8) {
+    if (paragraphs.length <= 1) return paragraphs;
+    
+    const result = [...paragraphs];
+    let i = 0;
+    
+    while (i < result.length) {
+        const currentWords = result[i].trim().split(/\s+/).length;
+        
+        // If current paragraph is too short, merge with shorter neighbor
+        if (currentWords < minWords) {
+            const prevWords = i > 0 ? result[i - 1].trim().split(/\s+/).length : Infinity;
+            const nextWords = i < result.length - 1 ? result[i + 1].trim().split(/\s+/).length : Infinity;
+            
+            if (prevWords <= nextWords && i > 0) {
+                // Merge with previous (shorter or equal)
+                result[i - 1] = result[i - 1] + ' ' + result[i];
+                result.splice(i, 1);
+                i--; // Check the merged paragraph again
+            } else if (i < result.length - 1) {
+                // Merge with next
+                result[i] = result[i] + ' ' + result[i + 1];
+                result.splice(i + 1, 1);
+                // Don't increment i, check the merged paragraph again
+            } else {
+                // Can't merge, move on
+                i++;
+            }
+        } else {
+            i++;
+        }
+    }
+    
+    return result;
 }
 
 /**
