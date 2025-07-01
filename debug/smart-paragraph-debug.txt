@@ -1,7 +1,7 @@
 SMART PARAGRAPH DETECTION DEBUG:
-Original lines: 41
-Initial paragraphs: 13
-After merging: 5
+Original lines: 1
+Initial paragraphs: 1
+After merging: 1
 
 Paragraphs containing target text:
-Paragraph 1: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T. Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolu..."
+Paragraph 0: "273 boundaries of Western medicine, with its twin pillars grounded in the work of D. C. Wallace, ‘Mitochondria as chi’, Genetics 179 (2008) 727–735. Pushing the mutations in mitochondrial DNA. the fem..."

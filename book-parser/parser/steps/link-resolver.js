@@ -502,36 +502,73 @@ function extractTextContentWithCoordinates(textContent, debugFolderPath = null) 
  * @returns {string} Combined text with line break markers
  */
 function combineTextItemsPreservingStructure(textItems, debugFolderPath = null) {
+    // Extract raw text preserving reading order without coordinate-based line grouping
     if (!textItems || textItems.length === 0) return '';
 
-    const lines = [];
-    let currentLine = [];
+    const rawText = extractRawTextFromItems(textItems);
+    return processRawTextIntoParagraphs(rawText, debugFolderPath);
+}
+
+/**
+ * Extract raw text from text items in reading order without coordinate-based line grouping
+ * @param {Array} textItems - PDF text items
+ * @returns {string} Raw text preserving natural reading flow
+ */
+function extractRawTextFromItems(textItems) {
+    if (!textItems || textItems.length === 0) return '';
+
+    // Sort items by Y coordinate (top to bottom) then X coordinate (left to right)
+    const sortedItems = [...textItems].sort((a, b) => {
+        const yDiff = Math.round(a.transform[5]) - Math.round(b.transform[5]);
+        if (Math.abs(yDiff) > 10) { // Different lines
+            return yDiff;
+        }
+        // Same line, sort by X coordinate
+        return a.transform[4] - b.transform[4];
+    });
+
+    // Join text items with spaces, preserving original text flow
+    const textParts = [];
     let lastY = null;
 
-    // Group text items by approximate Y position (line)
-    for (const item of textItems) {
-        const y = Math.round(item.transform[5]); // Y coordinate
+    for (const item of sortedItems) {
+        const currentY = Math.round(item.transform[5]);
 
-        // If this is a new line (Y coordinate changed significantly)
-        if (lastY !== null && Math.abs(y - lastY) > 5) {
-            if (currentLine.length > 0) {
-                const lineText = currentLine.join(' ').trim();
-                lines.push(lineText);
-                currentLine = [];
-            }
+        // Add newline if we're on a significantly different Y coordinate (new line)
+        if (lastY !== null && Math.abs(currentY - lastY) > 10) {
+            textParts.push('\n');
         }
 
         if (item.str.trim()) {
-            currentLine.push(item.str);
+            textParts.push(item.str.trim());
         }
-        lastY = y;
+
+        lastY = currentY;
     }
 
-    // Add the last line
-    if (currentLine.length > 0) {
-        const lineText = currentLine.join(' ').trim();
-        lines.push(lineText);
-    }
+    return textParts.join(' ').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Process raw PDF text into paragraphs using natural line breaks
+ * @param {string} rawText - Raw PDF text with natural line breaks
+ * @param {string} debugFolderPath - Path for debug output
+ * @returns {string} Text with paragraph markers
+ */
+function processRawTextIntoParagraphs(rawText, debugFolderPath = null) {
+    // Split raw text by actual newlines (preserves natural paragraph structure)
+    const lines = rawText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+
+    return processLinesIntoParagraphs(lines, debugFolderPath);
+}
+
+/**
+ * Process lines into paragraphs with proper detection logic
+ * @param {Array} lines - Array of text lines
+ * @param {string} debugFolderPath - Path for debug output
+ * @returns {string} Text with paragraph markers
+ */
+function processLinesIntoParagraphs(lines, debugFolderPath = null) {
 
     // Smart paragraph detection: split on actual paragraph breaks, not sentence endings
     const paragraphs = [];
