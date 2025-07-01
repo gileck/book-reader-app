@@ -1,0 +1,1 @@
+node book-parser/parser/index.js ./files/"The Oxygen Advantage"/book.pdf --debug 

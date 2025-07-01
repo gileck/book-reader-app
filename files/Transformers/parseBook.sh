@@ -1,0 +1,1 @@
+node ./book-parser/parser/index.js ./files/Transformers/book.pdf --debug

@@ -334,7 +334,8 @@ async function uploadParsedBook(bookFolderPath) {
                     ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
                     ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }), // Keep imageUrl for now, will be converted to imageName
                     ...(chunk.imageName && { imageName: chunk.imageName }),
-                    ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
+                    ...(chunk.imageAlt && { imageAlt: chunk.imageAlt }),
+                    ...(chunk.links && { links: chunk.links })
                 }))
             },
             wordCount: chapter.wordCount,

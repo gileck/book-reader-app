@@ -18,239 +18,72 @@ The parser processes PDF books through 9 main steps:
 
 ## Architecture
 
-The parser is organized into focused modules, each handling a specific aspect of PDF processing:
+The parser is organized into focused modules within a structured directory layout:
 
 ```
 book-parser/parser/
-├── parse-pdf-book-generic.js    # Main orchestrator (pure orchestration)
-├── config-loader.js             # Configuration loading
-├── metadata-extractor.js        # Book metadata extraction
-├── text-processor.js            # Text processing and chunking
-├── image-extractor.js           # Image extraction from PDF
-├── toc-extractor.js             # Table of contents extraction
-├── link-extractor.js            # Internal link extraction
-├── link-resolver.js             # Link resolution and validation
-├── chapter-detector.js          # Chapter detection logic
-├── chunk-processor.js           # Page-aware chunk processing
-├── data-formatter.js            # Database format conversion
-├── file-utils.js                # File I/O operations
-├── pdf-preprocessor.js          # Optimized PDF preprocessing
-└── parse-pdf-book-optimized.js  # Optimized main parser
+├── index.js                     # Main orchestrator with comprehensive debug output
+├── README.md                    # This documentation
+└── steps/                       # Processing modules directory
+    ├── config-loader.js         # Configuration loading
+    ├── metadata-extractor.js    # Book metadata extraction
+    ├── image-extractor.js       # Image extraction from PDF
+    ├── link-extractor.js        # Internal link extraction
+    ├── toc-extractor.js         # Table of contents extraction
+    ├── chapter-detector.js      # Chapter detection logic
+    ├── text-processor.js        # Text processing and chunking
+    ├── chunk-processor.js       # Page-aware chunk processing
+    ├── link-resolver.js         # Link resolution and validation
+    ├── data-formatter.js        # Database format conversion
+    ├── file-utils.js            # File I/O operations
+    └── pdf-preprocessor.js      # PDF preprocessing utilities
 ```
 
-**Main Orchestrator:** `parse-pdf-book-generic.js` contains only orchestration logic - it imports and calls functions from other modules without containing any business logic itself.
+**Main Orchestrator:** `index.js` contains the complete orchestration logic with comprehensive debug output - it imports and calls functions from the `steps/` modules while generating detailed debug files for each processing step.
 
-**Processing Modules:** Each module handles a specific processing step with clear input/output contracts and comprehensive documentation.
+**Processing Modules:** Each module in the `steps/` directory handles a specific processing step with clear input/output contracts and comprehensive documentation.
 
-**Utilities:** File I/O, formatting, and validation utilities are separated into dedicated modules for reusability.
+**Debug Output:** The parser generates detailed debug files for each step, saved to a `debug/` folder in the same directory as the input PDF.
 
-### Standard Parser
+### Processing Flow
 ```
-parse-pdf-book-generic.js (Main Orchestrator)
-├── config-loader.js          (Step 1: Configuration)
-├── image-extractor.js         (Step 2: Images)
-├── text-processor.js          (Step 3: Text Processing)
-├── toc-extractor.js          (Step 4: TOC Extraction)
-├── chapter-detector.js        (Step 5: Chapter Detection)
-├── link-extractor.js         (Step 6: Link Extraction)
-└── link-resolver.js          (Step 7: Link Resolution)
-```
-
-### Optimized Parser ⚡
-```
-parse-pdf-book-optimized.js (Optimized Orchestrator)
-├── config-loader.js          (Step 1: Configuration)
-├── pdf-preprocessor.js        (Step 2: Single PDF Processing)
-├── text-processor.js          (Step 3: Text Processing)
-├── chapter-detector.js        (Step 4: Chapter Detection)
-└── link-resolver.js          (Step 5: Link Resolution)
+index.js (Main Orchestrator)
+├── steps/config-loader.js          (Step 1: Configuration)
+├── steps/metadata-extractor.js     (Step 2: Book Metadata) 
+├── steps/image-extractor.js        (Step 3: Image Extraction)
+├── steps/link-extractor.js         (Step 4: Link Extraction)
+├── steps/chapter-detector.js       (Step 5: Chapter Detection)
+├── steps/text-processor.js         (Step 6: Text Chunking)
+├── steps/chunk-processor.js        (Step 7: Page-Aware Processing)
+├── steps/link-resolver.js          (Step 8: Link Resolution)
+└── steps/link-resolver.js          (Step 9: Link Validation)
 ```
 
-**Key Optimization:** The optimized version replaces 5 separate PDF operations with a single preprocessing step that extracts all data in one pass.
+**Enhanced Debugging:** Each step generates comprehensive debug output saved as JSON files, making it easy to trace processing and troubleshoot issues.
 
 ## Quick Start
 
 ```bash
 # Basic usage with defaults
-node parse-pdf-book-generic.js book.pdf
+node index.js book.pdf
 
 # With custom configuration
-node parse-pdf-book-generic.js book.pdf config.json
+node index.js book.pdf config.json
 
 # With custom output path
-node parse-pdf-book-generic.js book.pdf config.json output.json
+node index.js book.pdf config.json output.json
 
-# Debug mode
-node parse-pdf-book-generic.js book.pdf config.json output.json --debug
-
-# Optimized version (recommended for large PDFs)
-node parse-pdf-book-optimized.js book.pdf config.json output.json --debug
+# Debug mode (generates detailed debug files for each step)
+node index.js book.pdf config.json output.json --debug
 ```
 
 ---
 
-## Performance Optimization
 
-### Problem Identified
-The original parser had **redundant PDF operations** - the same PDF file was being loaded and parsed 5 separate times:
-
-1. `pdf-parse` - Basic text extraction
-2. `image-extractor.js` - PDF.js for image scanning  
-3. `link-extractor.js` - PDF.js for links/annotations
-4. `toc-extractor.js` - PDF.js for TOC/bookmarks
-5. `chapter-detector.js` - PDF.js for page-by-page text
-
-### Solution: Single PDF Preprocessing
-The optimized parser introduces `pdf-preprocessor.js` which:
-
-- ✅ **Loads PDF once** - Single `fs.readFileSync()` and `pdfjsLib.getDocument()`
-- ✅ **Extracts all data** - Text, images, links, TOC, and metadata in one pass
-- ✅ **Early error detection** - Catches issues during preprocessing
-- ✅ **Sequential processing** - Maintains debuggability while improving performance
-- ✅ **Detailed metrics** - Reports preprocessing vs post-processing time
-
-### Performance Benefits
-- **60-80% faster** on large PDFs due to eliminated redundant operations
-- **Lower memory usage** - PDF loaded once instead of 5 times
-- **Better error handling** - Issues caught early in preprocessing
-- **Cleaner debugging** - All PDF operations happen in one place
-
-### Usage
-```bash
-# Use optimized parser for better performance
-node parse-pdf-book-optimized.js book.pdf
-
-# Compare with standard parser
-node parse-pdf-book-generic.js book.pdf
-```
-
----
-
-## Step 0: PDF Preprocessing (Optimized Parser Only)
-
-**File:** `pdf-preprocessor.js`
-
-**Purpose:** Single-pass extraction of ALL data needed by other modules, eliminating redundant PDF operations.
-
-### Input/Output Example
-
-**Input:**
-- PDF file path: `research-book.pdf`
-- Debug mode: `true/false`
-
-**Output:**
-```javascript
-{
-  pdfPath: "/path/to/research-book.pdf",
-  numPages: 245,
-  basicText: "Chapter 1: Introduction\n\nThis research focuses on...",
-  info: { Title: "Research Methods", Author: "Dr. Smith" },
-  pages: [
-    {
-      pageNumber: 1,
-      textItems: [
-        { text: "Chapter 1:", x: 72, y: 720, width: 60, height: 12 },
-        { text: "Introduction", x: 140, y: 720, width: 80, height: 12 }
-      ],
-      combinedText: "Chapter 1: Introduction",
-      coordinateBounds: { minX: 72, maxX: 220, minY: 50, maxY: 750 },
-      imageCount: 2,
-      links: [
-        {
-          pageNumber: 1,
-          linkText: "see methodology",
-          destinationPage: 45,
-          destinationCoordinates: { x: 72, y: 400, zoom: 0 }
-        }
-      ]
-    }
-  ],
-  toc: {
-    source: "pdf_bookmarks",
-    chapters: [
-      { chapterNumber: 1, chapterTitle: "Introduction", startingPage: 1 },
-      { chapterNumber: 2, chapterTitle: "Methods", startingPage: 15 }
-    ]
-  },
-  images: [
-    { pageNumber: 15, imageCount: 1, detected: true },
-    { pageNumber: 23, imageCount: 2, detected: true }
-  ],
-  links: [...], // All internal links from all pages
-  processingTime: 1247,
-  errors: []
-}
-```
-
-### Key Functions
-
-```javascript
-// Main preprocessing function - extracts everything in one pass
-async function preprocessPDF(pdfPath, debugMode = false) {
-    // Load PDF buffer once
-    const pdfBuffer = fs.readFileSync(pdfPath);
-    const pdfDoc = await pdfjsLib.getDocument(pdfBuffer).promise;
-    const pdfData = await pdfParse(pdfBuffer);
-    
-    // Extract TOC/bookmarks
-    const outline = await pdfDoc.getOutline();
-    
-    // Process each page once for all data
-    for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-        const page = await pdfDoc.getPage(pageNum);
-        
-        // Extract text with coordinates
-        const textContent = await page.getTextContent();
-        
-        // Detect images
-        const operatorList = await page.getOperatorList();
-        
-        // Extract link annotations
-        const annotations = await page.getAnnotations();
-        
-        // Store all page data
-        preprocessedData.pages.push({
-            pageNumber: pageNum,
-            textItems: /* processed text items */,
-            combinedText: /* combined page text */,
-            coordinateBounds: /* calculated bounds */,
-            imageCount: /* detected images */,
-            links: /* page links */
-        });
-    }
-    
-    return preprocessedData;
-}
-
-// Early error detection during preprocessing
-function validatePDFIntegrity(preprocessedData) {
-    const errors = [];
-    
-    if (preprocessedData.numPages === 0) {
-        errors.push("PDF contains no pages");
-    }
-    
-    if (preprocessedData.basicText.length < 100) {
-        errors.push("PDF contains very little text content");
-    }
-    
-    return errors;
-}
-```
-
-### Benefits of Preprocessing
-
-1. **Eliminates Redundancy**: Instead of 5 separate PDF loads, everything happens in one pass
-2. **Memory Efficient**: PDF document object created once and reused
-3. **Early Error Detection**: Issues caught before individual module processing
-4. **Comprehensive Data**: All modules receive rich, preprocessed data
-5. **Performance Metrics**: Detailed timing breakdown for optimization analysis
-
----
 
 ## Step 1: Configuration Loading
 
-**File:** `config-loader.js`
+**File:** `steps/config-loader.js`
 
 **Purpose:** Load and validate parsing configuration, providing defaults when needed.
 
@@ -305,7 +138,7 @@ function loadBookConfig(configPath) {
 
 ## Step 2: Metadata Extraction
 
-**File:** [metadata-extractor.js](mdc:book-parser/parser/metadata-extractor.js)
+**File:** `steps/metadata-extractor.js`
 
 **Purpose:** Extract book metadata from parsed PDF data and configuration.
 
@@ -341,9 +174,248 @@ function extractBookMetadata(pdfData, filename, config) {
 
 ---
 
-## Step 3: Text Processing
+## Step 3: Image Extraction
 
-**File:** `text-processor.js`
+**File:** `steps/image-extractor.js`
+
+**Purpose:** Extract embedded images from PDF and save them to organized folders.
+
+### Input/Output Example
+
+**Input:**
+- PDF file: `research-book.pdf`
+- Book title: `"Advanced Research Methods"`
+- Book folder: `/path/to/Advanced-Research-Methods/`
+
+**Output:**
+```javascript
+{
+  images: [
+    {
+      pageNumber: 15,
+      imageName: "page-015-image-1.jpg",
+      imageAlt: "Figure 1 (Page 15)",
+      originalName: "image-000.jpg",
+      extracted: true
+    },
+    {
+      pageNumber: 23,
+      imageName: "page-023-image-1.jpg", 
+      imageAlt: "Figure 2 (Page 23)",
+      originalName: "image-001.jpg",
+      extracted: true
+    }
+  ],
+  imagesFolderPath: "/path/to/Advanced-Research-Methods/images/Advanced-Research-Methods/"
+}
+```
+
+### Key Functions
+
+```javascript
+// Main extraction function
+async function extractImages(pdfPath, bookTitle, bookFolderPath) {
+    console.log('🖼️  Extracting embedded images from PDF...');
+    
+    // Create organized directory structure
+    const imagesDir = path.join(bookFolderPath, 'images', bookTitle.replace(/[^a-zA-Z0-9]/g, '-'));
+    
+    // Scan pages for image locations using PDF.js
+    const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
+    const pageImageMap = [];
+    
+    // Extract images using pdfimages command-line tool
+    execSync(`pdfimages -all "${pdfPath}" "${tempPrefix}"`);
+    
+    // Correlate extracted files with page locations
+    return { images, imagesFolderPath: imagesDir };
+}
+```
+
+---
+
+## Step 4: Link Extraction
+
+**File:** `steps/link-extractor.js`
+
+**Purpose:** Extract internal links, footnotes, and cross-references from PDF.
+
+### Input/Output Example
+
+**Input:**
+- PDF with internal links and annotations
+
+**Output:**
+```javascript
+[
+  {
+    text: "see page 45",
+    pageNumber: 12,
+    targetPage: 45,
+    coordinates: { x: 150, y: 200 },
+    navigationType: "page_reference",
+    searchPattern: "research methodology",
+    linkType: "internal"
+  },
+  {
+    text: "¹",
+    pageNumber: 23,
+    targetPage: 156,
+    coordinates: { x: 89, y: 300 },
+    navigationType: "footnote",
+    searchPattern: "¹.*important.*study",
+    linkType: "footnote"
+  }
+]
+```
+
+### Key Functions
+
+```javascript
+// Main link extraction function
+async function extractInternalLinks(pdfPath) {
+    console.log('🔗 Extracting internal links...');
+    
+    const pdf = await pdfjsLib.getDocument(fs.readFileSync(pdfPath)).promise;
+    const links = [];
+    
+    // Process each page for annotations and links
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const annotations = await page.getAnnotations();
+        
+        for (const annotation of annotations) {
+            if (annotation.subtype === 'Link' && annotation.dest) {
+                const link = await processLinkAnnotation(annotation, page, pdf);
+                if (link) links.push(link);
+            }
+        }
+    }
+    
+    return validateLinkDestinations(links);
+}
+
+// Generate smart search patterns for footnotes
+function generateSearchPattern(linkText) {
+    if (/^[\d+]+$/.test(linkText)) {
+        // Footnote number - create pattern to find footnote text
+        return `^${escapeRegExp(linkText)}[\\s\\.:]+(.{10,100})`;
+    } else if (linkText.toLowerCase().includes('page')) {
+        // Page reference - extract topic context
+        return extractTopicFromContext(linkText);
+    }
+    
+    return escapeRegExp(linkText);
+}
+```
+
+---
+
+## Step 5: Chapter Detection
+
+**File:** `steps/chapter-detector.js`
+
+**Purpose:** Detect chapters using TOC data or pattern-based text analysis.
+
+### Input/Output Example
+
+**Input:**
+```javascript
+// Text content and TOC data
+{
+  text: "Chapter 1: Introduction\n\nThis is the introduction...\n\nChapter 2: Methods\n\nThe methodology section...",
+  tocChapters: [
+    { title: "Introduction", pageNumber: 1, chapterNumber: 1 },
+    { title: "Methods", pageNumber: 15, chapterNumber: 2 }
+  ]
+}
+```
+
+**Output:**
+```javascript
+[
+  {
+    number: 1,
+    title: "Introduction", 
+    content: "This is the introduction...",
+    startPageNumber: 1,
+    endPageNumber: 14,
+    chunks: [
+      {
+        text: "This is the introduction...",
+        pageNumber: 1,
+        type: "text"
+      }
+    ]
+  },
+  {
+    number: 2,
+    title: "Methods",
+    content: "The methodology section...",
+    startPageNumber: 15,
+    endPageNumber: 30,  
+    chunks: [
+      {
+        text: "The methodology section...",
+        pageNumber: 15,
+        type: "text"
+      }
+    ]
+  }
+]
+```
+
+### Key Functions
+
+```javascript
+// Main chapter detection with multiple strategies
+async function detectChapters(text, config, pdfPath = null) {
+    console.log('📖 Detecting chapters...');
+    
+    // Strategy 1: Use TOC data if available
+    if (pdfPath) {
+        const tocChapters = await extractTOCFromPdf(pdfPath);
+        if (tocChapters.length > 0) {
+            return await extractChapterContentFromTOC(tocChapters, text, pdfPath, config);
+        }
+    }
+    
+    // Strategy 2: Pattern-based detection
+    return detectChaptersFromText(text, config);
+}
+
+// Extract chapter content using TOC boundaries
+async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, config) {
+    const chapters = [];
+    
+    for (let i = 0; i < tocChapters.length; i++) {
+        const chapter = tocChapters[i];
+        const nextChapter = tocChapters[i + 1];
+        
+        // Determine chapter boundaries
+        const startPattern = new RegExp(escapeRegExp(chapter.title), 'i');
+        const endPattern = nextChapter ? new RegExp(escapeRegExp(nextChapter.title), 'i') : null;
+        
+        const content = extractContentBetweenPatterns(fullText, startPattern, endPattern);
+        const chunks = chunkText(content);
+        
+        chapters.push({
+            number: chapter.chapterNumber,
+            title: chapter.title,
+            content: content,
+            chunks: chunks
+        });
+    }
+    
+    return chapters;
+}
+```
+
+---
+
+## Step 6: Text Processing
+
+**File:** `steps/text-processor.js`
 
 **Purpose:** Process raw PDF text into clean, structured chunks with heading detection.
 
@@ -405,71 +477,19 @@ function cleanPageNumbers(text, pageNumber = null) {
 
 ---
 
-## Step 4: Image Extraction
+## Step 7: Page-Aware Processing
 
-**File:** `image-extractor.js`
+**File:** `steps/chunk-processor.js`
 
-**Purpose:** Extract embedded images from PDF and save them to organized folders.
-
-### Input/Output Example
-
-**Input:**
-- PDF file: `research-book.pdf`
-- Book title: `"Advanced Research Methods"`
-- Book folder: `/path/to/Advanced-Research-Methods/`
-
-**Output:**
-```javascript
-{
-  images: [
-    {
-      pageNumber: 15,
-      imageName: "page-015-image-1.jpg",
-      imageAlt: "Figure 1 (Page 15)",
-      originalName: "image-000.jpg",
-      extracted: true
-    },
-    {
-      pageNumber: 23,
-      imageName: "page-023-image-1.jpg", 
-      imageAlt: "Figure 2 (Page 23)",
-      originalName: "image-001.jpg",
-      extracted: true
-    }
-  ],
-  imagesFolderPath: "/path/to/Advanced-Research-Methods/images/Advanced-Research-Methods/"
-}
-```
-
-### Key Functions
-
-```javascript
-// Main extraction function
-async function extractImages(pdfPath, bookTitle, bookFolderPath) {
-    console.log('🖼️  Extracting embedded images from PDF...');
-    
-    // Create organized directory structure
-    const imagesDir = path.join(bookFolderPath, 'images', bookTitle.replace(/[^a-zA-Z0-9]/g, '-'));
-    
-    // Scan pages for image locations using PDF.js
-    const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
-    const pageImageMap = [];
-    
-    // Extract images using pdfimages command-line tool
-    execSync(`pdfimages -all "${pdfPath}" "${tempPrefix}"`);
-    
-    // Correlate extracted files with page locations
-    return { images, imagesFolderPath: imagesDir };
-}
-```
+**Purpose:** Create page-aware chunks with associated links and add images to chapters.
 
 ---
 
-## Step 5: TOC Extraction
+## Step 8: Link Resolution
 
-**File:** `toc-extractor.js`
+**File:** `steps/link-resolver.js`
 
-**Purpose:** Extract table of contents from PDF bookmarks or text parsing.
+**Purpose:** Resolve extracted links to specific text chunks using coordinates and content matching.
 
 ### Input/Output Example
 
@@ -971,7 +991,7 @@ function createPageAwareChunksWithImages(chapters, images, links = []) {
 
 ### Step 10: Data Formatting
 
-**File:** [data-formatter.js](mdc:book-parser/parser/data-formatter.js)
+**File:** `steps/data-formatter.js`
 
 **Purpose:** Convert parsed chapters to database-ready format with proper structure and metadata. Images are included at the chapter level.
 
@@ -1018,7 +1038,7 @@ function convertChaptersToDbFormat(chapters) {
 
 ### Step 11: File Operations
 
-**File:** [file-utils.js](mdc:book-parser/parser/file-utils.js)
+**File:** `steps/file-utils.js`
 
 **Purpose:** Handle file I/O operations for saving parsed book data and generating summaries.
 
@@ -1065,58 +1085,80 @@ function generateParserSummary(book, chapters, summaryPath) {
 
 ## Main Orchestrator
 
-**File:** `parse-pdf-book-generic.js`
+**File:** `index.js`
 
-**Purpose:** Coordinate all parsing steps and produce final structured output.
+**Purpose:** Coordinate all parsing steps, produce final structured output, and generate comprehensive debug files for each step.
 
 ### Complete Processing Flow
 
-**Pure Orchestration:** The main file contains no business logic - it only imports functions from specialized modules and calls them in the correct sequence.
+**Enhanced Orchestration:** The main file imports functions from the `steps/` modules and coordinates their execution while generating detailed debug output for each step.
 
 ```javascript
 async function parsePdfBook(pdfPath, configPath, debugMode = false) {
+    const startTime = Date.now();
+    const config = loadBookConfig(configPath);
+
+    // Create debug folder for step-by-step output
+    const debugFolder = path.join(path.dirname(pdfPath), 'debug');
+    
     // Step 1: Parse PDF content
     const pdfData = await pdfParse(fs.readFileSync(pdfPath));
+    // Debug: Save step1-pdf-data.json
     
-    // Step 2: Extract book metadata (metadata-extractor.js)
+    // Step 2: Extract book metadata (steps/metadata-extractor.js)
     const book = extractBookMetadata(pdfData, path.basename(pdfPath), config);
+    // Debug: Save step2-book-metadata.json
     
-    // Step 3: Extract images (image-extractor.js)
-    const { images } = await extractImages(pdfPath, book.title, bookFolderPath);
+    // Step 3: Extract images (steps/image-extractor.js)
+    const { images, imagesFolderPath } = await extractImages(pdfPath, book.title, bookFolderPath);
+    // Debug: Save step3-extracted-images.json
     
-    // Step 4: Extract internal links (link-extractor.js)
+    // Step 4: Extract internal links (steps/link-extractor.js)
     const links = await extractInternalLinks(pdfPath);
+    // Debug: Save step4-extracted-links.json
     
-    // Step 5: Detect chapters (chapter-detector.js)
+    // Step 5: Detect chapters (steps/chapter-detector.js)
     const chapters = await detectChapters(pdfData.text, config, pdfPath);
+    // Debug: Save step5-detected-chapters.json
     
-    // Step 6: Process chapters into chunks (text-processor.js)
+    // Step 6: Process chapters into chunks (steps/text-processor.js)
     chapters.forEach(chapter => {
-        chapter.chunks = chunkText(chapter.content, 5, 15);
+        if (Array.isArray(chapter.content)) {
+            const contentText = chapter.content.join(' ');
+            chapter.chunks = chunkText(contentText, 5, 15);
+            chapter.content = contentText;
+        } else {
+            chapter.chunks = chunkText(chapter.content, 5, 15);
+        }
     });
+    // Debug: Save step6-chapters-with-chunks.json
     
-    // Step 7: Create page-aware chunks with images at chapter level (chunk-processor.js)
+    // Step 7: Create page-aware chunks (steps/chunk-processor.js)
     const allChunks = createPageAwareChunksWithImages(chapters, images, links);
+    // Debug: Save step7-page-aware-chunks.json
     
-    // Step 8: Resolve links to target chunks (link-resolver.js)
+    // Step 8: Resolve links to target chunks (steps/link-resolver.js)
     const resolvedLinks = resolveLinksToTargetChunks(links, allChunks);
+    // Debug: Save step8-resolved-links.json
     
-    // Step 9: Validate link destinations (link-resolver.js) 
-    const validLinks = resolvedLinks.filter(link => link.targetChunk !== null);
+    // Step 9: Validate link destinations (steps/link-resolver.js)
+    const validLinks = validateLinkDestinations(resolvedLinks, chapters);
+    // Debug: Save step9-validated-links.json
     
     return {
         book,
-        chapters: convertChaptersToDbFormat(chapters), // Images included at chapter level
+        chapters: convertChaptersToDbFormat(chapters),
         images,
         links: validLinks,
-        processingTime: Date.now() - startTime
+        processingTime: Date.now() - startTime,
+        imagesFolderPath
     };
 }
 
-// File operations handled separately (file-utils.js)
+// Main execution with file operations (steps/file-utils.js)
 async function main() {
     const result = await parsePdfBook(pdfPath, configPath, debugMode);
-    saveToFile(result.book, result.chapters, outputPath, result.imagesFolderPath);
+    saveToFile(result.book, result.chapters, outputPath, result.imagesFolderPath, result.links);
     generateParserSummary(result.book, result.chapters, summaryPath);
 }
 ```
@@ -1210,11 +1252,22 @@ This ensures every chunk has a valid page number for link resolution and navigat
 
 ## Error Handling & Debugging
 
-Each module includes comprehensive error handling and logging:
+The parser includes comprehensive error handling and detailed debug output:
 
 ```javascript
-// Enable debug mode for detailed logging
-node parse-pdf-book-generic.js book.pdf config.json output.json --debug
+// Enable debug mode for detailed step-by-step logging
+node index.js book.pdf config.json output.json --debug
+
+// Debug files are automatically generated in the debug/ folder:
+// - step1-pdf-data.json          - Raw PDF parsing results
+// - step2-book-metadata.json     - Extracted book metadata  
+// - step3-extracted-images.json  - Image extraction results
+// - step4-extracted-links.json   - Link extraction results
+// - step5-detected-chapters.json - Chapter detection results
+// - step6-chapters-with-chunks.json - Text chunking results
+// - step7-page-aware-chunks.json - Page-aware chunk processing
+// - step8-resolved-links.json    - Link resolution results
+// - step9-validated-links.json   - Final validated links
 
 // Common error scenarios handled:
 // - Missing or corrupted PDF files
@@ -1223,6 +1276,7 @@ node parse-pdf-book-generic.js book.pdf config.json output.json --debug
 // - Memory issues with large PDFs
 // - Coordinate resolution failures
 // - Missing TOC or bookmark data
+// - Array vs string content handling in chapters
 ```
 
 ---
@@ -1248,12 +1302,19 @@ node parse-pdf-book-generic.js book.pdf config.json output.json --debug
 
 ## Customization & Extension
 
-Each module is designed for easy customization:
+Each module in the `steps/` directory is designed for easy customization:
 
-1. **Add new text patterns** in `text-processor.js`
-2. **Customize chapter detection** in `chapter-detector.js` 
-3. **Extend link types** in `link-extractor.js`
-4. **Add new resolution strategies** in `link-resolver.js`
-5. **Custom image processing** in `image-extractor.js`
+1. **Add new text patterns** in `steps/text-processor.js`
+2. **Customize chapter detection** in `steps/chapter-detector.js` 
+3. **Extend link types** in `steps/link-extractor.js`
+4. **Add new resolution strategies** in `steps/link-resolver.js`
+5. **Custom image processing** in `steps/image-extractor.js`
+6. **Modify debug output** in `index.js` orchestrator
 
-The modular architecture makes it easy to swap out individual components or add new processing steps without affecting the entire pipeline. 
+The organized directory structure makes it easy to:
+- Swap out individual processing modules without affecting other components
+- Add new processing steps by creating new modules in the `steps/` directory
+- Extend the orchestrator in `index.js` to include additional steps
+- Customize debug output for specific troubleshooting needs
+
+All modules maintain clear input/output contracts, making the entire pipeline modular and extensible. 

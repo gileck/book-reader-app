@@ -1,5 +1,12 @@
 import { ObjectId } from 'mongodb';
 
+export interface LinkReference {
+    text: string;
+    targetChunk: number;
+    chapterNumber: number;
+    wordIndex?: number; // Index of the word within the chunk text for highlighting
+}
+
 export interface TextChunk {
     index: number;
     text: string;
@@ -8,6 +15,7 @@ export interface TextChunk {
     pageNumber?: number;
     imageName?: string;
     imageAlt?: string;
+    links?: LinkReference[]; // Links within this chunk with word indices
 }
 
 export interface ChapterContent {

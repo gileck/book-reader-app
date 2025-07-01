@@ -52,11 +52,22 @@ function chunkText(text, minWords = 5, maxWords = 15) {
             const nextWord = words[i + 1];
             const isAbbreviation = endsWithAbbreviation(currentSentence);
             const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
+            
+            // Check if the next word is a footnote reference (numbers, letters, symbols)
+            const nextIsFootnote = nextWord && /^[0-9a-zA-Z\*\†\‡\§\¶]{1,3}$/.test(nextWord);
 
             if (!isAbbreviation || !nextIsLowercase) {
-                // This is a real sentence ending
-                sentences.push(currentSentence.trim());
-                currentSentence = '';
+                if (nextIsFootnote) {
+                    // Include the footnote with the current sentence, then split
+                    currentSentence += (currentSentence ? ' ' : '') + nextWord;
+                    sentences.push(currentSentence.trim());
+                    currentSentence = '';
+                    i++; // Skip the footnote word since we've already processed it
+                } else {
+                    // This is a real sentence ending
+                    sentences.push(currentSentence.trim());
+                    currentSentence = '';
+                }
             }
         }
     }
@@ -373,6 +384,9 @@ function fuzzyMatch(pdfLine, configTitle) {
     return false;
 }
 
+const fs = require('fs');
+const path = require('path');
+
 /**
  * Combine text items from PDF while preserving natural structure and line breaks
  * @param {Array} textItems - Array of PDF text items
@@ -384,32 +398,141 @@ function combineTextItemsPreservingStructure(textItems) {
     const lines = [];
     let currentLine = [];
     let lastY = null;
+    let lastLineStartX = null;
+    const allItemsDebug = [];
 
     // Group text items by approximate Y position (line)
     for (const item of textItems) {
         const y = Math.round(item.transform[5]); // Y coordinate
+        const x = Math.round(item.transform[4]); // X coordinate
 
-        // If this is a new line (significant Y change), start a new line
+        // Debug ALL items around our problematic text
+        if (item.str.includes('structure') || item.str.includes('cell') || item.str.includes('building') || 
+            item.str.includes('inorganic') || item.str.includes('spreading') || item.str.includes('Yet at night')) {
+            allItemsDebug.push(`"${item.str}" | Y: ${y} | X: ${x} | LastY: ${lastY} | YDiff: ${lastY ? Math.abs(y - lastY) : 'N/A'} | WillBreak: ${lastY !== null && Math.abs(y - lastY) > 5}`);
+        }
+
+        // If this is a new line (Y coordinate changed significantly)
         if (lastY !== null && Math.abs(y - lastY) > 5) {
             if (currentLine.length > 0) {
-                lines.push(currentLine.join(' ').trim());
+                const lineText = currentLine.join(' ').trim();
+                lines.push({
+                    text: lineText,
+                    startX: lastLineStartX,
+                    y: lastY
+                });
                 currentLine = [];
             }
+            lastLineStartX = x; // Record the X position of the first item on this new line
         }
 
         if (item.str.trim()) {
             currentLine.push(item.str);
+            // If this is the first item on the line, record its X position
+            if (currentLine.length === 1) {
+                lastLineStartX = x;
+            }
         }
         lastY = y;
     }
 
     // Add the last line
     if (currentLine.length > 0) {
-        lines.push(currentLine.join(' ').trim());
+        const lineText = currentLine.join(' ').trim();
+        lines.push({
+            text: lineText,
+            startX: lastLineStartX,
+            y: lastY
+        });
     }
 
-    // Join lines but preserve structure for heading detection
-    return lines.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
+    // Now intelligently combine lines based on indentation and sentence structure
+    const paragraphs = [];
+    let currentParagraph = '';
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const nextLine = lines[i + 1];
+        
+        // Add current line to paragraph
+        if (currentParagraph.length > 0) {
+            currentParagraph += ' ';
+        }
+        currentParagraph += line.text;
+        
+        // Decide whether to end the paragraph here
+        let shouldEndParagraph = false;
+        
+        if (!nextLine) {
+            // Last line - always end paragraph
+            shouldEndParagraph = true;
+        } else {
+            // Check if next line starts a new paragraph based on:
+            // 1. Significant indentation difference (indicating new paragraph)
+            // 2. Current line ends with sentence-ending punctuation AND next line starts with capital letter
+            
+            const indentationDiff = Math.abs(nextLine.startX - line.startX);
+            const hasSignificantIndent = indentationDiff > 10; // Adjust threshold as needed
+            
+            const currentEndsWithPunctuation = /[.!?]$/.test(line.text.trim());
+            const nextStartsWithCapital = /^[A-Z]/.test(nextLine.text.trim());
+            
+            // End paragraph if:
+            // - Next line has significant indentation change, OR
+            // - Current line ends properly AND next line starts with capital (strong paragraph indicator)
+            shouldEndParagraph = hasSignificantIndent || (currentEndsWithPunctuation && nextStartsWithCapital);
+        }
+        
+        if (shouldEndParagraph) {
+            paragraphs.push(currentParagraph.trim());
+            currentParagraph = '';
+        }
+    }
+
+    // Write comprehensive debug info
+    try {
+        // Make sure the debug directory exists
+        const debugDir = './debug';
+        if (!fs.existsSync(debugDir)) {
+            fs.mkdirSync(debugDir);
+        }
+        
+        // Write all text items debug
+        if (allItemsDebug.length > 0) {
+            fs.writeFileSync('./debug/text-items-debug.txt', allItemsDebug.join('\n'));
+        }
+        
+        // Write paragraph analysis debug
+        const paragraphDebug = [];
+        paragraphDebug.push('PARAGRAPH ANALYSIS:');
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const nextLine = lines[i + 1];
+            
+            if (line.text.includes('inorganic') || line.text.includes('Yet at night') || 
+                line.text.includes('structure') || line.text.includes('cell')) {
+                
+                const indentDiff = nextLine ? Math.abs(nextLine.startX - line.startX) : 0;
+                paragraphDebug.push(`Line ${i}: "${line.text}"`);
+                paragraphDebug.push(`  StartX: ${line.startX}, Y: ${line.y}`);
+                if (nextLine) {
+                    paragraphDebug.push(`  NextStartX: ${nextLine.startX}, IndentDiff: ${indentDiff}`);
+                    paragraphDebug.push(`  ShouldBreak: ${indentDiff > 10 || (/[.!?]$/.test(line.text.trim()) && /^[A-Z]/.test(nextLine.text.trim()))}`);
+                }
+                paragraphDebug.push('');
+            }
+        }
+        
+        if (paragraphDebug.length > 1) {
+            fs.writeFileSync('./debug/paragraph-detection-debug.txt', paragraphDebug.join('\n'));
+        }
+        
+    } catch (error) {
+        // Ignore write errors
+    }
+
+    // Join paragraphs with line break markers
+    return paragraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
 }
 
 /**
@@ -446,7 +569,8 @@ function preserveHeadingsInPageText(pageText, nextPageText = '') {
         }
     }
 
-    return processedLines.join(' ');
+    // CRITICAL FIX: Preserve line break markers when rejoining
+    return processedLines.join(' ⟨⟨LINE_BREAK⟩⟩ ');
 }
 
 /**
@@ -621,6 +745,355 @@ function shouldMergeSentence(firstText, secondText, firstType = 'text', secondTy
     return false;
 }
 
+/**
+ * Process and chunk text with paragraph structure preservation
+ * @param {string} text - Raw text with line break markers
+ * @param {number} minWords - Minimum words per chunk (default: 5)
+ * @param {number} maxWords - Maximum words per chunk (default: 15)
+ * @param {number} pageNumber - Page number for context
+ * @returns {Array} Array of paragraph objects with nested chunks
+ */
+function chunkTextWithParagraphs(text, minWords = 5, maxWords = 15, pageNumber = 1) {
+    if (!text || text.trim().length === 0) {
+        return [];
+    }
+
+    // Debug for Introduction page
+    if (text.includes('The structure') || text.includes('A cell is a city')) {
+        try {
+            const fs = require('fs');
+            const debugDir = './debug';
+            if (!fs.existsSync(debugDir)) {
+                fs.mkdirSync(debugDir);
+            }
+            
+            const debugInfo = [
+                `DEBUGGING chunkTextWithParagraphs for page ${pageNumber}:`,
+                `Full text length: ${text.length}`,
+                `Contains line breaks: ${text.includes('⟨⟨LINE_BREAK⟩⟩')}`,
+                `Number of line breaks: ${(text.match(/⟨⟨LINE_BREAK⟩⟩/g) || []).length}`,
+                ''
+            ];
+            
+            fs.appendFileSync('./debug/chunk-processing-debug.txt', debugInfo.join('\n') + '\n');
+        } catch (error) {
+            // Ignore write errors
+        }
+    }
+
+    // Split by line breaks to preserve PDF visual structure
+    const lines = text.split(' ⟨⟨LINE_BREAK⟩⟩ ').filter(line => line.trim().length > 0);
+    
+    // Debug the split lines for Introduction
+    if (text.includes('The structure') || text.includes('A cell is a city')) {
+        try {
+            const debugInfo = [
+                `Lines after splitting (showing first 20):`,
+                ...lines.slice(0, 20).map((line, i) => `Line ${i}: "${line.substring(0, 100)}${line.length > 100 ? '...' : ''}"`),
+                '',
+                'Looking for specific lines:',
+                ...lines.map((line, i) => {
+                    if (line.includes('The structure') || line.includes('A cell is a city')) {
+                        return `*** FOUND Line ${i}: "${line}"`;
+                    }
+                    return null;
+                }).filter(Boolean),
+                ''
+            ];
+            
+            fs.appendFileSync('./debug/chunk-processing-debug.txt', debugInfo.join('\n') + '\n');
+        } catch (error) {
+            // Ignore write errors
+        }
+    }
+    
+    const paragraphs = [];
+    let globalChunkIndex = 0;
+    let paragraphId = 0;
+
+    let currentTextParagraph = null;
+    let currentParagraphText = '';
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        
+        if (line.length === 0) continue;
+
+        // Check if this line is a heading
+        const isHeading = line.includes('⟨⟨HEADING⟩⟩');
+        
+        if (isHeading) {
+            // Finish current text paragraph if exists
+            if (currentTextParagraph && currentParagraphText.trim().length > 0) {
+                const chunks = createChunksFromText(currentParagraphText, minWords, maxWords, globalChunkIndex);
+                currentTextParagraph.chunks = chunks;
+                globalChunkIndex += chunks.length;
+                paragraphs.push(currentTextParagraph);
+            }
+
+            // Create header paragraph (separate from text paragraphs)
+            const headerText = line.replace(/⟨⟨HEADING⟩⟩(.*?)⟨⟨\/HEADING⟩⟩/g, '$1').trim();
+            const headerChunks = createChunksFromText(headerText, 1, 50, globalChunkIndex); // Headers can be longer
+            
+            paragraphs.push({
+                id: paragraphId++,
+                pageNumber: pageNumber,
+                type: 'header',
+                level: determineHeaderLevel(headerText, line), // h1, h2, h3, etc.
+                chunks: headerChunks
+            });
+            
+            globalChunkIndex += headerChunks.length;
+            currentTextParagraph = null;
+            currentParagraphText = '';
+            continue;
+        }
+
+        // Regular text line - check if we should start a new paragraph
+        const shouldStartNewParagraph = shouldStartNewTextParagraph(line, currentParagraphText, lines[i - 1], lines[i + 1]);
+
+        if (shouldStartNewParagraph && currentTextParagraph && currentParagraphText.trim().length > 0) {
+            // Finish current text paragraph
+            const chunks = createChunksFromText(currentParagraphText, minWords, maxWords, globalChunkIndex);
+            currentTextParagraph.chunks = chunks;
+            globalChunkIndex += chunks.length;
+            paragraphs.push(currentTextParagraph);
+            
+            // Start new text paragraph
+            currentTextParagraph = {
+                id: paragraphId++,
+                pageNumber: pageNumber,
+                type: 'text',
+                chunks: []
+            };
+            currentParagraphText = line;
+        } else {
+            // Continue current paragraph or start first one
+            if (!currentTextParagraph) {
+                currentTextParagraph = {
+                    id: paragraphId++,
+                    pageNumber: pageNumber,
+                    type: 'text',
+                    chunks: []
+                };
+                currentParagraphText = line;
+            } else {
+                currentParagraphText += ' ' + line;
+            }
+        }
+    }
+
+    // Finish last text paragraph
+    if (currentTextParagraph && currentParagraphText.trim().length > 0) {
+        const chunks = createChunksFromText(currentParagraphText, minWords, maxWords, globalChunkIndex);
+        currentTextParagraph.chunks = chunks;
+        paragraphs.push(currentTextParagraph);
+    }
+
+    return paragraphs;
+}
+
+/**
+ * Determine header level based on text content and formatting
+ * @param {string} headerText - Clean header text
+ * @param {string} originalLine - Original line with formatting markers
+ * @returns {number} Header level (1-6)
+ */
+function determineHeaderLevel(headerText, originalLine) {
+    // For now, default to h2 for most headers
+    // This could be enhanced to detect different header levels based on:
+    // - Font size indicators in the original text
+    // - Text patterns (Chapter vs Section vs Subsection)
+    // - Hierarchical position in document
+    
+    // Basic pattern matching for common header types
+    if (/^chapter\s+\d+/i.test(headerText)) {
+        return 1; // Chapter headers are h1
+    }
+    
+    if (/^\d+\.\d+/.test(headerText)) {
+        return 3; // Numbered subsections are h3
+    }
+    
+    return 2; // Most section headers are h2
+}
+
+/**
+ * Determine if we should start a new text paragraph at this line
+ * Simple approach: use PDF line structure with basic sentence ending detection
+ * @param {string} currentLine - Current line text  
+ * @param {string} currentParagraphText - Text accumulated in current paragraph
+ * @param {string} previousLine - Previous line (optional)
+ * @param {string} nextLine - Next line (optional)
+ * @returns {boolean} Whether to start a new paragraph
+ */
+function shouldStartNewTextParagraph(currentLine, currentParagraphText, previousLine, nextLine) {
+    // Always start new paragraph for first line
+    if (!currentParagraphText || currentParagraphText.trim().length === 0) {
+        return true;
+    }
+
+    const currentLineTrimmed = currentLine.trim();
+    const currentParagraphTrimmed = currentParagraphText.trim();
+    
+    // Debug logging for specific case
+    if (currentLineTrimmed.startsWith('A cell is a city')) {
+        const debugInfo = [
+            'Found "A cell is a city" line',
+            `Previous paragraph ends with: "${currentParagraphTrimmed.slice(-20)}"`,
+            `Current line: "${currentLineTrimmed}"`,
+            `Previous ends with sentence? ${/[.!?]\s*$/.test(currentParagraphTrimmed)}`,
+            `Current starts with capital? ${/^[A-Z]/.test(currentLineTrimmed)}`
+        ];
+        
+        try {
+            // Make sure the debug directory exists
+            const debugDir = './debug';
+            if (!fs.existsSync(debugDir)) {
+                fs.mkdirSync(debugDir);
+            }
+            fs.writeFileSync('./debug/paragraph-detection-debug.txt', debugInfo.join('\n'));
+        } catch (error) {
+            // Ignore write errors
+        }
+    }
+    
+    // Simple rule: if previous text ends with sentence-ending punctuation 
+    // AND current line starts with capital letter, start new paragraph
+    const prevEndsWithSentenceEnd = /[.!?]\s*$/.test(currentParagraphTrimmed);
+    const prevEndsWithFootnote = /[.!?]\s*\d{1,2}\s*$/.test(currentParagraphTrimmed); // Footnote numbers 1-99
+    const currentStartsWithCapital = /^[A-Z]/.test(currentLineTrimmed);
+    
+    if ((prevEndsWithSentenceEnd || prevEndsWithFootnote) && currentStartsWithCapital) {
+        // Only check for very obvious abbreviations to avoid false breaks
+        const isObviousAbbreviation = /\b(Dr|Mr|Mrs|Ms|Prof|vs|etc|i\.e|e\.g)\.\s*$/.test(currentParagraphTrimmed);
+        
+        if (!isObviousAbbreviation) {
+            // Debug logging for specific case
+            if (currentLineTrimmed.startsWith('A cell is a city')) {
+                try {
+                    fs.appendFileSync('./debug/paragraph-detection-debug.txt', '\nShould start new paragraph!');
+                } catch (error) {
+                    // Ignore write errors
+                }
+            }
+            return true;
+        }
+    }
+    
+    // Don't break paragraphs otherwise - let PDF line structure guide us
+    return false;
+}
+
+/**
+ * Create chunks from text while preserving sentence structure
+ * @param {string} text - Text to chunk
+ * @param {number} minWords - Minimum words per chunk
+ * @param {number} maxWords - Maximum words per chunk  
+ * @param {number} startingGlobalIndex - Starting global chunk index
+ * @returns {Array} Array of chunk objects
+ */
+function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
+    if (!text || text.trim().length === 0) {
+        return [];
+    }
+
+    // Use existing sentence splitting logic but adapted for paragraph context
+    const sentences = [];
+    let currentSentence = '';
+    const words = text.trim().split(/\s+/);
+
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        currentSentence += (currentSentence ? ' ' : '') + word;
+
+        // Check if this word ends a sentence
+        if (/[.!?]+$/.test(word)) {
+            const nextWord = words[i + 1];
+            const isAbbreviation = endsWithAbbreviation(currentSentence);
+            const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
+            
+            // Check if the next word is a footnote reference
+            const nextIsFootnote = nextWord && /^[0-9a-zA-Z\*\†\‡\§\¶]{1,3}$/.test(nextWord);
+
+            if (!isAbbreviation || !nextIsLowercase) {
+                if (nextIsFootnote) {
+                    // Include the footnote with the current sentence, then split
+                    currentSentence += ' ' + nextWord;
+                    sentences.push(currentSentence.trim());
+                    currentSentence = '';
+                    i++; // Skip the footnote word since we've already processed it
+                } else {
+                    // This is a real sentence ending
+                    sentences.push(currentSentence.trim());
+                    currentSentence = '';
+                }
+            }
+        }
+    }
+
+    // Add any remaining text as a sentence
+    if (currentSentence.trim()) {
+        sentences.push(currentSentence.trim());
+    }
+
+    // Group sentences into chunks
+    const chunks = [];
+    let currentChunk = '';
+    let currentWords = [];
+    let chunkId = 0;
+
+    for (const sentence of sentences) {
+        const sentenceWords = sentence.trim().split(/\s+/).filter(w => w.length > 0);
+
+        // If adding this sentence would exceed maxWords, finalize current chunk
+        if (currentWords.length > 0 && currentWords.length + sentenceWords.length > maxWords) {
+            chunks.push({
+                id: chunkId++,
+                text: currentChunk.trim(),
+                globalIndex: startingGlobalIndex + chunks.length,
+                wordCount: currentWords.length,
+                links: []
+            });
+            currentChunk = '';
+            currentWords = [];
+        }
+
+        // Add sentence to current chunk
+        if (currentChunk.length > 0) {
+            currentChunk += ' ';
+        }
+        currentChunk += sentence;
+        currentWords.push(...sentenceWords);
+
+        // If we have enough words, create a chunk
+        if (currentWords.length >= minWords) {
+            chunks.push({
+                id: chunkId++,
+                text: currentChunk.trim(),
+                globalIndex: startingGlobalIndex + chunks.length,
+                wordCount: currentWords.length,
+                links: []
+            });
+            currentChunk = '';
+            currentWords = [];
+        }
+    }
+
+    // Add any remaining text as final chunk
+    if (currentChunk.trim().length > 0) {
+        chunks.push({
+            id: chunkId++,
+            text: currentChunk.trim(),
+            globalIndex: startingGlobalIndex + chunks.length,
+            wordCount: currentWords.length,
+            links: []
+        });
+    }
+
+    return chunks;
+}
+
 module.exports = {
     chunkText,
     cleanPageNumbers,
@@ -632,5 +1105,9 @@ module.exports = {
     preserveHeadingsInPageText,
     isLikelyHeading,
     endsWithAbbreviation,
-    shouldMergeSentence
+    shouldMergeSentence,
+    chunkTextWithParagraphs,
+    shouldStartNewTextParagraph,
+    createChunksFromText,
+    determineHeaderLevel
 }; 

@@ -6,77 +6,77 @@
     "filename": "book.pdf"
   },
   "processing": {
-    "timestamp": "2025-06-29T14:56:05.579Z",
+    "timestamp": "2025-07-01T14:28:00.384Z",
     "totalChapters": 8,
-    "totalChunks": 5178,
-    "totalWords": 115397,
+    "totalChunks": 0,
+    "totalWords": 118056,
     "totalImages": 0,
-    "totalLinks": 28370
+    "totalLinks": 0
   },
   "chapters": [
     {
       "title": "Introduction: Life itself",
-      "wordCount": 8102,
-      "chunkCount": 355,
+      "wordCount": 8158,
+      "chunkCount": 81,
       "pageRange": "9-27",
       "imageCount": 0,
-      "linkCount": 266
+      "linkCount": 0
     },
     {
       "title": "Discovering the nanocosm",
-      "wordCount": 14214,
-      "chunkCount": 642,
-      "pageRange": "28-61",
+      "wordCount": 14337,
+      "chunkCount": 149,
+      "pageRange": "28-62",
       "imageCount": 0,
-      "linkCount": 535
+      "linkCount": 0
     },
     {
       "title": "The path of carbon",
-      "wordCount": 11689,
-      "chunkCount": 526,
-      "pageRange": "63-90",
+      "wordCount": 11769,
+      "chunkCount": 106,
+      "pageRange": "63-91",
       "imageCount": 0,
-      "linkCount": 647
+      "linkCount": 0
     },
     {
       "title": "From gases to life",
-      "wordCount": 12734,
-      "chunkCount": 536,
-      "pageRange": "92-123",
+      "wordCount": 12826,
+      "chunkCount": 123,
+      "pageRange": "92-124",
       "imageCount": 0,
-      "linkCount": 308
+      "linkCount": 0
     },
     {
       "title": "Revolutions",
-      "wordCount": 11152,
-      "chunkCount": 495,
-      "pageRange": "125-149",
+      "wordCount": 11224,
+      "chunkCount": 104,
+      "pageRange": "125-150",
       "imageCount": 0,
-      "linkCount": 260
+      "linkCount": 0
     },
     {
       "title": "To the dark side",
-      "wordCount": 12411,
-      "chunkCount": 599,
-      "pageRange": "151-180",
+      "wordCount": 12549,
+      "chunkCount": 137,
+      "pageRange": "151-181",
       "imageCount": 0,
-      "linkCount": 417
+      "linkCount": 0
     },
     {
       "title": "The flux capacitor",
-      "wordCount": 13148,
-      "chunkCount": 603,
-      "pageRange": "182-210",
+      "wordCount": 13224,
+      "chunkCount": 133,
+      "pageRange": "182-211",
       "imageCount": 0,
-      "linkCount": 537
+      "linkCount": 0
     },
     {
       "title": "Epilogue: Self",
-      "wordCount": 31947,
-      "chunkCount": 1422,
-      "pageRange": "212-313",
+      "wordCount": 33969,
+      "chunkCount": 544,
+      "pageRange": "212-317",
       "imageCount": 0,
-      "linkCount": 25400
+      "linkCount": 0
     }
   ]
 }

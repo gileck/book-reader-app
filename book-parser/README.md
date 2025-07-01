@@ -1,19 +1,29 @@
 # Book Parser
 
-A comprehensive PDF book parsing library that extracts text, images, and chapter structure from PDF files with advanced TOC extraction and intelligent text processing.
+A comprehensive PDF book parsing library that extracts text, images, and chapter structure from PDF files with advanced TOC extraction and intelligent paragraph-based text processing.
 
 ## Features
 
 ### Core Features
 - **Automatic TOC Extraction**: Extracts chapters from PDF bookmarks/outline automatically
-- **Text Extraction**: Page-aware text extraction with intelligent sentence merging across pages
+- **Paragraph-Based Text Processing**: Converts entire paragraphs into single chunks for optimal TTS quality and readability
+- **Smart Text Extraction**: Page-aware text extraction with intelligent sentence merging across pages
 - **Image Extraction**: Embedded image extraction with precise page correlation using `pdfimages`
 - **Chapter Detection**: Automatic chapter detection with fallback to pattern-based detection
-- **Smart Text Processing**: Enhanced text cleaning with abbreviation handling and chapter heading removal
+- **Enhanced Text Processing**: Advanced text cleaning with abbreviation handling and chapter heading removal
 - **Internal PDF Link Extraction**: Extracts clickable internal links (footnotes, cross-references) from PDF annotations with high-precision target chunk resolution
+
+### Revolutionary Paragraph-Based Chunks
+The parser now uses a **paragraph-based chunking system** that provides:
+- **Complete Paragraphs as Chunks**: Each chunk contains a full paragraph (400-500 words) instead of tiny word fragments
+- **TTS Optimized**: Perfect for Text-to-Speech services that work best with complete, meaningful text segments
+- **Preserved Structure**: Headers and images remain as separate chunks for proper document structure
+- **Link Integration**: Links within paragraphs include precise word indices for accurate highlighting
+- **Backward Compatibility**: Maintains the same chunk structure for existing applications
 
 ### Link Extraction & Navigation
 - **Internal Link Detection**: Automatically extracts clickable internal PDF links (footnotes, citations, cross-references)
+- **Word-Level Precision**: Links include word indices within paragraphs for precise highlighting
 - **Target Chunk Resolution**: Maps links to specific text chunks using coordinate-based matching (97%+ accuracy)
 - **Navigation References**: Provides direct chunk-to-chunk references (`targetChunkIndex`) for UI navigation
 - **Link Target Marking**: Destination chunks marked with `isTargetLink: true` for UI highlighting
@@ -21,6 +31,7 @@ A comprehensive PDF book parsing library that extracts text, images, and chapter
 - **High Confidence Matching**: Achieves 97%+ high-confidence resolution using PDF coordinate data
 
 ### Text Processing Enhancements
+- **Paragraph Consolidation**: Groups related sentences into complete paragraphs for better content flow
 - **Sentence Merging**: Automatically merges sentences split across page boundaries for better TTS quality
 - **Abbreviation Handling**: Recognizes common abbreviations (Ph.D., M.D., U.S., etc.) to prevent incorrect sentence splitting
 - **Chapter Heading Cleanup**: Removes chapter headings from the beginning of chapter text
@@ -132,28 +143,29 @@ The parser generates multiple output files:
                 "chunks": [
                     {
                         "index": 0,
-                        "text": "Chapter content with clean formatting...",
+                        "text": "This is a complete paragraph containing multiple sentences that flow naturally together. The text has been intelligently processed to ensure optimal readability and TTS quality. Each paragraph-based chunk provides meaningful content that can be spoken as a cohesive unit, making the reading experience much more natural and engaging for users.",
                         "type": "text",
-                        "wordCount": 150,
+                        "wordCount": 450,
                         "pageNumber": 5,
-                        "isTargetLink": true,
                         "links": [
                             {
-                                "text": "footnote reference.1",
-                                "destinationPage": 25,
-                                "destinationChapter": "Chapter Title",
-                                "isValid": true,
-                                "hasValidDestination": true,
-                                "targetChunkIndex": 123,
-                                "resolution": {
-                                    "method": "coordinates",
-                                    "confidence": "high"
-                                }
+                                "text": "footnote reference",
+                                "targetChunk": 123,
+                                "chapterNumber": 3,
+                                "wordIndex": 25
                             }
                         ]
                     },
                     {
                         "index": 1,
+                        "text": "Chapter Heading",
+                        "type": "header", 
+                        "wordCount": 2,
+                        "pageNumber": 5,
+                        "links": []
+                    },
+                    {
+                        "index": 2,
                         "text": "",
                         "type": "image", 
                         "wordCount": 0,
@@ -193,14 +205,15 @@ Automatically generated alongside the main output:
     "overview": {
         "totalChapters": 10,
         "totalWords": 50000,
-        "totalTextChunks": 2500,
+        "totalTextChunks": 120,
         "totalImageChunks": 15,
-        "totalHeaderChunks": 50,
-        "totalChunks": 2565,
+        "totalHeaderChunks": 25,
+        "totalChunks": 160,
         "totalChunksWithLinks": 45,
         "totalLinks": 180,
         "averageWordsPerChapter": 5000,
-        "averageChunksPerChapter": 257,
+        "averageChunksPerChapter": 16,
+        "averageWordsPerChunk": 400,
         "averageLinksPerChapter": 18
     },
     "chapters": [
@@ -208,15 +221,15 @@ Automatically generated alongside the main output:
             "chapterNumber": 1,
             "chapterName": "Chapter Title",
             "wordCount": 3500,
-            "textChunks": 175,
+            "textChunks": 8,
             "imageChunks": 2,
-            "headerChunks": 5,
-            "chunksWithLinks": 8,
-            "totalLinks": 25,
-            "totalChunks": 182,
+            "headerChunks": 2,
+            "chunksWithLinks": 3,
+            "totalLinks": 8,
+            "totalChunks": 12,
             "pageRanges": "From 5 to 12",
             "numberOfPages": 8,
-            "previewText": "Chapter content preview showing first 5 text chunks combined..."
+            "previewText": "This is a complete paragraph containing multiple sentences that flow naturally together..."
         }
     ]
 }
@@ -242,38 +255,65 @@ debug/
 └── tocData.json                # Table of contents data
 ```
 
-## Text Processing Features
+## Paragraph-Based Chunking System
 
-### Smart Sentence Merging
-Automatically merges sentences split across page boundaries:
+### Benefits for TTS Services
+The new paragraph-based approach provides optimal content for Text-to-Speech:
+- **Natural Speech Flow**: Complete paragraphs create natural pauses and breathing points
+- **Better Comprehension**: Users hear complete thoughts rather than fragmented sentences
+- **Reduced Interruptions**: Fewer, longer chunks mean less frequent audio controls interaction
+- **Professional Quality**: Sounds like an audiobook rather than robotic word-by-word reading
+
+### Structure Comparison
+
+**Before (Word-based chunks):**
+```json
+{
+    "index": 0,
+    "text": "This is",
+    "wordCount": 2
+},
+{
+    "index": 1, 
+    "text": "a sentence",
+    "wordCount": 2
+},
+{
+    "index": 2,
+    "text": "split across",
+    "wordCount": 2
+}
 ```
-Page 10: "The discovery was made by scientists at the"
-Page 11: "University of Cambridge in 2023."
-Result: "The discovery was made by scientists at the University of Cambridge in 2023."
+
+**After (Paragraph-based chunks):**
+```json
+{
+    "index": 0,
+    "text": "This is a complete sentence that flows naturally with other sentences in the same paragraph. The content maintains its logical structure and provides meaningful context for both readers and TTS systems. Links within the paragraph are precisely marked with word indices for accurate highlighting.",
+    "wordCount": 45,
+    "links": [
+        {
+            "text": "precise highlighting",
+            "targetChunk": 156,
+            "chapterNumber": 3,
+            "wordIndex": 32
+        }
+    ]
+}
 ```
 
-### Abbreviation Recognition
-Handles common abbreviations to prevent incorrect sentence splitting:
-- Academic: Ph.D., M.D., B.A., M.S., Prof.
-- Geographic: U.S., U.K., St., Ave.
-- General: Inc., Co., Corp., Ltd., etc., vs., i.e., e.g.
+### Link Integration with Word Indices
 
-### Chapter Heading Cleanup
-Removes various chapter heading patterns from content:
-- "1 DISCOVERING THE NANOCOSM" → removed
-- "INTRODUCTION LIFE ITSELF" → removed  
-- "Chapter 5: Advanced Topics" → removed
-
-### Spaced Letter Correction
-Fixes PDF formatting artifacts:
-- "O   nce upon a time" → "Once upon a time"
-- "T   he discovery" → "The discovery"
+Links within paragraph chunks include precise positioning:
+- **wordIndex**: The exact word position within the paragraph where the link appears
+- **Accurate Highlighting**: UI can highlight exactly the right words within the paragraph
+- **Preserved Context**: Links maintain their natural context within complete sentences
 
 ## Chunk Types
 
-- **text**: Regular text content with intelligent processing
+- **text**: Complete paragraphs with natural flow and TTS optimization (400-500 words typically)
+- **header**: Chapter titles and section headings (preserved separately for structure)
 - **image**: Embedded images with page correlation and alt text
-- **header**: Chapter titles and headings
 
 ## Link Extraction and Resolution
 
@@ -305,16 +345,10 @@ Each extracted link contains:
 
 ```json
 {
-    "text": "footnote reference.1",           // Link text from PDF
-    "destinationPage": 25,            // Target page number
-    "destinationChapter": "Chapter Title", // Target chapter name
-    "isValid": true,                  // Link validation status
-    "hasValidDestination": true,      // Destination page exists
-    "targetChunkIndex": 123,          // Direct reference to target chunk
-    "resolution": {
-        "method": "coordinates",      // Resolution method used
-        "confidence": "high"          // Confidence level
-    }
+    "text": "footnote reference",
+    "targetChunk": 123,
+    "chapterNumber": 3,
+    "wordIndex": 25
 }
 ```
 

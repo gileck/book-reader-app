@@ -111,29 +111,72 @@ function findTextForAnnotation(annotation, textContent) {
     const rect = annotation.rect; // [x1, y1, x2, y2]
     const [x1, y1, x2, y2] = rect;
 
-    // Find text items that overlap with the annotation rectangle
+    // Find text items that are primarily within the annotation rectangle
     const overlappingItems = textContent.items.filter(item => {
         const itemX = item.transform[4];
         const itemY = item.transform[5];
         const itemWidth = item.width || 0;
         const itemHeight = item.height || 12; // Approximate height
 
-        // Check if text item overlaps with annotation rectangle
-        const overlapsX = itemX < x2 && (itemX + itemWidth) > x1;
-        const overlapsY = itemY < y2 && (itemY + itemHeight) > y1;
+        // Calculate the center of the text item
+        const itemCenterX = itemX + (itemWidth / 2);
+        const itemCenterY = itemY + (itemHeight / 2);
+        
+        // Check if the text item's center is within the annotation bounds
+        // This is more precise than checking for any overlap
+        const centerInBounds = itemCenterX >= x1 && itemCenterX <= x2 && 
+                              itemCenterY >= y1 && itemCenterY <= y2;
+        
+        // Also check for significant overlap (at least 50% of the text item)
+        const overlapX = Math.max(0, Math.min(itemX + itemWidth, x2) - Math.max(itemX, x1));
+        const overlapY = Math.max(0, Math.min(itemY + itemHeight, y2) - Math.max(itemY, y1));
+        const overlapArea = overlapX * overlapY;
+        const itemArea = itemWidth * itemHeight;
+        const significantOverlap = itemArea > 0 && (overlapArea / itemArea) >= 0.5;
 
-        return overlapsX && overlapsY;
+        return centerInBounds || significantOverlap;
     });
 
     if (overlappingItems.length === 0) {
         return "Link"; // Fallback for links without readable text
     }
 
-    // Combine overlapping text items
-    const linkText = overlappingItems
+    // Sort by position and combine text items
+    const sortedItems = overlappingItems.sort((a, b) => {
+        const aY = a.transform[5];
+        const bY = b.transform[5];
+        const aX = a.transform[4];
+        const bX = b.transform[4];
+        
+        // Sort by Y position first (top to bottom), then X position (left to right)
+        if (Math.abs(aY - bY) > 5) { // Different lines
+            return bY - aY; // Higher Y values first (PDF coordinates)
+        }
+        return aX - bX; // Left to right
+    });
+
+    // Combine text, but limit to reasonable length for footnotes
+    let linkText = sortedItems
         .map(item => item.str)
         .join('')
         .trim();
+
+    // For very small rectangles (likely footnotes), limit to short text
+    const rectWidth = x2 - x1;
+    const rectHeight = y2 - y1;
+    const isSmallRect = rectWidth < 20 && rectHeight < 20;
+    
+    if (isSmallRect && linkText.length > 10) {
+        // For small rectangles, try to extract just the relevant part
+        const words = linkText.split(/\s+/);
+        if (words.length > 1) {
+            // Take the first word if it looks like a footnote number/symbol
+            const firstWord = words[0];
+            if (/^[0-9a-zA-Z\*\†\‡\§]{1,3}$/.test(firstWord)) {
+                linkText = firstWord;
+            }
+        }
+    }
 
     return linkText || "Link";
 }

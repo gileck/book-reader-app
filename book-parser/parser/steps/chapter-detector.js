@@ -147,17 +147,19 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             }
 
             if (chapterPages.length > 0) {
-                // Combine all page text for content lines (for backward compatibility)
-                const combinedContent = chapterPages.map(p => p.text).join(' ')
-                    // Clean up the text
-                    .replace(/\s+/g, ' ')
-                    .trim();
-
-                // Split into reasonable chunks/paragraphs for content array
-                const contentLines = combinedContent
-                    .split(/[.!?]+\s+/)
-                    .filter(line => line.trim().length > 20)
-                    .map(line => line.trim() + (line.endsWith('.') ? '' : '.'));
+                // Preserve original paragraph structure from page text
+                // Keep the line break markers intact instead of splitting them out
+                const contentLines = [];
+                
+                for (const page of chapterPages) {
+                    // Instead of splitting and losing line breaks, just clean up the text
+                    // while preserving the ⟨⟨LINE_BREAK⟩⟩ markers
+                    const cleanedPageText = page.text.trim();
+                    
+                    if (cleanedPageText.length > 50) { // Only include pages with substantial content
+                        contentLines.push(cleanedPageText);
+                    }
+                }
 
                 // Assign sequential chapter numbers when using config-based extraction
                 const assignedChapterNumber = (config && config.chapterNames && config.chapterNames.length > 0)

@@ -1,0 +1,1 @@
+node book-parser/parser/index.js ./files/"Mitochondria and the Future of Medicine"/book.pdf --debug 

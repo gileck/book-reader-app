@@ -1,0 +1,1 @@
+node book-parser/parser/index.js ./files/"How Emotions Are Made"/book.pdf --debug 

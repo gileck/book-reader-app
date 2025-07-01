@@ -1,0 +1,759 @@
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2363
+Contains line breaks: false
+Number of line breaks: 0
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩ LIFE ITSELF From space it looks grey and crystalline, obliterat..."
+
+Looking for specific lines:
+*** FOUND Line 0: "⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩ LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them grey, angular, inorganic ... spreading. Yet at night they light up, glowing in the dark sky, suddenly beautiful. Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they alive? No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their visible structures, buildings on a map. But an empty city with no power, no energy flow, no traffic, no jostling crowds, is an eerie place, chilling and post-apocalyptic. Dead. What brings a city to life is the people, their movement from place to place, along with the flow of materials that sustains our daily existence – electricity, heat, water, gas, sewage. It would not be misleading to say that a city is brought to life by the controlled flow of energy and material in this way. Set up a time-lapse camera on a busy street downtown and we get a sense of this flow, obeying laws of flux that we can barely guess at. In my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a hive of bustling activity, others nearly dormant until the evening when the commuters return home and the lights flick on. We could map out the flux that animates a city. Certainly, we can imagine a city this way, but mostly all we notice are the buildings. The structure. A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2006
+Contains line breaks: false
+Number of line breaks: 0
+
+Lines after splitting (showing first 20):
+Line 0: "dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption an..."
+
+Looking for specific lines:
+*** FOUND Line 0: "dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair of electrons, while the dotted lines represent electrical attractions between oxygen atoms and the surface. What just happened here? Look at the curly arrows again. A pair of electrons passes directly from the surface onto the carbon atom, which promotes the transfer of a bonding pair of electrons onto the oxygen, giving it a negative charge. Because one of those electrons belonged to oxygen in the first place, by claiming the pair it only gains a single negative charge. I appreciate that chemical mechanisms can be intimidating to look at, and frankly they’re impossible to draw, forcing a trade-off between clarity and reality. Most of the individual steps I’m going to show here are not ‘real’, as the whole series occurs virtually instantaneously in a sort of soft-shoe shuffle. For clarity, I’ll split up the mechanisms into one or two steps at a time, the penalty being there are then pages of them, making the overall process look more difficult than it really is. But the benefit is that pictures bring the inexorable logic of each step to life in a way that words cannot. The structure above is stabilised by the transfer of electrons from the mineral surface, in much the same way that ferredoxin stabilises the transfer of electrons onto CO 2 in cells today (see Appendix 1). The parallel between mineral surfaces and enzymes such as ferredoxin is remarkable: the lattice structure of iron and sulfur in minerals such as greigite is nearly identical to the tiny clusters of iron and sulfur that"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 2810
+Contains line breaks: false
+Number of line breaks: 0
+
+Lines after splitting (showing first 20):
+Line 0: "R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial D..."
+
+Looking for specific lines:
+*** FOUND Line 0: "R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T. Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and migrations using mitochondrial DNA. Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only weakly subject to selection), but perceives it as facilitating adaptation to new environments; on the flip side, mutations can also cause disease. D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in human evolution and disease’, Gene 238 (1999) 211–230. A later contribution from Wallace and colleagues, taking mitochondrial diseases into more explicit consideration. D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999) 1482–1488. A seminal paper on mitochondrial diseases, comparing mouse models with human conditions. Wallace in his pomp. W. Fan, K. G. Waymire, N. Narula, P. Li, C. Rocher, P. E. Coskun, M. A. Vannan, J. Narula, G. R. Macgregor and D. C. Wallace, ‘A mouse model of mitochondrial disease reveals germline selection against severe mtDNA mutations’, Science 319 (2008) 958–962. An important paper that reconciled a paradox in Wallace’s thinking – how could a fast mitochondrial mutation rate facilitate adaptation to new environments without generating a terrible toll in mitochondrial disease? The answer was selective elimination of the worst mitochondrial mutations in the female germline. Others published similar results at the same time. N. Lane, ‘Biodiversity: on the origin of bar codes’, Nature 462 (2009) 272–274. My own attempt to reconcile adaptation, mitochondrial mutations and the surprisingly sharp distinctions between species (so-called bar-codes in mitochondrial DNA), discussing Wallace’s work. M. Colnaghi, A. Pomiankowski and N. Lane, ‘The need for high-quality oocyte mitochondria at extreme ploidy dictates mammalian germline development’, eLife 10 (2021) e69344. A mathematical model showing that the architecture of the female germline can be understood in terms of selection against detrimental mutations in mitochondrial DNA. D. C. Wallace, ‘Mitochondria as chi’, Genetics 179 (2008) 727–735. Pushing the boundaries of Western medicine, with its twin pillars grounded in the work of"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2363
+Contains line breaks: false
+Number of line breaks: 0
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩ LIFE ITSELF From space it looks grey and crystalline, obliterat..."
+
+Looking for specific lines:
+*** FOUND Line 0: "⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩ LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them grey, angular, inorganic ... spreading. Yet at night they light up, glowing in the dark sky, suddenly beautiful. Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they alive? No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their visible structures, buildings on a map. But an empty city with no power, no energy flow, no traffic, no jostling crowds, is an eerie place, chilling and post-apocalyptic. Dead. What brings a city to life is the people, their movement from place to place, along with the flow of materials that sustains our daily existence – electricity, heat, water, gas, sewage. It would not be misleading to say that a city is brought to life by the controlled flow of energy and material in this way. Set up a time-lapse camera on a busy street downtown and we get a sense of this flow, obeying laws of flux that we can barely guess at. In my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a hive of bustling activity, others nearly dormant until the evening when the commuters return home and the lights flick on. We could map out the flux that animates a city. Certainly, we can imagine a city this way, but mostly all we notice are the buildings. The structure. A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2006
+Contains line breaks: false
+Number of line breaks: 0
+
+Lines after splitting (showing first 20):
+Line 0: "dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption an..."
+
+Looking for specific lines:
+*** FOUND Line 0: "dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair of electrons, while the dotted lines represent electrical attractions between oxygen atoms and the surface. What just happened here? Look at the curly arrows again. A pair of electrons passes directly from the surface onto the carbon atom, which promotes the transfer of a bonding pair of electrons onto the oxygen, giving it a negative charge. Because one of those electrons belonged to oxygen in the first place, by claiming the pair it only gains a single negative charge. I appreciate that chemical mechanisms can be intimidating to look at, and frankly they’re impossible to draw, forcing a trade-off between clarity and reality. Most of the individual steps I’m going to show here are not ‘real’, as the whole series occurs virtually instantaneously in a sort of soft-shoe shuffle. For clarity, I’ll split up the mechanisms into one or two steps at a time, the penalty being there are then pages of them, making the overall process look more difficult than it really is. But the benefit is that pictures bring the inexorable logic of each step to life in a way that words cannot. The structure above is stabilised by the transfer of electrons from the mineral surface, in much the same way that ferredoxin stabilises the transfer of electrons onto CO 2 in cells today (see Appendix 1). The parallel between mineral surfaces and enzymes such as ferredoxin is remarkable: the lattice structure of iron and sulfur in minerals such as greigite is nearly identical to the tiny clusters of iron and sulfur that"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 2810
+Contains line breaks: false
+Number of line breaks: 0
+
+Lines after splitting (showing first 20):
+Line 0: "R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial D..."
+
+Looking for specific lines:
+*** FOUND Line 0: "R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T. Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and migrations using mitochondrial DNA. Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only weakly subject to selection), but perceives it as facilitating adaptation to new environments; on the flip side, mutations can also cause disease. D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in human evolution and disease’, Gene 238 (1999) 211–230. A later contribution from Wallace and colleagues, taking mitochondrial diseases into more explicit consideration. D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999) 1482–1488. A seminal paper on mitochondrial diseases, comparing mouse models with human conditions. Wallace in his pomp. W. Fan, K. G. Waymire, N. Narula, P. Li, C. Rocher, P. E. Coskun, M. A. Vannan, J. Narula, G. R. Macgregor and D. C. Wallace, ‘A mouse model of mitochondrial disease reveals germline selection against severe mtDNA mutations’, Science 319 (2008) 958–962. An important paper that reconciled a paradox in Wallace’s thinking – how could a fast mitochondrial mutation rate facilitate adaptation to new environments without generating a terrible toll in mitochondrial disease? The answer was selective elimination of the worst mitochondrial mutations in the female germline. Others published similar results at the same time. N. Lane, ‘Biodiversity: on the origin of bar codes’, Nature 462 (2009) 272–274. My own attempt to reconcile adaptation, mitochondrial mutations and the surprisingly sharp distinctions between species (so-called bar-codes in mitochondrial DNA), discussing Wallace’s work. M. Colnaghi, A. Pomiankowski and N. Lane, ‘The need for high-quality oocyte mitochondria at extreme ploidy dictates mammalian germline development’, eLife 10 (2021) e69344. A mathematical model showing that the architecture of the female germline can be understood in terms of selection against detrimental mutations in mitochondrial DNA. D. C. Wallace, ‘Mitochondria as chi’, Genetics 179 (2008) 727–735. Pushing the boundaries of Western medicine, with its twin pillars grounded in the work of"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2501
+Contains line breaks: true
+Number of line breaks: 33
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO"
+Line 2: "2"
+Line 3: "adsorption and reduction, as I describe below, does"
+Line 4: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 5: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 6: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 7: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 8: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 9: "of electrons, while the dotted lines represent electrical attractions"
+Line 10: "between oxygen atoms and the surface."
+Line 11: "What just happened here? Look at the curly arrows again. A pair of"
+Line 12: "electrons passes directly from the surface onto the carbon atom, which"
+Line 13: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 14: "giving it a negative charge. Because one of those electrons belonged to"
+Line 15: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 16: "negative charge. I appreciate that chemical mechanisms can be"
+Line 17: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 18: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 19: "going to show here are not ‘real’, as the whole series occurs virtually"
+
+Looking for specific lines:
+*** FOUND Line 25: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2501
+Contains line breaks: true
+Number of line breaks: 33
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO"
+Line 2: "2"
+Line 3: "adsorption and reduction, as I describe below, does"
+Line 4: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 5: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 6: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 7: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 8: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 9: "of electrons, while the dotted lines represent electrical attractions"
+Line 10: "between oxygen atoms and the surface."
+Line 11: "What just happened here? Look at the curly arrows again. A pair of"
+Line 12: "electrons passes directly from the surface onto the carbon atom, which"
+Line 13: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 14: "giving it a negative charge. Because one of those electrons belonged to"
+Line 15: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 16: "negative charge. I appreciate that chemical mechanisms can be"
+Line 17: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 18: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 19: "going to show here are not ‘real’, as the whole series occurs virtually"
+
+Looking for specific lines:
+*** FOUND Line 25: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2501
+Contains line breaks: true
+Number of line breaks: 33
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO"
+Line 2: "2"
+Line 3: "adsorption and reduction, as I describe below, does"
+Line 4: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 5: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 6: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 7: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 8: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 9: "of electrons, while the dotted lines represent electrical attractions"
+Line 10: "between oxygen atoms and the surface."
+Line 11: "What just happened here? Look at the curly arrows again. A pair of"
+Line 12: "electrons passes directly from the surface onto the carbon atom, which"
+Line 13: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 14: "giving it a negative charge. Because one of those electrons belonged to"
+Line 15: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 16: "negative charge. I appreciate that chemical mechanisms can be"
+Line 17: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 18: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 19: "going to show here are not ‘real’, as the whole series occurs virtually"
+
+Looking for specific lines:
+*** FOUND Line 25: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2501
+Contains line breaks: true
+Number of line breaks: 33
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO"
+Line 2: "2"
+Line 3: "adsorption and reduction, as I describe below, does"
+Line 4: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 5: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 6: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 7: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 8: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 9: "of electrons, while the dotted lines represent electrical attractions"
+Line 10: "between oxygen atoms and the surface."
+Line 11: "What just happened here? Look at the curly arrows again. A pair of"
+Line 12: "electrons passes directly from the surface onto the carbon atom, which"
+Line 13: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 14: "giving it a negative charge. Because one of those electrons belonged to"
+Line 15: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 16: "negative charge. I appreciate that chemical mechanisms can be"
+Line 17: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 18: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 19: "going to show here are not ‘real’, as the whole series occurs virtually"
+
+Looking for specific lines:
+*** FOUND Line 25: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2501
+Contains line breaks: true
+Number of line breaks: 33
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO"
+Line 2: "2"
+Line 3: "adsorption and reduction, as I describe below, does"
+Line 4: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 5: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 6: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 7: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 8: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 9: "of electrons, while the dotted lines represent electrical attractions"
+Line 10: "between oxygen atoms and the surface."
+Line 11: "What just happened here? Look at the curly arrows again. A pair of"
+Line 12: "electrons passes directly from the surface onto the carbon atom, which"
+Line 13: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 14: "giving it a negative charge. Because one of those electrons belonged to"
+Line 15: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 16: "negative charge. I appreciate that chemical mechanisms can be"
+Line 17: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 18: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 19: "going to show here are not ‘real’, as the whole series occurs virtually"
+
+Looking for specific lines:
+*** FOUND Line 25: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2441
+Contains line breaks: true
+Number of line breaks: 29
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO 2 adsorption and reduction, as I describe below, does"
+Line 2: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 3: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 4: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 5: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 6: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 7: "of electrons, while the dotted lines represent electrical attractions"
+Line 8: "between oxygen atoms and the surface."
+Line 9: "What just happened here? Look at the curly arrows again. A pair of"
+Line 10: "electrons passes directly from the surface onto the carbon atom, which"
+Line 11: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 12: "giving it a negative charge. Because one of those electrons belonged to"
+Line 13: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 14: "negative charge. I appreciate that chemical mechanisms can be"
+Line 15: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 16: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 17: "going to show here are not ‘real’, as the whole series occurs virtually"
+Line 18: "instantaneously in a sort of soft-shoe shuffle. For clarity, I’ll split up the"
+Line 19: "mechanisms into one or two steps at a time, the penalty being there are"
+
+Looking for specific lines:
+*** FOUND Line 23: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2888
+Contains line breaks: true
+Number of line breaks: 35
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green"
+Line 3: "colours of the living Earth. It is criss-crossed by irregular patterns and"
+Line 4: "convergent striations. There’s a central amorphous density, where these"
+Line 5: "scratches seem lighter. This ‘growth’ does not look alive, although it has"
+Line 6: "extended out along some lines, and there is something grasping and"
+Line 7: "parasitic about it. Across the globe there are thousands of them, varying"
+Line 8: "in shape and detail, but all of them grey, angular, inorganic ... spreading."
+Line 9: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 10: "Perhaps these cankers on the landscape are in some sense living – there"
+Line 11: "is a controlled flow of energy, there must be information and some form"
+Line 12: "of metabolism; some turnover of materials. Are they alive?"
+Line 13: "No, of course not; they are cities. We know them intimately from the"
+Line 14: "inside, even if most of us know little about the flow of energy and"
+Line 15: "materials through our own cities. We know them mainly by their visible"
+Line 16: "structures, buildings on a map. But an empty city with no power, no"
+Line 17: "energy flow, no traffic, no jostling crowds, is an eerie place, chilling and"
+Line 18: "post-apocalyptic. Dead. What brings a city to life is the people, their"
+Line 19: "movement from place to place, along with the flow of materials that"
+
+Looking for specific lines:
+*** FOUND Line 31: "mostly all we notice are the buildings. The structure."
+*** FOUND Line 32: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2441
+Contains line breaks: true
+Number of line breaks: 29
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments"
+Line 1: "show that CO 2 adsorption and reduction, as I describe below, does"
+Line 2: "indeed happen. Binding to a surface works a bit like an enzyme, feeding"
+Line 3: "electrons continuously and positioning molecules ‘just so’ for the next"
+Line 4: "steps to happen. Let’s walk through the steps, which I’ve made as"
+Line 5: "friendly as I can through my ‘portraits’ of the protagonists. I should say"
+Line 6: "that, by convention, a curly black arrow denotes the movement of a pair"
+Line 7: "of electrons, while the dotted lines represent electrical attractions"
+Line 8: "between oxygen atoms and the surface."
+Line 9: "What just happened here? Look at the curly arrows again. A pair of"
+Line 10: "electrons passes directly from the surface onto the carbon atom, which"
+Line 11: "promotes the transfer of a bonding pair of electrons onto the oxygen,"
+Line 12: "giving it a negative charge. Because one of those electrons belonged to"
+Line 13: "oxygen in the first place, by claiming the pair it only gains a single"
+Line 14: "negative charge. I appreciate that chemical mechanisms can be"
+Line 15: "intimidating to look at, and frankly they’re impossible to draw, forcing a"
+Line 16: "trade-off between clarity and reality. Most of the individual steps I’m"
+Line 17: "going to show here are not ‘real’, as the whole series occurs virtually"
+Line 18: "instantaneously in a sort of soft-shoe shuffle. For clarity, I’ll split up the"
+Line 19: "mechanisms into one or two steps at a time, the penalty being there are"
+
+Looking for specific lines:
+*** FOUND Line 23: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 3410
+Contains line breaks: true
+Number of line breaks: 40
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of"
+Line 1: "human mitochondrial DNA’, Proceedings of the National Academy of Sciences"
+Line 2: "USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is"
+Line 3: "inherited from the mother in humans, although this had already been established"
+Line 4: "for other species. Maternal inheritance of mitochondria now has the status of"
+Line 5: "general rule of thumb (there are no strict laws in biology)."
+Line 6: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+Line 8: "DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the"
+Line 9: "earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+Line 10: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only"
+Line 11: "weakly subject to selection), but perceives it as facilitating adaptation to new"
+Line 12: "environments; on the flip side, mutations can also cause disease."
+Line 13: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in"
+Line 14: "human evolution and disease’, Gene 238 (1999) 211–230. A later contribution"
+Line 15: "from Wallace and colleagues, taking mitochondrial diseases into more explicit"
+Line 16: "consideration."
+Line 17: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999)"
+Line 18: "1482–1488. A seminal paper on mitochondrial diseases, comparing mouse"
+Line 19: "models with human conditions. Wallace in his pomp."
+
+Looking for specific lines:
+*** FOUND Line 7: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial"
+
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2498
+Contains line breaks: true
+Number of line breaks: 9
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Line 1: "LIFE ITSELF"
+Line 2: "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. I..."
+Line 3: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Line 4: "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of ener..."
+Line 5: "No, of course not; they are cities. We know them intimately from the"
+Line 6: "inside, even if most of us know little about the flow of energy and materials through our own cities..."
+Line 7: "A cell is a city of a sort. It too has buildings, or at least physical"
+Line 8: "structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in t..."
+
+Looking for specific lines:
+*** FOUND Line 6: "inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their visible structures, buildings on a map. But an empty city with no power, no energy flow, no traffic, no jostling crowds, is an eerie place, chilling and post-apocalyptic. Dead. What brings a city to life is the people, their movement from place to place, along with the flow of materials that sustains our daily existence – electricity, heat, water, gas, sewage. It would not be misleading to say that a city is brought to life by the controlled flow of energy and material in this way. Set up a time-lapse camera on a busy street downtown and we get a sense of this flow, obeying laws of flux that we can barely guess at. In my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a hive of bustling activity, others nearly dormant until the evening when the commuters return home and the lights flick on. We could map out the flux that animates a city. Certainly, we can imagine a city this way, but mostly all we notice are the buildings. The structure."
+*** FOUND Line 7: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2066
+Contains line breaks: true
+Number of line breaks: 4
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO ..."
+Line 1: "What just happened here? Look at the curly arrows again. A pair of electrons passes directly from th..."
+Line 2: "The structure above is stabilised by the transfer of electrons from the"
+Line 3: "mineral surface, in much the same way that ferredoxin stabilises the transfer of electrons onto CO 2..."
+
+Looking for specific lines:
+*** FOUND Line 2: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 2990
+Contains line breaks: true
+Number of line breaks: 12
+
+Lines after splitting (showing first 20):
+Line 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human ..."
+Line 1: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Line 2: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journ..."
+Line 3: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only weakly subject to selec..."
+Line 4: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in human evolution and disea..."
+Line 5: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999) 1482–1488. A seminal pa..."
+Line 6: "W. Fan, K. G. Waymire, N. Narula, P. Li, C. Rocher, P. E. Coskun, M. A."
+Line 7: "Vannan, J. Narula, G. R. Macgregor and D. C. Wallace, ‘A mouse model of mitochondrial disease reveal..."
+Line 8: "N. Lane, ‘Biodiversity: on the origin of bar codes’, Nature 462 (2009) 272–274."
+Line 9: "My own attempt to reconcile adaptation, mitochondrial mutations and the surprisingly sharp distincti..."
+Line 10: "M. Colnaghi, A. Pomiankowski and N. Lane, ‘The need for high-quality oocyte mitochondria at extreme ..."
+Line 11: "D. C. Wallace, ‘Mitochondria as chi’, Genetics 179 (2008) 727–735. Pushing the boundaries of Western..."
+
+Looking for specific lines:
+*** FOUND Line 2: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+

@@ -185,7 +185,7 @@ async function preprocessPDF(pdfPath, debugMode = false) {
             });
             
             if (debugMode && pageNum % 10 === 0) {
-                console.log(`     📄 Processed ${pageNum}/${pdfDoc.numPages} pages`);
+    
             }
             
         } catch (error) {

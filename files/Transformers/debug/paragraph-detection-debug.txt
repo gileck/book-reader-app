@@ -1,0 +1,6 @@
+Found "A cell is a city" line
+Previous paragraph ends with: "ings. The structure."
+Current line: "A cell is a city of a sort. It too has buildings, or at least physical"
+Previous ends with sentence? true
+Current starts with capital? true
+Should start new paragraph!

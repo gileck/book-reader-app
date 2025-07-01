@@ -3,16 +3,16 @@ const path = require('path');
 const pdfParse = require('pdf-parse');
 
 // Import modular components
-const { loadBookConfig } = require('./config-loader');
-const { extractBookMetadata } = require('./metadata-extractor');
-const { convertChaptersToDbFormat } = require('./data-formatter');
-const { createPageAwareChunksWithImages } = require('./chunk-processor');
-const { extractImages } = require('./image-extractor');
-const { detectChapters } = require('./chapter-detector');
-const { extractInternalLinks } = require('./link-extractor');
-const { resolveLinksToTargetChunks, validateLinkDestinations } = require('./link-resolver');
-const { saveToFile, generateParserSummary } = require('./file-utils');
-const { chunkText } = require('./text-processor');
+const { loadBookConfig } = require('./steps/config-loader');
+const { extractBookMetadata } = require('./steps/metadata-extractor');
+const { convertChaptersToDbFormat } = require('./steps/data-formatter');
+const { createPageAwareChunksWithImages, addCoordinateBoundsToChunks, processChapter } = require('./steps/chunk-processor');
+const { extractImages } = require('./steps/image-extractor');
+const { detectChapters } = require('./steps/chapter-detector');
+const { extractInternalLinks } = require('./steps/link-extractor');
+const { resolveLinksToTargetChunks, validateLinkDestinations } = require('./steps/link-resolver');
+const { saveToFile, generateParserSummary } = require('./steps/file-utils');
+const { chunkText } = require('./steps/text-processor');
 
 // Global debug tracker for headers
 let headerTracker = [];
@@ -32,6 +32,13 @@ async function parsePdfBook(pdfPath, configPath, debugMode = false) {
     console.log('✅ Step 1: Parsing PDF content...');
     const pdfBuffer = fs.readFileSync(pdfPath);
     const pdfData = await pdfParse(pdfBuffer);
+    
+    // Save raw unprocessed PDF text for debugging
+    fs.writeFileSync(
+        path.join(debugFolderPath, 'raw-pdf-text.txt'),
+        pdfData.text
+    );
+    
     
     // Save step 1 debug output
     fs.writeFileSync(
@@ -103,49 +110,23 @@ async function parsePdfBook(pdfPath, configPath, debugMode = false) {
         })), null, 2)
     );
     
-    // Step 6: Process chapters into chunks
-    console.log('✅ Step 6: Processing chapters into chunks...');
+    // Step 6: Process chapters into paragraph-structured chunks
+    console.log('✅ Step 6: Processing chapters into paragraph-structured chunks...');
     chapters.forEach(chapter => {
-        if (Array.isArray(chapter.content)) {
-            // Convert content array to string
-            const contentText = chapter.content.join(' ');
-            // Process text into chunks
-            chapter.chunks = chunkText(contentText, 5, 15);
-            // Keep original content for reference but convert to string
-            chapter.content = contentText;
-        } else if (typeof chapter.content === 'string') {
-            // Content is already a string, just process it
-            chapter.chunks = chunkText(chapter.content, 5, 15);
-        } else {
-            // No content or invalid content
-            chapter.chunks = [];
-            chapter.content = '';
-        }
+        const processedChapter = processChapter(chapter, debugFolderPath);
+        // Update the chapter with the new structure
+        chapter.content = processedChapter.content;
+        chapter.chunks = processedChapter.content.chunks; // For backward compatibility
+        chapter.paragraphs = processedChapter.content.paragraphs; // New structure
     });
-    
-    // Save step 6 debug output
-    fs.writeFileSync(
-        path.join(debugFolderPath, 'step6-chapters-with-chunks.json'),
-        JSON.stringify(chapters.map(ch => ({
-            number: ch.number,
-            title: ch.title,
-            chunksCount: ch.chunks ? ch.chunks.length : 0,
-            imagesCount: ch.images ? ch.images.length : 0,
-            images: ch.images ? ch.images.map(img => ({
-                imageName: img.imageName,
-                pageNumber: img.pageNumber
-            })) : [],
-            chunks: ch.chunks ? ch.chunks.map(chunk => ({
-                text: chunk.text ? chunk.text.substring(0, 200) + '...' : '',
-                wordCount: chunk.wordCount,
-                pageNumber: chunk.pageNumber
-            })) : []
-        })), null, 2)
-    );
     
     // Step 7: Create page-aware chunks
     console.log('✅ Step 7: Creating page-aware chunks...');
-    const allChunks = createPageAwareChunksWithImages(chapters, images, links);
+    const allChunks = await createPageAwareChunksWithImages(chapters, images, links);
+    
+    // Step 7.5: Add coordinate bounds to chunks
+    console.log('✅ Step 7.5: Adding coordinate bounds to chunks...');
+    await addCoordinateBoundsToChunks(allChunks, pdfPath);
     
     // Save step 7 debug output
     fs.writeFileSync(
@@ -159,7 +140,8 @@ async function parsePdfBook(pdfPath, configPath, debugMode = false) {
             wordCount: chunk.wordCount,
             pageNumber: chunk.pageNumber,
             linksCount: chunk.links ? chunk.links.length : 0,
-            targetLink: chunk.targetLink || false
+            targetLink: chunk.targetLink || false,
+            coordinateBounds: chunk.coordinateBounds
         })), null, 2)
     );
 

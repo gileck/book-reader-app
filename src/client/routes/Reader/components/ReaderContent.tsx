@@ -35,6 +35,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     onCurrentChunkVisibilityChange,
     onExplainText
 }) => {
+
     return (
         <Box sx={{ mt: 4 }}>
             <SimpleTextRenderer
