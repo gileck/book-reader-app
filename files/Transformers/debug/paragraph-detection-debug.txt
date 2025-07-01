@@ -1,6 +1,5 @@
-Found "A cell is a city" line
-Previous paragraph ends with: "ings. The structure."
-Current line: "A cell is a city of a sort. It too has buildings, or at least physical"
-Previous ends with sentence? true
-Current starts with capital? true
-Should start new paragraph!
+PARAGRAPH ANALYSIS:
+Line 21: "stem cells 203, 208n4"
+  StartX: 77, Y: 411
+  NextStartX: 77, IndentDiff: 0
+  ShouldBreak: false

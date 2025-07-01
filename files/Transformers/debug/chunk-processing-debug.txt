@@ -757,3 +757,407 @@ Line 11: "D. C. Wallace, ‘Mitochondria as chi’, Genetics 179 (2008) 727–73
 Looking for specific lines:
 *** FOUND Line 2: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and migrations using mitochondrial DNA."
 
+DEBUGGING chunkTextWithParagraphs for page 9:
+Full text length: 2498
+Contains line breaks: true
+Number of line breaks: 9
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩I NTRODUCTION⟨⟨/HEADING⟩⟩"
+Paragraph 1: "LIFE ITSELF"
+Paragraph 2: "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous dens..."
+Paragraph 3: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 4: "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 5: "No, of course not; they are cities. We know them intimately from the"
+Paragraph 6: "inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their visible structures, buildings on a map. But an empty city with no pow..."
+Paragraph 7: "A cell is a city of a sort. It too has buildings, or at least physical"
+Paragraph 8: "structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself"
+
+Looking for specific text:
+*** FOUND Paragraph 2: "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them grey, angular, inorganic ... spreading."
+*** FOUND Paragraph 3: "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+*** FOUND Paragraph 6: "inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their visible structures, buildings on a map. But an empty city with no power, no energy flow, no traffic, no jostling crowds, is an eerie place, chilling and post-apocalyptic. Dead. What brings a city to life is the people, their movement from place to place, along with the flow of materials that sustains our daily existence – electricity, heat, water, gas, sewage. It would not be misleading to say that a city is brought to life by the controlled flow of energy and material in this way. Set up a time-lapse camera on a busy street downtown and we get a sense of this flow, obeying laws of flux that we can barely guess at. In my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a hive of bustling activity, others nearly dormant until the evening when the commuters return home and the lights flick on. We could map out the flux that animates a city. Certainly, we can imagine a city this way, but mostly all we notice are the buildings. The structure."
+*** FOUND Paragraph 7: "A cell is a city of a sort. It too has buildings, or at least physical"
+
+Final paragraphs created: 9
+Paragraph 0 (header): ⟨⟨LINE_BREAK⟩⟩ I NTRODUCTION
+Paragraph 1 (text): LIFE ITSELF
+Paragraph 2 (text): From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. I... | is criss-crossed by irregular patterns and convergent striations. | There’s a central amorphous density, where these scratches seem lighter. | This ‘growth’ does not look alive, although it has extended out along some lines, and there is somet... | Across the globe there are thousands of them, varying in shape and detail, but all of them grey, ang... | spreading.
+Paragraph 3 (text): Yet at night they light up, glowing in the dark sky, suddenly beautiful.
+Paragraph 4 (text): Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of ener... | they alive?
+Paragraph 5 (text): No, of course not; they are cities. We | know them intimately from the
+Paragraph 6 (text): inside, even if most of us know little about the flow of energy and materials through our own cities... | know them mainly by their visible structures, buildings on a map. But | an empty city with no power, no energy flow, no traffic, no jostling crowds, is an eerie place, chil... | Dead. | What brings a city to life is the people, their movement from place to place, along with the flow of... | would not be misleading to say that a city is brought to life by the controlled flow of energy and m... | up a time-lapse camera on a busy street downtown and we get a sense of this flow, obeying laws of fl... | my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the jumbl... | could map out the flux that animates a city. | Certainly, we can imagine a city this way, but mostly all we notice are the buildings. The | structure.
+Paragraph 7 (text): A cell is a city of a sort. It | too has buildings, or at least physical
+Paragraph 8 (text): structures. | Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensi... | you shrink yourself
+
+DEBUGGING chunkTextWithParagraphs for page 11:
+Full text length: 2865
+Contains line breaks: true
+Number of line breaks: 9
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 1: "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 2: "For decades, biology has been dominated by information – the power"
+Paragraph 3: "of genes. The importance of genes is unquestionable, yet there is no difference in the information content of a living protozoon and one that died a moment ago. The difference between being alive or d..."
+Paragraph 4: "1"
+Paragraph 5: "If there is a view from modern biology, it is that genetic information"
+Paragraph 6: "structures the flow of energy and materials. To a first approximation, biology is understood in terms of information networks and control systems. Even the laws of thermodynamics, which govern the beh..."
+Paragraph 7: "Thinking about life only in terms of information is distorting. Seeking"
+Paragraph 8: "new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because it is not meaningful. A far better question goes back to the formative ..."
+
+Looking for specific text:
+*** FOUND Paragraph 1: "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate their exquisite behaviour? Do they experience any sort of feelings?"
+
+Final paragraphs created: 9
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ regulatory loops that lend an illusion of purpose, listed all their parts.
+Paragraph 1 (text): And yet underneath it all, we are barely any closer to understanding what breathes life into these f... | did they first emerge from the sterile inorganic Earth? | What forces coordinate their exquisite behaviour? Do | they experience any sort of feelings?
+Paragraph 2 (text): For decades, biology has been dominated by information – the power
+Paragraph 3 (text): of genes. The | importance of genes is unquestionable, yet there is no difference in the information content of a li... | difference between being alive or dead lies in energy flow, in the ability of cells to continually r...
+Paragraph 4 (text): 1
+Paragraph 5 (text): If there is a view from modern biology, it is that genetic information
+Paragraph 6 (text): structures the flow of energy and materials. To | a first approximation, biology is understood in terms of information networks and control systems. | Even the laws of thermodynamics, which govern the behaviour of molecules and their interactions and ... | this view generates its own paradox at the origin of life – where does all this information come fro... | Within the realm of biology, we already have a simple explanation: natural selection sifts through r... | Information accumulates with function over time. We | can quibble over details, but there is no conceptual difficulty here. At | the origin of life, though, this view will not do. | Place information at the heart of life, and there is a problem with the emergence of function, which... | only that, but there’s a problem in understanding the troubling trajectory of evolution, not least t... | There are problems, too, in understanding why we age and die, why we are still suffering from diseas...
+Paragraph 7 (text): Thinking about life only in terms of information is distorting. | Seeking
+Paragraph 8 (text): new laws of physics to explain the origin of information is to ask the wrong question, which can’t b... | far better question goes back to the formative years of biology: what processes animate cells and se... | idea that there is a vital force, that life is fundamentally
+
+DEBUGGING chunkTextWithParagraphs for page 12:
+Full text length: 2636
+Contains line breaks: true
+Number of line breaks: 7
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Le..."
+Paragraph 1: "You and me."
+Paragraph 2: "This book will explore how the flow of energy and matter structures"
+Paragraph 3: "the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view upside down."
+Paragraph 4: "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 5: "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 6: "The dynamic side To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochem..."
+
+Looking for specific text:
+*** FOUND Paragraph 5: "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms on the origin of life and cancer, to name but two fields. How could such disparate questions, separated by billions of years and gulfs in planetary environment be linked? At the core of this emerging view is an amazing, conflicted cycle of reactions that uses energy to transform inorganic molecules – gases – into the building blocks of life, and the reverse. To understand this cycle of energy and matter is to resolve the deep chemical coherence of the living world, connecting the origin of life with the devastation of cancer, the first photosynthetic bacteria with our own mitochondria, the abrupt evolutionary leap to animals with sulfurous sludges, the big history of our planet with the trivial differences between ourselves, perhaps even the stream of consciousness. In this book, we will see that understanding the deep chemistry that animates life, and fades as we die, illuminates some of the enduring mysteries of biology and our own existence."
+
+Final paragraphs created: 7
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ different from inanimate matter, was disproved long ago and is now only wheeled out a... | biochemistry – my own discipline, which deals with the flow of energy and materials through cells – ...
+Paragraph 1 (text): You and me.
+Paragraph 2 (text): This book will explore how the flow of energy and matter structures
+Paragraph 3 (text): the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I | want to turn the standard view upside down.
+Paragraph 4 (text): Genes and information do not determine the innermost details of our lives. | Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures...
+Paragraph 5 (text): It is the movement that creates the form. I | want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook b... | could such disparate questions, separated by billions of years and gulfs in planetary environment be... | the core of this emerging view is an amazing, conflicted cycle of reactions that uses energy to tran... | understand this cycle of energy and matter is to resolve the deep chemical coherence of the living w... | this book, we will see that understanding the deep chemistry that animates life, and fades as we die...
+Paragraph 6 (text): The dynamic side To understand this flow of energy and matter and all it portends, we must first loo... | golden age of biochemistry began with a realisation that cells are not made of an amorphous protopla...
+
+DEBUGGING chunkTextWithParagraphs for page 25:
+Full text length: 2892
+Contains line breaks: true
+Number of line breaks: 7
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ In Chapter 3, we’ll go right back to the beginning, to see how this"
+Paragraph 1: "same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction between H 2 and CO 2 is facilitated by steep gradients of protons across thin..."
+Paragraph 2: "Chapter 4 will ask how this spontaneous chemistry at the origin of life"
+Paragraph 3: "came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often more of a roundabout, with flow entering and exiting everywhere, even co..."
+Paragraph 4: "Not much is known about how metabolic flux is balanced between"
+Paragraph 5: "different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see that the standard view of cancer as a disease of the genome dri..."
+Paragraph 6: "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+Looking for specific text:
+*** FOUND Paragraph 1: "same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction between H 2 and CO 2 is facilitated by steep gradients of protons across thin inorganic barriers, with structures similar to cells. We’ll see that this chemistry can in principle – and recent experimental work shows in practice – drive almost all the core metabolism of cells, giving rise to the building blocks of genes (the ‘letters’ of DNA). I shall argue that genes emerged in protocells capable of a rudimentary form of heredity, giving meaning to the emergence of genetic information from the beginning. We’ll touch on recent work from my own research group, who are beginning to make exciting progress on the origins of genetic heredity in this setting."
+
+Final paragraphs created: 7
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ In Chapter 3, we’ll go right back to the beginning, to see how this
+Paragraph 1 (text): same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal ven... | We’ll see that this chemistry can in principle – and recent experimental work shows in practice – dr... | shall argue that genes emerged in protocells capable of a rudimentary form of heredity, giving meani... | We’ll touch on recent work from my own research group, who are beginning to make exciting progress o...
+Paragraph 2 (text): Chapter 4 will ask how this spontaneous chemistry at the origin of life
+Paragraph 3 (text): came to be the closed cycle that we know today. The | idea of a universal cycle is misleading: even in humans, the cycle is often more of a roundabout, wi... | Tight energetic constraints on the early Earth forced metabolic efficiency and cooperation on bacter... | the link between rising oxygen levels – the energising waste product of photosynthesis – and the geo... | We’ll see that the need for metabolic efficiency might have fostered cooperation not only in bacteri...
+Paragraph 4 (text): Not much is known about how metabolic flux is balanced between
+Paragraph 5 (text): different tissues, but we know much more about what goes wrong when cells revert to selfish behaviou... | Chapter 5, we’ll see that the standard view of cancer as a disease of the genome driven by genetic m... | Mutations linked with cancer are commonly found in normal tissues, while cancer cells often cease di...
+Paragraph 6 (text): In fact, age is the biggest risk factor for cancer. | We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to... | the flux through our Krebs cycle becomes more sluggish with age, intermediates such as succinate acc...
+
+DEBUGGING chunkTextWithParagraphs for page 54:
+Full text length: 2026
+Contains line breaks: true
+Number of line breaks: 8
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 1: "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 2: "A grossly simplified schematic of the respiratory chain. The"
+Paragraph 3: "transfer of electrons from NADH to oxygen is shown by the dotted line. These electrons pass through three great protein complexes embedded in the membrane (complex I, III and IV; we’ll meet complex II..."
+Paragraph 4: "proton-motive force) that drives ATP synthesis from ADP"
+Paragraph 5: "(adenosine diphosphate) and inorganic phosphate (P i ). In humans, eight protons pass through the ATP synthase for one turn of the motor, which generates three ATPs. The other two protons are not ‘was..."
+Paragraph 6: "that the number of ATPs formed from a single NADH is not a whole number but a fraction (3.3 in humans) and can vary depending on factors that have kept bioenergeticists busy for"
+Paragraph 7: "decades, right up to today."
+
+Looking for specific text:
+*** FOUND Paragraph 5: "(adenosine diphosphate) and inorganic phosphate (P i ). In humans, eight protons pass through the ATP synthase for one turn of the motor, which generates three ATPs. The other two protons are not ‘wasted’ but are saved up towards the next ATP. Note this means"
+
+Final paragraphs created: 8
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ today. Let me just give you a flavour (don’t worry about the details).
+Paragraph 1 (text): They demonstrated that mitochondrial membranes really do pump protons when given various substrates ... | They showed that inhibitors of electron transfer, such as the pesticide rotenone, partially blocked ... | they showed that ‘uncouplers’ such as the antibiotic gramicidin, which disconnect electron transfer ... | controlling these experimental parameters with exquisite finesse, Mitchell and Moyle were even able ... | These papers are wholly modern in their thinking and idiom, despite being breathtakingly new in conc...
+Paragraph 2 (text): A grossly simplified schematic of the respiratory chain. The
+Paragraph 3 (text): transfer of electrons from NADH to oxygen is shown by the dotted line. | These electrons pass through three great protein complexes embedded in the membrane (complex I, III ... | This current of electrons powers the extrusion of ten protons across the membrane, generating a comb...
+Paragraph 4 (text): proton-motive force) that drives ATP synthesis from ADP
+Paragraph 5 (text): (adenosine diphosphate) and inorganic phosphate (P i ). In | humans, eight protons pass through the ATP synthase for one turn of the motor, which generates three... | other two protons are not ‘wasted’ but are saved up towards the next ATP. | Note this means
+Paragraph 6 (text): that the number of ATPs formed from a single NADH is not a whole number but a fraction (3.3 in human...
+Paragraph 7 (text): decades, right up to today.
+
+DEBUGGING chunkTextWithParagraphs for page 65:
+Full text length: 2697
+Contains line breaks: true
+Number of line breaks: 3
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photos..."
+Paragraph 1: "The simplistic dichotomy between plants and animals – the notion"
+Paragraph 2: "that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also profoundly misleading, making little sense of the structure of me..."
+
+Looking for specific text:
+*** FOUND Paragraph 2: "that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also profoundly misleading, making little sense of the structure of metabolism, and therefore little sense of why it goes wrong in disease. We are taught in school that plants are ‘autotrophs’ – they ‘make sugars’ from inorganic molecules such as CO 2 and water – while animals eat plants, or other animals that eat plants, completing the circle of life. Autotrophs, we’re told, depend on the sun for their energy in the glorious everyday miracle of photosynthesis, transforming light energy and gases from the very air into their own substance, into our own substance. This is biosynthesis – the conversion of simple molecules such as CO 2 into the building blocks of life, and ultimately into the great macromolecular machines, DNA and proteins. It is a miracle that should be taught to every schoolchild, but we should tell them too that plants were latecomers on this Earth. For several billion years, our planet was sculpted by bacteria. Photosynthesis as we know it was invented by the cyanobacteria, once graced with the more evocative name blue-green algae. Yet they were quite late to the party too. Before these sophisticated bacteria, other autotrophs were already ancient, living from gases and rocks, sometimes deep in the bowels of the Earth. Many had no need for the sun. If we want to understand the deep chemistry of life (and death ...) we must shift our gaze from the lofty pinnacles of evolution down to the obscure canyons of creation."
+
+Final paragraphs created: 3
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ this idea; in this chapter, we’ll see that it can be malignantly misleading too. | Every dogma has its day, but this particular meme still bedevils the textbooks. The | meme is this: photosynthesis converts CO 2 into sugars (using rubisco), while respiration burns thos... | twist a phrase, this is the central dogma of metabolism: sugars are the backbone of biochemistry. | Their pathways take central position on biochemical charts. If | a conjuror distracts attention from where the real action is taking place, the teaching of photosynt... | problem lies in our endless fascination with plants and animals, mirrored in the venerable disciplin... | What we’re taught can condition how we think for decades. The | problem in this case is that focusing too much on sugars has distracted us from the fundamental conn...
+Paragraph 1 (text): The simplistic dichotomy between plants and animals – the notion
+Paragraph 2 (text): that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – ... | are taught in school that plants are ‘autotrophs’ – they ‘make sugars’ from inorganic molecules such... | Autotrophs, we’re told, depend on the sun for their energy in the glorious everyday miracle of photo... | This is biosynthesis – the conversion of simple molecules such as CO 2 into the building blocks of l... | is a miracle that should be taught to every schoolchild, but we should tell them too that plants wer... | several billion years, our planet was sculpted by bacteria. | Photosynthesis as we know it was invented by the cyanobacteria, once graced with the more evocative ... | they were quite late to the party too. | Before these sophisticated bacteria, other autotrophs were already ancient, living from gases and ro... | Many had no need for the sun. If | we want to understand the deep chemistry of life (and death ...) we must shift our gaze from the lof...
+
+DEBUGGING chunkTextWithParagraphs for page 103:
+Full text length: 1432
+Contains line breaks: true
+Number of line breaks: 4
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only..."
+Paragraph 1: "one copy begets two, allowing exponential take-off."
+Paragraph 2: "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He"
+Paragraph 3: "was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Dorothy Hodgkin told a group of her colleagues that they had to cram into..."
+
+Looking for specific text:
+*** FOUND Paragraph 2: "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He"
+
+Final paragraphs created: 4
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ The reverse Krebs cycle repeats its succession of steps, highlighted in bold letterin... | Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The | only difference on the second rendition is that the final +2H becomes +H 2 O. | Notice that the requirement for ATP at the critical steps near ferredoxin is also mirrored. | Each full turn of the Krebs cycle produces one additional molecule of oxaloacetate, along with the o...
+Paragraph 1 (text): one copy begets two, allowing exponential take-off.
+Paragraph 2 (text): Orgel had trained as an inorganic chemist at Oxford in the 1940s. He
+Paragraph 3 (text): was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when ... | Crick later joined Orgel at the Salk Institute in San Diego during his brief foray into the origin o... | That conception grew from the problem of the genetic code, which Crick had pronounced a ‘frozen acci...
+
+DEBUGGING chunkTextWithParagraphs for page 107:
+Full text length: 2066
+Contains line breaks: true
+Number of line breaks: 4
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bi..."
+Paragraph 1: "What just happened here? Look at the curly arrows again. A pair of electrons passes directly from the surface onto the carbon atom, which promotes the transfer of a bonding pair of electrons onto the ..."
+Paragraph 2: "The structure above is stabilised by the transfer of electrons from the"
+Paragraph 3: "mineral surface, in much the same way that ferredoxin stabilises the transfer of electrons onto CO 2 in cells today (see Appendix 1). The parallel between mineral surfaces and enzymes such as ferredox..."
+
+Looking for specific text:
+*** FOUND Paragraph 2: "The structure above is stabilised by the transfer of electrons from the"
+
+DEBUGGING chunkTextWithParagraphs for page 115:
+Full text length: 2378
+Contains line breaks: true
+Number of line breaks: 4
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle..."
+Paragraph 1: "Here’s how. Alkaline hydrothermal vents are riddled with"
+Paragraph 2: "interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluids, making it more reactive, whereas CO 2 comes dissolved ..."
+Paragraph 3: "⟨⟨HEADING⟩⟩Small steps, giant leaps⟨⟨/HEADING⟩⟩"
+
+Looking for specific text:
+*** FOUND Paragraph 2: "interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluids, making it more reactive, whereas CO 2 comes dissolved in acidic ocean water, making it more willing to accept electrons. In early vents (lacking dissolved oxygen) the two phases were separated by thin barriers containing iron sulfide minerals, which could transfer electrons from H 2 on one side to CO 2 on the other. The theory is soundly grounded, but that’s not enough. This is an experimental question, which my lab and others have been struggling to address for years now. We’ve had limited success, because H 2 is difficult to work with under continuous flow at high pressure. But as I write, Reuben Hudson and Victor Sojo (a former student of mine, who generously included me among his collaborators) have shown that pH gradients across thin inorganic barriers do indeed facilitate the transfer of electrons from H 2 on one side, to CO 2 on the other, at a pressure of just 1.5 bar. This was proved beautifully using isotopes of carbon and hydrogen to show that the electrons did indeed come from H 2 , whereas the protons derived from the acidic ocean solution, as laid out here. And crucially, the carbon in the organic molecules (mainly formate) really did derive from the CO 2 added. No organics were formed at normal air pressure, or without H 2 gas, or in the absence of a steep pH gradient. This is beautiful experimental verification – for once, not slain by an ugly fact. I take my hat off to them."
+
+Final paragraphs created: 4
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ the protons detach, Ech becomes more reactive, and can now force its electrons onto f... | Then incoming protons bind Ech again, and the cycle repeats itself. In | other words, Ech acts as a switch that extracts electrons from H 2 when in ‘oxidising’ mode (with pr... | difference between the two modes is about 200 millivolts, so the simple pH gradient makes the ‘impos... | unlike molecular machines such as the ATP synthase, this mechanism could work in prebiotic condition...
+Paragraph 1 (text): Here’s how. Alkaline hydrothermal vents are riddled with
+Paragraph 2 (text): interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H | 2 gas is delivered in alkaline hydrothermal fluids, making it more reactive, whereas CO 2 comes diss... | early vents (lacking dissolved oxygen) the two phases were separated by thin barriers containing iro... | theory is soundly grounded, but that’s not enough. | This is an experimental question, which my lab and others have been struggling to address for years ... | We’ve had limited success, because H 2 is difficult to work with under continuous flow at high press... | as I write, Reuben Hudson and Victor Sojo (a former student of mine, who generously included me amon... | This was proved beautifully using isotopes of carbon and hydrogen to show that the electrons did ind... | crucially, the carbon in the organic molecules (mainly formate) really did derive from the CO 2 adde... | organics were formed at normal air pressure, or without H 2 gas, or in the absence of a steep pH gra... | This is beautiful experimental verification – for once, not slain by an ugly fact. I | take my hat off to them.
+Paragraph 3 (header): Small steps, giant leaps
+
+DEBUGGING chunkTextWithParagraphs for page 116:
+Full text length: 2800
+Contains line breaks: true
+Number of line breaks: 8
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way..."
+Paragraph 1: "Together, these products can take on amazingly life-like properties."
+Paragraph 2: "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 3: "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 4: "The next step is just as pleasing. How could these protocells grow and"
+Paragraph 5: "divide? To do so, they would need to make more organic molecules inside themselves (more fatty acids, more amino acids) using the proton gradient. The million-dollar question is: could a prebiotic ver..."
+Paragraph 6: "If you are unusually alert, you may have noticed a discrepancy"
+Paragraph 7: "between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protocells (where I talked about protons crossing cell membranes). Th..."
+
+Looking for specific text:
+*** FOUND Paragraph 3: "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few small steps of quite repetitive chemistry, we’ve leapt from strictly inorganic pores to organic protocells, bounded by lipid membranes, poised to ... do what exactly?"
+*** FOUND Paragraph 7: "between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protocells (where I talked about protons crossing cell membranes). The"
+
+Final paragraphs created: 8
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ How do we get from pores in hydrothermal vents to the first cell-like structures? You | can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way ... | example, fatty acids, the main constituents of cell membranes, are simply longer-chain carboxylic ac... | These, too, have been made by Fischer–Tropsch synthesis under hydrothermal conditions. | Likewise, some amino acids can be formed easily from carboxylic acids by substituting a nitrogen for...
+Paragraph 1 (text): Together, these products can take on amazingly life-like properties.
+Paragraph 2 (text): Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin ... | These are mesmerising entities that fuse together and divide in two, with every appearance of bustli... | Think about the magic of dancing soap bubbles and you’ll get the general idea.
+Paragraph 3 (text): Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even ... | just a few small steps of quite repetitive chemistry, we’ve leapt from strictly inorganic pores to o... | what exactly?
+Paragraph 4 (text): The next step is just as pleasing. How | could these protocells grow and
+Paragraph 5 (text): divide? To | do so, they would need to make more organic molecules inside themselves (more fatty acids, more amin... | million-dollar question is: could a prebiotic version of Ech operate in protocells, driving their gr... | short answer is yes. We | were amazed to find that when mixed with iron and sulfide in solution, the amino acid cysteine spont... | They even have a similar tendency to force electrons onto other molecules such as CO 2 . | These iron–sulfur clusters could in principle drive the formation of new carboxylic acids, fatty aci...
+Paragraph 6 (text): If you are unusually alert, you may have noticed a discrepancy
+Paragraph 7 (text): between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barr...
+
+DEBUGGING chunkTextWithParagraphs for page 117:
+Full text length: 1979
+Contains line breaks: true
+Number of line breaks: 8
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic bar..."
+Paragraph 1: "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 2: "the membrane of the protocell (on the arrows) symbolise iron–"
+Paragraph 3: "sulfur clusters bound to amino acids, associated with the"
+Paragraph 4: "membrane – a proto-Ech (see text). Growing protocells must remain bound to the barriers in hydrothermal vents to tap the geologically sustained proton-motive force. CO 2 crosses the"
+Paragraph 5: "barriers much more slowly than protons, hence the dotted arrows."
+Paragraph 6: "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 7: "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+Looking for specific text:
+*** FOUND Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rather than electrons. In fact, that is feasible. We have shown that protons cross iron-sulfide barriers two million times faster than hydroxide ions going the other way. That discrepancy can generate steep pH gradients just within the alkaline side of the barrier. In this case, ‘steep’ means four pH units (a 10,000-fold difference in concentration) across iron-sulfide nanocrystals barely 25 millionths of a millimetre (25 nanometres) in diameter. If so, then inorganic pores and protocells are potentially homologous. Because protocells stick to iron-sulfide barriers on the alkaline side, protons could flow straight across the barriers and into the protocells lining the barrier, before being dissipated by the alkaline hydrothermal flow, giving a beautiful continuity between geochemistry and biochemistry."
+*** FOUND Paragraph 1: "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles in"
+
+Final paragraphs created: 8
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidi... | principle, this arrangement could be achieved by protons crossing the inorganic barrier, rather than... | fact, that is feasible. We | have shown that protons cross iron-sulfide barriers two million times faster than hydroxide ions goi... | That discrepancy can generate steep pH gradients just within the alkaline side of the barrier. In | this case, ‘steep’ means four pH units (a 10,000-fold difference in concentration) across iron-sulfi... | so, then inorganic pores and protocells are potentially homologous. | Because protocells stick to iron-sulfide barriers on the alkaline side, protons could flow straight ...
+Paragraph 1 (text): Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (ri... | triangles in
+Paragraph 2 (text): the membrane of the protocell (on the arrows) symbolise iron–
+Paragraph 3 (text): sulfur clusters bound to amino acids, associated with the
+Paragraph 4 (text): membrane – a proto-Ech (see text). | Growing protocells must remain bound to the barriers in hydrothermal vents to tap the geologically s... | 2 crosses the
+Paragraph 5 (text): barriers much more slowly than protons, hence the dotted arrows.
+Paragraph 6 (text): Perhaps the most important property of this system is that it can in principle make copies of itself...
+Paragraph 7 (text): For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a pro...
+
+DEBUGGING chunkTextWithParagraphs for page 120:
+Full text length: 1199
+Contains line breaks: true
+Number of line breaks: 3
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase?"
+Paragraph 1: "The answer turns out to be quite simple. ATP can be formed directly"
+Paragraph 2: "from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. Going back to the reaction steps I outlined earlier, recall that I finished by depicting an acetyl gro..."
+
+Looking for specific text:
+*** FOUND Paragraph 2: "from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. Going back to the reaction steps I outlined earlier, recall that I finished by depicting an acetyl group (as in acetyl CoA), bound to the FeS surface. If this were to react with an inorganic phosphate bound to the surface (rather than the oxygen I showed before), the product released would be acetyl phosphate: Acetyl phosphate remains a critical intermediate between acetyl CoA and ATP in bacteria and archaea today, as first discovered by Fritz Lipmann. This simple chemistry takes place in water. Theory says it should occur under prebiotic conditions too, and we have shown that it really does – acetyl phosphate is formed from a two-carbon precursor thioacetate. Once formed, acetyl phosphate will pass its phosphate onto ADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield, roughly like this:"
+
+Final paragraphs created: 3
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ didn’t just pop into existence by accident in a prebiotic world. So | if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthas...
+Paragraph 1 (text): The answer turns out to be quite simple. ATP | can be formed directly
+Paragraph 2 (text): from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. | Going back to the reaction steps I outlined earlier, recall that I finished by depicting an acetyl g... | this were to react with an inorganic phosphate bound to the surface (rather than the oxygen I showed... | This simple chemistry takes place in water. | Theory says it should occur under prebiotic conditions too, and we have shown that it really does – ... | Once formed, acetyl phosphate will pass its phosphate onto ADP (adenosine diphosphate) to form ATP a...
+
+DEBUGGING chunkTextWithParagraphs for page 121:
+Full text length: 2795
+Contains line breaks: true
+Number of line breaks: 7
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This find..."
+Paragraph 1: "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 2: "The bigger picture that emerges is this. Vents provide a steady supply"
+Paragraph 3: "of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chemical mechanisms that resemble steps of the reverse Krebs cycle, implyin..."
+Paragraph 4: "The beauty of vents is that hydrothermal flow is continuous. If only a"
+Paragraph 5: "tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the same reaction can happen all over again."
+Paragraph 6: "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+Looking for specific text:
+*** FOUND Paragraph 6: "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in the"
+
+Final paragraphs created: 7
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed bea... | This finding might explain why ATP is the universal energy currency. But | the key point is that ATP can be formed directly through simple chemistry in water. | Equally critical: this simple chemistry does not release cells from their dependence on proton gradi... | the contrary, these are still needed to drive the synthesis of reactive molecules such as thioacetat... | can think of the proton gradient as a ratchet, pushing the chemistry of protocells far from equilibr... | this case, acetyl phosphate and ATP can form readily in locally acidic conditions close to the membr...
+Paragraph 1 (text): In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed...
+Paragraph 2 (text): The bigger picture that emerges is this. | Vents provide a steady supply
+Paragraph 3 (text): of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic a... | These form through chemical mechanisms that resemble steps of the reverse Krebs cycle, implying that... | Krebs- cycle intermediates are universal precursors for making amino acids, fatty acids, sugars and ... | Exactly how all those are formed under prebiotic conditions (which catalysts, which feedbacks) is a ... | some principles are clear. | Catalysts and proton gradients do no more than lower the kinetic barriers to reactions that are ther... | far forwards those reactions can go depends on the driving force, which is the reactivity between H ... | more H 2 available, the more organic products will be produced, and the further these reactions will... | could think of this as gentle waves spreading up a beach; how far up the water travels varies locall...
+Paragraph 4 (text): The beauty of vents is that hydrothermal flow is continuous. If | only a
+Paragraph 5 (text): tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the...
+Paragraph 6 (text): Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in t... | inorganic pores within vents are the perfect homes for protocells that nestle in the
+
+DEBUGGING chunkTextWithParagraphs for page 141:
+Full text length: 2783
+Contains line breaks: true
+Number of line breaks: 12
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and..."
+Paragraph 1: "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the"
+Paragraph 2: "13 C abundance in limestone sedimented at the"
+Paragraph 3: "same time."
+Paragraph 4: "⟨⟨HEADING⟩⟩The soaring⟨⟨/HEADING⟩⟩"
+Paragraph 5: "13 C peak in the GOE therefore speaks of carbon burial"
+Paragraph 6: "and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just note that high 13 C corresponds to the many other signs..."
+Paragraph 7: "13 C trace flat-lines for"
+Paragraph 8: "around a billion years, sometimes called the ‘boring billion’, even though that is when complex (‘eukaryotic’) cells evolved, along with traits such as sex, which are biologically anything but boring...."
+Paragraph 9: "The Shuram conundrum Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dat..."
+
+Looking for specific text:
+*** FOUND Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere. That slight rise is in turn reflected in the composition of limestone, formed by the precipitation of inorganic carbonate from the oceans. Like sea salt, the concentration of carbonate is roughly constant across the oceans."
+
+Final paragraphs created: 12
+Paragraph 0 (text): ⟨⟨LINE_BREAK⟩⟩ (30/1,000). | This difference can be measured in modern plants as well as in traces of organic matter trapped in a... | bias leaves behind a little more 13 C in the oceans and atmosphere. | That slight rise is in turn reflected in the composition of limestone, formed by the precipitation o... | Like sea salt, the concentration of carbonate is roughly constant across the oceans.
+Paragraph 1 (text): Variations over time in the 13 C content of limestone therefore give a global indication of how much...
+Paragraph 2 (text): 13 C abundance in limestone sedimented at the
+Paragraph 3 (text): same time.
+Paragraph 4 (header): The soaring
+Paragraph 5 (text): 13 C peak in the GOE therefore speaks of carbon burial
+Paragraph 6 (text): and rising oxygen levels. | Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go ... | then the
+Paragraph 7 (text): 13 C trace flat-lines for
+Paragraph 8 (text): around a billion years, sometimes called the ‘boring billion’, even though that is when complex (‘eu... | I’ve dwelt on that theme in other books, but it is less relevant here. 5 | Two things matter right now. The | first is that atmospheric oxygen remained low throughout the boring billion, at around 1–10 per cent... | second is what happened at the end of the boring billion: 200 million years of planetary convulsions... | Some shot up, testifying to a world flooding with oxygen, but there were cataclysmic downturns too t... | hard on the heels of the biggest downturn of all came the Cambrian explosion. | Understanding this enigmatic downturn is key to understanding the origin of animals.
+Paragraph 9 (text): The Shuram conundrum Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock ... | Beginning in strata dated to 560 million years ago, the 13 C trace falls abruptly from around 5 per ...
+Paragraph 10 (text): 13 C
+Paragraph 11 (text): content), recovering slowly over ten million years. | Does that sound uninterestingly dry and technical? | It’s actually shocking! Just think what it means. A | fall in 13 C relative to 12 C implies that far more carbon was
+
+DEBUGGING chunkTextWithParagraphs for page 234:
+Full text length: 2355
+Contains line breaks: true
+Number of line breaks: 10
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ ⟨⟨HEADING⟩⟩ABBREVIATIONS⟨⟨/HEADING⟩⟩"
+Paragraph 1: "2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 2: "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 3: "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 4: "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2 in hydrothermal vents. -COOH Carboxylic ..."
+Paragraph 5: "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 6: "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 7: "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 8: "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 9: "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+
+Looking for specific text:
+*** FOUND Paragraph 2: "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phosphate ( P i ), which provides the energy needed to drive many reactions in the cell. The ATP synthase regenerates ATP by rejoining a P i onto ADP."
+*** FOUND Paragraph 8: "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+
+Final paragraphs created: 10
+Paragraph 0 (header): ⟨⟨LINE_BREAK⟩⟩ ABBREVIATIONS
+Paragraph 1 (text): 2H Two hydrogen atoms (two electrons plus two protons). Can | be extracted from anywhere in a molecule and transferred onto another molecule.
+Paragraph 2 (text): ATP Adenosine triphosphate. The ‘universal energy currency’. Has | a tail of three phosphate groups linked in a chain. | Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phosphate ( P i ), wh... | ATP synthase regenerates ATP by rejoining a P i onto ADP.
+Paragraph 3 (text): CoA Coenzyme A. A | complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acet...
+Paragraph 4 (text): CO 2 Carbon dioxide. The | ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or ... | -COOH Carboxylic acid group. | Characteristic of all Krebs cycle molecules, which can have two or three such groups. The | proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group.
+Paragraph 5 (text): DNA Deoxyribonucleic acid. The hereditary material. | Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pai... | When prised apart, each strand acts as a template, allowing the precise sequence to be copied.
+Paragraph 6 (text): Ech Energy-converting hydrogenase. A | membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to... | prebiotic version could have driven CO 2 fixation at the origin of life.
+Paragraph 7 (text): Fd Ferredoxin. The red protein. An | iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. T... | form that transfers electrons is shortened to Fd 2– .
+Paragraph 8 (text): FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containin... | classic is the 4Fe4S cluster.
+Paragraph 9 (text): GSH Glutathione. GSH | is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from... | important cellular antioxidant.
+
+DEBUGGING chunkTextWithParagraphs for page 274:
+Full text length: 2990
+Contains line breaks: true
+Number of line breaks: 12
+
+Paragraphs after splitting by LINE_BREAK (showing first 10):
+Paragraph 0: "⟨⟨LINE_BREAK⟩⟩ R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The firs..."
+Paragraph 1: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T."
+Paragraph 2: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and mig..."
+Paragraph 3: "Unlike others, Wallace never thought of mitochondrial DNA as ‘neutral’ (only weakly subject to selection), but perceives it as facilitating adaptation to new environments; on the flip side, mutations ..."
+Paragraph 4: "D. C. Wallace, M. D. Brown and M. T. Lott, ‘Mitochondrial DNA variation in human evolution and disease’, Gene 238 (1999) 211–230. A later contribution from Wallace and colleagues, taking mitochondrial..."
+Paragraph 5: "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999) 1482–1488. A seminal paper on mitochondrial diseases, comparing mouse models with human conditions. Wallace in his pomp."
+Paragraph 6: "W. Fan, K. G. Waymire, N. Narula, P. Li, C. Rocher, P. E. Coskun, M. A."
+Paragraph 7: "Vannan, J. Narula, G. R. Macgregor and D. C. Wallace, ‘A mouse model of mitochondrial disease reveals germline selection against severe mtDNA mutations’, Science 319 (2008) 958–962. An important paper..."
+Paragraph 8: "N. Lane, ‘Biodiversity: on the origin of bar codes’, Nature 462 (2009) 272–274."
+Paragraph 9: "My own attempt to reconcile adaptation, mitochondrial mutations and the surprisingly sharp distinctions between species (so-called bar-codes in mitochondrial DNA), discussing Wallace’s work."
+
+Looking for specific text:
+*** FOUND Paragraph 2: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and migrations using mitochondrial DNA."
+

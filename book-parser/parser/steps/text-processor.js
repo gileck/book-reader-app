@@ -759,7 +759,7 @@ function chunkTextWithParagraphs(text, minWords = 5, maxWords = 15, pageNumber =
     }
 
     // Debug for Introduction page
-    if (text.includes('The structure') || text.includes('A cell is a city')) {
+    if (text.includes('The structure') || text.includes('A cell is a city') || text.includes('inorganic') || text.includes('Yet at night')) {
         try {
             const fs = require('fs');
             const debugDir = './debug';
@@ -781,20 +781,21 @@ function chunkTextWithParagraphs(text, minWords = 5, maxWords = 15, pageNumber =
         }
     }
 
-    // Split by line breaks to preserve PDF visual structure
-    const lines = text.split(' ⟨⟨LINE_BREAK⟩⟩ ').filter(line => line.trim().length > 0);
+    // TRUST the LINE_BREAK markers from our sophisticated indentation-based paragraph detection
+    // Split by line breaks to get paragraphs (not individual lines)
+    const paragraphTexts = text.split(' ⟨⟨LINE_BREAK⟩⟩ ').filter(para => para.trim().length > 0);
     
-    // Debug the split lines for Introduction
-    if (text.includes('The structure') || text.includes('A cell is a city')) {
+    // Debug the split paragraphs
+    if (text.includes('The structure') || text.includes('A cell is a city') || text.includes('inorganic') || text.includes('Yet at night')) {
         try {
             const debugInfo = [
-                `Lines after splitting (showing first 20):`,
-                ...lines.slice(0, 20).map((line, i) => `Line ${i}: "${line.substring(0, 100)}${line.length > 100 ? '...' : ''}"`),
+                `Paragraphs after splitting by LINE_BREAK (showing first 10):`,
+                ...paragraphTexts.slice(0, 10).map((para, i) => `Paragraph ${i}: "${para.substring(0, 200)}${para.length > 200 ? '...' : ''}"`),
                 '',
-                'Looking for specific lines:',
-                ...lines.map((line, i) => {
-                    if (line.includes('The structure') || line.includes('A cell is a city')) {
-                        return `*** FOUND Line ${i}: "${line}"`;
+                'Looking for specific text:',
+                ...paragraphTexts.map((para, i) => {
+                    if (para.includes('inorganic') || para.includes('Yet at night') || para.includes('The structure') || para.includes('A cell is a city')) {
+                        return `*** FOUND Paragraph ${i}: "${para}"`;
                     }
                     return null;
                 }).filter(Boolean),
@@ -811,83 +812,60 @@ function chunkTextWithParagraphs(text, minWords = 5, maxWords = 15, pageNumber =
     let globalChunkIndex = 0;
     let paragraphId = 0;
 
-    let currentTextParagraph = null;
-    let currentParagraphText = '';
-
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
+    // Process each paragraph separately
+    for (let i = 0; i < paragraphTexts.length; i++) {
+        const paragraphText = paragraphTexts[i].trim();
         
-        if (line.length === 0) continue;
+        if (paragraphText.length === 0) continue;
 
-        // Check if this line is a heading
-        const isHeading = line.includes('⟨⟨HEADING⟩⟩');
+        // Check if this paragraph is a heading
+        const isHeading = paragraphText.includes('⟨⟨HEADING⟩⟩');
         
         if (isHeading) {
-            // Finish current text paragraph if exists
-            if (currentTextParagraph && currentParagraphText.trim().length > 0) {
-                const chunks = createChunksFromText(currentParagraphText, minWords, maxWords, globalChunkIndex);
-                currentTextParagraph.chunks = chunks;
-                globalChunkIndex += chunks.length;
-                paragraphs.push(currentTextParagraph);
-            }
-
-            // Create header paragraph (separate from text paragraphs)
-            const headerText = line.replace(/⟨⟨HEADING⟩⟩(.*?)⟨⟨\/HEADING⟩⟩/g, '$1').trim();
+            // Create header paragraph
+            const headerText = paragraphText.replace(/⟨⟨HEADING⟩⟩(.*?)⟨⟨\/HEADING⟩⟩/g, '$1').trim();
             const headerChunks = createChunksFromText(headerText, 1, 50, globalChunkIndex); // Headers can be longer
             
             paragraphs.push({
                 id: paragraphId++,
                 pageNumber: pageNumber,
                 type: 'header',
-                level: determineHeaderLevel(headerText, line), // h1, h2, h3, etc.
+                level: determineHeaderLevel(headerText, paragraphText), // h1, h2, h3, etc.
                 chunks: headerChunks
             });
             
             globalChunkIndex += headerChunks.length;
-            currentTextParagraph = null;
-            currentParagraphText = '';
-            continue;
-        }
-
-        // Regular text line - check if we should start a new paragraph
-        const shouldStartNewParagraph = shouldStartNewTextParagraph(line, currentParagraphText, lines[i - 1], lines[i + 1]);
-
-        if (shouldStartNewParagraph && currentTextParagraph && currentParagraphText.trim().length > 0) {
-            // Finish current text paragraph
-            const chunks = createChunksFromText(currentParagraphText, minWords, maxWords, globalChunkIndex);
-            currentTextParagraph.chunks = chunks;
-            globalChunkIndex += chunks.length;
-            paragraphs.push(currentTextParagraph);
+        } else {
+            // Create text paragraph - each LINE_BREAK separated text is one paragraph
+            const chunks = createChunksFromText(paragraphText, minWords, maxWords, globalChunkIndex);
             
-            // Start new text paragraph
-            currentTextParagraph = {
+            paragraphs.push({
                 id: paragraphId++,
                 pageNumber: pageNumber,
                 type: 'text',
-                chunks: []
-            };
-            currentParagraphText = line;
-        } else {
-            // Continue current paragraph or start first one
-            if (!currentTextParagraph) {
-                currentTextParagraph = {
-                    id: paragraphId++,
-                    pageNumber: pageNumber,
-                    type: 'text',
-                    chunks: []
-                };
-                currentParagraphText = line;
-            } else {
-                currentParagraphText += ' ' + line;
-            }
+                chunks: chunks
+            });
+            
+            globalChunkIndex += chunks.length;
         }
     }
 
-    // Finish last text paragraph
-    if (currentTextParagraph && currentParagraphText.trim().length > 0) {
-        const chunks = createChunksFromText(currentParagraphText, minWords, maxWords, globalChunkIndex);
-        currentTextParagraph.chunks = chunks;
-        paragraphs.push(currentTextParagraph);
+    // Debug final result
+    if (text.includes('inorganic') || text.includes('Yet at night')) {
+        try {
+            const debugInfo = [
+                `Final paragraphs created: ${paragraphs.length}`,
+                ...paragraphs.map((para, i) => {
+                    const chunkTexts = para.chunks.map(c => c.text.substring(0, 100) + (c.text.length > 100 ? '...' : '')).join(' | ');
+                    return `Paragraph ${i} (${para.type}): ${chunkTexts}`;
+                }),
+                ''
+            ];
+            
+            fs.appendFileSync('./debug/chunk-processing-debug.txt', debugInfo.join('\n') + '\n');
+        } catch (error) {
+            // Ignore write errors
+        }
     }
 
     return paragraphs;
@@ -916,73 +894,6 @@ function determineHeaderLevel(headerText, originalLine) {
     }
     
     return 2; // Most section headers are h2
-}
-
-/**
- * Determine if we should start a new text paragraph at this line
- * Simple approach: use PDF line structure with basic sentence ending detection
- * @param {string} currentLine - Current line text  
- * @param {string} currentParagraphText - Text accumulated in current paragraph
- * @param {string} previousLine - Previous line (optional)
- * @param {string} nextLine - Next line (optional)
- * @returns {boolean} Whether to start a new paragraph
- */
-function shouldStartNewTextParagraph(currentLine, currentParagraphText, previousLine, nextLine) {
-    // Always start new paragraph for first line
-    if (!currentParagraphText || currentParagraphText.trim().length === 0) {
-        return true;
-    }
-
-    const currentLineTrimmed = currentLine.trim();
-    const currentParagraphTrimmed = currentParagraphText.trim();
-    
-    // Debug logging for specific case
-    if (currentLineTrimmed.startsWith('A cell is a city')) {
-        const debugInfo = [
-            'Found "A cell is a city" line',
-            `Previous paragraph ends with: "${currentParagraphTrimmed.slice(-20)}"`,
-            `Current line: "${currentLineTrimmed}"`,
-            `Previous ends with sentence? ${/[.!?]\s*$/.test(currentParagraphTrimmed)}`,
-            `Current starts with capital? ${/^[A-Z]/.test(currentLineTrimmed)}`
-        ];
-        
-        try {
-            // Make sure the debug directory exists
-            const debugDir = './debug';
-            if (!fs.existsSync(debugDir)) {
-                fs.mkdirSync(debugDir);
-            }
-            fs.writeFileSync('./debug/paragraph-detection-debug.txt', debugInfo.join('\n'));
-        } catch (error) {
-            // Ignore write errors
-        }
-    }
-    
-    // Simple rule: if previous text ends with sentence-ending punctuation 
-    // AND current line starts with capital letter, start new paragraph
-    const prevEndsWithSentenceEnd = /[.!?]\s*$/.test(currentParagraphTrimmed);
-    const prevEndsWithFootnote = /[.!?]\s*\d{1,2}\s*$/.test(currentParagraphTrimmed); // Footnote numbers 1-99
-    const currentStartsWithCapital = /^[A-Z]/.test(currentLineTrimmed);
-    
-    if ((prevEndsWithSentenceEnd || prevEndsWithFootnote) && currentStartsWithCapital) {
-        // Only check for very obvious abbreviations to avoid false breaks
-        const isObviousAbbreviation = /\b(Dr|Mr|Mrs|Ms|Prof|vs|etc|i\.e|e\.g)\.\s*$/.test(currentParagraphTrimmed);
-        
-        if (!isObviousAbbreviation) {
-            // Debug logging for specific case
-            if (currentLineTrimmed.startsWith('A cell is a city')) {
-                try {
-                    fs.appendFileSync('./debug/paragraph-detection-debug.txt', '\nShould start new paragraph!');
-                } catch (error) {
-                    // Ignore write errors
-                }
-            }
-            return true;
-        }
-    }
-    
-    // Don't break paragraphs otherwise - let PDF line structure guide us
-    return false;
 }
 
 /**
@@ -1107,7 +1018,6 @@ module.exports = {
     endsWithAbbreviation,
     shouldMergeSentence,
     chunkTextWithParagraphs,
-    shouldStartNewTextParagraph,
-    createChunksFromText,
-    determineHeaderLevel
+    determineHeaderLevel,
+    createChunksFromText
 }; 

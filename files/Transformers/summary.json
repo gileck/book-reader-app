@@ -6,7 +6,7 @@
     "filename": "book.pdf"
   },
   "processing": {
-    "timestamp": "2025-07-01T14:28:00.384Z",
+    "timestamp": "2025-07-01T14:32:32.950Z",
     "totalChapters": 8,
     "totalChunks": 0,
     "totalWords": 118056,
@@ -17,7 +17,7 @@
     {
       "title": "Introduction: Life itself",
       "wordCount": 8158,
-      "chunkCount": 81,
+      "chunkCount": 119,
       "pageRange": "9-27",
       "imageCount": 0,
       "linkCount": 0
@@ -25,7 +25,7 @@
     {
       "title": "Discovering the nanocosm",
       "wordCount": 14337,
-      "chunkCount": 149,
+      "chunkCount": 216,
       "pageRange": "28-62",
       "imageCount": 0,
       "linkCount": 0
@@ -33,7 +33,7 @@
     {
       "title": "The path of carbon",
       "wordCount": 11769,
-      "chunkCount": 106,
+      "chunkCount": 180,
       "pageRange": "63-91",
       "imageCount": 0,
       "linkCount": 0
@@ -41,7 +41,7 @@
     {
       "title": "From gases to life",
       "wordCount": 12826,
-      "chunkCount": 123,
+      "chunkCount": 189,
       "pageRange": "92-124",
       "imageCount": 0,
       "linkCount": 0
@@ -49,7 +49,7 @@
     {
       "title": "Revolutions",
       "wordCount": 11224,
-      "chunkCount": 104,
+      "chunkCount": 158,
       "pageRange": "125-150",
       "imageCount": 0,
       "linkCount": 0
@@ -57,7 +57,7 @@
     {
       "title": "To the dark side",
       "wordCount": 12549,
-      "chunkCount": 137,
+      "chunkCount": 206,
       "pageRange": "151-181",
       "imageCount": 0,
       "linkCount": 0
@@ -65,7 +65,7 @@
     {
       "title": "The flux capacitor",
       "wordCount": 13224,
-      "chunkCount": 133,
+      "chunkCount": 201,
       "pageRange": "182-211",
       "imageCount": 0,
       "linkCount": 0
@@ -73,7 +73,7 @@
     {
       "title": "Epilogue: Self",
       "wordCount": 33969,
-      "chunkCount": 544,
+      "chunkCount": 900,
       "pageRange": "212-317",
       "imageCount": 0,
       "linkCount": 0
