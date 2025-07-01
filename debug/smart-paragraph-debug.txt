@@ -1,7 +1,7 @@
 SMART PARAGRAPH DETECTION DEBUG:
 Original lines: 41
-Initial paragraphs: 12
-After merging: 12
+Initial paragraphs: 13
+After merging: 5
 
 Paragraphs containing target text:
-Paragraph 2: "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolution 33 (1991) 543–55. One of the earlier papers tracing human ancestry and mig..."
+Paragraph 1: "D. A. Merriwether, A. G. Clark, S. W. Ballinger, T. G. Schurr, H. Soodyall, T. Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journal of Molecular Evolu..."

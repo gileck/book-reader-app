@@ -7,6 +7,7 @@ interface AudioPlaybackState {
     currentChunkIndex: number;
     currentWordIndex: number;
     isPlaying: boolean;
+    intendedPlay: boolean; // Track if user wants to play but current chunk isn't ready
     audioChunks: { [key: number]: { audio: HTMLAudioElement; timepoints: TTSTimepoint[] } };
     ttsError: TtsErrorDetail | null;
     ttsServiceAvailable: boolean;
@@ -16,6 +17,7 @@ const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
     currentChunkIndex: 0,
     currentWordIndex: 0,
     isPlaying: false,
+    intendedPlay: false,
     audioChunks: {},
     ttsError: null,
     ttsServiceAvailable: true
@@ -164,7 +166,8 @@ export const useAudioPlayback = (
             audioChunks: {},
             currentChunkIndex: 0,
             currentWordIndex: 0,
-            isPlaying: false
+            isPlaying: false,
+            intendedPlay: false
         });
         pendingRequests.current.clear();
         failedChunks.current.clear();
@@ -223,18 +226,32 @@ export const useAudioPlayback = (
                     );
                     injectCSS(chunkCSS, `chunk-animation-chunk-${index}`);
 
-                    setState(prev => ({
-                        ...prev,
-                        audioChunks: {
-                            ...prev.audioChunks,
-                            [index]: {
-                                audio,
-                                timepoints: result.data.timepoints!
-                            }
-                        },
-                        ttsError: null,
-                        ttsServiceAvailable: true
-                    }));
+                    setState(prev => {
+                        const newState = {
+                            ...prev,
+                            audioChunks: {
+                                ...prev.audioChunks,
+                                [index]: {
+                                    audio,
+                                    timepoints: result.data.timepoints!
+                                }
+                            },
+                            ttsError: null,
+                            ttsServiceAvailable: true
+                        };
+
+                        // Auto-play if this is the current chunk and user intended to play
+                        if (index === prev.currentChunkIndex && prev.intendedPlay) {
+                            setTimeout(() => {
+                                audio.playbackRate = playbackSpeed;
+                                audio.play();
+                            }, 100);
+                            newState.isPlaying = true;
+                            newState.intendedPlay = false;
+                        }
+
+                        return newState;
+                    });
                 } else if (!result.data?.success) {
                     // Handle TTS generation failure - mark chunk as failed to prevent infinite retries
                     failedChunks.current.add(index);
@@ -266,10 +283,13 @@ export const useAudioPlayback = (
             }
         };
 
-        // Fetch current and next chunk
+        // Fetch current and next 2 chunks
         fetchChunk(state.currentChunkIndex);
         if (state.currentChunkIndex < textChunks.length - 1) {
             fetchChunk(state.currentChunkIndex + 1);
+        }
+        if (state.currentChunkIndex < textChunks.length - 2) {
+            fetchChunk(state.currentChunkIndex + 2);
         }
     }, [chapter, state.currentChunkIndex, textChunks, selectedVoice, selectedProvider, currentChapterNumber]);
 
@@ -306,7 +326,7 @@ export const useAudioPlayback = (
         const handlePlay = () => updateState({ isPlaying: true });
         const handlePause = () => updateState({ isPlaying: false });
         const handleEnded = () => {
-            updateState({ isPlaying: false, currentWordIndex: 0 });
+            updateState({ isPlaying: false, currentWordIndex: 0, intendedPlay: false });
             onAudioFinished();
         };
 
@@ -334,7 +354,9 @@ export const useAudioPlayback = (
                 if (nextAudioData) {
                     nextAudioData.audio.playbackRate = playbackSpeed;
                     nextAudioData.audio.play();
-                    updateState({ isPlaying: true });
+                    updateState({ isPlaying: true, intendedPlay: false });
+                } else {
+                    updateState({ intendedPlay: true });
                 }
             }, 100);
         }
@@ -345,7 +367,10 @@ export const useAudioPlayback = (
         if (audioData) {
             audioData.audio.playbackRate = playbackSpeed;
             audioData.audio.play();
-            updateState({ isPlaying: true });
+            updateState({ isPlaying: true, intendedPlay: false });
+        } else {
+            // Current chunk isn't ready yet, set intendedPlay so it auto-plays when ready
+            updateState({ intendedPlay: true });
         }
     }, [state.audioChunks, state.currentChunkIndex, playbackSpeed, updateState]);
 
@@ -354,7 +379,7 @@ export const useAudioPlayback = (
         if (audioData) {
             audioData.audio.pause();
         }
-        updateState({ isPlaying: false });
+        updateState({ isPlaying: false, intendedPlay: false });
     }, [state.audioChunks, state.currentChunkIndex, updateState]);
 
     const handleWordClick = useCallback((chunkIndex: number, wordIndex: number) => {
@@ -388,8 +413,9 @@ export const useAudioPlayback = (
                         prevAudioData.audio.currentTime = 0;
                         prevAudioData.audio.playbackRate = playbackSpeed;
                         prevAudioData.audio.play();
-                        updateState({ isPlaying: true });
+                        updateState({ isPlaying: true, intendedPlay: false });
                     } else {
+                        updateState({ intendedPlay: true });
                         setTimeout(waitForAudio, 200);
                     }
                 };
@@ -417,8 +443,9 @@ export const useAudioPlayback = (
                         nextAudioData.audio.currentTime = 0;
                         nextAudioData.audio.playbackRate = playbackSpeed;
                         nextAudioData.audio.play();
-                        updateState({ isPlaying: true });
+                        updateState({ isPlaying: true, intendedPlay: false });
                     } else {
+                        updateState({ intendedPlay: true });
                         setTimeout(waitForAudio, 200);
                     }
                 };
@@ -550,6 +577,8 @@ export const useAudioPlayback = (
 
     // Check if current chunk is loading
     const isCurrentChunkLoading = pendingRequests.current.has(state.currentChunkIndex);
+
+
 
     const clearTtsError = useCallback(() => {
         updateState({

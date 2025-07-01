@@ -16,7 +16,7 @@ const { combineTextItemsPreservingStructure, preserveHeadingsInPageText, cleanPa
 async function detectChapters(text, config, pdfPath = null) {
     // Try TOC extraction first if PDF path is provided
     if (pdfPath) {
-    
+
         const tocData = await extractTOCFromPdf(pdfPath);
 
         // Save tocData to debug file (only in debug mode)
@@ -62,11 +62,11 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
         // Test debug output to verify function is called
         try {
             const fs = require('fs');
-            const debugDir = './debug';
+            const debugDir = path.join(path.dirname(pdfPath), 'debug');
             if (!fs.existsSync(debugDir)) {
-                fs.mkdirSync(debugDir);
+                fs.mkdirSync(debugDir, { recursive: true });
             }
-            fs.writeFileSync('./debug/cross-page-debug.txt', 
+            fs.writeFileSync(path.join(debugDir, 'cross-page-debug.txt'),
                 `FUNCTION CALLED: extractChapterContentFromTOC with ${tocChapters.length} chapters\n\n`);
         } catch (error) {
             console.log('Debug file write error:', error);
@@ -95,9 +95,9 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             return false;
         });
 
-            if (contentChapters.length === 0) {
-        return null;
-    }
+        if (contentChapters.length === 0) {
+            return null;
+        }
 
         // Use pdfjs to extract text page by page for precise chapter boundaries
         const data = new Uint8Array(fs.readFileSync(pdfPath));
@@ -112,11 +112,11 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             // Debug what chapter we're processing
             try {
                 const fs = require('fs');
-                const debugDir = './debug';
+                const debugDir = path.join(path.dirname(pdfPath), 'debug');
                 if (!fs.existsSync(debugDir)) {
-                    fs.mkdirSync(debugDir);
+                    fs.mkdirSync(debugDir, { recursive: true });
                 }
-                fs.appendFileSync('./debug/cross-page-debug.txt', 
+                fs.appendFileSync(path.join(debugDir, 'cross-page-debug.txt'),
                     `PROCESSING CHAPTER: "${currentChapter.chapterTitle}" (${currentChapter.chapterNumber})\n\n`);
             } catch (error) {
                 // Ignore debug errors
@@ -125,7 +125,7 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             const startPage = currentChapter.startingPage;
             const endPage = nextChapter ? nextChapter.startingPage - 1 : doc.numPages;
 
-    
+
 
             const chapterPages = [];
 
@@ -136,7 +136,7 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                     const textContent = await page.getTextContent();
 
                     // Extract text with coordinate information
-                    const textWithCoords = extractTextContentWithCoordinates(textContent);
+                    const textWithCoords = extractTextContentWithCoordinates(textContent, path.join(path.dirname(pdfPath), 'debug'));
                     let pageText = textWithCoords.combinedText;
 
                     // Get next page text for cross-page header detection
@@ -145,7 +145,7 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                         try {
                             const nextPage = await doc.getPage(pageNum + 1);
                             const nextTextContent = await nextPage.getTextContent();
-                            const nextRawText = combineTextItemsPreservingStructure(nextTextContent.items);
+                            const nextRawText = combineTextItemsPreservingStructure(nextTextContent.items, path.join(path.dirname(pdfPath), 'debug'));
                             // Take first few lines of next page
                             const nextLines = nextRawText.split(' ⟨⟨LINE_BREAK⟩⟩ ').slice(0, 3);
                             nextPageText = nextLines.join(' ⟨⟨LINE_BREAK⟩⟩ ');
@@ -175,20 +175,20 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             if (chapterPages.length > 0) {
                 // Process pages to handle cross-page sentence continuation
                 const contentLines = [];
-                
+
                 for (let pageIndex = 0; pageIndex < chapterPages.length; pageIndex++) {
                     const page = chapterPages[pageIndex];
                     let pageText = page.text.trim();
-                    
+
                     if (pageText.length <= 50) continue; // Skip pages with minimal content
-                    
+
                     // Check if this page ends with an incomplete sentence
                     // (doesn't end with sentence-ending punctuation)
                     const pageEndsWithPunctuation = /[.!?;]$/.test(pageText);
                     const hasNextPage = pageIndex < chapterPages.length - 1;
-                    
+
                     // Debug all pages with relevant content or in Introduction chapter
-                    if (pageText.includes('If you shrink yourself') || pageText.includes('down to the size') || 
+                    if (pageText.includes('If you shrink yourself') || pageText.includes('down to the size') ||
                         pageText.includes('cityscape') || currentChapter.chapterTitle.includes('Introduction') ||
                         pageText.includes('inorganic') || pageText.includes('Yet at night')) {
                         try {
@@ -200,32 +200,32 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                                 `Page text length: ${pageText.length}`,
                                 ''
                             ];
-                            
+
                             const fs = require('fs');
-                            const debugDir = './debug';
+                            const debugDir = path.join(path.dirname(pdfPath), 'debug');
                             if (!fs.existsSync(debugDir)) {
-                                fs.mkdirSync(debugDir);
+                                fs.mkdirSync(debugDir, { recursive: true });
                             }
-                            fs.appendFileSync('./debug/cross-page-debug.txt', debugInfo.join('\n') + '\n');
+                            fs.appendFileSync(path.join(debugDir, 'cross-page-debug.txt'), debugInfo.join('\n') + '\n');
                         } catch (error) {
                             // Ignore debug errors
                         }
                     }
-                    
+
                     if (!pageEndsWithPunctuation && hasNextPage) {
                         // This page ends without sentence punctuation, check next page
                         const nextPage = chapterPages[pageIndex + 1];
                         const nextPageText = nextPage.text.trim();
-                        
+
                         if (nextPageText.length > 50) {
                             // Find the first sentence boundary in the next page
                             const firstSentenceEnd = nextPageText.search(/[.!?;]/);
-                            
+
                             if (firstSentenceEnd !== -1) {
                                 // Extract the continuation part from next page
                                 const continuationPart = nextPageText.substring(0, firstSentenceEnd + 1);
                                 const remainingNextPageText = nextPageText.substring(firstSentenceEnd + 1).trim();
-                                
+
                                 // Additional debug for the specific cross-page case
                                 if (pageText.includes('If you shrink yourself') || continuationPart.includes('down to the size')) {
                                     try {
@@ -237,22 +237,22 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                                             `Combined result: "${(pageText + ' ' + continuationPart).substring(Math.max(0, pageText.length - 50))}"`,
                                             ''
                                         ];
-                                        
-                                        fs.appendFileSync('./debug/cross-page-debug.txt', debugInfo.join('\n') + '\n');
+
+                                        fs.appendFileSync(path.join(path.dirname(pdfPath), 'debug', 'cross-page-debug.txt'), debugInfo.join('\n') + '\n');
                                     } catch (error) {
                                         // Ignore debug errors
                                     }
                                 }
-                                
+
                                 // Combine current page with continuation
                                 pageText = pageText + ' ' + continuationPart;
-                                
+
                                 // Update next page to remove the continuation part
                                 chapterPages[pageIndex + 1].text = remainingNextPageText;
                             }
                         }
                     }
-                    
+
                     contentLines.push(pageText);
                 }
 
@@ -270,7 +270,7 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                     endingPage: endPage
                 });
             } else {
-    
+
             }
         }
 

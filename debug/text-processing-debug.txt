@@ -88,3 +88,258 @@ Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Mate
 Contains line breaks: true
 Number of line breaks: 11
 
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 11
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 11
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 10
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: false
+Number of line breaks: 0
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: false
+Number of line breaks: 0
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: false
+Number of line breaks: 0
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). D. A. Merriwether, A. G. Clark, S. W. Ballinger, T...
+Contains line breaks: true
+Number of line breaks: 3
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them gr...
+Contains line breaks: true
+Number of line breaks: 1
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 106 dashed lines. I’m saying ‘imagine it’, but let me be clear: experiments show that CO 2 adsorption and reduction, as I describe below, does indeed happen. Binding to a surface works a bit like an enzyme, feeding electrons continuously and positioning molecules ‘just so’ for the next steps to happen. Let’s walk through the steps, which I’ve made as friendly as I can through my ‘portraits’ of the protagonists. I should say that, by convention, a curly black arrow denotes the movement of a pair ...
+Contains line breaks: true
+Number of line breaks: 2
+
+FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:
+Combined text: 273 R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration that mitochondrial DNA is inherited from the mother in humans, although this had already been established for other species. Maternal inheritance of mitochondria now has the status of general rule of thumb (there are no strict laws in biology). ⟨⟨LINE_BREAK⟩⟩ D. A. Merriwether, A. G. Clark, S. ...
+Contains line breaks: true
+Number of line breaks: 4
+

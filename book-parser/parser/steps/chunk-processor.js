@@ -30,7 +30,7 @@ async function createPageAwareChunksWithImages(chapters, images, links = []) {
     // First pass: create basic chunks
     chapters.forEach(chapter => {
         const pageNumbers = new Set();
-        
+
         // Skip chapters without chunks but ensure they have basic properties
         if (!chapter.chunks || !Array.isArray(chapter.chunks)) {
             chapter.pageNumbers = [];
@@ -38,7 +38,7 @@ async function createPageAwareChunksWithImages(chapters, images, links = []) {
             chapter.endPageNumber = chapter.endPageNumber || chapter.endingPage || 1;
             return;
         }
-        
+
         // Map startingPage/endingPage to startPageNumber/endPageNumber if needed
         if (!chapter.startPageNumber && chapter.startingPage) {
             chapter.startPageNumber = chapter.startingPage;
@@ -46,33 +46,33 @@ async function createPageAwareChunksWithImages(chapters, images, links = []) {
         if (!chapter.endPageNumber && chapter.endingPage) {
             chapter.endPageNumber = chapter.endingPage;
         }
-        
+
         // Calculate page numbers for chunks based on their position in the chapter
         const chapterPageRange = chapter.endPageNumber - chapter.startPageNumber + 1;
         const chunksPerPage = Math.ceil(chapter.chunks.length / chapterPageRange);
-        
+
         chapter.chunks.forEach((chunk, index) => {
             chunk.id = chunkId++;
             chunk.index = chunkId - 1; // Add index property for link resolution
             chunk.chapterNumber = chapter.chapterNumber || chapter.number;
             chunk.chapterTitle = chapter.title;
             chunk.links = []; // Initialize empty links array
-            
+
             // Assign page number based on chunk position within chapter
             if (!chunk.pageNumber) {
                 const pageIndex = Math.floor(index / chunksPerPage);
                 chunk.pageNumber = chapter.startPageNumber + Math.min(pageIndex, chapterPageRange - 1);
             }
-            
+
             if (chunk.pageNumber) {
                 pageNumbers.add(chunk.pageNumber);
             }
-            
+
             allChunks.push(chunk);
         });
-        
+
         chapter.pageNumbers = Array.from(pageNumbers).sort((a, b) => a - b);
-        
+
         // Set page numbers with fallbacks for empty pageNumbers
         if (chapter.pageNumbers.length > 0) {
             chapter.startPageNumber = Math.min(...chapter.pageNumbers);
@@ -135,13 +135,13 @@ async function addCoordinateBoundsToChunks(allChunks, pdfPath) {
 
                 // Calculate page bounds from text content
                 const pageBounds = calculatePageBounds(textContent, viewport);
-                
+
                 // Assign coordinate bounds to each chunk based on its position on the page
                 pageChunks.forEach((chunk, index) => {
                     chunk.coordinateBounds = estimateChunkCoordinates(
-                        chunk, 
-                        index, 
-                        pageChunks.length, 
+                        chunk,
+                        index,
+                        pageChunks.length,
                         pageBounds
                     );
                 });
@@ -239,40 +239,68 @@ function estimateChunkCoordinates(chunk, chunkIndex, totalChunks, pageCoordinate
  */
 function processChapter(chapter, debugDir) {
 
-    
-    // Create paragraphs with chunks for each page
+
+    // Create paragraphs with chunks - use merged content from cross-page processing
     let allParagraphs = [];
     let globalChunkIndex = 0;
-    
-    // Group pages by content and process each page
-    for (let pageIndex = 0; pageIndex < chapter.pages.length; pageIndex++) {
-        const page = chapter.pages[pageIndex];
-        
-        if (!page.text || page.text.trim().length === 0) {
-            continue;
-        }
-        
-        
-        
-        // Use new paragraph-aware chunking
-        const pageParagraphs = chunkTextWithParagraphs(
-            page.text, 
+
+    // Check if we have content as array (from cross-page merging) or pages
+    if (chapter.content && Array.isArray(chapter.content)) {
+        // Use merged content from cross-page processing
+        const mergedText = chapter.content.join(' ⟨⟨PAGE_BREAK⟩⟩ ');
+
+        // Process the merged text as a whole to preserve cross-page sentence continuations
+        const chapterParagraphs = chunkTextWithParagraphs(
+            mergedText,
             5,  // minWords
-            15, // maxWords  
-            page.pageNumber
+            15, // maxWords
+            chapter.startPageNumber || chapter.startingPage || 1
         );
-        
-        // Update global chunk indices
-        for (const paragraph of pageParagraphs) {
+
+        // Update global chunk indices and distribute page numbers
+        let currentPageIndex = 0;
+        const pageNumbers = chapter.pages ? chapter.pages.map(p => p.pageNumber) : [chapter.startPageNumber || 1];
+
+        for (const paragraph of chapterParagraphs) {
             for (const chunk of paragraph.chunks) {
                 chunk.globalIndex = globalChunkIndex++;
-                chunk.pageNumber = page.pageNumber; // Ensure chunk has page number
+                // Distribute chunks across pages proportionally
+                const pageProgressRatio = globalChunkIndex / (chapterParagraphs.length * 2); // Rough estimate
+                const targetPageIndex = Math.min(Math.floor(pageProgressRatio * pageNumbers.length), pageNumbers.length - 1);
+                chunk.pageNumber = pageNumbers[targetPageIndex] || paragraph.pageNumber;
             }
         }
-        
-        allParagraphs.push(...pageParagraphs);
+
+        allParagraphs.push(...chapterParagraphs);
+    } else {
+        // Fallback to page-by-page processing if no merged content
+        for (let pageIndex = 0; pageIndex < chapter.pages.length; pageIndex++) {
+            const page = chapter.pages[pageIndex];
+
+            if (!page.text || page.text.trim().length === 0) {
+                continue;
+            }
+
+            // Use new paragraph-aware chunking
+            const pageParagraphs = chunkTextWithParagraphs(
+                page.text,
+                5,  // minWords
+                15, // maxWords  
+                page.pageNumber
+            );
+
+            // Update global chunk indices
+            for (const paragraph of pageParagraphs) {
+                for (const chunk of paragraph.chunks) {
+                    chunk.globalIndex = globalChunkIndex++;
+                    chunk.pageNumber = page.pageNumber; // Ensure chunk has page number
+                }
+            }
+
+            allParagraphs.push(...pageParagraphs);
+        }
     }
-    
+
     // Create the updated chapter structure
     const processedChapter = {
         ...chapter,
@@ -283,7 +311,7 @@ function processChapter(chapter, debugDir) {
             chunks: flattenParagraphsToChunks(allParagraphs)
         }
     };
-    
+
     // Save debug information
     if (debugDir) {
         const debugFile = path.join(debugDir, 'step6-chapters-with-paragraphs.json');
@@ -305,10 +333,10 @@ function processChapter(chapter, debugDir) {
                 }))
             }))
         };
-        
+
         fs.writeFileSync(debugFile, JSON.stringify(debugData, null, 2));
     }
-    
+
     return processedChapter;
 }
 
@@ -319,7 +347,7 @@ function processChapter(chapter, debugDir) {
  */
 function flattenParagraphsToChunks(paragraphs) {
     const allChunks = [];
-    
+
     for (const paragraph of paragraphs) {
         for (const chunk of paragraph.chunks) {
             allChunks.push({
@@ -330,7 +358,7 @@ function flattenParagraphsToChunks(paragraphs) {
             });
         }
     }
-    
+
     return allChunks;
 }
 
@@ -341,7 +369,7 @@ function flattenParagraphsToChunks(paragraphs) {
  */
 function createGlobalChunkMapping(paragraphs) {
     const mapping = new Map();
-    
+
     for (const paragraph of paragraphs) {
         for (const chunk of paragraph.chunks) {
             mapping.set(chunk.globalIndex, {
@@ -352,7 +380,7 @@ function createGlobalChunkMapping(paragraphs) {
             });
         }
     }
-    
+
     return mapping;
 }
 

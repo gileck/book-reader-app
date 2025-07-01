@@ -1,0 +1,28 @@
+ALL ORIGINAL PARAGRAPHS BEFORE MERGING:
+Total paragraphs: 23
+Paragraphs < 60 words: 23
+Paragraphs >= 60 words: 0
+
+Paragraph 0 (1 words) [SHORT]: "316"
+Paragraph 1 (7 words) [SHORT]: "Table of Contents Praise for Transformer 1"
+Paragraph 2 (3 words) [SHORT]: "Title Page 3"
+Paragraph 3 (2 words) [SHORT]: "Copyright 4"
+Paragraph 4 (2 words) [SHORT]: "Dedication 5"
+Paragraph 5 (2 words) [SHORT]: "Contents 6"
+Paragraph 6 (4 words) [SHORT]: "Introduction: Life itself 8"
+Paragraph 7 (5 words) [SHORT]: "1. Discovering the nanocosm 27"
+Paragraph 8 (6 words) [SHORT]: "2. The path of carbon 62"
+Paragraph 9 (6 words) [SHORT]: "3. From gases to life 91"
+Paragraph 10 (3 words) [SHORT]: "4. Revolutions 124"
+Paragraph 11 (6 words) [SHORT]: "5. To the dark side 150"
+Paragraph 12 (5 words) [SHORT]: "6. The flux capacitor 181"
+Paragraph 13 (3 words) [SHORT]: "Epilogue: Self 211"
+Paragraph 14 (5 words) [SHORT]: "Envoi: ‘Like Most Revelations’ 219"
+Paragraph 15 (5 words) [SHORT]: "The forward Krebs cycle 220"
+Paragraph 16 (5 words) [SHORT]: "The reverse Krebs cycle 221"
+Paragraph 17 (6 words) [SHORT]: "Appendix 1: Red protein mechanics 222"
+Paragraph 18 (6 words) [SHORT]: "Appendix 2: The Krebs line 227"
+Paragraph 19 (4 words) [SHORT]: "List of abbreviations 233"
+Paragraph 20 (3 words) [SHORT]: "Further reading 236"
+Paragraph 21 (2 words) [SHORT]: "Acknowledgements 282"
+Paragraph 22 (2 words) [SHORT]: "Index 288"

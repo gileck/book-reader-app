@@ -331,7 +331,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                             hasError
                                 ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
                                 : isCurrentChunkLoading
-                                    ? 'Loading audio...'
+                                    ? 'Loading current audio...'
                                     : isPlaying
                                         ? 'Pause'
                                         : 'Play'
@@ -339,21 +339,17 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         sx={{
                             backgroundColor: hasError
                                 ? '#9e9e9e' // Gray when there's an error
-                                : isCurrentChunkLoading
-                                    ? '#ff9800'
-                                    : isPlaying ? '#f44336' : '#4caf50',
+                                : isPlaying ? '#f44336' : '#4caf50',
                             color: 'white',
                             '&:hover': {
                                 backgroundColor: hasError
                                     ? '#757575' // Darker gray on hover when there's an error
-                                    : isCurrentChunkLoading
-                                        ? '#f57c00'
-                                        : isPlaying ? '#d32f2f' : '#388e3c'
+                                    : isPlaying ? '#d32f2f' : '#388e3c'
                             },
                             '&:disabled': {
                                 backgroundColor: hasError
                                     ? '#9e9e9e' // Keep gray when disabled due to error
-                                    : '#ff9800',
+                                    : '#757575', // Gray when disabled due to loading
                                 color: 'white'
                             },
                             width: 64,

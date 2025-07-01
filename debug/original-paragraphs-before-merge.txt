@@ -1,0 +1,997 @@
+ORIGINAL PARAGRAPHS BEFORE MERGING:
+Total paragraphs: 10
+
+Paragraph 0 (24 words): "233 ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 1 (59 words): "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 2 (33 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 3 (31 words): "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2 in hydrothermal vents."
+Paragraph 4 (33 words): "-COOH Carboxylic acid group. Characteristic of all Krebs cycle molecules, which can have two or three such groups. The proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group."
+Paragraph 5 (43 words): "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 6 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 7 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 8 (31 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 9 (31 words): "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 10
+
+Paragraph 0 (24 words): "233 ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 1 (59 words): "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 2 (33 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 3 (31 words): "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2 in hydrothermal vents."
+Paragraph 4 (33 words): "-COOH Carboxylic acid group. Characteristic of all Krebs cycle molecules, which can have two or three such groups. The proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group."
+Paragraph 5 (43 words): "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 6 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 7 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 8 (31 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 9 (31 words): "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (84 words): "8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. Ther..."
+Paragraph 1 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 2 (35 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 3 (238 words): "No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their ..."
+Paragraph 4 (39 words): "A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrin..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (13 words): "10 regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 1 (43 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 2 (63 words): "For decades, biology has been dominated by information – the power of genes. The importance of genes is unquestionable, yet there is no difference in the information content of a living protozoon and ..."
+Paragraph 3 (252 words): "1 If there is a view from modern biology, it is that genetic information structures the flow of energy and materials. To a first approximation, biology is understood in terms of information networks a..."
+Paragraph 4 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (95 words): "11 different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s ..."
+Paragraph 1 (3 words): "You and me."
+Paragraph 2 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 3 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 4 (187 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 5 (52 words): "The dynamic side To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochem..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (143 words): "24 In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction betwee..."
+Paragraph 1 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 2 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 3 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (14 words): "53 today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 1 (126 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 2 (159 words): "A grossly simplified schematic of the respiratory chain. The transfer of electrons from NADH to oxygen is shown by the dotted line. These electrons pass through three great protein complexes embedded ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (160 words): "64 this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis con..."
+Paragraph 1 (277 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (101 words): "102 The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference..."
+Paragraph 1 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (107 words): "114 the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats it..."
+Paragraph 1 (282 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 2 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (117 words): "115 How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life,..."
+Paragraph 1 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 2 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 3 (55 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 4 (3 words): "do what exactly?"
+Paragraph 5 (142 words): "The next step is just as pleasing. How could these protocells grow and divide? To do so, they would need to make more organic molecules inside themselves (more fatty acids, more amino acids) using the..."
+Paragraph 6 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (149 words): "116 fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rathe..."
+Paragraph 1 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 2 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 3 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (32 words): "119 didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase?"
+Paragraph 1 (162 words): "The answer turns out to be quite simple. ATP can be formed directly from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. Going back to the reaction steps I..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (157 words): "120 Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might e..."
+Paragraph 1 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 2 (208 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 3 (41 words): "The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the same reaction can happen all..."
+Paragraph 4 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (71 words): "140 (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere..."
+Paragraph 1 (41 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13 C abundance in limestone sedim..."
+Paragraph 2 (224 words): "The soaring 13 C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; ..."
+Paragraph 3 (99 words): "The Shuram conundrum Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dat..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 10
+
+Paragraph 0 (24 words): "233 ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 1 (59 words): "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 2 (33 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 3 (31 words): "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2 in hydrothermal vents."
+Paragraph 4 (33 words): "-COOH Carboxylic acid group. Characteristic of all Krebs cycle molecules, which can have two or three such groups. The proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group."
+Paragraph 5 (43 words): "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 6 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 7 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 8 (31 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 9 (31 words): "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (3 words): "8 I NTRODUCTION"
+Paragraph 1 (2 words): "LIFE ITSELF"
+Paragraph 2 (404 words): "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous dens..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (443 words): "10 regulatory loops that lend an illusion of purpose, listed all their parts. And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How d..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (367 words): "11 different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s ..."
+Paragraph 1 (49 words): "To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochemistry began with ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (464 words): "24 In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction betwee..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (299 words): "53 today. Let me just give you a flavour (don’t worry about the details). They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (437 words): "64 this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis con..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (237 words): "102 The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (393 words): "114 the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats it..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (431 words): "115 How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life,..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (288 words): "116 fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rathe..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (194 words): "119 didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase? The answer turns out to b..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (459 words): "120 Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might e..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (110 words): "140 (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere..."
+Paragraph 1 (4 words): "same time. The soaring"
+Paragraph 2 (225 words): "13 C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just ..."
+Paragraph 3 (96 words): "Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dated to 560 million yea..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (2 words): "233 ABBREVIATIONS"
+Paragraph 1 (366 words): "2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule. ATP Adenosine triphosphate. The ‘universal energy currency’...."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (3 words): "8 I NTRODUCTION"
+Paragraph 1 (2 words): "LIFE ITSELF"
+Paragraph 2 (79 words): "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous dens..."
+Paragraph 3 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 4 (204 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 5 (108 words): "the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a hive of bustling activity, others nearly dormant until the evening when ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (13 words): "10 regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 1 (201 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 2 (157 words): "have a simple explanation: natural selection sifts through random differences, favouring what works, eliminating what doesn’t, generation after generation. Information accumulates with function over t..."
+Paragraph 3 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (98 words): "11 different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s ..."
+Paragraph 1 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 2 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 3 (190 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 4 (49 words): "To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochemistry began with ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (143 words): "24 In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction betwee..."
+Paragraph 1 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 2 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 3 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (14 words): "53 today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 1 (202 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 2 (83 words): "(adenosine diphosphate) and inorganic phosphate (P i ). In humans, eight protons pass through the ATP synthase for one turn of the motor, which generates three ATPs. The other two protons are not ‘was..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (160 words): "64 this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis con..."
+Paragraph 1 (203 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+Paragraph 2 (74 words): "more evocative name blue-green algae. Yet they were quite late to the party too. Before these sophisticated bacteria, other autotrophs were already ancient, living from gases and rocks, sometimes deep..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (101 words): "102 The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference..."
+Paragraph 1 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (107 words): "114 the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats it..."
+Paragraph 1 (203 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 2 (79 words): "come from H 2 , whereas the protons derived from the acidic ocean solution, as laid out here. And crucially, the carbon in the organic molecules (mainly formate) really did derive from the CO 2 added...."
+Paragraph 3 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (117 words): "115 How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life,..."
+Paragraph 1 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 2 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 3 (200 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 4 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (149 words): "116 fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rathe..."
+Paragraph 1 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 2 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 3 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (194 words): "119 didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase? The answer turns out to b..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (157 words): "120 Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might e..."
+Paragraph 1 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 2 (208 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 3 (41 words): "The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the same reaction can happen all..."
+Paragraph 4 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (71 words): "140 (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere..."
+Paragraph 1 (39 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13 C abundance in limestone sedim..."
+Paragraph 2 (4 words): "same time. The soaring"
+Paragraph 3 (203 words): "13 C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just ..."
+Paragraph 4 (22 words): "downturn of all came the Cambrian explosion. Understanding this enigmatic downturn is key to understanding the origin of animals. The Shuram conundrum"
+Paragraph 5 (96 words): "Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dated to 560 million yea..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (2 words): "233 ABBREVIATIONS"
+Paragraph 1 (81 words): "2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule. ATP Adenosine triphosphate. The ‘universal energy currency’...."
+Paragraph 2 (140 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism. CO 2 Carbon diox..."
+Paragraph 3 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 4 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 5 (62 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster. GSH Gluta..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (3 words): "8 I NTRODUCTION"
+Paragraph 1 (2 words): "LIFE ITSELF"
+Paragraph 2 (79 words): "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous dens..."
+Paragraph 3 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 4 (204 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 5 (120 words): "could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (13 words): "10 regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 1 (201 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 2 (168 words): "this information come from? Within the realm of biology, we already have a simple explanation: natural selection sifts through random differences, favouring what works, eliminating what doesn’t, gener..."
+Paragraph 3 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (98 words): "11 different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s ..."
+Paragraph 1 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 2 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 3 (190 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 4 (49 words): "To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochemistry began with ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (143 words): "24 In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction betwee..."
+Paragraph 1 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 2 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 3 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (14 words): "53 today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 1 (202 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 2 (91 words): "proton-motive force) that drives ATP synthesis from ADP (adenosine diphosphate) and inorganic phosphate (P i ). In humans, eight protons pass through the ATP synthase for one turn of the motor, which ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (160 words): "64 this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis con..."
+Paragraph 1 (203 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+Paragraph 2 (87 words): "as we know it was invented by the cyanobacteria, once graced with the more evocative name blue-green algae. Yet they were quite late to the party too. Before these sophisticated bacteria, other autotr..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (101 words): "102 The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference..."
+Paragraph 1 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (107 words): "114 the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats it..."
+Paragraph 1 (203 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 2 (91 words): "isotopes of carbon and hydrogen to show that the electrons did indeed come from H 2 , whereas the protons derived from the acidic ocean solution, as laid out here. And crucially, the carbon in the org..."
+Paragraph 3 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (117 words): "115 How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life,..."
+Paragraph 1 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 2 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 3 (200 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 4 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (149 words): "116 fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rathe..."
+Paragraph 1 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 2 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 3 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (194 words): "119 didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase? The answer turns out to b..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (157 words): "120 Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might e..."
+Paragraph 1 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 2 (208 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 3 (49 words): "driving force – the strength of the tide. The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is repleni..."
+Paragraph 4 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (71 words): "140 (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere..."
+Paragraph 1 (39 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13 C abundance in limestone sedim..."
+Paragraph 2 (4 words): "same time. The soaring"
+Paragraph 3 (203 words): "13 C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just ..."
+Paragraph 4 (35 words): "that are harder to interpret. And hard on the heels of the biggest downturn of all came the Cambrian explosion. Understanding this enigmatic downturn is key to understanding the origin of animals. The..."
+Paragraph 5 (96 words): "Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dated to 560 million yea..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (2 words): "233 ABBREVIATIONS"
+Paragraph 1 (81 words): "2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule. ATP Adenosine triphosphate. The ‘universal energy currency’...."
+Paragraph 2 (140 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism. CO 2 Carbon diox..."
+Paragraph 3 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 4 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 5 (62 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster. GSH Gluta..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (3 words): "8 I NTRODUCTION"
+Paragraph 1 (2 words): "LIFE ITSELF"
+Paragraph 2 (79 words): "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous dens..."
+Paragraph 3 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 4 (204 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 5 (120 words): "could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (13 words): "10 regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 1 (201 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 2 (168 words): "this information come from? Within the realm of biology, we already have a simple explanation: natural selection sifts through random differences, favouring what works, eliminating what doesn’t, gener..."
+Paragraph 3 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (98 words): "11 different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s ..."
+Paragraph 1 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 2 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 3 (190 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 4 (49 words): "To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochemistry began with ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (143 words): "24 In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction betwee..."
+Paragraph 1 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 2 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 3 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (14 words): "53 today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 1 (202 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 2 (91 words): "proton-motive force) that drives ATP synthesis from ADP (adenosine diphosphate) and inorganic phosphate (P i ). In humans, eight protons pass through the ATP synthase for one turn of the motor, which ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (160 words): "64 this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis con..."
+Paragraph 1 (203 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+Paragraph 2 (87 words): "as we know it was invented by the cyanobacteria, once graced with the more evocative name blue-green algae. Yet they were quite late to the party too. Before these sophisticated bacteria, other autotr..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 2
+
+Paragraph 0 (101 words): "102 The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference..."
+Paragraph 1 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (107 words): "114 the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats it..."
+Paragraph 1 (203 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 2 (91 words): "isotopes of carbon and hydrogen to show that the electrons did indeed come from H 2 , whereas the protons derived from the acidic ocean solution, as laid out here. And crucially, the carbon in the org..."
+Paragraph 3 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (117 words): "115 How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life,..."
+Paragraph 1 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 2 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 3 (200 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 4 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (149 words): "116 fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rathe..."
+Paragraph 1 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 2 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 3 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (194 words): "119 didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase? The answer turns out to b..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (157 words): "120 Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might e..."
+Paragraph 1 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 2 (208 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 3 (49 words): "driving force – the strength of the tide. The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is repleni..."
+Paragraph 4 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (71 words): "140 (30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere..."
+Paragraph 1 (39 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13 C abundance in limestone sedim..."
+Paragraph 2 (4 words): "same time. The soaring"
+Paragraph 3 (203 words): "13 C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just ..."
+Paragraph 4 (35 words): "that are harder to interpret. And hard on the heels of the biggest downturn of all came the Cambrian explosion. Understanding this enigmatic downturn is key to understanding the origin of animals. The..."
+Paragraph 5 (96 words): "Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dated to 560 million yea..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (2 words): "233 ABBREVIATIONS"
+Paragraph 1 (81 words): "2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule. ATP Adenosine triphosphate. The ‘universal energy currency’...."
+Paragraph 2 (140 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism. CO 2 Carbon diox..."
+Paragraph 3 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 4 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 5 (62 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster. GSH Gluta..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "8"
+Paragraph 1 (83 words): "I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’..."
+Paragraph 2 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 3 (35 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 4 (202 words): "No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their ..."
+Paragraph 5 (46 words): "bustling activity, others nearly dormant until the evening when the commuters return home and the lights flick on. We could map out the flux that animates a city. Certainly, we can imagine a city this..."
+Paragraph 6 (39 words): "A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrin..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 8
+
+Paragraph 0 (1 words): "10"
+Paragraph 1 (12 words): "regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 2 (43 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 3 (63 words): "For decades, biology has been dominated by information – the power of genes. The importance of genes is unquestionable, yet there is no difference in the information content of a living protozoon and ..."
+Paragraph 4 (1 words): "1"
+Paragraph 5 (205 words): "If there is a view from modern biology, it is that genetic information structures the flow of energy and materials. To a first approximation, biology is understood in terms of information networks and..."
+Paragraph 6 (56 words): "animals in the Cambrian explosion, despite the continuous exploration of genetic sequence space – information – across life. There are problems, too, in understanding why we age and die, why we are st..."
+Paragraph 7 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "11"
+Paragraph 1 (94 words): "different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s cap..."
+Paragraph 2 (3 words): "You and me."
+Paragraph 3 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 4 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 5 (187 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 6 (52 words): "The dynamic side To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochem..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (1 words): "24"
+Paragraph 1 (37 words): "In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction between H..."
+Paragraph 2 (105 words): "is facilitated by steep gradients of protons across thin inorganic barriers, with structures similar to cells. We’ll see that this chemistry can in principle – and recent experimental work shows in pr..."
+Paragraph 3 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 4 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 5 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (1 words): "53"
+Paragraph 1 (13 words): "today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 2 (126 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 3 (159 words): "A grossly simplified schematic of the respiratory chain. The transfer of electrons from NADH to oxygen is shown by the dotted line. These electrons pass through three great protein complexes embedded ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (1 words): "64"
+Paragraph 1 (159 words): "this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis conver..."
+Paragraph 2 (203 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+Paragraph 3 (87 words): "as we know it was invented by the cyanobacteria, once graced with the more evocative name blue-green algae. Yet they were quite late to the party too. Before these sophisticated bacteria, other autotr..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "102"
+Paragraph 1 (100 words): "The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference on ..."
+Paragraph 2 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (1 words): "114"
+Paragraph 1 (106 words): "the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats itself..."
+Paragraph 2 (76 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 3 (205 words): "on one side to CO 2 on the other. The theory is soundly grounded, but that’s not enough. This is an experimental question, which my lab and others have been struggling to address for years now. We’ve ..."
+Paragraph 4 (17 words): "verification – for once, not slain by an ugly fact. I take my hat off to them."
+Paragraph 5 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 8
+
+Paragraph 0 (1 words): "115"
+Paragraph 1 (116 words): "How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life, but..."
+Paragraph 2 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 3 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 4 (55 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 5 (3 words): "do what exactly?"
+Paragraph 6 (142 words): "The next step is just as pleasing. How could these protocells grow and divide? To do so, they would need to make more organic molecules inside themselves (more fatty acids, more amino acids) using the..."
+Paragraph 7 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "116"
+Paragraph 1 (13 words): "fundamental requirement is that H 2 is in alkaline conditions, while CO 2"
+Paragraph 2 (77 words): "is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rather than electrons. In fact, that is feasible. We have shown that protons cross ..."
+Paragraph 3 (58 words): "millionths of a millimetre (25 nanometres) in diameter. If so, then inorganic pores and protocells are potentially homologous. Because protocells stick to iron-sulfide barriers on the alkaline side, p..."
+Paragraph 4 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 5 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 6 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "119"
+Paragraph 1 (31 words): "didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase?"
+Paragraph 2 (162 words): "The answer turns out to be quite simple. ATP can be formed directly from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. Going back to the reaction steps I..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "120"
+Paragraph 1 (156 words): "Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might expla..."
+Paragraph 2 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 3 (149 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 4 (59 words): "available, the more organic products will be produced, and the further these reactions will be driven from the starting point. You could think of this as gentle waves spreading up a beach; how far up ..."
+Paragraph 5 (41 words): "The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the same reaction can happen all..."
+Paragraph 6 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 9
+
+Paragraph 0 (1 words): "140"
+Paragraph 1 (70 words): "(30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere. Th..."
+Paragraph 2 (32 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13"
+Paragraph 3 (9 words): "C abundance in limestone sedimented at the same time."
+Paragraph 4 (3 words): "The soaring 13"
+Paragraph 5 (58 words): "C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just not..."
+Paragraph 6 (163 words): "C trace flat-lines for around a billion years, sometimes called the ‘boring billion’, even though that is when complex (‘eukaryotic’) cells evolved, along with traits such as sex, which are biological..."
+Paragraph 7 (61 words): "The Shuram conundrum Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dat..."
+Paragraph 8 (38 words): "C content), recovering slowly over ten million years. Does that sound uninterestingly dry and technical? It’s actually shocking! Just think what it means. A fall in 13 C relative to 12 C implies that ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 12
+
+Paragraph 0 (1 words): "233"
+Paragraph 1 (23 words): "ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 2 (59 words): "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 3 (33 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 4 (28 words): "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2"
+Paragraph 5 (3 words): "in hydrothermal vents."
+Paragraph 6 (33 words): "-COOH Carboxylic acid group. Characteristic of all Krebs cycle molecules, which can have two or three such groups. The proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group."
+Paragraph 7 (43 words): "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 8 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 9 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 10 (31 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 11 (31 words): "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (1 words): "8"
+Paragraph 1 (83 words): "I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’..."
+Paragraph 2 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 3 (35 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 4 (238 words): "No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their ..."
+Paragraph 5 (39 words): "A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrin..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "10"
+Paragraph 1 (12 words): "regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 2 (43 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 3 (63 words): "For decades, biology has been dominated by information – the power of genes. The importance of genes is unquestionable, yet there is no difference in the information content of a living protozoon and ..."
+Paragraph 4 (1 words): "1"
+Paragraph 5 (251 words): "If there is a view from modern biology, it is that genetic information structures the flow of energy and materials. To a first approximation, biology is understood in terms of information networks and..."
+Paragraph 6 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "11"
+Paragraph 1 (94 words): "different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s cap..."
+Paragraph 2 (3 words): "You and me."
+Paragraph 3 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 4 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 5 (187 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 6 (52 words): "The dynamic side To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochem..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (1 words): "24"
+Paragraph 1 (37 words): "In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction between H..."
+Paragraph 2 (105 words): "is facilitated by steep gradients of protons across thin inorganic barriers, with structures similar to cells. We’ll see that this chemistry can in principle – and recent experimental work shows in pr..."
+Paragraph 3 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 4 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 5 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (1 words): "53"
+Paragraph 1 (13 words): "today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 2 (126 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 3 (159 words): "A grossly simplified schematic of the respiratory chain. The transfer of electrons from NADH to oxygen is shown by the dotted line. These electrons pass through three great protein complexes embedded ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "64"
+Paragraph 1 (159 words): "this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis conver..."
+Paragraph 2 (277 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "102"
+Paragraph 1 (100 words): "The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference on ..."
+Paragraph 2 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (1 words): "114"
+Paragraph 1 (106 words): "the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats itself..."
+Paragraph 2 (76 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 3 (206 words): "on one side to CO 2 on the other. The theory is soundly grounded, but that’s not enough. This is an experimental question, which my lab and others have been struggling to address for years now. We’ve ..."
+Paragraph 4 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 8
+
+Paragraph 0 (1 words): "115"
+Paragraph 1 (116 words): "How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life, but..."
+Paragraph 2 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 3 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 4 (55 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 5 (3 words): "do what exactly?"
+Paragraph 6 (142 words): "The next step is just as pleasing. How could these protocells grow and divide? To do so, they would need to make more organic molecules inside themselves (more fatty acids, more amino acids) using the..."
+Paragraph 7 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "116"
+Paragraph 1 (13 words): "fundamental requirement is that H 2 is in alkaline conditions, while CO 2"
+Paragraph 2 (77 words): "is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rather than electrons. In fact, that is feasible. We have shown that protons cross ..."
+Paragraph 3 (58 words): "millionths of a millimetre (25 nanometres) in diameter. If so, then inorganic pores and protocells are potentially homologous. Because protocells stick to iron-sulfide barriers on the alkaline side, p..."
+Paragraph 4 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 5 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 6 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "119"
+Paragraph 1 (31 words): "didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase?"
+Paragraph 2 (162 words): "The answer turns out to be quite simple. ATP can be formed directly from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. Going back to the reaction steps I..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "120"
+Paragraph 1 (156 words): "Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might expla..."
+Paragraph 2 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 3 (149 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 4 (59 words): "available, the more organic products will be produced, and the further these reactions will be driven from the starting point. You could think of this as gentle waves spreading up a beach; how far up ..."
+Paragraph 5 (41 words): "The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the same reaction can happen all..."
+Paragraph 6 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 9
+
+Paragraph 0 (1 words): "140"
+Paragraph 1 (70 words): "(30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere. Th..."
+Paragraph 2 (32 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13"
+Paragraph 3 (9 words): "C abundance in limestone sedimented at the same time."
+Paragraph 4 (3 words): "The soaring 13"
+Paragraph 5 (58 words): "C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just not..."
+Paragraph 6 (163 words): "C trace flat-lines for around a billion years, sometimes called the ‘boring billion’, even though that is when complex (‘eukaryotic’) cells evolved, along with traits such as sex, which are biological..."
+Paragraph 7 (61 words): "The Shuram conundrum Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dat..."
+Paragraph 8 (38 words): "C content), recovering slowly over ten million years. Does that sound uninterestingly dry and technical? It’s actually shocking! Just think what it means. A fall in 13 C relative to 12 C implies that ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 12
+
+Paragraph 0 (1 words): "233"
+Paragraph 1 (23 words): "ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 2 (59 words): "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 3 (33 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 4 (28 words): "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2"
+Paragraph 5 (3 words): "in hydrothermal vents."
+Paragraph 6 (33 words): "-COOH Carboxylic acid group. Characteristic of all Krebs cycle molecules, which can have two or three such groups. The proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group."
+Paragraph 7 (43 words): "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 8 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 9 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 10 (31 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 11 (31 words): "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (1 words): "8"
+Paragraph 1 (83 words): "I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’..."
+Paragraph 2 (13 words): "Yet at night they light up, glowing in the dark sky, suddenly beautiful."
+Paragraph 3 (35 words): "Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they aliv..."
+Paragraph 4 (238 words): "No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their ..."
+Paragraph 5 (39 words): "A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrin..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "10"
+Paragraph 1 (12 words): "regulatory loops that lend an illusion of purpose, listed all their parts."
+Paragraph 2 (43 words): "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate ..."
+Paragraph 3 (63 words): "For decades, biology has been dominated by information – the power of genes. The importance of genes is unquestionable, yet there is no difference in the information content of a living protozoon and ..."
+Paragraph 4 (1 words): "1"
+Paragraph 5 (251 words): "If there is a view from modern biology, it is that genetic information structures the flow of energy and materials. To a first approximation, biology is understood in terms of information networks and..."
+Paragraph 6 (72 words): "Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "11"
+Paragraph 1 (94 words): "different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s cap..."
+Paragraph 2 (3 words): "You and me."
+Paragraph 3 (37 words): "This book will explore how the flow of energy and matter structures the evolution of life and even genetic information, leaving an indelible stamp on our own lives. I want to turn the standard view up..."
+Paragraph 4 (42 words): "Genes and information do not determine the innermost details of our lives. Rather, the unceasing flow of energy and matter through a world in perpetual disequilibrium conjures the genes themselves int..."
+Paragraph 5 (187 words): "It is the movement that creates the form. I want to capture an extraordinary renaissance that is currently hiding in plain sight: how textbook biochemistry is simultaneously galvanising new paradigms ..."
+Paragraph 6 (52 words): "The dynamic side To understand this flow of energy and matter and all it portends, we must first look to where biology has turned a blind eye since the ascent of information. The golden age of biochem..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 6
+
+Paragraph 0 (1 words): "24"
+Paragraph 1 (37 words): "In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction between H..."
+Paragraph 2 (105 words): "is facilitated by steep gradients of protons across thin inorganic barriers, with structures similar to cells. We’ll see that this chemistry can in principle – and recent experimental work shows in pr..."
+Paragraph 3 (163 words): "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often ..."
+Paragraph 4 (86 words): "Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see ..."
+Paragraph 5 (72 words): "In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well a..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 4
+
+Paragraph 0 (1 words): "53"
+Paragraph 1 (13 words): "today. Let me just give you a flavour (don’t worry about the details)."
+Paragraph 2 (126 words): "They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxygen, transiently acidifying the medium. They showed that inhibitors of ..."
+Paragraph 3 (159 words): "A grossly simplified schematic of the respiratory chain. The transfer of electrons from NADH to oxygen is shown by the dotted line. These electrons pass through three great protein complexes embedded ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "64"
+Paragraph 1 (159 words): "this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis conver..."
+Paragraph 2 (277 words): "The simplistic dichotomy between plants and animals – the notion that plants make sugars by photosynthesis, while animals respire those sugars via the Krebs cycle – is of course partly true, but also ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "102"
+Paragraph 1 (100 words): "The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference on ..."
+Paragraph 2 (136 words): "Orgel had trained as an inorganic chemist at Oxford in the 1940s. He was among the first to see the molecular model of DNA constructed by Crick and Watson in 1953, when the great crystallographer Doro..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 5
+
+Paragraph 0 (1 words): "114"
+Paragraph 1 (106 words): "the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats itself..."
+Paragraph 2 (76 words): "Here’s how. Alkaline hydrothermal vents are riddled with interconnected pores that have a similar topology to cells – alkaline inside, acid outside. H 2 gas is delivered in alkaline hydrothermal fluid..."
+Paragraph 3 (206 words): "on one side to CO 2 on the other. The theory is soundly grounded, but that’s not enough. This is an experimental question, which my lab and others have been struggling to address for years now. We’ve ..."
+Paragraph 4 (4 words): "Small steps, giant leaps"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 8
+
+Paragraph 0 (1 words): "115"
+Paragraph 1 (116 words): "How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life, but..."
+Paragraph 2 (9 words): "Together, these products can take on amazingly life-like properties."
+Paragraph 3 (66 words): "Simple mixtures of fatty acids form spontaneously into what can be called ‘protocells’, with a thin bilayer membrane similar to modern cell membranes enclosing a watery internal volume. These are mesm..."
+Paragraph 4 (55 words): "Working in my lab, Sean Jordan and Hanadi Rammu have shown that these protocells self-assemble even more readily under hydrothermal conditions, such as pH 11, 70°C and ocean salinity. In just a few sm..."
+Paragraph 5 (3 words): "do what exactly?"
+Paragraph 6 (142 words): "The next step is just as pleasing. How could these protocells grow and divide? To do so, they would need to make more organic molecules inside themselves (more fatty acids, more amino acids) using the..."
+Paragraph 7 (39 words): "If you are unusually alert, you may have noticed a discrepancy between organic synthesis in inorganic pores (where I talked about electrons crossing inorganic barriers) and organic synthesis in protoc..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "116"
+Paragraph 1 (13 words): "fundamental requirement is that H 2 is in alkaline conditions, while CO 2"
+Paragraph 2 (77 words): "is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rather than electrons. In fact, that is feasible. We have shown that protons cross ..."
+Paragraph 3 (58 words): "millionths of a millimetre (25 nanometres) in diameter. If so, then inorganic pores and protocells are potentially homologous. Because protocells stick to iron-sulfide barriers on the alkaline side, p..."
+Paragraph 4 (91 words): "Transfer of protons across an inorganic barrier (left) or the same barrier enclosing a protocell (right) could drive the formation of organics (CH 2 O) within the pore or the protocell. The triangles ..."
+Paragraph 5 (25 words): "Perhaps the most important property of this system is that it can in principle make copies of itself, and over time can become more complex."
+Paragraph 6 (23 words): "For reasons of physical chemistry, new fatty acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 3
+
+Paragraph 0 (1 words): "119"
+Paragraph 1 (31 words): "didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase?"
+Paragraph 2 (162 words): "The answer turns out to be quite simple. ATP can be formed directly from acetyl phosphate, which in turn is formed from acetyl CoA, or simpler prebiotic equivalents. Going back to the reaction steps I..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 7
+
+Paragraph 0 (1 words): "120"
+Paragraph 1 (156 words): "Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might expla..."
+Paragraph 2 (19 words): "In terms of reactivity, the difference is about three orders of magnitude, so it’s not to be sneezed at."
+Paragraph 3 (149 words): "The bigger picture that emerges is this. Vents provide a steady supply of H 2 and CO 2 , in just the right conditions needed to promote their reaction to make carboxylic acids. These form through chem..."
+Paragraph 4 (59 words): "available, the more organic products will be produced, and the further these reactions will be driven from the starting point. You could think of this as gentle waves spreading up a beach; how far up ..."
+Paragraph 5 (41 words): "The beauty of vents is that hydrothermal flow is continuous. If only a tiny proportion of H 2 reacts at any one moment, in the next moment that H 2 is replenished, and the same reaction can happen all..."
+Paragraph 6 (34 words): "Growth is the non-stop formation of new organics from the continuous flow and reaction of gases in the environment. The inorganic pores within vents are the perfect homes for protocells that nestle in..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 9
+
+Paragraph 0 (1 words): "140"
+Paragraph 1 (70 words): "(30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere. Th..."
+Paragraph 2 (32 words): "Variations over time in the 13 C content of limestone therefore give a global indication of how much organic carbon got buried – the more 12 C buried, the greater the 13"
+Paragraph 3 (9 words): "C abundance in limestone sedimented at the same time."
+Paragraph 4 (3 words): "The soaring 13"
+Paragraph 5 (58 words): "C peak in the GOE therefore speaks of carbon burial and rising oxygen levels. Converting this trace into an estimate of atmospheric composition is tricky and we don’t need to go there; we can just not..."
+Paragraph 6 (163 words): "C trace flat-lines for around a billion years, sometimes called the ‘boring billion’, even though that is when complex (‘eukaryotic’) cells evolved, along with traits such as sex, which are biological..."
+Paragraph 7 (61 words): "The Shuram conundrum Named after the Shuram Formation in Oman, this carbonate-rich sedimentary rock contains the single largest ‘negative isotope excursion’ in Earth’s history. Beginning in strata dat..."
+Paragraph 8 (38 words): "C content), recovering slowly over ten million years. Does that sound uninterestingly dry and technical? It’s actually shocking! Just think what it means. A fall in 13 C relative to 12 C implies that ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 12
+
+Paragraph 0 (1 words): "233"
+Paragraph 1 (23 words): "ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule."
+Paragraph 2 (59 words): "ATP Adenosine triphosphate. The ‘universal energy currency’. Has a tail of three phosphate groups linked in a chain. Chopping off one phosphate leaves adenosine diphosphate ( ADP ) plus inorganic phos..."
+Paragraph 3 (33 words): "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vinegar) to form acetyl CoA, one of the most important molecules in all of metabolism."
+Paragraph 4 (28 words): "CO 2 Carbon dioxide. The ‘Lego brick’ from which almost all organic molecules are made in biochemistry via photosynthesis or by reacting with gases such as H 2"
+Paragraph 5 (3 words): "in hydrothermal vents."
+Paragraph 6 (33 words): "-COOH Carboxylic acid group. Characteristic of all Krebs cycle molecules, which can have two or three such groups. The proton (H + ) dissociates easily, giving the carboxylate ( -COO – ) group."
+Paragraph 7 (43 words): "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long chains of millions of letters (nucleotides) that pair together to form complementary strands. When p..."
+Paragraph 8 (50 words): "Ech Energy-converting hydrogenase. A membrane protein that uses the flow of protons (H + ) to power the transfer of electrons from H 2 to ferredoxin, which in turn passes them on to CO 2 . A prebiotic..."
+Paragraph 9 (33 words): "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons onto CO 2 to form organic molecules. The form that transfers electrons is shortened to Fd 2– ."
+Paragraph 10 (31 words): "FeS cluster One of several different types of small inorganic clusters of iron and sulfur, containing just a few atoms, with structures similar to minerals. The classic is the 4Fe4S cluster."
+Paragraph 11 (31 words): "GSH Glutathione. GSH is the reduced form (containing H) and GSSG is the oxidised form (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
+

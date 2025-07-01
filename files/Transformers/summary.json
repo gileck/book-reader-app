@@ -6,74 +6,74 @@
     "filename": "book.pdf"
   },
   "processing": {
-    "timestamp": "2025-07-01T16:13:05.802Z",
+    "timestamp": "2025-07-01T18:57:31.345Z",
     "totalChapters": 8,
     "totalChunks": 0,
-    "totalWords": 113914,
+    "totalWords": 118048,
     "totalImages": 0,
     "totalLinks": 0
   },
   "chapters": [
     {
       "title": "Introduction: Life itself",
-      "wordCount": 7974,
-      "chunkCount": 76,
+      "wordCount": 8157,
+      "chunkCount": 43,
       "pageRange": "9-27",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Discovering the nanocosm",
-      "wordCount": 13894,
-      "chunkCount": 153,
+      "wordCount": 14338,
+      "chunkCount": 75,
       "pageRange": "28-62",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "The path of carbon",
-      "wordCount": 11496,
-      "chunkCount": 106,
+      "wordCount": 11769,
+      "chunkCount": 59,
       "pageRange": "63-91",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "From gases to life",
-      "wordCount": 12284,
-      "chunkCount": 122,
+      "wordCount": 12827,
+      "chunkCount": 59,
       "pageRange": "92-124",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Revolutions",
-      "wordCount": 10918,
-      "chunkCount": 102,
+      "wordCount": 11224,
+      "chunkCount": 55,
       "pageRange": "125-150",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "To the dark side",
-      "wordCount": 12185,
-      "chunkCount": 134,
+      "wordCount": 12550,
+      "chunkCount": 63,
       "pageRange": "151-181",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "The flux capacitor",
-      "wordCount": 12863,
-      "chunkCount": 138,
+      "wordCount": 13224,
+      "chunkCount": 72,
       "pageRange": "182-211",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Epilogue: Self",
-      "wordCount": 32300,
-      "chunkCount": 518,
+      "wordCount": 33959,
+      "chunkCount": 246,
       "pageRange": "212-317",
       "imageCount": 0,
       "linkCount": 0

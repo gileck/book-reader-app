@@ -12,12 +12,12 @@ function resolveLinksToTargetChunks(links, allChunks) {
     for (const link of links) {
         // Create a key for deduplication based on text and destination
         const linkKey = `${link.linkText || link.text}_${link.destinationPage}_${link.destinationCoordinates?.x}_${link.destinationCoordinates?.y}`;
-        
+
         // Skip if we've already processed this exact link
         if (seenLinks.has(linkKey)) {
             continue;
         }
-        
+
         const destinationInfo = findDestinationChunk(link, allChunks);
 
         if (destinationInfo) {
@@ -68,21 +68,21 @@ function distributeLinksToSourceChunks(originalLinks, allChunks, resolvedLinks) 
     // For each original link, find the best matching chunk on its source page
     originalLinks.forEach(originalLink => {
         const sourcePageChunks = allChunks.filter(chunk => chunk.pageNumber === originalLink.pageNumber);
-        
+
         if (sourcePageChunks.length === 0) return;
 
         // Find the most relevant chunk for this link
         const relevantChunk = findMostRelevantChunk(originalLink, sourcePageChunks);
-        
+
         if (relevantChunk) {
             // Find the corresponding resolved link
             const linkKey = `${originalLink.linkText || originalLink.text}_`;
-            const matchingResolvedLink = resolvedLinks.find(resolved => 
+            const matchingResolvedLink = resolvedLinks.find(resolved =>
                 resolved.text === (originalLink.linkText || originalLink.text)
             );
 
-            if (matchingResolvedLink && !relevantChunk.links.some(existingLink => 
-                existingLink.text === matchingResolvedLink.text && 
+            if (matchingResolvedLink && !relevantChunk.links.some(existingLink =>
+                existingLink.text === matchingResolvedLink.text &&
                 existingLink.targetChunk === matchingResolvedLink.targetChunk
             )) {
                 relevantChunk.links.push({
@@ -103,14 +103,14 @@ function distributeLinksToSourceChunks(originalLinks, allChunks, resolvedLinks) 
  */
 function findMostRelevantChunk(link, chunks) {
     const linkText = link.linkText || link.text;
-    
+
     // For footnote links, prioritize chunks that contain the footnote reference in the text
     if (isFootnoteLink(linkText)) {
         // Look for chunks that contain the footnote reference followed by a space or end of text
         // This handles cases like "building blocks. 1 If there is a view..."
         const footnoteInTextMatches = chunks.filter(chunk => {
             if (!chunk.text) return false;
-            
+
             // Create regex pattern to match footnote at word boundary
             // Matches: "blocks. 1 If", "sentence. 1", "word 1 ", etc.
             const patterns = [
@@ -118,10 +118,10 @@ function findMostRelevantChunk(link, chunks) {
                 new RegExp(`\\s${linkText}\\s`, 'g'),   // " 1 "
                 new RegExp(`\\s${linkText}$`, 'g')      // " 1" at end
             ];
-            
+
             return patterns.some(pattern => pattern.test(chunk.text));
         });
-        
+
         if (footnoteInTextMatches.length > 0) {
             return footnoteInTextMatches[0];
         }
@@ -133,7 +133,7 @@ function findMostRelevantChunk(link, chunks) {
             x: (link.rect[0] + link.rect[2]) / 2,
             y: (link.rect[1] + link.rect[3]) / 2
         };
-        
+
         const coordMatches = findChunksByCoordinates(chunks, coords.x, coords.y, 100);
         if (coordMatches.length > 0) {
             return coordMatches[0];
@@ -141,7 +141,7 @@ function findMostRelevantChunk(link, chunks) {
     }
 
     // If link text appears in a chunk, prefer that chunk
-    const textMatches = chunks.filter(chunk => 
+    const textMatches = chunks.filter(chunk =>
         chunk.text && chunk.text.includes(linkText)
     );
     if (textMatches.length > 0) {
@@ -186,7 +186,7 @@ function findDestinationChunk(link, chunks) {
                     }
                 }
             }
-            
+
             return {
                 chunk: coordMatches[0],
                 method: 'coordinates',
@@ -261,7 +261,7 @@ function isFootnoteLink(linkText) {
  */
 function isFootnoteDefinition(chunkText, footnoteRef) {
     if (!chunkText || !footnoteRef) return false;
-    
+
     const cleanRef = footnoteRef.trim();
     // Look for footnote definition pattern: starts with the reference followed by space or punctuation
     const footnotePattern = new RegExp(`^\\s*${escapeRegExp(cleanRef)}[\\s\\.]`, 'i');
@@ -276,16 +276,16 @@ function isFootnoteDefinition(chunkText, footnoteRef) {
  */
 function findFootnoteDefinition(chunks, footnoteRef) {
     if (!footnoteRef) return null;
-    
+
     const cleanRef = footnoteRef.trim();
-    
+
     // Look for exact footnote definition pattern
     for (const chunk of chunks) {
         if (isFootnoteDefinition(chunk.text, cleanRef)) {
             return chunk;
         }
     }
-    
+
     return null;
 }
 
@@ -371,7 +371,7 @@ function estimateChunkCoordinates(chunk, chunkIndex, totalChunks, pageCoordinate
  * @param {Object} textContent - PDF text content object
  * @returns {Object} Object with textItems, combinedText, and coordinateBounds
  */
-function extractTextContentWithCoordinates(textContent) {
+function extractTextContentWithCoordinates(textContent, debugFolderPath = null) {
     const textItems = [];
     let allText = '';
 
@@ -390,11 +390,11 @@ function extractTextContentWithCoordinates(textContent) {
 
         allText += text;
     }
-    
+
     // Save positioning data for target text
     const targetTexts = ['alive?', 'cities. We', 'spreading.', 'Yet at night', 'The structure.', 'A cell is a city'];
     const hasTargetText = targetTexts.some(target => allText.includes(target));
-    
+
     if (hasTargetText) {
         try {
             const fs = require('fs');
@@ -403,7 +403,7 @@ function extractTextContentWithCoordinates(textContent) {
             if (!fs.existsSync(debugDir)) {
                 fs.mkdirSync(debugDir);
             }
-            
+
             const positioningData = textContent.items.map((item, index) => ({
                 index: index,
                 text: item.str,
@@ -414,33 +414,33 @@ function extractTextContentWithCoordinates(textContent) {
                 transform: item.transform,
                 isTargetText: targetTexts.some(target => item.str && item.str.includes(target))
             }));
-            
+
             fs.writeFileSync(
                 path.join(debugDir, 'positioning-data.json'),
                 JSON.stringify(positioningData, null, 2)
             );
-            
+
             // Also save a summary focusing on target text
             const targetItems = positioningData.filter(item => item.isTargetText);
             const contextItems = [];
-            
+
             // Add context around target items
             targetItems.forEach(targetItem => {
                 const startIndex = Math.max(0, targetItem.index - 3);
                 const endIndex = Math.min(positioningData.length - 1, targetItem.index + 3);
-                
+
                 for (let i = startIndex; i <= endIndex; i++) {
                     if (!contextItems.find(item => item.index === i)) {
                         contextItems.push(positioningData[i]);
                     }
                 }
             });
-            
+
             fs.writeFileSync(
                 path.join(debugDir, 'target-text-positioning.json'),
                 JSON.stringify(contextItems.sort((a, b) => a.index - b.index), null, 2)
             );
-            
+
         } catch (error) {
             // Ignore write errors
         }
@@ -450,13 +450,13 @@ function extractTextContentWithCoordinates(textContent) {
     if (textItems.length === 0) {
         return {
             textItems,
-            combinedText: combineTextItemsPreservingStructure(textContent.items),
+            combinedText: combineTextItemsPreservingStructure(textContent.items, debugFolderPath),
             coordinateBounds: null
         };
     }
 
-    const combinedText = combineTextItemsPreservingStructure(textContent.items);
-    
+    const combinedText = combineTextItemsPreservingStructure(textContent.items, debugFolderPath);
+
     // Debug specific problematic text
     if (combinedText.includes('The structure') || combinedText.includes('A cell is a city')) {
         try {
@@ -466,7 +466,7 @@ function extractTextContentWithCoordinates(textContent) {
             if (!fs.existsSync(debugDir)) {
                 fs.mkdirSync(debugDir);
             }
-            
+
             const debugInfo = [
                 'FOUND PROBLEMATIC TEXT IN extractTextContentWithCoordinates:',
                 `Combined text: ${combinedText.substring(0, 500)}...`,
@@ -474,7 +474,7 @@ function extractTextContentWithCoordinates(textContent) {
                 `Number of line breaks: ${(combinedText.match(/⟨⟨LINE_BREAK⟩⟩/g) || []).length}`,
                 ''
             ];
-            
+
             fs.appendFileSync(path.join(debugDir, 'text-processing-debug.txt'), debugInfo.join('\n') + '\n');
         } catch (error) {
             // Ignore write errors
@@ -501,7 +501,7 @@ function extractTextContentWithCoordinates(textContent) {
  * @param {Array} textItems - Array of PDF text items
  * @returns {string} Combined text with line break markers
  */
-function combineTextItemsPreservingStructure(textItems) {
+function combineTextItemsPreservingStructure(textItems, debugFolderPath = null) {
     if (!textItems || textItems.length === 0) return '';
 
     const lines = [];
@@ -533,38 +533,74 @@ function combineTextItemsPreservingStructure(textItems) {
         lines.push(lineText);
     }
 
-    // Smart paragraph detection: split on lines ending with sentence-ending punctuation
+    // Smart paragraph detection: split on actual paragraph breaks, not sentence endings
     const paragraphs = [];
     let currentParagraph = '';
-    
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
-        
-        if (line.length === 0) continue;
+
+        if (line.length === 0) {
+            // Empty line indicates paragraph break
+            if (currentParagraph.trim().length > 0) {
+                paragraphs.push(currentParagraph.trim());
+                currentParagraph = '';
+            }
+            continue;
+        }
 
         // Add line to current paragraph
         if (currentParagraph.length > 0) {
             currentParagraph += ' ';
         }
         currentParagraph += line;
-        
-        // Check if this line ends with sentence-ending punctuation
-        const endsWithSentenceEnd = /[.!?;]$/.test(line);
-        
+
+        // Simple and correct paragraph detection:
+        // If line ends with sentence-ending punctuation + newline = paragraph break
+
+        // Check if this line ends with sentence-ending punctuation or footnote
+        const endsWithSentenceEnd = /[.!?]$/.test(line) || /\d+$/.test(line.trim());
+
         // If it ends with sentence punctuation, finish the paragraph
         if (endsWithSentenceEnd) {
             paragraphs.push(currentParagraph.trim());
             currentParagraph = '';
         }
     }
-    
+
     // Add any remaining text as final paragraph
     if (currentParagraph.trim().length > 0) {
         paragraphs.push(currentParagraph.trim());
     }
-    
+
+    // Debug: Save original paragraphs before merging
+    if (paragraphs.some(p => p.includes('inorganic') || p.includes('Yet at night') || p.includes('cell is a city'))) {
+        try {
+            const fs = require('fs');
+            const debugDir = './debug';
+            if (!fs.existsSync(debugDir)) {
+                fs.mkdirSync(debugDir);
+            }
+
+            const debugInfo = [
+                'ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):',
+                `Total paragraphs: ${paragraphs.length}`,
+                '',
+                ...paragraphs.map((para, i) => {
+                    const wordCount = para.trim().split(/\s+/).length;
+                    return `Paragraph ${i} (${wordCount} words): "${para.substring(0, 200)}${para.length > 200 ? '...' : ''}"`;
+                }),
+                ''
+            ];
+
+            fs.appendFileSync('./debug/original-paragraphs-before-merge.txt', debugInfo.join('\n') + '\n');
+        } catch (error) {
+            // Ignore write errors
+        }
+    }
+
     // Smart merging: merge short paragraphs with shorter neighboring paragraphs
-    const mergedParagraphs = smartMergeParagraphs(paragraphs);
+    const mergedParagraphs = smartMergeParagraphs(paragraphs, 60);
 
     // Join paragraphs with line break markers
     return mergedParagraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
@@ -578,28 +614,40 @@ function combineTextItemsPreservingStructure(textItems) {
  */
 function smartMergeParagraphs(paragraphs, minWords = 8) {
     if (paragraphs.length <= 1) return paragraphs;
-    
+
     const result = [...paragraphs];
     let i = 0;
-    
+
     while (i < result.length) {
         const currentWords = result[i].trim().split(/\s+/).length;
-        
+
         // If current paragraph is too short, merge with shorter neighbor
         if (currentWords < minWords) {
             const prevWords = i > 0 ? result[i - 1].trim().split(/\s+/).length : Infinity;
             const nextWords = i < result.length - 1 ? result[i + 1].trim().split(/\s+/).length : Infinity;
-            
-            if (prevWords <= nextWords && i > 0) {
-                // Merge with previous (shorter or equal)
-                result[i - 1] = result[i - 1] + ' ' + result[i];
-                result.splice(i, 1);
-                i--; // Check the merged paragraph again
-            } else if (i < result.length - 1) {
-                // Merge with next
-                result[i] = result[i] + ' ' + result[i + 1];
-                result.splice(i + 1, 1);
-                // Don't increment i, check the merged paragraph again
+
+            // Check if merging would create a paragraph that's too long
+            const mergeWithPrev = prevWords <= nextWords && i > 0;
+            const mergeWithNext = !mergeWithPrev && i < result.length - 1;
+
+            if (mergeWithPrev) {
+                const mergedWords = prevWords + currentWords;
+                if (mergedWords <= 300) { // Hard limit for merged paragraphs
+                    result[i - 1] = result[i - 1] + ' ' + result[i];
+                    result.splice(i, 1);
+                    i--; // Check the merged paragraph again
+                } else {
+                    i++; // Skip if would create too long paragraph
+                }
+            } else if (mergeWithNext) {
+                const mergedWords = currentWords + nextWords;
+                if (mergedWords <= 300) { // Hard limit for merged paragraphs
+                    result[i] = result[i] + ' ' + result[i + 1];
+                    result.splice(i + 1, 1);
+                    // Don't increment i, check the merged paragraph again
+                } else {
+                    i++; // Skip if would create too long paragraph
+                }
             } else {
                 // Can't merge, move on
                 i++;
@@ -608,7 +656,7 @@ function smartMergeParagraphs(paragraphs, minWords = 8) {
             i++;
         }
     }
-    
+
     return result;
 }
 
