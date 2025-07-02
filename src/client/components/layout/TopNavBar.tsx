@@ -6,10 +6,11 @@ import { useRouter } from '../../router';
 import { NavItem } from '../../components/layout/types';
 import { useAuth } from '../../context/AuthContext';
 import { useSettings } from '../../settings/SettingsContext';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { getUserSettings, updateUserSettings } from '../../../apis/userSettings/client';
 
 interface TopNavBarProps {
   navItems: NavItem[];
@@ -22,6 +23,8 @@ export const TopNavBar = ({ navItems, isStandalone, onDrawerToggle }: TopNavBarP
   const { user, isAuthenticated, logout } = useAuth();
   const { settings, updateSettings } = useSettings();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [userTheme, setUserTheme] = useState<'light' | 'dark'>('light');
+  const hasLoadedUserTheme = useRef(false);
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -49,12 +52,67 @@ export const TopNavBar = ({ navItems, isStandalone, onDrawerToggle }: TopNavBarP
     await logout();
   };
 
-  const handleThemeToggle = () => {
-    updateSettings({ theme: settings.theme === 'light' ? 'dark' : 'light' });
+  // Load user theme when user is authenticated
+  useEffect(() => {
+    const loadUserTheme = async () => {
+      if (isAuthenticated && user?.id && !hasLoadedUserTheme.current) {
+        try {
+          const settingsResult = await getUserSettings({ userId: user.id });
+          if (settingsResult.data?.success && settingsResult.data.userSettings) {
+            const theme = settingsResult.data.userSettings.theme;
+            setUserTheme(theme);
+            // Sync with global settings only if different
+            if (settings.theme !== theme) {
+              updateSettings({ theme });
+            }
+            hasLoadedUserTheme.current = true;
+          }
+        } catch (error) {
+          console.error('Error loading user theme:', error);
+        }
+      }
+    };
+
+    loadUserTheme();
+  }, [isAuthenticated, user?.id, settings.theme, updateSettings]);
+
+  // Reset theme loading flag when user changes
+  useEffect(() => {
+    hasLoadedUserTheme.current = false;
+  }, [user?.id]);
+
+  // Sync userTheme with global settings when not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setUserTheme(settings.theme);
+    }
+  }, [isAuthenticated, settings.theme]);
+
+  const handleThemeToggle = async () => {
+    const newTheme = userTheme === 'light' ? 'dark' : 'light';
+    setUserTheme(newTheme);
+    
+    // Update global settings immediately for app-wide theme
+    updateSettings({ theme: newTheme });
+    
+    // Update user-specific settings in database if authenticated
+    if (isAuthenticated && user?.id) {
+      try {
+        await updateUserSettings({
+          userId: user.id,
+          settings: { theme: newTheme }
+        });
+      } catch (error) {
+        console.error('Error updating user theme:', error);
+        // Revert on error
+        setUserTheme(userTheme);
+        updateSettings({ theme: userTheme });
+      }
+    }
   };
 
   const getThemeIcon = () => {
-    return settings.theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />;
+    return userTheme === 'light' ? <DarkModeIcon /> : <LightModeIcon />;
   };
 
   return (
@@ -107,7 +165,7 @@ export const TopNavBar = ({ navItems, isStandalone, onDrawerToggle }: TopNavBarP
             color="inherit"
             onClick={handleThemeToggle}
             aria-label="toggle theme"
-            title={`Current theme: ${settings.theme}`}
+            title={`Current theme: ${userTheme}`}
           >
             {getThemeIcon()}
           </IconButton>

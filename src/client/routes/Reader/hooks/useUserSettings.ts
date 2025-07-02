@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getUserSettings, updateUserSettings } from '../../../../apis/userSettings/client';
 import { generateTts } from '../../../../apis/tts/client';
+import { useSettings } from '../../../settings/SettingsContext';
 
 interface UserSettingsState {
     playbackSpeed: number;
@@ -36,6 +37,7 @@ const getDefaultUserSettingsState = (): UserSettingsState => ({
 
 export const useUserSettings = (userId: string) => {
     const [state, setState] = useState(getDefaultUserSettingsState());
+    const { updateSettings } = useSettings();
 
     const updateState = useCallback((partialState: Partial<UserSettingsState>) => {
         setState(prev => ({ ...prev, ...partialState }));
@@ -157,6 +159,9 @@ export const useUserSettings = (userId: string) => {
 
     const handleThemeChange = useCallback(async (theme: 'light' | 'dark') => {
         updateState({ theme });
+        
+        // Update global settings for app-wide theme
+        updateSettings({ theme });
 
         try {
             await updateUserSettings({
@@ -166,7 +171,7 @@ export const useUserSettings = (userId: string) => {
         } catch (error) {
             console.error('Error updating theme:', error);
         }
-    }, [userId, updateState]);
+    }, [userId, updateState, updateSettings]);
 
     const handleHighlightColorChange = useCallback(async (highlightColor: string) => {
         updateState({ highlightColor });

@@ -238,8 +238,6 @@ function estimateChunkCoordinates(chunk, chunkIndex, totalChunks, pageCoordinate
  * @returns {Object} Chapter with paragraph-structured chunks
  */
 function processChapter(chapter, debugDir) {
-
-
     // Create paragraphs with chunks - use merged content from cross-page processing
     let allParagraphs = [];
     let globalChunkIndex = 0;
@@ -247,13 +245,28 @@ function processChapter(chapter, debugDir) {
     // Check if we have content as array (from cross-page merging) or pages
     if (chapter.content && Array.isArray(chapter.content)) {
         // Use merged content from cross-page processing
-        const mergedText = chapter.content.join(' ⟨⟨PAGE_BREAK⟩⟩ ');
+        // CRITICAL FIX: Cross-page merging already handled sentence continuations,
+        // but we need to preserve paragraph boundaries (LINE_BREAK markers) within each content piece
+        // Join content pieces but ensure paragraph boundaries are preserved
+        let mergedText = '';
+        
+        for (let i = 0; i < chapter.content.length; i++) {
+            const contentPiece = chapter.content[i];
+            
+            if (i > 0) {
+                // Between content pieces, add a space but preserve internal paragraph structure
+                // Only add a single space since cross-page merging already handled sentence continuations
+                mergedText += ' ';
+            }
+            
+            mergedText += contentPiece;
+        }
 
         // Process the merged text as a whole to preserve cross-page sentence continuations
         const chapterParagraphs = chunkTextWithParagraphs(
             mergedText,
-            5,  // minWords
-            15, // maxWords
+            80,  // minWords - follow hard rules (80-300 words per paragraph)
+            300, // maxWords - follow hard rules (80-300 words per paragraph)
             chapter.startPageNumber || chapter.startingPage || 1
         );
 
@@ -284,8 +297,8 @@ function processChapter(chapter, debugDir) {
             // Use new paragraph-aware chunking
             const pageParagraphs = chunkTextWithParagraphs(
                 page.text,
-                5,  // minWords
-                15, // maxWords  
+                80,  // minWords - follow hard rules (80-300 words per paragraph)
+                300, // maxWords - follow hard rules (80-300 words per paragraph)
                 page.pageNumber
             );
 

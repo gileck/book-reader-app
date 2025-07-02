@@ -6,75 +6,75 @@
     "filename": "book.pdf"
   },
   "processing": {
-    "timestamp": "2025-07-01T19:10:01.641Z",
+    "timestamp": "2025-07-02T15:14:53.117Z",
     "totalChapters": 8,
     "totalChunks": 0,
-    "totalWords": 118048,
+    "totalWords": 117908,
     "totalImages": 0,
     "totalLinks": 0
   },
   "chapters": [
     {
       "title": "Introduction: Life itself",
-      "wordCount": 8157,
-      "chunkCount": 43,
-      "pageRange": "9-27",
+      "wordCount": 8148,
+      "chunkCount": 26,
+      "pageRange": "18-27",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Discovering the nanocosm",
-      "wordCount": 14338,
-      "chunkCount": 75,
-      "pageRange": "28-62",
+      "wordCount": 14322,
+      "chunkCount": 46,
+      "pageRange": "45-62",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "The path of carbon",
-      "wordCount": 11769,
-      "chunkCount": 59,
-      "pageRange": "63-91",
+      "wordCount": 11757,
+      "chunkCount": 38,
+      "pageRange": "77-91",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "From gases to life",
-      "wordCount": 12827,
-      "chunkCount": 59,
-      "pageRange": "92-124",
+      "wordCount": 12812,
+      "chunkCount": 41,
+      "pageRange": "108-124",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Revolutions",
-      "wordCount": 11224,
-      "chunkCount": 55,
-      "pageRange": "125-150",
+      "wordCount": 11212,
+      "chunkCount": 37,
+      "pageRange": "138-150",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "To the dark side",
-      "wordCount": 12550,
-      "chunkCount": 63,
-      "pageRange": "151-181",
+      "wordCount": 12535,
+      "chunkCount": 41,
+      "pageRange": "166-181",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "The flux capacitor",
-      "wordCount": 13224,
-      "chunkCount": 72,
-      "pageRange": "182-211",
+      "wordCount": 13210,
+      "chunkCount": 43,
+      "pageRange": "197-211",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Epilogue: Self",
-      "wordCount": 33959,
-      "chunkCount": 246,
-      "pageRange": "212-317",
+      "wordCount": 33912,
+      "chunkCount": 96,
+      "pageRange": "266-317",
       "imageCount": 0,
       "linkCount": 0
     }

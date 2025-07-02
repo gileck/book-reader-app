@@ -428,7 +428,7 @@ function extractRawTextFromItems(textItems) {
 
     // Sort items by Y coordinate (top to bottom) then X coordinate (left to right)
     const sortedItems = [...textItems].sort((a, b) => {
-        const yDiff = Math.round(a.transform[5]) - Math.round(b.transform[5]);
+        const yDiff = Math.round(b.transform[5]) - Math.round(a.transform[5]); // Fixed: b - a for top to bottom
         if (Math.abs(yDiff) > 10) { // Different lines
             return yDiff;
         }
@@ -488,14 +488,23 @@ function processLinesIntoParagraphs(lines, debugFolderPath = null) {
         }
         currentParagraph += line;
 
-        // Simple and correct paragraph detection:
-        // If line ends with sentence-ending punctuation + newline = paragraph break
-
-        // Check if this line ends with sentence-ending punctuation or footnote
-        const endsWithSentenceEnd = /[.!?]$/.test(line) || /\d+$/.test(line.trim());
-
-        // If it ends with sentence punctuation, finish the paragraph
-        if (endsWithSentenceEnd) {
+        // FIXED: Proper paragraph detection - don't break at every sentence!
+        // Only break paragraphs when there's an actual paragraph boundary
+        // Most paragraphs contain multiple sentences, so we should continue
+        // building the paragraph until we hit a real paragraph break
+        
+        // Look ahead to see if the next line suggests a paragraph break
+        const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : '';
+        const shouldBreakParagraph = nextLine.length > 0 && (
+            // Next line starts with obvious paragraph indicators
+            /^[A-Z][a-z]+/.test(nextLine) && /[.!?]$/.test(line) && nextLine !== nextLine.toUpperCase() ||
+            // Current line ends with a period and next line starts with capital letter (common paragraph pattern)
+            /\.$/.test(line) && /^[A-Z]/.test(nextLine) && currentParagraph.split(/\s+/).length > 40 ||
+            // Next line looks like a new section/chapter
+            /^(Chapter|Section|\d+\.|\w+:)/.test(nextLine)
+        );
+        
+        if (shouldBreakParagraph) {
             paragraphs.push(currentParagraph.trim());
             currentParagraph = '';
         }
@@ -555,7 +564,7 @@ function processLinesIntoParagraphs(lines, debugFolderPath = null) {
     }
 
     // Smart merging: merge short paragraphs with shorter neighboring paragraphs
-    const mergedParagraphs = smartMergeParagraphs(paragraphs, 60);
+    const mergedParagraphs = smartMergeParagraphs(paragraphs, 80);
 
     // Debug for problematic text
     if (mergedParagraphs.some(p => p.includes('inorganic') || p.includes('Yet at night') || p.includes('The structure'))) {
@@ -1008,8 +1017,8 @@ function determineHeaderLevel(headerText, originalLine) {
 }
 
 /**
- * Create chunks from text while preserving sentence structure
- * @param {string} text - Text to chunk
+ * Create chunks from text while preserving sentence structure and respecting line breaks
+ * @param {string} text - Text to chunk (may contain ⟨⟨LINE_BREAK⟩⟩ markers)
  * @param {number} minWords - Minimum words per chunk
  * @param {number} maxWords - Maximum words per chunk  
  * @param {number} startingGlobalIndex - Starting global chunk index
@@ -1020,106 +1029,82 @@ function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
         return [];
     }
 
-    // Use existing sentence splitting logic but adapted for paragraph context
-    const sentences = [];
-    let currentSentence = '';
-    const words = text.trim().split(/\s+/);
-
-    for (let i = 0; i < words.length; i++) {
-        const word = words[i];
-        currentSentence += (currentSentence ? ' ' : '') + word;
-
-        // Check if this word ends a sentence
-        if (/[.!?]+$/.test(word)) {
-            const nextWord = words[i + 1];
-            const isAbbreviation = endsWithAbbreviation(currentSentence);
-            const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
-
-            // Check if the next word is a footnote reference
-            const nextIsFootnote = nextWord && /^[0-9a-zA-Z\*\†\‡\§\¶]{1,3}$/.test(nextWord);
-
-            if (!isAbbreviation || !nextIsLowercase) {
-                if (nextIsFootnote) {
-                    // Include the footnote with the current sentence, then split
-                    currentSentence += ' ' + nextWord;
-                    sentences.push(currentSentence.trim());
-                    currentSentence = '';
-                    i++; // Skip the footnote word since we've already processed it
-                } else {
-                    // This is a real sentence ending
-                    sentences.push(currentSentence.trim());
-                    currentSentence = '';
-                }
-            }
-        }
-    }
-
-    // Add any remaining text as a sentence
-    if (currentSentence.trim()) {
-        sentences.push(currentSentence.trim());
-    }
-
-    // Group sentences into chunks
+    // Split by LINE_BREAK markers to get natural paragraph segments
+    const segments = text.split(' ⟨⟨LINE_BREAK⟩⟩ ').filter(seg => seg.trim().length > 0);
+    
     const chunks = [];
+    let chunkIndex = 0;
     let currentChunk = '';
     let currentWords = [];
-    let chunkIndex = 0;
 
-    for (let i = 0; i < sentences.length; i++) {
-        const sentence = sentences[i];
-        const sentenceWords = sentence.split(/\s+/).filter(w => w.length > 0);
+    for (let segmentIndex = 0; segmentIndex < segments.length; segmentIndex++) {
+        const segment = segments[segmentIndex].trim();
+        
+        // Split segment into sentences
+        const sentences = [];
+        let currentSentence = '';
+        const words = segment.split(/\s+/);
 
-        // Check if adding this sentence would exceed maxWords
-        if (currentWords.length > 0 && (currentWords.length + sentenceWords.length) > maxWords) {
-            // Create chunk with current content
-            chunks.push({
-                index: startingGlobalIndex + chunkIndex,
-                text: currentChunk.trim(),
-                wordCount: currentWords.length,
-                type: 'text'
-            });
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            currentSentence += (currentSentence ? ' ' : '') + word;
 
-            chunkIndex++;
-            currentChunk = '';
-            currentWords = [];
-        }
+            // Check if this word ends a sentence
+            if (/[.!?]+$/.test(word)) {
+                const nextWord = words[i + 1];
+                const isAbbreviation = endsWithAbbreviation(currentSentence);
+                const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
 
-        // Add sentence to current chunk
-        if (currentChunk) currentChunk += ' ';
-        currentChunk += sentence;
-        currentWords = currentWords.concat(sentenceWords);
-
-        // Check if we have a complete chunk with enough words
-        if (currentWords.length >= minWords) {
-            // Look ahead to see if the next sentence would create a very small chunk
-            const nextSentence = sentences[i + 1];
-            if (nextSentence) {
-                const nextSentenceWords = nextSentence.split(/\s+/).filter(w => w.length > 0);
-                // If next sentence would be very small and we're not too big, include it
-                if (nextSentenceWords.length < minWords &&
-                    (currentWords.length + nextSentenceWords.length) <= maxWords) {
-                    // Include next sentence
-                    currentChunk += ' ' + nextSentence;
-                    currentWords = currentWords.concat(nextSentenceWords);
-                    i++; // Skip next sentence since we've included it
+                if (!isAbbreviation || !nextIsLowercase) {
+                    sentences.push(currentSentence.trim());
+                    currentSentence = '';
                 }
             }
+        }
 
-            // Create chunk
-            chunks.push({
-                index: startingGlobalIndex + chunkIndex,
-                text: currentChunk.trim(),
-                wordCount: currentWords.length,
-                type: 'text'
-            });
+        // Add any remaining text as a sentence
+        if (currentSentence.trim()) {
+            sentences.push(currentSentence.trim());
+        }
 
-            chunkIndex++;
-            currentChunk = '';
-            currentWords = [];
+        // Process sentences in this segment
+        for (let sentenceIndex = 0; sentenceIndex < sentences.length; sentenceIndex++) {
+            const sentence = sentences[sentenceIndex];
+            const sentenceWords = sentence.split(/\s+/).filter(w => w.length > 0);
+
+            // Add sentence to current chunk
+            if (currentChunk) currentChunk += ' ';
+            currentChunk += sentence;
+            currentWords = currentWords.concat(sentenceWords);
+
+            // Check if we should create a chunk
+            const isLastSentenceInSegment = sentenceIndex === sentences.length - 1;
+            const isLastSegment = segmentIndex === segments.length - 1;
+            const hasEnoughWords = currentWords.length >= minWords;
+
+            // Create chunk if:
+            // 1. We have enough words AND it's the end of a segment (natural paragraph break)
+            // 2. OR we've reached maxWords
+            // 3. OR it's the very last chunk
+            if ((hasEnoughWords && isLastSentenceInSegment) || 
+                currentWords.length >= maxWords || 
+                (isLastSegment && sentenceIndex === sentences.length - 1)) {
+                
+                chunks.push({
+                    index: startingGlobalIndex + chunkIndex,
+                    text: currentChunk.trim(),
+                    wordCount: currentWords.length,
+                    type: 'text'
+                });
+
+                chunkIndex++;
+                currentChunk = '';
+                currentWords = [];
+            }
         }
     }
 
-    // Handle remaining content
+    // Add any remaining text as final chunk
     if (currentChunk.trim()) {
         chunks.push({
             index: startingGlobalIndex + chunkIndex,
@@ -1129,19 +1114,11 @@ function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
         });
     }
 
-    // Apply smart merging to the final chunks
-    const mergedChunks = smartMergeChunks(chunks, Math.max(minWords, 8)); // Use at least 8 words minimum
-
-    // Re-index after merging
-    mergedChunks.forEach((chunk, idx) => {
-        chunk.index = startingGlobalIndex + idx;
-    });
-
-    return mergedChunks;
+    return chunks;
 }
 
 /**
- * Smart merging logic for chunks: merge short chunks with shorter neighboring chunks
+ * Smart merging logic for chunks: merge short chunks with neighboring chunks, but NEVER break sentences
  * @param {Array} chunks - Array of chunk objects
  * @param {number} minWords - Minimum words for a chunk to be considered complete (default: 8)
  * @returns {Array} Array of merged chunks
@@ -1150,13 +1127,28 @@ function smartMergeChunks(chunks, minWords = 8) {
     if (chunks.length <= 1) return chunks;
 
     const result = [...chunks];
+    
+    // First pass: Fix obvious sentence splits
+    for (let i = 0; i < result.length - 1; i++) {
+        const currentChunk = result[i];
+        const nextChunk = result[i + 1];
+        
+        if (hasBrokenSentenceBoundary(currentChunk.text, nextChunk.text)) {
+            // Merge these chunks to fix the broken sentence
+            currentChunk.text = currentChunk.text + ' ' + nextChunk.text;
+            currentChunk.wordCount = currentChunk.wordCount + nextChunk.wordCount;
+            result.splice(i + 1, 1);
+            i--; // Recheck this position
+        }
+    }
+    
+    // Second pass: Merge short chunks if possible without breaking sentences
     let i = 0;
-
     while (i < result.length) {
         const currentChunk = result[i];
         const currentWords = currentChunk.wordCount;
 
-        // If current chunk is too short, merge with shorter neighbor
+        // If current chunk is too short, try to merge with neighbors
         if (currentWords < minWords) {
             const prevChunk = i > 0 ? result[i - 1] : null;
             const nextChunk = i < result.length - 1 ? result[i + 1] : null;
@@ -1164,20 +1156,21 @@ function smartMergeChunks(chunks, minWords = 8) {
             const prevWords = prevChunk ? prevChunk.wordCount : Infinity;
             const nextWords = nextChunk ? nextChunk.wordCount : Infinity;
 
-            if (prevWords <= nextWords && prevChunk) {
-                // Merge with previous (shorter or equal)
+            // Try to merge with the shorter neighbor, but only if it won't break sentences
+            if (prevChunk && prevWords <= nextWords && !hasBrokenSentenceBoundary(prevChunk.text, currentChunk.text)) {
+                // Merge with previous
                 prevChunk.text = prevChunk.text + ' ' + currentChunk.text;
                 prevChunk.wordCount = prevWords + currentWords;
                 result.splice(i, 1);
                 i--; // Check the merged chunk again
-            } else if (nextChunk) {
+            } else if (nextChunk && !hasBrokenSentenceBoundary(currentChunk.text, nextChunk.text)) {
                 // Merge with next
                 currentChunk.text = currentChunk.text + ' ' + nextChunk.text;
                 currentChunk.wordCount = currentWords + nextWords;
                 result.splice(i + 1, 1);
                 // Don't increment i, check the merged chunk again
             } else {
-                // Can't merge, move on
+                // Can't merge without breaking sentences, move on
                 i++;
             }
         } else {
@@ -1186,6 +1179,104 @@ function smartMergeChunks(chunks, minWords = 8) {
     }
 
     return result;
+}
+
+/**
+ * Check if there's a broken sentence boundary between two chunks
+ * @param {string} firstText - Text of the first chunk
+ * @param {string} secondText - Text of the second chunk
+ * @returns {boolean} True if there's a broken sentence boundary
+ */
+function hasBrokenSentenceBoundary(firstText, secondText) {
+    if (!firstText || !secondText) return false;
+    
+    const firstTrimmed = firstText.trim();
+    const secondTrimmed = secondText.trim();
+    
+    if (!firstTrimmed || !secondTrimmed) return false;
+    
+    // Get the last few words of first chunk and first few words of second chunk
+    const firstWords = firstTrimmed.split(/\s+/);
+    const secondWords = secondTrimmed.split(/\s+/);
+    
+    const lastWord = firstWords[firstWords.length - 1];
+    const firstWordOfSecond = secondWords[0];
+    const secondWordOfSecond = secondWords[1] || '';
+    
+    // Remove punctuation from last word for analysis
+    const lastWordClean = lastWord.replace(/[.,!?;:()[\]{}'"]/g, '');
+    
+    // PATTERN 1: Subject + verb continuation (like "We" + "can")
+    const subjects = /^(I|We|You|He|She|It|They|This|That|These|Those|There|Here)$/i;
+    const verbStarters = /^(can|could|will|would|should|shall|may|might|must|do|does|did|have|has|had|are|is|was|were|am|be|been|being|go|goes|went|come|comes|came|see|sees|saw|get|gets|got|make|makes|made|take|takes|took|give|gives|gave|know|knows|knew|think|thinks|thought|feel|feels|felt|look|looks|looked|seem|seems|seemed|become|becomes|became|find|finds|found|want|wants|wanted|need|needs|needed|try|tries|tried|work|works|worked|live|lives|lived|use|uses|used|say|says|said|tell|tells|told|call|calls|called|ask|asks|asked|help|helps|helped|move|moves|moved|turn|turns|turned|keep|keeps|kept|let|lets|show|shows|showed|bring|brings|brought|put|puts|put|set|sets|start|starts|started|stop|stops|stopped|run|runs|ran|walk|walks|walked|stand|stands|stood|sit|sits|sat|play|plays|played|read|reads|read|write|writes|wrote|hear|hears|heard|listen|listens|listened|watch|watches|watched|remember|remembers|remembered|forget|forgets|forgot|learn|learns|learned|teach|teaches|taught|understand|understands|understood|believe|believes|believed|hope|hopes|hoped|expect|expects|expected|imagine|imagines|imagined|wonder|wonders|wondered|worry|worries|worried|care|cares|cared|love|loves|loved|like|likes|liked|hate|hates|hated|enjoy|enjoys|enjoyed|prefer|prefers|preferred|choose|chooses|chose|decide|decides|decided|agree|agrees|agreed|disagree|disagrees|disagreed|accept|accepts|accepted|refuse|refuses|refused|allow|allows|allowed|require|requires|required|suggest|suggests|suggested|recommend|recommends|recommended|consider|considers|considered|discuss|discusses|discussed|explain|explains|explained|describe|describes|described|mention|mentions|mentioned|note|notes|noted|notice|notices|noticed|observe|observes|observed|realize|realizes|realized|recognize|recognizes|recognized|admit|admits|admitted|deny|denies|denied|claim|claims|claimed|argue|argues|argued|insist|insists|insisted|propose|proposes|proposed|offer|offers|offered|promise|promises|promised|threaten|threatens|threatened|warn|warns|warned|advise|advises|advised|inform|informs|informed|announce|announces|announced|declare|declares|declared|state|states|stated|report|reports|reported|confirm|confirms|confirmed|reveal|reveals|revealed|discover|discovers|discovered|explore|explores|explored|investigate|investigates|investigated|examine|examines|examined|study|studies|studied|research|researches|researched|test|tests|tested|prove|proves|proved|demonstrate|demonstrates|demonstrated|show|shows|showed|indicate|indicates|indicated|suggest|suggests|suggested|imply|implies|implied|mean|means|meant|represent|represents|represented|symbolize|symbolizes|symbolized|reflect|reflects|reflected|express|expresses|expressed|communicate|communicates|communicated|share|shares|shared|exchange|exchanges|exchanged|trade|trades|traded|sell|sells|sold|buy|buys|bought|pay|pays|paid|cost|costs|spend|spends|spent|save|saves|saved|earn|earns|earned|win|wins|won|lose|loses|lost|gain|gains|gained|achieve|achieves|achieved|accomplish|accomplishes|accomplished|succeed|succeeds|succeeded|fail|fails|failed|manage|manages|managed|handle|handles|handled|deal|deals|dealt|face|faces|faced|meet|meets|met|encounter|encounters|encountered|experience|experiences|experienced|undergo|undergoes|underwent|suffer|suffers|suffered|endure|endures|endured|survive|survives|survived|exist|exists|existed|occur|occurs|occurred|happen|happens|happened|appear|appears|appeared|disappear|disappears|disappeared|arrive|arrives|arrived|leave|leaves|left|enter|enters|entered|exit|exits|exited|return|returns|returned|stay|stays|stayed|remain|remains|remained|continue|continues|continued|begin|begins|began|start|starts|started|finish|finishes|finished|end|ends|ended|complete|completes|completed|follow|follows|followed|lead|leads|led|guide|guides|guided|direct|directs|directed|control|controls|controlled|influence|influences|influenced|affect|affects|affected|impact|impacts|impacted|change|changes|changed|alter|alters|altered|modify|modifies|modified|improve|improves|improved|develop|develops|developed|create|creates|created|build|builds|built|construct|constructs|constructed|design|designs|designed|plan|plans|planned|organize|organizes|organized|arrange|arranges|arranged|prepare|prepares|prepared|establish|establishes|established|form|forms|formed|produce|produces|produced|generate|generates|generated|cause|causes|caused|result|results|resulted|lead|leads|led|contribute|contributes|contributed|provide|provides|provided|supply|supplies|supplied|deliver|delivers|delivered|serve|serves|served|support|supports|supported|assist|assists|assisted|aid|aids|aided|enable|enables|enabled|facilitate|facilitates|facilitated|encourage|encourages|encouraged|motivate|motivates|motivated|inspire|inspires|inspired|influence|influences|influenced|persuade|persuades|persuaded|convince|convinces|convinced|force|forces|forced|pressure|pressures|pressured|push|pushes|pushed|pull|pulls|pulled|drag|drags|dragged|carry|carries|carried|lift|lifts|lifted|raise|raises|raised|lower|lowers|lowered|drop|drops|dropped|throw|throws|threw|catch|catches|caught|hold|holds|held|grab|grabs|grabbed|release|releases|released|free|frees|freed|open|opens|opened|close|closes|closed|lock|locks|locked|unlock|unlocks|unlocked|connect|connects|connected|link|links|linked|join|joins|joined|attach|attaches|attached|separate|separates|separated|divide|divides|divided|split|splits|split|break|breaks|broke|crack|cracks|cracked|damage|damages|damaged|destroy|destroys|destroyed|repair|repairs|repaired|fix|fixes|fixed|restore|restores|restored|replace|replaces|replaced|remove|removes|removed|eliminate|eliminates|eliminated|reduce|reduces|reduced|increase|increases|increased|expand|expands|expanded|extend|extends|extended|stretch|stretches|stretched|grow|grows|grew|shrink|shrinks|shrank|contract|contracts|contracted|spread|spreads|spread|scatter|scatters|scattered|gather|gathers|gathered|collect|collects|collected|accumulate|accumulates|accumulated|store|stores|stored|keep|keeps|kept|maintain|maintains|maintained|preserve|preserves|preserved|protect|protects|protected|defend|defends|defended|guard|guards|guarded|secure|secures|secured|ensure|ensures|ensured|guarantee|guarantees|guaranteed|check|checks|checked|verify|verifies|verified|confirm|confirms|confirmed|validate|validates|validated|monitor|monitors|monitored|track|tracks|tracked|follow|follows|followed|trace|traces|traced|locate|locates|located|identify|identifies|identified|recognize|recognizes|recognized|distinguish|distinguishes|distinguished|differentiate|differentiates|differentiated|compare|compares|compared|contrast|contrasts|contrasted|match|matches|matched|fit|fits|fitted|suit|suits|suited|adapt|adapts|adapted|adjust|adjusts|adjusted|modify|modifies|modified|customize|customizes|customized|personalize|personalizes|personalized|specialize|specializes|specialized|focus|focuses|focused|concentrate|concentrates|concentrated|emphasize|emphasizes|emphasized|highlight|highlights|highlighted|stress|stresses|stressed|prioritize|prioritizes|prioritized|rank|ranks|ranked|rate|rates|rated|evaluate|evaluates|evaluated|assess|assesses|assessed|judge|judges|judged|measure|measures|measured|calculate|calculates|calculated|estimate|estimates|estimated|predict|predicts|predicted|forecast|forecasts|forecasted|project|projects|projected|plan|plans|planned|schedule|schedules|scheduled|organize|organizes|organized|coordinate|coordinates|coordinated|manage|manages|managed|supervise|supervises|supervised|oversee|oversees|oversaw|monitor|monitors|monitored|regulate|regulates|regulated|govern|governs|governed|rule|rules|ruled|command|commands|commanded|order|orders|ordered|instruct|instructs|instructed|direct|directs|directed|guide|guides|guided|teach|teaches|taught|train|trains|trained|educate|educates|educated|inform|informs|informed|advise|advises|advised|counsel|counsels|counseled|consult|consults|consulted|recommend|recommends|recommended|suggest|suggests|suggested|propose|proposes|proposed|request|requests|requested|ask|asks|asked|demand|demands|demanded|require|requires|required|need|needs|needed|want|wants|wanted|desire|desires|desired|wish|wishes|wished|hope|hopes|hoped|expect|expects|expected|anticipate|anticipates|anticipated|await|awaits|awaited|wait|waits|waited|depend|depends|depended|rely|relies|relied|trust|trusts|trusted|believe|believes|believed|doubt|doubts|doubted|question|questions|questioned|challenge|challenges|challenged|oppose|opposes|opposed|resist|resists|resisted|fight|fights|fought|struggle|struggles|struggled|compete|competes|competed|contest|contests|contested|argue|argues|argued|debate|debates|debated|discuss|discusses|discussed|negotiate|negotiates|negotiated|bargain|bargains|bargained|compromise|compromises|compromised|settle|settles|settled|resolve|resolves|resolved|solve|solves|solved|address|addresses|addressed|tackle|tackles|tackled|approach|approaches|approached|handle|handles|handled|manage|manages|managed|cope|copes|coped|deal|deals|dealt|process|processes|processed|treat|treats|treated|respond|responds|responded|react|reacts|reacted|answer|answers|answered|reply|replies|replied|acknowledge|acknowledges|acknowledged|recognize|recognizes|recognized|accept|accepts|accepted|approve|approves|approved|endorse|endorses|endorsed|support|supports|supported|back|backs|backed|favor|favors|favored|prefer|prefers|preferred|choose|chooses|chose|select|selects|selected|pick|picks|picked|opt|opts|opted|decide|decides|decided|determine|determines|determined|conclude|concludes|concluded|resolve|resolves|resolved|settle|settles|settled|finalize|finalizes|finalized|complete|completes|completed|finish|finishes|finished|end|ends|ended|stop|stops|stopped|cease|ceases|ceased|quit|quits|quit|abandon|abandons|abandoned|give|gives|gave|surrender|surrenders|surrendered|yield|yields|yielded|submit|submits|submitted|comply|complies|complied|conform|conforms|conformed|obey|obeys|obeyed|follow|follows|followed|adhere|adheres|adhered|stick|sticks|stuck|keep|keeps|kept|maintain|maintains|maintained|uphold|upholds|upheld|preserve|preserves|preserved|retain|retains|retained|save|saves|saved|rescue|rescues|rescued|recover|recovers|recovered|retrieve|retrieves|retrieved|regain|regains|regained|restore|restores|restored|return|returns|returned|bring|brings|brought|fetch|fetches|fetched|get|gets|got|obtain|obtains|obtained|acquire|acquires|acquired|gain|gains|gained|receive|receives|received|accept|accepts|accepted|take|takes|took|capture|captures|captured|seize|seizes|seized|grab|grabs|grabbed|snatch|snatches|snatched|steal|steals|stole|rob|robs|robbed|cheat|cheats|cheated|trick|tricks|tricked|deceive|deceives|deceived|fool|fools|fooled|mislead|misleads|misled|lie|lies|lied|hide|hides|hid|conceal|conceals|concealed|cover|covers|covered|mask|masks|masked|disguise|disguises|disguised|pretend|pretends|pretended|fake|fakes|faked|imitate|imitates|imitated|copy|copies|copied|mimic|mimics|mimicked|reproduce|reproduces|reproduced|repeat|repeats|repeated|duplicate|duplicates|duplicated|replicate|replicates|replicated|clone|clones|cloned|mirror|mirrors|mirrored|reflect|reflects|reflected|echo|echoes|echoed|resemble|resembles|resembled|look|looks|looked|appear|appears|appeared|seem|seems|seemed|sound|sounds|sounded|feel|feels|felt|taste|tastes|tasted|smell|smells|smelled|touch|touches|touched|sense|senses|sensed|perceive|perceives|perceived|notice|notices|noticed|observe|observes|observed|spot|spots|spotted|detect|detects|detected|discover|discovers|discovered|find|finds|found|locate|locates|located|uncover|uncovers|uncovered|reveal|reveals|revealed|expose|exposes|exposed|show|shows|showed|display|displays|displayed|exhibit|exhibits|exhibited|present|presents|presented|demonstrate|demonstrates|demonstrated|illustrate|illustrates|illustrated|depict|depicts|depicted|portray|portrays|portrayed|represent|represents|represented|symbolize|symbolizes|symbolized|signify|signifies|signified|indicate|indicates|indicated|point|points|pointed|direct|directs|directed|aim|aims|aimed|target|targets|targeted|focus|focuses|focused|concentrate|concentrates|concentrated|center|centers|centered)$/i;
+    
+    if (subjects.test(lastWordClean) && verbStarters.test(firstWordOfSecond)) {
+        return true;
+    }
+    
+    // PATTERN 2: Obvious sentence fragments ending first chunk
+    const sentenceStarters = /^(In|On|At|The|A|An|This|That|But|And|Yet|For|So|Because|Since|When|Where|What|How|Why|Who|Which|As|If|Unless|Although|While|Before|After|During|Through|Between|Among|Within|Without|Beyond|Behind|Beneath|Above|Below|Beside|Around|Across|Along|Against|Toward|Towards|Despite|Except|Including|Regarding|Concerning|According|Due|Thanks|Owing|Relating|Referring|Compared|Relative|Similar|Different|Contrary|Opposed|Addition|Response|Reaction|Relation|Respect|Regard|Reference|Contrast|Comparison|Many|Most|Some|Few|Several|All|Each|Every|Both|Either|Neither|One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|First|Second|Third|Last|Next|Another|Other|Same|Different|New|Old|Young|Small|Large|Big|Little|Great|Good|Bad|Best|Worst|Better|Worse|High|Low|Long|Short|Wide|Narrow|Deep|Shallow|Fast|Slow|Quick|Early|Late|Soon|Now|Then|Here|There|Everywhere|Somewhere|Nowhere|Anywhere|Today|Tomorrow|Yesterday|Always|Never|Sometimes|Often|Usually|Rarely|Seldom|Frequently|Occasionally|Recently|Currently|Previously|Finally|Eventually|Immediately|Suddenly|Gradually|Slowly|Quickly|Carefully|Easily|Hardly|Nearly|Almost|Quite|Very|Really|Extremely|Completely|Totally|Partly|Partially|Mostly|Generally|Specifically|Particularly|Especially|Obviously|Clearly|Certainly|Definitely|Probably|Possibly|Maybe|Perhaps|However|Nevertheless|Nonetheless|Furthermore|Moreover|Additionally|Besides|Also|Too|Either|Neither|Instead|Otherwise|Therefore|Thus|Hence|Consequently|Accordingly|Similarly|Likewise|Meanwhile|Meanwhile|Furthermore|Moreover|Additionally|Besides|Also|Too|Either|Neither|Instead|Otherwise|Therefore|Thus|Hence|Consequently|Accordingly|Similarly|Likewise|Meanwhile)$/i;
+    const startsWithLowercase = /^[a-z]/.test(firstWordOfSecond);
+    
+    if (sentenceStarters.test(lastWordClean) && startsWithLowercase) {
+        return true;
+    }
+    
+    // PATTERN 3: Incomplete phrases ending first chunk
+    const incompleteEndings = /\b(of|to|in|on|at|by|for|with|from|into|onto|upon|beneath|above|below|behind|beside|between|among|through|during|before|after|since|until|about|around|across|along|against|toward|towards|beyond|within|without|despite|except|including|regarding|concerning|according|due|thanks|owing|relating|referring|compared|relative|similar|different|contrary|opposed|addition|response|reaction|relation|respect|regard|reference|contrast|comparison|such|like|unlike|as|than|more|less|most|least|better|worse|rather|instead|other|another|same|different|various|several|many|few|some|all|each|every|both|either|neither|not|never|always|sometimes|often|usually|rarely|seldom|frequently|occasionally|generally|specifically|particularly|especially|mainly|mostly|partly|completely|totally|entirely|fully|quite|very|really|extremely|highly|deeply|strongly|clearly|obviously|certainly|definitely|probably|possibly|maybe|perhaps|actually|really|truly|indeed|surely|definitely|absolutely|completely|totally|entirely|fully|quite|rather|somewhat|slightly|barely|hardly|scarcely|nearly|almost|just|only|even|still|yet|already|soon|now|then|here|there|where|when|while|since|until|before|after|during|through|throughout|within|without|beyond|behind|beneath|above|below|beside|around|across|along|against|toward|towards|despite|except|including|regarding|concerning|according|due|thanks|owing|relating|referring|compared|relative|similar|different|contrary|opposed|addition|response|reaction|relation|respect|regard|reference|contrast|comparison)$/i.test(firstTrimmed);
+    
+    if (incompleteEndings && startsWithLowercase) {
+        return true;
+    }
+    
+    // PATTERN 4: Check if first chunk doesn't end with sentence punctuation and second starts lowercase
+    const endsWithoutPunctuation = !/[.!?]$/.test(firstTrimmed);
+    if (endsWithoutPunctuation && startsWithLowercase) {
+        // Additional check: make sure it's not just a natural paragraph break
+        // If the last word is a complete word and the first word of second chunk is also complete,
+        // and they could form a continuing sentence, then it's likely a broken sentence
+        const couldBeContinuation = !/^[A-Z]/.test(firstWordOfSecond) && 
+                                   firstWordOfSecond.length > 1 && 
+                                   !['the', 'and', 'or', 'but', 'so', 'yet', 'for', 'nor'].includes(firstWordOfSecond.toLowerCase());
+        
+        if (couldBeContinuation) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+/**
+ * Check if text starts with a clear sentence beginning
+ * @param {string} text - Text to check
+ * @returns {boolean} True if text starts with a sentence beginning
+ */
+function startsWithSentenceBeginning(text) {
+    if (!text || text.trim().length === 0) return false;
+    
+    const trimmed = text.trim();
+    
+    // Check if starts with capital letter (indicating sentence start)
+    if (/^[A-Z]/.test(trimmed)) return true;
+    
+    // Check if starts with common sentence starters
+    const sentenceStarters = /^(In|On|At|The|A|An|This|That|These|Those|We|I|You|He|She|It|They|But|And|Or|So|Yet|For|Because|Since|When|Where|What|How|Why|Who|Which)/;
+    return sentenceStarters.test(trimmed);
+}
+
+/**
+ * Check if text ends with a clear sentence ending
+ * @param {string} text - Text to check
+ * @returns {boolean} True if text ends with a sentence ending
+ */
+function endsWithSentenceEnding(text) {
+    if (!text || text.trim().length === 0) return false;
+    
+    const trimmed = text.trim();
+    
+    // Check if ends with sentence punctuation
+    return /[.!?]+$/.test(trimmed);
 }
 
 module.exports = {

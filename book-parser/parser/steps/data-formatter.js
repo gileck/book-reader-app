@@ -7,69 +7,33 @@
  */
 
 /**
- * Convert paragraphs to paragraph-based chunks
- * Each paragraph becomes a single chunk with full paragraph text
+ * Convert paragraphs to individual chunks (preserving the chunking structure)
+ * Each chunk remains separate as intended by the chunking algorithm
  * 
  * @param {Array} paragraphs - Array of paragraph objects with chunks
- * @returns {Array} Array of paragraph-based chunks
+ * @returns {Array} Array of individual chunks
  */
 function convertParagraphsToChunks(paragraphs) {
-    return paragraphs.map((paragraph, index) => {
-        // Combine all chunk texts into one paragraph text
-        const paragraphText = paragraph.chunks
-            .map(chunk => chunk.text)
-            .join(' ')
-            .replace(/\s+/g, ' ')
-            .trim();
+    const allChunks = [];
+    let chunkIndex = 0;
 
-        // Calculate total word count
-        const totalWordCount = paragraph.chunks.reduce((sum, chunk) => sum + chunk.wordCount, 0);
-
-        // Collect all links from chunks and calculate word indices
-        const allLinks = [];
-        let currentWordIndex = 0;
-
+    for (const paragraph of paragraphs) {
         for (const chunk of paragraph.chunks) {
-            if (chunk.links && chunk.links.length > 0) {
-                // Find word index within the paragraph text for each link
-                const chunkWords = chunk.text.split(/\s+/).filter(w => w.length > 0);
-                
-                chunk.links.forEach(link => {
-                    // Find the link text within the chunk
-                    const linkWords = link.text.split(/\s+/).filter(w => w.length > 0);
-                    const linkText = linkWords.join(' ');
-                    
-                    // Try to find the exact position of the link text within the chunk
-                    let wordIndexInChunk = 0;
-                    for (let i = 0; i <= chunkWords.length - linkWords.length; i++) {
-                        const candidateText = chunkWords.slice(i, i + linkWords.length).join(' ');
-                        if (candidateText.toLowerCase().includes(linkText.toLowerCase()) || 
-                            linkText.toLowerCase().includes(candidateText.toLowerCase())) {
-                            wordIndexInChunk = i;
-                            break;
-                        }
-                    }
-
-                    allLinks.push({
-                        text: link.text,
-                        targetChunk: link.targetChunk,
-                        chapterNumber: link.chapterNumber,
-                        wordIndex: currentWordIndex + wordIndexInChunk
-                    });
-                });
-            }
-            currentWordIndex += chunk.text.split(/\s+/).filter(w => w.length > 0).length;
+            // Preserve each chunk as a separate entity - don't merge them!
+            allChunks.push({
+                index: chunkIndex++,
+                text: chunk.text.replace(/\s+/g, ' ').trim(),
+                wordCount: chunk.wordCount,
+                type: paragraph.type || 'text',
+                pageNumber: paragraph.pageNumber || chunk.pageNumber,
+                links: chunk.links || [],
+                paragraphId: paragraph.id,
+                paragraphType: paragraph.type
+            });
         }
+    }
 
-        return {
-            index: index,
-            text: paragraphText,
-            wordCount: totalWordCount,
-            type: paragraph.type || 'text',
-            pageNumber: paragraph.pageNumber,
-            links: allLinks
-        };
-    });
+    return allChunks;
 }
 
 /**

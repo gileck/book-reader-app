@@ -175,8 +175,14 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
             if (chapterPages.length > 0) {
                 // Process pages to handle cross-page sentence continuation
                 const contentLines = [];
+                const processedPages = new Set(); // Track which pages have been processed
 
                 for (let pageIndex = 0; pageIndex < chapterPages.length; pageIndex++) {
+                    // Skip pages that have already been processed as part of cross-page merging
+                    if (processedPages.has(pageIndex)) {
+                        continue;
+                    }
+
                     const page = chapterPages[pageIndex];
                     let pageText = page.text.trim();
 
@@ -226,15 +232,27 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                                 const continuationPart = nextPageText.substring(0, firstSentenceEnd + 1);
                                 const remainingNextPageText = nextPageText.substring(firstSentenceEnd + 1).trim();
 
+                                // Clean page numbers from the end of current page text before merging
+                                // This handles cases like "If you shrink yourself 8" where "8" is a page number
+                                let cleanedPageText = pageText;
+                                const pageNumberMatch = pageText.match(/\s+(\d+)$/);
+                                if (pageNumberMatch) {
+                                    const potentialPageNumber = parseInt(pageNumberMatch[1]);
+                                    // If the number at the end could be a page number (reasonable range)
+                                    if (potentialPageNumber >= 1 && potentialPageNumber <= 1000) {
+                                        cleanedPageText = pageText.replace(/\s+\d+$/, '');
+                                    }
+                                }
+
                                 // Additional debug for the specific cross-page case
                                 if (pageText.includes('If you shrink yourself') || continuationPart.includes('down to the size')) {
                                     try {
                                         const debugInfo = [
                                             `CROSS-PAGE CONTINUATION DETECTED:`,
-                                            `Page ${page.pageNumber} ended with: "${pageText.substring(Math.max(0, pageText.length - 100))}"`,
+                                            `Page ${page.pageNumber} original: "${pageText.substring(Math.max(0, pageText.length - 100))}"`,
+                                            `Page ${page.pageNumber} cleaned: "${cleanedPageText.substring(Math.max(0, cleanedPageText.length - 100))}"`,
                                             `Continuation from page ${nextPage.pageNumber}: "${continuationPart}"`,
                                             `Remaining next page: "${remainingNextPageText.substring(0, 100)}..."`,
-                                            `Combined result: "${(pageText + ' ' + continuationPart).substring(Math.max(0, pageText.length - 50))}"`,
                                             ''
                                         ];
 
@@ -244,11 +262,37 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                                     }
                                 }
 
-                                // Combine current page with continuation
-                                pageText = pageText + ' ' + continuationPart;
+                                // CRITICAL FIX: Only merge the cross-page sentence, preserve other paragraph boundaries
+                                // Instead of removing all line breaks, we need to be surgical:
+                                // 1. Remove the line break at the very end of current page (if it exists)
+                                // 2. Join the incomplete sentence with its continuation 
+                                // 3. Preserve all other line breaks for proper paragraph boundaries
 
-                                // Update next page to remove the continuation part
-                                chapterPages[pageIndex + 1].text = remainingNextPageText;
+                                // More surgical approach: only merge at the exact split point
+                                let mergedPageText = cleanedPageText;
+                                
+                                // If the page ends with a line break marker, this indicates the sentence was split
+                                if (mergedPageText.endsWith(' ⟨⟨LINE_BREAK⟩⟩')) {
+                                    // Remove only the trailing line break where sentence was split
+                                    mergedPageText = mergedPageText.replace(/ ⟨⟨LINE_BREAK⟩⟩$/, '');
+                                }
+                                
+                                // Join with continuation part - no line break since it's same sentence
+                                pageText = mergedPageText + ' ' + continuationPart;
+
+                                // Mark the next page as processed and update its content for future processing
+                                processedPages.add(pageIndex + 1);
+                                
+                                // If there's remaining text on the next page, we need to process it
+                                if (remainingNextPageText.length > 50) {
+                                    // Add the merged current page
+                                    contentLines.push(pageText); 
+                                    
+                                    // CRITICAL: Ensure remaining text preserves its line breaks for proper paragraphs
+                                    // Don't add extra line breaks, just use the remaining text as-is
+                                    contentLines.push(remainingNextPageText); 
+                                    continue; // Skip adding pageText again below
+                                }
                             }
                         }
                     }

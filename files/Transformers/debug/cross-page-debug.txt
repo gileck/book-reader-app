@@ -5,184 +5,106 @@ PROCESSING CHAPTER: "Introduction: Life itself" (0)
 PAGE 9 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "s a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself"
-Page text length: 2353
+Page text ends with: "a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself 8"
+Page text length: 2340
 
 CROSS-PAGE CONTINUATION DETECTED:
-Page 9 ended with: "s a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself"
+Page 9 original: "a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself 8"
+Page 9 cleaned: "s a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself"
 Continuation from page 10: "down to the size of a molecule, the ‘cityscape’ is dizzying."
 Remaining next page: "Membranes sweep past your view: curving, fluid walls, swooping overhead or plunging down below. Traf..."
-Combined result: " built in three dimensions. If you shrink yourself down to the size of a molecule, the ‘cityscape’ is dizzying."
-
-PAGE 10 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "trifuges or with optical tweezers, read out the code that specifies their structures, deciphered the"
-Page text length: 2807
 
 PAGE 11 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "t them apart from inanimate matter? The idea that there is a vital force, that life is fundamentally"
-Page text length: 2685
-
-PAGE 12 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "biochemistry began with a realisation that cells are not made of an amorphous protoplasm composed of"
-Page text length: 2329
+Page text ends with: "hem apart from inanimate matter? The idea that there is a vital force, that life is fundamentally 10"
+Page text length: 2733
 
 PAGE 13 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "et every second , each one reliably going through exactly the same succession. This is the flux that"
-Page text length: 2804
-
-PAGE 14 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: " Albert Kluyver, marshalled new evidence for the unity of biochemistry. His slightly maniacal phrase"
-Page text length: 2702
+Page text ends with: "every second , each one reliably going through exactly the same succession. This is the flux that 12"
+Page text length: 2802
 
 PAGE 15 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "of Shakespeare in blips and bleeps but technically there is no loss of meaning, and the canon can be"
-Page text length: 2551
-
-PAGE 16 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "jungle has changed the way we think about everything, it has also helped us forget some lessons from"
-Page text length: 2751
+Page text ends with: "Shakespeare in blips and bleeps but technically there is no loss of meaning, and the canon can be 14"
+Page text length: 2590
 
 PAGE 17 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "n at least two papers detailing the atomic structure of the latest machines. In comparison, even the"
-Page text length: 2540
-
-PAGE 18 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "en the road. Unlike a city, where harassed local authorities may procrastinate for months, the genes"
-Page text length: 2673
+Page text ends with: "t least two papers detailing the atomic structure of the latest machines. In comparison, even the 16"
+Page text length: 2508
 
 PAGE 19 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: " snapshot in time. We can take a sample of cells and look at the distribution of flux at one moment,"
-Page text length: 2470
-
-PAGE 20 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "ck to the emergence of life. Core metabolism has changed little in part because it was never powered"
-Page text length: 2697
+Page text ends with: "apshot in time. We can take a sample of cells and look at the distribution of flux at one moment, 18"
+Page text length: 2576
 
 PAGE 21 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: " suggested one plausible answer: burning very small carbon skeletons is not an efficient process, he"
-Page text length: 2529
-
-PAGE 22 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: true
-Has next page: true
-Page text ends with: "he Krebs cycle into sharp modern focus but does not explain why the cycle has a yin and yang at all."
-Page text length: 2749
+Page text ends with: "ggested one plausible answer: burning very small carbon skeletons is not an efficient process, he 20"
+Page text length: 2541
 
 PAGE 23 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "eciate that biochemistry is for many people an obscure subject, full of runic symbols that suggest a"
-Page text length: 2787
-
-PAGE 24 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: true
-Has next page: true
-Page text ends with: " reacting the simple gases hydrogen and carbon dioxide to generate the universal precursors of life."
-Page text length: 2568
+Page text ends with: "ate that biochemistry is for many people an obscure subject, full of runic symbols that suggest a 22"
+Page text length: 2760
 
 PAGE 25 DEBUG (Chapter: Introduction: Life itself):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: " succinate accumulate and trigger the ancestral pathways for dealing with low oxygen levels, driving"
-Page text length: 2832
-
-PAGE 26 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "ediate gradually builds up; in effect, a car park. To understand which one requires a lot of context"
-Page text length: 2806
+Page text ends with: "ccinate accumulate and trigger the ancestral pathways for dealing with low oxygen levels, driving 24"
+Page text length: 2790
 
 PAGE 27 DEBUG (Chapter: Introduction: Life itself):
-Page ends with punctuation: true
+Page ends with punctuation: false
 Has next page: false
-Page text ends with: "There are times when it feels as if metabolomics should just be called gnomics."
-Page text length: 79
+Page text ends with: "e interpretation. There are times when it feels as if metabolomics should just be called gnomics. 26"
+Page text length: 109
 
 PROCESSING CHAPTER: "Discovering the nanocosm" (1)
 
 PAGE 54 DEBUG (Chapter: Discovering the nanocosm):
-Page ends with punctuation: true
+Page ends with punctuation: false
 Has next page: true
-Page text ends with: "d can vary depending on factors that have kept bioenergeticists busy for decades, right up to today."
-Page text length: 1914
+Page text ends with: "an vary depending on factors that have kept bioenergeticists busy for decades, right up to today. 53"
+Page text length: 1909
 
 PROCESSING CHAPTER: "The path of carbon" (2)
 
 PAGE 65 DEBUG (Chapter: The path of carbon):
-Page ends with punctuation: true
+Page ends with punctuation: false
 Has next page: true
-Page text ends with: "e must shift our gaze from the lofty pinnacles of evolution down to the obscure canyons of creation."
-Page text length: 2656
+Page text ends with: "ust shift our gaze from the lofty pinnacles of evolution down to the obscure canyons of creation. 64"
+Page text length: 2655
 
 PROCESSING CHAPTER: "From gases to life" (3)
-
-PAGE 103 DEBUG (Chapter: From gases to life):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "h Crick had pronounced a ‘frozen accident’, meaning that the code was essentially random, and became"
-Page text length: 1387
-
-PAGE 115 DEBUG (Chapter: From gases to life):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "ification – for once, not slain by an ugly fact. I take my hat off to them. Small steps, giant leaps"
-Page text length: 2191
 
 PAGE 116 DEBUG (Chapter: From gases to life):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "ers) and organic synthesis in protocells (where I talked about protons crossing cell membranes). The"
-Page text length: 2628
-
-PAGE 117 DEBUG (Chapter: From gases to life):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "y acids will go straight into the membrane, whereas a proportion of amino acids should interact with"
-Page text length: 1775
+Page text ends with: " and organic synthesis in protocells (where I talked about protons crossing cell membranes). The 115"
+Page text length: 2684
 
 PAGE 120 DEBUG (Chapter: From gases to life):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "phate onto ADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield, roughly like this:"
-Page text length: 1089
-
-PAGE 121 DEBUG (Chapter: From gases to life):
-Page ends with punctuation: false
-Has next page: true
-Page text ends with: "nvironment. The inorganic pores within vents are the perfect homes for protocells that nestle in the"
-Page text length: 2544
+Page text ends with: "e onto ADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield, roughly like this: 119"
+Page text length: 1158
 
 PROCESSING CHAPTER: "Revolutions" (4)
 
 PAGE 141 DEBUG (Chapter: Revolutions):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "shocking! Just think what it means. A fall in 13 C relative to 12 C implies that far more carbon was"
-Page text length: 2613
+Page text ends with: "king! Just think what it means. A fall in 13 C relative to 12 C implies that far more carbon was 140"
+Page text length: 2584
 
 PROCESSING CHAPTER: "To the dark side" (5)
 
@@ -193,12 +115,12 @@ PROCESSING CHAPTER: "Epilogue: Self" (Epilogue)
 PAGE 218 DEBUG (Chapter: Epilogue: Self):
 Page ends with punctuation: false
 Has next page: true
-Page text ends with: "ond, you will transform into malate, then oxaloacetate, or perhaps an amino acid or sugar. You are a"
-Page text length: 2860
+Page text ends with: " you will transform into malate, then oxaloacetate, or perhaps an amino acid or sugar. You are a 217"
+Page text length: 2827
 
 PAGE 234 DEBUG (Chapter: Epilogue: Self):
-Page ends with punctuation: true
+Page ends with punctuation: false
 Has next page: true
-Page text ends with: "m (where an H has been extracted from each of two GSH molecules). An important cellular antioxidant."
-Page text length: 2242
+Page text ends with: "here an H has been extracted from each of two GSH molecules). An important cellular antioxidant. 233"
+Page text length: 2186
 

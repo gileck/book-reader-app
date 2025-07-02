@@ -3,4 +3,4 @@ Total paragraphs: 1
 Paragraphs < 60 words: 0
 Paragraphs >= 60 words: 1
 
-Paragraph 0 (93 words): "316 Index 288 Acknowledgements 282 Further reading 236 List of abbreviations 233 Appendix 2: The Krebs line 227 Appendix 1: Red protein mechanics 222 The reverse Krebs cycle 221 The forward Krebs cycle 220 Envoi: ‘Like Most Revelations’ 219 Epilogue: Self 211 6. The flux capacitor 181 5. To the dark..."
+Paragraph 0 (93 words): "Table of Contents Praise for Transformer 1 Title Page 3 Copyright 4 Dedication 5 Contents 6 Introduction: Life itself 8 1. Discovering the nanocosm 27 2. The path of carbon 62 3. From gases to life 91 4. Revolutions 124 5. To the dark side 150 6. The flux capacitor 181 Epilogue: Self 211 Envoi: ‘Lik..."

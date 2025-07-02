@@ -519,7 +519,7 @@ function extractRawTextFromItems(textItems) {
 
     // Sort items by Y coordinate (top to bottom) then X coordinate (left to right)
     const sortedItems = [...textItems].sort((a, b) => {
-        const yDiff = Math.round(a.transform[5]) - Math.round(b.transform[5]);
+        const yDiff = Math.round(b.transform[5]) - Math.round(a.transform[5]); // Fixed: b - a for top to bottom
         if (Math.abs(yDiff) > 10) { // Different lines
             return yDiff;
         }
@@ -637,7 +637,7 @@ function processLinesIntoParagraphs(lines, debugFolderPath = null) {
     }
 
     // Smart merging: merge short paragraphs with shorter neighboring paragraphs
-    const mergedParagraphs = smartMergeParagraphs(paragraphs, 60);
+    const mergedParagraphs = smartMergeParagraphs(paragraphs, 80);
 
     // Join paragraphs with line break markers
     return mergedParagraphs.join(' ⟨⟨LINE_BREAK⟩⟩ ').trim();
