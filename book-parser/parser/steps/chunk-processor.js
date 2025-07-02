@@ -342,7 +342,8 @@ function processChapter(chapter, debugDir) {
                     id: c.id,
                     globalIndex: c.globalIndex,
                     text: c.text.substring(0, 100) + (c.text.length > 100 ? '...' : ''),
-                    wordCount: c.wordCount
+                    wordCount: c.wordCount,
+                    type: c.type
                 }))
             }))
         };
@@ -356,7 +357,7 @@ function processChapter(chapter, debugDir) {
 /**
  * Flatten paragraph structure to chunks for backward compatibility
  * @param {Array} paragraphs - Array of paragraph objects
- * @returns {Array} Flat array of chunks with paragraph info
+ * @returns {Array} Flat array of chunks
  */
 function flattenParagraphsToChunks(paragraphs) {
     const allChunks = [];
@@ -365,9 +366,8 @@ function flattenParagraphsToChunks(paragraphs) {
         for (const chunk of paragraph.chunks) {
             allChunks.push({
                 ...chunk,
-                paragraphId: paragraph.id,
-                paragraphType: paragraph.type,
-                type: paragraph.type === 'header' ? 'header' : 'text'
+                // Preserve the original chunk type from createChunksFromText
+                type: chunk.type || (paragraph.type === 'header' ? 'header' : 'text')
             });
         }
     }

@@ -1,1 +1,1 @@
-node ./book-parser/parser/index.js ./files/Transformers/book.pdf --debug
+node ../../book-parser/parser/index.js ./book.pdf --debug

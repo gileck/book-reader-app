@@ -24,11 +24,9 @@ function convertParagraphsToChunks(paragraphs) {
                 index: chunkIndex++,
                 text: chunk.text.replace(/\s+/g, ' ').trim(),
                 wordCount: chunk.wordCount,
-                type: paragraph.type || 'text',
+                type: chunk.type || paragraph.type || 'text',
                 pageNumber: paragraph.pageNumber || chunk.pageNumber,
-                links: chunk.links || [],
-                paragraphId: paragraph.id,
-                paragraphType: paragraph.type
+                links: chunk.links || []
             });
         }
     }

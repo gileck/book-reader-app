@@ -944,7 +944,7 @@ function chunkTextWithParagraphs(text, minWords = 5, maxWords = 15, pageNumber =
         if (isHeading) {
             // Create header paragraph
             const headerText = paragraphText.replace(/⟨⟨HEADING⟩⟩(.*?)⟨⟨\/HEADING⟩⟩/g, '$1').trim();
-            const headerChunks = createChunksFromText(headerText, 1, 50, globalChunkIndex); // Headers can be longer
+            const headerChunks = createChunksFromText(headerText, 1, 50, globalChunkIndex, 'header'); // Headers can be longer
 
             paragraphs.push({
                 id: paragraphId++,
@@ -1022,9 +1022,10 @@ function determineHeaderLevel(headerText, originalLine) {
  * @param {number} minWords - Minimum words per chunk
  * @param {number} maxWords - Maximum words per chunk  
  * @param {number} startingGlobalIndex - Starting global chunk index
+ * @param {string} chunkType - Type of chunks to create ('text' or 'header')
  * @returns {Array} Array of chunk objects
  */
-function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
+function createChunksFromText(text, minWords, maxWords, startingGlobalIndex, chunkType = 'text') {
     if (!text || text.trim().length === 0) {
         return [];
     }
@@ -1094,7 +1095,7 @@ function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
                     index: startingGlobalIndex + chunkIndex,
                     text: currentChunk.trim(),
                     wordCount: currentWords.length,
-                    type: 'text'
+                    type: chunkType
                 });
 
                 chunkIndex++;
@@ -1110,7 +1111,7 @@ function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
             index: startingGlobalIndex + chunkIndex,
             text: currentChunk.trim(),
             wordCount: currentWords.length,
-            type: 'text'
+            type: chunkType
         });
     }
 
