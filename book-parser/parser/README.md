@@ -417,29 +417,42 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
 
 **File:** `steps/text-processor.js`
 
-**Purpose:** Process raw PDF text into clean, structured chunks with heading detection.
+**Purpose:** Process raw PDF text into clean, structured chunks with intelligent paragraph boundary detection and proper sentence handling.
+
+### Recent Improvements (2024)
+
+**🔧 Fixed Sentence Splitting Issues:**
+- **Problem**: Sentences were being improperly split mid-sentence (e.g., "Yet" ending one chunk, "at night they light up..." starting the next)
+- **Solution**: Completely rewrote `createChunksFromText` function to respect natural paragraph boundaries and never break sentences
+
+**🔧 Paragraph Boundary Detection:**
+- **Respects LINE_BREAK Markers**: Algorithm now splits text by `⟨⟨LINE_BREAK⟩⟩` markers to identify natural paragraph segments
+- **Natural Chunking**: Creates chunks at the end of paragraph segments when they have sufficient words (80-300 words)
+- **Sentence Integrity**: Never breaks sentences across chunks - processes complete sentences within their paragraph context
 
 ### Input/Output Example
 
 **Input:**
 ```text
-"Chapter 1: Introduction\n\nThis is the first paragraph of the introduction. It contains important information about the research methodology.\n\nThe second paragraph continues the discussion..."
+"Chapter 1: Introduction ⟨⟨LINE_BREAK⟩⟩ This is the first paragraph of the introduction. It contains important information about the research methodology. The paragraph continues with more detailed explanations. ⟨⟨LINE_BREAK⟩⟩ The second paragraph begins a new topic. It discusses different aspects of the research approach."
 ```
 
 **Output:**
 ```javascript
 [
   {
-    text: "This is the first paragraph of the introduction. It contains important information about the research methodology.",
+    index: 0,
+    text: "This is the first paragraph of the introduction. It contains important information about the research methodology. The paragraph continues with more detailed explanations.",
+    wordCount: 85,
     type: "text",
-    pageNumber: 1,
-    coordinates: { x: 72, y: 720, width: 450, height: 12 }
+    pageNumber: 1
   },
   {
-    text: "The second paragraph continues the discussion...",
+    index: 1,
+    text: "The second paragraph begins a new topic. It discusses different aspects of the research approach.",
+    wordCount: 92,
     type: "text", 
-    pageNumber: 1,
-    coordinates: { x: 72, y: 690, width: 450, height: 12 }
+    pageNumber: 1
   }
 ]
 ```
@@ -447,23 +460,92 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
 ### Key Functions
 
 ```javascript
-// Main text chunking with heading detection
-function chunkText(text, minWords = 5, maxWords = 15) {
-    const sentences = text.split(/(?<=[.!?])\s+/);
+// Advanced text chunking that respects paragraph boundaries and sentence integrity
+function createChunksFromText(text, minWords, maxWords, startingGlobalIndex) {
+    if (!text || text.trim().length === 0) return [];
+
+    // Split by LINE_BREAK markers to get natural paragraph segments
+    const segments = text.split(' ⟨⟨LINE_BREAK⟩⟩ ').filter(seg => seg.trim().length > 0);
+    
     const chunks = [];
-    
-    sentences.forEach(sentence => {
-        // Detect headings using patterns and formatting
-        const isHeading = isLikelyHeading(sentence);
+    let chunkIndex = 0;
+    let currentChunk = '';
+    let currentWords = [];
+
+    for (let segmentIndex = 0; segmentIndex < segments.length; segmentIndex++) {
+        const segment = segments[segmentIndex].trim();
         
-        chunks.push({
-            text: cleanText(sentence),
-            type: isHeading ? 'heading' : 'text',
-            wordCount: sentence.split(/\s+/).length
-        });
-    });
-    
-    return mergeSplitSentences(chunks);
+        // Split segment into sentences using intelligent sentence detection
+        const sentences = splitIntoSentences(segment);
+
+        // Process sentences in this segment
+        for (let sentenceIndex = 0; sentenceIndex < sentences.length; sentenceIndex++) {
+            const sentence = sentences[sentenceIndex];
+            const sentenceWords = sentence.split(/\s+/).filter(w => w.length > 0);
+
+            // Add sentence to current chunk
+            if (currentChunk) currentChunk += ' ';
+            currentChunk += sentence;
+            currentWords = currentWords.concat(sentenceWords);
+
+            // Check if we should create a chunk
+            const isLastSentenceInSegment = sentenceIndex === sentences.length - 1;
+            const hasEnoughWords = currentWords.length >= minWords;
+
+            // Create chunk if:
+            // 1. We have enough words AND it's the end of a segment (natural paragraph break)
+            // 2. OR we've reached maxWords
+            // 3. OR it's the very last chunk
+            if ((hasEnoughWords && isLastSentenceInSegment) || 
+                currentWords.length >= maxWords || 
+                (segmentIndex === segments.length - 1 && sentenceIndex === sentences.length - 1)) {
+                
+                chunks.push({
+                    index: startingGlobalIndex + chunkIndex,
+                    text: currentChunk.trim(),
+                    wordCount: currentWords.length,
+                    type: 'text'
+                });
+
+                chunkIndex++;
+                currentChunk = '';
+                currentWords = [];
+            }
+        }
+    }
+
+    return chunks;
+}
+
+// Intelligent sentence splitting that handles abbreviations and edge cases
+function splitIntoSentences(text) {
+    const sentences = [];
+    let currentSentence = '';
+    const words = text.split(/\s+/);
+
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        currentSentence += (currentSentence ? ' ' : '') + word;
+
+        // Check if this word ends a sentence
+        if (/[.!?]+$/.test(word)) {
+            const nextWord = words[i + 1];
+            const isAbbreviation = endsWithAbbreviation(currentSentence);
+            const nextIsLowercase = nextWord && /^[a-z]/.test(nextWord);
+
+            if (!isAbbreviation || !nextIsLowercase) {
+                sentences.push(currentSentence.trim());
+                currentSentence = '';
+            }
+        }
+    }
+
+    // Add any remaining text as a sentence
+    if (currentSentence.trim()) {
+        sentences.push(currentSentence.trim());
+    }
+
+    return sentences;
 }
 
 // Clean common PDF artifacts
@@ -474,6 +556,20 @@ function cleanPageNumbers(text, pageNumber = null) {
         .trim();
 }
 ```
+
+### Chunk Size Management
+
+- **Target Range**: 80-300 words per chunk
+- **Natural Boundaries**: Respects paragraph breaks marked by `⟨⟨LINE_BREAK⟩⟩`
+- **Sentence Integrity**: Never splits sentences across chunks
+- **Flexible Sizing**: Allows chunks to exceed maxWords if needed to preserve sentence boundaries
+
+### Debug Output
+
+The text processor generates comprehensive debug files:
+- `smart-paragraph-debug.txt` - Paragraph detection analysis
+- `text-processing-debug.txt` - Sentence splitting details
+- `chunk-processing-debug.txt` - Final chunk creation process
 
 ---
 
