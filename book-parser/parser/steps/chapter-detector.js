@@ -4,7 +4,7 @@ const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
 const { extractTOCFromPdf } = require('./toc-extractor');
 const { extractTextContentWithCoordinates } = require('./link-resolver');
 const { fuzzyMatch } = require('./text-processor');
-const { combineTextItemsPreservingStructure, preserveHeadingsInPageText, cleanPageNumbers } = require('./text-processor');
+const { combineTextItemsPreservingStructure, preserveHeadingsInPageText, cleanPageNumbers, markHeadersInText } = require('./text-processor');
 
 /**
  * Detect chapters using TOC or pattern-based fallback
@@ -154,8 +154,8 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                         }
                     }
 
-                    // Apply heading detection with cross-page context
-                    pageText = preserveHeadingsInPageText(pageText, nextPageText);
+                    // Apply header detection before any cross-page merging
+                    pageText = markHeadersInText(pageText);
 
                     // Clean page number from beginning of page text - pass the actual page number
                     pageText = cleanPageNumbers(pageText, pageNum);
@@ -270,27 +270,27 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
 
                                 // More surgical approach: only merge at the exact split point
                                 let mergedPageText = cleanedPageText;
-                                
+
                                 // If the page ends with a line break marker, this indicates the sentence was split
                                 if (mergedPageText.endsWith(' ⟨⟨LINE_BREAK⟩⟩')) {
                                     // Remove only the trailing line break where sentence was split
                                     mergedPageText = mergedPageText.replace(/ ⟨⟨LINE_BREAK⟩⟩$/, '');
                                 }
-                                
+
                                 // Join with continuation part - no line break since it's same sentence
                                 pageText = mergedPageText + ' ' + continuationPart;
 
                                 // Mark the next page as processed and update its content for future processing
                                 processedPages.add(pageIndex + 1);
-                                
+
                                 // If there's remaining text on the next page, we need to process it
                                 if (remainingNextPageText.length > 50) {
                                     // Add the merged current page
-                                    contentLines.push(pageText); 
-                                    
+                                    contentLines.push(pageText);
+
                                     // CRITICAL: Ensure remaining text preserves its line breaks for proper paragraphs
                                     // Don't add extra line breaks, just use the remaining text as-is
-                                    contentLines.push(remainingNextPageText); 
+                                    contentLines.push(remainingNextPageText);
                                     continue; // Skip adding pageText again below
                                 }
                             }

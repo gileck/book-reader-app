@@ -6,75 +6,75 @@
     "filename": "book.pdf"
   },
   "processing": {
-    "timestamp": "2025-07-02T15:40:57.021Z",
+    "timestamp": "2025-07-02T19:26:23.542Z",
     "totalChapters": 8,
     "totalChunks": 0,
-    "totalWords": 117908,
+    "totalWords": 117910,
     "totalImages": 0,
     "totalLinks": 0
   },
   "chapters": [
     {
       "title": "Introduction: Life itself",
-      "wordCount": 8148,
-      "chunkCount": 26,
-      "pageRange": "18-27",
+      "wordCount": 8149,
+      "chunkCount": 49,
+      "pageRange": "9-27",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Discovering the nanocosm",
       "wordCount": 14322,
-      "chunkCount": 46,
-      "pageRange": "45-62",
+      "chunkCount": 93,
+      "pageRange": "28-62",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "The path of carbon",
       "wordCount": 11757,
-      "chunkCount": 38,
-      "pageRange": "77-91",
+      "chunkCount": 71,
+      "pageRange": "63-91",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "From gases to life",
       "wordCount": 12812,
-      "chunkCount": 41,
-      "pageRange": "108-124",
+      "chunkCount": 78,
+      "pageRange": "92-124",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Revolutions",
       "wordCount": 11212,
-      "chunkCount": 37,
-      "pageRange": "138-150",
+      "chunkCount": 69,
+      "pageRange": "125-150",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "To the dark side",
       "wordCount": 12535,
-      "chunkCount": 41,
-      "pageRange": "166-181",
+      "chunkCount": 82,
+      "pageRange": "151-181",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "The flux capacitor",
       "wordCount": 13210,
-      "chunkCount": 43,
-      "pageRange": "197-211",
+      "chunkCount": 86,
+      "pageRange": "182-211",
       "imageCount": 0,
       "linkCount": 0
     },
     {
       "title": "Epilogue: Self",
-      "wordCount": 33912,
-      "chunkCount": 96,
-      "pageRange": "266-317",
+      "wordCount": 33913,
+      "chunkCount": 259,
+      "pageRange": "212-317",
       "imageCount": 0,
       "linkCount": 0
     }

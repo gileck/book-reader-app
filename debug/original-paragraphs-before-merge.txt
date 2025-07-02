@@ -1771,3 +1771,73 @@ Total paragraphs: 1
 
 Paragraph 0 (368 words): "ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule. ATP Adenosine triphosphate. The ‘universal ene..."
 
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (409 words): "I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (443 words): "regulatory loops that lend an illusion of purpose, listed all their parts. And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (416 words): "different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s cap..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (464 words): "In Chapter 3, we’ll go right back to the beginning, to see how this same chemistry can take place spontaneously in nature, and specifically in deep-sea hydrothermal vents, where the reaction between H..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (299 words): "today. Let me just give you a flavour (don’t worry about the details). They demonstrated that mitochondrial membranes really do pump protons when given various substrates (including succinate) and oxy..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (437 words): "this idea; in this chapter, we’ll see that it can be malignantly misleading too. Every dogma has its day, but this particular meme still bedevils the textbooks. The meme is this: photosynthesis conver..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (237 words): "The reverse Krebs cycle repeats its succession of steps, highlighted in bold lettering. Starting with ferredoxin the repeated steps are: +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA. The only difference on ..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (393 words): "the protons detach, Ech becomes more reactive, and can now force its electrons onto ferredoxin, which in turn pushes them onto CO 2 . Then incoming protons bind Ech again, and the cycle repeats itself..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (431 words): "How do we get from pores in hydrothermal vents to the first cell-like structures? You can be forgiven for thinking that these first few steps of prebiotic chemistry are still a long way from life, but..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (288 words): "fundamental requirement is that H 2 is in alkaline conditions, while CO 2 is in acidic conditions. In principle, this arrangement could be achieved by protons crossing the inorganic barrier, rather th..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (194 words): "didn’t just pop into existence by accident in a prebiotic world. So if the first cells needed ATP to make genes and proteins, how did they manage without an ATP synthase? The answer turns out to be qu..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (459 words): "Silvana Pinna, a PhD student in my lab, has shown that ATP synthesis is catalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she tried could do the same job. This finding might expla..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (435 words): "(30/1,000). This difference can be measured in modern plants as well as in traces of organic matter trapped in ancient rocks. The bias leaves behind a little more 13 C in the oceans and atmosphere. Th..."
+
+ORIGINAL PARAGRAPHS BEFORE MERGING (from link-resolver):
+Total paragraphs: 1
+
+Paragraph 0 (368 words): "ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere in a molecule and transferred onto another molecule. ATP Adenosine triphosphate. The ‘universal ene..."
+

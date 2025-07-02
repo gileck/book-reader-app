@@ -546,7 +546,14 @@ function extractRawTextFromItems(textItems) {
         lastY = currentY;
     }
 
-    return textParts.join(' ').replace(/\s+/g, ' ').trim();
+    // Join text parts but preserve newlines for header detection
+    const result = textParts.join(' ');
+    // Replace multiple spaces with single spaces, but preserve newlines
+    const processed = result.replace(/[ \t]+/g, ' ').replace(/\n +/g, '\n').replace(/ +\n/g, '\n').trim();
+
+
+
+    return processed;
 }
 
 /**

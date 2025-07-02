@@ -1,589 +1,2602 @@
 {
   "chapterNumber": "Epilogue",
   "title": "Epilogue: Self",
-  "paragraphCount": 1,
-  "totalChunks": 96,
+  "paragraphCount": 98,
+  "totalChunks": 259,
   "paragraphs": [
     {
-      "id": 0,
+      "id": "paragraph_0",
       "type": "text",
       "pageNumber": 212,
-      "chunkCount": 96,
+      "chunkCount": 2,
       "chunks": [
         {
+          "id": "chunk_0",
           "globalIndex": 0,
           "text": "E PILOGUE SELF ‘I think therefore I am’ said Descartes, in one of the most celebrated lines ever wri...",
-          "wordCount": 303,
+          "wordCount": 166,
           "type": "text"
         },
         {
+          "id": "chunk_1",
           "globalIndex": 1,
-          "text": "It might seem uncanny that whole metabolic pathways can spring into existence in this way, in the ab...",
-          "wordCount": 308,
+          "text": "Why would I even touch on such a question in a book on the Krebs cycle? The answer is that the flux ...",
+          "wordCount": 242,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_1",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_2",
           "globalIndex": 2,
-          "text": "When he visited me at UCL, that’s what I thought he’d want to talk about. I knew little about it, an...",
-          "wordCount": 302,
+          "text": "From the beginning, genes copied themselves inside protocells, spreading when they promoted cell gro...",
+          "wordCount": 146,
           "type": "text"
         },
         {
+          "id": "chunk_3",
           "globalIndex": 3,
-          "text": "The problem is the lack of relationship between molecular structure and biological activity: molecul...",
-          "wordCount": 300,
+          "text": "The idea is pleasing, but I wouldn’t have given it any more thought but for a visit from a scientifi...",
+          "wordCount": 154,
           "type": "text"
         },
         {
+          "id": "chunk_4",
           "globalIndex": 4,
-          "text": "You can see why Turin has a reputation for being difficult. His science is right at the edge of the ...",
-          "wordCount": 306,
+          "text": "Rarely have I met someone who thinks in such clear lines. His papers convey this clarity, coupled wi...",
+          "wordCount": 130,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_2",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_5",
           "globalIndex": 5,
-          "text": "The question is, at the cellular level, which electrical charges are involved? The glib assumption i...",
-          "wordCount": 326,
+          "text": "fruit flies are conscious, they are most definitely unconscious when exposed to chloroform or ether....",
+          "wordCount": 191,
           "type": "text"
         },
         {
+          "id": "chunk_6",
           "globalIndex": 6,
-          "text": "Electrical fields can easily explain this behaviour. If so, the key point is that the electrical fie...",
-          "wordCount": 335,
+          "text": "One of the few things that general anaesthetics do have in common is that they are lipid soluble – t...",
+          "wordCount": 254,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_3",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_7",
           "globalIndex": 7,
-          "text": "This behaviour is marvellous and sophisticated, and takes place in real time as we watch. What coord...",
-          "wordCount": 310,
+          "text": "The effect must be subtle, for too much would kill us, and overdose is always a risk with anaestheti...",
+          "wordCount": 119,
           "type": "text"
         },
         {
+          "id": "chunk_8",
           "globalIndex": 8,
-          "text": "Phages are remarkable, mechanical structures, like miniature lunar landers, with the malevolence of ...",
-          "wordCount": 313,
+          "text": "I mentioned electromagnetic fields. We have long known that the brain generates electrical fields, w...",
+          "wordCount": 129,
           "type": "text"
         },
         {
+          "id": "chunk_9",
           "globalIndex": 9,
-          "text": "Each of these can trigger waves of death through marine blooms of cyanobacteria. All operate through...",
-          "wordCount": 300,
+          "text": "The glib assumption is that charges on the cell membrane (or action potentials) are responsible. But...",
+          "wordCount": 178,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_4",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_10",
           "globalIndex": 10,
-          "text": "Yet you are still part of an entity, a self. Your flux through the Krebs cycle is linked, moment by ...",
-          "wordCount": 307,
+          "text": "a stronger field, operating over a longer distance. Parallel membranes, such as the cristae membrane...",
+          "wordCount": 172,
           "type": "text"
         },
         {
+          "id": "chunk_11",
           "globalIndex": 11,
-          "text": "A PPENDIX 1 RED PROTEIN MECHANICS The red protein is ferredoxin, one of the most ancient and fundame...",
-          "wordCount": 306,
+          "text": "This kind of statement might have pushed the boundaries of respectable science until recently, but t...",
+          "wordCount": 299,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_5",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_12",
           "globalIndex": 12,
-          "text": "(ATP is adenosine triphosphate; the transfer of one phosphate onto acetate by ATP leaves ADP, adenos...",
-          "wordCount": 336,
+          "text": "This behaviour is marvellous and sophisticated, and takes place in real time as we watch. What coord...",
+          "wordCount": 140,
           "type": "text"
         },
         {
+          "id": "chunk_13",
           "globalIndex": 13,
-          "text": "The electrons move wholly onto the sulfur of CoA, giving it a negative charge, and leaving the carbo...",
-          "wordCount": 323,
+          "text": "To understand why – why the language of mitochondrial electrical fields became bound to the ephemera...",
+          "wordCount": 122,
           "type": "text"
         },
         {
+          "id": "chunk_14",
           "globalIndex": 14,
-          "text": "But something similar may happen in the enzymes, where all the molecular players are held ‘just so’,...",
-          "wordCount": 308,
+          "text": "Let me give you an example of how important this membrane potential is to bacteria. In the ocean the...",
+          "wordCount": 164,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_6",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_15",
           "globalIndex": 15,
-          "text": "In our case, we didn’t form acetyl CoA itself (CoA being a complex molecule) but a prebiotic version...",
-          "wordCount": 316,
+          "text": "itself. But the time window is short. If there are too many phages, then there’s only one way out fo...",
+          "wordCount": 163,
           "type": "text"
         },
         {
+          "id": "chunk_16",
           "globalIndex": 16,
-          "text": "To see why, look at Appendix 1, showing what activation by ATP does. By adding on a phosphate group,...",
-          "wordCount": 310,
+          "text": "They can die by wear and tear too – damage caused by overexposure to bright light, or too little iro...",
+          "wordCount": 219,
           "type": "text"
         },
         {
+          "id": "chunk_17",
           "globalIndex": 17,
-          "text": "In this case, I’m not going to draw the pyruvate with its normal Cheshire Cat smile, but in the more...",
-          "wordCount": 309,
+          "text": "Shrink yourself down to the size of a molecule in the Krebs cycle. Succinate. The cell you’re part o...",
+          "wordCount": 107,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_7",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_18",
           "globalIndex": 18,
-          "text": "I’ll use these styles interchangeably in the next couple of pages. As we saw earlier with pyruvate, ...",
-          "wordCount": 358,
+          "text": "There’s no sense in which information binds you. Yet you are still part of an entity, a self. Your f...",
+          "wordCount": 190,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_8",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_19",
           "globalIndex": 19,
-          "text": "Think for a moment what we’ve done here. Starting with CO 2 and a common mineral surface (as describ...",
-          "wordCount": 313,
+          "text": "ENVOI ‘Like Most Revelations’ Richard Howard It is the movement that incites the form, discovered as...",
+          "wordCount": 148,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_9",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_20",
           "globalIndex": 20,
-          "text": "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long ...",
-          "wordCount": 314,
+          "text": "It seems to have many jobs, but the common denominator is that it has unparalleled power to transfer...",
+          "wordCount": 234,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_10",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_21",
           "globalIndex": 21,
-          "text": "NAD + picks up 2H from Krebs-cycle intermediates and then passes on the electrons to complex I in re...",
-          "wordCount": 310,
+          "text": "The problem here is that the carboxylate group (-COO – ) is not very reactive. To react with CO 2 , ...",
+          "wordCount": 260,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_11",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_22",
           "globalIndex": 22,
-          "text": "234 SNP Single-nucleotide polymorphism (pronounced ‘snip’). A single-letter change in DNA, which can...",
-          "wordCount": 327,
+          "text": "It’s adding on two electrons, but where did they actually go? The easiest way to see this is to thin...",
+          "wordCount": 188,
           "type": "text"
         },
         {
+          "id": "chunk_23",
           "globalIndex": 23,
-          "text": "N. Lane, ‘The unseen world: reflections on Leeuwenhoek (1677) “Concerning little animals”’, Philosop...",
-          "wordCount": 314,
+          "text": "Short of an immediate back-reaction (which would just revert to the starting point), where could the...",
+          "wordCount": 98,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_12",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_24",
           "globalIndex": 24,
-          "text": "(Cambridge, W. Heffer & Sons, 1949). The title says it all. Many of Gowland Hopkins’s addresses and ...",
-          "wordCount": 305,
+          "text": "Each of the two oxygen atoms therefore has a δ − , whereas the carbon atom is δ + , as shown below. ...",
+          "wordCount": 248,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_13",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_25",
           "globalIndex": 25,
-          "text": "F. H. C. Crick, J. S. Griffith and L. E. Orgel, ‘Codes without commas’, Proceedings of the National ...",
-          "wordCount": 311,
+          "text": "In fact, water is never produced as a separate entity. Look back at that first scheme – you’ll see t...",
+          "wordCount": 136,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_14",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_26",
           "globalIndex": 26,
-          "text": "W. Martin and M. J. Russell, ‘On the origin of biochemistry at an alkaline hydrothermal vent’, Philo...",
-          "wordCount": 319,
+          "text": "A PPENDIX 2 THE KREBS LINE In Chapter 3, we followed the fate of CO 2 bound to the surface of a mine...",
+          "wordCount": 120,
           "type": "text"
         },
         {
+          "id": "chunk_27",
           "globalIndex": 27,
-          "text": "He died in 2007, just before this final paper was published, which, in the way of science, has since...",
-          "wordCount": 303,
+          "text": "Acetyl CoA is not only the end-product of the acetyl CoA pathway; it’s also a key constituent of the...",
+          "wordCount": 282,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_15",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_28",
           "globalIndex": 28,
-          "text": "From personal experience, they write ‘It was in a sense reassuring, and endearing, to discover that ...",
-          "wordCount": 302,
+          "text": "To see why, look at Appendix 1, showing what activation by ATP does. By adding on a phosphate group,...",
+          "wordCount": 117,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_16",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_29",
           "globalIndex": 29,
-          "text": "Albert Szent-Györgyi, The Crazy Ape (New York, Philosophical Library, 1970). Quite a disturbed book ...",
-          "wordCount": 312,
+          "text": "why that Mad-Eye Moody oxygen is so reactive, which brings its own inexorable chemistry. Let me expl...",
+          "wordCount": 155,
           "type": "text"
         },
         {
+          "id": "chunk_30",
           "globalIndex": 30,
-          "text": "Hard work, but captures a lot of the excitement of science. Hans A. Krebs, The Citric Acid Cycle, No...",
-          "wordCount": 317,
+          "text": "In the absence of a phosphate, the likelihood of a stable enol form persisting is greater if a neigh...",
+          "wordCount": 100,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_17",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_31",
           "globalIndex": 31,
-          "text": "W. P. Jenks and R. V. Wolfenden, ‘Fritz Albert Lipmann’, Biographical Memoirs 88 (2006) 246–266. The...",
-          "wordCount": 303,
+          "text": "the two electrons that formerly bound the hydrogen to pyruvate now move to form the double bond in e...",
+          "wordCount": 82,
           "type": "text"
         },
         {
+          "id": "chunk_32",
           "globalIndex": 32,
-          "text": "This is a stealth abstract. A. T. Jagendorf, ‘Chance, luck and photosynthesis research: an inside st...",
-          "wordCount": 304,
+          "text": "The reactivity of the enol stems from its shape-changing behaviour, specifically the tendency of the...",
+          "wordCount": 139,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_18",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_33",
           "globalIndex": 33,
-          "text": "A memoir of the later ‘ox phos wars’, over the mechanism of proton pumping, especially cytochrome ox...",
-          "wordCount": 300,
+          "text": "Notice that I’m drawing the carboxylate group with its negative charge in the conventional way again...",
+          "wordCount": 230,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_19",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
         {
+          "id": "chunk_34",
           "globalIndex": 34,
-          "text": "My own take on how bioenergetics shaped the origin of life and the evolution of complexity. Nick Lan...",
-          "wordCount": 302,
+          "text": "⟨⟨LINE_BREAK⟩⟩ The final step we’ll consider involves the loss of the alcohol (OH) group as a hydrox...",
+          "wordCount": 289,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_20",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
         {
+          "id": "chunk_35",
           "globalIndex": 35,
-          "text": "Oliver Morton, Eating the Sun: How Plants Power the Planet (London, Fourth Estate, 2009). A delightf...",
-          "wordCount": 301,
+          "text": "ABBREVIATIONS 2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from anywhere...",
+          "wordCount": 82,
           "type": "text"
         },
         {
+          "id": "chunk_36",
           "globalIndex": 36,
-          "text": "Calvin, ‘The path of carbon in photosynthesis. XXI. The cyclic regeneration of carbon dioxide accept...",
-          "wordCount": 303,
+          "text": "CoA Coenzyme A. A complex molecule containing a reactive thiol ( -SH ) that can bind to acetate (vin...",
+          "wordCount": 97,
           "type": "text"
         },
         {
+          "id": "chunk_37",
           "globalIndex": 37,
-          "text": "Reverse Krebs cycle K. V. Thimann, ‘The absorption of carbon dioxide in photosynthesis’, Science 88 ...",
-          "wordCount": 313,
+          "text": "DNA Deoxyribonucleic acid. The hereditary material. Forms the famous double helix, composed of long ...",
+          "wordCount": 93,
           "type": "text"
         },
         {
+          "id": "chunk_38",
           "globalIndex": 38,
-          "text": "A fine book that makes the case for rethinking how science is funded. Peer review is deeply conserva...",
-          "wordCount": 302,
+          "text": "Fd Ferredoxin. The red protein. An iron–sulfur protein with a unique power to transfer electrons ont...",
+          "wordCount": 99,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_21",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
         {
+          "id": "chunk_39",
           "globalIndex": 39,
-          "text": "L. Steffens, E. Pettinato, T. M. Steiner, A. Mall, S. König, W. Eisenreich and I. A. Berg, ‘High CO ...",
-          "wordCount": 317,
+          "text": "Statistical studies that correlate single- letter differences in DNA across whole genomes with the r...",
+          "wordCount": 93,
           "type": "text"
         },
         {
+          "id": "chunk_40",
           "globalIndex": 40,
-          "text": "Reanalysis of early Earth hydrothermal systems W. Martin, J. Baross, D. Kelley and M. J. Russell, ‘H...",
-          "wordCount": 314,
+          "text": "NADH Nicotinamide adenine dinucleotide. One of the most important carriers of 2H, NADH is the form l...",
+          "wordCount": 95,
           "type": "text"
         },
         {
+          "id": "chunk_41",
           "globalIndex": 41,
-          "text": "Unusually philosophical in its approach, enumerating a number of postulates and theorems, deriving f...",
-          "wordCount": 303,
+          "text": "NADPH Nicotinamide adenine dinucleotide phosphate. A 2H carrier used in biosynthesis. NADP + is the ...",
+          "wordCount": 134,
           "type": "text"
         },
         {
+          "id": "chunk_42",
           "globalIndex": 42,
-          "text": "An extraordinary discovery, which has inspired whole fields of research and demonstrates the value o...",
-          "wordCount": 310,
+          "text": "RNA Ribonucleic acid. A working copy of a gene, composed of a single strand of nucleotides linked to...",
+          "wordCount": 156,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_22",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_43",
           "globalIndex": 43,
-          "text": "Here he teams up with some leading phylogeneticists including the brilliant and prolific Eugene Koon...",
-          "wordCount": 311,
+          "text": "But if you’ve read this far, you will have become deeply embroiled in the wider literature. This lit...",
+          "wordCount": 112,
           "type": "text"
         },
         {
+          "id": "chunk_44",
           "globalIndex": 44,
-          "text": "Like Morowitz, de Duve focused on how geochemistry could give rise to biochemistry. His views on the...",
-          "wordCount": 302,
+          "text": "Introduction: Life itself Leeuwenhoek and the inscrutability of cells Clifford Dobell, Antony van Le...",
+          "wordCount": 99,
           "type": "text"
         },
         {
+          "id": "chunk_45",
           "globalIndex": 45,
-          "text": "I’m not sure how close to life’s chemistry this really is, but it certainly ropes in a lot of interm...",
-          "wordCount": 333,
+          "text": "Brian J. Ford, Single Lens: The Story of the Simple Microscope (New York, Harper & Row, 1985). A rem...",
+          "wordCount": 163,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_23",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_46",
           "globalIndex": 46,
-          "text": "While some details have been decried, the paper reinforces the idea that LUCA lived from H 2 and CO ...",
-          "wordCount": 302,
+          "text": "manifesto for reconceiving the role that information plays in life and its origin, by a leading phys...",
+          "wordCount": 120,
           "type": "text"
         },
         {
+          "id": "chunk_47",
           "globalIndex": 47,
-          "text": "J. Russell, ‘On the antiquity of metalloenzymes and their substrates in bioenergetics’, Biochimica e...",
-          "wordCount": 300,
+          "text": "L. D. Hansen, R. S. Criddle and E. H. Battley, ‘Biological calorimetry and the thermodynamics of the...",
+          "wordCount": 137,
           "type": "text"
         },
         {
+          "id": "chunk_48",
           "globalIndex": 48,
-          "text": "Lane, ‘Life as a guide to prebiotic nucleotide synthesis’, Nature Communications 9 (2018) 5176–5177....",
-          "wordCount": 319,
+          "text": "The unity of biochemistry D. D. Woods, ‘Albert Jan Kluyver’, Biographical Memoirs of Fellows of the ...",
+          "wordCount": 174,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_24",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
         {
+          "id": "chunk_49",
           "globalIndex": 49,
-          "text": "pH gradients N. Lane, J. F. Allen and W. Martin, ‘How did LUCA make a living? Chemiosmosis in the or...",
-          "wordCount": 301,
+          "text": "Makers of the Revolution in Biology , 25th Anniversary Edition (Cold Spring Harbor Laboratory Press,...",
+          "wordCount": 95,
           "type": "text"
         },
         {
+          "id": "chunk_50",
           "globalIndex": 50,
-          "text": "I regret never meeting him in person to discuss these questions. R. Vasiliadou, N. Dimov, N. Szita, ...",
-          "wordCount": 310,
+          "text": "F. H. C. Crick, J. S. Griffith and L. E. Orgel, ‘Codes without commas’, Proceedings of the National ...",
+          "wordCount": 123,
           "type": "text"
         },
         {
+          "id": "chunk_51",
           "globalIndex": 51,
-          "text": "S. F. Jordan, E. Nee and N. Lane, ‘Isoprenoids enhance the stability of fatty acid membranes at the ...",
-          "wordCount": 310,
+          "text": "David S. Goodsell, The Machinery of Life (New York, Copernicus Books, 2009). Goodsell is a wonderful...",
+          "wordCount": 84,
           "type": "text"
         },
         {
+          "id": "chunk_52",
           "globalIndex": 52,
-          "text": "63–94. I still find this mind-blowing. Which is more stable, thermodynamically, a mixture of H 2 and...",
-          "wordCount": 308,
+          "text": "James D. Watson, Tania A. Baker, Stephen P. Bell, Alexander Gann, Michael Levine and Richard Losick,...",
+          "wordCount": 86,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_25",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_53",
           "globalIndex": 53,
-          "text": "But it has not weathered so well, and pushes its central thesis a little too far. 258 Daniel C. Denn...",
-          "wordCount": 304,
+          "text": "Smith and Morowitz take the case for the unity of biochemistry right back to the origin of life. W. ...",
+          "wordCount": 113,
           "type": "text"
         },
         {
+          "id": "chunk_54",
           "globalIndex": 54,
-          "text": "Given how much has changed in two decades it hasn’t weathered badly, though I no longer agree with a...",
-          "wordCount": 304,
+          "text": "Philip Ball, Molecules: A Very Short Introduction (Oxford, Oxford University Press, 2003). Originall...",
+          "wordCount": 131,
           "type": "text"
         },
         {
+          "id": "chunk_55",
           "globalIndex": 55,
-          "text": "Still relevant today in light of the disputed detection of phosphine gas in the Venusian atmosphere....",
-          "wordCount": 318,
+          "text": "Konrad Bloch, Blondes in Venetian Paintings, the Nine-Banded Armadillo and Other Essays in Biochemis...",
+          "wordCount": 151,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_26",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_56",
           "globalIndex": 56,
-          "text": "A little masterpiece. S. E. McGlynn, G. L. Chadwick, C. P. Kempes and V. J. Orphan, ‘Single cell act...",
-          "wordCount": 318,
+          "text": "H. H. Dale, ‘Frederick Gowland Hopkins 1861–1947’, Obituary Notices Fellows Royal Society 6 (1948) 1...",
+          "wordCount": 85,
           "type": "text"
         },
         {
+          "id": "chunk_57",
           "globalIndex": 57,
-          "text": "Tim Lenton and Andrew Watson, Revolutions that Made the Earth (Oxford, Oxford University Press, 2013...",
-          "wordCount": 310,
+          "text": "Hans Krebs, Reminiscences and Reflections (Oxford, Clarendon Press, 1981). An enjoyable and interest...",
+          "wordCount": 93,
           "type": "text"
         },
         {
+          "id": "chunk_58",
           "globalIndex": 58,
-          "text": "G. A. Shields, B. J. W. Mills, M. Zhu, T. D. Raub, S. J. Daines and T. M. Lenton ‘Unique Neoproteroz...",
-          "wordCount": 313,
+          "text": "(suppl) (1980) K11–K15. Very charming recollections of the young Hans Krebs from a lifelong friend i...",
+          "wordCount": 235,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_27",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_59",
           "globalIndex": 59,
-          "text": "A comprehensive treatment of the biochemistry and physiology of eukaryotes (including animals) that ...",
-          "wordCount": 318,
+          "text": "H. Krebs, ‘Otto Heinrich Warburg. 1883–1970’, Biographical Memoirs Fellows of the Royal Society 18 (...",
+          "wordCount": 81,
           "type": "text"
         },
         {
+          "id": "chunk_60",
           "globalIndex": 60,
-          "text": "A lovely analysis of different types of flux through the Krebs cycle. This is one of a series of pap...",
-          "wordCount": 314,
+          "text": "Albert Szent-Györgyi, The Living State. With Observations on Cancer (London and New York, Academic P...",
+          "wordCount": 115,
           "type": "text"
         },
         {
+          "id": "chunk_61",
           "globalIndex": 61,
-          "text": "Hesketh skips lightly over the metabolic perspective I elaborate in this book, even suggesting that ...",
-          "wordCount": 305,
+          "text": "J. J. Farmer, B. R. Davis, W. B. Cherry, D. J. Brenner, V. R. Dowell and A. Balows, ‘50 years ago: t...",
+          "wordCount": 199,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_28",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_62",
           "globalIndex": 62,
-          "text": "A. M. Soto and C. Sonnenschein, ‘The somatic mutation theory of cancer: growing problems with the pa...",
-          "wordCount": 306,
+          "text": "This volume deals with Krebs’s earlier years, leading up to the urea cycle. Frederic L. Holmes, Hans...",
+          "wordCount": 196,
           "type": "text"
         },
         {
+          "id": "chunk_63",
           "globalIndex": 63,
-          "text": "G. M. Weisz, ‘Dr Otto Heinrich Warburg – survivor of ethical storms’, Rambam Maimonides Medical Jour...",
-          "wordCount": 321,
+          "text": "J. M. Buchanan, ‘Biochemistry during the life and times of Hans Krebs and Fritz Lipmann’, Journal of...",
+          "wordCount": 98,
           "type": "text"
         },
         {
+          "id": "chunk_64",
           "globalIndex": 64,
-          "text": "O. Warburg, ‘On the origin of cancer cells’, Science 123 (1956) 309–314. A searing piece that I quot...",
-          "wordCount": 310,
+          "text": "Fritz Lipmann, Wanderings of a Biochemist (New York, John Wiley and Sons, 1971). Lipmann’s autobiogr...",
+          "wordCount": 111,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_29",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_65",
           "globalIndex": 65,
-          "text": "P. S. Ward and C. B. Thompson, ‘Metabolic reprogramming: a cancer hallmark even Warburg did not anti...",
-          "wordCount": 311,
+          "text": "‘at the age of eighty-seven, not long after having learned that his latest grant application had bee...",
+          "wordCount": 152,
           "type": "text"
         },
         {
+          "id": "chunk_66",
           "globalIndex": 66,
-          "text": "A fine historically grounded overview of the Warburg effect, with a balanced appraisal of the eviden...",
-          "wordCount": 301,
+          "text": "John Prebble and Bruce Webber, Wandering in the Gardens of the Mind (Oxford, Oxford University Press...",
+          "wordCount": 119,
           "type": "text"
         },
         {
+          "id": "chunk_67",
           "globalIndex": 67,
-          "text": "Frakich, S. Carcamo, I. Kovacs, S. Tudzarova and S. Moncada, ‘Molecular basis for the differential u...",
-          "wordCount": 317,
+          "text": "A. T. Jagendorf, ‘Chance, luck and photosynthesis research: an inside story’, Photosynthesis Researc...",
+          "wordCount": 121,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_30",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_68",
           "globalIndex": 68,
-          "text": "Complications! To convert α-ketoglutarate to citrate requires oxidising α- ketoglutarate, the exact ...",
-          "wordCount": 308,
+          "text": "D. Mitchell and J. Moyle, ‘Evidence discriminating between the chemical and the chemiosmotic mechani...",
+          "wordCount": 120,
           "type": "text"
         },
         {
+          "id": "chunk_69",
           "globalIndex": 69,
-          "text": "I confess to some scepticism (I suspect a downside), but Sinclair makes a strong case for revolution...",
-          "wordCount": 305,
+          "text": "J. N. Prebble, ‘Contrasting approaches to a biological problem: Paul Boyer, Peter Mitchell and the m...",
+          "wordCount": 129,
           "type": "text"
         },
         {
+          "id": "chunk_70",
           "globalIndex": 70,
-          "text": "Puts forward the disturbing notion that cancers ‘deliberately’ release the ammonia from glutamine, w...",
-          "wordCount": 319,
+          "text": "Franklin M. Harold, The Vital Force: A Study of Bioenergetics (New York, W. H. Freeman, 1986). An un...",
+          "wordCount": 127,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_31",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_71",
           "globalIndex": 71,
-          "text": "André Klarsfeld and Frédéric Revah, The Biology of Death: Origins of Mortality (Ithaca, NY, Cornell ...",
-          "wordCount": 300,
+          "text": "mentioning the reverse Krebs cycle – which had been proposed fifteen years earlier. How blind are ev...",
+          "wordCount": 118,
           "type": "text"
         },
         {
+          "id": "chunk_72",
           "globalIndex": 72,
-          "text": "Rand, G. Schatz and C. Saccone, ‘The neglected genome’, EMBO Reports 13 (2012) 473–474. A short and ...",
-          "wordCount": 300,
+          "text": "Nick Lane, Power, Sex, Suicide: Mitochondria and the Meaning of Life (Oxford, Oxford University Pres...",
+          "wordCount": 114,
           "type": "text"
         },
         {
+          "id": "chunk_73",
           "globalIndex": 73,
-          "text": "Li, C. Rocher, P. E. Coskun, M. A. Vannan, J. Narula, G. R. Macgregor and D. C. Wallace, ‘A mouse mo...",
-          "wordCount": 302,
+          "text": "R. J. Ellis, ‘The most abundant protein in the world’, Trends in Biochemical Sciences 4 (1979) 241–2...",
+          "wordCount": 169,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_32",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
         {
+          "id": "chunk_74",
           "globalIndex": 74,
-          "text": "K. Dowling, ‘Mitochondria, maternal inheritance, and male aging’, Current Biology 22 (2012) 1717–172...",
-          "wordCount": 315,
+          "text": "A unique record. Oliver Morton, Eating the Sun: How Plants Power the Planet (London, Fourth Estate, ...",
+          "wordCount": 91,
           "type": "text"
         },
         {
+          "id": "chunk_75",
           "globalIndex": 75,
-          "text": "M. F. Camus, W. Kotiadis, H. Carter, E. Rodriguez and N. Lane, ‘Mitonuclear interactions produce ext...",
-          "wordCount": 321,
+          "text": "Early carbon isotope work S. Ruben, W. Z. Hassid and M. D. Kamen, ‘Radioactive carbon in the study o...",
+          "wordCount": 129,
           "type": "text"
         },
         {
+          "id": "chunk_76",
           "globalIndex": 76,
-          "text": "But most of these exceptions can be explained simply enough. There’s still truth to the idea. Geoffr...",
-          "wordCount": 316,
+          "text": "S. Ruben, ‘Photosynthesis and phosphorylation’, Journal of the American Chemical Society 65 (1943) 2...",
+          "wordCount": 84,
           "type": "text"
         },
         {
+          "id": "chunk_77",
           "globalIndex": 77,
-          "text": "A tall order, but worth a shot; ended up mostly with committee-speak words of caution, though noneth...",
-          "wordCount": 310,
+          "text": "Calvin, ‘The path of carbon in photosynthesis. XXI. The cyclic regeneration of carbon dioxide accept...",
+          "wordCount": 110,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_33",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_78",
           "globalIndex": 78,
-          "text": "A good review of the targets of glycation (the decoration of proteins, lipids and DNA with sticky, s...",
-          "wordCount": 306,
+          "text": "A. A. Benson, ‘Last days in the old radiation laboratory (ORL), Berkeley, California, 1954’, Photosy...",
+          "wordCount": 132,
           "type": "text"
         },
         {
+          "id": "chunk_79",
           "globalIndex": 79,
-          "text": "Paula Moreira discusses how diabetes-linked defects in mitochondria increase the risk of Alzheimer’s...",
-          "wordCount": 306,
+          "text": "Photophosphorylation D. I. Arnon, F. R. Whatley and M. B. Allen, ‘Photosynthesis by isolated chlorop...",
+          "wordCount": 111,
           "type": "text"
         },
         {
+          "id": "chunk_80",
           "globalIndex": 80,
-          "text": "The membrane potential changes quickly and can achieve the highest levels only in this way. Biology ...",
-          "wordCount": 302,
+          "text": "D. I. Arnon, ‘Ferredoxin and photosynthesis’, Science 149 (1965) 1460–1470. Ferredoxin was discovere...",
+          "wordCount": 174,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_34",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
         {
+          "id": "chunk_81",
           "globalIndex": 81,
-          "text": "Well worth a read. The fact that we’ve known about the electroencephalogram for a century, and can m...",
-          "wordCount": 300,
+          "text": "B. B. Buchanan, ‘Daniel I. Arnon. November 14, 1910–December 20, 1994’, Biographical Memoirs 80 (200...",
+          "wordCount": 174,
           "type": "text"
         },
         {
+          "id": "chunk_82",
           "globalIndex": 82,
-          "text": "D. Ren, Z. Nemati, C. H. Lee, J. Li, K. Haddadi, D. C. Wallace and P. J. Burke, ‘An ultra-high bandw...",
-          "wordCount": 311,
+          "text": "Ferredoxin and photorespiration J. Ormerod, ‘“Every dogma has its day”: a personal look at carbon me...",
+          "wordCount": 188,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_35",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_83",
           "globalIndex": 83,
-          "text": "M. Solms and K. Friston, ‘How and why consciousness arises: some considerations from physics and phy...",
-          "wordCount": 318,
+          "text": "seminal discovery, that the canonical ATP citrate lyase is not necessary for the reverse Krebs cycle...",
+          "wordCount": 117,
           "type": "text"
         },
         {
+          "id": "chunk_84",
           "globalIndex": 84,
-          "text": "How do bacteria divide down the middle to form two daughter cells? It turns out that oscillator prot...",
-          "wordCount": 311,
+          "text": "I. A. Berg, ‘Ecological aspects on the distribution of different autotrophic CO 2 fixation pathways’...",
+          "wordCount": 124,
           "type": "text"
         },
         {
+          "id": "chunk_85",
           "globalIndex": 85,
-          "text": "Books evolve as they are written. This was conceived as short and light-footed. It ended up longer a...",
-          "wordCount": 319,
+          "text": "J. A. Baross and S. E. Hoffman, ‘Submarine hydrothermal vents and associated gradient environments a...",
+          "wordCount": 186,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_36",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_86",
           "globalIndex": 86,
-          "text": "This book has been forged in the crucible of thinking hard about our experiments. So I thank all my ...",
-          "wordCount": 303,
+          "text": "N. H. Sleep, D. K. Bird and E. C. Pope, ‘Serpentinite and the dawn of life’, Philosophical Transacti...",
+          "wordCount": 169,
           "type": "text"
         },
         {
+          "id": "chunk_87",
           "globalIndex": 87,
-          "text": "A few words of thanks to other friends, who have read chapters or the whole book and given me feedba...",
-          "wordCount": 315,
+          "text": "Mike Russell and Gunter Wächtershäuser G. Wächtershäuser, ‘Evolution of the first metabolic cycles’,...",
+          "wordCount": 86,
           "type": "text"
         },
         {
+          "id": "chunk_88",
           "globalIndex": 88,
-          "text": "I need to thank a few specialist colleagues and friends for reading over specific chapters. I treasu...",
-          "wordCount": 319,
+          "text": "G. Wächtershäuser, ‘Groundworks for an evolutionary biochemistry: the iron– sulphur world’, Progress...",
+          "wordCount": 155,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_37",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_89",
           "globalIndex": 89,
-          "text": "Christian is utterly meticulous, balanced and enthusiastic. It’s a sorry outcome for the UK that he ...",
-          "wordCount": 305,
+          "text": "Transactions of the Royal Society B 358 (2003) 59–85. An all-time classic paper, the kind of paper t...",
+          "wordCount": 145,
           "type": "text"
         },
         {
+          "id": "chunk_90",
           "globalIndex": 90,
-          "text": "A short note on consciousness. I wrote a chapter on consciousness in Life Ascending in 2009, which f...",
-          "wordCount": 304,
+          "text": "D. S. Kelley, J. A. Karson, G. L. Früh-Green et al ., ‘A serpentinite-hosted ecosystem: the Lost Cit...",
+          "wordCount": 102,
           "type": "text"
         },
         {
+          "id": "chunk_91",
           "globalIndex": 91,
-          "text": "It remains for me to thank my family, especially my father, the historian Anthony Lane, who as alway...",
-          "wordCount": 321,
+          "text": "Terrestrial geothermal systems David W. Deamer, Assembling Life: How Can Life Begin on Earth and Oth...",
+          "wordCount": 204,
           "type": "text"
-        },
+        }
+      ]
+    },
+    {
+      "id": "paragraph_38",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
         {
+          "id": "chunk_92",
           "globalIndex": 92,
-          "text": "Thanks to Ed Lake at Profile Books and Brendan Curry at W. W. Norton for balancing encouragement wit...",
-          "wordCount": 2437,
+          "text": "I am unpersuaded, but Mulkidjanian’s papers are always worth reading. J. D. Sutherland, ‘Studies on ...",
+          "wordCount": 137,
           "type": "text"
         },
         {
+          "id": "chunk_93",
           "globalIndex": 93,
-          "text": "86 Halpern, Aaron 148 ‘handicap principle’ 261 Harrison, Stuart 131, 148 Hassid, Zev 84–5 heredity m...",
-          "wordCount": 1936,
+          "text": "J. Szostak, ‘How did life begin?’, Nature 557 (2018) S13–S15. Jack Szostak won the Nobel prize for h...",
+          "wordCount": 123,
           "type": "text"
         },
         {
+          "id": "chunk_94",
           "globalIndex": 94,
-          "text": "86 and photosynthesis 79–82 radioisotopes of carbon see carbon-11; carbon-14 Ralser, Markus 131 Rama...",
-          "wordCount": 870,
+          "text": "Protometabolism using life as a guide Christian De Duve, Singularities. Landmarks on the Pathways of...",
+          "wordCount": 220,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_39",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_95",
+          "globalIndex": 95,
+          "text": "of view, looking for similar chemistry to that still happening in cells. This is an exciting paper w...",
+          "wordCount": 144,
           "type": "text"
         },
         {
-          "globalIndex": 95,
-          "text": "Discovering the nanocosm 27 2. The path of carbon 62 3. From gases to life 91 4. Revolutions 124 5. ...",
-          "wordCount": 72,
+          "id": "chunk_96",
+          "globalIndex": 96,
+          "text": "M. Ralser, ‘An appeal to magic? The discovery of a non-enzymatic metabolism and its role in the orig...",
+          "wordCount": 115,
+          "type": "text"
+        },
+        {
+          "id": "chunk_97",
+          "globalIndex": 97,
+          "text": "Michael Madigan, Kelly Bender, Daniel Buckley, W. Matthew Sattley and David Stahl, Brock Biology of ...",
+          "wordCount": 111,
+          "type": "text"
+        },
+        {
+          "id": "chunk_98",
+          "globalIndex": 98,
+          "text": "The physiology of LUCA M. C. Weiss, F. L. Sousa, N. Mrnjavac, S. Neukirchen, M. Roettger, S. Nelson-...",
+          "wordCount": 108,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_40",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_99",
+          "globalIndex": 99,
+          "text": "Braakman and E. Smith, ‘The emergence and early evolution of biological carbon fixation’, PLoS Compu...",
+          "wordCount": 91,
+          "type": "text"
+        },
+        {
+          "id": "chunk_100",
+          "globalIndex": 100,
+          "text": "F. L. Sousa, T. Thiergart, G. Landan, S. Nelson-Sathi, I. A. C. Pereira, J. F. Allen, N. Lane and W....",
+          "wordCount": 102,
+          "type": "text"
+        },
+        {
+          "id": "chunk_101",
+          "globalIndex": 101,
+          "text": "G. Fuchs, ‘Alternative pathways of carbon dioxide fixation: insights into the early evolution of lif...",
+          "wordCount": 138,
+          "type": "text"
+        },
+        {
+          "id": "chunk_102",
+          "globalIndex": 102,
+          "text": "Harold Morowitz and the reverse Krebs cycle Harold J. Morowitz, Energy Flow in Biology (New York, Ac...",
+          "wordCount": 85,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_41",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_103",
+          "globalIndex": 103,
+          "text": "on the shelf of anyone seriously interested in the origin of life. Manages to present new ideas with...",
+          "wordCount": 147,
+          "type": "text"
+        },
+        {
+          "id": "chunk_104",
+          "globalIndex": 104,
+          "text": "Nucleotide synthesis using life as a guide S. A. Harrison and N. Lane, ‘Life as a guide to prebiotic...",
+          "wordCount": 91,
+          "type": "text"
+        },
+        {
+          "id": "chunk_105",
+          "globalIndex": 105,
+          "text": "Magic surfaces G. D. Cody, N. Z. Boctor, R. M. Hazen, J. A. Brandes, H. J. Morowitz, H. S. Yodor Jr,...",
+          "wordCount": 166,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_42",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_106",
+          "globalIndex": 106,
+          "text": "Sojo, B. Herschy, A. Whicher, E. Camprubi and N. Lane, ‘The origin of life in alkaline hydrothermal ...",
+          "wordCount": 90,
+          "type": "text"
+        },
+        {
+          "id": "chunk_107",
+          "globalIndex": 107,
+          "text": "Chemiosmosis in the origin of life’, BioEssays 32 (2010) 271–280. Wrestling with the problems of how...",
+          "wordCount": 103,
+          "type": "text"
+        },
+        {
+          "id": "chunk_108",
+          "globalIndex": 108,
+          "text": "N. Lane and W. Martin, ‘The origin of membrane bioenergetics’, Cell 151 (2012) 1406–1416. A paper wi...",
+          "wordCount": 113,
+          "type": "text"
+        },
+        {
+          "id": "chunk_109",
+          "globalIndex": 109,
+          "text": "N. Lane, ‘Proton gradients at the origin of life’, BioEssays 39 (2017) 1600217. A riposte to the cri...",
+          "wordCount": 156,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_43",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_110",
+          "globalIndex": 110,
+          "text": "R. Hudson, R. de Graaf, M. S. Rodin, A. Ohno, N. Lane, S. E. McGlynn, Y. M. A. Yamada, R. Nakamura, ...",
+          "wordCount": 86,
+          "type": "text"
+        },
+        {
+          "id": "chunk_111",
+          "globalIndex": 111,
+          "text": "Formation of protocells in hydrothermal vents T. M. McCollom, G. Ritter and B. R. Simoneit, ‘Lipid s...",
+          "wordCount": 137,
+          "type": "text"
+        },
+        {
+          "id": "chunk_112",
+          "globalIndex": 112,
+          "text": "S. F. Jordan, E. Nee and N. Lane, ‘Isoprenoids enhance the stability of fatty acid membranes at the ...",
+          "wordCount": 128,
+          "type": "text"
+        },
+        {
+          "id": "chunk_113",
+          "globalIndex": 113,
+          "text": "T. West, V. Sojo, A. Pomiankowski and N. Lane, ‘The origin of heredity in protocells’, Philosphical ...",
+          "wordCount": 90,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_44",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_114",
+          "globalIndex": 114,
+          "text": "Nunes Palmeira, M. Colnaghi, S. Harrison, A. Pomiankowski and N. Lane, ‘The limits of metabolic here...",
+          "wordCount": 108,
+          "type": "text"
+        },
+        {
+          "id": "chunk_115",
+          "globalIndex": 115,
+          "text": "and CO 2 , or cells? The answer is cells. That’s why life exists. J. P. Amend, D. E. LaRowe, T. M. M...",
+          "wordCount": 90,
+          "type": "text"
+        },
+        {
+          "id": "chunk_116",
+          "globalIndex": 116,
+          "text": "W. F. Martin, F. L. Sousa and N. Lane, ‘Energy at life’s origin’, Science 344 (2014) 1092–1093. A sh...",
+          "wordCount": 95,
+          "type": "text"
+        },
+        {
+          "id": "chunk_117",
+          "globalIndex": 117,
+          "text": "S. Pinna, C. Kunz, S. Harrison, S. F. Jordan, J. Ward, F. Werner and N. Lane, ‘A prebiotic basis for...",
+          "wordCount": 124,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_45",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_118",
+          "globalIndex": 118,
+          "text": "Daniel C. Dennett, Darwin’s Dangerous Idea: Evolution and the Meanings of Life (New York, Simon & Sc...",
+          "wordCount": 92,
+          "type": "text"
+        },
+        {
+          "id": "chunk_119",
+          "globalIndex": 119,
+          "text": "J. Y. Chen, D. Y. Huang and C. W. Li, ‘An early Cambrian craniate-like chordate’, Nature 402 (1999) ...",
+          "wordCount": 117,
+          "type": "text"
+        },
+        {
+          "id": "chunk_120",
+          "globalIndex": 120,
+          "text": "Oxygen Donald E. Canfield, Oxygen: A Four Billion Year History (Princeton, Princeton University Pres...",
+          "wordCount": 113,
+          "type": "text"
+        },
+        {
+          "id": "chunk_121",
+          "globalIndex": 121,
+          "text": "Andrew H. Knoll, Life on a Young Planet: The First Three Billion Years of Life on Earth (Princeton, ...",
+          "wordCount": 144,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_46",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_122",
+          "globalIndex": 122,
+          "text": "Electron bifurcation W. Buckel and R. K. Thauer, ‘Flavin-based electron bifurcation, ferredoxin, fla...",
+          "wordCount": 167,
+          "type": "text"
+        },
+        {
+          "id": "chunk_123",
+          "globalIndex": 123,
+          "text": "One of my favourite papers, an utter masterpiece of scientific deduction. R. M. Schwartz and M. O. D...",
+          "wordCount": 113,
+          "type": "text"
+        },
+        {
+          "id": "chunk_124",
+          "globalIndex": 124,
+          "text": "L. Sagan, ‘On the origin of mitosing cells’, Journal of Theoretical Biology 14 (1967) 225–274. A won...",
+          "wordCount": 115,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_47",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_125",
+          "globalIndex": 125,
+          "text": "Bacterial metabolism and syntrophy P. Schönheit, W. Buckel and W. F. Martin, ‘On the origin of heter...",
+          "wordCount": 109,
+          "type": "text"
+        },
+        {
+          "id": "chunk_126",
+          "globalIndex": 126,
+          "text": "E. Libby, L. Hébert-Dufresne, S.-R. Hosseini and A. Wagner, ‘Syntrophy emerges spontaneously in comp...",
+          "wordCount": 109,
+          "type": "text"
+        },
+        {
+          "id": "chunk_127",
+          "globalIndex": 127,
+          "text": "Dawn of photosynthesis J. Allen and W. Martin, ‘Out of thin air’, Nature 445 (2007) 610–612. A spark...",
+          "wordCount": 93,
+          "type": "text"
+        },
+        {
+          "id": "chunk_128",
+          "globalIndex": 128,
+          "text": "Nick Lane, Building with Light: Primo Levi, Science and Writing (Centro internazionale di studi Prim...",
+          "wordCount": 115,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_48",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_129",
+          "globalIndex": 129,
+          "text": "H. C. Betts, M. N. Puttick, J. W. Clark, T. A. Williams, P. C. J. Donoghue and D. Pisani, ‘Integrate...",
+          "wordCount": 100,
+          "type": "text"
+        },
+        {
+          "id": "chunk_130",
+          "globalIndex": 130,
+          "text": "T. Oliver, P. Sánchez-Baracaldo, A. W. Larkum, A. W. Rutherford and T. Cardona, ‘Time-resolved compa...",
+          "wordCount": 89,
+          "type": "text"
+        },
+        {
+          "id": "chunk_131",
+          "globalIndex": 131,
+          "text": "Shurum conundrum G. A. Shields, ‘Carbon and carbon isotope mass balance in the Neoproterozoic Earth ...",
+          "wordCount": 98,
+          "type": "text"
+        },
+        {
+          "id": "chunk_132",
+          "globalIndex": 132,
+          "text": "Graham Shields’s thinking about the role of sulfate in the Neoproterozoic oxygenation and the Cambri...",
+          "wordCount": 134,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_49",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_133",
+          "globalIndex": 133,
+          "text": "Active ventilation in animals A. H. Knoll, R. K. Bambach, D. E. Canfield and J. P. Grotzinger, ‘Comp...",
+          "wordCount": 118,
+          "type": "text"
+        },
+        {
+          "id": "chunk_134",
+          "globalIndex": 134,
+          "text": "William F. Martin, Aloysius G. M. Tielens and Marek Mentel, Mitochondria and Anaerobic Energy Metabo...",
+          "wordCount": 122,
+          "type": "text"
+        },
+        {
+          "id": "chunk_135",
+          "globalIndex": 135,
+          "text": "Forked Krebs cycle Laurence A. Moran, Robert Horton, Gray Scrimgeour and Marc Perry, Principles of B...",
+          "wordCount": 188,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_50",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_136",
+          "globalIndex": 136,
+          "text": "J. Sweetlove, K. F. Beard, A. Nunes-Nesi, A. R. Fernie and R. G. Ratcliffe, ‘Not just a circle: flux...",
+          "wordCount": 87,
+          "type": "text"
+        },
+        {
+          "id": "chunk_137",
+          "globalIndex": 137,
+          "text": "Chapter 5: To the dark side Oncogenes and tumour-suppressor genes Robert A. Weinberg, One Renegade C...",
+          "wordCount": 125,
+          "type": "text"
+        },
+        {
+          "id": "chunk_138",
+          "globalIndex": 138,
+          "text": "Pan-Cancer Analysis of Whole Genomes. ‘A collection of research and related content from the ICGC/TC...",
+          "wordCount": 134,
+          "type": "text"
+        },
+        {
+          "id": "chunk_139",
+          "globalIndex": 139,
+          "text": "Hesketh skips lightly over the metabolic perspective I elaborate in this book, even suggesting that ...",
+          "wordCount": 123,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_51",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_140",
+          "globalIndex": 140,
+          "text": "still bites: ‘Most serious of all the results of the somatic mutation hypothesis has been its effect...",
+          "wordCount": 182,
+          "type": "text"
+        },
+        {
+          "id": "chunk_141",
+          "globalIndex": 141,
+          "text": "A. M. Soto and C. Sonnenschein, ‘The somatic mutation theory of cancer: growing problems with the pa...",
+          "wordCount": 100,
+          "type": "text"
+        },
+        {
+          "id": "chunk_142",
+          "globalIndex": 142,
+          "text": "C. A. Rebbeck, A. M. Leroi and A. Burt, ‘Mitochondrial capture by a transmissible cancer’, Science 3...",
+          "wordCount": 147,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_52",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_143",
+          "globalIndex": 143,
+          "text": "Martin D. Kamen, Radiant Science, Dark Politics. A Memoir of the Nuclear Age (Berkeley, University o...",
+          "wordCount": 94,
+          "type": "text"
+        },
+        {
+          "id": "chunk_144",
+          "globalIndex": 144,
+          "text": "John N. Prebble, Searching for a Mechanism: A History of Cell Bioenergetics (Oxford, Oxford Universi...",
+          "wordCount": 122,
+          "type": "text"
+        },
+        {
+          "id": "chunk_145",
+          "globalIndex": 145,
+          "text": "Govindjee, ‘On the requirement of minimum number of four versus eight quanta of light for the evolut...",
+          "wordCount": 112,
+          "type": "text"
+        },
+        {
+          "id": "chunk_146",
+          "globalIndex": 146,
+          "text": "Warburg and his critics on cancer Otto Warburg, Über den Stoffwechsel der Tumoren (Berlin, Springer,...",
+          "wordCount": 82,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_53",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_147",
+          "globalIndex": 147,
+          "text": "at the original for the full context. Otto Heinrich Warburg, The Prime Cause and Prevention of Cance...",
+          "wordCount": 129,
+          "type": "text"
+        },
+        {
+          "id": "chunk_148",
+          "globalIndex": 148,
+          "text": "S. Weinhouse, ‘The Warburg hypothesis fifty years later’, Zeitschrift für Krebsforschung 87 (1976) 1...",
+          "wordCount": 95,
+          "type": "text"
+        },
+        {
+          "id": "chunk_149",
+          "globalIndex": 149,
+          "text": "(2009) 1029–1033. A masterful paper, which to my mind captures the key to the Warburg effect, which ...",
+          "wordCount": 183,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_54",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_150",
+          "globalIndex": 150,
+          "text": "W. Hochachka and K. B. Storey, ‘Metabolic consequences of diving in animals and man’, Science 187 (1...",
+          "wordCount": 153,
+          "type": "text"
+        },
+        {
+          "id": "chunk_151",
+          "globalIndex": 151,
+          "text": "O’Neill, ‘Mitochondria are the powerhouses of immunity’, Nature Immunology 18 (2017) 488–498.) C. Fr...",
+          "wordCount": 108,
+          "type": "text"
+        },
+        {
+          "id": "chunk_152",
+          "globalIndex": 152,
+          "text": "Hypoxia in cancer E. T. Chouchani, V. R. Pell, E. Gaude et al. , ‘Ischaemic accumulation of succinat...",
+          "wordCount": 190,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_55",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_153",
+          "globalIndex": 153,
+          "text": "to an important book by Rebecca Skloot, The Immortal Life of Henrietta Lacks (Pan, 2011), after whom...",
+          "wordCount": 95,
+          "type": "text"
+        },
+        {
+          "id": "chunk_154",
+          "globalIndex": 154,
+          "text": "S. Ochoa, ‘Isocitrate dehydrogenase and carbon dioxide fixation’, Journal of Biological Chemistry 15...",
+          "wordCount": 93,
+          "type": "text"
+        },
+        {
+          "id": "chunk_155",
+          "globalIndex": 155,
+          "text": "Should have been less of a revelation, given that CO 2 fixation in animals and the reverse Krebs cyc...",
+          "wordCount": 87,
+          "type": "text"
+        },
+        {
+          "id": "chunk_156",
+          "globalIndex": 156,
+          "text": "Ratios matter in biochemistry. Which way will the Krebs cycle operate? You can predict on the basis ...",
+          "wordCount": 171,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_56",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_157",
+          "globalIndex": 157,
+          "text": "Wagner, E. Bertero, A. Nickel, M. Kohlhaas, G. E. Gibson, W. Heggermont, S. Heymans and C. Maack, ‘S...",
+          "wordCount": 152,
+          "type": "text"
+        },
+        {
+          "id": "chunk_158",
+          "globalIndex": 158,
+          "text": "M. S. Bonkowski and D. A. Sinclair, ‘Slowing ageing by design: the rise of NAD + and sirtuin-activat...",
+          "wordCount": 99,
+          "type": "text"
+        },
+        {
+          "id": "chunk_159",
+          "globalIndex": 159,
+          "text": "D. V. Titov, V. Cracan, R. P. Goodman, J. Peng, Z. Grabarek and V. K. Mootha, ‘Complementation of mi...",
+          "wordCount": 180,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_57",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_160",
+          "globalIndex": 160,
+          "text": "2020). Available here: https://doi:10.26124/bec:2020-0002. The ‘bible’ of fluo- respirometry, privat...",
+          "wordCount": 128,
+          "type": "text"
+        },
+        {
+          "id": "chunk_161",
+          "globalIndex": 161,
+          "text": "Ketogenic diet and cancer D. D. Weber, S. Aminzadeh-Gohari, J. Tulipan, L. Catalano, R. G. Feichting...",
+          "wordCount": 100,
+          "type": "text"
+        },
+        {
+          "id": "chunk_162",
+          "globalIndex": 162,
+          "text": "The book from his inaugural lecture at UCL, which put forward a new theory of ageing that is still m...",
+          "wordCount": 178,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_58",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_163",
+          "globalIndex": 163,
+          "text": "André Klarsfeld and Frédéric Revah, The Biology of Death: Origins of Mortality (Ithaca, NY, Cornell ...",
+          "wordCount": 115,
+          "type": "text"
+        },
+        {
+          "id": "chunk_164",
+          "globalIndex": 164,
+          "text": "V. Tam, N. Patel, M. Turcotte, Y. Bossé, G. Paré and D. Meyre, ‘Benefits and limitations of genome-w...",
+          "wordCount": 102,
+          "type": "text"
+        },
+        {
+          "id": "chunk_165",
+          "globalIndex": 165,
+          "text": "Adam Rutherford, A Brief History of Everyone Who Ever Lived: The Stories in Our Genes (London, Weide...",
+          "wordCount": 155,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_59",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_166",
+          "globalIndex": 166,
+          "text": "R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial D...",
+          "wordCount": 87,
+          "type": "text"
+        },
+        {
+          "id": "chunk_167",
+          "globalIndex": 167,
+          "text": "Jenkins, S. T. Sherry and D. C. Wallace, ‘The structure of human mitochondrial DNA variation’, Journ...",
+          "wordCount": 104,
+          "type": "text"
+        },
+        {
+          "id": "chunk_168",
+          "globalIndex": 168,
+          "text": "D. C. Wallace, ‘Mitochondrial diseases in man and mouse’, Science 283 (1999) 1482–1488. A seminal pa...",
+          "wordCount": 125,
+          "type": "text"
+        },
+        {
+          "id": "chunk_169",
+          "globalIndex": 169,
+          "text": "N. Lane, ‘Biodiversity: on the origin of bar codes’, Nature 462 (2009) 272–274. My own attempt to re...",
+          "wordCount": 112,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_60",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_170",
+          "globalIndex": 170,
+          "text": "An important synthesis; should be required reading for medical students. Mitochondria in flies D. E....",
+          "wordCount": 94,
+          "type": "text"
+        },
+        {
+          "id": "chunk_171",
+          "globalIndex": 171,
+          "text": "M. F. Camus, D. J. Clancy and D. K. Dowling, ‘Mitochondria, maternal inheritance, and male aging’, C...",
+          "wordCount": 125,
+          "type": "text"
+        },
+        {
+          "id": "chunk_172",
+          "globalIndex": 172,
+          "text": "Hybid breakdown does not vary with genetic distance M. F. Camus, M. O’Leary, M. Reuter and N. Lane, ...",
+          "wordCount": 100,
+          "type": "text"
+        },
+        {
+          "id": "chunk_173",
+          "globalIndex": 173,
+          "text": "(2021) 230–239. A large panel of 81 different fly lines, in which the mitochondria are systematicall...",
+          "wordCount": 83,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_61",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_174",
+          "globalIndex": 174,
+          "text": "antioxidant NAC caused problems in some lines but not others, depending on the mitochondrial DNA. M....",
+          "wordCount": 108,
+          "type": "text"
+        },
+        {
+          "id": "chunk_175",
+          "globalIndex": 175,
+          "text": "Glutathione, redox stress and S-glutathionylation P. Korge, G. Calmettes and J. N. Weiss, ‘Increased...",
+          "wordCount": 81,
+          "type": "text"
+        },
+        {
+          "id": "chunk_176",
+          "globalIndex": 176,
+          "text": "R. J. Mailloux and W. G. Willmore, ‘ S -Glutathionlylation reactions in mitochondrial function and d...",
+          "wordCount": 90,
+          "type": "text"
+        },
+        {
+          "id": "chunk_177",
+          "globalIndex": 177,
+          "text": "Number of heartbeats Raymond Pearl, The Rate of Living. Being an Account of some Experimental Studie...",
+          "wordCount": 151,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_62",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 4,
+      "chunks": [
+        {
+          "id": "chunk_178",
+          "globalIndex": 178,
+          "text": "B. S. Haldane. Antioxidants don’t work J. M. Gutteridge and B. Halliwell, ‘Free radicals and antioxi...",
+          "wordCount": 105,
+          "type": "text"
+        },
+        {
+          "id": "chunk_179",
+          "globalIndex": 179,
+          "text": "M. W. Moyer, ‘The myth of antioxidants’, Scientific American 308 (2013) 62–67. A clear presentation ...",
+          "wordCount": 137,
+          "type": "text"
+        },
+        {
+          "id": "chunk_180",
+          "globalIndex": 180,
+          "text": "N. Lane, ‘A unifying view of ageing and disease: the double-agent theory’, Journal of Theoretical Bi...",
+          "wordCount": 102,
+          "type": "text"
+        },
+        {
+          "id": "chunk_181",
+          "globalIndex": 181,
+          "text": "Hyperfunction M. V. Blagosklonny, ‘Aging is not programmed’, Cell Cycle 12 (2013) 3736– 3742. A clar...",
+          "wordCount": 90,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_63",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_182",
+          "globalIndex": 182,
+          "text": "D. Gems, ‘The aging–disease false dichotomy: understanding senescence as pathology’, Frontiers in Ge...",
+          "wordCount": 119,
+          "type": "text"
+        },
+        {
+          "id": "chunk_183",
+          "globalIndex": 183,
+          "text": "Variations in mitochondrial proteome between tissues S. E. Calvo and V. K. Mootha, ‘The mitochondria...",
+          "wordCount": 140,
+          "type": "text"
+        },
+        {
+          "id": "chunk_184",
+          "globalIndex": 184,
+          "text": "A. A. Gerencser, S. A. Mookerjee, M. Jastroch and M. D. Brand, ‘Positive feedback amplified the resp...",
+          "wordCount": 145,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_64",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_185",
+          "globalIndex": 185,
+          "text": "Paula Moreira discusses how diabetes-linked defects in mitochondria increase the risk of Alzheimer’s...",
+          "wordCount": 102,
+          "type": "text"
+        },
+        {
+          "id": "chunk_186",
+          "globalIndex": 186,
+          "text": "Mitochondrial-associated membranes and Alzheimer’s disease E. Area-Gomez and E. A. Schon, ‘On the pa...",
+          "wordCount": 131,
+          "type": "text"
+        },
+        {
+          "id": "chunk_187",
+          "globalIndex": 187,
+          "text": "Powering up mitochondria by calcium activation of pyruvate dehydrogenase A. P. Wescott, J. P. Y. Kao...",
+          "wordCount": 163,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_65",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_188",
+          "globalIndex": 188,
+          "text": "Anaesthetics and mitochondria L. Turin, E. M. C. Skoulakis and A. P. Horsfield, ‘Electron spin chang...",
+          "wordCount": 143,
+          "type": "text"
+        },
+        {
+          "id": "chunk_189",
+          "globalIndex": 189,
+          "text": "A. Gaitanidis, A. Sotgui and L. Turin, ‘Spontaneous radiofrequency emission from electron spins with...",
+          "wordCount": 116,
+          "type": "text"
+        },
+        {
+          "id": "chunk_190",
+          "globalIndex": 190,
+          "text": "Actually, it shouldn’t be embarrassing. Sing it from the rooftops! Science is about what we don’t kn...",
+          "wordCount": 173,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_66",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_191",
+          "globalIndex": 191,
+          "text": "Electrical fields determine development; genes are secondary. So far that mostly goes for flat-worms...",
+          "wordCount": 80,
+          "type": "text"
+        },
+        {
+          "id": "chunk_192",
+          "globalIndex": 192,
+          "text": "D. Ren, Z. Nemati, C. H. Lee, J. Li, K. Haddadi, D. C. Wallace and P. J. Burke, ‘An ultra-high bandw...",
+          "wordCount": 140,
+          "type": "text"
+        },
+        {
+          "id": "chunk_193",
+          "globalIndex": 193,
+          "text": "Now in his nineties, Denton is still active; and others, including Mark Solms and Peter Godfrey-Smit...",
+          "wordCount": 231,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_67",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_194",
+          "globalIndex": 194,
+          "text": "J. McFadden, ‘Integrating information in the brain’s EM field: the cemi field theory of consciousnes...",
+          "wordCount": 129,
+          "type": "text"
+        },
+        {
+          "id": "chunk_195",
+          "globalIndex": 195,
+          "text": "D. Refardt, T. Bergmiller and R. Kümmerli, ‘Altruism can evolve when relatedness is low: evidence fr...",
+          "wordCount": 104,
+          "type": "text"
+        },
+        {
+          "id": "chunk_196",
+          "globalIndex": 196,
+          "text": "H. Strahl and L. W. Hamoen, ‘Membrane potential is important for bacterial cell division’, Proceedin...",
+          "wordCount": 147,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_68",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_197",
+          "globalIndex": 197,
+          "text": "Little did I realise when writing that passage that it would require such a trivial leap of the imag...",
+          "wordCount": 285,
+          "type": "text"
+        },
+        {
+          "id": "chunk_198",
+          "globalIndex": 198,
+          "text": "I must thank, too, my fantastic lab group at UCL. They have had to fight their way through Covid, wi...",
+          "wordCount": 135,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_69",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_199",
+          "globalIndex": 199,
+          "text": "as the severely disturbed downstream consequences of mitonuclear incompatibilities in ageing flies. ...",
+          "wordCount": 236,
+          "type": "text"
+        },
+        {
+          "id": "chunk_200",
+          "globalIndex": 200,
+          "text": "Many friends and colleagues have also read either chapters or the whole book. While on the theme of ...",
+          "wordCount": 155,
+          "type": "text"
+        },
+        {
+          "id": "chunk_201",
+          "globalIndex": 201,
+          "text": "A few words of thanks to other friends, who have read chapters or the whole book and given me feedba...",
+          "wordCount": 108,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_70",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_202",
+          "globalIndex": 202,
+          "text": "She racked her mind over possible titles. Titles are never easy, and Allyson has one of the most inv...",
+          "wordCount": 124,
+          "type": "text"
+        },
+        {
+          "id": "chunk_203",
+          "globalIndex": 203,
+          "text": "I can only hope that I have warmed the offending waters appropriately. Thanks as well to Emily MacKa...",
+          "wordCount": 83,
+          "type": "text"
+        },
+        {
+          "id": "chunk_204",
+          "globalIndex": 204,
+          "text": "I need to thank a few specialist colleagues and friends for reading over specific chapters. I treasu...",
+          "wordCount": 258,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_71",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_205",
+          "globalIndex": 205,
+          "text": "lost ourselves in a six-hour discussion on why the cycle is a cycle and other abstruse questions. Ra...",
+          "wordCount": 107,
+          "type": "text"
+        },
+        {
+          "id": "chunk_206",
+          "globalIndex": 206,
+          "text": "While on the subject of cancer, I must thank Prof. Frank Sullivan, formerly of the US National Cance...",
+          "wordCount": 137,
+          "type": "text"
+        },
+        {
+          "id": "chunk_207",
+          "globalIndex": 207,
+          "text": "Frank taught me the value of open-minded scepticism in science, and he is unyielding in applying thi...",
+          "wordCount": 229,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_72",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_208",
+          "globalIndex": 208,
+          "text": "While wrestling with the question, I immersed myself in the revelatory work of Prof. Luca Turin (lin...",
+          "wordCount": 197,
+          "type": "text"
+        },
+        {
+          "id": "chunk_209",
+          "globalIndex": 209,
+          "text": "It remains for me to thank my family, especially my father, the historian Anthony Lane, who as alway...",
+          "wordCount": 126,
+          "type": "text"
+        },
+        {
+          "id": "chunk_210",
+          "globalIndex": 210,
+          "text": "Despite our best efforts to inculcate a love of science in Eneko and Hugo, it’s already clear that t...",
+          "wordCount": 125,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_73",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_211",
+          "globalIndex": 211,
+          "text": "other people felt the same until his funeral. We will all remember him with love and admiration. Hea...",
+          "wordCount": 265,
+          "type": "text"
+        },
+        {
+          "id": "chunk_212",
+          "globalIndex": 212,
+          "text": "Finally, I thank Cliff Hanks for bringing the poem ‘Like Most Revelations’ to my attention, and Rich...",
+          "wordCount": 59,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_74",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
+        {
+          "id": "chunk_213",
+          "globalIndex": 213,
+          "text": "The suffix ‘n’ plus a number indicates a relevant footnote on that page. Page numbers in italics ind...",
+          "wordCount": 152,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_75",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_214",
+          "globalIndex": 214,
+          "text": "‘alpha-keto’ groups 41, 286, 299 see also α-ketoglutarate (at ‘k’) alternative oxidase 183, 228n7, 2...",
+          "wordCount": 86,
+          "type": "text"
+        },
+        {
+          "id": "chunk_215",
+          "globalIndex": 215,
+          "text": "see also glutathione; vitamins antioxidant dosing 26, 225 , 249–50, 258 see also NAC antiviral defen...",
+          "wordCount": 93,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_76",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_216",
+          "globalIndex": 216,
+          "text": "ATP (adenosine triphosphate) 302 in cellular respiration 56–7, 64 formation without ATP synthase 144...",
+          "wordCount": 83,
+          "type": "text"
+        },
+        {
+          "id": "chunk_217",
+          "globalIndex": 217,
+          "text": "origins of life and 116, 121–2, 153, 169 plants as 77, 103 bacteria carbon fixation in 69, 100, 123,...",
+          "wordCount": 100,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_77",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_218",
+          "globalIndex": 218,
+          "text": "Krebs cycle and non-cycle 111, 184–6 symbiosis among 170, 188 ‘balancer chromosomes’ 245, 248 Baldwi...",
+          "wordCount": 84,
+          "type": "text"
+        },
+        {
+          "id": "chunk_219",
+          "globalIndex": 219,
+          "text": "Krebs cycle and its reversal 73, 188, 208 reverse Krebs cycle 78, 101–2 role of NADPH 108n11, 206 to...",
+          "wordCount": 86,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_78",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_220",
+          "globalIndex": 220,
+          "text": "C4 carboxylic acids in photosynthesis 93, 100 in respiration 33, 46–8, 50–2 in reverse Krebs cycle 1...",
+          "wordCount": 84,
+          "type": "text"
+        },
+        {
+          "id": "chunk_221",
+          "globalIndex": 221,
+          "text": "Cambrian period emergence of animals and predation 25, 156–7, 160, 180, 182, 189 preceded by Shuram ...",
+          "wordCount": 197,
+          "type": "text"
+        },
+        {
+          "id": "chunk_222",
+          "globalIndex": 222,
+          "text": "fixation in plants 83–5, 103 fixation in protocells 148, 163 in photosynthesis 85–6, 98, 100, 288 re...",
+          "wordCount": 111,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_79",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_223",
+          "globalIndex": 223,
+          "text": "cell division 27, 192, 195, 283 cell-free extracts 62 cell nucleus, transplanting 195 cells as batte...",
+          "wordCount": 85,
+          "type": "text"
+        },
+        {
+          "id": "chunk_224",
+          "globalIndex": 224,
+          "text": "as a transducer 174 see also haem; photosynthesis chloroplasts 78, 100, 167, 221n6, 228n7 chordates ...",
+          "wordCount": 103,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_80",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_225",
+          "globalIndex": 225,
+          "text": "succinyl CoA Cohen, Michael 278 Colnaghi, Marco 241n2 complexes I, II, III see respiratory chain con...",
+          "wordCount": 82,
+          "type": "text"
+        },
+        {
+          "id": "chunk_226",
+          "globalIndex": 226,
+          "text": "cycles, biochemical necessarily catalytic 53 nutrient cycles 126 Q cycle 68n13 urea cycle 52, 224–7 ...",
+          "wordCount": 89,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_81",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_227",
+          "globalIndex": 227,
+          "text": "imposed on Calvin 94n6 ketogenic diets 228 and mitochondrial function 25, 242, 249, 251, 264 Wallace...",
+          "wordCount": 80,
+          "type": "text"
+        },
+        {
+          "id": "chunk_228",
+          "globalIndex": 228,
+          "text": "Earth as a battery 162 geology of the early Earth 117, 119 global freeze 158, 176, 179 Ech (energy-c...",
+          "wordCount": 82,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_82",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_229",
+          "globalIndex": 229,
+          "text": "The Emergence of Everything , by Morowitz 127 Emerson, Robert 199–200 Enceladus 117, 120 endoplasmic...",
+          "wordCount": 81,
+          "type": "text"
+        },
+        {
+          "id": "chunk_230",
+          "globalIndex": 230,
+          "text": "see also specific enzymes epigenetic changes in cells 215, 223, 231, 244–5, 269, 271–3 of tissues 19...",
+          "wordCount": 169,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_83",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
+        {
+          "id": "chunk_231",
+          "globalIndex": 231,
+          "text": "metabolic flux; ROS flux flux capacitors, mitochondria as 244, 266 ‘follow the money’ rule 196, 228 ...",
+          "wordCount": 93,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_84",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_232",
+          "globalIndex": 232,
+          "text": "origins in protocells 149–50, 275 (reverse) Krebs cycle signalling 20, 185, 195, 211–12, 215 whether...",
+          "wordCount": 80,
+          "type": "text"
+        },
+        {
+          "id": "chunk_233",
+          "globalIndex": 233,
+          "text": "and the Warburg Effect 197, 200 glutamine from α-ketoglutarate 184 in cancer 215–16, 217 , 221–2, 22...",
+          "wordCount": 140,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_85",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
+        {
+          "id": "chunk_234",
+          "globalIndex": 234,
+          "text": "cytochrome oxidase haemoglobin 35–6, 114, 165, 183, 187 Haldane, JBS 29–30, 59, 198n2 Haldane, JS 30...",
+          "wordCount": 139,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_86",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_235",
+          "globalIndex": 235,
+          "text": "burned in respiration 49–51, 55–8, 63–4, 159, 206, 254–5, 261 2H and H 2 distinguished 47–8n6 2H car...",
+          "wordCount": 82,
+          "type": "text"
+        },
+        {
+          "id": "chunk_236",
+          "globalIndex": 236,
+          "text": "chemical environment 113–14, 119–20, 132, 139, 141, 153–4 explored with a submersible 112–13, 115 no...",
+          "wordCount": 144,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_87",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
+        {
+          "id": "chunk_237",
+          "globalIndex": 237,
+          "text": "carbon-13; radioisotopes Jacob, François 191 Japanese lifespans 272 Jordan, Sean 145 Kamen, Martin 8...",
+          "wordCount": 169,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_88",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_238",
+          "globalIndex": 238,
+          "text": "in the brain 263, 266, 280–81 in cancer cells 222–3, 228 in fruit flies 255–6 mitonuclear mismatches...",
+          "wordCount": 85,
+          "type": "text"
+        },
+        {
+          "id": "chunk_239",
+          "globalIndex": 239,
+          "text": "lactate in cancer cells 204, 216, 224, 228 from pyruvate 200–201, 216, 224–5 as waste product 185 , ...",
+          "wordCount": 109,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_89",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_240",
+          "globalIndex": 240,
+          "text": "tissue symbiosis 190 lifestyle choices 25, 235, 264, 268–9, 272–3 light energy infrared, and photosy...",
+          "wordCount": 93,
+          "type": "text"
+        },
+        {
+          "id": "chunk_241",
+          "globalIndex": 241,
+          "text": "in the Krebs line 128, 230, 287 , 299–300 reverse Krebs cycle 128, 230, 287 malate–aspartate shuttle...",
+          "wordCount": 181,
+          "type": "text"
+        },
+        {
+          "id": "chunk_242",
+          "globalIndex": 242,
+          "text": "methanogens and methanotrophs 143, 164, 166, 170 methyl group transfer 138–9 microbes see bacteria a...",
+          "wordCount": 95,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_90",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_243",
+          "globalIndex": 243,
+          "text": "mutations within 240–41, 247, 254n4, 257 offering improved lifespan 272 respiration efficiency 251, ...",
+          "wordCount": 80,
+          "type": "text"
+        },
+        {
+          "id": "chunk_244",
+          "globalIndex": 244,
+          "text": "multicellular organisms parallel processing 161, 188 mutations accumulation with ageing 257, 269 aff...",
+          "wordCount": 178,
+          "type": "text"
+        },
+        {
+          "id": "chunk_245",
+          "globalIndex": 245,
+          "text": "delivered as glutamine 215, 224 Nobel Prizes awarded to Warburg 35, 196–7, 199 not awarded to Kamen,...",
+          "wordCount": 114,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_91",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_246",
+          "globalIndex": 246,
+          "text": "origin of life and hydrothermal vents 113, 117, 133, 152–3 inevitability 127, 131n7, 275 metabolism ...",
+          "wordCount": 86,
+          "type": "text"
+        },
+        {
+          "id": "chunk_247",
+          "globalIndex": 247,
+          "text": "oxygen atmospheric, as in balance 177 and the Cambrian explosion 156–8 cellular response to a defici...",
+          "wordCount": 102,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_92",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 3,
+      "chunks": [
+        {
+          "id": "chunk_248",
+          "globalIndex": 248,
+          "text": "phosphoenol-pyruvate 70–71, 73, 102, 122, 224–5, 287 , 296–7 phosphoglycerate 92, 94, 96, 174 photop...",
+          "wordCount": 80,
+          "type": "text"
+        },
+        {
+          "id": "chunk_249",
+          "globalIndex": 249,
+          "text": "Pinna, Silvana 152 plants as autotrophs 77, 103 carbon fixation in 83–5, 103 evidence relevant to ca...",
+          "wordCount": 183,
+          "type": "text"
+        },
+        {
+          "id": "chunk_250",
+          "globalIndex": 250,
+          "text": "pyruvate dehydrogenase 209n4, 267–8, 280 Q cycle (quinones) 68n13 quantum effects 64, 135, 276 ‘race...",
+          "wordCount": 92,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_93",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_251",
+          "globalIndex": 251,
+          "text": "as a mitochondrial function 32, 67–8n13 photophosphorylation and 99 as preceding photosynthesis 36 r...",
+          "wordCount": 80,
+          "type": "text"
+        },
+        {
+          "id": "chunk_252",
+          "globalIndex": 252,
+          "text": "uncoupling in plants 228n7 ‘respiratory ferment’ 199, 216 reverse Krebs cycle in ancient bacteria 78...",
+          "wordCount": 101,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_94",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_253",
+          "globalIndex": 253,
+          "text": "supercharged membrane potentials 219 in transplant organs 214n5 see also free radicals ROS flux 230,...",
+          "wordCount": 81,
+          "type": "text"
+        },
+        {
+          "id": "chunk_254",
+          "globalIndex": 254,
+          "text": "science cancer research spending 192 ‘creation science’ and 125 as creative 36 culture and risk taki...",
+          "wordCount": 82,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_95",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 2,
+      "chunks": [
+        {
+          "id": "chunk_255",
+          "globalIndex": 255,
+          "text": "serpentinisation 120, 174 sex differences and mitochondria 239–41, 247 sexual ornamentation 261 Shie...",
+          "wordCount": 83,
+          "type": "text"
+        },
+        {
+          "id": "chunk_256",
+          "globalIndex": 256,
+          "text": "Stephenson, Marjory 29, 31, 59–60 submarine vents see hydrothermal succinate accumulation in disease...",
+          "wordCount": 91,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_96",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
+        {
+          "id": "chunk_257",
+          "globalIndex": 257,
+          "text": "symbiosis among bacteria and archaea 170, 188 endosymbiosis 69, 221n6 between tissues 189–90, 265 Sz...",
+          "wordCount": 156,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "paragraph_97",
+      "type": "text",
+      "pageNumber": 212,
+      "chunkCount": 1,
+      "chunks": [
+        {
+          "id": "chunk_258",
+          "globalIndex": 258,
+          "text": "vitalism/vital force 5, 8, 62 vitamins C and E 44–5, 48, 252 Wächtershäuser, Günter 115–16 Walker, S...",
+          "wordCount": 215,
           "type": "text"
         }
       ]

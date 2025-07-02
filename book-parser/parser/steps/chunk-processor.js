@@ -249,16 +249,15 @@ function processChapter(chapter, debugDir) {
         // but we need to preserve paragraph boundaries (LINE_BREAK markers) within each content piece
         // Join content pieces but ensure paragraph boundaries are preserved
         let mergedText = '';
-        
+
         for (let i = 0; i < chapter.content.length; i++) {
             const contentPiece = chapter.content[i];
-            
+
             if (i > 0) {
-                // Between content pieces, add a space but preserve internal paragraph structure
-                // Only add a single space since cross-page merging already handled sentence continuations
-                mergedText += ' ';
+                // Between content pieces, add a newline to preserve paragraph boundaries
+                mergedText += '\n';
             }
-            
+
             mergedText += contentPiece;
         }
 

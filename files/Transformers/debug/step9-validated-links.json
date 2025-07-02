@@ -1,82 +1,1788 @@
 [
   {
-    "text": "11",
-    "targetChunk": 69,
-    "chapterNumber": 1
+    "text": "Link",
+    "targetChunk": 544,
+    "chapterNumber": "Epilogue"
   },
   {
-    "text": "12",
-    "targetChunk": 62,
-    "chapterNumber": 1
+    "text": "Link",
+    "targetChunk": 417,
+    "chapterNumber": 5
   },
   {
-    "text": "13",
+    "text": "Introduction: Life itself",
+    "targetChunk": 1
+  },
+  {
+    "text": "1. Discovering the nanocosm",
     "targetChunk": 50,
     "chapterNumber": 1
   },
   {
-    "text": "11",
-    "targetChunk": 110,
+    "text": "2. The path of carbon",
+    "targetChunk": 143,
     "chapterNumber": 2
   },
   {
-    "text": "8",
-    "targetChunk": 73,
-    "chapterNumber": 2
-  },
-  {
-    "text": "8",
-    "targetChunk": 144,
+    "text": "3. From gases to life",
+    "targetChunk": 214,
     "chapterNumber": 3
   },
   {
+    "text": "4. Revolutions",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "5. To the dark side",
+    "targetChunk": 361,
+    "chapterNumber": 5
+  },
+  {
+    "text": "6. The flux capacitor",
+    "targetChunk": 443,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Epilogue: Self",
+    "targetChunk": 529,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Envoi: ‘Like Most Revelations’",
+    "targetChunk": 544,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Appendix 1: Red protein mechanics",
+    "targetChunk": 546,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Appendix 2: The Krebs line",
+    "targetChunk": 556,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "List of abbreviations",
+    "targetChunk": 567,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Further reading",
+    "targetChunk": 573,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Acknowledgements",
+    "targetChunk": 659,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Index",
+    "targetChunk": 671,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "1",
+    "targetChunk": 34
+  },
+  {
+    "text": "2",
+    "targetChunk": 33
+  },
+  {
+    "text": "Link",
+    "targetChunk": 143,
+    "chapterNumber": 2
+  },
+  {
+    "text": "3",
+    "targetChunk": 33
+  },
+  {
+    "text": "Link",
+    "targetChunk": 214,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 361,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 443,
+    "chapterNumber": 6
+  },
+  {
+    "text": "1",
+    "targetChunk": 5
+  },
+  {
+    "text": "2",
+    "targetChunk": 14
+  },
+  {
+    "text": "3",
+    "targetChunk": 22
+  },
+  {
+    "text": "1",
+    "targetChunk": 112,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 56,
+    "chapterNumber": 1
+  },
+  {
+    "text": "2",
+    "targetChunk": 111,
+    "chapterNumber": 1
+  },
+  {
+    "text": "3",
+    "targetChunk": 111,
+    "chapterNumber": 1
+  },
+  {
+    "text": "and chlorophyll.’ He wasn’t so far from the truth, as we’ll see in Chapter4.",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "4",
+    "targetChunk": 114,
+    "chapterNumber": 1
+  },
+  {
+    "text": "5",
+    "targetChunk": 114,
+    "chapterNumber": 1
+  },
+  {
+    "text": "6",
+    "targetChunk": 113,
+    "chapterNumber": 1
+  },
+  {
+    "text": "7",
+    "targetChunk": 116,
+    "chapterNumber": 1
+  },
+  {
+    "text": "8",
+    "targetChunk": 116,
+    "chapterNumber": 1
+  },
+  {
     "text": "9",
+    "targetChunk": 115,
+    "chapterNumber": 1
+  },
+  {
+    "text": "10",
+    "targetChunk": 115,
+    "chapterNumber": 1
+  },
+  {
+    "text": "11",
+    "targetChunk": 140,
+    "chapterNumber": 1
+  },
+  {
+    "text": "12",
+    "targetChunk": 141,
+    "chapterNumber": 1
+  },
+  {
+    "text": "13",
+    "targetChunk": 142,
+    "chapterNumber": 1
+  },
+  {
+    "text": "1",
+    "targetChunk": 56,
+    "chapterNumber": 1
+  },
+  {
+    "text": "2",
+    "targetChunk": 60,
+    "chapterNumber": 1
+  },
+  {
+    "text": "3",
+    "targetChunk": 59,
+    "chapterNumber": 1
+  },
+  {
+    "text": "4",
+    "targetChunk": 63,
+    "chapterNumber": 1
+  },
+  {
+    "text": "5",
+    "targetChunk": 73,
+    "chapterNumber": 1
+  },
+  {
+    "text": "6",
+    "targetChunk": 78,
+    "chapterNumber": 1
+  },
+  {
+    "text": "7",
+    "targetChunk": 80,
+    "chapterNumber": 1
+  },
+  {
+    "text": "8",
+    "targetChunk": 92,
+    "chapterNumber": 1
+  },
+  {
+    "text": "9",
+    "targetChunk": 96,
+    "chapterNumber": 1
+  },
+  {
+    "text": "10",
+    "targetChunk": 97,
+    "chapterNumber": 1
+  },
+  {
+    "text": "11",
+    "targetChunk": 100,
+    "chapterNumber": 1
+  },
+  {
+    "text": "12",
+    "targetChunk": 99,
+    "chapterNumber": 1
+  },
+  {
+    "text": "13",
+    "targetChunk": 103,
+    "chapterNumber": 1
+  },
+  {
+    "text": "1",
+    "targetChunk": 192,
+    "chapterNumber": 2
+  },
+  {
+    "text": "2",
+    "targetChunk": 192,
+    "chapterNumber": 2
+  },
+  {
+    "text": "3",
+    "targetChunk": 195,
+    "chapterNumber": 2
+  },
+  {
+    "text": "4",
+    "targetChunk": 195,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 50,
+    "chapterNumber": 1
+  },
+  {
+    "text": "5",
+    "targetChunk": 195,
+    "chapterNumber": 2
+  },
+  {
+    "text": "6",
+    "targetChunk": 194,
+    "chapterNumber": 2
+  },
+  {
+    "text": "7",
+    "targetChunk": 194,
+    "chapterNumber": 2
+  },
+  {
+    "text": "8",
+    "targetChunk": 197,
+    "chapterNumber": 2
+  },
+  {
+    "text": "9",
+    "targetChunk": 197,
+    "chapterNumber": 2
+  },
+  {
+    "text": "10",
+    "targetChunk": 196,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 178,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 73,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 89,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 546,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "11",
+    "targetChunk": 213,
+    "chapterNumber": 2
+  },
+  {
+    "text": "1",
     "targetChunk": 145,
+    "chapterNumber": 2
+  },
+  {
+    "text": "2",
+    "targetChunk": 151,
+    "chapterNumber": 2
+  },
+  {
+    "text": "3",
+    "targetChunk": 152,
+    "chapterNumber": 2
+  },
+  {
+    "text": "4",
+    "targetChunk": 156,
+    "chapterNumber": 2
+  },
+  {
+    "text": "5",
+    "targetChunk": 161,
+    "chapterNumber": 2
+  },
+  {
+    "text": "6",
+    "targetChunk": 168,
+    "chapterNumber": 2
+  },
+  {
+    "text": "7",
+    "targetChunk": 168,
+    "chapterNumber": 2
+  },
+  {
+    "text": "8",
+    "targetChunk": 170,
+    "chapterNumber": 2
+  },
+  {
+    "text": "9",
+    "targetChunk": 172,
+    "chapterNumber": 2
+  },
+  {
+    "text": "10",
+    "targetChunk": 180,
+    "chapterNumber": 2
+  },
+  {
+    "text": "11",
+    "targetChunk": 189,
+    "chapterNumber": 2
+  },
+  {
+    "text": "1",
+    "targetChunk": 273,
+    "chapterNumber": 3
+  },
+  {
+    "text": "2",
+    "targetChunk": 273,
+    "chapterNumber": 3
+  },
+  {
+    "text": "3",
+    "targetChunk": 273,
+    "chapterNumber": 3
+  },
+  {
+    "text": "4",
+    "targetChunk": 276,
     "chapterNumber": 3
   },
   {
     "text": "5",
-    "targetChunk": 181,
+    "targetChunk": 276,
+    "chapterNumber": 3
+  },
+  {
+    "text": "6",
+    "targetChunk": 275,
+    "chapterNumber": 3
+  },
+  {
+    "text": "7",
+    "targetChunk": 275,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 243,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 556,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "8",
+    "targetChunk": 290,
+    "chapterNumber": 3
+  },
+  {
+    "text": "9",
+    "targetChunk": 291,
+    "chapterNumber": 3
+  },
+  {
+    "text": "ATP synthase motor, as noted in Chapter 1. This awesome nanomotor is",
+    "targetChunk": 50,
+    "chapterNumber": 1
+  },
+  {
+    "text": "1",
+    "targetChunk": 216,
+    "chapterNumber": 3
+  },
+  {
+    "text": "2",
+    "targetChunk": 218,
+    "chapterNumber": 3
+  },
+  {
+    "text": "3",
+    "targetChunk": 220,
+    "chapterNumber": 3
+  },
+  {
+    "text": "4",
+    "targetChunk": 232,
+    "chapterNumber": 3
+  },
+  {
+    "text": "5",
+    "targetChunk": 234,
+    "chapterNumber": 3
+  },
+  {
+    "text": "6",
+    "targetChunk": 238,
+    "chapterNumber": 3
+  },
+  {
+    "text": "7",
+    "targetChunk": 239,
+    "chapterNumber": 3
+  },
+  {
+    "text": "8",
+    "targetChunk": 265,
+    "chapterNumber": 3
+  },
+  {
+    "text": "9",
+    "targetChunk": 265,
+    "chapterNumber": 3
+  },
+  {
+    "text": "1",
+    "targetChunk": 340,
+    "chapterNumber": 4
+  },
+  {
+    "text": "2",
+    "targetChunk": 340,
+    "chapterNumber": 4
+  },
+  {
+    "text": "3",
+    "targetChunk": 339,
+    "chapterNumber": 4
+  },
+  {
+    "text": "4",
+    "targetChunk": 339,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 168,
+    "chapterNumber": 2
+  },
+  {
+    "text": "5",
+    "targetChunk": 358,
     "chapterNumber": 4
   },
   {
     "text": "6",
-    "targetChunk": 166,
+    "targetChunk": 360,
     "chapterNumber": 4
   },
   {
-    "text": "7",
-    "targetChunk": 228,
+    "text": "1",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "2",
+    "targetChunk": 301,
+    "chapterNumber": 4
+  },
+  {
+    "text": "3",
+    "targetChunk": 314,
+    "chapterNumber": 4
+  },
+  {
+    "text": "4",
+    "targetChunk": 316,
+    "chapterNumber": 4
+  },
+  {
+    "text": "5",
+    "targetChunk": 324,
+    "chapterNumber": 4
+  },
+  {
+    "text": "6",
+    "targetChunk": 328,
+    "chapterNumber": 4
+  },
+  {
+    "text": "1",
+    "targetChunk": 416,
     "chapterNumber": 5
   },
   {
+    "text": "2",
+    "targetChunk": 416,
+    "chapterNumber": 5
+  },
+  {
+    "text": "3",
+    "targetChunk": 416,
+    "chapterNumber": 5
+  },
+  {
+    "text": "4",
+    "targetChunk": 419,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Recall that at the end of Chapter 4 we touched on the origins of",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 332,
+    "chapterNumber": 4
+  },
+  {
+    "text": "5",
+    "targetChunk": 419,
+    "chapterNumber": 5
+  },
+  {
+    "text": "6",
+    "targetChunk": 418,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 407,
+    "chapterNumber": 5
+  },
+  {
+    "text": "7",
+    "targetChunk": 441,
+    "chapterNumber": 5
+  },
+  {
+    "text": "1",
+    "targetChunk": 361,
+    "chapterNumber": 5
+  },
+  {
+    "text": "2",
+    "targetChunk": 371,
+    "chapterNumber": 5
+  },
+  {
+    "text": "3",
+    "targetChunk": 380,
+    "chapterNumber": 5
+  },
+  {
+    "text": "4",
+    "targetChunk": 385,
+    "chapterNumber": 5
+  },
+  {
+    "text": "5",
+    "targetChunk": 393,
+    "chapterNumber": 5
+  },
+  {
+    "text": "6",
+    "targetChunk": 401,
+    "chapterNumber": 5
+  },
+  {
+    "text": "7",
+    "targetChunk": 410,
+    "chapterNumber": 5
+  },
+  {
+    "text": "1",
+    "targetChunk": 494,
+    "chapterNumber": 6
+  },
+  {
+    "text": "2",
+    "targetChunk": 494,
+    "chapterNumber": 6
+  },
+  {
+    "text": "3",
+    "targetChunk": 497,
+    "chapterNumber": 6
+  },
+  {
+    "text": "4",
+    "targetChunk": 497,
+    "chapterNumber": 6
+  },
+  {
+    "text": "5",
+    "targetChunk": 496,
+    "chapterNumber": 6
+  },
+  {
+    "text": "6",
+    "targetChunk": 499,
+    "chapterNumber": 6
+  },
+  {
+    "text": "7",
+    "targetChunk": 499,
+    "chapterNumber": 6
+  },
+  {
+    "text": "8",
+    "targetChunk": 499,
+    "chapterNumber": 6
+  },
+  {
+    "text": "9",
+    "targetChunk": 498,
+    "chapterNumber": 6
+  },
+  {
+    "text": "10",
+    "targetChunk": 498,
+    "chapterNumber": 6
+  },
+  {
     "text": "11",
-    "targetChunk": 271,
+    "targetChunk": 527,
     "chapterNumber": 6
   },
   {
     "text": "12",
-    "targetChunk": 264,
+    "targetChunk": 515,
     "chapterNumber": 6
   },
   {
-    "text": ", 151, 214, 289",
-    "targetChunk": 189,
-    "chapterNumber": 5
+    "text": "1",
+    "targetChunk": 450,
+    "chapterNumber": 6
   },
   {
-    "text": "Link",
-    "targetChunk": 230,
+    "text": "2",
+    "targetChunk": 452,
+    "chapterNumber": 6
+  },
+  {
+    "text": "3",
+    "targetChunk": 461,
+    "chapterNumber": 6
+  },
+  {
+    "text": "4",
+    "targetChunk": 470,
+    "chapterNumber": 6
+  },
+  {
+    "text": "5",
+    "targetChunk": 475,
+    "chapterNumber": 6
+  },
+  {
+    "text": "6",
+    "targetChunk": 475,
+    "chapterNumber": 6
+  },
+  {
+    "text": "7",
+    "targetChunk": 479,
+    "chapterNumber": 6
+  },
+  {
+    "text": "8",
+    "targetChunk": 481,
+    "chapterNumber": 6
+  },
+  {
+    "text": "9",
+    "targetChunk": 487,
+    "chapterNumber": 6
+  },
+  {
+    "text": "10",
+    "targetChunk": 486,
+    "chapterNumber": 6
+  },
+  {
+    "text": "11",
+    "targetChunk": 488,
+    "chapterNumber": 6
+  },
+  {
+    "text": "12",
+    "targetChunk": 493,
     "chapterNumber": 6
   },
   {
     "text": "Link",
-    "targetChunk": 73,
+    "targetChunk": 233,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 54,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 54,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 226,
+    "chapterNumber": 3
+  },
+  {
+    "text": "121, 139–40",
+    "targetChunk": 252,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 545,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 555,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 182,
     "chapterNumber": 2
   },
   {
     "text": "Link",
-    "targetChunk": 152,
+    "targetChunk": 402,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 87,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 252,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 225,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 316,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 554,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 267,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 415,
+    "chapterNumber": 5
+  },
+  {
+    "text": "66",
+    "targetChunk": 102,
+    "chapterNumber": 1
+  },
+  {
+    "text": ", 151, 214, 289",
+    "targetChunk": 391,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 475,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 488,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 32
+  },
+  {
+    "text": "diet and 25, 232, 233, 264, 268, 272",
+    "targetChunk": 443,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 483,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 486,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 493,
+    "chapterNumber": 6
+  },
+  {
+    "text": "diseases of 233–5, 243, 263",
+    "targetChunk": 443,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 454,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 480,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 459,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 478,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 412,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 193,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 474,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 476,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 364,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 410,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 458,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 443,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 449,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 68,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 563,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 327,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 410,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 215,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 25
+  },
+  {
+    "text": "Link",
+    "targetChunk": 50,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 484,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 537,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 110,
+    "chapterNumber": 1
+  },
+  {
+    "text": "biosynthesis 72, 101, 122, 208, 215",
+    "targetChunk": 178,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 383,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 393,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 64,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 66,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 105,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 409,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 533,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "prebiotic formation 114, 116, 120–22, 132, 145",
+    "targetChunk": 216,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 217,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 224,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 239,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 259,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 265,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 304,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 63,
+    "chapterNumber": 1
+  },
+  {
+    "text": "ammonia 39, 70, 113–14, 222, 226–7",
+    "targetChunk": 214,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 402,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 531,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 378,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 397,
+    "chapterNumber": 5
+  },
+  {
+    "text": "225",
+    "targetChunk": 407,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 251",
+    "targetChunk": 467,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 34
+  },
+  {
+    "text": "Link",
+    "targetChunk": 463,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 475,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 538,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "methanogens 143, 164, 166, 170",
+    "targetChunk": 258,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 301,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 306,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 312,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 191,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 81,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Arnon, Daniel 98–100, 102, 164",
+    "targetChunk": 172,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 178,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 17
+  },
+  {
+    "text": "Link",
+    "targetChunk": 529,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 71,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 78,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 466,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 463,
+    "chapterNumber": 6
+  },
+  {
+    "text": "aspartate 179n5, 224–7",
+    "targetChunk": 324,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 405,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 145,
+    "chapterNumber": 2
+  },
+  {
+    "text": "early/primordial 76, 109–10, 114, 119, 165",
+    "targetChunk": 188,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 216,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 221,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 319,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 567,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 100,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 260,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 99,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 172,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 333,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 372,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 380,
+    "chapterNumber": 5
+  },
+  {
+    "text": "ATP citrate lyase 110, 123, 173, 220n6",
+    "targetChunk": 191,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 227,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 398,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 102,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 106,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 175,
+    "chapterNumber": 2
+  },
+  {
+    "text": ", 67, 69, 99, 150–51, 211, 218",
+    "targetChunk": 268,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 387,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 177,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 232,
+    "chapterNumber": 3
+  },
+  {
+    "text": "128",
+    "targetChunk": 235,
+    "chapterNumber": 3
+  },
+  {
+    "text": ", 130, 132",
+    "targetChunk": 238,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 165,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 157,
+    "chapterNumber": 2
+  },
+  {
+    "text": "origins of life and 116, 121–2, 153, 169",
+    "targetChunk": 217,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 272,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 310,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 144,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 180,
+    "chapterNumber": 2
+  },
+  {
+    "text": "carbon fixation in 69, 100, 123, 143, 167, 283",
+    "targetChunk": 177,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 258,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 308,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 541,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 311,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 388,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 96,
+    "chapterNumber": 1
+  },
+  {
+    "text": "sulfur bacteria 100, 103–5, 114, 166",
+    "targetChunk": 177,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 302,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 103,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 536,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 109,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 146,
+    "chapterNumber": 2
+  },
+  {
+    "text": "101",
+    "targetChunk": 178,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 189,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 330,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 336,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 91,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 490,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 214,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 173,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Benson, Andrew 91, 93–7, 100, 102–3",
+    "targetChunk": 165,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 166,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 158,
+    "chapterNumber": 2
+  },
+  {
+    "text": "the",
+    "targetChunk": 148,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 153,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 155,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 160,
+    "chapterNumber": 2
+  },
+  {
+    "text": "bilaterians 157, 183, 189",
+    "targetChunk": 294,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 338,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 28
+  },
+  {
+    "text": "Link",
+    "targetChunk": 57,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 447,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 473,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 495,
+    "chapterNumber": 6
+  },
+  {
+    "text": "amino acids 72, 101, 122, 208, 215",
+    "targetChunk": 178,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 381,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 297,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 375,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 485,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 183,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 7
+  },
+  {
+    "text": "Link",
+    "targetChunk": 11
+  },
+  {
+    "text": "Link",
+    "targetChunk": 240,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 26
+  },
+  {
+    "text": "Link",
+    "targetChunk": 55,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 29
+  },
+  {
+    "text": "Link",
+    "targetChunk": 529,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "in",
+    "targetChunk": 55,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 80,
+    "chapterNumber": 1
+  },
+  {
+    "text": "C5",
+    "targetChunk": 82,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 169,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 82,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 328,
+    "chapterNumber": 4
+  },
+  {
+    "text": "185",
+    "targetChunk": 332,
+    "chapterNumber": 4
+  },
+  {
+    "text": ", 217,",
+    "targetChunk": 394,
+    "chapterNumber": 5
+  },
+  {
+    "text": "222–3",
+    "targetChunk": 402,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 170,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 163,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 187,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 318,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 315,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 294,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 308,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 324,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 384,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 298,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 323,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 458,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 367,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 385,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 408,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 361,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 363,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 18
+  },
+  {
+    "text": "Link",
+    "targetChunk": 334,
     "chapterNumber": 4
   },
   {
@@ -85,22 +1791,1054 @@
   },
   {
     "text": "Link",
-    "targetChunk": 27,
-    "chapterNumber": 1
+    "targetChunk": 151,
+    "chapterNumber": 2
   },
   {
     "text": "Link",
-    "targetChunk": 189,
+    "targetChunk": 392,
     "chapterNumber": 5
   },
   {
     "text": "Link",
-    "targetChunk": 111,
+    "targetChunk": 362,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 369,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 152,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 322,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 161,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 149,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 156,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 550,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 242,
     "chapterNumber": 3
   },
   {
+    "text": "Link",
+    "targetChunk": 188,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 234,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 394,
+    "chapterNumber": 5
+  },
+  {
+    "text": "fixation in bacteria 69, 100, 123, 143, 167, 283",
+    "targetChunk": 177,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 266,
+    "chapterNumber": 3
+  },
+  {
+    "text": "in",
+    "targetChunk": 157,
+    "chapterNumber": 2
+  },
+  {
+    "text": "reverse Krebs cycle 78, 100–101, 217, 231",
+    "targetChunk": 146,
+    "chapterNumber": 2
+  },
+  {
+    "text": "carbon monoxide 35, 135–6, 139, 216",
+    "targetChunk": 60,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 376,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 83,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 269,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 235,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 452,
+    "chapterNumber": 6
+  },
+  {
+    "text": "cell division 27, 192, 195, 283",
+    "targetChunk": 50,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 95,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 299,
+    "chapterNumber": 4
+  },
+  {
+    "text": "city analogy 1–2, 14, 17–18",
+    "targetChunk": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 16
+  },
+  {
+    "text": "Link",
+    "targetChunk": 19
+  },
+  {
+    "text": "colour 35–6n3",
+    "targetChunk": 60,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 244,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Cheshire Cat grin 43, 47, 56, 106, 297",
+    "targetChunk": 69,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 76,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 185,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 560,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 60,
+    "chapterNumber": 1
+  },
+  {
+    "text": "chloroplasts 78, 100, 167, 221n6, 228n7",
+    "targetChunk": 177,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 401,
+    "chapterNumber": 5
+  },
+  {
+    "text": "chordates 155, 156n1",
+    "targetChunk": 292,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 457,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 314,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 479,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 86,
+    "chapterNumber": 1
+  },
+  {
+    "text": ", 300–",
+    "targetChunk": 565,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 254,
+    "chapterNumber": 3
+  },
+  {
+    "text": ", 140, 295–6",
+    "targetChunk": 555,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 552,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 532,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 453,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 92,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 10
+  },
+  {
+    "text": "cyclotrons 79, 80n2, 82, 83n3, 84, 85n4, 87–9",
+    "targetChunk": 153,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 261,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 368,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 77,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 371,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 391,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 250,
+    "chapterNumber": 3
+  },
+  {
+    "text": "and",
+    "targetChunk": 32
+  },
+  {
+    "text": "Link",
+    "targetChunk": 467,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 445,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 446,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 450,
+    "chapterNumber": 6
+  },
+  {
+    "text": "of old age 233–5, 243, 263",
+    "targetChunk": 443,
+    "chapterNumber": 6
+  },
+  {
+    "text": "dogmas 28, 77, 98, 103, 192",
+    "targetChunk": 144,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 14
+  },
+  {
+    "text": "Link",
+    "targetChunk": 20
+  },
+  {
+    "text": "Link",
+    "targetChunk": 220,
+    "chapterNumber": 3
+  },
+  {
+    "text": "global freeze 158, 176, 179",
+    "targetChunk": 293,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 321,
+    "chapterNumber": 4
+  },
+  {
+    "text": "147",
+    "targetChunk": 264,
+    "chapterNumber": 3
+  },
+  {
+    "text": ", 163",
+    "targetChunk": 302,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 389,
+    "chapterNumber": 5
+  },
+  {
+    "text": "S as 166–7",
+    "targetChunk": 306,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 253,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 535,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 22
+  },
+  {
+    "text": "Link",
+    "targetChunk": 232,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 238,
+    "chapterNumber": 3
+  },
+  {
+    "text": "in cells 215, 223, 231, 244–5, 269, 271–3",
+    "targetChunk": 415,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 337,
+    "chapterNumber": 4
+  },
+  {
+    "text": "of tissues 190, 252, 259, 262–4",
+    "targetChunk": 466,
+    "chapterNumber": 6
+  },
+  {
+    "text": "epilepsy 237, 240, 278",
+    "targetChunk": 446,
+    "chapterNumber": 6
+  },
+  {
+    "text": "eukaryotes 179, 189, 269n11",
+    "targetChunk": 324,
+    "chapterNumber": 4
+  },
+  {
+    "text": "exercise 25, 223, 232–3, 256, 264, 268",
+    "targetChunk": 417,
+    "chapterNumber": 5
+  },
+  {
+    "text": "‘ferment’, respiratory 35–6, 64n11, 199, 216",
+    "targetChunk": 60,
+    "chapterNumber": 1
+  },
+  {
+    "text": "of glucose in cancer 197, 201–2, 208–9n4",
+    "targetChunk": 369,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 255,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 468,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 9
+  },
+  {
+    "text": "free radicals 25, 106–7, 248, 252, 278",
+    "targetChunk": 185,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 293,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 230,
+    "chapterNumber": 3
+  },
+  {
+    "text": "gene editing 14, 228n7, 282",
+    "targetChunk": 16
+  },
+  {
+    "text": "Link",
+    "targetChunk": 219,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 268,
+    "chapterNumber": 3
+  },
+  {
+    "text": "genetic code 10–11, 12n2, 148, 149n9, 166",
+    "targetChunk": 14
+  },
+  {
+    "text": "Link",
+    "targetChunk": 487,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 62,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 30
+  },
+  {
+    "text": "Link",
+    "targetChunk": 373,
+    "chapterNumber": 5
+  },
+  {
+    "text": "217",
+    "targetChunk": 394,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 221–2, 224, 226–7",
+    "targetChunk": 405,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 471,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 377,
+    "chapterNumber": 5
+  },
+  {
+    "text": "aerobic glycolysis 203, 209–10, 213, 215, 223–5, 232",
+    "targetChunk": 385,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 326,
+    "chapterNumber": 4
+  },
+  {
+    "text": "greigite 121, 133, 135",
+    "targetChunk": 226,
+    "chapterNumber": 3
+  },
+  {
+    "text": "metabolic shift in cancer 196, 205, 209, 213, 223–4",
+    "targetChunk": 367,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Haldane, JBS 29–30, 59, 198n2",
+    "targetChunk": 52,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 150,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 264,
+    "chapterNumber": 3
+  },
+  {
+    "text": "missing 236–7, 263",
+    "targetChunk": 447,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 491,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 245,
+    "chapterNumber": 3
+  },
+  {
+    "text": "in",
+    "targetChunk": 109,
+    "chapterNumber": 1
+  },
+  {
+    "text": ", 206",
+    "targetChunk": 381,
+    "chapterNumber": 5
+  },
+  {
+    "text": "burned in respiration 49–51, 55–8, 63–4, 159, 206, 254–5, 261",
+    "targetChunk": 88,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 98,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 296,
+    "chapterNumber": 4
+  },
+  {
+    "text": "as",
+    "targetChunk": 5
+  },
+  {
+    "text": ", 262",
+    "targetChunk": 478,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 470,
+    "chapterNumber": 6
+  },
+  {
+    "text": ", 184,",
+    "targetChunk": 330,
+    "chapterNumber": 4
+  },
+  {
+    "text": ", 218, 220–22,",
+    "targetChunk": 398,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 167,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Keilin, David 59, 64, 198, 200",
+    "targetChunk": 91,
+    "chapterNumber": 1
+  },
+  {
+    "text": ", 105,",
+    "targetChunk": 182,
+    "chapterNumber": 2
+  },
+  {
+    "text": ", 217–21,",
+    "targetChunk": 394,
+    "chapterNumber": 5
+  },
+  {
+    "text": "222",
+    "targetChunk": 402,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 261,",
+    "targetChunk": 479,
+    "chapterNumber": 6
+  },
+  {
+    "text": "227",
+    "targetChunk": 411,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 218, 220, 231, 261",
+    "targetChunk": 398,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 261n7",
+    "targetChunk": 479,
+    "chapterNumber": 6
+  },
+  {
+    "text": "ketones 228, 265",
+    "targetChunk": 410,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Krebs, Hans 18, 23, 28, 30, 31n1, 49–50n7, 65n12",
+    "targetChunk": 54,
+    "chapterNumber": 1
+  },
+  {
+    "text": "work on respiration 32–3, 37–8, 43–4, 51",
+    "targetChunk": 56,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 69,
+    "chapterNumber": 1
+  },
+  {
+    "text": "reversal 61n7, 111, 126, 217, 230",
+    "targetChunk": 193,
+    "chapterNumber": 2
+  },
+  {
+    "text": "mutations affecting 196, 209–10, 215, 220",
+    "targetChunk": 367,
+    "chapterNumber": 5
+  },
+  {
+    "text": "in the brain 263, 266, 280–81",
+    "targetChunk": 480,
+    "chapterNumber": 6
+  },
+  {
+    "text": "potential reversal 186, 214, 244, 262",
+    "targetChunk": 334,
+    "chapterNumber": 4
+  },
+  {
+    "text": ", 226",
+    "targetChunk": 409,
+    "chapterNumber": 5
+  },
+  {
+    "text": "in cancer cells 204, 216, 224, 228",
+    "targetChunk": 376,
+    "chapterNumber": 5
+  },
+  {
+    "text": "from pyruvate 200–201, 216, 224–5",
+    "targetChunk": 373,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 8
+  },
+  {
+    "text": "lifestyle choices 25, 235, 264, 268–9, 272–3",
+    "targetChunk": 445,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Lipmann, Fritz 55–8, 65, 139, 151",
+    "targetChunk": 88,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 24
+  },
+  {
+    "text": "of respiration 99, 174, 196, 202, 214n5, 266, 270",
+    "targetChunk": 367,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 283,",
+    "targetChunk": 541,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "manometers 31, 34–5, 37, 39",
+    "targetChunk": 54,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Martin, Bill 117, 119–21, 168",
+    "targetChunk": 220,
+    "chapterNumber": 3
+  },
+  {
+    "text": "Link",
+    "targetChunk": 399,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 93,
+    "chapterNumber": 1
+  },
+  {
+    "text": "mutations within 240–41, 247, 254n4, 257",
+    "targetChunk": 450,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 451,
+    "chapterNumber": 6
+  },
+  {
+    "text": "charge on 68, 179, 225, 265, 267, 278–9",
+    "targetChunk": 407,
+    "chapterNumber": 5
+  },
+  {
+    "text": "Link",
+    "targetChunk": 465,
+    "chapterNumber": 6
+  },
+  {
+    "text": "-acetyl cysteine) 249–52, 255, 263",
+    "targetChunk": 463,
+    "chapterNumber": 6
+  },
+  {
+    "text": "206n3, 220, 261",
+    "targetChunk": 398,
+    "chapterNumber": 5
+  },
+  {
+    "text": ") 107, 108n11, 109, 206n3, 218–19",
+    "targetChunk": 188,
+    "chapterNumber": 2
+  },
+  {
+    "text": ", 264",
+    "targetChunk": 483,
+    "chapterNumber": 6
+  },
+  {
+    "text": "Link",
+    "targetChunk": 88,
+    "chapterNumber": 1
+  },
+  {
+    "text": "(periodical) 55, 65, 171, 193, 217",
+    "targetChunk": 99,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 52,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 74,
+    "chapterNumber": 1
+  },
+  {
+    "text": "neurons 265–8, 274",
+    "targetChunk": 485,
+    "chapterNumber": 6
+  },
+  {
+    "text": "neutrons 27, 80–81, 87–8, 178",
+    "targetChunk": 151,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 59,
+    "chapterNumber": 1
+  },
+  {
+    "text": "oncogenes 192–4, 205",
+    "targetChunk": 361,
+    "chapterNumber": 5
+  },
+  {
+    "text": "inevitability 127, 131n7, 275",
+    "targetChunk": 234,
+    "chapterNumber": 3
+  },
+  {
+    "text": "the Oroboros 171–3, 184, 186–7",
+    "targetChunk": 311,
+    "chapterNumber": 4
+  },
+  {
+    "text": "in cancer biochemistry 216, 220, 223–6, 228, 230–31, 260",
+    "targetChunk": 398,
+    "chapterNumber": 5
+  },
+  {
+    "text": "298",
+    "targetChunk": 561,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "Link",
+    "targetChunk": 274,
+    "chapterNumber": 3
+  },
+  {
+    "text": "particle accelerators 79, 80, 81n2, 82, 83n3, 84, 85n4, 87–9",
+    "targetChunk": 150,
+    "chapterNumber": 2
+  },
+  {
+    "text": ", 296–7",
+    "targetChunk": 557,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "mechanism 82–6, 103, 199",
+    "targetChunk": 153,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Link",
+    "targetChunk": 108,
+    "chapterNumber": 1
+  },
+  {
+    "text": "156, 183–4",
+    "targetChunk": 327,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 565,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "predators and prey 156, 160, 180, 183, 235–6, 281",
+    "targetChunk": 298,
+    "chapterNumber": 4
+  },
+  {
+    "text": "Link",
+    "targetChunk": 143,
+    "chapterNumber": 2
+  },
+  {
+    "text": "protists 3–4, 161, 186, 276, 281",
+    "targetChunk": 297,
+    "chapterNumber": 4
+  },
+  {
+    "text": "proton gradients 64, 150, 152, 164",
+    "targetChunk": 100,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 248,
+    "chapterNumber": 3
+  },
+  {
+    "text": "121",
+    "targetChunk": 226,
+    "chapterNumber": 3
+  },
+  {
+    "text": "in",
+    "targetChunk": 69,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 70,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Link",
+    "targetChunk": 557,
+    "chapterNumber": "Epilogue"
+  },
+  {
+    "text": "suppression with age 230, 259–60, 262, 264",
+    "targetChunk": 412,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 230, 249–51, 254, 259, 262, 271",
+    "targetChunk": 471,
+    "chapterNumber": 6
+  },
+  {
     "text": ", 211, 214n5",
-    "targetChunk": 189,
+    "targetChunk": 391,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 225, 262",
+    "targetChunk": 407,
+    "chapterNumber": 5
+  },
+  {
+    "text": "NADH and NADPH in 64, 108n11, 179n5, 219–20",
+    "targetChunk": 100,
+    "chapterNumber": 1
+  },
+  {
+    "text": "origins of life and 116, 118–23, 130, 152",
+    "targetChunk": 217,
+    "chapterNumber": 3
+  },
+  {
+    "text": "oxygen levels and 106–7, 109, 157–8",
+    "targetChunk": 185,
+    "chapterNumber": 2
+  },
+  {
+    "text": "roundabout analogy 24, 54, 70–72, 188, 260, 270",
+    "targetChunk": 86,
+    "chapterNumber": 1
+  },
+  {
+    "text": "Ruben, Sam 82–6, 88–92, 102",
+    "targetChunk": 153,
+    "chapterNumber": 2
+  },
+  {
+    "text": "Shuram excursion 180–81, 182n6, 183",
+    "targetChunk": 323,
+    "chapterNumber": 4
+  },
+  {
+    "text": "stem cells 203, 208n4",
+    "targetChunk": 377,
+    "chapterNumber": 5
+  },
+  {
+    "text": "215",
+    "targetChunk": 393,
+    "chapterNumber": 5
+  },
+  {
+    "text": ", 231, 260–61n7,",
+    "targetChunk": 476,
+    "chapterNumber": 6
+  },
+  {
+    "text": "sulfur bacteria 100, 104–5, 114",
+    "targetChunk": 177,
+    "chapterNumber": 2
+  },
+  {
+    "text": "differentiation 189, 202, 208–9, 269",
+    "targetChunk": 338,
+    "chapterNumber": 4
+  },
+  {
+    "text": "traffic analogy 7–8, 14–16, 53–4",
+    "targetChunk": 9
+  },
+  {
+    "text": ", 226, 253",
+    "targetChunk": 409,
+    "chapterNumber": 5
+  },
+  {
+    "text": "urea 8, 28, 38–9",
+    "targetChunk": 50,
+    "chapterNumber": 1
+  },
+  {
+    "text": "viruses 205, 282",
+    "targetChunk": 378,
+    "chapterNumber": 5
+  },
+  {
+    "text": "on cancer 196, 200, 203",
+    "targetChunk": 367,
     "chapterNumber": 5
   }
 ]
