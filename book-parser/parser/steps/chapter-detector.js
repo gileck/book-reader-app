@@ -154,11 +154,11 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                         }
                     }
 
-                    // Apply header detection before any cross-page merging
-                    pageText = markHeadersInText(pageText);
-
                     // Clean page number from beginning of page text - pass the actual page number
                     pageText = cleanPageNumbers(pageText, pageNum);
+
+                    // Apply header detection before any cross-page merging
+                    pageText = markHeadersInText(pageText);
 
                     if (pageText.length > 50) { // Only include pages with substantial content
                         chapterPages.push({
@@ -190,8 +190,11 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
 
                     // Check if this page ends with an incomplete sentence
                     // (doesn't end with sentence-ending punctuation)
+                    // BUT: Never merge pages if current page ends with a header marker or next page starts with one
                     const pageEndsWithPunctuation = /[.!?;]$/.test(pageText);
                     const hasNextPage = pageIndex < chapterPages.length - 1;
+                    const pageEndsWithHeader = /⟨⟨\/HEADER⟩⟩\s*$/.test(pageText);
+                    const nextPageStartsWithHeader = hasNextPage && /^\s*⟨⟨HEADER⟩⟩/.test(chapterPages[pageIndex + 1].text);
 
                     // Debug all pages with relevant content or in Introduction chapter
                     if (pageText.includes('If you shrink yourself') || pageText.includes('down to the size') ||
@@ -218,7 +221,7 @@ async function extractChapterContentFromTOC(tocChapters, fullText, pdfPath, conf
                         }
                     }
 
-                    if (!pageEndsWithPunctuation && hasNextPage) {
+                    if (!pageEndsWithPunctuation && hasNextPage && !pageEndsWithHeader && !nextPageStartsWithHeader) {
                         // This page ends without sentence punctuation, check next page
                         const nextPage = chapterPages[pageIndex + 1];
                         const nextPageText = nextPage.text.trim();
