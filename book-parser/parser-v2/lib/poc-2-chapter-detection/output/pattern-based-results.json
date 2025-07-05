@@ -1,0 +1,2392 @@
+{
+  "name": "Pattern-Based",
+  "potentialChapters": [
+    {
+      "lineNumber": 797,
+      "text": "Chapter 4 will ask how this spontaneous chemistry at the origin of life",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 4 will ask how this spontaneous chemistry at the origin of life",
+        "4",
+        "will ask how this spontaneous chemistry at the origin of life"
+      ],
+      "chapterNumber": 4,
+      "title": "will ask how this spontaneous chemistry at the origin of life",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 2264,
+      "text": "7 He married Margaret Fieldhouse in 1938. She taught in a Catholic convent",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "7 He married Margaret Fieldhouse in 1938. She taught in a Catholic convent",
+        "7",
+        "He married Margaret Fieldhouse in 1938. She taught in a Catholic convent"
+      ],
+      "chapterNumber": 7,
+      "title": "He married Margaret Fieldhouse in 1938. She taught in a Catholic convent",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 8952,
+      "text": "EPILOGUE",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "EPILOGUE",
+        "EPILOGUE",
+        null
+      ],
+      "chapterNumber": null,
+      "title": "EPILOGUE",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 9881,
+      "text": "Chapter 1: Discovering the nanocosm",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 1: Discovering the nanocosm",
+        "1",
+        "Discovering the nanocosm"
+      ],
+      "chapterNumber": 1,
+      "title": "Discovering the nanocosm",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10108,
+      "text": "Chapter 2: The path of carbon",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 2: The path of carbon",
+        "2",
+        "The path of carbon"
+      ],
+      "chapterNumber": 2,
+      "title": "The path of carbon",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10289,
+      "text": "Chapter 3: From gases to life",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 3: From gases to life",
+        "3",
+        "From gases to life"
+      ],
+      "chapterNumber": 3,
+      "title": "From gases to life",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10716,
+      "text": "Chapter 4: Revolutions",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 4: Revolutions",
+        "4",
+        "Revolutions"
+      ],
+      "chapterNumber": 4,
+      "title": "Revolutions",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10941,
+      "text": "Chapter 5: To the dark side",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 5: To the dark side",
+        "5",
+        "To the dark side"
+      ],
+      "chapterNumber": 5,
+      "title": "To the dark side",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 11020,
+      "text": "Chapter 2  but  it’s  worth another mention here  for  Kamen’s  description of",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 2  but  it’s  worth another mention here  for  Kamen’s  description of",
+        "2",
+        "but  it’s  worth another mention here  for  Kamen’s  description of"
+      ],
+      "chapterNumber": 2,
+      "title": "but  it’s  worth another mention here  for  Kamen’s  description of",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 11266,
+      "text": "Chapter 6: The flux capacitor",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 6: The flux capacitor",
+        "6",
+        "The flux capacitor"
+      ],
+      "chapterNumber": 6,
+      "title": "The flux capacitor",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 82,
+      "text": "232 reproduced by permission of David Higham Associates, © The Dylan",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "232 reproduced by permission of David Higham Associates, © The Dylan",
+        "232",
+        "reproduced by permission of David Higham Associates, © The Dylan"
+      ],
+      "chapterNumber": 232,
+      "title": "reproduced by permission of David Higham Associates, © The Dylan",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 852,
+      "text": "2 There are all kinds of interactions between ‘regulatory RNAs’ that do not",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 There are all kinds of interactions between ‘regulatory RNAs’ that do not",
+        "2",
+        "There are all kinds of interactions between ‘regulatory RNAs’ that do not"
+      ],
+      "chapterNumber": 2,
+      "title": "There are all kinds of interactions between ‘regulatory RNAs’ that do not",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 862,
+      "text": "3 Even this can be hard to interpret. A high concentration of some intermediate",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3 Even this can be hard to interpret. A high concentration of some intermediate",
+        "3",
+        "Even this can be hard to interpret. A high concentration of some intermediate"
+      ],
+      "chapterNumber": 3,
+      "title": "Even this can be hard to interpret. A high concentration of some intermediate",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2210,
+      "text": "4 A ‘group’ refers to a few atoms bound together within a molecule, which tend",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4 A ‘group’ refers to a few atoms bound together within a molecule, which tend",
+        "4",
+        "A ‘group’ refers to a few atoms bound together within a molecule, which tend"
+      ],
+      "chapterNumber": 4,
+      "title": "A ‘group’ refers to a few atoms bound together within a molecule, which tend",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2221,
+      "text": "5 Szent-Györgyi had a way with words. Some of the most arresting aphorisms in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5 Szent-Györgyi had a way with words. Some of the most arresting aphorisms in",
+        "5",
+        "Szent-Györgyi had a way with words. Some of the most arresting aphorisms in"
+      ],
+      "chapterNumber": 5,
+      "title": "Szent-Györgyi had a way with words. Some of the most arresting aphorisms in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2275,
+      "text": "8 For the more astute accountants among you, some of the hydrogens burnt in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "8 For the more astute accountants among you, some of the hydrogens burnt in",
+        "8",
+        "For the more astute accountants among you, some of the hydrogens burnt in"
+      ],
+      "chapterNumber": 8,
+      "title": "For the more astute accountants among you, some of the hydrogens burnt in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2282,
+      "text": "9  Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "9  Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a",
+        "9",
+        "Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a"
+      ],
+      "chapterNumber": 9,
+      "title": "Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2294,
+      "text": "10 NADH was also discovered by Warburg, but he failed to appreciate its full",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "10 NADH was also discovered by Warburg, but he failed to appreciate its full",
+        "10",
+        "NADH was also discovered by Warburg, but he failed to appreciate its full"
+      ],
+      "chapterNumber": 10,
+      "title": "NADH was also discovered by Warburg, but he failed to appreciate its full",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2305,
+      "text": "11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno",
+        "11",
+        "A much-loved figure, with a faintly owlish look, Keilin headed the Molteno"
+      ],
+      "chapterNumber": 11,
+      "title": "A much-loved figure, with a faintly owlish look, Keilin headed the Molteno",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2312,
+      "text": "12 There’s an irony here because Krebs and R. E. Davies came up with a similar",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "12 There’s an irony here because Krebs and R. E. Davies came up with a similar",
+        "12",
+        "There’s an irony here because Krebs and R. E. Davies came up with a similar"
+      ],
+      "chapterNumber": 12,
+      "title": "There’s an irony here because Krebs and R. E. Davies came up with a similar",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2324,
+      "text": "13 Although Mitchell had himself proposed conformational changes in proteins",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "13 Although Mitchell had himself proposed conformational changes in proteins",
+        "13",
+        "Although Mitchell had himself proposed conformational changes in proteins"
+      ],
+      "chapterNumber": 13,
+      "title": "Although Mitchell had himself proposed conformational changes in proteins",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2854,
+      "text": "1941 was greeted with disbelief that swiftly morphed into fear, as San",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1941 was greeted with disbelief that swiftly morphed into fear, as San",
+        "1941",
+        "was greeted with disbelief that swiftly morphed into fear, as San"
+      ],
+      "chapterNumber": 1941,
+      "title": "was greeted with disbelief that swiftly morphed into fear, as San",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 3320,
+      "text": "1940. In 1945 the great Spanish biochemist Severo Ochoa, working in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1940. In 1945 the great Spanish biochemist Severo Ochoa, working in",
+        "1940",
+        "In 1945 the great Spanish biochemist Severo Ochoa, working in"
+      ],
+      "chapterNumber": 1940,
+      "title": "In 1945 the great Spanish biochemist Severo Ochoa, working in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5003,
+      "text": "22 here. ATP synthesis is powered by proton gradients, which rotate the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "22 here. ATP synthesis is powered by proton gradients, which rotate the",
+        "22",
+        "here. ATP synthesis is powered by proton gradients, which rotate the"
+      ],
+      "chapterNumber": 22,
+      "title": "here. ATP synthesis is powered by proton gradients, which rotate the",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5116,
+      "text": "1 A veteran of many expeditions on the Alvin, typically lasting a full day at a",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 A veteran of many expeditions on the Alvin, typically lasting a full day at a",
+        "1",
+        "A veteran of many expeditions on the Alvin, typically lasting a full day at a"
+      ],
+      "chapterNumber": 1,
+      "title": "A veteran of many expeditions on the Alvin, typically lasting a full day at a",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5137,
+      "text": "4  Being  by  then  something of  a  scientific celebrity (and  by  no  means",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4  Being  by  then  something of  a  scientific celebrity (and  by  no  means",
+        "4",
+        "Being  by  then  something of  a  scientific celebrity (and  by  no  means"
+      ],
+      "chapterNumber": 4,
+      "title": "Being  by  then  something of  a  scientific celebrity (and  by  no  means",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5163,
+      "text": "6  That  of  course raises  its  own  questions about  just  how  RNA  acquires",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6  That  of  course raises  its  own  questions about  just  how  RNA  acquires",
+        "6",
+        "That  of  course raises  its  own  questions about  just  how  RNA  acquires"
+      ],
+      "chapterNumber": 6,
+      "title": "That  of  course raises  its  own  questions about  just  how  RNA  acquires",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5185,
+      "text": "9 You might be wondering how a random string of RNA could affect protocell",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "9 You might be wondering how a random string of RNA could affect protocell",
+        "9",
+        "You might be wondering how a random string of RNA could affect protocell"
+      ],
+      "chapterNumber": 9,
+      "title": "You might be wondering how a random string of RNA could affect protocell",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5236,
+      "text": "520  million years  ago. This  is  the  first  time  in  the  four-billion-year",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "520  million years  ago. This  is  the  first  time  in  the  four-billion-year",
+        "520",
+        "million years  ago. This  is  the  first  time  in  the  four-billion-year"
+      ],
+      "chapterNumber": 520,
+      "title": "million years  ago. This  is  the  first  time  in  the  four-billion-year",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 6757,
+      "text": "50 per cent Jewish, and he was for a brief period relieved of his position.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "50 per cent Jewish, and he was for a brief period relieved of his position.",
+        "50",
+        "per cent Jewish, and he was for a brief period relieved of his position."
+      ],
+      "chapterNumber": 50,
+      "title": "per cent Jewish, and he was for a brief period relieved of his position.",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 7575,
+      "text": "1 This may sound surprising, as there has been much greater success in early",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 This may sound surprising, as there has been much greater success in early",
+        "1",
+        "This may sound surprising, as there has been much greater success in early"
+      ],
+      "chapterNumber": 1,
+      "title": "This may sound surprising, as there has been much greater success in early",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 7578,
+      "text": "1958 to 1990. The overall cancer death rate in 2016 was barely lower than the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1958 to 1990. The overall cancer death rate in 2016 was barely lower than the",
+        "1958",
+        "to 1990. The overall cancer death rate in 2016 was barely lower than the"
+      ],
+      "chapterNumber": 1958,
+      "title": "to 1990. The overall cancer death rate in 2016 was barely lower than the",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 7616,
+      "text": "5 My own PhD, back in the 1990s, addressed problems with oxygen delivery in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5 My own PhD, back in the 1990s, addressed problems with oxygen delivery in",
+        "5",
+        "My own PhD, back in the 1990s, addressed problems with oxygen delivery in"
+      ],
+      "chapterNumber": 5,
+      "title": "My own PhD, back in the 1990s, addressed problems with oxygen delivery in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 8827,
+      "text": "2 In his PhD with me and Andrew Pomiankowski, Marco Colnaghi has done",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 In his PhD with me and Andrew Pomiankowski, Marco Colnaghi has done",
+        "2",
+        "In his PhD with me and Andrew Pomiankowski, Marco Colnaghi has done"
+      ],
+      "chapterNumber": 2,
+      "title": "In his PhD with me and Andrew Pomiankowski, Marco Colnaghi has done",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 8873,
+      "text": "5 Quite why larger animals usually have a lower metabolic rate is surprisingly",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5 Quite why larger animals usually have a lower metabolic rate is surprisingly",
+        "5",
+        "Quite why larger animals usually have a lower metabolic rate is surprisingly"
+      ],
+      "chapterNumber": 5,
+      "title": "Quite why larger animals usually have a lower metabolic rate is surprisingly",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 8893,
+      "text": "7 It might seem that this problem could be solved by upregulating ‘anaplerotic’",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "7 It might seem that this problem could be solved by upregulating ‘anaplerotic’",
+        "7",
+        "It might seem that this problem could be solved by upregulating ‘anaplerotic’"
+      ],
+      "chapterNumber": 7,
+      "title": "It might seem that this problem could be solved by upregulating ‘anaplerotic’",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 8911,
+      "text": "9 These are part of an extensive internal membrane system in cells called the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "9 These are part of an extensive internal membrane system in cells called the",
+        "9",
+        "These are part of an extensive internal membrane system in cells called the"
+      ],
+      "chapterNumber": 9,
+      "title": "These are part of an extensive internal membrane system in cells called the",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 8923,
+      "text": "10 High glucose in the blood (hyperglycaemia) suppresses the uptake of glucose",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "10 High glucose in the blood (hyperglycaemia) suppresses the uptake of glucose",
+        "10",
+        "High glucose in the blood (hyperglycaemia) suppresses the uptake of glucose"
+      ],
+      "chapterNumber": 10,
+      "title": "High glucose in the blood (hyperglycaemia) suppresses the uptake of glucose",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 9757,
+      "text": "20140344. My own attempt to assess what van Leeuwenhoek’s discoveries mean",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "20140344. My own attempt to assess what van Leeuwenhoek’s discoveries mean",
+        "20140344",
+        "My own attempt to assess what van Leeuwenhoek’s discoveries mean"
+      ],
+      "chapterNumber": 20140344,
+      "title": "My own attempt to assess what van Leeuwenhoek’s discoveries mean",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 9919,
+      "text": "10 December 1931. Available from:",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "10 December 1931. Available from:",
+        "10",
+        "December 1931. Available from:"
+      ],
+      "chapterNumber": 10,
+      "title": "December 1931. Available from:",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 9945,
+      "text": "11 December 1937. Available from: www.nobelprize.org/uploads/2018/06/szent-",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "11 December 1937. Available from: www.nobelprize.org/uploads/2018/06/szent-",
+        "11",
+        "December 1937. Available from: www.nobelprize.org/uploads/2018/06/szent-"
+      ],
+      "chapterNumber": 11,
+      "title": "December 1937. Available from: www.nobelprize.org/uploads/2018/06/szent-",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 9973,
+      "text": "1937. Volume 2  (Oxford, Oxford University Press, 1993). The  second",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1937. Volume 2  (Oxford, Oxford University Press, 1993). The  second",
+        "1937",
+        "Volume 2  (Oxford, Oxford University Press, 1993). The  second"
+      ],
+      "chapterNumber": 1937,
+      "title": "Volume 2  (Oxford, Oxford University Press, 1993). The  second",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 10054,
+      "text": "208 (1965) 1205–1206. A shorter paper, again presenting experimental evidence",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "208 (1965) 1205–1206. A shorter paper, again presenting experimental evidence",
+        "208",
+        "(1965) 1205–1206. A shorter paper, again presenting experimental evidence"
+      ],
+      "chapterNumber": 208,
+      "title": "(1965) 1205–1206. A shorter paper, again presenting experimental evidence",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 10112,
+      "text": "250. Or  how  rubisco got  its  name. A  fascinating historical piece in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "250. Or  how  rubisco got  its  name. A  fascinating historical piece in",
+        "250",
+        "Or  how  rubisco got  its  name. A  fascinating historical piece in"
+      ],
+      "chapterNumber": 250,
+      "title": "Or  how  rubisco got  its  name. A  fascinating historical piece in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 11111,
+      "text": "18 (2017) 488–498.)",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "18 (2017) 488–498.)",
+        "18",
+        "(2017) 488–498.)"
+      ],
+      "chapterNumber": 18,
+      "title": "(2017) 488–498.)",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 11272,
+      "text": "22  (2012) R741–R752. Dame Linda Partridge has  been  one  of  the  most",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "22  (2012) R741–R752. Dame Linda Partridge has  been  one  of  the  most",
+        "22",
+        "(2012) R741–R752. Dame Linda Partridge has  been  one  of  the  most"
+      ],
+      "chapterNumber": 22,
+      "title": "(2012) R741–R752. Dame Linda Partridge has  been  one  of  the  most",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 11615,
+      "text": "2020. Here Levin teams up with Daniel Dennett, who has a very acute nose for",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2020. Here Levin teams up with Daniel Dennett, who has a very acute nose for",
+        "2020",
+        "Here Levin teams up with Daniel Dennett, who has a very acute nose for"
+      ],
+      "chapterNumber": 2020,
+      "title": "Here Levin teams up with Daniel Dennett, who has a very acute nose for",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 11648,
+      "text": "25 (2018) 202–238. Solms’s ideas on consciousness were developed with Karl",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "25 (2018) 202–238. Solms’s ideas on consciousness were developed with Karl",
+        "25",
+        "(2018) 202–238. Solms’s ideas on consciousness were developed with Karl"
+      ],
+      "chapterNumber": 25,
+      "title": "(2018) 202–238. Solms’s ideas on consciousness were developed with Karl",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2178,
+      "text": "2 If you are sharp-eyed you might notice that the rates of oxygen consumption",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 If you are sharp-eyed you might notice that the rates of oxygen consumption",
+        "2",
+        "If you are sharp-eyed you might notice that the rates of oxygen consumption"
+      ],
+      "chapterNumber": 2,
+      "title": "If you are sharp-eyed you might notice that the rates of oxygen consumption",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 2243,
+      "text": "6  Let  me  just  clarify the  distinction between 2H  and  H .",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6  Let  me  just  clarify the  distinction between 2H  and  H .",
+        "6",
+        "Let  me  just  clarify the  distinction between 2H  and  H ."
+      ],
+      "chapterNumber": 6,
+      "title": "Let  me  just  clarify the  distinction between 2H  and  H .",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 7589,
+      "text": "3 The reason NADPH has more power than NADH has nothing to do with the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3 The reason NADPH has more power than NADH has nothing to do with the",
+        "3",
+        "The reason NADPH has more power than NADH has nothing to do with the"
+      ],
+      "chapterNumber": 3,
+      "title": "The reason NADPH has more power than NADH has nothing to do with the",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 8824,
+      "text": "1 There are occasional examples of mitochondrial DNA inherited from the father",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 There are occasional examples of mitochondrial DNA inherited from the father",
+        "1",
+        "There are occasional examples of mitochondrial DNA inherited from the father"
+      ],
+      "chapterNumber": 1,
+      "title": "There are occasional examples of mitochondrial DNA inherited from the father",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 10006,
+      "text": "88 (2006) 246–266. The US National Academy of Sciences equivalent to the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "88 (2006) 246–266. The US National Academy of Sciences equivalent to the",
+        "88",
+        "(2006) 246–266. The US National Academy of Sciences equivalent to the"
+      ],
+      "chapterNumber": 88,
+      "title": "(2006) 246–266. The US National Academy of Sciences equivalent to the",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 10340,
+      "text": "201. An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "201. An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s",
+        "201",
+        "An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s"
+      ],
+      "chapterNumber": 201,
+      "title": "An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 10375,
+      "text": "2000. Richly illustrated and with an exciting early view of the significance of",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2000. Richly illustrated and with an exciting early view of the significance of",
+        "2000",
+        "Richly illustrated and with an exciting early view of the significance of"
+      ],
+      "chapterNumber": 2000,
+      "title": "Richly illustrated and with an exciting early view of the significance of",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 11119,
+      "text": "122 (2020) 133–135. A call to arms from Christian Frezza. Time the metabolic",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "122 (2020) 133–135. A call to arms from Christian Frezza. Time the metabolic",
+        "122",
+        "(2020) 133–135. A call to arms from Christian Frezza. Time the metabolic"
+      ],
+      "chapterNumber": 122,
+      "title": "(2020) 133–135. A call to arms from Christian Frezza. Time the metabolic",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 11431,
+      "text": "32  (2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "32  (2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses",
+        "32",
+        "(2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses"
+      ],
+      "chapterNumber": 32,
+      "title": "(2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 11925,
+      "text": "INDEX",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "INDEX",
+        "INDEX",
+        null
+      ],
+      "chapterNumber": null,
+      "title": "INDEX",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "lineNumber": 874,
+      "text": "DISCOVERING THE NANOCOSM",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "DISCOVERING THE NANOCOSM"
+      ],
+      "chapterNumber": null,
+      "title": "DISCOVERING THE NANOCOSM",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 2162,
+      "text": "1 For balance it should be said that there were also some protests outside the lab",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 For balance it should be said that there were also some protests outside the lab",
+        "1",
+        "For balance it should be said that there were also some protests outside the lab"
+      ],
+      "chapterNumber": 1,
+      "title": "For balance it should be said that there were also some protests outside the lab",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 2344,
+      "text": "THE PATH OF CARBON",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "THE PATH OF CARBON"
+      ],
+      "chapterNumber": null,
+      "title": "THE PATH OF CARBON",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 3698,
+      "text": "FROM GASES TO LIFE",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "FROM GASES TO LIFE"
+      ],
+      "chapterNumber": null,
+      "title": "FROM GASES TO LIFE",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 5210,
+      "text": "REVOLUTIONS",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "REVOLUTIONS"
+      ],
+      "chapterNumber": null,
+      "title": "REVOLUTIONS",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 7647,
+      "text": "7 Books tend to take their own direction against the best-laid plans of the author.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "7 Books tend to take their own direction against the best-laid plans of the author.",
+        "7",
+        "Books tend to take their own direction against the best-laid plans of the author."
+      ],
+      "chapterNumber": 7,
+      "title": "Books tend to take their own direction against the best-laid plans of the author.",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 7672,
+      "text": "THE FLUX CAPACITOR",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "THE FLUX CAPACITOR"
+      ],
+      "chapterNumber": null,
+      "title": "THE FLUX CAPACITOR",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 9604,
+      "text": "ABBREVIATIONS",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "ABBREVIATIONS"
+      ],
+      "chapterNumber": null,
+      "title": "ABBREVIATIONS",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 9729,
+      "text": "FURTHER READING",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "FURTHER READING"
+      ],
+      "chapterNumber": null,
+      "title": "FURTHER READING",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 10836,
+      "text": "references to the Z-scheme here, then try my chapter on photosynthesis in Life",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "references to the Z-scheme here, then try my chapter on photosynthesis in Life",
+        "references",
+        "to the Z-scheme here, then try my chapter on photosynthesis in Life"
+      ],
+      "chapterNumber": null,
+      "title": "to the Z-scheme here, then try my chapter on photosynthesis in Life",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 11687,
+      "text": "ACKNOWLEDGEMENTS",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "ACKNOWLEDGEMENTS"
+      ],
+      "chapterNumber": null,
+      "title": "ACKNOWLEDGEMENTS",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 3631,
+      "text": "8 Did you really want to know what they are? A is fructose phosphate, a six-",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "8 Did you really want to know what they are? A is fructose phosphate, a six-",
+        "8",
+        "Did you really want to know what they are? A is fructose phosphate, a six-"
+      ],
+      "chapterNumber": 8,
+      "title": "Did you really want to know what they are? A is fructose phosphate, a six-",
+      "confidence": 0.6000000000000001
+    },
+    {
+      "lineNumber": 7581,
+      "text": "2018 (Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2018 (Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf.",
+        "2018",
+        "(Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf."
+      ],
+      "chapterNumber": 2018,
+      "title": "(Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf.",
+      "confidence": 0.6000000000000001
+    },
+    {
+      "lineNumber": 7582,
+      "text": "2 Warburg actively enjoyed the war, which reminds me of J. B. S. Haldane, who",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 Warburg actively enjoyed the war, which reminds me of J. B. S. Haldane, who",
+        "2",
+        "Warburg actively enjoyed the war, which reminds me of J. B. S. Haldane, who"
+      ],
+      "chapterNumber": 2,
+      "title": "Warburg actively enjoyed the war, which reminds me of J. B. S. Haldane, who",
+      "confidence": 0.6000000000000001
+    },
+    {
+      "lineNumber": 7631,
+      "text": "6 The enzyme that breaks down citrate in the cytosol (in animals) is an ATP",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6 The enzyme that breaks down citrate in the cytosol (in animals) is an ATP",
+        "6",
+        "The enzyme that breaks down citrate in the cytosol (in animals) is an ATP"
+      ],
+      "chapterNumber": 6,
+      "title": "The enzyme that breaks down citrate in the cytosol (in animals) is an ATP",
+      "confidence": 0.6000000000000001
+    },
+    {
+      "lineNumber": 8885,
+      "text": "6  ‘Mutator mice’  have  an  error-prone  mitochondrial DNA  polymerase that",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6  ‘Mutator mice’  have  an  error-prone  mitochondrial DNA  polymerase that",
+        "6",
+        "‘Mutator mice’  have  an  error-prone  mitochondrial DNA  polymerase that"
+      ],
+      "chapterNumber": 6,
+      "title": "‘Mutator mice’  have  an  error-prone  mitochondrial DNA  polymerase that",
+      "confidence": 0.6000000000000001
+    },
+    {
+      "lineNumber": 846,
+      "text": "1 When I talk about energy flow, I’m really referring to what physicists call ‘free",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 When I talk about energy flow, I’m really referring to what physicists call ‘free",
+        "1",
+        "When I talk about energy flow, I’m really referring to what physicists call ‘free"
+      ],
+      "chapterNumber": 1,
+      "title": "When I talk about energy flow, I’m really referring to what physicists call ‘free",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 3561,
+      "text": "1 The venture failed because in the late 1970s, when Wildman set up a pilot plant",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 The venture failed because in the late 1970s, when Wildman set up a pilot plant",
+        "1",
+        "The venture failed because in the late 1970s, when Wildman set up a pilot plant"
+      ],
+      "chapterNumber": 1,
+      "title": "The venture failed because in the late 1970s, when Wildman set up a pilot plant",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 3614,
+      "text": "6 It is worth reflecting that paper after paper published in top journals can be",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6 It is worth reflecting that paper after paper published in top journals can be",
+        "6",
+        "It is worth reflecting that paper after paper published in top journals can be"
+      ],
+      "chapterNumber": 6,
+      "title": "It is worth reflecting that paper after paper published in top journals can be",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 3626,
+      "text": "7 Calvin’s wife Genevieve took matters in hand: under her strict dietary regime,",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "7 Calvin’s wife Genevieve took matters in hand: under her strict dietary regime,",
+        "7",
+        "Calvin’s wife Genevieve took matters in hand: under her strict dietary regime,"
+      ],
+      "chapterNumber": 7,
+      "title": "Calvin’s wife Genevieve took matters in hand: under her strict dietary regime,",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 3644,
+      "text": "9 Science is almost always a team effort, frequently with large groups of people,",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "9 Science is almost always a team effort, frequently with large groups of people,",
+        "9",
+        "Science is almost always a team effort, frequently with large groups of people,"
+      ],
+      "chapterNumber": 9,
+      "title": "Science is almost always a team effort, frequently with large groups of people,",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 3659,
+      "text": "10 Peer review is often lionised as the ‘gold standard’, and at its best can indeed",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "10 Peer review is often lionised as the ‘gold standard’, and at its best can indeed",
+        "10",
+        "Peer review is often lionised as the ‘gold standard’, and at its best can indeed"
+      ],
+      "chapterNumber": 10,
+      "title": "Peer review is often lionised as the ‘gold standard’, and at its best can indeed",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 5120,
+      "text": "2 In fact, we now know that deep-sea vents produce enough near-infrared light to",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 In fact, we now know that deep-sea vents produce enough near-infrared light to",
+        "2",
+        "In fact, we now know that deep-sea vents produce enough near-infrared light to"
+      ],
+      "chapterNumber": 2,
+      "title": "In fact, we now know that deep-sea vents produce enough near-infrared light to",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 5126,
+      "text": "3 The tradition of synthetic chemistry aims to make the products of interest, such",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3 The tradition of synthetic chemistry aims to make the products of interest, such",
+        "3",
+        "The tradition of synthetic chemistry aims to make the products of interest, such"
+      ],
+      "chapterNumber": 3,
+      "title": "The tradition of synthetic chemistry aims to make the products of interest, such",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 5145,
+      "text": "2 project, the largest closed ecological system ever created (designed to explore",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 project, the largest closed ecological system ever created (designed to explore",
+        "2",
+        "project, the largest closed ecological system ever created (designed to explore"
+      ],
+      "chapterNumber": 2,
+      "title": "project, the largest closed ecological system ever created (designed to explore",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 5151,
+      "text": "5 Just in case you are confused ... the normal ‘forwards’ Krebs cycle is catalytic,",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5 Just in case you are confused ... the normal ‘forwards’ Krebs cycle is catalytic,",
+        "5",
+        "Just in case you are confused ... the normal ‘forwards’ Krebs cycle is catalytic,"
+      ],
+      "chapterNumber": 5,
+      "title": "Just in case you are confused ... the normal ‘forwards’ Krebs cycle is catalytic,",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 5169,
+      "text": "7 The picture emerging is reminiscent of the anthropic principle – the idea that",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "7 The picture emerging is reminiscent of the anthropic principle – the idea that",
+        "7",
+        "The picture emerging is reminiscent of the anthropic principle – the idea that"
+      ],
+      "chapterNumber": 7,
+      "title": "The picture emerging is reminiscent of the anthropic principle – the idea that",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 5183,
+      "text": "8 That wasn’t the original plan, but cracking the code is exciting and we’re on a",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "8 That wasn’t the original plan, but cracking the code is exciting and we’re on a",
+        "8",
+        "That wasn’t the original plan, but cracking the code is exciting and we’re on a"
+      ],
+      "chapterNumber": 8,
+      "title": "That wasn’t the original plan, but cracking the code is exciting and we’re on a",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 6346,
+      "text": "2  But  I  can’t  resist  telling you  anyway. In  some  of  the  most  important and",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2  But  I  can’t  resist  telling you  anyway. In  some  of  the  most  important and",
+        "2",
+        "But  I  can’t  resist  telling you  anyway. In  some  of  the  most  important and"
+      ],
+      "chapterNumber": 2,
+      "title": "But  I  can’t  resist  telling you  anyway. In  some  of  the  most  important and",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 6371,
+      "text": "3 Erich Gnaiger is a larger-than-life character, practically a legend in the world of",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3 Erich Gnaiger is a larger-than-life character, practically a legend in the world of",
+        "3",
+        "Erich Gnaiger is a larger-than-life character, practically a legend in the world of"
+      ],
+      "chapterNumber": 3,
+      "title": "Erich Gnaiger is a larger-than-life character, practically a legend in the world of",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 6378,
+      "text": "4  The  eagle-eyed will  notice that  statement is  slightly ambiguous. Citrate is",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4  The  eagle-eyed will  notice that  statement is  slightly ambiguous. Citrate is",
+        "4",
+        "The  eagle-eyed will  notice that  statement is  slightly ambiguous. Citrate is"
+      ],
+      "chapterNumber": 4,
+      "title": "The  eagle-eyed will  notice that  statement is  slightly ambiguous. Citrate is",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 6426,
+      "text": "6 Certainly not Shields. He has the bit between his teeth. The Shuram anomaly is",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6 Certainly not Shields. He has the bit between his teeth. The Shuram anomaly is",
+        "6",
+        "Certainly not Shields. He has the bit between his teeth. The Shuram anomaly is"
+      ],
+      "chapterNumber": 6,
+      "title": "Certainly not Shields. He has the bit between his teeth. The Shuram anomaly is",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 7609,
+      "text": "4  Conversely,  stem  cells,  which give  rise  to  most  new  cells  in  tissues, are",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4  Conversely,  stem  cells,  which give  rise  to  most  new  cells  in  tissues, are",
+        "4",
+        "Conversely,  stem  cells,  which give  rise  to  most  new  cells  in  tissues, are"
+      ],
+      "chapterNumber": 4,
+      "title": "Conversely,  stem  cells,  which give  rise  to  most  new  cells  in  tissues, are",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 8845,
+      "text": "3  This  is  a  fine  example of  how  solving one  evolutionary problem leads  to",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3  This  is  a  fine  example of  how  solving one  evolutionary problem leads  to",
+        "3",
+        "This  is  a  fine  example of  how  solving one  evolutionary problem leads  to"
+      ],
+      "chapterNumber": 3,
+      "title": "This  is  a  fine  example of  how  solving one  evolutionary problem leads  to",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 8855,
+      "text": "4 Biology is always more complex than you’d like it to be. It took me a long time",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4 Biology is always more complex than you’d like it to be. It took me a long time",
+        "4",
+        "Biology is always more complex than you’d like it to be. It took me a long time"
+      ],
+      "chapterNumber": 4,
+      "title": "Biology is always more complex than you’d like it to be. It took me a long time",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 8905,
+      "text": "8 Plants and simple (tiny) animals don’t need to suppress complex I, as they can",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "8 Plants and simple (tiny) animals don’t need to suppress complex I, as they can",
+        "8",
+        "Plants and simple (tiny) animals don’t need to suppress complex I, as they can"
+      ],
+      "chapterNumber": 8,
+      "title": "Plants and simple (tiny) animals don’t need to suppress complex I, as they can",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 8933,
+      "text": "11 I take this number from Joana Xavier, one of the stars of a rising generation of",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "11 I take this number from Joana Xavier, one of the stars of a rising generation of",
+        "11",
+        "I take this number from Joana Xavier, one of the stars of a rising generation of"
+      ],
+      "chapterNumber": 11,
+      "title": "I take this number from Joana Xavier, one of the stars of a rising generation of",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 8940,
+      "text": "12 Barja argues that this is linked to a programme of ageing: that ROS flux from",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "12 Barja argues that this is linked to a programme of ageing: that ROS flux from",
+        "12",
+        "Barja argues that this is linked to a programme of ageing: that ROS flux from"
+      ],
+      "chapterNumber": 12,
+      "title": "Barja argues that this is linked to a programme of ageing: that ROS flux from",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 9441,
+      "text": "THE KREBS LINE",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "THE KREBS LINE"
+      ],
+      "chapterNumber": null,
+      "title": "THE KREBS LINE",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 10670,
+      "text": "20160419. I think this is an important paper, but it has stayed under the radar. We",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "20160419. I think this is an important paper, but it has stayed under the radar. We",
+        "20160419",
+        "I think this is an important paper, but it has stayed under the radar. We"
+      ],
+      "chapterNumber": 20160419,
+      "title": "I think this is an important paper, but it has stayed under the radar. We",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 10763,
+      "text": "1 (2017) 0138. A sweeping take from Olivia Judson on how a succession of energy revolutions transformed the potential of life on Earth, from the origins of life to photosynthesis, oxygen and fire.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 (2017) 0138. A sweeping take from Olivia Judson on how a succession of energy revolutions transformed the potential of life on Earth, from the origins of life to photosynthesis, oxygen and fire.",
+        "1",
+        "(2017) 0138. A sweeping take from Olivia Judson on how a succession of energy revolutions transformed the potential of life on Earth, from the origins of life to photosynthesis, oxygen and fire."
+      ],
+      "chapterNumber": 1,
+      "title": "(2017) 0138. A sweeping take from Olivia Judson on how a succession of energy revolutions transformed the potential of life on Earth, from the origins of life to photosynthesis, oxygen and fire.",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 10864,
+      "text": "148400. I can’t help but cite this radically different take on the early origin of",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "148400. I can’t help but cite this radically different take on the early origin of",
+        "148400",
+        "I can’t help but cite this radically different take on the early origin of"
+      ],
+      "chapterNumber": 148400,
+      "title": "I can’t help but cite this radically different take on the early origin of",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 10936,
+      "text": "15 (2010) 462–470. A lovely analysis of different types of flux through the Krebs",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "15 (2010) 462–470. A lovely analysis of different types of flux through the Krebs",
+        "15",
+        "(2010) 462–470. A lovely analysis of different types of flux through the Krebs"
+      ],
+      "chapterNumber": 15,
+      "title": "(2010) 462–470. A lovely analysis of different types of flux through the Krebs",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 10948,
+      "text": "70 . The kind of paper that gives journals like Cell their high ‘impact factor’: this",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "70 . The kind of paper that gives journals like Cell their high ‘impact factor’: this",
+        "70",
+        ". The kind of paper that gives journals like Cell their high ‘impact factor’: this"
+      ],
+      "chapterNumber": 70,
+      "title": ". The kind of paper that gives journals like Cell their high ‘impact factor’: this",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 10969,
+      "text": "1361. Quite a diatribe against the somatic mutation theory of cancer, written in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1361. Quite a diatribe against the somatic mutation theory of cancer, written in",
+        "1361",
+        "Quite a diatribe against the somatic mutation theory of cancer, written in"
+      ],
+      "chapterNumber": 1361,
+      "title": "Quite a diatribe against the somatic mutation theory of cancer, written in",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 11451,
+      "text": "2000. A  historical look  to  the  future’, Annals of  the  New  York  Academy of",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2000. A  historical look  to  the  future’, Annals of  the  New  York  Academy of",
+        "2000",
+        "A  historical look  to  the  future’, Annals of  the  New  York  Academy of"
+      ],
+      "chapterNumber": 2000,
+      "title": "A  historical look  to  the  future’, Annals of  the  New  York  Academy of",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 11481,
+      "text": "3742. A clarification of his own influential thinking. Ageing is driven by ‘quasi-",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3742. A clarification of his own influential thinking. Ageing is driven by ‘quasi-",
+        "3742",
+        "A clarification of his own influential thinking. Ageing is driven by ‘quasi-"
+      ],
+      "chapterNumber": 3742,
+      "title": "A clarification of his own influential thinking. Ageing is driven by ‘quasi-",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 11498,
+      "text": "900. A good review of the targets of glycation (the decoration of proteins, lipids",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "900. A good review of the targets of glycation (the decoration of proteins, lipids",
+        "900",
+        "A good review of the targets of glycation (the decoration of proteins, lipids"
+      ],
+      "chapterNumber": 900,
+      "title": "A good review of the targets of glycation (the decoration of proteins, lipids",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 11522,
+      "text": "1113. The evidence is mounting that Alzheimer’s disease is a form of diabetes. I",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1113. The evidence is mounting that Alzheimer’s disease is a form of diabetes. I",
+        "1113",
+        "The evidence is mounting that Alzheimer’s disease is a form of diabetes. I"
+      ],
+      "chapterNumber": 1113,
+      "title": "The evidence is mounting that Alzheimer’s disease is a form of diabetes. I",
+      "confidence": 0.6
+    },
+    {
+      "lineNumber": 100,
+      "text": "2. The path of carbon",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2. The path of carbon",
+        "2",
+        "The path of carbon"
+      ],
+      "chapterNumber": 2,
+      "title": "The path of carbon",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 104,
+      "text": "6. The flux capacitor",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6. The flux capacitor",
+        "6",
+        "The flux capacitor"
+      ],
+      "chapterNumber": 6,
+      "title": "The flux capacitor",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 3569,
+      "text": "2 This is sufficiently below the speed of light not to require correction for the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2 This is sufficiently below the speed of light not to require correction for the",
+        "2",
+        "This is sufficiently below the speed of light not to require correction for the"
+      ],
+      "chapterNumber": 2,
+      "title": "This is sufficiently below the speed of light not to require correction for the",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 3588,
+      "text": "4 This unexpected finding took biologists some time to accept, yet CO fixation in  the  dark  had  already been shown to  occur in  autotrophic bacteria.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4 This unexpected finding took biologists some time to accept, yet CO fixation in  the  dark  had  already been shown to  occur in  autotrophic bacteria.",
+        "4",
+        "This unexpected finding took biologists some time to accept, yet CO fixation in  the  dark  had  already been shown to  occur in  autotrophic bacteria."
+      ],
+      "chapterNumber": 4,
+      "title": "This unexpected finding took biologists some time to accept, yet CO fixation in  the  dark  had  already been shown to  occur in  autotrophic bacteria.",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 6392,
+      "text": "5 But here is a taster, in light of the driving forces we have been discussing in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5 But here is a taster, in light of the driving forces we have been discussing in",
+        "5",
+        "But here is a taster, in light of the driving forces we have been discussing in"
+      ],
+      "chapterNumber": 5,
+      "title": "But here is a taster, in light of the driving forces we have been discussing in",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 10305,
+      "text": "60 years. I usually try to avoid giving web addresses, in case they disappear, but",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "60 years. I usually try to avoid giving web addresses, in case they disappear, but",
+        "60",
+        "years. I usually try to avoid giving web addresses, in case they disappear, but"
+      ],
+      "chapterNumber": 60,
+      "title": "years. I usually try to avoid giving web addresses, in case they disappear, but",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 10912,
+      "text": "165. Shows that  the  ‘Ur-bilaterian’ (the  common ancestor of  all  bilaterally",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "165. Shows that  the  ‘Ur-bilaterian’ (the  common ancestor of  all  bilaterally",
+        "165",
+        "Shows that  the  ‘Ur-bilaterian’ (the  common ancestor of  all  bilaterally"
+      ],
+      "chapterNumber": 165,
+      "title": "Shows that  the  ‘Ur-bilaterian’ (the  common ancestor of  all  bilaterally",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 13125,
+      "text": "1. Discovering the nanocosm27",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1. Discovering the nanocosm27",
+        "1",
+        "Discovering the nanocosm27"
+      ],
+      "chapterNumber": 1,
+      "title": "Discovering the nanocosm27",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 13130,
+      "text": "6. The flux capacitor181",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "6. The flux capacitor181",
+        "6",
+        "The flux capacitor181"
+      ],
+      "chapterNumber": 6,
+      "title": "The flux capacitor181",
+      "confidence": 0.5
+    },
+    {
+      "lineNumber": 71,
+      "text": "1 3 5 7 9 10 8 6 4 2",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 3 5 7 9 10 8 6 4 2",
+        "1",
+        "3 5 7 9 10 8 6 4 2"
+      ],
+      "chapterNumber": 1,
+      "title": "3 5 7 9 10 8 6 4 2",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 114,
+      "text": "Index to this mortal process of continuing, it is the movement that creates the form.",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Index to this mortal process of continuing, it is the movement that creates the form.",
+        "Index",
+        "to this mortal process of continuing, it is the movement that creates the form."
+      ],
+      "chapterNumber": null,
+      "title": "to this mortal process of continuing, it is the movement that creates the form.",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 8121,
+      "text": "conclusion was that mismatched mitochondria caused male infertility by",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "conclusion was that mismatched mitochondria caused male infertility by",
+        "conclusion",
+        "was that mismatched mitochondria caused male infertility by"
+      ],
+      "chapterNumber": null,
+      "title": "was that mismatched mitochondria caused male infertility by",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 9440,
+      "text": "APPENDIX 2",
+      "pattern": "/^(Appendix\\s+[A-Z0-9]+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "APPENDIX 2",
+        "APPENDIX 2",
+        null
+      ],
+      "chapterNumber": null,
+      "title": "APPENDIX 2",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 9739,
+      "text": "Introduction: Life itself",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Introduction: Life itself",
+        "Introduction",
+        "Life itself"
+      ],
+      "chapterNumber": null,
+      "title": "Life itself",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 9836,
+      "text": "introduction to the molecular genetic paradigm that underpins modern medicine.",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "introduction to the molecular genetic paradigm that underpins modern medicine.",
+        "introduction",
+        "to the molecular genetic paradigm that underpins modern medicine."
+      ],
+      "chapterNumber": null,
+      "title": "to the molecular genetic paradigm that underpins modern medicine.",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 9856,
+      "text": "introduction to biochemistry that caught my imagination when I was at school,",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "introduction to biochemistry that caught my imagination when I was at school,",
+        "introduction",
+        "to biochemistry that caught my imagination when I was at school,"
+      ],
+      "chapterNumber": null,
+      "title": "to biochemistry that caught my imagination when I was at school,",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 11243,
+      "text": "Introduction to OXPHOS Analysis (Innsbruck, Bioenergetics Communications, 2020).",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Introduction to OXPHOS Analysis (Innsbruck, Bioenergetics Communications, 2020).",
+        "Introduction",
+        "to OXPHOS Analysis (Innsbruck, Bioenergetics Communications, 2020)."
+      ],
+      "chapterNumber": null,
+      "title": "to OXPHOS Analysis (Innsbruck, Bioenergetics Communications, 2020).",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 11566,
+      "text": "Epilogue: Self Anaesthetics and mitochondria L.",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Epilogue: Self Anaesthetics and mitochondria L.",
+        "Epilogue",
+        "Self Anaesthetics and mitochondria L."
+      ],
+      "chapterNumber": null,
+      "title": "Self Anaesthetics and mitochondria L.",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 13124,
+      "text": "Introduction: Life itself8",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Introduction: Life itself8",
+        "Introduction",
+        "Life itself8"
+      ],
+      "chapterNumber": null,
+      "title": "Life itself8",
+      "confidence": 0.4
+    },
+    {
+      "lineNumber": 105,
+      "text": "Epilogue: Self",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Epilogue: Self",
+        "Epilogue",
+        "Self"
+      ],
+      "chapterNumber": null,
+      "title": "Self",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 109,
+      "text": "Appendix 1: Red protein mechanics",
+      "pattern": "/^(Appendix\\s+[A-Z0-9]+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Appendix 1: Red protein mechanics",
+        "Appendix 1",
+        "Red protein mechanics"
+      ],
+      "chapterNumber": null,
+      "title": "Red protein mechanics",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 110,
+      "text": "Appendix 2: The Krebs line",
+      "pattern": "/^(Appendix\\s+[A-Z0-9]+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Appendix 2: The Krebs line",
+        "Appendix 2",
+        "The Krebs line"
+      ],
+      "chapterNumber": null,
+      "title": "The Krebs line",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 3580,
+      "text": "3 The very idea behind the cyclotron had been criticised by no less a figure than",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3 The very idea behind the cyclotron had been criticised by no less a figure than",
+        "3",
+        "The very idea behind the cyclotron had been criticised by no less a figure than"
+      ],
+      "chapterNumber": 3,
+      "title": "The very idea behind the cyclotron had been criticised by no less a figure than",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 6334,
+      "text": "1 Like many people of my generation, I first came across Pikaia in an inspiring,",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1 Like many people of my generation, I first came across Pikaia in an inspiring,",
+        "1",
+        "Like many people of my generation, I first came across Pikaia in an inspiring,"
+      ],
+      "chapterNumber": 1,
+      "title": "Like many people of my generation, I first came across Pikaia in an inspiring,",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 13131,
+      "text": "Epilogue: Self211",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Epilogue: Self211",
+        "Epilogue",
+        "Self211"
+      ],
+      "chapterNumber": null,
+      "title": "Self211",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 13135,
+      "text": "Appendix 1: Red protein mechanics222",
+      "pattern": "/^(Appendix\\s+[A-Z0-9]+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Appendix 1: Red protein mechanics222",
+        "Appendix 1",
+        "Red protein mechanics222"
+      ],
+      "chapterNumber": null,
+      "title": "Red protein mechanics222",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 13136,
+      "text": "Appendix 2: The Krebs line227",
+      "pattern": "/^(Appendix\\s+[A-Z0-9]+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Appendix 2: The Krebs line227",
+        "Appendix 2",
+        "The Krebs line227"
+      ],
+      "chapterNumber": null,
+      "title": "The Krebs line227",
+      "confidence": 0.3
+    },
+    {
+      "lineNumber": 101,
+      "text": "3. From gases to life",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3. From gases to life",
+        "3",
+        "From gases to life"
+      ],
+      "chapterNumber": 3,
+      "title": "From gases to life",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 102,
+      "text": "4. Revolutions",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4. Revolutions",
+        "4",
+        "Revolutions"
+      ],
+      "chapterNumber": 4,
+      "title": "Revolutions",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 103,
+      "text": "5. To the dark side",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5. To the dark side",
+        "5",
+        "To the dark side"
+      ],
+      "chapterNumber": 5,
+      "title": "To the dark side",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 13126,
+      "text": "2. The path of carbon62",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2. The path of carbon62",
+        "2",
+        "The path of carbon62"
+      ],
+      "chapterNumber": 2,
+      "title": "The path of carbon62",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 13127,
+      "text": "3. From gases to life91",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "3. From gases to life91",
+        "3",
+        "From gases to life91"
+      ],
+      "chapterNumber": 3,
+      "title": "From gases to life91",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 13128,
+      "text": "4. Revolutions124",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "4. Revolutions124",
+        "4",
+        "Revolutions124"
+      ],
+      "chapterNumber": 4,
+      "title": "Revolutions124",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 13129,
+      "text": "5. To the dark side150",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "5. To the dark side150",
+        "5",
+        "To the dark side150"
+      ],
+      "chapterNumber": 5,
+      "title": "To the dark side150",
+      "confidence": 0.2
+    },
+    {
+      "lineNumber": 3677,
+      "text": "11  NADP",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "11  NADP",
+        "11",
+        "NADP"
+      ],
+      "chapterNumber": 11,
+      "title": "NADP",
+      "confidence": 0
+    }
+  ],
+  "validatedChapters": [
+    {
+      "lineNumber": 797,
+      "text": "Chapter 4 will ask how this spontaneous chemistry at the origin of life",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 4 will ask how this spontaneous chemistry at the origin of life",
+        "4",
+        "will ask how this spontaneous chemistry at the origin of life"
+      ],
+      "chapterNumber": 4,
+      "title": "will ask how this spontaneous chemistry at the origin of life",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 874,
+      "text": "DISCOVERING THE NANOCOSM",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "DISCOVERING THE NANOCOSM"
+      ],
+      "chapterNumber": null,
+      "title": "DISCOVERING THE NANOCOSM",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 2264,
+      "text": "7 He married Margaret Fieldhouse in 1938. She taught in a Catholic convent",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "7 He married Margaret Fieldhouse in 1938. She taught in a Catholic convent",
+        "7",
+        "He married Margaret Fieldhouse in 1938. She taught in a Catholic convent"
+      ],
+      "chapterNumber": 7,
+      "title": "He married Margaret Fieldhouse in 1938. She taught in a Catholic convent",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 2344,
+      "text": "THE PATH OF CARBON",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "THE PATH OF CARBON"
+      ],
+      "chapterNumber": null,
+      "title": "THE PATH OF CARBON",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 3698,
+      "text": "FROM GASES TO LIFE",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "FROM GASES TO LIFE"
+      ],
+      "chapterNumber": null,
+      "title": "FROM GASES TO LIFE",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 8952,
+      "text": "EPILOGUE",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "EPILOGUE",
+        "EPILOGUE",
+        null
+      ],
+      "chapterNumber": null,
+      "title": "EPILOGUE",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 9729,
+      "text": "FURTHER READING",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "FURTHER READING"
+      ],
+      "chapterNumber": null,
+      "title": "FURTHER READING",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 9881,
+      "text": "Chapter 1: Discovering the nanocosm",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 1: Discovering the nanocosm",
+        "1",
+        "Discovering the nanocosm"
+      ],
+      "chapterNumber": 1,
+      "title": "Discovering the nanocosm",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10108,
+      "text": "Chapter 2: The path of carbon",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 2: The path of carbon",
+        "2",
+        "The path of carbon"
+      ],
+      "chapterNumber": 2,
+      "title": "The path of carbon",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10289,
+      "text": "Chapter 3: From gases to life",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 3: From gases to life",
+        "3",
+        "From gases to life"
+      ],
+      "chapterNumber": 3,
+      "title": "From gases to life",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 10941,
+      "text": "Chapter 5: To the dark side",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 5: To the dark side",
+        "5",
+        "To the dark side"
+      ],
+      "chapterNumber": 5,
+      "title": "To the dark side",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 11266,
+      "text": "Chapter 6: The flux capacitor",
+      "pattern": "/^Chapter\\s+(\\d+)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "Chapter 6: The flux capacitor",
+        "6",
+        "The flux capacitor"
+      ],
+      "chapterNumber": 6,
+      "title": "The flux capacitor",
+      "confidence": 1
+    },
+    {
+      "lineNumber": 2275,
+      "text": "8 For the more astute accountants among you, some of the hydrogens burnt in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "8 For the more astute accountants among you, some of the hydrogens burnt in",
+        "8",
+        "For the more astute accountants among you, some of the hydrogens burnt in"
+      ],
+      "chapterNumber": 8,
+      "title": "For the more astute accountants among you, some of the hydrogens burnt in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2282,
+      "text": "9  Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "9  Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a",
+        "9",
+        "Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a"
+      ],
+      "chapterNumber": 9,
+      "title": "Mitchell  had  some  wealth through  his  uncle, Sir  Godfrey Mitchell, a",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2294,
+      "text": "10 NADH was also discovered by Warburg, but he failed to appreciate its full",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "10 NADH was also discovered by Warburg, but he failed to appreciate its full",
+        "10",
+        "NADH was also discovered by Warburg, but he failed to appreciate its full"
+      ],
+      "chapterNumber": 10,
+      "title": "NADH was also discovered by Warburg, but he failed to appreciate its full",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2305,
+      "text": "11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno",
+        "11",
+        "A much-loved figure, with a faintly owlish look, Keilin headed the Molteno"
+      ],
+      "chapterNumber": 11,
+      "title": "A much-loved figure, with a faintly owlish look, Keilin headed the Molteno",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2312,
+      "text": "12 There’s an irony here because Krebs and R. E. Davies came up with a similar",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "12 There’s an irony here because Krebs and R. E. Davies came up with a similar",
+        "12",
+        "There’s an irony here because Krebs and R. E. Davies came up with a similar"
+      ],
+      "chapterNumber": 12,
+      "title": "There’s an irony here because Krebs and R. E. Davies came up with a similar",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2324,
+      "text": "13 Although Mitchell had himself proposed conformational changes in proteins",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "13 Although Mitchell had himself proposed conformational changes in proteins",
+        "13",
+        "Although Mitchell had himself proposed conformational changes in proteins"
+      ],
+      "chapterNumber": 13,
+      "title": "Although Mitchell had himself proposed conformational changes in proteins",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 11111,
+      "text": "18 (2017) 488–498.)",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "18 (2017) 488–498.)",
+        "18",
+        "(2017) 488–498.)"
+      ],
+      "chapterNumber": 18,
+      "title": "(2017) 488–498.)",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5003,
+      "text": "22 here. ATP synthesis is powered by proton gradients, which rotate the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "22 here. ATP synthesis is powered by proton gradients, which rotate the",
+        "22",
+        "here. ATP synthesis is powered by proton gradients, which rotate the"
+      ],
+      "chapterNumber": 22,
+      "title": "here. ATP synthesis is powered by proton gradients, which rotate the",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5210,
+      "text": "REVOLUTIONS",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "REVOLUTIONS"
+      ],
+      "chapterNumber": null,
+      "title": "REVOLUTIONS",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 11648,
+      "text": "25 (2018) 202–238. Solms’s ideas on consciousness were developed with Karl",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "25 (2018) 202–238. Solms’s ideas on consciousness were developed with Karl",
+        "25",
+        "(2018) 202–238. Solms’s ideas on consciousness were developed with Karl"
+      ],
+      "chapterNumber": 25,
+      "title": "(2018) 202–238. Solms’s ideas on consciousness were developed with Karl",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 11431,
+      "text": "32  (2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "32  (2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses",
+        "32",
+        "(2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses"
+      ],
+      "chapterNumber": 32,
+      "title": "(2020)  101472. Ryan  Mailloux shows that S-glutathionylation suppresses",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 6757,
+      "text": "50 per cent Jewish, and he was for a brief period relieved of his position.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "50 per cent Jewish, and he was for a brief period relieved of his position.",
+        "50",
+        "per cent Jewish, and he was for a brief period relieved of his position."
+      ],
+      "chapterNumber": 50,
+      "title": "per cent Jewish, and he was for a brief period relieved of his position.",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 10006,
+      "text": "88 (2006) 246–266. The US National Academy of Sciences equivalent to the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "88 (2006) 246–266. The US National Academy of Sciences equivalent to the",
+        "88",
+        "(2006) 246–266. The US National Academy of Sciences equivalent to the"
+      ],
+      "chapterNumber": 88,
+      "title": "(2006) 246–266. The US National Academy of Sciences equivalent to the",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 11119,
+      "text": "122 (2020) 133–135. A call to arms from Christian Frezza. Time the metabolic",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "122 (2020) 133–135. A call to arms from Christian Frezza. Time the metabolic",
+        "122",
+        "(2020) 133–135. A call to arms from Christian Frezza. Time the metabolic"
+      ],
+      "chapterNumber": 122,
+      "title": "(2020) 133–135. A call to arms from Christian Frezza. Time the metabolic",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 10340,
+      "text": "201. An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "201. An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s",
+        "201",
+        "An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s"
+      ],
+      "chapterNumber": 201,
+      "title": "An exhaustive, revolutionary thesis, detailing much of Wächtershäuser’s",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 10054,
+      "text": "208 (1965) 1205–1206. A shorter paper, again presenting experimental evidence",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "208 (1965) 1205–1206. A shorter paper, again presenting experimental evidence",
+        "208",
+        "(1965) 1205–1206. A shorter paper, again presenting experimental evidence"
+      ],
+      "chapterNumber": 208,
+      "title": "(1965) 1205–1206. A shorter paper, again presenting experimental evidence",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 82,
+      "text": "232 reproduced by permission of David Higham Associates, © The Dylan",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "232 reproduced by permission of David Higham Associates, © The Dylan",
+        "232",
+        "reproduced by permission of David Higham Associates, © The Dylan"
+      ],
+      "chapterNumber": 232,
+      "title": "reproduced by permission of David Higham Associates, © The Dylan",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 10112,
+      "text": "250. Or  how  rubisco got  its  name. A  fascinating historical piece in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "250. Or  how  rubisco got  its  name. A  fascinating historical piece in",
+        "250",
+        "Or  how  rubisco got  its  name. A  fascinating historical piece in"
+      ],
+      "chapterNumber": 250,
+      "title": "Or  how  rubisco got  its  name. A  fascinating historical piece in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 5236,
+      "text": "520  million years  ago. This  is  the  first  time  in  the  four-billion-year",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "520  million years  ago. This  is  the  first  time  in  the  four-billion-year",
+        "520",
+        "million years  ago. This  is  the  first  time  in  the  four-billion-year"
+      ],
+      "chapterNumber": 520,
+      "title": "million years  ago. This  is  the  first  time  in  the  four-billion-year",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 9973,
+      "text": "1937. Volume 2  (Oxford, Oxford University Press, 1993). The  second",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1937. Volume 2  (Oxford, Oxford University Press, 1993). The  second",
+        "1937",
+        "Volume 2  (Oxford, Oxford University Press, 1993). The  second"
+      ],
+      "chapterNumber": 1937,
+      "title": "Volume 2  (Oxford, Oxford University Press, 1993). The  second",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 3320,
+      "text": "1940. In 1945 the great Spanish biochemist Severo Ochoa, working in",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1940. In 1945 the great Spanish biochemist Severo Ochoa, working in",
+        "1940",
+        "In 1945 the great Spanish biochemist Severo Ochoa, working in"
+      ],
+      "chapterNumber": 1940,
+      "title": "In 1945 the great Spanish biochemist Severo Ochoa, working in",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 2854,
+      "text": "1941 was greeted with disbelief that swiftly morphed into fear, as San",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1941 was greeted with disbelief that swiftly morphed into fear, as San",
+        "1941",
+        "was greeted with disbelief that swiftly morphed into fear, as San"
+      ],
+      "chapterNumber": 1941,
+      "title": "was greeted with disbelief that swiftly morphed into fear, as San",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 7578,
+      "text": "1958 to 1990. The overall cancer death rate in 2016 was barely lower than the",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "1958 to 1990. The overall cancer death rate in 2016 was barely lower than the",
+        "1958",
+        "to 1990. The overall cancer death rate in 2016 was barely lower than the"
+      ],
+      "chapterNumber": 1958,
+      "title": "to 1990. The overall cancer death rate in 2016 was barely lower than the",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 7581,
+      "text": "2018 (Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf.",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2018 (Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf.",
+        "2018",
+        "(Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf."
+      ],
+      "chapterNumber": 2018,
+      "title": "(Figure 6): https://www.cdc.gov/nchs/data/nvsr/nvsr67/nvsr67_05.pdf.",
+      "confidence": 0.6000000000000001
+    },
+    {
+      "lineNumber": 7672,
+      "text": "THE FLUX CAPACITOR",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "THE FLUX CAPACITOR"
+      ],
+      "chapterNumber": null,
+      "title": "THE FLUX CAPACITOR",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 9604,
+      "text": "ABBREVIATIONS",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "ABBREVIATIONS"
+      ],
+      "chapterNumber": null,
+      "title": "ABBREVIATIONS",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 10375,
+      "text": "2000. Richly illustrated and with an exciting early view of the significance of",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2000. Richly illustrated and with an exciting early view of the significance of",
+        "2000",
+        "Richly illustrated and with an exciting early view of the significance of"
+      ],
+      "chapterNumber": 2000,
+      "title": "Richly illustrated and with an exciting early view of the significance of",
+      "confidence": 0.8
+    },
+    {
+      "lineNumber": 11615,
+      "text": "2020. Here Levin teams up with Daniel Dennett, who has a very acute nose for",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "2020. Here Levin teams up with Daniel Dennett, who has a very acute nose for",
+        "2020",
+        "Here Levin teams up with Daniel Dennett, who has a very acute nose for"
+      ],
+      "chapterNumber": 2020,
+      "title": "Here Levin teams up with Daniel Dennett, who has a very acute nose for",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 9757,
+      "text": "20140344. My own attempt to assess what van Leeuwenhoek’s discoveries mean",
+      "pattern": "/^(\\d+)\\.?\\s+(.+)$/",
+      "match": [
+        "20140344. My own attempt to assess what van Leeuwenhoek’s discoveries mean",
+        "20140344",
+        "My own attempt to assess what van Leeuwenhoek’s discoveries mean"
+      ],
+      "chapterNumber": 20140344,
+      "title": "My own attempt to assess what van Leeuwenhoek’s discoveries mean",
+      "confidence": 0.9
+    },
+    {
+      "lineNumber": 10836,
+      "text": "references to the Z-scheme here, then try my chapter on photosynthesis in Life",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "references to the Z-scheme here, then try my chapter on photosynthesis in Life",
+        "references",
+        "to the Z-scheme here, then try my chapter on photosynthesis in Life"
+      ],
+      "chapterNumber": null,
+      "title": "to the Z-scheme here, then try my chapter on photosynthesis in Life",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 11687,
+      "text": "ACKNOWLEDGEMENTS",
+      "pattern": "/^[A-Z\\s]{10,50}$/",
+      "match": [
+        "ACKNOWLEDGEMENTS"
+      ],
+      "chapterNumber": null,
+      "title": "ACKNOWLEDGEMENTS",
+      "confidence": 0.7
+    },
+    {
+      "lineNumber": 11925,
+      "text": "INDEX",
+      "pattern": "/^(Introduction|Conclusion|Epilogue|Index|Bibliography|References)(?:\\s*[:\\-\\s]\\s*(.*))?$/i",
+      "match": [
+        "INDEX",
+        "INDEX",
+        null
+      ],
+      "chapterNumber": null,
+      "title": "INDEX",
+      "confidence": 0.7999999999999999
+    }
+  ],
+  "chapterCount": 44
+}

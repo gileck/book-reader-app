@@ -1,0 +1,205 @@
+{
+  "summary": {
+    "totalChapters": 44,
+    "totalParagraphs": 675,
+    "totalChunks": 336,
+    "totalWords": 117340,
+    "averageChunksPerChapter": 8,
+    "averageWordsPerChunk": 349,
+    "processingTime": "2025-07-04T06:27:44.870Z",
+    "algorithm": "Header-Aware Paragraph-Based Chunking",
+    "parameters": {
+      "min": 80,
+      "ideal": 200,
+      "max": 300
+    }
+  },
+  "sampleChapters": [
+    {
+      "chapterInfo": {
+        "id": 1,
+        "title": "reproduced by permission of David Higham Associates, © The Dylan",
+        "totalParagraphs": 23
+      },
+      "chunks": [
+        {
+          "index": 1,
+          "text": "232 reproduced by permission of David Higham Associates, © The Dylan Thomas Trust. All reasonable efforts have been made to obtain copyright permissions where required. Any omissions and errors of attribution are unintentional and will, if notified in writing to the publisher, be corrected in future printings. A CIP catalogue record for this book is available from the British Library. ISBN 978 1 78816 054 4 eISBN 978 1 78283 450 2 Typeset in Sabon by MacGuru Ltd In memory of Ian Ackland-Snow 6 Contents Introduction: Life itself Discovering the nanocosm 2. The path of carbon 3. From gases to life 4. Revolutions 5. To the dark side 6. The flux capacitor Epilogue: Self Envoi: ‘Like Most Revelations’ The forward Krebs cycle The reverse Krebs cycle Appendix 1: Red protein mechanics Appendix 2: The Krebs line List of abbreviations Further reading Acknowledgements Index to this mortal process of continuing, it is the movement that creates the form. Richard Howard INTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations. There’s a central amorphous density, where these scratches seem lighter. This ‘growth’ does not look alive, although it has extended out along some lines, and there is something grasping and parasitic about it. Across the globe there are thousands of them, varying in shape and detail, but all of them grey, angular, inorganic ... spreading. Yet at night they light up, glowing in the dark sky, suddenly beautiful. Perhaps these cankers on the landscape are in some sense living – there is a controlled flow of energy, there must be information and some form of metabolism; some turnover of materials. Are they alive? No, of course not; they are cities. We know them intimately from the inside, even if most of us know little about the flow of energy and materials through our own cities. We know them mainly by their visible structures, buildings on a map. But an empty city with no power, no energy flow, no traffic, no jostling crowds, is an eerie place, chilling and post-apocalyptic. Dead. What brings a city to life is the people, their movement from place to place, along with the flow of materials that sustains our daily existence – electricity, heat, water, gas, sewage. It would not be misleading to say that a city is brought to life by the controlled flow of energy and material in this way. Set up a time-lapse camera on a busy street downtown and we get a sense of this flow, obeying laws of flux that we can barely guess at. In my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the jumbled flow of people, lights and power, pulsating down some streets, just a residual overflow in others, some districts a hive of bustling activity, others nearly dormant until the evening when the commuters return home and the lights flick on. We could map out the flux that animates a city. Certainly, we can imagine a city this way, but mostly all we notice are the buildings. The structure. A cell is a city of a sort. It too has buildings, or at least physical structures. Unlike our own constructions a cell is not dominated by gravity, and is truly built in three dimensions. If you shrink yourself down to the size of a molecule, the ‘cityscape’ is dizzying.",
+          "wordCount": 577,
+          "characterCount": 3368,
+          "paragraphCount": 4,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "index": 2,
+          "text": "sweep past your view: curving, fluid walls, swooping overhead or plunging down below. Traffic streams past on colossal cables, extending out in all directions. Traffic as you’ve never seen before: great mechanical contraptions, machines the size of buildings, pistons whirring faster than the eye can see. The great citadel of the nucleus, heart of the metropolis, looms in the distance, miles away from you, but dominating your field of view. All is hustle and bustle. Unlike any human city, the vast sweeping walls themselves move and conjoin and dissociate again. Zoom out, and the whole city of the cell can change shape and move around, reassembling its internal structures as it does so. From out here, through the lens of a microscope, we can watch the trafficking of goods through the cell, lit up by fluorescent dyes like a town at night, all electric reds and blues and greens. Yet everything I have described is buildings, the structures of the cell. We can picture this marvellous city on a scale less than thousandths of a millimetre; we can visualise the movement of its parts like never before. But the cell is animated on a smaller scale still. Even the most powerful microscopes can’t discriminate the moment-by-moment flow of energy and materials that animates all life, the unceasing changes that transform small molecules over millionths of seconds, and distances of less than a millionth of a millimetre. Deep within these marvellous moving structures, the flow of energy and matter is still invisible, as hard to imagine as the restless electrons that power our conurbations and the people within. Perhaps for that reason, we have a tendency to discount its importance to life. Few things are as inscrutable as a cell. In the seventeenth century, when the Dutch microscopist Antonie van Leeuwenhoek unveiled the cosmos hidden in a drop of water, he marvelled at the little ‘animalcules’ that lived out their lives there, all whirring parts and purpose. For all our deep explorations of the cityscape of the cell, the behaviour of these protozoa is as beguiling and nearly as mysterious to us today. Do these microscopic blobs of animated protoplasm know what they are doing as they chase and consume each other? Surely not! But to our naive eye, it almost looks as if they do – as if these tiny beings have hopes and fears and pains of their own. As if they feel some joy or relief when they tear themselves free from the mechanical rotating jaws of some minuscule gyrating predator. Some 350 years after van Leeuwenhoek, we now know what most of these whirring parts do, what they’re made of, how they function. We have taken them apart, in centrifuges or with optical tweezers, read out the code that specifies their structures, deciphered the regulatory loops that lend an illusion of purpose, listed all their parts.",
+          "wordCount": 479,
+          "characterCount": 2842,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            5
+          ]
+        },
+        {
+          "index": 3,
+          "text": "And yet underneath it all, we are barely any closer to understanding what breathes life into these flicks of matter. How did they first emerge from the sterile inorganic Earth? What forces coordinate their exquisite behaviour? Do they experience any sort of feelings? For decades, biology has been dominated by information – the power of genes. The importance of genes is unquestionable, yet there is no difference in the information content of a living protozoon and one that died a moment ago. The difference between being alive or dead lies in energy flow, in the ability of cells to continually regenerate themselves from simpler building blocks. If there is a view from modern biology, it is that genetic information structures the flow of energy and materials. To a first approximation, biology is understood in terms of information networks and control systems. Even the laws of thermodynamics, which govern the behaviour of molecules and their interactions and reactions, can be recast in terms of information – Shannon entropy, the laws of bits of information. But this view generates its own paradox at the origin of life – where does all this information come from? Within the realm of biology, we already have a simple explanation: natural selection sifts through random differences, favouring what works, eliminating what doesn’t, generation after generation. Information accumulates with function over time. We can quibble over details, but there is no conceptual difficulty here. At the origin of life, though, this view will not do. Place information at the heart of life, and there is a problem with the emergence of function, which is to say, the origin of biological information. Not only that, but there’s a problem in understanding the troubling trajectory of evolution, not least the long delays between abrupt changes, such as the emergence of animals in the Cambrian explosion, despite the continuous exploration of genetic sequence space – information – across life. There are problems, too, in understanding why we age and die, why we are still suffering from diseases such as cancer, despite decades of research, and most fundamentally, how subjective experiences can give rise to the conscious Thinking about life only in terms of information is distorting. Seeking new laws of physics to explain the origin of information is to ask the wrong question, which can’t be answered precisely because it is not meaningful. A far better question goes back to the formative years of biology: what processes animate cells and set them apart from inanimate matter? The idea that there is a vital force, that life is fundamentally different from inanimate matter, was disproved long ago and is now only wheeled out as a straw man to burn – even though it’s an understandable illusion for anyone who has shared van Leeuwenhoek’s captivation with busy animalcules.",
+          "wordCount": 466,
+          "characterCount": 2879,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            6
+          ]
+        }
+      ],
+      "analysis": {
+        "totalChunks": 17,
+        "headerChunks": 0,
+        "wordCountDistribution": {
+          "TooShort": 0,
+          "Ideal": 1,
+          "Good": 0,
+          "TooLong": 16
+        },
+        "averageWordsPerChunk": 439,
+        "totalWords": 7469,
+        "qualityScore": "5.9%"
+      }
+    },
+    {
+      "chapterInfo": {
+        "id": 2,
+        "title": "will ask how this spontaneous chemistry at the origin of life",
+        "totalParagraphs": 3
+      },
+      "chunks": [
+        {
+          "index": 1,
+          "text": "Chapter 4 will ask how this spontaneous chemistry at the origin of life came to be the closed cycle that we know today. The idea of a universal cycle is misleading: even in humans, the cycle is often more of a roundabout, with flow entering and exiting everywhere, even coursing in opposite directions through different bits of the cycle. Tight energetic constraints on the early Earth forced metabolic efficiency and cooperation on bacteria, until the evolution of photosynthesis changed life forever. Yet the link between rising oxygen levels – the energising waste product of photosynthesis – and the geologically abrupt emergence of animals in the Cambrian, around two billion years later, was dislocated by some of the most diabolical global conditions in the history of our planet. We’ll see that the need for metabolic efficiency might have fostered cooperation not only in bacteria, but even between the mutually dependent tissues of early animals creeping through sulfurous sludges, their lives teetering on the brink. Not much is known about how metabolic flux is balanced between different tissues, but we know much more about what goes wrong when cells revert to selfish behaviour in cancer. In Chapter 5, we’ll see that the standard view of cancer as a disease of the genome driven by genetic mutations is not the whole picture, and indeed verges on being a latter- day dogma. Mutations linked with cancer are commonly found in normal tissues, while cancer cells often cease dividing if placed in normal tissue. In fact, age is the biggest risk factor for cancer. We’ll see that cancer emerges from the yin and yang of the Krebs cycle as we get older – the need to use the same pathway for biosynthesis as well as energy generation. As the flux through our Krebs cycle becomes more sluggish with age, intermediates such as succinate accumulate and trigger the ancestral pathways for dealing with low oxygen levels, driving inflammation, cellular growth and proliferation, all of which promote cancer.",
+          "wordCount": 331,
+          "characterCount": 2013,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            1
+          ]
+        },
+        {
+          "index": 2,
+          "text": "In Chapter 6, we’ll examine why Krebs-cycle flux gets more sluggish with age, unmasking different age-related diseases in each one of us. Much of the answer can be ascribed to a gradual depression of cell respiration with age, which varies with our lifestyle (such as diet or exercise), as well as how effectively our two genomes work together – the genes in the mitochondria alongside those in the nucleus. I’ll give a new take on the free-radical theory of ageing from my own research, which might explain why birds live so much longer than equivalent mammals, and why antioxidants are not helpful. And we’ll see why full brain function needs the full Krebs cycle, and conversely why failing cellular respiration is linked with conditions such as Alzheimer’s disease. Finally, the Epilogue will touch on the hardest problem of all, the stream of consciousness. By now, it should come as no surprise that the moment-by-moment flux of metabolism that makes us alive should be interwoven with our innermost feelings of self, perhaps going right back to the first stirrings of life. How exactly? We’d better begin at the 1 When I talk about energy flow, I’m really referring to what physicists call ‘free energy’, which is to say the energy available to power work (rather than being dissipated as heat). That goes for the whole book. And when I talk about building blocks, I’m referring to small molecules such as amino acids or nucleotides, which can be joined together to form giant macromolecules such as proteins or DNA, respectively. Again, that goes for the whole book. 2 There are all kinds of interactions between ‘regulatory RNAs’ that do not involve any proteins at all. RNA is a working copy of a short section of DNA, where the exact sequence of letters in the DNA is transcribed into the same sequence of letters in the RNA copy. This copy can be read off into a protein, or alternatively can bind to other RNA molecules directly. In this case the RNA sequence does not really ‘code’ for anything; the letters in one string of RNA simply interact with those in another. I’m using the term ‘code’ very loosely here, to mean the DNA sequence that somehow gives rise to an organism. In any case, in stricter usage, the genetic code should be termed the genetic cipher. Cryptographers can get very cross about this. 3 Even this can be hard to interpret. A high concentration of some intermediate in the cell does not necessarily imply high flux – it might reflect a high rate of flux, with the intermediate being constantly replenished at high levels, or it could reflect the opposite – almost no downstream flux, so the intermediate gradually builds up; in effect, a car park. To understand which one requires a lot of context and subtle interpretation.",
+          "wordCount": 475,
+          "characterCount": 2762,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            2
+          ]
+        },
+        {
+          "index": 3,
+          "text": "There are times when it feels as if metabolomics should just be called gnomics.",
+          "wordCount": 14,
+          "characterCount": 79,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooShort",
+          "paragraphIndices": [
+            3
+          ]
+        }
+      ],
+      "analysis": {
+        "totalChunks": 3,
+        "headerChunks": 0,
+        "wordCountDistribution": {
+          "TooShort": 1,
+          "Ideal": 0,
+          "Good": 0,
+          "TooLong": 2
+        },
+        "averageWordsPerChunk": 273,
+        "totalWords": 820,
+        "qualityScore": "0.0%"
+      }
+    },
+    {
+      "chapterInfo": {
+        "id": 3,
+        "title": "DISCOVERING THE NANOCOSM",
+        "totalParagraphs": 70
+      },
+      "chunks": [
+        {
+          "index": 1,
+          "text": "DISCOVERING THE NANOCOSM Burlington House, Piccadilly, 1932. Its stately Victorian façades are glittering with light at the fag-end of a particularly dismal November. A spry, silver-haired gentleman, immaculately dressed and moustachioed, is coming to the end of his anniversary address as President of the Royal Society of London. Just three years after his Nobel Prize for the discovery of vitamins, Sir Frederick Gowland Hopkins is now a sprightly 71, his intellectual vigour undiminished. He had begun his address with a celebration of nuclear physics. Earlier that year Chadwick had proved the existence of the neutron, and Cockcroft and Walton had split the nucleus, releasing the power of atomic energy. Kudos to the Cavendish Laboratory in Cambridge – truly an annus mirabilis. The phenomenon of transmutation seemed to be at hand in full reality, Hopkins had remarked, relishing his words. After all, the lithium nucleus had been converted into two helium nuclei – nuclear fission. Who knew then what the next decades would bring. With a degree of trepidation that he’s careful to offset by his choice of words, Hopkins moves on to the emission of radiation by cells, which he notes might even accelerate cell division. Does he hear murmuring in the audience? No matter. Science must push the boundaries. He is eager to close with the most brilliant work from his own field of biochemistry. Science is international. He picks out the young Krebs of Freiburg-im- Breisgau, whose revelatory work has just the degree of unexpectedness to be expected of biochemical phenomena (he allows himself a flicker of pride in his wording here) – work that shows why experimental biochemistry must remain an independent scientific discipline. The audience knows he’s an unabashed advocate for his fledgling field. He is content to live up to it. Hans Krebs had shown how biochemistry can escape from the dogma that chemical methods cannot be used to study life because they instantaneously convert the living into the dead. By adding precise quantities of amino acids to thin slices of living tissues and making meticulous measurements of the gases emanating, Krebs had shown how cells make the waste-product urea, excreted in urine, through a cycle of reactions. This was not dead chemistry, but a dynamic living process.",
+          "wordCount": 373,
+          "characterCount": 2317,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            1
+          ]
+        },
+        {
+          "index": 2,
+          "text": "In the audience, Hopkins’s many friends are smiling. They know his obsession with the dynamic side of biochemistry. And they also know he’s right. There is no more beloved figure in science than Sir Frederick. Nobel Prize, Knight of the Realm and soon to be elevated to Order of Merit: a pillar of the establishment. But he always felt an outsider. He had been expelled for truancy (or technically ‘his removal was advised’) from the City of London School. He had simply failed to turn up one morning, for reasons he could never explain to himself, and then, shrinking from the inevitable shame and punishment, persisted in his truancy for weeks, hanging out in shipyards and museums and libraries. He’d ended up in a new school that had barely tested him at all, before taking an unrewarding (and indeed unpaid) apprenticeship in an analytical chemistry laboratory. But it turned out he was a brilliant and meticulous chemist. He took several short courses at which he excelled before finally getting a break – a dream job in forensic medicine at Guy’s Hospital in London. That led him to Cambridge at the end of the nineteenth century, where in due course he was elected its first professor of biochemistry. It had been an unusually circuitous route, which omitted the orthodox training in Germany, where the founding fathers of biochemistry had plied their craft. No doubt that only added to his sense of being an outsider. It must have fostered his originality too. He had nothing of their authoritarian approach to science but rather earned the love of those around him. Hopkins nurtured a joyously free, productive and non-hierarchical lab environment. He had been backed consistently by the nascent Medical Research Council (MRC), but they were perpetually frustrated by his stubborn refusal to dedicate his time and efforts to applied medical research, neither taking his own early work on vitamins forward, nor expecting others to address practical problems. Instead he collected a group of incalcitrants, who seemed to work on whatever they pleased, including the dazzling polymath J. B. S. Haldane, who was temporarily dismissed from Cambridge for gross immorality (cohabiting with a married woman), and several brilliant if equally unmanageable women, notably Marjory Stephenson and Dorothy Needham. Known affectionately as Hoppy to his colleagues (which I doubt impressed the MRC either), Hopkins did occasionally influence their direction of research, for example convincing the young Marjory Stephenson to work on bacterial metabolism. Her pioneering studies (most famously on bacteria living in stagnant river waters, causing more anguish at the MRC) forced open the doors of the Royal Society; she was elected its first female Fellow in 1945, alongside the crystallographer Kathleen Lonsdale.",
+          "wordCount": 449,
+          "characterCount": 2809,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            2
+          ]
+        },
+        {
+          "index": 3,
+          "text": "But Hopkins’s real mission was the development of biochemistry as an experimental discipline, with its own methodology and way of seeing the world. It was vibrant and fun. The lab’s journal, Brighter Biochemistry, included compilations of verse (Haldane wrote an annual report in rhyming couplets), exam questions from the future, cartoons and cautionary tales, such as laments for ‘Jane who had no bacteriological technique and so perished miserably’ and ‘Belinda who broke everything and left the laboratory under lamentable circumstances.’ Don’t be fooled by their irreverence. These were serious minds at play, and Hoppy’s laboratory nurtured some of the most imaginative and original scientists of their generation, including a number who went on to win Nobel prizes. Hans on board This was the world into which the young Hans Krebs arrived in 1933. He had not intended to leave Freiburg, of course, but had been relieved of his position, like almost all those of Jewish ancestry, after Hitler became Chancellor in January 1933. Krebs soon realised he needed to get as far from Germany as possible; even the offer of a position in Zurich seemed a little too risky. Rarely has the attainment of fame (and in particular the recognition from Hopkins in his anniversary address to the Royal Society) been more fortuitously timed. Hopkins was one of a group of the great and good – forty-one eminent intellectuals, including H. A. L. Fisher, Margery Fry, J. S. Haldane (the equally distinguished father of J. B. S.), A. E. Housman, John Maynard Keynes, Ernest Rutherford and J. J. Thomson – who in May that year had founded the Academic Assistance Council to support scholars who had been obliged to relinquish their posts in Germany. The founders defined their goal as ‘the relief of suffering and the defence of learning and science’. Krebs was the first to be backed by this scheme, arriving in Cambridge in June with a cargo of thirty manometers, his equipment for measuring minute changes in gas pressure. You can imagine that Hopkins’s lab was very different to anything that Krebs had known in Germany. Years later, Krebs reflected on what he called ‘the British way of life’, writing that ‘The Cambridge laboratory included people of many dispositions, convictions and abilities.",
+          "wordCount": 374,
+          "characterCount": 2287,
+          "paragraphCount": 1,
+          "startsWithHeader": false,
+          "headerText": null,
+          "wordCountCategory": "TooLong",
+          "paragraphIndices": [
+            3
+          ]
+        }
+      ],
+      "analysis": {
+        "totalChunks": 37,
+        "headerChunks": 1,
+        "wordCountDistribution": {
+          "TooShort": 1,
+          "Ideal": 1,
+          "Good": 9,
+          "TooLong": 26
+        },
+        "averageWordsPerChunk": 361,
+        "totalWords": 13362,
+        "qualityScore": "27.0%"
+      }
+    }
+  ]
+}

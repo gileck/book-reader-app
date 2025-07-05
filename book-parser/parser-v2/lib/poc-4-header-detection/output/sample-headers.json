@@ -1,0 +1,37 @@
+{
+  "summary": {
+    "totalChapters": 44,
+    "totalParagraphs": 675,
+    "totalHeaders": 10,
+    "overallHeaderRate": "1.5%",
+    "processingTime": "2025-07-04T06:25:08.514Z",
+    "algorithm": "6-Rule Header Detection",
+    "rules": {
+      "ALL_CAPS": {
+        "weight": 0.3,
+        "description": "All capital letters"
+      },
+      "SHORT_LENGTH": {
+        "weight": 0.2,
+        "description": "Short length (3-8 words)"
+      },
+      "NO_PERIOD": {
+        "weight": 0.15,
+        "description": "No ending period"
+      },
+      "ISOLATED_LINE": {
+        "weight": 0.15,
+        "description": "Isolated line (blank lines before/after)"
+      },
+      "BOLD_PATTERN": {
+        "weight": 0.1,
+        "description": "Bold/formatting patterns"
+      },
+      "SEMANTIC_PATTERN": {
+        "weight": 0.1,
+        "description": "Semantic header patterns"
+      }
+    }
+  },
+  "highConfidenceHeaders": []
+}

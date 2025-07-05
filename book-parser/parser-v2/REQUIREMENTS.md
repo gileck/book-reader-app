@@ -53,7 +53,7 @@ The parser generates the following files in the same folder as the input:
 
 **Specific Requirements**:
 - **Paragraph-Based Chunking**: Each chunk is based on paragraph boundaries (may contain multiple merged paragraphs or split long paragraphs)
-- **Paragraph Definition**: A paragraph is text that ends with a literal newline character (`\n`) in the raw PDF text
+- **Paragraph Definition**: A paragraph is a group of sentences that do not include a newline character. As long as a group of sentences are on the same line (without newline breaks), they constitute a single paragraph. Paragraphs are separated by literal newline characters (`\n`) in the raw PDF text.
 - **PDF Text Extraction**: Use raw PDF text extraction to find literal `\n` characters for paragraph boundaries
 - **Chunk Size**: Target 80-300 words per chunk (flexible for paragraph integrity)
 - **Page Number Assignment**: Each chunk gets the page number where its first paragraph begins

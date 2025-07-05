@@ -1,0 +1,18 @@
+{
+  "chunkCount": 1,
+  "wordCountStats": {
+    "min": 150,
+    "max": 150,
+    "avg": 150
+  },
+  "chunks": [
+    {
+      "index": 0,
+      "wordCount": 150,
+      "type": "text",
+      "pageNumber": 1,
+      "chapterNumber": 1,
+      "preview": "Sample chunk text..."
+    }
+  ]
+}

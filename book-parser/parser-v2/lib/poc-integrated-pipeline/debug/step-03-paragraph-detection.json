@@ -1,0 +1,3440 @@
+{
+  "step": "paragraph-detection",
+  "timestamp": "2025-07-05T08:53:11.780Z",
+  "success": true,
+  "statistics": {
+    "totalParagraphs": 427,
+    "averageLength": 2147,
+    "lengthRange": {
+      "min": 14,
+      "max": 3385
+    },
+    "chaptersProcessed": 13,
+    "paragraphsPerChapter": 33
+  },
+  "paragraphs": [
+    {
+      "index": 0,
+      "chapterNumber": 11,
+      "textLength": 2221,
+      "pageNumber": 222,
+      "preview": "The reverse Krebs cycle\nBerkeley casts a long shadow over the photosynthesis world. Five years\nafter Calvin’s  Nobel lecture,  another luminary of  photosynthesis\nresearch, also  at  Berkeley,  publis...",
+      "wordCount": 345
+    },
+    {
+      "index": 1,
+      "chapterNumber": 11,
+      "textLength": 2160,
+      "pageNumber": 223,
+      "preview": "79\nelectrons, streaming from water, powers the extrusion of protons across a\nmembrane, generating a proton-motive force. This drives the synthesis of\nATP  through that  extraordinary nanoturbine, the ...",
+      "wordCount": 340
+    },
+    {
+      "index": 2,
+      "chapterNumber": 11,
+      "textLength": 1356,
+      "pageNumber": 224,
+      "preview": "80\nInstead of  pulling out  hydrogen and  CO\n2\n  from organic molecules to\ngenerate ATP, the reverse Krebs cycle does the opposite: it uses CO\n2\n and\nhydrogen to make new organic molecules (and costs ...",
+      "wordCount": 226
+    },
+    {
+      "index": 3,
+      "chapterNumber": 11,
+      "textLength": 2800,
+      "pageNumber": 224,
+      "preview": "81\nphosphoenol-pyruvate, as you can see on page 287). The reverse cycle\nintegrates them into a  biosynthetic engine at  the  very heart of\nmetabolism, in a way that makes perfect sense. The Krebs cycl...",
+      "wordCount": 453
+    },
+    {
+      "index": 4,
+      "chapterNumber": 11,
+      "textLength": 2562,
+      "pageNumber": 226,
+      "preview": "82\nthat threw Calvin and Benson off the trail for half a decade. In one sense\nthese were not  misleading at  all. They pointed to  something equally\nimportant: sugars are peripheral. They’re needed fo...",
+      "wordCount": 425
+    },
+    {
+      "index": 5,
+      "chapterNumber": 11,
+      "textLength": 2075,
+      "pageNumber": 227,
+      "preview": "83\nYet  tiny  sulfur bacteria could apparently reverse the  Krebs cycle\nwithout problem. They did so by using a small, red protein discovered in\nthe early 1960s which seemed to be capable of magic – t...",
+      "wordCount": 347
+    },
+    {
+      "index": 6,
+      "chapterNumber": 11,
+      "textLength": 1929,
+      "pageNumber": 228,
+      "preview": "84\nbeautiful). The  critical point here  is  that  ferredoxin has  a  biologically\nunparalleled ability  to  press electrons onto even the  most unreactive\nmolecules. But  that  comes at  a  cost. Fer...",
+      "wordCount": 312
+    },
+    {
+      "index": 7,
+      "chapterNumber": 11,
+      "textLength": 2627,
+      "pageNumber": 229,
+      "preview": "85\nit can generate reactive free radicals. This eventuality is largely\navoided by Fd\n2–\n swiftly passing its electrons on to NADP\n+\n to form\nNADPH, rather than directly to CO\n2\n.\nRather than dealing i...",
+      "wordCount": 426
+    },
+    {
+      "index": 8,
+      "chapterNumber": 11,
+      "textLength": 2770,
+      "pageNumber": 230,
+      "preview": "86\nfor replacing rubisco with an ‘improved’ enzyme could be sudden death.\nNo doubt we’ll find out in due course.\nAll that reasoning is consistent with a relatively late evolution of the\nCalvin–Benson ...",
+      "wordCount": 459
+    },
+    {
+      "index": 9,
+      "chapterNumber": 11,
+      "textLength": 2843,
+      "pageNumber": 232,
+      "preview": "87\nlyase was thought to be present in the genomes of all bacteria using the\nreverse Krebs cycle. In phylogenetic analyses, this gene was taken to be\ndiagnostic for  the  presence of  the  reverse cycl...",
+      "wordCount": 477
+    },
+    {
+      "index": 10,
+      "chapterNumber": 11,
+      "textLength": 3253,
+      "pageNumber": 233,
+      "preview": "88\n3 The very idea behind the cyclotron had been criticised by no less a figure than\nAlbert Einstein, who compared the idea of firing subatomic particles at a target to\nbe something akin to shooting b...",
+      "wordCount": 544
+    },
+    {
+      "index": 11,
+      "chapterNumber": 11,
+      "textLength": 3385,
+      "pageNumber": 235,
+      "preview": "89\n8 Did you really want to know what they are? A is fructose phosphate, a six-\ncarbon sugar. B represents several different sugars, including xylulose phosphate\n(C5), erythrose phosphate (C4) and  se...",
+      "wordCount": 567
+    },
+    {
+      "index": 12,
+      "chapterNumber": 11,
+      "textLength": 789,
+      "pageNumber": 236,
+      "preview": "90\n11  NADP\n+\n  is  a  phosphorylated form of  NAD\n+\n  (nicotinamide adenine\ndinucleotide), which  we  met  in  the  previous chapter as  the  main carrier\nresponsible for transferring 2H from Krebs-c...",
+      "wordCount": 127
+    },
+    {
+      "index": 13,
+      "chapterNumber": 11,
+      "textLength": 2323,
+      "pageNumber": 237,
+      "preview": "91\n3\nFROM GASES TO LIFE\n‘Isn’t the deep ocean supposed to be like a desert?’ Jack Corliss’s voice\ncrackled from  the  depths to  the  acoustic telephone aboard the Lulu.\nDescribed as  a  floating junk...",
+      "wordCount": 383
+    },
+    {
+      "index": 14,
+      "chapterNumber": 11,
+      "textLength": 2764,
+      "pageNumber": 238,
+      "preview": "92\nchaos!’, recalled one  researcher. This  was  an  unimagined finding: a\ndeep-sea food  chain  that  apparently did  not  depend on  sunlight or\nphotosynthesis, but lived on the gas hydrogen sulfide...",
+      "wordCount": 438
+    },
+    {
+      "index": 15,
+      "chapterNumber": 11,
+      "textLength": 2693,
+      "pageNumber": 239,
+      "preview": "93\ncatalyse the  reaction between carbon dioxide and  hydrogen, forming\ncarboxylic acids,  the  carbon skeletons from  which all  other  cellular\nbuilding blocks are made. The only problem was that th...",
+      "wordCount": 414
+    },
+    {
+      "index": 16,
+      "chapterNumber": 11,
+      "textLength": 2787,
+      "pageNumber": 241,
+      "preview": "94\npassionate and  opinionated until  the  evidence forces a  reluctant\nagreement, which has not happened yet. I should confess to a personal\nbias here: as a biochemist with a particular interest in b...",
+      "wordCount": 449
+    },
+    {
+      "index": 17,
+      "chapterNumber": 11,
+      "textLength": 2512,
+      "pageNumber": 242,
+      "preview": "95\novercome? That in turn boils down to genes first or metabolism first?\nThe thrust of this book is that energy is primal – energy flow shapes\ngenetic information. I will argue that the structure of m...",
+      "wordCount": 427
+    },
+    {
+      "index": 18,
+      "chapterNumber": 11,
+      "textLength": 2659,
+      "pageNumber": 243,
+      "preview": "96\nwere vaporised and returned to the air and oceans as CO\n2\n, its primordial\nstate, then that would give an atmospheric pressure of about 100 bars of\nCO\n2\n (a bar being roughly the modern atmospheric...",
+      "wordCount": 444
+    },
+    {
+      "index": 19,
+      "chapterNumber": 11,
+      "textLength": 2732,
+      "pageNumber": 245,
+      "preview": "97\nassertion, and it would not begin to compare quantitatively with H\n2\n and\nCO\n2\n.\nOf course, having plentiful H\n2\n and CO\n2\n is irrelevant if they don’t\nreact  with  each  other. This  has  long  be...",
+      "wordCount": 438
+    },
+    {
+      "index": 20,
+      "chapterNumber": 11,
+      "textLength": 2654,
+      "pageNumber": 246,
+      "preview": "98\n(LUCA). Like the Krebs cycle, the acetyl CoA pathway depends on H\n2\nand CO\n2\n, but in other respects it seems to be even more ancient – it is a\nshort, linear pathway that does not require any addit...",
+      "wordCount": 441
+    },
+    {
+      "index": 21,
+      "chapterNumber": 11,
+      "textLength": 2588,
+      "pageNumber": 247,
+      "preview": "99\nI mentioned the second possibility in the previous chapter – it could\nbe that the reverse Krebs cycle is conserved more widely than had been\nthought, in archaea as well as bacteria. That might be t...",
+      "wordCount": 432
+    },
+    {
+      "index": 22,
+      "chapterNumber": 11,
+      "textLength": 2757,
+      "pageNumber": 249,
+      "preview": "100\nnon-equilibrium thermodynamics, and with a lifelong fascination with\nthe origin of life, Morowitz testified against the pervasive idea that life\nbreaks the second law of thermodynamics – the tende...",
+      "wordCount": 433
+    },
+    {
+      "index": 23,
+      "chapterNumber": 11,
+      "textLength": 2293,
+      "pageNumber": 250,
+      "preview": "101\nof  matter. There  it  is,  at  the  centre of  all  biochemical charts, linked\nfundamentally to  energy  flow. Although the  reverse cycle  had  been\ndiscovered several years before his 1968 book...",
+      "wordCount": 380
+    },
+    {
+      "index": 24,
+      "chapterNumber": 11,
+      "textLength": 1388,
+      "pageNumber": 251,
+      "preview": "102\nThe reverse Krebs cycle repeats its succession of steps, highlighted\nin bold lettering. Starting with ferredoxin the repeated steps are:\n+CO\n2\n, +CO\n2\n, +2H, –H\n2\nO, +2H, +CoA. The only difference...",
+      "wordCount": 236
+    },
+    {
+      "index": 25,
+      "chapterNumber": 11,
+      "textLength": 2754,
+      "pageNumber": 252,
+      "preview": "103\nuniversal not because it was better than any other code, but because\nmutational changes to any code, once established, would be catastrophic,\nhence could not occur. We now know that’s not correct....",
+      "wordCount": 440
+    },
+    {
+      "index": 26,
+      "chapterNumber": 11,
+      "textLength": 2745,
+      "pageNumber": 253,
+      "preview": "104\nThere’s no question that Orgel had a powerful point. I think that it’s\nfatal to the idea of the reverse Krebs cycle – as a strict cycle – being truly\nprebiotic. On the other hand, there is clearly...",
+      "wordCount": 459
+    },
+    {
+      "index": 27,
+      "chapterNumber": 11,
+      "textLength": 2498,
+      "pageNumber": 255,
+      "preview": "105\nbiochemistry, the carboxylic acids from which other cell components are\nmade. Experimental work shows that some of those cell components\n(some amino acids,  sugars and  fatty  acids)  really  can ...",
+      "wordCount": 425
+    },
+    {
+      "index": 28,
+      "chapterNumber": 11,
+      "textLength": 2052,
+      "pageNumber": 256,
+      "preview": "106\ndashed lines. I’m saying ‘imagine it’, but let me be clear: experiments\nshow  that  CO\n2\n  adsorption and  reduction, as  I  describe below,  does\nindeed happen. Binding to a surface works a bit l...",
+      "wordCount": 342
+    },
+    {
+      "index": 29,
+      "chapterNumber": 11,
+      "textLength": 1448,
+      "pageNumber": 257,
+      "preview": "107\nperform the chemistry in ferredoxin. Both the minerals and clusters can\nalso incorporate other metals that transfer pairs of electrons even more\nreadily, especially nickel. So how far does this pa...",
+      "wordCount": 239
+    },
+    {
+      "index": 30,
+      "chapterNumber": 11,
+      "textLength": 1871,
+      "pageNumber": 258,
+      "preview": "108\nAs before, the curly arrows depict the movement of a pair of electrons,\ninitially from the surface of the mineral onto the carbon atom, allowing\nthe oxygen atom to take back the electron pair it h...",
+      "wordCount": 331
+    },
+    {
+      "index": 31,
+      "chapterNumber": 11,
+      "textLength": 1328,
+      "pageNumber": 259,
+      "preview": "109\nThe final step in this sequence is another repeat, but this time the oxygen\ntakes its final bonding pair of electrons and detaches as a hydroxide ion\n(OH\n–\n), leaving now a methyl group (-CH\n3\n) b...",
+      "wordCount": 238
+    },
+    {
+      "index": 32,
+      "chapterNumber": 11,
+      "textLength": 1991,
+      "pageNumber": 259,
+      "preview": "110\nlife, but of course cells do it all the time, albeit using enzymes and ATP.\nA deep secret of life is that enzymes never pull water from a hat. Rather,\nthe  constituent parts  of  water  are  remov...",
+      "wordCount": 337
+    },
+    {
+      "index": 33,
+      "chapterNumber": 11,
+      "textLength": 1947,
+      "pageNumber": 260,
+      "preview": "111\npulled it out of a hat by a simple trick. Rather than being bound through\nthe sulfur to the handle that is coenzyme A, in this case the acetyl is\nbound directly to the surface. Critically, it shar...",
+      "wordCount": 325
+    },
+    {
+      "index": 34,
+      "chapterNumber": 11,
+      "textLength": 2482,
+      "pageNumber": 261,
+      "preview": "112\nfavour the continuous transfer of electrons from the surface, forming not\nonly Krebs-cycle intermediates, but also longer-chain carboxylic acids –\nfatty acids – capable of forming membranes. On th...",
+      "wordCount": 414
+    },
+    {
+      "index": 35,
+      "chapterNumber": 11,
+      "textLength": 2636,
+      "pageNumber": 263,
+      "preview": "113\nto alkaline hydrothermal vents, is that the reactivity of both H\n2\n and CO\n2\ndepends on  the  local  concentration  of  H\n+\n  ions,  which is  to  say,  pH.\nWe’ve noted this already for CO\n2\n. Man...",
+      "wordCount": 454
+    },
+    {
+      "index": 36,
+      "chapterNumber": 11,
+      "textLength": 2353,
+      "pageNumber": 264,
+      "preview": "114\nthe protons detach, Ech becomes more reactive, and can now force its\nelectrons onto ferredoxin, which in turn pushes them onto CO\n2\n. Then\nincoming protons bind Ech again, and the cycle repeats it...",
+      "wordCount": 393
+    },
+    {
+      "index": 37,
+      "chapterNumber": 11,
+      "textLength": 2736,
+      "pageNumber": 265,
+      "preview": "115\nHow do we get from pores in hydrothermal vents to the first cell-like\nstructures? You can be forgiven for thinking that these first few steps of\nprebiotic chemistry are still a long way from life,...",
+      "wordCount": 431
+    },
+    {
+      "index": 38,
+      "chapterNumber": 11,
+      "textLength": 1888,
+      "pageNumber": 266,
+      "preview": "116\nfundamental requirement is that H\n2\n is in alkaline conditions, while CO\n2\nis in acidic conditions. In principle, this arrangement could be achieved\nby protons crossing the inorganic barrier, rath...",
+      "wordCount": 288
+    },
+    {
+      "index": 39,
+      "chapterNumber": 11,
+      "textLength": 2698,
+      "pageNumber": 267,
+      "preview": "117\niron  and  sulfide, generating more  ferredoxin-like FeS  clusters. The\nprotocells with  the  most  FeS  clusters should make  the  most  new\norganics, favouring more of the same physical interact...",
+      "wordCount": 418
+    },
+    {
+      "index": 40,
+      "chapterNumber": 11,
+      "textLength": 2608,
+      "pageNumber": 269,
+      "preview": "118\ncode had no need to ‘invent’ information from nothing: information took\nits meaning from protocell growth from the beginning. From this point of\nview, genetic information simply enables a more exa...",
+      "wordCount": 426
+    },
+    {
+      "index": 41,
+      "chapterNumber": 11,
+      "textLength": 1168,
+      "pageNumber": 270,
+      "preview": "119\ndidn’t just pop into existence by accident in a prebiotic world. So if the\nfirst cells needed ATP to make genes and proteins, how did they manage\nwithout an ATP synthase?\nThe answer turns out to b...",
+      "wordCount": 194
+    },
+    {
+      "index": 42,
+      "chapterNumber": 11,
+      "textLength": 2770,
+      "pageNumber": 271,
+      "preview": "120\nSilvana Pinna, a PhD student in my lab, has shown that ATP synthesis is\ncatalysed beautifully by ferric iron (Fe\n3+\n), yet no other metal ions she\ntried could do the same job. This finding might e...",
+      "wordCount": 459
+    },
+    {
+      "index": 43,
+      "chapterNumber": 11,
+      "textLength": 2739,
+      "pageNumber": 272,
+      "preview": "121\ncrannies and tap the local flow, growing, dividing, nestling, growing.\nGrowing.\nLet’s leave this chapter with a pregnant thought. I have described an\n‘autotrophic’ origin of life, in which gases r...",
+      "wordCount": 434
+    },
+    {
+      "index": 44,
+      "chapterNumber": 11,
+      "textLength": 3251,
+      "pageNumber": 273,
+      "preview": "122\nuses today, unless the chemistry seems logical to them (and it often doesn’t).\nBiologists tend to think backwards. Natural selection improves selectivity and\nyield, so the first pathways had to ha...",
+      "wordCount": 552
+    },
+    {
+      "index": 45,
+      "chapterNumber": 11,
+      "textLength": 1887,
+      "pageNumber": 275,
+      "preview": "123\nphysics, for the cosmological constants to be what they are – a theory of every-\nthing. In similar vein, it looks increasingly as if carbon chemistry is bound to\ngive rise to the core metabolism o...",
+      "wordCount": 305
+    },
+    {
+      "index": 46,
+      "chapterNumber": 11,
+      "textLength": 2394,
+      "pageNumber": 276,
+      "preview": "124\n4\nREVOLUTIONS\nYou are not completely spineless. You have a notochord: a flexible rod\nmade of cartilage, which in your descendants, millions of generations\nhence, will develop into a proper backbon...",
+      "wordCount": 413
+    },
+    {
+      "index": 47,
+      "chapterNumber": 11,
+      "textLength": 2725,
+      "pageNumber": 277,
+      "preview": "125\nCambrian animals  that  survived to  a  mature age  would suffer  from\ncancer and other degenerative diseases we know today, the scleroses of\nold age itself.\nHow can we possibly know anything abou...",
+      "wordCount": 441
+    },
+    {
+      "index": 48,
+      "chapterNumber": 11,
+      "textLength": 2621,
+      "pageNumber": 278,
+      "preview": "126\nWhy oxygen is unique\nThe path along which atmospheric oxygen rose to modern levels was\nlong and tortuous. We will picture it from some of the more spectacular\nvantage points later  in  this  chapt...",
+      "wordCount": 432
+    },
+    {
+      "index": 49,
+      "chapterNumber": 11,
+      "textLength": 2885,
+      "pageNumber": 280,
+      "preview": "127\nThis is how we know from physiology that the Cambrian explosion\nwas fuelled by nothing other than the complete oxidative Krebs cycle.\nIt’s a numbers game. Aerobic respiration operates at about 40 ...",
+      "wordCount": 477
+    },
+    {
+      "index": 50,
+      "chapterNumber": 11,
+      "textLength": 2592,
+      "pageNumber": 281,
+      "preview": "128\nitself. So why did the Krebs line turn into a cycle in the first place? And\nhow did this cycle flip direction to link with aerobic respiration? How\ndid organisms survive when that happened? Flippi...",
+      "wordCount": 443
+    },
+    {
+      "index": 51,
+      "chapterNumber": 11,
+      "textLength": 2610,
+      "pageNumber": 282,
+      "preview": "129\natmosphere and  hydrosphere are  relatively oxidised, being  composed\nmainly of gases such as CO\n2\n that are comparatively electron-poor, giving\nthem a relatively positive charge. From this point ...",
+      "wordCount": 436
+    },
+    {
+      "index": 52,
+      "chapterNumber": 11,
+      "textLength": 2747,
+      "pageNumber": 284,
+      "preview": "130\ntransferred can pump two protons, just a fifth of the energy available\nfrom aerobic respiration. Even so, repeating this same process over and\nover again does generate a proton-motive force suffic...",
+      "wordCount": 442
+    },
+    {
+      "index": 53,
+      "chapterNumber": 11,
+      "textLength": 2748,
+      "pageNumber": 285,
+      "preview": "131\nThe idea that the details of evolutionary history could be written in\nthe slight differences in amino acid sequence between proteins goes back\nto Francis Crick in 1958, and was first applied in th...",
+      "wordCount": 456
+    },
+    {
+      "index": 54,
+      "chapterNumber": 11,
+      "textLength": 2738,
+      "pageNumber": 287,
+      "preview": "132\nphotosynthesis (where oxygen is the waste), for these bacteria are still\nplugged into the planet, in that all their electrons derive from geological\nsources such as volcanoes and hydrothermal vent...",
+      "wordCount": 425
+    },
+    {
+      "index": 55,
+      "chapterNumber": 11,
+      "textLength": 2538,
+      "pageNumber": 288,
+      "preview": "133\nof biochemistry, for they are surprisingly relevant to the emergence of\nanimals in the Cambrian explosion.\nStructure of an energetically limited world\nRemember our pregnant thought from the end of...",
+      "wordCount": 406
+    },
+    {
+      "index": 56,
+      "chapterNumber": 11,
+      "textLength": 2807,
+      "pageNumber": 289,
+      "preview": "134\noptimal conditions, where oxygen levels are close to zero, and so isn’t\neasily divorced from location.\nBut you can’t always be lucky, punk. Sometimes you’ll get washed up\nin the wrong place. You’d...",
+      "wordCount": 440
+    },
+    {
+      "index": 57,
+      "chapterNumber": 11,
+      "textLength": 2464,
+      "pageNumber": 291,
+      "preview": "135\nmuch waste product was produced by one set of cells and consumed by\nthe  other,  how  far  gases  diffused  (or  electrons hopped) across the\nclumps, and  no  doubt  other  unknown subtleties. But...",
+      "wordCount": 402
+    },
+    {
+      "index": 58,
+      "chapterNumber": 11,
+      "textLength": 2321,
+      "pageNumber": 292,
+      "preview": "136\nUntil now we have considered the Krebs line and posed the question:\nwhy did it first become a cycle? To sustain forwards flux down the Krebs\nline, we need to have high concentrations of early inte...",
+      "wordCount": 380
+    },
+    {
+      "index": 59,
+      "chapterNumber": 11,
+      "textLength": 2703,
+      "pageNumber": 293,
+      "preview": "137\nZap. Repeat. It really can do this all day. Electrons flow. Chlorophyll\ntransduces light into electricity. For the first time, life is freed from the\nchurning bowels of our planet. No  more  must ...",
+      "wordCount": 431
+    },
+    {
+      "index": 60,
+      "chapterNumber": 11,
+      "textLength": 2786,
+      "pageNumber": 294,
+      "preview": "138\nphotosystem, and then reduce ferredoxin in the second. By transferring\nelectrons from water right through the two photosystems linked in series\n(through the  Z  scheme) oxygenic photosynthesis fre...",
+      "wordCount": 440
+    },
+    {
+      "index": 61,
+      "chapterNumber": 11,
+      "textLength": 2427,
+      "pageNumber": 296,
+      "preview": "139\nof  atmospheric oxygen depend on  exactly such  a  balance –  the  rate\noxygen is produced by photosynthesis minus the rate it is consumed by\nrespiration, rotting, oxidation of minerals and so on....",
+      "wordCount": 402
+    },
+    {
+      "index": 62,
+      "chapterNumber": 11,
+      "textLength": 2655,
+      "pageNumber": 297,
+      "preview": "140\n(30/1,000). This difference can be measured in modern plants as well as\nin  traces  of  organic  matter trapped in  ancient rocks. The  bias  leaves\nbehind a little more \n13\nC in the oceans and at...",
+      "wordCount": 435
+    },
+    {
+      "index": 63,
+      "chapterNumber": 11,
+      "textLength": 2791,
+      "pageNumber": 298,
+      "preview": "141\noxidised than was buried for millions of years. That in turn implies that\noxygen was being consumed, stripped out of the air, producing a massive\noxygen deficit. Yet at the end of this period, by ...",
+      "wordCount": 467
+    },
+    {
+      "index": 64,
+      "chapterNumber": 11,
+      "textLength": 2696,
+      "pageNumber": 300,
+      "preview": "142\nmountain ranges rose. Eroding from the uplifting mountains, a great flux\nof sulfate flooded back into the oceans. This flood reflected the power of\nplate tectonics, but also the hand of chance: th...",
+      "wordCount": 428
+    },
+    {
+      "index": 65,
+      "chapterNumber": 11,
+      "textLength": 2549,
+      "pageNumber": 301,
+      "preview": "143\nstifling conditions. The gentle filter feeders that had made it through to\nthe Permian had low oxygen requirements but no circulatory systems.\nThey died.\nThree hundred million years before the end...",
+      "wordCount": 412
+    },
+    {
+      "index": 66,
+      "chapterNumber": 11,
+      "textLength": 1912,
+      "pageNumber": 302,
+      "preview": "144\n(as anticipated by Szent-Györgyi in the 1930s) that we have followed\nover the last few chapters. The oxidative prong corresponds to the first\nfew steps of Krebs’s own vision, where acetyl CoA inst...",
+      "wordCount": 310
+    },
+    {
+      "index": 67,
+      "chapterNumber": 11,
+      "textLength": 2804,
+      "pageNumber": 303,
+      "preview": "145\ndehydrogenase. Although structurally very similar (clearly derived from\na common ancestor) this does exactly the opposite, stripping electrons\nfrom succinate to generate fumarate, feeding the elec...",
+      "wordCount": 446
+    },
+    {
+      "index": 68,
+      "chapterNumber": 11,
+      "textLength": 2717,
+      "pageNumber": 305,
+      "preview": "146\nefficient energy use, as tight as that in the ancient anaerobic world. And\nthe same principles can help to guide us here too.\nThe first principle is to maximise the driving force – increase the\nco...",
+      "wordCount": 431
+    },
+    {
+      "index": 69,
+      "chapterNumber": 11,
+      "textLength": 2787,
+      "pageNumber": 306,
+      "preview": "147\ntheir metabolic state, creating a metabolic homeostasis that shields them\nfrom the vicissitudes of the environment. The multiple tissues of animals\ncould be seen this way too; to some extent, indi...",
+      "wordCount": 425
+    },
+    {
+      "index": 70,
+      "chapterNumber": 11,
+      "textLength": 3301,
+      "pageNumber": 307,
+      "preview": "148\n1 Like many people of my generation, I first came across Pikaia in an inspiring,\nif flawed, book by Steven Jay Gould, Wonderful Life. Pikaia’s standing on the\nevolutionary path to vertebrates has ...",
+      "wordCount": 509
+    },
+    {
+      "index": 71,
+      "chapterNumber": 11,
+      "textLength": 2925,
+      "pageNumber": 309,
+      "preview": "149\nthe synthesis of more oxaloacetate from acetyl CoA. It therefore seems likely\nthat  the  reverse Krebs cycle  generally  regenerates oxaloacetate, whereas the\nacetyl CoA is bled off to form fatty ...",
+      "wordCount": 479
+    },
+    {
+      "index": 72,
+      "chapterNumber": 11,
+      "textLength": 2264,
+      "pageNumber": 311,
+      "preview": "150\n5\nTO THE DARK SIDE\n‘The dream of every cell is to become two cells’ said François Jacob, the\nmost lyrical revolutionary of molecular biology. No cell lives the dream\nso wholly or so senselessly as...",
+      "wordCount": 390
+    },
+    {
+      "index": 73,
+      "chapterNumber": 11,
+      "textLength": 2793,
+      "pageNumber": 312,
+      "preview": "151\nthe context. Ostensibly random mutations began to make sense in much\nthe same way that scattered dots, when joined up dot to dot, begin to\ndepict a meaningful image. There is a scientific thrill a...",
+      "wordCount": 460
+    },
+    {
+      "index": 74,
+      "chapterNumber": 11,
+      "textLength": 2859,
+      "pageNumber": 313,
+      "preview": "152\nenvironment. The idea that ‘one rogue cell’ causes cancer is a scientific\nmorality tale. The rogue cell is an unfortunate product of multiple blind\nhits to its genes, acts of arbitrary violence in...",
+      "wordCount": 462
+    },
+    {
+      "index": 75,
+      "chapterNumber": 11,
+      "textLength": 2476,
+      "pageNumber": 314,
+      "preview": "153\nage. People over the age of fifty have around ninety times the risk of\npeople younger than twenty-four. I’m now in my mid-fifties. My risk of\ncancer will double by the time I’m in my early sixties...",
+      "wordCount": 421
+    },
+    {
+      "index": 76,
+      "chapterNumber": 11,
+      "textLength": 2650,
+      "pageNumber": 316,
+      "preview": "154\nOtto Warburg was a genius. He could have won the Nobel prize three\ntimes and it would not have been undeserving. In some respects, he was\nhalf a century ahead of his time. From the 1930s, he advoc...",
+      "wordCount": 413
+    },
+    {
+      "index": 77,
+      "chapterNumber": 11,
+      "textLength": 2783,
+      "pageNumber": 317,
+      "preview": "155\nTowards the end of the First World War, Einstein wrote to Otto at the\nbehest of his mother, urging him not to return to the Russian front after\nan injury (for which he was awarded the Iron Cross) ...",
+      "wordCount": 455
+    },
+    {
+      "index": 78,
+      "chapterNumber": 11,
+      "textLength": 2047,
+      "pageNumber": 318,
+      "preview": "156\nnot play dice.’ The idea that life is nearly perfect is alien to evolutionary\nbiologists, who  see  messy trade-offs  everywhere. Yet  Warburg  saw\nnature through a prism that filtered out the tor...",
+      "wordCount": 334
+    },
+    {
+      "index": 79,
+      "chapterNumber": 11,
+      "textLength": 2621,
+      "pageNumber": 319,
+      "preview": "157\nto pyruvate (‘glycolysis’) normally produces two molecules of ATP, plus\ntwo molecules of NADH (which is to say the ‘2H’, usually oxidised in\nrespiration). The problem, when oxygen is unavailable, ...",
+      "wordCount": 435
+    },
+    {
+      "index": 80,
+      "chapterNumber": 11,
+      "textLength": 2595,
+      "pageNumber": 321,
+      "preview": "158\nhe ever truly loved, died from breast cancer when Adolf was eighteen.\nHer Jewish doctor, Eduard Bloch, wrote that ‘outwardly, Hitler’s love for\nhis mother was his most striking feature. I have nev...",
+      "wordCount": 442
+    },
+    {
+      "index": 81,
+      "chapterNumber": 11,
+      "textLength": 2800,
+      "pageNumber": 322,
+      "preview": "159\nswiftly over the last decade? Because Warburg was not entirely wrong\neither. He was onto something. Just not quite the right thing.\nWarburg’s  tendency to  assert  truth  in  the  face  of  confli...",
+      "wordCount": 454
+    },
+    {
+      "index": 82,
+      "chapterNumber": 11,
+      "textLength": 2806,
+      "pageNumber": 323,
+      "preview": "160\nmain point. For growth is the key, and growth needs more than ATP.\nRespiration undoubtedly declines as we age, but the underlying problem\nis not a shortfall in ATP, but rather a shift in metabolic...",
+      "wordCount": 463
+    },
+    {
+      "index": 83,
+      "chapterNumber": 11,
+      "textLength": 2794,
+      "pageNumber": 325,
+      "preview": "161\nHere’s the problem. Let’s start with glucose, which I’m sure you’ll\nremember is  a  six-carbon sugar. A  single  molecule of  glucose could\nproduce between thirty and thirty-six molecules of ATP t...",
+      "wordCount": 453
+    },
+    {
+      "index": 84,
+      "chapterNumber": 11,
+      "textLength": 2586,
+      "pageNumber": 326,
+      "preview": "162\n‘differentiated’ cells, so called because they have plenty of recognisable\ncellular structures under  the  microscope. These structures are  made\nlargely of proteins, and protein synthesis has the...",
+      "wordCount": 432
+    },
+    {
+      "index": 85,
+      "chapterNumber": 11,
+      "textLength": 1993,
+      "pageNumber": 328,
+      "preview": "163\nme. Since then, Frezza and a few of his colleagues around the world\nhave reconceptualised the role of the Krebs cycle and metabolic flux in\ncancer.\nRecall that  at  the  end  of Chapter 4  we  tou...",
+      "wordCount": 325
+    },
+    {
+      "index": 86,
+      "chapterNumber": 11,
+      "textLength": 2737,
+      "pageNumber": 329,
+      "preview": "164\nThe  dotted  line  shows the  transfer of  two  electrons from  NADH to\nfumarate. The waste product, succinate, accumulates, and can readily\nescape from the mitochondria. Now, here’s the rub, whic...",
+      "wordCount": 461
+    },
+    {
+      "index": 87,
+      "chapterNumber": 11,
+      "textLength": 2757,
+      "pageNumber": 330,
+      "preview": "165\nglycolysis, which we’ve seen promote ATP synthesis in the absence of\noxygen. But the genes switched on by HIF\n1α\n also encode proteins that\ndrive growth and inflammation. When I talked about low o...",
+      "wordCount": 436
+    },
+    {
+      "index": 88,
+      "chapterNumber": 11,
+      "textLength": 2209,
+      "pageNumber": 331,
+      "preview": "166\nthink for a moment about the common disorders where oxygen delivery\nto  tissues becomes compromised. Stroke. Heart  attacks. Dementia.\nArthritis. Organ transplants. Succinate accumulation is centr...",
+      "wordCount": 360
+    },
+    {
+      "index": 89,
+      "chapterNumber": 11,
+      "textLength": 1930,
+      "pageNumber": 332,
+      "preview": "167\nthe Krebs cycle with Salvador Moncada in his directorial office at the\nWolfson Institute a decade ago. Moncada had few equals in bestriding\npharmaceutical and  academic research. He  arrived at  t...",
+      "wordCount": 305
+    },
+    {
+      "index": 90,
+      "chapterNumber": 11,
+      "textLength": 2693,
+      "pageNumber": 333,
+      "preview": "168\nwith defective mitochondria would habitually drive part of their Krebs\ncycle backwards, to make citrate (C6) by reacting α-ketoglutarate (C5)\nwith CO\n2\n  –  a  rare  case  of  carbon fixation in  ...",
+      "wordCount": 451
+    },
+    {
+      "index": 91,
+      "chapterNumber": 11,
+      "textLength": 2715,
+      "pageNumber": 335,
+      "preview": "169\nthrough the rotary motor of the ATP synthase and remain outside. That\nsupercharges the electrical membrane potential. Respiration can’t pump\nprotons against a supercharged electrical potential, so...",
+      "wordCount": 429
+    },
+    {
+      "index": 92,
+      "chapterNumber": 11,
+      "textLength": 2573,
+      "pageNumber": 336,
+      "preview": "170\ntransfers 2H  from  NADPH onto  NAD\n+\n,  which raises  NADH levels.\nRather than  drawing on  the  proton-motive force, the  flipped\ntranshydrogenase pumps protons across the membrane, recharging t...",
+      "wordCount": 403
+    },
+    {
+      "index": 93,
+      "chapterNumber": 11,
+      "textLength": 1501,
+      "pageNumber": 337,
+      "preview": "171\nHow glutamine sustains cancer growth: the ‘NH\n3\n’ can be lost as\nammonia or transferred to amino acids and used for nucleotide\nsynthesis. The α-ketoglutarate can form both citrate (for\nbiosynthesi...",
+      "wordCount": 247
+    },
+    {
+      "index": 94,
+      "chapterNumber": 11,
+      "textLength": 1812,
+      "pageNumber": 338,
+      "preview": "172\nactivity depends on  the  availability of  NADH. The  sirtuins normally\nclose down growth and sexual development when times are lean, and\nthere’s little NADH from food. Conversely, if NADH levels ...",
+      "wordCount": 306
+    },
+    {
+      "index": 95,
+      "chapterNumber": 11,
+      "textLength": 1605,
+      "pageNumber": 339,
+      "preview": "173\nYou’re  not  out  of  choices yet. You  can  be  stripped  of  CO\n2\n,  then\nstrapped to  a  phosphate to  form  the  C3  phosphoenol-pyruvate, the\nstarting point for sugar synthesis via gluconeoge...",
+      "wordCount": 249
+    },
+    {
+      "index": 96,
+      "chapterNumber": 11,
+      "textLength": 2813,
+      "pageNumber": 340,
+      "preview": "174\npicking up 2H (from NADH in the cytosol) again and again. Overall, this\nunusual form of respiration oxidises NADH in the cytosol, passing its\nelectrons onto oxygen, bolstering the power of aerobic...",
+      "wordCount": 472
+    },
+    {
+      "index": 97,
+      "chapterNumber": 11,
+      "textLength": 1702,
+      "pageNumber": 341,
+      "preview": "175\nat once diverting more aspartate into the synthesis of nucleotides for\nRNA and DNA. If ever a cycle deserved to be called vicious, this is it.\nFormation of glutamine from α-ketoglutarate. Note tha...",
+      "wordCount": 279
+    },
+    {
+      "index": 98,
+      "chapterNumber": 11,
+      "textLength": 2614,
+      "pageNumber": 342,
+      "preview": "176\nI’ve  implied  that  cancer is  primarily a  metabolic disease, yet  if\nanything goes for metabolism, then what actually turns a cell cancerous?\nYou’ve probably appreciated by now that the underly...",
+      "wordCount": 439
+    },
+    {
+      "index": 99,
+      "chapterNumber": 11,
+      "textLength": 2624,
+      "pageNumber": 343,
+      "preview": "177\ndown to oxygen, powering the extrusion of ten protons along the way.\nWe saw in Chapter 1 that’s enough to make three (and a bit) ATPs. So\nthe decline in complex I activity with age means that it’s...",
+      "wordCount": 454
+    },
+    {
+      "index": 100,
+      "chapterNumber": 11,
+      "textLength": 2885,
+      "pageNumber": 345,
+      "preview": "178\nimponderables there  are. How  much uncertainty about elementary\nquestions. We have a long way to go before we can answer all these\nquestions and face a diagnosis of cancer without fear. In the me...",
+      "wordCount": 483
+    },
+    {
+      "index": 101,
+      "chapterNumber": 11,
+      "textLength": 3157,
+      "pageNumber": 346,
+      "preview": "179\npushed away from its expected chemical equilibrium. If oxygen is present, both\nNADH and  NADPH should be  entirely oxidised to  NAD\n+\n  and  NADP\n+\n,\nrespectively. In cells, however, NADH accounts...",
+      "wordCount": 509
+    },
+    {
+      "index": 102,
+      "chapterNumber": 11,
+      "textLength": 1910,
+      "pageNumber": 348,
+      "preview": "180\nalgal endosymbiont, making them an interesting target for antimalarial drugs (as\nwe don’t have genes derived from algae, limiting the possibility of side effects).\n7 Books tend to take their own d...",
+      "wordCount": 318
+    },
+    {
+      "index": 103,
+      "chapterNumber": 11,
+      "textLength": 2367,
+      "pageNumber": 349,
+      "preview": "181\n6\nTHE FLUX CAPACITOR\n‘So how do you explain me, then?’ The question is lobbed like a hand\ngrenade from the audience, intended to devastate the ‘expert’ standing on\nthe stage. It’s a question I’ve ...",
+      "wordCount": 409
+    },
+    {
+      "index": 104,
+      "chapterNumber": 11,
+      "textLength": 2819,
+      "pageNumber": 350,
+      "preview": "182\nage. Obviously, a gene that causes harm at the age of 150 cannot be\nrooted out by selection because none of us survive to that age. According\nto Medawar, much the same applies to variants of genes...",
+      "wordCount": 472
+    },
+    {
+      "index": 105,
+      "chapterNumber": 11,
+      "textLength": 2789,
+      "pageNumber": 351,
+      "preview": "183\ntask tantamount to Sisyphus rolling his boulder up the mountain: if not\nstrictly impossible, at least formidable.\nSo it came as a shock in the 1990s to discover that a handful of genes\ncould doubl...",
+      "wordCount": 452
+    },
+    {
+      "index": 106,
+      "chapterNumber": 11,
+      "textLength": 2676,
+      "pageNumber": 353,
+      "preview": "184\nmultiple genetic variants. If the known heritability of a disease is 0.5\n(from twin studies) and the known genetic risk factors account for that\nfull hereditary risk, then together they should add...",
+      "wordCount": 433
+    },
+    {
+      "index": 107,
+      "chapterNumber": 11,
+      "textLength": 2794,
+      "pageNumber": 354,
+      "preview": "185\none species such as a mouse, while the genes in the mitochondria came\nfrom another species, such as a hamster.\nWallace  found  that  antibiotic resistance broke  down  with  genetic\ndistance betwe...",
+      "wordCount": 443
+    },
+    {
+      "index": 108,
+      "chapterNumber": 11,
+      "textLength": 2817,
+      "pageNumber": 355,
+      "preview": "186\nwhich cut in different places depending on the sequence) to demonstrate\nbeyond doubt that children inherit their mitochondrial genes from their\nmother. He went on to show that mitochondrial genes ...",
+      "wordCount": 436
+    },
+    {
+      "index": 109,
+      "chapterNumber": 11,
+      "textLength": 2809,
+      "pageNumber": 357,
+      "preview": "187\nEurasia and eventually to Australia and the Americas. While this gives a\ntwo-dimensional view, compared with the richness of whole genomes\nused today, the broad outlines of the story have been cor...",
+      "wordCount": 422
+    },
+    {
+      "index": 110,
+      "chapterNumber": 11,
+      "textLength": 2872,
+      "pageNumber": 358,
+      "preview": "188\nany hospital today. Go in, and you’ll be faced with signs pointing to\nNeurology,  Nephrology,  Cardiology,  Ophthalmology,  Rheumatology,\nGastroenterology, Gynaecology, and more. Vesalius would be...",
+      "wordCount": 434
+    },
+    {
+      "index": 111,
+      "chapterNumber": 11,
+      "textLength": 2630,
+      "pageNumber": 360,
+      "preview": "189\ncontrolling the activity of thousands of genes, the epigenetic state of the\ncell. There  is  a  subtle and  continuous interplay between the  singing\nmembrane potential, flux through the  Krebs  c...",
+      "wordCount": 429
+    },
+    {
+      "index": 112,
+      "chapterNumber": 11,
+      "textLength": 2770,
+      "pageNumber": 361,
+      "preview": "190\nideas and plans – and as excited about mitochondria as I am. Flo was\nparticularly interested in a problem known as ‘mother’s curse’, and we\nbegan to work together on the question. The problem here...",
+      "wordCount": 442
+    },
+    {
+      "index": 113,
+      "chapterNumber": 11,
+      "textLength": 2742,
+      "pageNumber": 362,
+      "preview": "191\ncelebrate it. But we ought to know if hybrid vigour can be undermined\nby a higher risk of mitochondrial diseases. Spoiler alert: I don’t think so.\nBut there’s plenty else to ponder on here.\nThis w...",
+      "wordCount": 443
+    },
+    {
+      "index": 114,
+      "chapterNumber": 11,
+      "textLength": 2628,
+      "pageNumber": 364,
+      "preview": "192\ndidn’t say ‘That’s funny’; it was anything but. It was quite shocking.\nExactly the kind of unexpected finding that leads to places in science.\nGiving the flies an antioxidant had little effect on ...",
+      "wordCount": 437
+    },
+    {
+      "index": 115,
+      "chapterNumber": 11,
+      "textLength": 2861,
+      "pageNumber": 365,
+      "preview": "193\nare produced by respiration, so suppressing respiration should have some\neffect on ROS flux, yet there was no change. A much lower rate of\nrespiration was producing the same overall rate of ROS fl...",
+      "wordCount": 469
+    },
+    {
+      "index": 116,
+      "chapterNumber": 11,
+      "textLength": 2491,
+      "pageNumber": 366,
+      "preview": "194\nyou any more details yet, but I can give you a sense of what we think\nmight be going on.\nThe  normal  (reduced) form  of  glutathione, GSH,  contains a  thiol\ngroup – a sulfur bound to a hydrogen....",
+      "wordCount": 424
+    },
+    {
+      "index": 117,
+      "chapterNumber": 11,
+      "textLength": 2863,
+      "pageNumber": 368,
+      "preview": "195\nstructure and  function of  proteins,  activating or  deactivating  them  in\nways that are still imperfectly understood. You could think of this as a\nsimple on–off  switch for  a  protein. But  th...",
+      "wordCount": 479
+    },
+    {
+      "index": 118,
+      "chapterNumber": 11,
+      "textLength": 2589,
+      "pageNumber": 369,
+      "preview": "196\nlines lay in their mitochondrial DNA, so the primary deficit had to be in\nrespiration. We know that any deficit in respiration necessarily disturbs\nKrebs-cycle flux, because the Krebs cycle cannot...",
+      "wordCount": 432
+    },
+    {
+      "index": 119,
+      "chapterNumber": 11,
+      "textLength": 2841,
+      "pageNumber": 370,
+      "preview": "197\nfaster we burn through resources, the faster we burn out. Small animals\ntypically have faster metabolic rates and shorter lifespans; large animals\ntend  to  have  lower  metabolic rates  and  live...",
+      "wordCount": 459
+    },
+    {
+      "index": 120,
+      "chapterNumber": 11,
+      "textLength": 2713,
+      "pageNumber": 372,
+      "preview": "198\nmetabolic rate  altogether,  as  somehow old-fashioned and  genetically\nnebulous, is to ignore perhaps the single most important determinant of\nlongevity: how quickly the cellular machinery needs ...",
+      "wordCount": 436
+    },
+    {
+      "index": 121,
+      "chapterNumber": 11,
+      "textLength": 2872,
+      "pageNumber": 373,
+      "preview": "199\nreproductive prime. Respiration is  efficient, so  we  can  drive  both\nbiosynthesis and  ATP  synthesis through the  normal oxidative Krebs\ncycle. To do so, we need to extract carbon skeletons fr...",
+      "wordCount": 477
+    },
+    {
+      "index": 122,
+      "chapterNumber": 11,
+      "textLength": 2479,
+      "pageNumber": 375,
+      "preview": "200\nmetabolism by forwards flux, so must make a choice. Their stunted tail\nor narrow eye-span or less vibrant colour betrays a Krebs-cycle flux\ncompromised by deficient interactions between the protei...",
+      "wordCount": 398
+    },
+    {
+      "index": 123,
+      "chapterNumber": 11,
+      "textLength": 2755,
+      "pageNumber": 376,
+      "preview": "201\nOur flies illuminate part of the answer. We all – even identical twins –\nhave  a  unique combination of  mitochondrial genes  set  against our\nnuclear genomes. The  flies  show us  that  seemingly...",
+      "wordCount": 423
+    },
+    {
+      "index": 124,
+      "chapterNumber": 11,
+      "textLength": 2852,
+      "pageNumber": 377,
+      "preview": "202\ndemands of each tissue, and the ability of our weakening mitochondria to\nmeet those needs. This in turn depends on how our mitochondrial genes\ninteract with the unique set of nuclear genes that ar...",
+      "wordCount": 447
+    },
+    {
+      "index": 125,
+      "chapterNumber": 11,
+      "textLength": 2709,
+      "pageNumber": 379,
+      "preview": "203\nhigh blood glucose drives a vicious cycle, in which tissues eventually\nbecome resistant to  insulin. And  that  gives  the  brain  a  particularly\nserious problem, as it relies so heavily on gluco...",
+      "wordCount": 436
+    },
+    {
+      "index": 126,
+      "chapterNumber": 11,
+      "textLength": 2639,
+      "pageNumber": 380,
+      "preview": "204\nrescuing neuronal function. But excess Ca\n2+\n is itself damaging, and the\nMAMs become swollen and damaged over time. MAM dysfunction is\nlinked to many other features of Alzheimer’s in an uncanny w...",
+      "wordCount": 430
+    },
+    {
+      "index": 127,
+      "chapterNumber": 11,
+      "textLength": 2788,
+      "pageNumber": 381,
+      "preview": "205\nso  my  wrinkles and  aches  and  pains  are  the  product of  about  10\n32\nreactions to  date,  roughly a  billion times  the  number of  stars  in  the\nknown universe. I won’t even wonder how ma...",
+      "wordCount": 459
+    },
+    {
+      "index": 128,
+      "chapterNumber": 11,
+      "textLength": 2746,
+      "pageNumber": 383,
+      "preview": "206\nregulating a subunit containing the most reactive iron–sulfur cluster.\n12\nFar from suppressing complex I activity, restricting ROS flux enables\nbats  and  birds  to  maintain or  increase their  a...",
+      "wordCount": 447
+    },
+    {
+      "index": 129,
+      "chapterNumber": 11,
+      "textLength": 2942,
+      "pageNumber": 384,
+      "preview": "207\nour epigenetic state: we must sustain a new pattern of flux moment by\nmoment, year after year. Changes that can’t be sustained are no use – we\nwill slump back soon enough into the metabolic doldru...",
+      "wordCount": 500
+    },
+    {
+      "index": 130,
+      "chapterNumber": 11,
+      "textLength": 3225,
+      "pageNumber": 386,
+      "preview": "208\neffectively put in ‘cold storage’ for decades, and more. None of this happens in\nthe  male  germline for  the  simple reason that  males do  not  pass  on  their\nmitochondria. This is the deepest ...",
+      "wordCount": 523
+    },
+    {
+      "index": 131,
+      "chapterNumber": 11,
+      "textLength": 3110,
+      "pageNumber": 387,
+      "preview": "209\n6  ‘Mutator mice’  have  an  error-prone  mitochondrial DNA  polymerase that\nintroduces mutations into mitochondrial DNA. Double mutants (in which both\ncopies of the gene are error prone) have ver...",
+      "wordCount": 492
+    },
+    {
+      "index": 132,
+      "chapterNumber": 11,
+      "textLength": 1476,
+      "pageNumber": 389,
+      "preview": "210\nOne paper by Paula Moreira captures the nub of the problem in her title: ‘Sweet\nmitochondria – a shortcut to Alzheimer’s disease’.\n11 I take this number from Joana Xavier, one of the stars of a ri...",
+      "wordCount": 236
+    },
+    {
+      "index": 133,
+      "chapterNumber": 11,
+      "textLength": 2335,
+      "pageNumber": 389,
+      "preview": "211\nEPILOGUE\nSELF\n‘I think therefore I am’ said Descartes, in one of the most celebrated\nlines ever written. But what am I, exactly? An artificial intelligence can\nthink too, by definition, and theref...",
+      "wordCount": 391
+    },
+    {
+      "index": 134,
+      "chapterNumber": 11,
+      "textLength": 2756,
+      "pageNumber": 391,
+      "preview": "212\nwere  random  strings of  a  few  letters of  RNA, polymerising inside\nprotocells growing in those deep-sea vents. From the beginning, genes\ncopied themselves inside protocells, spreading when the...",
+      "wordCount": 447
+    },
+    {
+      "index": 135,
+      "chapterNumber": 11,
+      "textLength": 2818,
+      "pageNumber": 392,
+      "preview": "213\nfruit  flies  are  conscious, they  are  most  definitely unconscious when\nexposed to chloroform or ether.’\nThe mechanism of general anaesthesia is one of the major unsolved\nproblems in science, r...",
+      "wordCount": 437
+    },
+    {
+      "index": 136,
+      "chapterNumber": 11,
+      "textLength": 2796,
+      "pageNumber": 393,
+      "preview": "214\nmembranes, and flits respiratory electrons straight to oxygen. The effect\nmust be subtle, for too much would kill us, and overdose is always a risk\nwith anaesthetics. But suppose it’s true. What n...",
+      "wordCount": 434
+    },
+    {
+      "index": 137,
+      "chapterNumber": 11,
+      "textLength": 2788,
+      "pageNumber": 395,
+      "preview": "215\na stronger field, operating over a longer distance. Parallel membranes,\nsuch as the cristae membranes of neuronal mitochondria, should generate\nstronger fields that amplify a signal and potentiall...",
+      "wordCount": 450
+    },
+    {
+      "index": 138,
+      "chapterNumber": 11,
+      "textLength": 2756,
+      "pageNumber": 396,
+      "preview": "216\ngraze, give  chase  or  flee  from  predators, struggle for  their  lives,  or\nregenerate themselves, whirring parts  and  all,  after  some  disastrous\nencounter. This  behaviour is  marvellous a...",
+      "wordCount": 447
+    },
+    {
+      "index": 139,
+      "chapterNumber": 11,
+      "textLength": 2872,
+      "pageNumber": 398,
+      "preview": "217\nitself. But the time window is short. If there are too many phages, then\nthere’s only one way out for the bacterium: die, fast, for the good of its\nkin. How does it do this? It yanks open pores in...",
+      "wordCount": 477
+    },
+    {
+      "index": 140,
+      "chapterNumber": 11,
+      "textLength": 1198,
+      "pageNumber": 399,
+      "preview": "218\nfleeting moment in the kaleidoscope of metabolism, shape-changing a\nbillion times a second. There’s no sense in which information binds you.\nYet you are still part of an entity, a self. Your flux ...",
+      "wordCount": 203
+    },
+    {
+      "index": 141,
+      "chapterNumber": 11,
+      "textLength": 702,
+      "pageNumber": 400,
+      "preview": "219\nENVOI\n‘Like Most Revelations’\nRichard Howard\nIt is the movement that incites the form,\ndiscovered as a downward rapture – yes,\nit is the movement that delights the form,\nsustained by its own veloc...",
+      "wordCount": 126
+    },
+    {
+      "index": 142,
+      "chapterNumber": 11,
+      "textLength": 27,
+      "pageNumber": 400,
+      "preview": "220\nThe forward Krebs cycle",
+      "wordCount": 5
+    },
+    {
+      "index": 143,
+      "chapterNumber": 11,
+      "textLength": 27,
+      "pageNumber": 400,
+      "preview": "221\nThe reverse Krebs cycle",
+      "wordCount": 5
+    },
+    {
+      "index": 144,
+      "chapterNumber": 11,
+      "textLength": 1423,
+      "pageNumber": 400,
+      "preview": "222\nAPPENDIX 1\nRED PROTEIN MECHANICS\nThe red protein is ferredoxin, one of the most ancient and fundamental\nproteins across all of life. It seems to have many jobs, but the common\ndenominator is that ...",
+      "wordCount": 256
+    },
+    {
+      "index": 145,
+      "chapterNumber": 11,
+      "textLength": 1390,
+      "pageNumber": 401,
+      "preview": "223\nThe problem here is that the carboxylate group (-COO\n–\n) is not very\nreactive. To  react  with  CO\n2\n,  it  first  needs  to  be  activated. This  is\nachieved initially with ATP, which adds on the...",
+      "wordCount": 250
+    },
+    {
+      "index": 146,
+      "chapterNumber": 11,
+      "textLength": 1677,
+      "pageNumber": 401,
+      "preview": "224\nYou might still be wondering what the ferredoxin is doing here. It’s\nadding on two electrons, but where did they actually go? The easiest way\nto see this is to think about what happens when the Co...",
+      "wordCount": 297
+    },
+    {
+      "index": 147,
+      "chapterNumber": 11,
+      "textLength": 1356,
+      "pageNumber": 402,
+      "preview": "225\nEach of the two oxygen atoms therefore has a δ\n−\n, whereas the carbon\natom is δ\n+\n, as shown below.\nThis  mild  electrical polarity can  in  principle give  rise  to  a  more\nextreme endpoint, whe...",
+      "wordCount": 240
+    },
+    {
+      "index": 148,
+      "chapterNumber": 11,
+      "textLength": 815,
+      "pageNumber": 403,
+      "preview": "226\naction in the various reaction steps I’ve depicted above. In fact, water is\nnever produced as a separate entity. Look back at that first scheme –\nyou’ll see  that  the  oxygen in  the  water  mole...",
+      "wordCount": 145
+    },
+    {
+      "index": 149,
+      "chapterNumber": 11,
+      "textLength": 1789,
+      "pageNumber": 403,
+      "preview": "227\nAPPENDIX 2\nTHE KREBS LINE\nIn Chapter 3, we followed the fate of CO\n2\n bound to the surface of a\nmineral, through to a C2 acetyl group bound to the surface. This acetyl\ngroup is equivalent to acety...",
+      "wordCount": 330
+    },
+    {
+      "index": 150,
+      "chapterNumber": 11,
+      "textLength": 1118,
+      "pageNumber": 404,
+      "preview": "228\nJust in case you don’t recognise this as pyruvate, let me draw in the final\nstep again, showing it being released as pyruvate, which I hope you\nknow and love by now:\nWhen bound to the mineral surf...",
+      "wordCount": 189
+    },
+    {
+      "index": 151,
+      "chapterNumber": 11,
+      "textLength": 1408,
+      "pageNumber": 405,
+      "preview": "229\nwhy that Mad-Eye Moody oxygen is so reactive, which brings its own\ninexorable chemistry.\nLet me explain. Pyruvate exists in two states, one being more reactive\nand  shorter lived  than  the  other...",
+      "wordCount": 237
+    },
+    {
+      "index": 152,
+      "chapterNumber": 11,
+      "textLength": 1355,
+      "pageNumber": 406,
+      "preview": "230\nThe curly arrows here depict a proton acquiring a pair of electrons from\nthe  surface;  the  two  electrons that  formerly bound the  hydrogen to\npyruvate now move to form the double bond in enol ...",
+      "wordCount": 236
+    },
+    {
+      "index": 153,
+      "chapterNumber": 11,
+      "textLength": 1273,
+      "pageNumber": 406,
+      "preview": "231\nNotice that I’m drawing the carboxylate group with its negative charge\nin  the  conventional way  again  here,  to  emphasise its  electrical\ninteractions with  the  charged  surface. I’ll  use  t...",
+      "wordCount": 202
+    },
+    {
+      "index": 154,
+      "chapterNumber": 11,
+      "textLength": 1888,
+      "pageNumber": 407,
+      "preview": "232\nelectrons plus  two  protons equates  to  the  addition of  two  hydrogen\natoms, one onto the alpha carbon and the other onto the oxygen, giving\nthe C4 malate (right-hand side).\nThe final step we’...",
+      "wordCount": 317
+    },
+    {
+      "index": 155,
+      "chapterNumber": 11,
+      "textLength": 2218,
+      "pageNumber": 408,
+      "preview": "233\nABBREVIATIONS\n2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from\nanywhere in a molecule and transferred onto another molecule.\nATP Adenosine triphosphate. The ‘universal...",
+      "wordCount": 362
+    },
+    {
+      "index": 156,
+      "chapterNumber": 11,
+      "textLength": 2580,
+      "pageNumber": 409,
+      "preview": "234\nGWAS Genome-wide association studies. Statistical studies that correlate single-\nletter differences in DNA across whole genomes with the risk of diseases.\nH\n+\n Proton; a positively charged particl...",
+      "wordCount": 435
+    },
+    {
+      "index": 157,
+      "chapterNumber": 11,
+      "textLength": 209,
+      "pageNumber": 410,
+      "preview": "235\nSNP  Single-nucleotide  polymorphism (pronounced ‘snip’). A  single-letter\nchange in  DNA, which can  differ  between individuals. We  have  millions of\nSNPs, making us genetically different to ea...",
+      "wordCount": 28
+    },
+    {
+      "index": 158,
+      "chapterNumber": 11,
+      "textLength": 2467,
+      "pageNumber": 410,
+      "preview": "236\nFURTHER READING\nThis is not a textbook or research paper, so is not referenced in a comprehensive\nway. But if you’ve read this far, you will have become deeply embroiled in the\nwider literature. T...",
+      "wordCount": 391
+    },
+    {
+      "index": 159,
+      "chapterNumber": 11,
+      "textLength": 2684,
+      "pageNumber": 412,
+      "preview": "237\nmanifesto for reconceiving the role that information plays in life and its origin,\nby a leading physicist and thinker who has long considered the makeup of life.\nNot  surprisingly,  I  don’t  agre...",
+      "wordCount": 418
+    },
+    {
+      "index": 160,
+      "chapterNumber": 11,
+      "textLength": 2617,
+      "pageNumber": 413,
+      "preview": "238\nThe digital jungle\nHorace Freeland Judson, The Eighth Day of Creation. Makers of the Revolution\nin  Biology,  25th  Anniversary Edition (Cold  Spring Harbor Laboratory Press,\n1996). A  magisterial...",
+      "wordCount": 396
+    },
+    {
+      "index": 161,
+      "chapterNumber": 11,
+      "textLength": 2498,
+      "pageNumber": 414,
+      "preview": "239\nSmith and Morowitz take the case for the unity of biochemistry right back to the\norigin of life.\nW. Martin and  M. J. Russell, ‘On  the  origin  of  biochemistry at  an  alkaline\nhydrothermal vent...",
+      "wordCount": 390
+    },
+    {
+      "index": 162,
+      "chapterNumber": 11,
+      "textLength": 2720,
+      "pageNumber": 415,
+      "preview": "240\nSociety in 1932.\nH. H. Dale, ‘Frederick Gowland Hopkins 1861–1947’, Obituary Notices Fellows\nRoyal Society 6 (1948) 115–145. An affectionate biography from Sir Henry Dale,\nanother pioneering bioch...",
+      "wordCount": 416
+    },
+    {
+      "index": 163,
+      "chapterNumber": 11,
+      "textLength": 2530,
+      "pageNumber": 417,
+      "preview": "241\nH. Krebs, ‘Otto Heinrich Warburg. 1883–1970’, Biographical Memoirs Fellows\nof the Royal Society 18 (1972) 628–699. Krebs’s generous tribute to his scientific\nmentor; even Krebs was unable to prese...",
+      "wordCount": 381
+    },
+    {
+      "index": 164,
+      "chapterNumber": 11,
+      "textLength": 2776,
+      "pageNumber": 418,
+      "preview": "242\nextraordinary scholarship, drawing on Krebs’s lab books in detail, with all their\nexclamation marks. This volume deals with Krebs’s earlier years, leading up to\nthe urea cycle.\nFrederic L. Holmes,...",
+      "wordCount": 416
+    },
+    {
+      "index": 165,
+      "chapterNumber": 11,
+      "textLength": 2795,
+      "pageNumber": 419,
+      "preview": "243\n‘at the age of eighty-seven, not long after having learned that his latest grant\napplication had been successful’. Here at least, times have changed.\nPeter Mitchell and chemiosmotic coupling\nPeter...",
+      "wordCount": 392
+    },
+    {
+      "index": 166,
+      "chapterNumber": 11,
+      "textLength": 2595,
+      "pageNumber": 421,
+      "preview": "244\nP. D. Mitchell and J. Moyle, ‘Evidence discriminating between the chemical and\nthe  chemiosmotic  mechanisms of  electron transport phosphorylation’, Nature\n208 (1965) 1205–1206. A shorter paper, ...",
+      "wordCount": 377
+    },
+    {
+      "index": 167,
+      "chapterNumber": 11,
+      "textLength": 2529,
+      "pageNumber": 422,
+      "preview": "245\nmentioning the reverse Krebs cycle – which had been proposed fifteen years\nearlier. How blind are even the finest scientists.\nH. A. Krebs and H. L. Kornberg, Energy Transformations in Living Matte...",
+      "wordCount": 386
+    },
+    {
+      "index": 168,
+      "chapterNumber": 11,
+      "textLength": 2623,
+      "pageNumber": 423,
+      "preview": "246\nphysicists and chemists of the day, set in times of heightened politics and war. A\nunique record.\nOliver Morton, Eating the Sun: How Plants Power the Planet (London, Fourth\nEstate, 2009). A  delig...",
+      "wordCount": 428
+    },
+    {
+      "index": 169,
+      "chapterNumber": 11,
+      "textLength": 2700,
+      "pageNumber": 425,
+      "preview": "247\nA. A. Benson, ‘Last  days  in  the  old  radiation laboratory (ORL), Berkeley,\nCalifornia, 1954’, Photosynthesis Research  105  (2010) 209–212. More\nfascinating reminiscences from Andrew Benson.\nT...",
+      "wordCount": 399
+    },
+    {
+      "index": 170,
+      "chapterNumber": 11,
+      "textLength": 2518,
+      "pageNumber": 426,
+      "preview": "248\nafter it was first proposed – by which time it is at last undisputed, if not widely\nknown.\nB. B. Buchanan, ‘Daniel I. Arnon. November 14, 1910–December 20, 1994’,\nBiographical Memoirs 80 (2001) 2–...",
+      "wordCount": 378
+    },
+    {
+      "index": 171,
+      "chapterNumber": 11,
+      "textLength": 2597,
+      "pageNumber": 427,
+      "preview": "249\nseminal discovery, that the canonical ATP citrate lyase is not necessary for the\nreverse Krebs cycle; the standard enzyme citrate synthase is reversible after all.\nSo do dogmas fall.\nL. Steffens, ...",
+      "wordCount": 406
+    },
+    {
+      "index": 172,
+      "chapterNumber": 11,
+      "textLength": 2811,
+      "pageNumber": 429,
+      "preview": "250\neach  discovered new  vent  systems, alongside Bill  Martin and  Mike  Russell,\nleading protagonists of how life might have started in such systems.\nN. H. Sleep, D. K. Bird and E. C. Pope, ‘Serpen...",
+      "wordCount": 432
+    },
+    {
+      "index": 173,
+      "chapterNumber": 11,
+      "textLength": 2795,
+      "pageNumber": 430,
+      "preview": "251\nTransactions of the Royal Society B 358 (2003) 59–85. An all-time classic paper,\nthe kind of paper that draws young minds not just into the field but into science.\nJ. Whitfield, ‘Origin of life: n...",
+      "wordCount": 440
+    },
+    {
+      "index": 174,
+      "chapterNumber": 11,
+      "textLength": 3096,
+      "pageNumber": 431,
+      "preview": "252\nwith some leading phylogeneticists including the brilliant and prolific Eugene\nKoonin. I am unpersuaded, but Mulkidjanian’s papers are always worth reading.\nJ. D. Sutherland, ‘Studies on the origi...",
+      "wordCount": 491
+    },
+    {
+      "index": 175,
+      "chapterNumber": 11,
+      "textLength": 2980,
+      "pageNumber": 433,
+      "preview": "253\nof view, looking for similar chemistry to that still happening in cells. This is an\nexciting paper which links up with their own earlier work, showing that various\nintermediates in the acetyl CoA ...",
+      "wordCount": 477
+    },
+    {
+      "index": 176,
+      "chapterNumber": 11,
+      "textLength": 2661,
+      "pageNumber": 434,
+      "preview": "254\nR. Braakman and E. Smith, ‘The emergence and early evolution of biological\ncarbon fixation’, PLoS Computational Biology 8 (2012) e1002455. An extremely\nneat  idea,  which attempts to  unite  phylo...",
+      "wordCount": 417
+    },
+    {
+      "index": 177,
+      "chapterNumber": 11,
+      "textLength": 2541,
+      "pageNumber": 436,
+      "preview": "255\non the shelf of anyone seriously interested in the origin of life. Manages to\npresent new ideas with admirable clarity, while being balanced and exhaustive.\nJ. Trefil, H. J. Morowitz and E. Smith,...",
+      "wordCount": 403
+    },
+    {
+      "index": 178,
+      "chapterNumber": 11,
+      "textLength": 2840,
+      "pageNumber": 437,
+      "preview": "256\nV. Sojo, B. Herschy, A. Whicher, E. Camprubi and N. Lane, ‘The origin of life in\nalkaline hydrothermal vents’, Astrobiology 16 (2016) 181–197. Our own attempt\nto reconcile the origins of life in a...",
+      "wordCount": 462
+    },
+    {
+      "index": 179,
+      "chapterNumber": 11,
+      "textLength": 2878,
+      "pageNumber": 438,
+      "preview": "257\nR. Hudson, R. de Graaf, M. S. Rodin, A. Ohno, N. Lane, S. E. McGlynn, Y. M.\nA. Yamada, R. Nakamura, L. M. Barge, D. Braun and V. Sojo, ‘CO\n2\n reduction\ndriven by a pH gradient’, Proceedings of the...",
+      "wordCount": 441
+    },
+    {
+      "index": 180,
+      "chapterNumber": 11,
+      "textLength": 2636,
+      "pageNumber": 440,
+      "preview": "258\nR. Nunes Palmeira, M. Colnaghi, S. Harrison, A. Pomiankowski and N. Lane,\n‘The  limits  of  metabolic heredity in  protocells’, available on BioRxiv\n(https://doi.org/10.1101/2022.01.28.477904). Mo...",
+      "wordCount": 418
+    },
+    {
+      "index": 181,
+      "chapterNumber": 11,
+      "textLength": 2855,
+      "pageNumber": 441,
+      "preview": "259\nDaniel C. Dennett, Darwin’s Dangerous Idea: Evolution and the Meanings of\nLife (New York, Simon & Schuster, 1995). I never appreciated what a razor-\nsharp philosophical mind could do to scientific...",
+      "wordCount": 447
+    },
+    {
+      "index": 182,
+      "chapterNumber": 11,
+      "textLength": 2758,
+      "pageNumber": 443,
+      "preview": "260\nenergy revolutions transformed the potential of life on Earth, from the origins of\nlife to photosynthesis, oxygen and fire.\nElectron bifurcation\nW. Buckel and  R. K. Thauer,  ‘Flavin-based electro...",
+      "wordCount": 414
+    },
+    {
+      "index": 183,
+      "chapterNumber": 11,
+      "textLength": 2796,
+      "pageNumber": 444,
+      "preview": "261\nBacterial metabolism and syntrophy\nP. Schönheit, W. Buckel and  W. F. Martin, ‘On  the  origin  of  heterotrophy’,\nTrends in Microbiology 24 (2016) 12–25. An important paper, which is so clearly\nt...",
+      "wordCount": 414
+    },
+    {
+      "index": 184,
+      "chapterNumber": 11,
+      "textLength": 2828,
+      "pageNumber": 445,
+      "preview": "262\nmentorship as academic lineage), Lenton and Watson know exactly whereof they\nspeak.\nH. C. Betts, M. N. Puttick, J. W. Clark, T. A. Williams, P. C. J. Donoghue and D.\nPisani, ‘Integrated genomic an...",
+      "wordCount": 433
+    },
+    {
+      "index": 185,
+      "chapterNumber": 11,
+      "textLength": 2756,
+      "pageNumber": 447,
+      "preview": "263\nActive ventilation in animals\nA. H. Knoll, R. K. Bambach, D. E. Canfield and J. P. Grotzinger, ‘Comparative\nearth history and late Permian mass extinction’, Science 273: 452–457 (1996). A\nrevelato...",
+      "wordCount": 427
+    },
+    {
+      "index": 186,
+      "chapterNumber": 11,
+      "textLength": 2837,
+      "pageNumber": 448,
+      "preview": "264\nL. J. Sweetlove, K. F. Beard, A. Nunes-Nesi, A. R. Fernie and R. G. Ratcliffe,\n‘Not just a circle: flux modes in the plant TCA cycle’, Trends in Plant Sciences\n15 (2010) 462–470. A lovely analysis...",
+      "wordCount": 470
+    },
+    {
+      "index": 187,
+      "chapterNumber": 11,
+      "textLength": 2616,
+      "pageNumber": 450,
+      "preview": "265\nstill bites: ‘Most serious of all the results of the somatic mutation hypothesis has\nbeen its effect on research workers. It acts as a tranquillizer on those who believe\nin it, and this at a time ...",
+      "wordCount": 411
+    },
+    {
+      "index": 188,
+      "chapterNumber": 11,
+      "textLength": 2798,
+      "pageNumber": 451,
+      "preview": "266\ninsightful piece that captures a lot of Warburg’s thinking that remains relevant for\na modern audience interested in cancer.\nMartin D. Kamen, Radiant Science, Dark Politics. A Memoir of the Nuclea...",
+      "wordCount": 428
+    },
+    {
+      "index": 189,
+      "chapterNumber": 11,
+      "textLength": 2614,
+      "pageNumber": 452,
+      "preview": "267\nat the original for the full context.\nOtto Heinrich Warburg, The Prime Cause and Prevention of Cancer (Würzburg,\nKonrad Triltsch, 1969). A famous manifesto, following on where his Science\npaper le...",
+      "wordCount": 407
+    },
+    {
+      "index": 190,
+      "chapterNumber": 11,
+      "textLength": 2824,
+      "pageNumber": 454,
+      "preview": "268\nP. W. Hochachka and K. B. Storey, ‘Metabolic consequences of diving in animals\nand  man’, Science  187  (1975) 613–621. How  diving animals survive long\nperiods without oxygen – calling attention ...",
+      "wordCount": 450
+    },
+    {
+      "index": 191,
+      "chapterNumber": 11,
+      "textLength": 2868,
+      "pageNumber": 455,
+      "preview": "269\nto an important book by Rebecca Skloot, The Immortal Life of Henrietta Lacks\n(Pan,  2011),  after  whom HeLa  cells  were  named, which calls  attention to  a\nhistorical wrong.\nS. L. Colombo, M. P...",
+      "wordCount": 445
+    },
+    {
+      "index": 192,
+      "chapterNumber": 11,
+      "textLength": 2781,
+      "pageNumber": 456,
+      "preview": "270\nM. Wagner, E. Bertero, A. Nickel, M. Kohlhaas, G. E. Gibson, W. Heggermont,\nS. Heymans and  C. Maack, ‘Selective NADH communication from  α-\nketoglutarate dehydrogenase to  mitochondrial transhydr...",
+      "wordCount": 432
+    },
+    {
+      "index": 193,
+      "chapterNumber": 11,
+      "textLength": 2563,
+      "pageNumber": 458,
+      "preview": "271\n2020). Available here: https://doi:10.26124/bec:2020-0002. The ‘bible’ of fluo-\nrespirometry,  privately  published by  Erich  Gnaiger in  the  tradition of  Peter\nMitchell’s ‘little grey books’; ...",
+      "wordCount": 393
+    },
+    {
+      "index": 194,
+      "chapterNumber": 11,
+      "textLength": 2436,
+      "pageNumber": 459,
+      "preview": "272\npieces of evolutionary thinking of the twentieth century, and should be read by\nall.\nAndré Klarsfeld and Frédéric Revah, The Biology of Death: Origins of Mortality\n(Ithaca, NY,  Cornell University...",
+      "wordCount": 385
+    },
+    {
+      "index": 195,
+      "chapterNumber": 11,
+      "textLength": 2831,
+      "pageNumber": 460,
+      "preview": "273\nR. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of\nhuman mitochondrial DNA’, Proceedings of the National Academy of Sciences\nUSA 77 (1980) 6715–671. The first demonstra...",
+      "wordCount": 426
+    },
+    {
+      "index": 196,
+      "chapterNumber": 11,
+      "textLength": 2680,
+      "pageNumber": 462,
+      "preview": "274\nVesalius and Mendel. An important synthesis; should be required reading for\nmedical students.\nMitochondria in flies\nD. E. Miller,  K. R. Cook  and  R. S. Hawley,  ‘The  joy  of  balancers’, PLoS\nG...",
+      "wordCount": 403
+    },
+    {
+      "index": 197,
+      "chapterNumber": 11,
+      "textLength": 2756,
+      "pageNumber": 463,
+      "preview": "275\nantioxidant NAC caused problems in some lines but not others, depending on the\nmitochondrial DNA.\nM. F. Camus, W. Kotiadis, H. Carter, E. Rodriguez and N. Lane, ‘Mitonuclear\ninteractions produce e...",
+      "wordCount": 406
+    },
+    {
+      "index": 198,
+      "chapterNumber": 11,
+      "textLength": 2843,
+      "pageNumber": 465,
+      "preview": "276\nbook length, drawing parallels with companies and cities that I haven’t seen\nanyone do since the great polymath J. B. S. Haldane.\nAntioxidants don’t work\nJ. M. Gutteridge and B. Halliwell, ‘Free r...",
+      "wordCount": 452
+    },
+    {
+      "index": 199,
+      "chapterNumber": 11,
+      "textLength": 2685,
+      "pageNumber": 466,
+      "preview": "277\nD. Gems, ‘The  aging–disease false  dichotomy: understanding senescence as\npathology’, Frontiers in Genetics 6 (2015) 12. David Gems rails against the idea\nthat ageing is somehow normal and ‘healt...",
+      "wordCount": 404
+    },
+    {
+      "index": 200,
+      "chapterNumber": 11,
+      "textLength": 2702,
+      "pageNumber": 467,
+      "preview": "278\nurine). Paula  Moreira discusses how  diabetes-linked defects in  mitochondria\nincrease the risk of Alzheimer’s disease.\nD. A. Butterfield and  B. Halliwell, ‘Oxidative stress, dysfunctional gluco...",
+      "wordCount": 397
+    },
+    {
+      "index": 201,
+      "chapterNumber": 11,
+      "textLength": 2668,
+      "pageNumber": 469,
+      "preview": "279\nAnaesthetics and mitochondria\nL. Turin, E. M. C. Skoulakis and A. P. Horsfield, ‘Electron spin changes during\ngeneral anesthesia in Drosophila’, Proceedings of  the  National Academy of\nSciences U...",
+      "wordCount": 417
+    },
+    {
+      "index": 202,
+      "chapterNumber": 11,
+      "textLength": 2960,
+      "pageNumber": 470,
+      "preview": "280\nMichael Levin is currently doing some of the most exciting work in biology.\nElectrical fields determine development; genes are secondary. So far that mostly\ngoes for flat-worms, but could it be mo...",
+      "wordCount": 462
+    },
+    {
+      "index": 203,
+      "chapterNumber": 11,
+      "textLength": 2269,
+      "pageNumber": 471,
+      "preview": "281\nJ. McFadden, ‘Integrating information in the brain’s EM field: the cemi field\ntheory of consciousness’, Neuroscience of Consciousness 2020 (2020) niaa016.\nJohnjoe McFadden has  been  thinking abou...",
+      "wordCount": 361
+    },
+    {
+      "index": 204,
+      "chapterNumber": 11,
+      "textLength": 2484,
+      "pageNumber": 473,
+      "preview": "282\nACKNOWLEDGEMENTS\nThis book opens with a description of an empty city, lacking the hurly\nburly of people and energy flow. Little did I realise when writing that\npassage that it would require such a...",
+      "wordCount": 440
+    },
+    {
+      "index": 205,
+      "chapterNumber": 11,
+      "textLength": 2799,
+      "pageNumber": 474,
+      "preview": "283\nas  the  severely  disturbed downstream consequences of  mitonuclear\nincompatibilities in  ageing flies. Grappling with  new  results while\nwriting this book, sometimes watching cherished ideas im...",
+      "wordCount": 479
+    },
+    {
+      "index": 206,
+      "chapterNumber": 11,
+      "textLength": 2880,
+      "pageNumber": 475,
+      "preview": "284\ncare  to  admit, while  celebrating the  bigger picture and  occasionally\ndredging up some details from her deeply buried degree in biochemistry.\nShe  racked her  mind  over  possible titles. Titl...",
+      "wordCount": 486
+    },
+    {
+      "index": 207,
+      "chapterNumber": 11,
+      "textLength": 2738,
+      "pageNumber": 477,
+      "preview": "285\nlost ourselves in a six-hour discussion on why the cycle is a cycle and\nother abstruse questions. Rarely have science and pure pleasure aligned\nso closely. And I thank Prof. Christian Frezza, who ...",
+      "wordCount": 443
+    },
+    {
+      "index": 208,
+      "chapterNumber": 11,
+      "textLength": 2772,
+      "pageNumber": 478,
+      "preview": "286\naside until Derek invited me to give the Derek Denton Oration in the\nArts and Sciences in Melbourne in 2019 – on condition that I addressed\nconsciousness, if  only  in  brief. While wrestling with...",
+      "wordCount": 479
+    },
+    {
+      "index": 209,
+      "chapterNumber": 11,
+      "textLength": 1926,
+      "pageNumber": 479,
+      "preview": "287\nother people felt the same until his funeral. We will all remember him\nwith love and admiration. Heartfelt condolences to Mary Jane.\nLast but not least, I thank Caroline Dawnay of United Agents, a...",
+      "wordCount": 315
+    },
+    {
+      "index": 210,
+      "chapterNumber": 11,
+      "textLength": 1033,
+      "pageNumber": 480,
+      "preview": "288\nINDEX\nNote: The index covers the main text and appendices. The suffix ‘n’ plus\na number indicates a relevant footnote on that page. Page numbers in\nitalics indicate illustrations.\nAcademic Assista...",
+      "wordCount": 161
+    },
+    {
+      "index": 211,
+      "chapterNumber": 11,
+      "textLength": 1219,
+      "pageNumber": 481,
+      "preview": "289\n‘alpha-keto’ groups 41, 286, 299\nsee also α-ketoglutarate (at ‘k’)\nalternative oxidase 183, 228n7, 262n8\nAlvin (submersible) 112–13, 115\nAlzheimer’s disease 21, 28, 266–8, 280\namino acids\nbiosynth...",
+      "wordCount": 177
+    },
+    {
+      "index": 212,
+      "chapterNumber": 11,
+      "textLength": 1177,
+      "pageNumber": 482,
+      "preview": "290\nATP (adenosine triphosphate) 302\nin cellular respiration 56–7, 64\nformation without ATP synthase 144, 151\nsynthesis 65–8, 98–105, 187–8\nyields from respiration and fermentation 201–2, 207\nATP citr...",
+      "wordCount": 181
+    },
+    {
+      "index": 213,
+      "chapterNumber": 11,
+      "textLength": 1075,
+      "pageNumber": 482,
+      "preview": "291\nKrebs cycle and non-cycle 111, 184–6\nsymbiosis among 170, 188\n‘balancer chromosomes’ 245, 248\nBaldwin, Ernest 59\nBarja, Gustavo 271\nBaross, John 113–14\nBassham, James 97\nBenson, Andrew 91, 93–7, 1...",
+      "wordCount": 170
+    },
+    {
+      "index": 214,
+      "chapterNumber": 11,
+      "textLength": 1275,
+      "pageNumber": 483,
+      "preview": "292\nC4 carboxylic acids\nin photosynthesis 93, 100\nin respiration 33, 46–8, 50–2\nin reverse Krebs cycle 123, 184\nC5 molecules 51–2, 94–5, 105\nsee also α-ketoglutarate (at ‘k’)\nC6 carboxylic acids, citr...",
+      "wordCount": 201
+    },
+    {
+      "index": 215,
+      "chapterNumber": 11,
+      "textLength": 1188,
+      "pageNumber": 483,
+      "preview": "293\ncarbon-12 (\n12\nC) 178, 180–82\ncarbon-13 (\n13\nC) 88, 178–80, 182n6\ncarbon-14 (\n14\nC) 79, 86–92, 99, 102, 178\ncarbon capture and sequestration 34–5n2, 177\ncarbon dioxide (CO\n2\n)\nactivation by ATP or...",
+      "wordCount": 191
+    },
+    {
+      "index": 216,
+      "chapterNumber": 11,
+      "textLength": 1168,
+      "pageNumber": 484,
+      "preview": "294\ncell division 27, 192, 195, 283\ncell-free extracts 62\ncell nucleus, transplanting 195\ncells\nas batteries 162\ncellular level consciousness 276\ncity analogy 1–2, 14, 17–18\ncolour 35–6n3\nemission of ...",
+      "wordCount": 182
+    },
+    {
+      "index": 217,
+      "chapterNumber": 11,
+      "textLength": 1141,
+      "pageNumber": 484,
+      "preview": "295\nsee also acetyl CoA; succinyl CoA\nCohen, Michael 278\nColnaghi, Marco 241n2\ncomplexes I, II, III see respiratory chain\nconsciousness 274–84\nevidence from anaesthetics 276–8\nand membrane potentials ...",
+      "wordCount": 175
+    },
+    {
+      "index": 218,
+      "chapterNumber": 11,
+      "textLength": 1064,
+      "pageNumber": 485,
+      "preview": "296\nimposed on Calvin 94n6\nketogenic diets 228\nand mitochondrial function 25, 242, 249, 251, 264\nWallace on 242\nWarburg on 197\ndifferentiation, tissues 189, 202, 208–9, 269\ndiseases\nchronic infections...",
+      "wordCount": 161
+    },
+    {
+      "index": 219,
+      "chapterNumber": 11,
+      "textLength": 1090,
+      "pageNumber": 486,
+      "preview": "297\nThe Emergence of Everything, by Morowitz 127\nEmerson, Robert 199–200\nEnceladus 117, 120\nendoplasmic reticulum 266n9\nendosymbiosis 69, 221n6\nenergetics\nof early life 168\nof fixed carbon 160\nof livi...",
+      "wordCount": 167
+    },
+    {
+      "index": 220,
+      "chapterNumber": 11,
+      "textLength": 1161,
+      "pageNumber": 486,
+      "preview": "298\nsee also glycolysis, aerobic\nferredoxin (Fd)\namino acid sequence and antiquity 164–7\nancient metabolic pathways 121–2, 142\ndetailed mechanism of action 288–93\ndiscovery and properties 105–10, 114\n...",
+      "wordCount": 174
+    },
+    {
+      "index": 221,
+      "chapterNumber": 11,
+      "textLength": 1305,
+      "pageNumber": 487,
+      "preview": "299\norigins in protocells 149–50, 275\n(reverse) Krebs cycle signalling 20, 185, 195, 211–12, 215\nwhether preceded by metabolism 4–6, 17, 118, 129, 150\nsee also alleles; epigenetic changes\ngenes, mitoc...",
+      "wordCount": 201
+    },
+    {
+      "index": 222,
+      "chapterNumber": 11,
+      "textLength": 1062,
+      "pageNumber": 487,
+      "preview": "300\nprotocells 146–7\nGWAS (genome-wide association studies) 235, 237, 244\n2H/H\n2\n see hydrogen\nhaem pigments 35–6\nsee also chlorophyll; cytochrome oxidase\nhaemoglobin 35–6, 114, 165, 183, 187\nHaldane,...",
+      "wordCount": 157
+    },
+    {
+      "index": 223,
+      "chapterNumber": 11,
+      "textLength": 1363,
+      "pageNumber": 488,
+      "preview": "301\nburned in respiration 49–51, 55–8, 63–4, 159, 206, 254–5, 261\n2H and H\n2\n distinguished 47–8n6\n2H carriers in respiration 49–51, 63–4, 108n11\nin photosynthesis 99–100, 174\nprotons pumped by transf...",
+      "wordCount": 201
+    },
+    {
+      "index": 224,
+      "chapterNumber": 11,
+      "textLength": 1210,
+      "pageNumber": 489,
+      "preview": "302\nspontaneous formation of 4Fe4S 146\nisocitrate 128, 184, 185, 218, 220–22, 286, 287\nisocitrate dehydrogenase 218–21\nisotope studies 144\nsee also carbon-12; carbon-13; radioisotopes\nJacob, François ...",
+      "wordCount": 186
+    },
+    {
+      "index": 225,
+      "chapterNumber": 11,
+      "textLength": 1225,
+      "pageNumber": 489,
+      "preview": "303\nin the brain 263, 266, 280–81\nin cancer cells 222–3, 228\nin fruit flies 255–6\nmitonuclear mismatches and 262, 264–7\npotential reversal 186, 214, 244, 262\nKrebs cycle intermediates 51–2\nautocatalys...",
+      "wordCount": 191
+    },
+    {
+      "index": 226,
+      "chapterNumber": 11,
+      "textLength": 1198,
+      "pageNumber": 490,
+      "preview": "304\ntissue symbiosis 190\nlifestyle choices 25, 235, 264, 268–9, 272–3\nlight energy\ninfrared, and photosynthesis 115n2\npowering ATP synthesis 105\nsynthesis of organics in plants 107\n‘Like most revelati...",
+      "wordCount": 189
+    },
+    {
+      "index": 227,
+      "chapterNumber": 11,
+      "textLength": 1206,
+      "pageNumber": 490,
+      "preview": "305\nmetabolic flux\ncomplementarity 161, 189\nnumeric interpretation 8, 269–70\nredirected in cancer 16, 26, 205, 210\nas reversible 153, 168–9\nsignalling function 20–21, 244\nand stream of consciousness 2...",
+      "wordCount": 177
+    },
+    {
+      "index": 228,
+      "chapterNumber": 11,
+      "textLength": 1202,
+      "pageNumber": 491,
+      "preview": "306\nmutations within 240–41, 247, 254n4, 257\noffering improved lifespan 272\nrespiration efficiency 251, 254–5n4\nuniparental inheritance 239–40, 246n2\nmitochondrial membranes\nand anaesthesia 277–8\nchar...",
+      "wordCount": 174
+    },
+    {
+      "index": 229,
+      "chapterNumber": 11,
+      "textLength": 1257,
+      "pageNumber": 492,
+      "preview": "307\nin biosynthesis 206–9, 224, 225, 264\nand glutathione regeneration 252–3, 255\nand isocitrate dehydrogenase 218–21\nKrebs reversal and cancer 217–21\nin photosynthesis and photorespiration 107–9\nprogr...",
+      "wordCount": 195
+    },
+    {
+      "index": 230,
+      "chapterNumber": 11,
+      "textLength": 1219,
+      "pageNumber": 492,
+      "preview": "308\norigin of life\nand hydrothermal vents 113, 117, 133, 152–3\ninevitability 127, 131n7, 275\nmetabolism preceding genes 4–5, 118, 150\noxygen as inimical 157\nprocesses summarised 275\nornithine 52–3\nthe...",
+      "wordCount": 187
+    },
+    {
+      "index": 231,
+      "chapterNumber": 11,
+      "textLength": 1200,
+      "pageNumber": 493,
+      "preview": "309\nphosphoenol-pyruvate 70–71, 73, 102, 122, 224–5, 287, 296–7\nphosphoglycerate 92, 94, 96, 174\nphotophosphorylation 99, 105\nphotorespiration 76, 109\nphotosynthesis\nanoxygenic and oxygenic 166–8, 175...",
+      "wordCount": 182
+    },
+    {
+      "index": 232,
+      "chapterNumber": 11,
+      "textLength": 1079,
+      "pageNumber": 493,
+      "preview": "310\nproton gradients 64, 150, 152, 164\nproton-motive force 61, 69, 143, 147, 162–4, 220\npowering ATP synthesis 65–7, 66, 99, 163\nprotons\nin acidic environments 137–8\npumped by 2H transfers 68n13, 164,...",
+      "wordCount": 171
+    },
+    {
+      "index": 233,
+      "chapterNumber": 11,
+      "textLength": 1189,
+      "pageNumber": 494,
+      "preview": "311\nas a mitochondrial function 32, 67–8n13\nphotophosphorylation and 99\nas preceding photosynthesis 36\nrole of NADH 108n11\nrole of succinate 211–14\nsuppression by antioxidants 250–52, 254\nsuppression ...",
+      "wordCount": 178
+    },
+    {
+      "index": 234,
+      "chapterNumber": 11,
+      "textLength": 1084,
+      "pageNumber": 495,
+      "preview": "312\nsupercharged membrane potentials 219\nin transplant organs 214n5\nsee also free radicals\nROS flux 230, 244, 249–55, 257n5, 259, 261–2, 270–72\nroundabout analogy 24, 54, 70–72, 188, 260, 270\nthe Roya...",
+      "wordCount": 163
+    },
+    {
+      "index": 235,
+      "chapterNumber": 11,
+      "textLength": 1159,
+      "pageNumber": 495,
+      "preview": "313\nserpentinisation 120, 174\nsex differences and mitochondria 239–41, 247\nsexual ornamentation 261\nShields, Graham 180–81, 182n6\nShuram excursion 180–81, 182n6, 183\nSir Hans Krebs Trust 31n1, 49–50n7...",
+      "wordCount": 171
+    },
+    {
+      "index": 236,
+      "chapterNumber": 11,
+      "textLength": 1031,
+      "pageNumber": 496,
+      "preview": "314\nsymbiosis\namong bacteria and archaea 170, 188\nendosymbiosis 69, 221n6\nbetween tissues 189–90, 265\nSzent-Györgyi, Albert 44–52, 63, 71, 104, 184, 299\nThauer, Rolf 163n2\nthermodynamics\nfavouring org...",
+      "wordCount": 155
+    },
+    {
+      "index": 237,
+      "chapterNumber": 11,
+      "textLength": 798,
+      "pageNumber": 496,
+      "preview": "315\nvitalism/vital force 5, 8, 62\nvitamins C and E 44–5, 48, 252\nWächtershäuser, Günter 115–16\nWalker, Sara 130n6\nWalker, Sir John 67–8n13\nWallace, Doug 238–44, 279\nWarburg, Emil 197\nWarburg, Otto\non ...",
+      "wordCount": 122
+    },
+    {
+      "index": 238,
+      "chapterNumber": 11,
+      "textLength": 367,
+      "pageNumber": 497,
+      "preview": "316\nTable of Contents\nPraise for Transformer1\nTitle Page3\nCopyright4\nDedication5\nContents6\nIntroduction: Life itself8\n1. Discovering the nanocosm27\n2. The path of carbon62\n3. From gases to life91\n4. R...",
+      "wordCount": 54
+    },
+    {
+      "index": 239,
+      "chapterNumber": 10,
+      "textLength": 23,
+      "pageNumber": 221,
+      "preview": "The forward Krebs cycle",
+      "wordCount": 4
+    },
+    {
+      "index": 240,
+      "chapterNumber": 10,
+      "textLength": 27,
+      "pageNumber": 221,
+      "preview": "221\nThe reverse Krebs cycle",
+      "wordCount": 5
+    },
+    {
+      "index": 241,
+      "chapterNumber": 10,
+      "textLength": 1423,
+      "pageNumber": 221,
+      "preview": "222\nAPPENDIX 1\nRED PROTEIN MECHANICS\nThe red protein is ferredoxin, one of the most ancient and fundamental\nproteins across all of life. It seems to have many jobs, but the common\ndenominator is that ...",
+      "wordCount": 256
+    },
+    {
+      "index": 242,
+      "chapterNumber": 10,
+      "textLength": 1390,
+      "pageNumber": 221,
+      "preview": "223\nThe problem here is that the carboxylate group (-COO\n–\n) is not very\nreactive. To  react  with  CO\n2\n,  it  first  needs  to  be  activated. This  is\nachieved initially with ATP, which adds on the...",
+      "wordCount": 250
+    },
+    {
+      "index": 243,
+      "chapterNumber": 10,
+      "textLength": 1677,
+      "pageNumber": 222,
+      "preview": "224\nYou might still be wondering what the ferredoxin is doing here. It’s\nadding on two electrons, but where did they actually go? The easiest way\nto see this is to think about what happens when the Co...",
+      "wordCount": 297
+    },
+    {
+      "index": 244,
+      "chapterNumber": 10,
+      "textLength": 1356,
+      "pageNumber": 223,
+      "preview": "225\nEach of the two oxygen atoms therefore has a δ\n−\n, whereas the carbon\natom is δ\n+\n, as shown below.\nThis  mild  electrical polarity can  in  principle give  rise  to  a  more\nextreme endpoint, whe...",
+      "wordCount": 240
+    },
+    {
+      "index": 245,
+      "chapterNumber": 10,
+      "textLength": 815,
+      "pageNumber": 223,
+      "preview": "226\naction in the various reaction steps I’ve depicted above. In fact, water is\nnever produced as a separate entity. Look back at that first scheme –\nyou’ll see  that  the  oxygen in  the  water  mole...",
+      "wordCount": 145
+    },
+    {
+      "index": 246,
+      "chapterNumber": 10,
+      "textLength": 1789,
+      "pageNumber": 224,
+      "preview": "227\nAPPENDIX 2\nTHE KREBS LINE\nIn Chapter 3, we followed the fate of CO\n2\n bound to the surface of a\nmineral, through to a C2 acetyl group bound to the surface. This acetyl\ngroup is equivalent to acety...",
+      "wordCount": 330
+    },
+    {
+      "index": 247,
+      "chapterNumber": 10,
+      "textLength": 1118,
+      "pageNumber": 225,
+      "preview": "228\nJust in case you don’t recognise this as pyruvate, let me draw in the final\nstep again, showing it being released as pyruvate, which I hope you\nknow and love by now:\nWhen bound to the mineral surf...",
+      "wordCount": 189
+    },
+    {
+      "index": 248,
+      "chapterNumber": 10,
+      "textLength": 1408,
+      "pageNumber": 225,
+      "preview": "229\nwhy that Mad-Eye Moody oxygen is so reactive, which brings its own\ninexorable chemistry.\nLet me explain. Pyruvate exists in two states, one being more reactive\nand  shorter lived  than  the  other...",
+      "wordCount": 237
+    },
+    {
+      "index": 249,
+      "chapterNumber": 10,
+      "textLength": 1355,
+      "pageNumber": 226,
+      "preview": "230\nThe curly arrows here depict a proton acquiring a pair of electrons from\nthe  surface;  the  two  electrons that  formerly bound the  hydrogen to\npyruvate now move to form the double bond in enol ...",
+      "wordCount": 236
+    },
+    {
+      "index": 250,
+      "chapterNumber": 10,
+      "textLength": 1273,
+      "pageNumber": 227,
+      "preview": "231\nNotice that I’m drawing the carboxylate group with its negative charge\nin  the  conventional way  again  here,  to  emphasise its  electrical\ninteractions with  the  charged  surface. I’ll  use  t...",
+      "wordCount": 202
+    },
+    {
+      "index": 251,
+      "chapterNumber": 10,
+      "textLength": 1888,
+      "pageNumber": 227,
+      "preview": "232\nelectrons plus  two  protons equates  to  the  addition of  two  hydrogen\natoms, one onto the alpha carbon and the other onto the oxygen, giving\nthe C4 malate (right-hand side).\nThe final step we’...",
+      "wordCount": 317
+    },
+    {
+      "index": 252,
+      "chapterNumber": 10,
+      "textLength": 2218,
+      "pageNumber": 228,
+      "preview": "233\nABBREVIATIONS\n2H Two hydrogen atoms (two electrons plus two protons). Can be extracted from\nanywhere in a molecule and transferred onto another molecule.\nATP Adenosine triphosphate. The ‘universal...",
+      "wordCount": 362
+    },
+    {
+      "index": 253,
+      "chapterNumber": 10,
+      "textLength": 2580,
+      "pageNumber": 229,
+      "preview": "234\nGWAS Genome-wide association studies. Statistical studies that correlate single-\nletter differences in DNA across whole genomes with the risk of diseases.\nH\n+\n Proton; a positively charged particl...",
+      "wordCount": 435
+    },
+    {
+      "index": 254,
+      "chapterNumber": 10,
+      "textLength": 209,
+      "pageNumber": 231,
+      "preview": "235\nSNP  Single-nucleotide  polymorphism (pronounced ‘snip’). A  single-letter\nchange in  DNA, which can  differ  between individuals. We  have  millions of\nSNPs, making us genetically different to ea...",
+      "wordCount": 28
+    },
+    {
+      "index": 255,
+      "chapterNumber": 10,
+      "textLength": 2467,
+      "pageNumber": 231,
+      "preview": "236\nFURTHER READING\nThis is not a textbook or research paper, so is not referenced in a comprehensive\nway. But if you’ve read this far, you will have become deeply embroiled in the\nwider literature. T...",
+      "wordCount": 391
+    },
+    {
+      "index": 256,
+      "chapterNumber": 10,
+      "textLength": 2684,
+      "pageNumber": 232,
+      "preview": "237\nmanifesto for reconceiving the role that information plays in life and its origin,\nby a leading physicist and thinker who has long considered the makeup of life.\nNot  surprisingly,  I  don’t  agre...",
+      "wordCount": 418
+    },
+    {
+      "index": 257,
+      "chapterNumber": 10,
+      "textLength": 2617,
+      "pageNumber": 233,
+      "preview": "238\nThe digital jungle\nHorace Freeland Judson, The Eighth Day of Creation. Makers of the Revolution\nin  Biology,  25th  Anniversary Edition (Cold  Spring Harbor Laboratory Press,\n1996). A  magisterial...",
+      "wordCount": 396
+    },
+    {
+      "index": 258,
+      "chapterNumber": 10,
+      "textLength": 2498,
+      "pageNumber": 235,
+      "preview": "239\nSmith and Morowitz take the case for the unity of biochemistry right back to the\norigin of life.\nW. Martin and  M. J. Russell, ‘On  the  origin  of  biochemistry at  an  alkaline\nhydrothermal vent...",
+      "wordCount": 390
+    },
+    {
+      "index": 259,
+      "chapterNumber": 10,
+      "textLength": 2720,
+      "pageNumber": 236,
+      "preview": "240\nSociety in 1932.\nH. H. Dale, ‘Frederick Gowland Hopkins 1861–1947’, Obituary Notices Fellows\nRoyal Society 6 (1948) 115–145. An affectionate biography from Sir Henry Dale,\nanother pioneering bioch...",
+      "wordCount": 416
+    },
+    {
+      "index": 260,
+      "chapterNumber": 10,
+      "textLength": 2530,
+      "pageNumber": 237,
+      "preview": "241\nH. Krebs, ‘Otto Heinrich Warburg. 1883–1970’, Biographical Memoirs Fellows\nof the Royal Society 18 (1972) 628–699. Krebs’s generous tribute to his scientific\nmentor; even Krebs was unable to prese...",
+      "wordCount": 381
+    },
+    {
+      "index": 261,
+      "chapterNumber": 10,
+      "textLength": 2776,
+      "pageNumber": 239,
+      "preview": "242\nextraordinary scholarship, drawing on Krebs’s lab books in detail, with all their\nexclamation marks. This volume deals with Krebs’s earlier years, leading up to\nthe urea cycle.\nFrederic L. Holmes,...",
+      "wordCount": 416
+    },
+    {
+      "index": 262,
+      "chapterNumber": 10,
+      "textLength": 2795,
+      "pageNumber": 240,
+      "preview": "243\n‘at the age of eighty-seven, not long after having learned that his latest grant\napplication had been successful’. Here at least, times have changed.\nPeter Mitchell and chemiosmotic coupling\nPeter...",
+      "wordCount": 392
+    },
+    {
+      "index": 263,
+      "chapterNumber": 10,
+      "textLength": 2595,
+      "pageNumber": 241,
+      "preview": "244\nP. D. Mitchell and J. Moyle, ‘Evidence discriminating between the chemical and\nthe  chemiosmotic  mechanisms of  electron transport phosphorylation’, Nature\n208 (1965) 1205–1206. A shorter paper, ...",
+      "wordCount": 377
+    },
+    {
+      "index": 264,
+      "chapterNumber": 10,
+      "textLength": 2529,
+      "pageNumber": 243,
+      "preview": "245\nmentioning the reverse Krebs cycle – which had been proposed fifteen years\nearlier. How blind are even the finest scientists.\nH. A. Krebs and H. L. Kornberg, Energy Transformations in Living Matte...",
+      "wordCount": 386
+    },
+    {
+      "index": 265,
+      "chapterNumber": 10,
+      "textLength": 2623,
+      "pageNumber": 244,
+      "preview": "246\nphysicists and chemists of the day, set in times of heightened politics and war. A\nunique record.\nOliver Morton, Eating the Sun: How Plants Power the Planet (London, Fourth\nEstate, 2009). A  delig...",
+      "wordCount": 428
+    },
+    {
+      "index": 266,
+      "chapterNumber": 10,
+      "textLength": 2700,
+      "pageNumber": 245,
+      "preview": "247\nA. A. Benson, ‘Last  days  in  the  old  radiation laboratory (ORL), Berkeley,\nCalifornia, 1954’, Photosynthesis Research  105  (2010) 209–212. More\nfascinating reminiscences from Andrew Benson.\nT...",
+      "wordCount": 399
+    },
+    {
+      "index": 267,
+      "chapterNumber": 10,
+      "textLength": 2518,
+      "pageNumber": 247,
+      "preview": "248\nafter it was first proposed – by which time it is at last undisputed, if not widely\nknown.\nB. B. Buchanan, ‘Daniel I. Arnon. November 14, 1910–December 20, 1994’,\nBiographical Memoirs 80 (2001) 2–...",
+      "wordCount": 378
+    },
+    {
+      "index": 268,
+      "chapterNumber": 10,
+      "textLength": 2597,
+      "pageNumber": 248,
+      "preview": "249\nseminal discovery, that the canonical ATP citrate lyase is not necessary for the\nreverse Krebs cycle; the standard enzyme citrate synthase is reversible after all.\nSo do dogmas fall.\nL. Steffens, ...",
+      "wordCount": 406
+    },
+    {
+      "index": 269,
+      "chapterNumber": 10,
+      "textLength": 2811,
+      "pageNumber": 249,
+      "preview": "250\neach  discovered new  vent  systems, alongside Bill  Martin and  Mike  Russell,\nleading protagonists of how life might have started in such systems.\nN. H. Sleep, D. K. Bird and E. C. Pope, ‘Serpen...",
+      "wordCount": 432
+    },
+    {
+      "index": 270,
+      "chapterNumber": 10,
+      "textLength": 2795,
+      "pageNumber": 251,
+      "preview": "251\nTransactions of the Royal Society B 358 (2003) 59–85. An all-time classic paper,\nthe kind of paper that draws young minds not just into the field but into science.\nJ. Whitfield, ‘Origin of life: n...",
+      "wordCount": 440
+    },
+    {
+      "index": 271,
+      "chapterNumber": 10,
+      "textLength": 3096,
+      "pageNumber": 252,
+      "preview": "252\nwith some leading phylogeneticists including the brilliant and prolific Eugene\nKoonin. I am unpersuaded, but Mulkidjanian’s papers are always worth reading.\nJ. D. Sutherland, ‘Studies on the origi...",
+      "wordCount": 491
+    },
+    {
+      "index": 272,
+      "chapterNumber": 10,
+      "textLength": 2980,
+      "pageNumber": 253,
+      "preview": "253\nof view, looking for similar chemistry to that still happening in cells. This is an\nexciting paper which links up with their own earlier work, showing that various\nintermediates in the acetyl CoA ...",
+      "wordCount": 477
+    },
+    {
+      "index": 273,
+      "chapterNumber": 10,
+      "textLength": 2661,
+      "pageNumber": 255,
+      "preview": "254\nR. Braakman and E. Smith, ‘The emergence and early evolution of biological\ncarbon fixation’, PLoS Computational Biology 8 (2012) e1002455. An extremely\nneat  idea,  which attempts to  unite  phylo...",
+      "wordCount": 417
+    },
+    {
+      "index": 274,
+      "chapterNumber": 10,
+      "textLength": 2541,
+      "pageNumber": 256,
+      "preview": "255\non the shelf of anyone seriously interested in the origin of life. Manages to\npresent new ideas with admirable clarity, while being balanced and exhaustive.\nJ. Trefil, H. J. Morowitz and E. Smith,...",
+      "wordCount": 403
+    },
+    {
+      "index": 275,
+      "chapterNumber": 10,
+      "textLength": 2840,
+      "pageNumber": 258,
+      "preview": "256\nV. Sojo, B. Herschy, A. Whicher, E. Camprubi and N. Lane, ‘The origin of life in\nalkaline hydrothermal vents’, Astrobiology 16 (2016) 181–197. Our own attempt\nto reconcile the origins of life in a...",
+      "wordCount": 462
+    },
+    {
+      "index": 276,
+      "chapterNumber": 10,
+      "textLength": 2878,
+      "pageNumber": 259,
+      "preview": "257\nR. Hudson, R. de Graaf, M. S. Rodin, A. Ohno, N. Lane, S. E. McGlynn, Y. M.\nA. Yamada, R. Nakamura, L. M. Barge, D. Braun and V. Sojo, ‘CO\n2\n reduction\ndriven by a pH gradient’, Proceedings of the...",
+      "wordCount": 441
+    },
+    {
+      "index": 277,
+      "chapterNumber": 10,
+      "textLength": 2636,
+      "pageNumber": 260,
+      "preview": "258\nR. Nunes Palmeira, M. Colnaghi, S. Harrison, A. Pomiankowski and N. Lane,\n‘The  limits  of  metabolic heredity in  protocells’, available on BioRxiv\n(https://doi.org/10.1101/2022.01.28.477904). Mo...",
+      "wordCount": 418
+    },
+    {
+      "index": 278,
+      "chapterNumber": 10,
+      "textLength": 2855,
+      "pageNumber": 262,
+      "preview": "259\nDaniel C. Dennett, Darwin’s Dangerous Idea: Evolution and the Meanings of\nLife (New York, Simon & Schuster, 1995). I never appreciated what a razor-\nsharp philosophical mind could do to scientific...",
+      "wordCount": 447
+    },
+    {
+      "index": 279,
+      "chapterNumber": 10,
+      "textLength": 2758,
+      "pageNumber": 263,
+      "preview": "260\nenergy revolutions transformed the potential of life on Earth, from the origins of\nlife to photosynthesis, oxygen and fire.\nElectron bifurcation\nW. Buckel and  R. K. Thauer,  ‘Flavin-based electro...",
+      "wordCount": 414
+    },
+    {
+      "index": 280,
+      "chapterNumber": 10,
+      "textLength": 2796,
+      "pageNumber": 265,
+      "preview": "261\nBacterial metabolism and syntrophy\nP. Schönheit, W. Buckel and  W. F. Martin, ‘On  the  origin  of  heterotrophy’,\nTrends in Microbiology 24 (2016) 12–25. An important paper, which is so clearly\nt...",
+      "wordCount": 414
+    },
+    {
+      "index": 281,
+      "chapterNumber": 10,
+      "textLength": 2828,
+      "pageNumber": 266,
+      "preview": "262\nmentorship as academic lineage), Lenton and Watson know exactly whereof they\nspeak.\nH. C. Betts, M. N. Puttick, J. W. Clark, T. A. Williams, P. C. J. Donoghue and D.\nPisani, ‘Integrated genomic an...",
+      "wordCount": 433
+    },
+    {
+      "index": 282,
+      "chapterNumber": 10,
+      "textLength": 2756,
+      "pageNumber": 267,
+      "preview": "263\nActive ventilation in animals\nA. H. Knoll, R. K. Bambach, D. E. Canfield and J. P. Grotzinger, ‘Comparative\nearth history and late Permian mass extinction’, Science 273: 452–457 (1996). A\nrevelato...",
+      "wordCount": 427
+    },
+    {
+      "index": 283,
+      "chapterNumber": 10,
+      "textLength": 2837,
+      "pageNumber": 269,
+      "preview": "264\nL. J. Sweetlove, K. F. Beard, A. Nunes-Nesi, A. R. Fernie and R. G. Ratcliffe,\n‘Not just a circle: flux modes in the plant TCA cycle’, Trends in Plant Sciences\n15 (2010) 462–470. A lovely analysis...",
+      "wordCount": 470
+    },
+    {
+      "index": 284,
+      "chapterNumber": 10,
+      "textLength": 2616,
+      "pageNumber": 270,
+      "preview": "265\nstill bites: ‘Most serious of all the results of the somatic mutation hypothesis has\nbeen its effect on research workers. It acts as a tranquillizer on those who believe\nin it, and this at a time ...",
+      "wordCount": 411
+    },
+    {
+      "index": 285,
+      "chapterNumber": 10,
+      "textLength": 2798,
+      "pageNumber": 271,
+      "preview": "266\ninsightful piece that captures a lot of Warburg’s thinking that remains relevant for\na modern audience interested in cancer.\nMartin D. Kamen, Radiant Science, Dark Politics. A Memoir of the Nuclea...",
+      "wordCount": 428
+    },
+    {
+      "index": 286,
+      "chapterNumber": 10,
+      "textLength": 2614,
+      "pageNumber": 273,
+      "preview": "267\nat the original for the full context.\nOtto Heinrich Warburg, The Prime Cause and Prevention of Cancer (Würzburg,\nKonrad Triltsch, 1969). A famous manifesto, following on where his Science\npaper le...",
+      "wordCount": 407
+    },
+    {
+      "index": 287,
+      "chapterNumber": 10,
+      "textLength": 2824,
+      "pageNumber": 274,
+      "preview": "268\nP. W. Hochachka and K. B. Storey, ‘Metabolic consequences of diving in animals\nand  man’, Science  187  (1975) 613–621. How  diving animals survive long\nperiods without oxygen – calling attention ...",
+      "wordCount": 450
+    },
+    {
+      "index": 288,
+      "chapterNumber": 10,
+      "textLength": 2868,
+      "pageNumber": 276,
+      "preview": "269\nto an important book by Rebecca Skloot, The Immortal Life of Henrietta Lacks\n(Pan,  2011),  after  whom HeLa  cells  were  named, which calls  attention to  a\nhistorical wrong.\nS. L. Colombo, M. P...",
+      "wordCount": 445
+    },
+    {
+      "index": 289,
+      "chapterNumber": 10,
+      "textLength": 2781,
+      "pageNumber": 277,
+      "preview": "270\nM. Wagner, E. Bertero, A. Nickel, M. Kohlhaas, G. E. Gibson, W. Heggermont,\nS. Heymans and  C. Maack, ‘Selective NADH communication from  α-\nketoglutarate dehydrogenase to  mitochondrial transhydr...",
+      "wordCount": 432
+    },
+    {
+      "index": 290,
+      "chapterNumber": 10,
+      "textLength": 2563,
+      "pageNumber": 278,
+      "preview": "271\n2020). Available here: https://doi:10.26124/bec:2020-0002. The ‘bible’ of fluo-\nrespirometry,  privately  published by  Erich  Gnaiger in  the  tradition of  Peter\nMitchell’s ‘little grey books’; ...",
+      "wordCount": 393
+    },
+    {
+      "index": 291,
+      "chapterNumber": 10,
+      "textLength": 2436,
+      "pageNumber": 280,
+      "preview": "272\npieces of evolutionary thinking of the twentieth century, and should be read by\nall.\nAndré Klarsfeld and Frédéric Revah, The Biology of Death: Origins of Mortality\n(Ithaca, NY,  Cornell University...",
+      "wordCount": 385
+    },
+    {
+      "index": 292,
+      "chapterNumber": 10,
+      "textLength": 2831,
+      "pageNumber": 281,
+      "preview": "273\nR. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of\nhuman mitochondrial DNA’, Proceedings of the National Academy of Sciences\nUSA 77 (1980) 6715–671. The first demonstra...",
+      "wordCount": 426
+    },
+    {
+      "index": 293,
+      "chapterNumber": 10,
+      "textLength": 2680,
+      "pageNumber": 282,
+      "preview": "274\nVesalius and Mendel. An important synthesis; should be required reading for\nmedical students.\nMitochondria in flies\nD. E. Miller,  K. R. Cook  and  R. S. Hawley,  ‘The  joy  of  balancers’, PLoS\nG...",
+      "wordCount": 403
+    },
+    {
+      "index": 294,
+      "chapterNumber": 10,
+      "textLength": 2756,
+      "pageNumber": 284,
+      "preview": "275\nantioxidant NAC caused problems in some lines but not others, depending on the\nmitochondrial DNA.\nM. F. Camus, W. Kotiadis, H. Carter, E. Rodriguez and N. Lane, ‘Mitonuclear\ninteractions produce e...",
+      "wordCount": 406
+    },
+    {
+      "index": 295,
+      "chapterNumber": 10,
+      "textLength": 2843,
+      "pageNumber": 285,
+      "preview": "276\nbook length, drawing parallels with companies and cities that I haven’t seen\nanyone do since the great polymath J. B. S. Haldane.\nAntioxidants don’t work\nJ. M. Gutteridge and B. Halliwell, ‘Free r...",
+      "wordCount": 452
+    },
+    {
+      "index": 296,
+      "chapterNumber": 10,
+      "textLength": 2685,
+      "pageNumber": 286,
+      "preview": "277\nD. Gems, ‘The  aging–disease false  dichotomy: understanding senescence as\npathology’, Frontiers in Genetics 6 (2015) 12. David Gems rails against the idea\nthat ageing is somehow normal and ‘healt...",
+      "wordCount": 404
+    },
+    {
+      "index": 297,
+      "chapterNumber": 10,
+      "textLength": 2702,
+      "pageNumber": 288,
+      "preview": "278\nurine). Paula  Moreira discusses how  diabetes-linked defects in  mitochondria\nincrease the risk of Alzheimer’s disease.\nD. A. Butterfield and  B. Halliwell, ‘Oxidative stress, dysfunctional gluco...",
+      "wordCount": 397
+    },
+    {
+      "index": 298,
+      "chapterNumber": 10,
+      "textLength": 2668,
+      "pageNumber": 289,
+      "preview": "279\nAnaesthetics and mitochondria\nL. Turin, E. M. C. Skoulakis and A. P. Horsfield, ‘Electron spin changes during\ngeneral anesthesia in Drosophila’, Proceedings of  the  National Academy of\nSciences U...",
+      "wordCount": 417
+    },
+    {
+      "index": 299,
+      "chapterNumber": 10,
+      "textLength": 2960,
+      "pageNumber": 290,
+      "preview": "280\nMichael Levin is currently doing some of the most exciting work in biology.\nElectrical fields determine development; genes are secondary. So far that mostly\ngoes for flat-worms, but could it be mo...",
+      "wordCount": 462
+    },
+    {
+      "index": 300,
+      "chapterNumber": 10,
+      "textLength": 2269,
+      "pageNumber": 292,
+      "preview": "281\nJ. McFadden, ‘Integrating information in the brain’s EM field: the cemi field\ntheory of consciousness’, Neuroscience of Consciousness 2020 (2020) niaa016.\nJohnjoe McFadden has  been  thinking abou...",
+      "wordCount": 361
+    },
+    {
+      "index": 301,
+      "chapterNumber": 10,
+      "textLength": 2484,
+      "pageNumber": 293,
+      "preview": "282\nACKNOWLEDGEMENTS\nThis book opens with a description of an empty city, lacking the hurly\nburly of people and energy flow. Little did I realise when writing that\npassage that it would require such a...",
+      "wordCount": 440
+    },
+    {
+      "index": 302,
+      "chapterNumber": 10,
+      "textLength": 2799,
+      "pageNumber": 294,
+      "preview": "283\nas  the  severely  disturbed downstream consequences of  mitonuclear\nincompatibilities in  ageing flies. Grappling with  new  results while\nwriting this book, sometimes watching cherished ideas im...",
+      "wordCount": 479
+    },
+    {
+      "index": 303,
+      "chapterNumber": 10,
+      "textLength": 2880,
+      "pageNumber": 296,
+      "preview": "284\ncare  to  admit, while  celebrating the  bigger picture and  occasionally\ndredging up some details from her deeply buried degree in biochemistry.\nShe  racked her  mind  over  possible titles. Titl...",
+      "wordCount": 486
+    },
+    {
+      "index": 304,
+      "chapterNumber": 10,
+      "textLength": 2738,
+      "pageNumber": 297,
+      "preview": "285\nlost ourselves in a six-hour discussion on why the cycle is a cycle and\nother abstruse questions. Rarely have science and pure pleasure aligned\nso closely. And I thank Prof. Christian Frezza, who ...",
+      "wordCount": 443
+    },
+    {
+      "index": 305,
+      "chapterNumber": 10,
+      "textLength": 2772,
+      "pageNumber": 299,
+      "preview": "286\naside until Derek invited me to give the Derek Denton Oration in the\nArts and Sciences in Melbourne in 2019 – on condition that I addressed\nconsciousness, if  only  in  brief. While wrestling with...",
+      "wordCount": 479
+    },
+    {
+      "index": 306,
+      "chapterNumber": 10,
+      "textLength": 1926,
+      "pageNumber": 300,
+      "preview": "287\nother people felt the same until his funeral. We will all remember him\nwith love and admiration. Heartfelt condolences to Mary Jane.\nLast but not least, I thank Caroline Dawnay of United Agents, a...",
+      "wordCount": 315
+    },
+    {
+      "index": 307,
+      "chapterNumber": 10,
+      "textLength": 1033,
+      "pageNumber": 301,
+      "preview": "288\nINDEX\nNote: The index covers the main text and appendices. The suffix ‘n’ plus\na number indicates a relevant footnote on that page. Page numbers in\nitalics indicate illustrations.\nAcademic Assista...",
+      "wordCount": 161
+    },
+    {
+      "index": 308,
+      "chapterNumber": 10,
+      "textLength": 1219,
+      "pageNumber": 301,
+      "preview": "289\n‘alpha-keto’ groups 41, 286, 299\nsee also α-ketoglutarate (at ‘k’)\nalternative oxidase 183, 228n7, 262n8\nAlvin (submersible) 112–13, 115\nAlzheimer’s disease 21, 28, 266–8, 280\namino acids\nbiosynth...",
+      "wordCount": 177
+    },
+    {
+      "index": 309,
+      "chapterNumber": 10,
+      "textLength": 1177,
+      "pageNumber": 302,
+      "preview": "290\nATP (adenosine triphosphate) 302\nin cellular respiration 56–7, 64\nformation without ATP synthase 144, 151\nsynthesis 65–8, 98–105, 187–8\nyields from respiration and fermentation 201–2, 207\nATP citr...",
+      "wordCount": 181
+    },
+    {
+      "index": 310,
+      "chapterNumber": 10,
+      "textLength": 1075,
+      "pageNumber": 303,
+      "preview": "291\nKrebs cycle and non-cycle 111, 184–6\nsymbiosis among 170, 188\n‘balancer chromosomes’ 245, 248\nBaldwin, Ernest 59\nBarja, Gustavo 271\nBaross, John 113–14\nBassham, James 97\nBenson, Andrew 91, 93–7, 1...",
+      "wordCount": 170
+    },
+    {
+      "index": 311,
+      "chapterNumber": 10,
+      "textLength": 1275,
+      "pageNumber": 303,
+      "preview": "292\nC4 carboxylic acids\nin photosynthesis 93, 100\nin respiration 33, 46–8, 50–2\nin reverse Krebs cycle 123, 184\nC5 molecules 51–2, 94–5, 105\nsee also α-ketoglutarate (at ‘k’)\nC6 carboxylic acids, citr...",
+      "wordCount": 201
+    },
+    {
+      "index": 312,
+      "chapterNumber": 10,
+      "textLength": 1188,
+      "pageNumber": 304,
+      "preview": "293\ncarbon-12 (\n12\nC) 178, 180–82\ncarbon-13 (\n13\nC) 88, 178–80, 182n6\ncarbon-14 (\n14\nC) 79, 86–92, 99, 102, 178\ncarbon capture and sequestration 34–5n2, 177\ncarbon dioxide (CO\n2\n)\nactivation by ATP or...",
+      "wordCount": 191
+    },
+    {
+      "index": 313,
+      "chapterNumber": 10,
+      "textLength": 1168,
+      "pageNumber": 304,
+      "preview": "294\ncell division 27, 192, 195, 283\ncell-free extracts 62\ncell nucleus, transplanting 195\ncells\nas batteries 162\ncellular level consciousness 276\ncity analogy 1–2, 14, 17–18\ncolour 35–6n3\nemission of ...",
+      "wordCount": 182
+    },
+    {
+      "index": 314,
+      "chapterNumber": 10,
+      "textLength": 1141,
+      "pageNumber": 305,
+      "preview": "295\nsee also acetyl CoA; succinyl CoA\nCohen, Michael 278\nColnaghi, Marco 241n2\ncomplexes I, II, III see respiratory chain\nconsciousness 274–84\nevidence from anaesthetics 276–8\nand membrane potentials ...",
+      "wordCount": 175
+    },
+    {
+      "index": 315,
+      "chapterNumber": 10,
+      "textLength": 1064,
+      "pageNumber": 306,
+      "preview": "296\nimposed on Calvin 94n6\nketogenic diets 228\nand mitochondrial function 25, 242, 249, 251, 264\nWallace on 242\nWarburg on 197\ndifferentiation, tissues 189, 202, 208–9, 269\ndiseases\nchronic infections...",
+      "wordCount": 161
+    },
+    {
+      "index": 316,
+      "chapterNumber": 10,
+      "textLength": 1090,
+      "pageNumber": 306,
+      "preview": "297\nThe Emergence of Everything, by Morowitz 127\nEmerson, Robert 199–200\nEnceladus 117, 120\nendoplasmic reticulum 266n9\nendosymbiosis 69, 221n6\nenergetics\nof early life 168\nof fixed carbon 160\nof livi...",
+      "wordCount": 167
+    },
+    {
+      "index": 317,
+      "chapterNumber": 10,
+      "textLength": 1161,
+      "pageNumber": 307,
+      "preview": "298\nsee also glycolysis, aerobic\nferredoxin (Fd)\namino acid sequence and antiquity 164–7\nancient metabolic pathways 121–2, 142\ndetailed mechanism of action 288–93\ndiscovery and properties 105–10, 114\n...",
+      "wordCount": 174
+    },
+    {
+      "index": 318,
+      "chapterNumber": 10,
+      "textLength": 1305,
+      "pageNumber": 307,
+      "preview": "299\norigins in protocells 149–50, 275\n(reverse) Krebs cycle signalling 20, 185, 195, 211–12, 215\nwhether preceded by metabolism 4–6, 17, 118, 129, 150\nsee also alleles; epigenetic changes\ngenes, mitoc...",
+      "wordCount": 201
+    },
+    {
+      "index": 319,
+      "chapterNumber": 10,
+      "textLength": 1062,
+      "pageNumber": 308,
+      "preview": "300\nprotocells 146–7\nGWAS (genome-wide association studies) 235, 237, 244\n2H/H\n2\n see hydrogen\nhaem pigments 35–6\nsee also chlorophyll; cytochrome oxidase\nhaemoglobin 35–6, 114, 165, 183, 187\nHaldane,...",
+      "wordCount": 157
+    },
+    {
+      "index": 320,
+      "chapterNumber": 10,
+      "textLength": 1363,
+      "pageNumber": 308,
+      "preview": "301\nburned in respiration 49–51, 55–8, 63–4, 159, 206, 254–5, 261\n2H and H\n2\n distinguished 47–8n6\n2H carriers in respiration 49–51, 63–4, 108n11\nin photosynthesis 99–100, 174\nprotons pumped by transf...",
+      "wordCount": 201
+    },
+    {
+      "index": 321,
+      "chapterNumber": 10,
+      "textLength": 1210,
+      "pageNumber": 309,
+      "preview": "302\nspontaneous formation of 4Fe4S 146\nisocitrate 128, 184, 185, 218, 220–22, 286, 287\nisocitrate dehydrogenase 218–21\nisotope studies 144\nsee also carbon-12; carbon-13; radioisotopes\nJacob, François ...",
+      "wordCount": 186
+    },
+    {
+      "index": 322,
+      "chapterNumber": 10,
+      "textLength": 1225,
+      "pageNumber": 310,
+      "preview": "303\nin the brain 263, 266, 280–81\nin cancer cells 222–3, 228\nin fruit flies 255–6\nmitonuclear mismatches and 262, 264–7\npotential reversal 186, 214, 244, 262\nKrebs cycle intermediates 51–2\nautocatalys...",
+      "wordCount": 191
+    },
+    {
+      "index": 323,
+      "chapterNumber": 10,
+      "textLength": 1198,
+      "pageNumber": 310,
+      "preview": "304\ntissue symbiosis 190\nlifestyle choices 25, 235, 264, 268–9, 272–3\nlight energy\ninfrared, and photosynthesis 115n2\npowering ATP synthesis 105\nsynthesis of organics in plants 107\n‘Like most revelati...",
+      "wordCount": 189
+    },
+    {
+      "index": 324,
+      "chapterNumber": 10,
+      "textLength": 1206,
+      "pageNumber": 311,
+      "preview": "305\nmetabolic flux\ncomplementarity 161, 189\nnumeric interpretation 8, 269–70\nredirected in cancer 16, 26, 205, 210\nas reversible 153, 168–9\nsignalling function 20–21, 244\nand stream of consciousness 2...",
+      "wordCount": 177
+    },
+    {
+      "index": 325,
+      "chapterNumber": 10,
+      "textLength": 1202,
+      "pageNumber": 311,
+      "preview": "306\nmutations within 240–41, 247, 254n4, 257\noffering improved lifespan 272\nrespiration efficiency 251, 254–5n4\nuniparental inheritance 239–40, 246n2\nmitochondrial membranes\nand anaesthesia 277–8\nchar...",
+      "wordCount": 174
+    },
+    {
+      "index": 326,
+      "chapterNumber": 10,
+      "textLength": 1257,
+      "pageNumber": 312,
+      "preview": "307\nin biosynthesis 206–9, 224, 225, 264\nand glutathione regeneration 252–3, 255\nand isocitrate dehydrogenase 218–21\nKrebs reversal and cancer 217–21\nin photosynthesis and photorespiration 107–9\nprogr...",
+      "wordCount": 195
+    },
+    {
+      "index": 327,
+      "chapterNumber": 10,
+      "textLength": 1219,
+      "pageNumber": 313,
+      "preview": "308\norigin of life\nand hydrothermal vents 113, 117, 133, 152–3\ninevitability 127, 131n7, 275\nmetabolism preceding genes 4–5, 118, 150\noxygen as inimical 157\nprocesses summarised 275\nornithine 52–3\nthe...",
+      "wordCount": 187
+    },
+    {
+      "index": 328,
+      "chapterNumber": 10,
+      "textLength": 1200,
+      "pageNumber": 313,
+      "preview": "309\nphosphoenol-pyruvate 70–71, 73, 102, 122, 224–5, 287, 296–7\nphosphoglycerate 92, 94, 96, 174\nphotophosphorylation 99, 105\nphotorespiration 76, 109\nphotosynthesis\nanoxygenic and oxygenic 166–8, 175...",
+      "wordCount": 182
+    },
+    {
+      "index": 329,
+      "chapterNumber": 10,
+      "textLength": 1079,
+      "pageNumber": 314,
+      "preview": "310\nproton gradients 64, 150, 152, 164\nproton-motive force 61, 69, 143, 147, 162–4, 220\npowering ATP synthesis 65–7, 66, 99, 163\nprotons\nin acidic environments 137–8\npumped by 2H transfers 68n13, 164,...",
+      "wordCount": 171
+    },
+    {
+      "index": 330,
+      "chapterNumber": 10,
+      "textLength": 1189,
+      "pageNumber": 314,
+      "preview": "311\nas a mitochondrial function 32, 67–8n13\nphotophosphorylation and 99\nas preceding photosynthesis 36\nrole of NADH 108n11\nrole of succinate 211–14\nsuppression by antioxidants 250–52, 254\nsuppression ...",
+      "wordCount": 178
+    },
+    {
+      "index": 331,
+      "chapterNumber": 10,
+      "textLength": 1084,
+      "pageNumber": 315,
+      "preview": "312\nsupercharged membrane potentials 219\nin transplant organs 214n5\nsee also free radicals\nROS flux 230, 244, 249–55, 257n5, 259, 261–2, 270–72\nroundabout analogy 24, 54, 70–72, 188, 260, 270\nthe Roya...",
+      "wordCount": 163
+    },
+    {
+      "index": 332,
+      "chapterNumber": 10,
+      "textLength": 1159,
+      "pageNumber": 316,
+      "preview": "313\nserpentinisation 120, 174\nsex differences and mitochondria 239–41, 247\nsexual ornamentation 261\nShields, Graham 180–81, 182n6\nShuram excursion 180–81, 182n6, 183\nSir Hans Krebs Trust 31n1, 49–50n7...",
+      "wordCount": 171
+    },
+    {
+      "index": 333,
+      "chapterNumber": 10,
+      "textLength": 1031,
+      "pageNumber": 316,
+      "preview": "314\nsymbiosis\namong bacteria and archaea 170, 188\nendosymbiosis 69, 221n6\nbetween tissues 189–90, 265\nSzent-Györgyi, Albert 44–52, 63, 71, 104, 184, 299\nThauer, Rolf 163n2\nthermodynamics\nfavouring org...",
+      "wordCount": 155
+    },
+    {
+      "index": 334,
+      "chapterNumber": 10,
+      "textLength": 798,
+      "pageNumber": 317,
+      "preview": "315\nvitalism/vital force 5, 8, 62\nvitamins C and E 44–5, 48, 252\nWächtershäuser, Günter 115–16\nWalker, Sara 130n6\nWalker, Sir John 67–8n13\nWallace, Doug 238–44, 279\nWarburg, Emil 197\nWarburg, Otto\non ...",
+      "wordCount": 122
+    },
+    {
+      "index": 335,
+      "chapterNumber": 10,
+      "textLength": 340,
+      "pageNumber": 317,
+      "preview": "316\nTable of Contents\nPraise for Transformer1\nTitle Page3\nCopyright4\nDedication5\nContents6\nIntroduction: Life itself8\n1. Discovering the nanocosm27\n2. The path of carbon62\n3. From gases to life91\n4. R...",
+      "wordCount": 50
+    },
+    {
+      "index": 336,
+      "chapterNumber": 1,
+      "textLength": 1753,
+      "pageNumber": 9,
+      "preview": "Introduction: Life itself\nLeeuwenhoek and the inscrutability of cells\nClifford Dobell, Antony van Leeuwenhoek and his ‘Little Animals’ (New York,\nRussell &  Russell, 1958). A  delightful  if  antiquat...",
+      "wordCount": 260
+    },
+    {
+      "index": 337,
+      "chapterNumber": 1,
+      "textLength": 2684,
+      "pageNumber": 9,
+      "preview": "237\nmanifesto for reconceiving the role that information plays in life and its origin,\nby a leading physicist and thinker who has long considered the makeup of life.\nNot  surprisingly,  I  don’t  agre...",
+      "wordCount": 418
+    },
+    {
+      "index": 338,
+      "chapterNumber": 1,
+      "textLength": 2617,
+      "pageNumber": 11,
+      "preview": "238\nThe digital jungle\nHorace Freeland Judson, The Eighth Day of Creation. Makers of the Revolution\nin  Biology,  25th  Anniversary Edition (Cold  Spring Harbor Laboratory Press,\n1996). A  magisterial...",
+      "wordCount": 396
+    },
+    {
+      "index": 339,
+      "chapterNumber": 1,
+      "textLength": 2291,
+      "pageNumber": 12,
+      "preview": "239\nSmith and Morowitz take the case for the unity of biochemistry right back to the\norigin of life.\nW. Martin and  M. J. Russell, ‘On  the  origin  of  biochemistry at  an  alkaline\nhydrothermal vent...",
+      "wordCount": 362
+    },
+    {
+      "index": 340,
+      "chapterNumber": 1,
+      "textLength": 206,
+      "pageNumber": 28,
+      "preview": "Discovering the nanocosm\nHopkins’s biochemistry lab\nF. Gowland Hopkins, ‘Atomic physics and vital activities’, Nature 130 (1932)\n869–871. The  text  of  Gowland Hopkins’s  anniversary address to  the ...",
+      "wordCount": 28
+    },
+    {
+      "index": 341,
+      "chapterNumber": 1,
+      "textLength": 2720,
+      "pageNumber": 28,
+      "preview": "240\nSociety in 1932.\nH. H. Dale, ‘Frederick Gowland Hopkins 1861–1947’, Obituary Notices Fellows\nRoyal Society 6 (1948) 115–145. An affectionate biography from Sir Henry Dale,\nanother pioneering bioch...",
+      "wordCount": 416
+    },
+    {
+      "index": 342,
+      "chapterNumber": 1,
+      "textLength": 2530,
+      "pageNumber": 29,
+      "preview": "241\nH. Krebs, ‘Otto Heinrich Warburg. 1883–1970’, Biographical Memoirs Fellows\nof the Royal Society 18 (1972) 628–699. Krebs’s generous tribute to his scientific\nmentor; even Krebs was unable to prese...",
+      "wordCount": 381
+    },
+    {
+      "index": 343,
+      "chapterNumber": 1,
+      "textLength": 2776,
+      "pageNumber": 30,
+      "preview": "242\nextraordinary scholarship, drawing on Krebs’s lab books in detail, with all their\nexclamation marks. This volume deals with Krebs’s earlier years, leading up to\nthe urea cycle.\nFrederic L. Holmes,...",
+      "wordCount": 416
+    },
+    {
+      "index": 344,
+      "chapterNumber": 1,
+      "textLength": 2795,
+      "pageNumber": 32,
+      "preview": "243\n‘at the age of eighty-seven, not long after having learned that his latest grant\napplication had been successful’. Here at least, times have changed.\nPeter Mitchell and chemiosmotic coupling\nPeter...",
+      "wordCount": 392
+    },
+    {
+      "index": 345,
+      "chapterNumber": 1,
+      "textLength": 2595,
+      "pageNumber": 33,
+      "preview": "244\nP. D. Mitchell and J. Moyle, ‘Evidence discriminating between the chemical and\nthe  chemiosmotic  mechanisms of  electron transport phosphorylation’, Nature\n208 (1965) 1205–1206. A shorter paper, ...",
+      "wordCount": 377
+    },
+    {
+      "index": 346,
+      "chapterNumber": 1,
+      "textLength": 1089,
+      "pageNumber": 34,
+      "preview": "245\nmentioning the reverse Krebs cycle – which had been proposed fifteen years\nearlier. How blind are even the finest scientists.\nH. A. Krebs and H. L. Kornberg, Energy Transformations in Living Matte...",
+      "wordCount": 169
+    },
+    {
+      "index": 347,
+      "chapterNumber": 2,
+      "textLength": 1439,
+      "pageNumber": 63,
+      "preview": "The path of carbon\nRubisco\nS. G. Wildman, ‘Along the trail from Fraction I protein to Rubisco (ribulose\nbisphosphate carboxylase-oxygenase’, Photosynthesis Research 73 (2002) 243–\n250. Or  how  rubisc...",
+      "wordCount": 217
+    },
+    {
+      "index": 348,
+      "chapterNumber": 2,
+      "textLength": 2623,
+      "pageNumber": 63,
+      "preview": "246\nphysicists and chemists of the day, set in times of heightened politics and war. A\nunique record.\nOliver Morton, Eating the Sun: How Plants Power the Planet (London, Fourth\nEstate, 2009). A  delig...",
+      "wordCount": 428
+    },
+    {
+      "index": 349,
+      "chapterNumber": 2,
+      "textLength": 2700,
+      "pageNumber": 65,
+      "preview": "247\nA. A. Benson, ‘Last  days  in  the  old  radiation laboratory (ORL), Berkeley,\nCalifornia, 1954’, Photosynthesis Research  105  (2010) 209–212. More\nfascinating reminiscences from Andrew Benson.\nT...",
+      "wordCount": 399
+    },
+    {
+      "index": 350,
+      "chapterNumber": 2,
+      "textLength": 2518,
+      "pageNumber": 66,
+      "preview": "248\nafter it was first proposed – by which time it is at last undisputed, if not widely\nknown.\nB. B. Buchanan, ‘Daniel I. Arnon. November 14, 1910–December 20, 1994’,\nBiographical Memoirs 80 (2001) 2–...",
+      "wordCount": 378
+    },
+    {
+      "index": 351,
+      "chapterNumber": 2,
+      "textLength": 1053,
+      "pageNumber": 67,
+      "preview": "249\nseminal discovery, that the canonical ATP citrate lyase is not necessary for the\nreverse Krebs cycle; the standard enzyme citrate synthase is reversible after all.\nSo do dogmas fall.\nL. Steffens, ...",
+      "wordCount": 173
+    },
+    {
+      "index": 352,
+      "chapterNumber": 3,
+      "textLength": 1543,
+      "pageNumber": 92,
+      "preview": "From gases to life\nDiscovery of black smoker vents\nJ. B. Corliss, J. A. Baross and S. . Hoffman,  ‘An  hypothesis concerning the\nrelationship between submarine hot  springs and  the  origin  of  life ...",
+      "wordCount": 233
+    },
+    {
+      "index": 353,
+      "chapterNumber": 3,
+      "textLength": 2811,
+      "pageNumber": 92,
+      "preview": "250\neach  discovered new  vent  systems, alongside Bill  Martin and  Mike  Russell,\nleading protagonists of how life might have started in such systems.\nN. H. Sleep, D. K. Bird and E. C. Pope, ‘Serpen...",
+      "wordCount": 432
+    },
+    {
+      "index": 354,
+      "chapterNumber": 3,
+      "textLength": 2795,
+      "pageNumber": 94,
+      "preview": "251\nTransactions of the Royal Society B 358 (2003) 59–85. An all-time classic paper,\nthe kind of paper that draws young minds not just into the field but into science.\nJ. Whitfield, ‘Origin of life: n...",
+      "wordCount": 440
+    },
+    {
+      "index": 355,
+      "chapterNumber": 3,
+      "textLength": 3096,
+      "pageNumber": 95,
+      "preview": "252\nwith some leading phylogeneticists including the brilliant and prolific Eugene\nKoonin. I am unpersuaded, but Mulkidjanian’s papers are always worth reading.\nJ. D. Sutherland, ‘Studies on the origi...",
+      "wordCount": 491
+    },
+    {
+      "index": 356,
+      "chapterNumber": 3,
+      "textLength": 2980,
+      "pageNumber": 97,
+      "preview": "253\nof view, looking for similar chemistry to that still happening in cells. This is an\nexciting paper which links up with their own earlier work, showing that various\nintermediates in the acetyl CoA ...",
+      "wordCount": 477
+    },
+    {
+      "index": 357,
+      "chapterNumber": 3,
+      "textLength": 2661,
+      "pageNumber": 98,
+      "preview": "254\nR. Braakman and E. Smith, ‘The emergence and early evolution of biological\ncarbon fixation’, PLoS Computational Biology 8 (2012) e1002455. An extremely\nneat  idea,  which attempts to  unite  phylo...",
+      "wordCount": 417
+    },
+    {
+      "index": 358,
+      "chapterNumber": 3,
+      "textLength": 2541,
+      "pageNumber": 99,
+      "preview": "255\non the shelf of anyone seriously interested in the origin of life. Manages to\npresent new ideas with admirable clarity, while being balanced and exhaustive.\nJ. Trefil, H. J. Morowitz and E. Smith,...",
+      "wordCount": 403
+    },
+    {
+      "index": 359,
+      "chapterNumber": 3,
+      "textLength": 2840,
+      "pageNumber": 101,
+      "preview": "256\nV. Sojo, B. Herschy, A. Whicher, E. Camprubi and N. Lane, ‘The origin of life in\nalkaline hydrothermal vents’, Astrobiology 16 (2016) 181–197. Our own attempt\nto reconcile the origins of life in a...",
+      "wordCount": 462
+    },
+    {
+      "index": 360,
+      "chapterNumber": 3,
+      "textLength": 2878,
+      "pageNumber": 102,
+      "preview": "257\nR. Hudson, R. de Graaf, M. S. Rodin, A. Ohno, N. Lane, S. E. McGlynn, Y. M.\nA. Yamada, R. Nakamura, L. M. Barge, D. Braun and V. Sojo, ‘CO\n2\n reduction\ndriven by a pH gradient’, Proceedings of the...",
+      "wordCount": 441
+    },
+    {
+      "index": 361,
+      "chapterNumber": 3,
+      "textLength": 2322,
+      "pageNumber": 104,
+      "preview": "258\nR. Nunes Palmeira, M. Colnaghi, S. Harrison, A. Pomiankowski and N. Lane,\n‘The  limits  of  metabolic heredity in  protocells’, available on BioRxiv\n(https://doi.org/10.1101/2022.01.28.477904). Mo...",
+      "wordCount": 366
+    },
+    {
+      "index": 362,
+      "chapterNumber": 4,
+      "textLength": 313,
+      "pageNumber": 125,
+      "preview": "Revolutions\nCambrian explosion\nStephen Jay Gould, Wonderful Life: The Burgess Shale and the History of Nature\n(New  York,  W. W. Norton, 1989). A  heady  book  that  must  have  drawn a\ngeneration of ...",
+      "wordCount": 52
+    },
+    {
+      "index": 363,
+      "chapterNumber": 4,
+      "textLength": 2855,
+      "pageNumber": 125,
+      "preview": "259\nDaniel C. Dennett, Darwin’s Dangerous Idea: Evolution and the Meanings of\nLife (New York, Simon & Schuster, 1995). I never appreciated what a razor-\nsharp philosophical mind could do to scientific...",
+      "wordCount": 447
+    },
+    {
+      "index": 364,
+      "chapterNumber": 4,
+      "textLength": 2758,
+      "pageNumber": 126,
+      "preview": "260\nenergy revolutions transformed the potential of life on Earth, from the origins of\nlife to photosynthesis, oxygen and fire.\nElectron bifurcation\nW. Buckel and  R. K. Thauer,  ‘Flavin-based electro...",
+      "wordCount": 414
+    },
+    {
+      "index": 365,
+      "chapterNumber": 4,
+      "textLength": 2796,
+      "pageNumber": 127,
+      "preview": "261\nBacterial metabolism and syntrophy\nP. Schönheit, W. Buckel and  W. F. Martin, ‘On  the  origin  of  heterotrophy’,\nTrends in Microbiology 24 (2016) 12–25. An important paper, which is so clearly\nt...",
+      "wordCount": 414
+    },
+    {
+      "index": 366,
+      "chapterNumber": 4,
+      "textLength": 2828,
+      "pageNumber": 129,
+      "preview": "262\nmentorship as academic lineage), Lenton and Watson know exactly whereof they\nspeak.\nH. C. Betts, M. N. Puttick, J. W. Clark, T. A. Williams, P. C. J. Donoghue and D.\nPisani, ‘Integrated genomic an...",
+      "wordCount": 433
+    },
+    {
+      "index": 367,
+      "chapterNumber": 4,
+      "textLength": 2756,
+      "pageNumber": 130,
+      "preview": "263\nActive ventilation in animals\nA. H. Knoll, R. K. Bambach, D. E. Canfield and J. P. Grotzinger, ‘Comparative\nearth history and late Permian mass extinction’, Science 273: 452–457 (1996). A\nrevelato...",
+      "wordCount": 427
+    },
+    {
+      "index": 368,
+      "chapterNumber": 4,
+      "textLength": 534,
+      "pageNumber": 132,
+      "preview": "264\nL. J. Sweetlove, K. F. Beard, A. Nunes-Nesi, A. R. Fernie and R. G. Ratcliffe,\n‘Not just a circle: flux modes in the plant TCA cycle’, Trends in Plant Sciences\n15 (2010) 462–470. A lovely analysis...",
+      "wordCount": 91
+    },
+    {
+      "index": 369,
+      "chapterNumber": 5,
+      "textLength": 2302,
+      "pageNumber": 151,
+      "preview": "To the dark side\nOncogenes and tumour-suppressor genes\nRobert A. Weinberg, One Renegade Cell: The Quest for the Origins of Cancer\n(Science Masters Series) (New York, Basic Books, 1998). A classic text...",
+      "wordCount": 379
+    },
+    {
+      "index": 370,
+      "chapterNumber": 5,
+      "textLength": 2616,
+      "pageNumber": 152,
+      "preview": "265\nstill bites: ‘Most serious of all the results of the somatic mutation hypothesis has\nbeen its effect on research workers. It acts as a tranquillizer on those who believe\nin it, and this at a time ...",
+      "wordCount": 411
+    },
+    {
+      "index": 371,
+      "chapterNumber": 5,
+      "textLength": 2798,
+      "pageNumber": 153,
+      "preview": "266\ninsightful piece that captures a lot of Warburg’s thinking that remains relevant for\na modern audience interested in cancer.\nMartin D. Kamen, Radiant Science, Dark Politics. A Memoir of the Nuclea...",
+      "wordCount": 428
+    },
+    {
+      "index": 372,
+      "chapterNumber": 5,
+      "textLength": 2614,
+      "pageNumber": 154,
+      "preview": "267\nat the original for the full context.\nOtto Heinrich Warburg, The Prime Cause and Prevention of Cancer (Würzburg,\nKonrad Triltsch, 1969). A famous manifesto, following on where his Science\npaper le...",
+      "wordCount": 407
+    },
+    {
+      "index": 373,
+      "chapterNumber": 5,
+      "textLength": 2824,
+      "pageNumber": 156,
+      "preview": "268\nP. W. Hochachka and K. B. Storey, ‘Metabolic consequences of diving in animals\nand  man’, Science  187  (1975) 613–621. How  diving animals survive long\nperiods without oxygen – calling attention ...",
+      "wordCount": 450
+    },
+    {
+      "index": 374,
+      "chapterNumber": 5,
+      "textLength": 2868,
+      "pageNumber": 157,
+      "preview": "269\nto an important book by Rebecca Skloot, The Immortal Life of Henrietta Lacks\n(Pan,  2011),  after  whom HeLa  cells  were  named, which calls  attention to  a\nhistorical wrong.\nS. L. Colombo, M. P...",
+      "wordCount": 445
+    },
+    {
+      "index": 375,
+      "chapterNumber": 5,
+      "textLength": 2781,
+      "pageNumber": 159,
+      "preview": "270\nM. Wagner, E. Bertero, A. Nickel, M. Kohlhaas, G. E. Gibson, W. Heggermont,\nS. Heymans and  C. Maack, ‘Selective NADH communication from  α-\nketoglutarate dehydrogenase to  mitochondrial transhydr...",
+      "wordCount": 432
+    },
+    {
+      "index": 376,
+      "chapterNumber": 5,
+      "textLength": 1394,
+      "pageNumber": 160,
+      "preview": "271\n2020). Available here: https://doi:10.26124/bec:2020-0002. The ‘bible’ of fluo-\nrespirometry,  privately  published by  Erich  Gnaiger in  the  tradition of  Peter\nMitchell’s ‘little grey books’; ...",
+      "wordCount": 210
+    },
+    {
+      "index": 377,
+      "chapterNumber": 6,
+      "textLength": 1168,
+      "pageNumber": 182,
+      "preview": "The flux capacitor\nEvolutionary ideas of ageing\nPeter Medawar, An Unsolved Problem of Biology (London, H. K. Lewis, 1952).\nThe book from his inaugural lecture at UCL, which put forward a new theory of...",
+      "wordCount": 183
+    },
+    {
+      "index": 378,
+      "chapterNumber": 6,
+      "textLength": 2436,
+      "pageNumber": 182,
+      "preview": "272\npieces of evolutionary thinking of the twentieth century, and should be read by\nall.\nAndré Klarsfeld and Frédéric Revah, The Biology of Death: Origins of Mortality\n(Ithaca, NY,  Cornell University...",
+      "wordCount": 385
+    },
+    {
+      "index": 379,
+      "chapterNumber": 6,
+      "textLength": 2831,
+      "pageNumber": 183,
+      "preview": "273\nR. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of\nhuman mitochondrial DNA’, Proceedings of the National Academy of Sciences\nUSA 77 (1980) 6715–671. The first demonstra...",
+      "wordCount": 426
+    },
+    {
+      "index": 380,
+      "chapterNumber": 6,
+      "textLength": 2680,
+      "pageNumber": 185,
+      "preview": "274\nVesalius and Mendel. An important synthesis; should be required reading for\nmedical students.\nMitochondria in flies\nD. E. Miller,  K. R. Cook  and  R. S. Hawley,  ‘The  joy  of  balancers’, PLoS\nG...",
+      "wordCount": 403
+    },
+    {
+      "index": 381,
+      "chapterNumber": 6,
+      "textLength": 2756,
+      "pageNumber": 186,
+      "preview": "275\nantioxidant NAC caused problems in some lines but not others, depending on the\nmitochondrial DNA.\nM. F. Camus, W. Kotiadis, H. Carter, E. Rodriguez and N. Lane, ‘Mitonuclear\ninteractions produce e...",
+      "wordCount": 406
+    },
+    {
+      "index": 382,
+      "chapterNumber": 6,
+      "textLength": 2843,
+      "pageNumber": 187,
+      "preview": "276\nbook length, drawing parallels with companies and cities that I haven’t seen\nanyone do since the great polymath J. B. S. Haldane.\nAntioxidants don’t work\nJ. M. Gutteridge and B. Halliwell, ‘Free r...",
+      "wordCount": 452
+    },
+    {
+      "index": 383,
+      "chapterNumber": 6,
+      "textLength": 2685,
+      "pageNumber": 189,
+      "preview": "277\nD. Gems, ‘The  aging–disease false  dichotomy: understanding senescence as\npathology’, Frontiers in Genetics 6 (2015) 12. David Gems rails against the idea\nthat ageing is somehow normal and ‘healt...",
+      "wordCount": 404
+    },
+    {
+      "index": 384,
+      "chapterNumber": 6,
+      "textLength": 2687,
+      "pageNumber": 190,
+      "preview": "278\nurine). Paula  Moreira discusses how  diabetes-linked defects in  mitochondria\nincrease the risk of Alzheimer’s disease.\nD. A. Butterfield and  B. Halliwell, ‘Oxidative stress, dysfunctional gluco...",
+      "wordCount": 395
+    },
+    {
+      "index": 385,
+      "chapterNumber": "Epilogue",
+      "textLength": 14,
+      "pageNumber": 212,
+      "preview": "Epilogue: Self",
+      "wordCount": 2
+    },
+    {
+      "index": 386,
+      "chapterNumber": "Epilogue",
+      "textLength": 2668,
+      "pageNumber": 212,
+      "preview": "279\nAnaesthetics and mitochondria\nL. Turin, E. M. C. Skoulakis and A. P. Horsfield, ‘Electron spin changes during\ngeneral anesthesia in Drosophila’, Proceedings of  the  National Academy of\nSciences U...",
+      "wordCount": 417
+    },
+    {
+      "index": 387,
+      "chapterNumber": "Epilogue",
+      "textLength": 2960,
+      "pageNumber": 213,
+      "preview": "280\nMichael Levin is currently doing some of the most exciting work in biology.\nElectrical fields determine development; genes are secondary. So far that mostly\ngoes for flat-worms, but could it be mo...",
+      "wordCount": 462
+    },
+    {
+      "index": 388,
+      "chapterNumber": "Epilogue",
+      "textLength": 2269,
+      "pageNumber": 214,
+      "preview": "281\nJ. McFadden, ‘Integrating information in the brain’s EM field: the cemi field\ntheory of consciousness’, Neuroscience of Consciousness 2020 (2020) niaa016.\nJohnjoe McFadden has  been  thinking abou...",
+      "wordCount": 361
+    },
+    {
+      "index": 389,
+      "chapterNumber": "Epilogue",
+      "textLength": 2484,
+      "pageNumber": 215,
+      "preview": "282\nACKNOWLEDGEMENTS\nThis book opens with a description of an empty city, lacking the hurly\nburly of people and energy flow. Little did I realise when writing that\npassage that it would require such a...",
+      "wordCount": 440
+    },
+    {
+      "index": 390,
+      "chapterNumber": "Epilogue",
+      "textLength": 2799,
+      "pageNumber": 217,
+      "preview": "283\nas  the  severely  disturbed downstream consequences of  mitonuclear\nincompatibilities in  ageing flies. Grappling with  new  results while\nwriting this book, sometimes watching cherished ideas im...",
+      "wordCount": 479
+    },
+    {
+      "index": 391,
+      "chapterNumber": "Epilogue",
+      "textLength": 2880,
+      "pageNumber": 218,
+      "preview": "284\ncare  to  admit, while  celebrating the  bigger picture and  occasionally\ndredging up some details from her deeply buried degree in biochemistry.\nShe  racked her  mind  over  possible titles. Titl...",
+      "wordCount": 486
+    },
+    {
+      "index": 392,
+      "chapterNumber": "Epilogue",
+      "textLength": 2738,
+      "pageNumber": 220,
+      "preview": "285\nlost ourselves in a six-hour discussion on why the cycle is a cycle and\nother abstruse questions. Rarely have science and pure pleasure aligned\nso closely. And I thank Prof. Christian Frezza, who ...",
+      "wordCount": 443
+    },
+    {
+      "index": 393,
+      "chapterNumber": "Epilogue",
+      "textLength": 2772,
+      "pageNumber": 221,
+      "preview": "286\naside until Derek invited me to give the Derek Denton Oration in the\nArts and Sciences in Melbourne in 2019 – on condition that I addressed\nconsciousness, if  only  in  brief. While wrestling with...",
+      "wordCount": 479
+    },
+    {
+      "index": 394,
+      "chapterNumber": "Epilogue",
+      "textLength": 1926,
+      "pageNumber": 222,
+      "preview": "287\nother people felt the same until his funeral. We will all remember him\nwith love and admiration. Heartfelt condolences to Mary Jane.\nLast but not least, I thank Caroline Dawnay of United Agents, a...",
+      "wordCount": 315
+    },
+    {
+      "index": 395,
+      "chapterNumber": "Epilogue",
+      "textLength": 1033,
+      "pageNumber": 223,
+      "preview": "288\nINDEX\nNote: The index covers the main text and appendices. The suffix ‘n’ plus\na number indicates a relevant footnote on that page. Page numbers in\nitalics indicate illustrations.\nAcademic Assista...",
+      "wordCount": 161
+    },
+    {
+      "index": 396,
+      "chapterNumber": "Epilogue",
+      "textLength": 1219,
+      "pageNumber": 224,
+      "preview": "289\n‘alpha-keto’ groups 41, 286, 299\nsee also α-ketoglutarate (at ‘k’)\nalternative oxidase 183, 228n7, 262n8\nAlvin (submersible) 112–13, 115\nAlzheimer’s disease 21, 28, 266–8, 280\namino acids\nbiosynth...",
+      "wordCount": 177
+    },
+    {
+      "index": 397,
+      "chapterNumber": "Epilogue",
+      "textLength": 1177,
+      "pageNumber": 224,
+      "preview": "290\nATP (adenosine triphosphate) 302\nin cellular respiration 56–7, 64\nformation without ATP synthase 144, 151\nsynthesis 65–8, 98–105, 187–8\nyields from respiration and fermentation 201–2, 207\nATP citr...",
+      "wordCount": 181
+    },
+    {
+      "index": 398,
+      "chapterNumber": "Epilogue",
+      "textLength": 1075,
+      "pageNumber": 225,
+      "preview": "291\nKrebs cycle and non-cycle 111, 184–6\nsymbiosis among 170, 188\n‘balancer chromosomes’ 245, 248\nBaldwin, Ernest 59\nBarja, Gustavo 271\nBaross, John 113–14\nBassham, James 97\nBenson, Andrew 91, 93–7, 1...",
+      "wordCount": 170
+    },
+    {
+      "index": 399,
+      "chapterNumber": "Epilogue",
+      "textLength": 1275,
+      "pageNumber": 226,
+      "preview": "292\nC4 carboxylic acids\nin photosynthesis 93, 100\nin respiration 33, 46–8, 50–2\nin reverse Krebs cycle 123, 184\nC5 molecules 51–2, 94–5, 105\nsee also α-ketoglutarate (at ‘k’)\nC6 carboxylic acids, citr...",
+      "wordCount": 201
+    },
+    {
+      "index": 400,
+      "chapterNumber": "Epilogue",
+      "textLength": 1188,
+      "pageNumber": 226,
+      "preview": "293\ncarbon-12 (\n12\nC) 178, 180–82\ncarbon-13 (\n13\nC) 88, 178–80, 182n6\ncarbon-14 (\n14\nC) 79, 86–92, 99, 102, 178\ncarbon capture and sequestration 34–5n2, 177\ncarbon dioxide (CO\n2\n)\nactivation by ATP or...",
+      "wordCount": 191
+    },
+    {
+      "index": 401,
+      "chapterNumber": "Epilogue",
+      "textLength": 1168,
+      "pageNumber": 227,
+      "preview": "294\ncell division 27, 192, 195, 283\ncell-free extracts 62\ncell nucleus, transplanting 195\ncells\nas batteries 162\ncellular level consciousness 276\ncity analogy 1–2, 14, 17–18\ncolour 35–6n3\nemission of ...",
+      "wordCount": 182
+    },
+    {
+      "index": 402,
+      "chapterNumber": "Epilogue",
+      "textLength": 1141,
+      "pageNumber": 227,
+      "preview": "295\nsee also acetyl CoA; succinyl CoA\nCohen, Michael 278\nColnaghi, Marco 241n2\ncomplexes I, II, III see respiratory chain\nconsciousness 274–84\nevidence from anaesthetics 276–8\nand membrane potentials ...",
+      "wordCount": 175
+    },
+    {
+      "index": 403,
+      "chapterNumber": "Epilogue",
+      "textLength": 1064,
+      "pageNumber": 228,
+      "preview": "296\nimposed on Calvin 94n6\nketogenic diets 228\nand mitochondrial function 25, 242, 249, 251, 264\nWallace on 242\nWarburg on 197\ndifferentiation, tissues 189, 202, 208–9, 269\ndiseases\nchronic infections...",
+      "wordCount": 161
+    },
+    {
+      "index": 404,
+      "chapterNumber": "Epilogue",
+      "textLength": 1090,
+      "pageNumber": 228,
+      "preview": "297\nThe Emergence of Everything, by Morowitz 127\nEmerson, Robert 199–200\nEnceladus 117, 120\nendoplasmic reticulum 266n9\nendosymbiosis 69, 221n6\nenergetics\nof early life 168\nof fixed carbon 160\nof livi...",
+      "wordCount": 167
+    },
+    {
+      "index": 405,
+      "chapterNumber": "Epilogue",
+      "textLength": 1161,
+      "pageNumber": 229,
+      "preview": "298\nsee also glycolysis, aerobic\nferredoxin (Fd)\namino acid sequence and antiquity 164–7\nancient metabolic pathways 121–2, 142\ndetailed mechanism of action 288–93\ndiscovery and properties 105–10, 114\n...",
+      "wordCount": 174
+    },
+    {
+      "index": 406,
+      "chapterNumber": "Epilogue",
+      "textLength": 1305,
+      "pageNumber": 230,
+      "preview": "299\norigins in protocells 149–50, 275\n(reverse) Krebs cycle signalling 20, 185, 195, 211–12, 215\nwhether preceded by metabolism 4–6, 17, 118, 129, 150\nsee also alleles; epigenetic changes\ngenes, mitoc...",
+      "wordCount": 201
+    },
+    {
+      "index": 407,
+      "chapterNumber": "Epilogue",
+      "textLength": 1062,
+      "pageNumber": 230,
+      "preview": "300\nprotocells 146–7\nGWAS (genome-wide association studies) 235, 237, 244\n2H/H\n2\n see hydrogen\nhaem pigments 35–6\nsee also chlorophyll; cytochrome oxidase\nhaemoglobin 35–6, 114, 165, 183, 187\nHaldane,...",
+      "wordCount": 157
+    },
+    {
+      "index": 408,
+      "chapterNumber": "Epilogue",
+      "textLength": 1363,
+      "pageNumber": 231,
+      "preview": "301\nburned in respiration 49–51, 55–8, 63–4, 159, 206, 254–5, 261\n2H and H\n2\n distinguished 47–8n6\n2H carriers in respiration 49–51, 63–4, 108n11\nin photosynthesis 99–100, 174\nprotons pumped by transf...",
+      "wordCount": 201
+    },
+    {
+      "index": 409,
+      "chapterNumber": "Epilogue",
+      "textLength": 1210,
+      "pageNumber": 231,
+      "preview": "302\nspontaneous formation of 4Fe4S 146\nisocitrate 128, 184, 185, 218, 220–22, 286, 287\nisocitrate dehydrogenase 218–21\nisotope studies 144\nsee also carbon-12; carbon-13; radioisotopes\nJacob, François ...",
+      "wordCount": 186
+    },
+    {
+      "index": 410,
+      "chapterNumber": "Epilogue",
+      "textLength": 1225,
+      "pageNumber": 232,
+      "preview": "303\nin the brain 263, 266, 280–81\nin cancer cells 222–3, 228\nin fruit flies 255–6\nmitonuclear mismatches and 262, 264–7\npotential reversal 186, 214, 244, 262\nKrebs cycle intermediates 51–2\nautocatalys...",
+      "wordCount": 191
+    },
+    {
+      "index": 411,
+      "chapterNumber": "Epilogue",
+      "textLength": 1198,
+      "pageNumber": 233,
+      "preview": "304\ntissue symbiosis 190\nlifestyle choices 25, 235, 264, 268–9, 272–3\nlight energy\ninfrared, and photosynthesis 115n2\npowering ATP synthesis 105\nsynthesis of organics in plants 107\n‘Like most revelati...",
+      "wordCount": 189
+    },
+    {
+      "index": 412,
+      "chapterNumber": "Epilogue",
+      "textLength": 1206,
+      "pageNumber": 233,
+      "preview": "305\nmetabolic flux\ncomplementarity 161, 189\nnumeric interpretation 8, 269–70\nredirected in cancer 16, 26, 205, 210\nas reversible 153, 168–9\nsignalling function 20–21, 244\nand stream of consciousness 2...",
+      "wordCount": 177
+    },
+    {
+      "index": 413,
+      "chapterNumber": "Epilogue",
+      "textLength": 1202,
+      "pageNumber": 234,
+      "preview": "306\nmutations within 240–41, 247, 254n4, 257\noffering improved lifespan 272\nrespiration efficiency 251, 254–5n4\nuniparental inheritance 239–40, 246n2\nmitochondrial membranes\nand anaesthesia 277–8\nchar...",
+      "wordCount": 174
+    },
+    {
+      "index": 414,
+      "chapterNumber": "Epilogue",
+      "textLength": 1257,
+      "pageNumber": 234,
+      "preview": "307\nin biosynthesis 206–9, 224, 225, 264\nand glutathione regeneration 252–3, 255\nand isocitrate dehydrogenase 218–21\nKrebs reversal and cancer 217–21\nin photosynthesis and photorespiration 107–9\nprogr...",
+      "wordCount": 195
+    },
+    {
+      "index": 415,
+      "chapterNumber": "Epilogue",
+      "textLength": 1219,
+      "pageNumber": 235,
+      "preview": "308\norigin of life\nand hydrothermal vents 113, 117, 133, 152–3\ninevitability 127, 131n7, 275\nmetabolism preceding genes 4–5, 118, 150\noxygen as inimical 157\nprocesses summarised 275\nornithine 52–3\nthe...",
+      "wordCount": 187
+    },
+    {
+      "index": 416,
+      "chapterNumber": "Epilogue",
+      "textLength": 1200,
+      "pageNumber": 236,
+      "preview": "309\nphosphoenol-pyruvate 70–71, 73, 102, 122, 224–5, 287, 296–7\nphosphoglycerate 92, 94, 96, 174\nphotophosphorylation 99, 105\nphotorespiration 76, 109\nphotosynthesis\nanoxygenic and oxygenic 166–8, 175...",
+      "wordCount": 182
+    },
+    {
+      "index": 417,
+      "chapterNumber": "Epilogue",
+      "textLength": 1079,
+      "pageNumber": 236,
+      "preview": "310\nproton gradients 64, 150, 152, 164\nproton-motive force 61, 69, 143, 147, 162–4, 220\npowering ATP synthesis 65–7, 66, 99, 163\nprotons\nin acidic environments 137–8\npumped by 2H transfers 68n13, 164,...",
+      "wordCount": 171
+    },
+    {
+      "index": 418,
+      "chapterNumber": "Epilogue",
+      "textLength": 1189,
+      "pageNumber": 237,
+      "preview": "311\nas a mitochondrial function 32, 67–8n13\nphotophosphorylation and 99\nas preceding photosynthesis 36\nrole of NADH 108n11\nrole of succinate 211–14\nsuppression by antioxidants 250–52, 254\nsuppression ...",
+      "wordCount": 178
+    },
+    {
+      "index": 419,
+      "chapterNumber": "Epilogue",
+      "textLength": 1084,
+      "pageNumber": 237,
+      "preview": "312\nsupercharged membrane potentials 219\nin transplant organs 214n5\nsee also free radicals\nROS flux 230, 244, 249–55, 257n5, 259, 261–2, 270–72\nroundabout analogy 24, 54, 70–72, 188, 260, 270\nthe Roya...",
+      "wordCount": 163
+    },
+    {
+      "index": 420,
+      "chapterNumber": "Epilogue",
+      "textLength": 1159,
+      "pageNumber": 238,
+      "preview": "313\nserpentinisation 120, 174\nsex differences and mitochondria 239–41, 247\nsexual ornamentation 261\nShields, Graham 180–81, 182n6\nShuram excursion 180–81, 182n6, 183\nSir Hans Krebs Trust 31n1, 49–50n7...",
+      "wordCount": 171
+    },
+    {
+      "index": 421,
+      "chapterNumber": "Epilogue",
+      "textLength": 1031,
+      "pageNumber": 239,
+      "preview": "314\nsymbiosis\namong bacteria and archaea 170, 188\nendosymbiosis 69, 221n6\nbetween tissues 189–90, 265\nSzent-Györgyi, Albert 44–52, 63, 71, 104, 184, 299\nThauer, Rolf 163n2\nthermodynamics\nfavouring org...",
+      "wordCount": 155
+    },
+    {
+      "index": 422,
+      "chapterNumber": "Epilogue",
+      "textLength": 798,
+      "pageNumber": 239,
+      "preview": "315\nvitalism/vital force 5, 8, 62\nvitamins C and E 44–5, 48, 252\nWächtershäuser, Günter 115–16\nWalker, Sara 130n6\nWalker, Sir John 67–8n13\nWallace, Doug 238–44, 279\nWarburg, Emil 197\nWarburg, Otto\non ...",
+      "wordCount": 122
+    },
+    {
+      "index": 423,
+      "chapterNumber": "Epilogue",
+      "textLength": 279,
+      "pageNumber": 239,
+      "preview": "316\nTable of Contents\nPraise for Transformer1\nTitle Page3\nCopyright4\nDedication5\nContents6\nIntroduction: Life itself8\n1. Discovering the nanocosm27\n2. The path of carbon62\n3. From gases to life91\n4. R...",
+      "wordCount": 42
+    },
+    {
+      "index": 424,
+      "chapterNumber": 9,
+      "textLength": 227,
+      "pageNumber": 220,
+      "preview": "Envoi: ‘Like Most Revelations’219\nThe forward Krebs cycle220\nThe reverse Krebs cycle221\nAppendix 1: Red protein mechanics222\nAppendix 2: The Krebs line227\nList of abbreviations233\nFurther reading236\nA...",
+      "wordCount": 29
+    },
+    {
+      "index": 425,
+      "chapterNumber": "Appendix 1",
+      "textLength": 139,
+      "pageNumber": 223,
+      "preview": "Appendix 1: Red protein mechanics222\nAppendix 2: The Krebs line227\nList of abbreviations233\nFurther reading236\nAcknowledgements282\nIndex288",
+      "wordCount": 17
+    },
+    {
+      "index": 426,
+      "chapterNumber": "Appendix 2",
+      "textLength": 102,
+      "pageNumber": 228,
+      "preview": "Appendix 2: The Krebs line227\nList of abbreviations233\nFurther reading236\nAcknowledgements282\nIndex288",
+      "wordCount": 12
+    }
+  ],
+  "validation": {
+    "allParagraphsHaveChapter": false,
+    "allParagraphsHaveText": true,
+    "reasonableLengths": true,
+    "pageNumbersAssigned": true
+  },
+  "errors": []
+}

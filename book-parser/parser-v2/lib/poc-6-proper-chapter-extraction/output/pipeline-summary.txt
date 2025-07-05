@@ -1,0 +1,79 @@
+
+POC 6: Integrated Pipeline Results (Steps 1-4)
+==============================================
+
+Execution Time: 2025-07-05T18:47:53.041Z
+TOC Source: pdf_bookmarks
+
+STEP COMPLETION STATUS:
+======================
+✅ Step 1: TOC Extraction - COMPLETED
+✅ Step 2: Page-by-Page Text Extraction - COMPLETED  
+✅ Step 3: Chapter Detection - COMPLETED
+✅ Step 4: Paragraph Detection - COMPLETED
+
+CHAPTER DETECTION RESULTS:
+==========================
+- Total chapters: 14
+- Valid chapters: 11/14
+- Chapter success rate: 79%
+
+PARAGRAPH DETECTION RESULTS:
+============================
+- Total paragraphs: 31
+- Valid paragraphs: 31/31
+- Paragraph success rate: 100%
+- Average word count: 84
+- Average paragraphs per chapter: 2
+
+VALIDATION TESTS:
+================
+- Introduction Start Text: PASS - Found expected start text
+- Path of Carbon Start Text: PASS - Found expected start text
+- Discovering Nanocosm Start Text: PASS - Found expected start text
+
+CHAPTER SUMMARY:
+===============
+- "Introduction: Life itself" (Pages 9-27, 48,843 chars, 2 paragraphs)
+- "Discovering the nanocosm" (Pages 28-62, 87,103 chars, 0 paragraphs)
+- "The path of carbon" (Pages 63-91, 70,874 chars, 0 paragraphs)
+- "From gases to life" (Pages 92-124, 77,533 chars, 2 paragraphs)
+- "Revolutions" (Pages 125-150, 68,712 chars, 4 paragraphs)
+- "To the dark side" (Pages 151-181, 76,053 chars, 1 paragraphs)
+- "The flux capacitor" (Pages 182-211, 81,202 chars, 1 paragraphs)
+- "Epilogue: Self" (Pages 212-219, 20,260 chars, 0 paragraphs)
+- "Envoi: ‘Like Most Revelations’" (Pages 220-220, 715 chars, 19 paragraphs)
+- "The forward Krebs cycle" (Pages 221-221, 27 chars, 19 paragraphs)
+- "The reverse Krebs cycle" (Pages 222-222, 27 chars, 19 paragraphs)
+- "Appendix 1: Red protein mechanics" (Pages 223-227, 6,652 chars, 1 paragraphs)
+- "Appendix 2: The Krebs line" (Pages 228-236, 13,786 chars, 1 paragraphs)
+- "Further reading" (Pages 237-317, 171,338 chars, 19 paragraphs)
+
+PARAGRAPH WORD COUNT DISTRIBUTION:
+==================================
+- Very short (<50 words): 0
+- Short (50-100 words): 0
+- Medium (100-200 words): 31
+- Long (200-300 words): 0
+- Very long (>300 words): 0
+
+
+CHAPTER ISSUES:
+- Chapter "Envoi: ‘Like Most Revelations’" too short (715 chars)
+- Chapter "The forward Krebs cycle" too short (27 chars)
+- Chapter "The forward Krebs cycle" has no meaningful start text
+- Chapter "The reverse Krebs cycle" too short (27 chars)
+- Chapter "The reverse Krebs cycle" has no meaningful start text
+
+
+No paragraph issues found!
+
+NEXT STEPS:
+===========
+✅ Step 1-4 completed successfully
+📋 Ready for Step 5: Header Detection
+📋 Ready for Step 6: Chunking Algorithm  
+📋 Ready for Step 7: Cross-Page Merging
+📋 Ready for Step 8: Final Output Generation
+
+STATUS: 50% COMPLETE (4/8 steps)

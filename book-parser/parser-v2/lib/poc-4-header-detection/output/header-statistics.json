@@ -1,0 +1,9 @@
+{
+  "confidenceDistribution": {
+    "low": 10,
+    "medium": 0,
+    "high": 0
+  },
+  "totalHeadersAnalyzed": 10,
+  "averageHeadersPerChapter": "0.2"
+}

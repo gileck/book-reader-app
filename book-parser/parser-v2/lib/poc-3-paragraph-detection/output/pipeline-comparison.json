@@ -1,0 +1,22 @@
+{
+  "previousApproach": {
+    "fr1Rate": "19.0%",
+    "compliantParagraphs": "4/21",
+    "mainIssues": [
+      "Page number breaks",
+      "Incomplete sentences",
+      "No front matter filtering"
+    ]
+  },
+  "improvedApproach": {
+    "fr1Rate": "51.0%",
+    "compliantParagraphs": "435/853",
+    "improvements": [
+      "Front matter filtering",
+      "498 cross-page sentence fixes",
+      "Page-aware processing",
+      "Clean paragraph detection"
+    ]
+  },
+  "improvementFactor": "2.7x"
+}

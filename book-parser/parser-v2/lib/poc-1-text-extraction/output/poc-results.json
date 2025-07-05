@@ -1,0 +1,143 @@
+{
+  "pdfPath": "/Users/gil/Projects/book-reader-app/book-parser/parser-v2/book.pdf",
+  "libraries": [
+    {
+      "library": "pdf-parse",
+      "success": true,
+      "textLength": 733647,
+      "pageCount": 317,
+      "newlineCount": 13139,
+      "crlfCount": 0,
+      "crCount": 0,
+      "firstChars": "\n\n\n\n1\nPraise for Transformer\n‘Nick Lane’s exploration of the building blocks that underlie life’s big\nfundamental questions – the origin of life itself, ageing and disease –\nhave shaped my thinking since I first came across his work. He is one of\nmy favourite science writers.’\nBill Gates\n‘In this compulsively readable book, Lane takes us on a riveting journey,\nranging from the flow of energy to new ways of understanding cancer.\nLane provides a luminous understanding of how scientists, including\n",
+      "lastChars": "le of Contents\nPraise for Transformer1\nTitle Page3\nCopyright4\nDedication5\nContents6\nIntroduction: Life itself8\n1. Discovering the nanocosm27\n2. The path of carbon62\n3. From gases to life91\n4. Revolutions124\n5. To the dark side150\n6. The flux capacitor181\nEpilogue: Self211\nEnvoi: ‘Like Most Revelations’219\nThe forward Krebs cycle220\nThe reverse Krebs cycle221\nAppendix 1: Red protein mechanics222\nAppendix 2: The Krebs line227\nList of abbreviations233\nFurther reading236\nAcknowledgements282\nIndex288",
+      "sampleParagraphs": [
+        {
+          "line": 5,
+          "text": "1",
+          "length": 1,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 6,
+          "text": "Praise for Transformer",
+          "length": 22,
+          "startsWithCapital": true,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 7,
+          "text": "‘Nick Lane’s exploration of the building blocks that underlie life’s big",
+          "length": 72,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 8,
+          "text": "fundamental questions – the origin of life itself, ageing and disease –",
+          "length": 71,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 9,
+          "text": "have shaped my thinking since I first came across his work. He is one of",
+          "length": 72,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 10,
+          "text": "my favourite science writers.’",
+          "length": 30,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 11,
+          "text": "Bill Gates",
+          "length": 10,
+          "startsWithCapital": true,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 12,
+          "text": "‘In this compulsively readable book, Lane takes us on a riveting journey,",
+          "length": 73,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 13,
+          "text": "ranging from the flow of energy to new ways of understanding cancer.",
+          "length": 68,
+          "startsWithCapital": false,
+          "endsWithPunctuation": true
+        },
+        {
+          "line": 14,
+          "text": "Lane provides a luminous understanding of how scientists, including",
+          "length": 67,
+          "startsWithCapital": true,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 15,
+          "text": "Lane himself, are rethinking energy and living organisms.’",
+          "length": 58,
+          "startsWithCapital": true,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 16,
+          "text": "Siddhartha Mukherjee, author of The Gene: An Intimate History",
+          "length": 61,
+          "startsWithCapital": true,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 17,
+          "text": "‘Thrilling and highly persuasive ... This hugely important book is set to",
+          "length": 73,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 18,
+          "text": "become a landmark, transforming our understanding of how life works.’",
+          "length": 69,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 19,
+          "text": "Gaia Vince, author of Nomad Century",
+          "length": 35,
+          "startsWithCapital": true,
+          "endsWithPunctuation": false
+        },
+        {
+          "line": 20,
+          "text": "‘I loved every page of Nick Lane’s new book. It’s one of the very best",
+          "length": 70,
+          "startsWithCapital": false,
+          "endsWithPunctuation": false
+        }
+      ],
+      "metadata": {
+        "PDFFormatVersion": "1.4",
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "Title": "Transformer: The Deep Chemistry of Life and Death",
+        "Author": "Nick Lane",
+        "Creator": "calibre (6.7.1) [http://calibre-ebook.com]",
+        "Producer": "calibre (6.7.1) [http://calibre-ebook.com]",
+        "CreationDate": "D:20240111031007+00'00'",
+        "ModDate": "D:20240110201008-07'00'"
+      }
+    }
+  ],
+  "testDate": "2025-07-03T17:31:17.549Z",
+  "conclusions": []
+}

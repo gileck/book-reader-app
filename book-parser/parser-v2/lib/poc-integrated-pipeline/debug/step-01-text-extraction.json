@@ -1,0 +1,15 @@
+{
+  "step": "text-extraction",
+  "timestamp": "2025-07-05T11:08:10.090Z",
+  "success": true,
+  "statistics": {
+    "totalCharacters": 733647,
+    "totalLines": 13139,
+    "literalNewlines": true,
+    "pageCount": 317,
+    "fileSize": "8.7MB",
+    "fileSizeBytes": 9093140
+  },
+  "textSample": "\n\n\n\n1\nPraise for Transformer\n‘Nick Lane’s exploration of the building blocks that underlie life’s big\nfundamental questions – the origin of life itself, ageing and disease –\nhave shaped my thinking since I first came across his work. He is one of\nmy favourite science writers.’\nBill Gates\n‘In this compulsively readable book, Lane takes us on a riveting journey,\nranging from the flow of energy to new ways of understanding cancer.\nLane provides a luminous understanding of how scientists, including\n",
+  "errors": []
+}
