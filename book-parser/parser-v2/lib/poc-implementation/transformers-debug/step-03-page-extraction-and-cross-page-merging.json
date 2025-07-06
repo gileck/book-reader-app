@@ -1,0 +1,31 @@
+{
+  "extractionMetadata": {
+    "totalPages": 309,
+    "totalChapters": 10,
+    "totalSentencesMerged": 158,
+    "extractionTime": "2025-07-06T16:01:02.496Z",
+    "processingTime": 8,
+    "note": "Using working step 2.3 output as reference"
+  },
+  "pageStats": {
+    "totalPages": 309,
+    "totalWords": 121235,
+    "averageWordsPerPage": 392.3462783171521,
+    "sentencesMerged": 158,
+    "chaptersProcessed": 10,
+    "pagesPerChapter": {
+      "0": 19,
+      "1": 35,
+      "2": 29,
+      "3": 33,
+      "4": 26,
+      "5": 31,
+      "6": 30,
+      "Epilogue": 11,
+      "Appendix 1": 5,
+      "Appendix 2": 90
+    },
+    "minWordsPerPage": 5,
+    "maxWordsPerPage": 581
+  }
+}

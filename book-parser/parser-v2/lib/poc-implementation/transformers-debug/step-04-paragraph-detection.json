@@ -1,0 +1,88 @@
+{
+  "paragraphDetectionMetadata": {
+    "totalParagraphs": 711,
+    "totalChapters": 10,
+    "processingTime": 35,
+    "detectionTime": "2025-07-06T16:01:02.540Z"
+  },
+  "paragraphStats": {
+    "totalParagraphs": 711,
+    "averageParagraphsPerChapter": 71.1,
+    "paragraphsPerChapter": {
+      "0": 48,
+      "1": 88,
+      "2": 69,
+      "3": 78,
+      "4": 73,
+      "5": 69,
+      "6": 77,
+      "Epilogue": 18,
+      "Appendix 1": 9,
+      "Appendix 2": 182
+    },
+    "averageWordsPerParagraph": 170.51336146272854,
+    "averageSentencesPerParagraph": 10.458509142053446,
+    "minWordsPerParagraph": 9,
+    "maxWordsPerParagraph": 634,
+    "minSentencesPerParagraph": 1,
+    "maxSentencesPerParagraph": 75,
+    "wordCountDistribution": {
+      "under100": 102,
+      "between100And200": 511,
+      "over200": 98,
+      "percentageInTargetRange": 72
+    }
+  },
+  "sampleParagraphs": [
+    {
+      "chapterTitle": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "paragraphCount": 48,
+      "sampleParagraphs": [
+        {
+          "pageNumber": 9,
+          "contentPreview": "I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green colo...",
+          "wordCount": 132,
+          "sentencesCount": 10
+        },
+        {
+          "pageNumber": 9,
+          "contentPreview": "No, of course not; they are cities. We know them intimately from the inside, even if most of us know...",
+          "wordCount": 153,
+          "sentencesCount": 9
+        },
+        {
+          "pageNumber": 9,
+          "contentPreview": "In my mind’s eye, we could rise above the conurbation and picture this combined flux, map out the ju...",
+          "wordCount": 88,
+          "sentencesCount": 4
+        }
+      ]
+    },
+    {
+      "chapterTitle": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "paragraphCount": 88,
+      "sampleParagraphs": [
+        {
+          "pageNumber": 28,
+          "contentPreview": "1 DISCOVERING THE NANOCOSM Burlington House, Piccadilly , 1932. Its stately Victorian façades are gl...",
+          "wordCount": 168,
+          "sentencesCount": 10
+        },
+        {
+          "pageNumber": 28,
+          "contentPreview": "With a degree of trepidation that he’s careful to offset by his choice of words, Hopkins moves on to...",
+          "wordCount": 215,
+          "sentencesCount": 12
+        },
+        {
+          "pageNumber": 29,
+          "contentPreview": "In the audience, Hopkins’ s many friends are smiling. They know his obsession with the dynamic side ...",
+          "wordCount": 188,
+          "sentencesCount": 12
+        }
+      ]
+    }
+  ]
+}

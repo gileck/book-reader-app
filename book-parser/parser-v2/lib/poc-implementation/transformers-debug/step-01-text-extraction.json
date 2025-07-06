@@ -1,0 +1,72 @@
+{
+  "extractionMetadata": {
+    "characterCount": 796464,
+    "pageCount": 317,
+    "lineCount": 13516,
+    "wordCount": 125206,
+    "literalNewlineCount": 0,
+    "extractionTime": "2025-07-06T16:14:08.765Z",
+    "pdfInfo": {
+      "pages": 317,
+      "info": {
+        "PDFFormatVersion": "1.4",
+        "IsAcroFormPresent": false,
+        "IsXFAPresent": false,
+        "Title": "Transformer: The Deep Chemistry of Life and Death",
+        "Author": "Nick Lane",
+        "Creator": "calibre (6.7.1) [http://calibre-ebook.com]",
+        "Producer": "calibre (6.7.1) [http://calibre-ebook.com]",
+        "CreationDate": "D:20240111031007+00'00'",
+        "ModDate": "D:20240110201008-07'00'"
+      },
+      "metadata": {
+        "_metadata": {
+          "dc:title": "Transformer: The Deep Chemistry of Life and Death",
+          "dc:description": "",
+          "dc:creator": "Nick Lane",
+          "dc:subject": "",
+          "dc:publisher": "Profile Books",
+          "dc:date": "2022-01-14T17:00:00-07:00",
+          "dc:language": "en",
+          "xmp:metadatadate": "2024-01-10T20:10:13.048159-07:00",
+          "calibre:timestamp": "2024-01-10T20:10:02.540929-07:00"
+        }
+      }
+    }
+  },
+  "textValidation": {
+    "hasContent": true,
+    "startsWithText": true,
+    "endsWithText": true,
+    "containsLiteralNewlines": false,
+    "averageWordsPerPage": 395
+  },
+  "textSamples": {
+    "beginning": "\n\n\n--- PAGE 1 ---\n\n--- END PAGE 1 ---\n\n\n\n--- PAGE 2 ---\n1 \nPraise for   Transformer \n‘Nick Lane’ s exploration of the building blocks that underlie life’ s big \nfundamental questions – the origin of life itself, ageing and disease – \nhave shaped my thinking since I first came across his work.  He is one of \nmy favourite science writers.’ \nBill Gates \n‘In this compulsively readable book, Lane takes us on a riveting journey , \nranging from the flow of ener gy to new ways of understanding cancer . ...",
+    "ending": "... \nDedication 5 \nContents 6 \nIntroduction: Life itself 8 \n1. Discovering the nanocosm 27 \n2. The path of carbon 62 \n3. From gases to life 91 \n4. Revolutions 124 \n5. T o the dark side 150 \n6. The flux capacitor 181 \nEpilogue: Self 211 \nEnvoi: ‘Like Most Revelations’ 219 \nThe forward Krebs cycle 220 \nThe reverse Krebs cycle 221 \nAppendix 1: Red protein mechanics 222 \nAppendix 2: The Krebs line 227 \nList of abbreviations 233 \nFurther reading 236 \nAcknowledgements 282 \nIndex 288\n--- END PAGE 317 ---\n",
+    "firstLines": [
+      "",
+      "",
+      "",
+      "--- PAGE 1 ---",
+      "",
+      "--- END PAGE 1 ---",
+      "",
+      "",
+      "",
+      "--- PAGE 2 ---"
+    ],
+    "lastLines": [
+      "The forward Krebs cycle 220 ",
+      "The reverse Krebs cycle 221 ",
+      "Appendix 1: Red protein mechanics 222 ",
+      "Appendix 2: The Krebs line 227 ",
+      "List of abbreviations 233 ",
+      "Further reading 236 ",
+      "Acknowledgements 282 ",
+      "Index 288",
+      "--- END PAGE 317 ---",
+      ""
+    ]
+  }
+}

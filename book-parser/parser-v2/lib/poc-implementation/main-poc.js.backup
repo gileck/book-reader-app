@@ -1,0 +1,253 @@
+#!/usr/bin/env node
+
+/**
+ * Modular Book Parser POC - Main Script
+ * 
+ * This script orchestrates the complete parsing pipeline by running each step
+ * sequentially and passing data between them. Each step is implemented in a 
+ * separate module for better organization and maintainability.
+ * 
+ * Usage:
+ *   node main-poc.js [step] [--debug]
+ * 
+ * Steps:
+ *   1. text-extraction
+ *   2. chapter-detection  
+ *   3. cross-page-merging
+ *   4. paragraph-detection
+ *   5. header-detection
+ *   6. chunking-algorithm
+ *   7. page-assignment
+ *   8. output-generation
+ *   all - run all steps
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// Import step implementations
+const textExtraction = require('./steps/01-text-extraction');
+const chapterDetection = require('./steps/02-chapter-detection');
+const crossPageMerging = require('./steps/03-cross-page-merging');
+const paragraphDetection = require('./steps/04-paragraph-detection');
+const headerDetection = require('./steps/05-header-detection');
+const chunkingAlgorithm = require('./steps/06-chunking-algorithm');
+const pageAssignment = require('./steps/07-page-assignment');
+const outputGeneration = require('./steps/08-output-generation');
+
+// Configuration
+const CONFIG = {
+    INPUT_PDF: '/Users/gileck/projects/book-reader-app/files/Transformers/book.pdf',
+    OUTPUT_DIR: '/Users/gileck/projects/book-reader-app/book-parser/parser-v2/lib/poc-implementation/transformers-output',
+    DEBUG_DIR: '/Users/gileck/projects/book-reader-app/book-parser/parser-v2/lib/poc-implementation/transformers-debug',
+    CHUNK_TARGET_MIN: 80,
+    CHUNK_TARGET_MAX: 300,
+    CHUNK_ABSOLUTE_MIN: 50,
+    CHUNK_ABSOLUTE_MAX: 500
+};
+
+// Pipeline state to pass between steps
+let PIPELINE_STATE = {
+    rawText: null,
+    chapters: [],
+    mergedChapters: [],
+    paragraphs: [],
+    headers: [],
+    chunks: [],
+    pages: [],
+    finalOutput: null,
+    metadata: {
+        processingStartTime: null,
+        processingEndTime: null,
+        stepResults: {}
+    }
+};
+
+// Step execution mapping
+const STEPS = {
+    'text-extraction': textExtraction.execute,
+    'chapter-detection': chapterDetection.execute,
+    'cross-page-merging': crossPageMerging.execute,
+    'paragraph-detection': paragraphDetection.execute,
+    'header-detection': headerDetection.execute,
+    'chunking-algorithm': chunkingAlgorithm.execute,
+    'page-assignment': pageAssignment.execute,
+    'output-generation': outputGeneration.execute
+};
+
+const STEP_NAMES = [
+    'text-extraction',
+    'chapter-detection', 
+    'cross-page-merging',
+    'paragraph-detection',
+    'header-detection',
+    'chunking-algorithm',
+    'page-assignment',
+    'output-generation'
+];
+
+// Ensure output directories exist
+function ensureDirectories() {
+    [CONFIG.OUTPUT_DIR, CONFIG.DEBUG_DIR].forEach(dir => {
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+    });
+}
+
+// Save pipeline state to file
+function savePipelineState() {
+    const stateFile = path.join(CONFIG.DEBUG_DIR, 'pipeline-state.json');
+    fs.writeFileSync(stateFile, JSON.stringify(PIPELINE_STATE, null, 2));
+}
+
+// Execute a single step
+async function executeStep(stepName) {
+    const stepFunction = STEPS[stepName];
+    if (!stepFunction) {
+        throw new Error(`Unknown step: ${stepName}`);
+    }
+
+    console.log(`\n=== EXECUTING STEP: ${stepName.toUpperCase().replace('-', ' ')} ===`);
+    const startTime = Date.now();
+
+    try {
+        // Execute step with current pipeline state and config
+        const result = await stepFunction(PIPELINE_STATE, CONFIG);
+        
+        // Update pipeline state with result
+        Object.assign(PIPELINE_STATE, result);
+        
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+        
+        // Store step execution metadata
+        PIPELINE_STATE.metadata.stepResults[stepName] = {
+            success: true,
+            duration: duration,
+            timestamp: new Date().toISOString()
+        };
+
+        console.log(`✅ Step completed successfully in ${duration}ms`);
+        
+        // Save state after each step for debugging
+        savePipelineState();
+        
+        return result;
+    } catch (error) {
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+        
+        // Store step execution metadata with error
+        PIPELINE_STATE.metadata.stepResults[stepName] = {
+            success: false,
+            duration: duration,
+            timestamp: new Date().toISOString(),
+            error: error.message
+        };
+
+        console.error(`❌ Step failed after ${duration}ms:`, error.message);
+        savePipelineState();
+        throw error;
+    }
+}
+
+// Execute all steps in sequence
+async function executeAllSteps() {
+    console.log('🚀 Starting complete pipeline execution...');
+    PIPELINE_STATE.metadata.processingStartTime = new Date().toISOString();
+
+    for (const stepName of STEP_NAMES) {
+        await executeStep(stepName);
+    }
+
+    PIPELINE_STATE.metadata.processingEndTime = new Date().toISOString();
+    console.log('\n🎉 Pipeline execution completed successfully!');
+    
+    // Final state save
+    savePipelineState();
+    
+    return PIPELINE_STATE;
+}
+
+// Show usage information
+function showUsage() {
+    console.log(`
+Modular Book Parser POC
+
+Usage:
+  node main-poc.js [step] [--debug]
+
+Available steps:
+  text-extraction     - Extract raw text from PDF
+  chapter-detection   - Detect chapter boundaries
+  cross-page-merging  - Merge split sentences across pages
+  paragraph-detection - Detect paragraph boundaries
+  header-detection    - Detect headers using 6-rule system
+  chunking-algorithm  - Create chunks with target word count
+  page-assignment     - Assign page numbers to chunks
+  output-generation   - Generate final output files
+  all                 - Run all steps in sequence
+
+Options:
+  --debug            - Enable detailed debug output
+
+Examples:
+  node main-poc.js all
+  node main-poc.js text-extraction
+  node main-poc.js chapter-detection --debug
+`);
+}
+
+// Main execution
+async function main() {
+    const args = process.argv.slice(2);
+    
+    if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
+        showUsage();
+        return;
+    }
+
+    const stepName = args[0];
+    const isDebug = args.includes('--debug');
+
+    // Setup
+    ensureDirectories();
+    
+    if (isDebug) {
+        console.log('🔧 Debug mode enabled');
+        console.log('📁 Output directory:', CONFIG.OUTPUT_DIR);
+        console.log('🐛 Debug directory:', CONFIG.DEBUG_DIR);
+        console.log('📄 Input PDF:', CONFIG.INPUT_PDF);
+    }
+
+    try {
+        if (stepName === 'all') {
+            await executeAllSteps();
+        } else if (STEPS[stepName]) {
+            await executeStep(stepName);
+        } else {
+            console.error(`❌ Unknown step: ${stepName}`);
+            console.log('\nAvailable steps:', Object.keys(STEPS).join(', '));
+            process.exit(1);
+        }
+    } catch (error) {
+        console.error('💥 Pipeline execution failed:', error.message);
+        if (isDebug) {
+            console.error(error.stack);
+        }
+        process.exit(1);
+    }
+}
+
+// Execute if called directly
+if (require.main === module) {
+    main();
+}
+
+module.exports = {
+    executeStep,
+    executeAllSteps,
+    CONFIG,
+    PIPELINE_STATE
+}; 

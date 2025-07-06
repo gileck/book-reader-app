@@ -1,0 +1,129 @@
+{
+  "chapterMetadata": [
+    {
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "startPosition": 154,
+      "endPosition": 977,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 9
+    },
+    {
+      "title": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "startPosition": 978,
+      "endPosition": 2473,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 28
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "startPosition": 2474,
+      "endPosition": 3770,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 63
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "startPosition": 3771,
+      "endPosition": 5133,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 92
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "startPosition": 5134,
+      "endPosition": 6353,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 125
+    },
+    {
+      "title": "To the dark side",
+      "chapterNumber": 5,
+      "startPosition": 6354,
+      "endPosition": 7673,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 151
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "startPosition": 7674,
+      "endPosition": 9060,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 182
+    },
+    {
+      "title": "Epilogue: Self",
+      "chapterNumber": "Epilogue",
+      "startPosition": 9061,
+      "endPosition": 9438,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 212
+    },
+    {
+      "title": "Appendix 1: Red protein mechanics",
+      "chapterNumber": "Appendix 1",
+      "startPosition": 9439,
+      "endPosition": 9586,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 223
+    },
+    {
+      "title": "Appendix 2: The Krebs line",
+      "chapterNumber": "Appendix 2",
+      "startPosition": 9587,
+      "endPosition": 13515,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.95,
+      "startingPage": 228
+    }
+  ],
+  "metadata": {
+    "processingStartTime": "2025-07-06T15:18:03.892Z",
+    "processingEndTime": null,
+    "stepResults": {
+      "step-1": {
+        "success": true,
+        "duration": 577,
+        "timestamp": "2025-07-06T15:18:04.472Z"
+      },
+      "step-2.1": {
+        "success": true,
+        "duration": 106,
+        "timestamp": "2025-07-06T15:18:04.584Z"
+      }
+    },
+    "textExtraction": {
+      "characterCount": 796464,
+      "pageCount": 317,
+      "lineCount": 13516,
+      "wordCount": 125206,
+      "literalNewlineCount": 0,
+      "extractionTime": "2025-07-06T15:18:04.434Z",
+      "averageWordsPerPage": 395
+    },
+    "chapterDetection": {
+      "chaptersDetected": 10,
+      "detectionTime": 105,
+      "tocSource": "pdf_bookmarks",
+      "tocEntriesFound": 10,
+      "patternMatches": 43,
+      "averageConfidence": 0.95,
+      "detectionMethod": "hybrid_v1_poc2_detection_only",
+      "pageOffset": 0
+    }
+  }
+}

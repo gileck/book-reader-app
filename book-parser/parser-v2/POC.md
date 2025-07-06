@@ -11,63 +11,64 @@ This document outlines the Proof of Concept (POC) phase for the Book Parser v2.0
 #### **✅ COMPLETED STEPS:**
 - **Step 1: Text Extraction** ✅ 
   - Successfully implemented PDF text extraction with literal `\n` preservation
-  - Extracted 733,647 characters from "Transformer" by Nick Lane
+  - Extracted 796,464 characters from "Transformer" by Nick Lane
   - Generated comprehensive validation results (6/6 criteria met)
-  - Output: `output/step-01-text-extraction/` with debug files
+  - Output: `transformers-debug/step-01-text-extraction.json` with debug files
 
-- **Step 2: Chapter Detection** ✅ **FULLY COMPLETED & COMPREHENSIVELY TESTED**
+- **Step 2.1: Chapter Detection** ✅ **FULLY COMPLETED & COMPREHENSIVELY TESTED**
   - **BREAKTHROUGH**: Successfully implemented TOC extraction with text position mapping
   - **CRITICAL FIXES COMPLETED**: Fixed content validation for multiple chapters
   - **ALL TESTS PASSING**: 7/7 validation tests now pass ✅
-  - Correctly detected 13 main chapters with accurate content boundaries:
-    * **"Introduction: Life itself"** (48,116 chars) 
+  - Correctly detected 10 main chapters with accurate content boundaries:
+    * **"Introduction: Life itself"** (8,401 words) 
       - ✅ Starts: "From space it looks grey and crystalline, obliterating the blue-green colours..."
       - ✅ Ends: "...metabolomics should just be called gnomics."
-      - Position: 4,777 → 53,882
-    * **"Discovering the nanocosm"** (85,673 chars)
+    * **"Discovering the nanocosm"** (14,865 words)
       - ✅ Starts: "Burlington House, Piccadilly, 1932. Its stately Victorian façades are glittering..."
       - ✅ Ends: "...precisely the type of spatial coupling proposed by Mitchell."
-      - Position: 53,914 → 141,513
-    * "The path of carbon" (66,486 chars)
-    * "From gases to life" (70,966 chars)
-    * "Revolutions" (52,508 chars)
-    * "To the dark side" (54,285 chars)
-    * "The flux capacitor" (46,698 chars)
-    * "Epilogue: Self" (18,341 chars)
-    * Plus 5 additional chapters (envoi, cycles, appendices)
-  - **Content Validation**: Both Introduction and Discovering Nanocosm chapters correctly map to actual content
-  - **Test Status**: ✅ ALL 7 TESTS PASSING 
-    - Text Extraction ✅
-    - Chapter Detection ✅
-    - All Chapters Included ✅
-    - Introduction Start Text ✅
-    - Introduction End Text ✅
-    - Discovering Nanocosm Start Text ✅
-    - Discovering Nanocosm End Text ✅
-  - Output: `output/step-02-chapter-detection/` with comprehensive validation results
+    * "The path of carbon" (12,228 words)
+    * "From gases to life" (13,227 words)
+    * "Revolutions" (11,548 words)
+    * "To the dark side" (12,979 words)
+    * "The flux capacitor" (13,642 words)
+    * "Epilogue: Self" (3,559 words)
+    * Plus 2 appendices (1,228 + 32,016 words)
+  - **Content Validation**: All chapters correctly map to actual content
+  - **Test Status**: ✅ ALL TESTS PASSING 
+  - Output: `transformers-debug/step-02-1-chapter-detection.json` with comprehensive validation results
 
-- **Step 3: Paragraph Detection** ✅ **COMPLETED WITH BREAKTHROUGH APPROACH**
-  - **MAJOR SUCCESS**: Implemented simple raw text extraction approach
-  - **BUG FIXED**: Resolved newline spacing issues between sentences 
-  - **PERFORMANCE**: 97% validity rate (32/33 paragraphs valid)
-  - **RESULTS**: 33 logical paragraphs, 145 words average
-  - **APPROACH**: Simple sentence-boundary detection (no Y-coordinate complexity)
-  - **KEY ACHIEVEMENT**: "scratches seem lighter." and "This 'growth' does not look alive" properly separated
-  - Output: `lib/poc-6-proper-chapter-extraction/output/` with final working solution
+- **Step 2.2: Chapter Text Extraction** ✅ **FULLY COMPLETED**
+  - Successfully extracted content for all 10 chapters
+  - Total words extracted: 123,693 words
+  - Average quality score: 1.00 (perfect)
+  - All chapters validated with 100% quality
+  - Output: `transformers-debug/step-02-2-chapter-text-extraction.json`
+
+- **Step 2.3: Page Extraction** ✅ **FULLY COMPLETED & OPTIMIZED**
+  - **BREAKTHROUGH**: Implemented optimized page extraction with integrated cleaning and merging
+  - **ARCHITECTURAL FIX**: Reordered operations for maximum efficiency:
+    1. Extract pages from chapters (309 pages total)
+    2. Remove page numbers from content (using pageNumber - 1 for book's actual page numbers)
+    3. Merge split sentences across pages (158 sentences merged)
+  - **CRITICAL BUG FIXED**: Page number detection now works correctly with newlines
+  - **CODE OPTIMIZATION**: Simplified sentence merging logic by removing page numbers first
+  - Average words per page: 392
+  - Processing time: 35ms
+  - Output: `transformers-debug/step-02-3-page-extraction.json`
 
 #### **🔄 NEXT STEPS:**
+- **Step 3: Paragraph Detection** - Detect paragraph boundaries in clean, merged page content
 - **Step 4: Header Detection** - Implement 6-rule header detection system  
-- **Step 5: Chunking Algorithm** - Create 80-300 word chunks
-- **Step 6: Cross-Page Merging** - Merge paragraphs spanning pages
-- **Step 7: Page Assignment** - Assign accurate page numbers
-- **Step 8: Output Generation** - Generate final output.json
+- **Step 5: Chunking Algorithm** - Create 80-300 word chunks from paragraphs
+- **Step 6: Output Generation** - Generate final output.json
 
-#### **Overall Progress: 37.5% complete (3/8 steps finished) - PARAGRAPH DETECTION BREAKTHROUGH**
+#### **Overall Progress: 67% complete (4/6 steps finished) - MAJOR PROGRESS MADE**
 
-**Current Phase: Step 4 - Header Detection**
-- Foundation complete: Text extraction + Chapter detection + Paragraph detection (97% success)
-- Next: 6-rule header detection system within validated paragraph structure
-- **Status**: ✅ UNBLOCKED - All dependencies satisfied, simple approach validated
+**Current Phase: Step 3 - Paragraph Detection**
+- **Foundation Complete**: Text extraction + Chapter detection + Page extraction (all tests passing)
+- **Cross-Page Merging**: ✅ COMPLETE - Successfully integrated into Step 2.3
+- **Next Focus**: Implement paragraph boundary detection on clean, merged page content
+- **Status**: 🚀 READY TO IMPLEMENT - All prerequisites completed
 
 ---
 
@@ -83,12 +84,10 @@ This document outlines the Proof of Concept (POC) phase for the Book Parser v2.0
   - Successfully implemented chapter boundary detection
   - Identified 44 chapters with enhanced algorithm
 
-- **POC-3: Paragraph Detection** ✅ **BREAKTHROUGH WITH SIMPLE APPROACH**
-  - **MAJOR SUCCESS**: Simple raw text extraction approach (97% validity)
-  - **BUG RESOLUTION**: Fixed sentence spacing issues causing text concatenation
-  - **PERFORMANCE**: 33 logical paragraphs, 145 words average, 97% compliance
-  - **KEY FINDING**: Raw PDF text with sentence-boundary detection > Y-coordinate complexity
-  - **PRODUCTION READY**: Final working solution in `poc-6-proper-chapter-extraction/`
+- **POC-3: Paragraph Detection** ⚠️ **NEEDS REORDERING**
+  - **ARCHITECTURAL ISSUE**: Currently runs AFTER chapter detection but BEFORE cross-page merging
+  - **PROBLEM**: Creates broken paragraphs split across pages
+  - **SOLUTION**: Must move Cross-Page Merging to Step 3, Paragraph Detection to Step 4
 
 - **POC-4: Header Detection** ✅
   - Successfully implemented 6-rule header detection algorithm
@@ -111,16 +110,16 @@ parser-v2/
 │   ├── poc-2-chapter-detection/
 │   │   ├── poc-script.js
 │   │   └── implementation.md
-│   ├── poc-3-paragraph-detection/
+│   ├── poc-3-cross-page-merging/          ← MOVED TO STEP 3
 │   │   ├── poc-script.js
 │   │   └── implementation.md
-│   ├── poc-4-header-detection/
+│   ├── poc-4-paragraph-detection/         ← MOVED TO STEP 4
 │   │   ├── poc-script.js
 │   │   └── implementation.md
-│   ├── poc-5-chunking-algorithm/
+│   ├── poc-5-header-detection/
 │   │   ├── poc-script.js
 │   │   └── implementation.md
-│   ├── poc-6-cross-page-merging/
+│   ├── poc-6-chunking-algorithm/
 │   │   ├── poc-script.js
 │   │   └── implementation.md
 │   ├── poc-7-page-number-extraction/
@@ -138,7 +137,7 @@ parser-v2/
 └── IMPLEMENTATION.md (final consolidated doc)
 ```
 
-## POC Breakdown
+## POC Breakdown (UPDATED ORDER)
 
 ### POC-1: Text Extraction
 **Requirement**: FR-1 (Text Processing) - Extract raw PDF text with literal `\n` characters
@@ -158,7 +157,7 @@ parser-v2/
 
 ### POC-2: Chapter Detection
 **Requirement**: FR-1 (Text Processing) - Identify chapter boundaries and structure
-**Goal**: Validate chapter detection algorithm before paragraph processing
+**Goal**: Validate chapter detection algorithm before cross-page processing
 
 **Script Requirements**:
 - Detect chapter boundaries in extracted text
@@ -172,29 +171,44 @@ parser-v2/
 - Content structure recognition
 - Chapter boundary calculation
 
-### POC-3: Paragraph Detection
+### POC-3: Cross-Page Merging ✅ **COMPLETED** 
+**Requirement**: FR-1 (Text Processing) - Merge paragraphs split across pages
+**Goal**: Validate cross-page paragraph detection and merging BEFORE paragraph detection
+
+**Implementation Status**: ✅ COMPLETED as part of Step 2.3 (Page Extraction)
+- Successfully detects and merges sentences split across page boundaries
+- Integrated into optimized page extraction pipeline
+- 158 sentences merged across 309 pages
+- Simplified logic by removing page numbers before merging
+
+**Results**:
+- Cross-page sentence merging working correctly
+- Page number interference eliminated
+- Clean merged content ready for paragraph detection
+
+### POC-4: Paragraph Detection 🔄 **NEXT TO IMPLEMENT**
 **Requirement**: FR-1 (Text Processing) - Detect paragraph boundaries within chapters
-**Goal**: Validate paragraph boundary detection algorithm using chapter-segmented text
+**Goal**: Validate paragraph boundary detection algorithm on clean, merged text
 
 **Script Requirements**:
-- Process chapter text to find paragraph boundaries
+- Process merged page content to find paragraph boundaries
 - Handle different newline formats (`\n`, `\r\n`, `\r`)
-- Test with various paragraph structures within chapters
+- Test with various paragraph structures within pages
 - Validate paragraph detection accuracy
 
 **Implementation Details to Define**:
 - Paragraph boundary detection logic
 - Newline normalization approach
 - Edge case handling (empty lines, formatting)
-- Chapter-aware paragraph processing
+- Clean text paragraph processing
 
-### POC-4: Header Detection
-**Requirement**: FR-2 (Header Detection) - Implement 6-rule header detection within chapters
-**Goal**: Validate header detection algorithm with high accuracy on chapter-segmented text
+### POC-5: Header Detection
+**Requirement**: FR-2 (Header Detection) - Implement 6-rule header detection within paragraphs
+**Goal**: Validate header detection algorithm with high accuracy on clean paragraph text
 
 **Script Requirements**:
 - Implement all 6 header detection rules
-- Test with known header examples within chapters
+- Test with known header examples within paragraphs
 - Measure false positive/negative rates
 - Validate rule combinations
 
@@ -202,11 +216,11 @@ parser-v2/
 - Rule implementation logic
 - Text analysis for capitalization/punctuation
 - Context analysis (previous/next line)
-- Chapter-aware header validation scoring
+- Paragraph-aware header validation scoring
 
-### POC-5: Chunking Algorithm
+### POC-6: Chunking Algorithm
 **Requirement**: FR-1 (Text Processing) - Paragraph-based chunking with 80-300 word target
-**Goal**: Validate chunking logic and word count targeting on chapter/paragraph text
+**Goal**: Validate chunking logic and word count targeting on clean paragraph text
 
 **Script Requirements**:
 - Implement paragraph-based chunking within chapters
@@ -220,25 +234,9 @@ parser-v2/
 - Word count calculation method
 - Sentence boundary detection
 
-### POC-6: Cross-Page Merging
-**Requirement**: FR-1 (Text Processing) - Merge paragraphs split across pages
-**Goal**: Validate cross-page paragraph detection and merging within chapters
-
-**Script Requirements**:
-- Detect page breaks in chapter text
-- Identify paragraphs spanning pages
-- Implement merging logic
-- Test with multi-page paragraphs
-
-**Implementation Details to Define**:
-- Page break detection method
-- Cross-page paragraph identification
-- Merging algorithm
-- Page number assignment for merged content
-
 ### POC-7: Page Number Extraction
 **Requirement**: FR-4 (Page Number Extraction) - Extract and assign accurate page numbers
-**Goal**: Validate page number extraction and assignment to chapters/chunks
+**Goal**: Validate page number extraction and assignment to final chunks
 
 **Script Requirements**:
 - Extract page numbers from PDF metadata
@@ -300,27 +298,29 @@ parser-v2/
 - Schema validation approach
 - Error handling for output generation
 
-## POC Execution Plan
+## POC Execution Plan (UPDATED)
 
-### Phase 1: Core Text Processing (POC-1, POC-2, POC-3)
-**Duration**: 3 POCs
+### Phase 1: Foundation (POC-1, POC-2, POC-2.2, POC-2.3)
+**Duration**: 4 POCs
 **Dependencies**: None
-**Goal**: Establish chapter-based text processing pipeline
+**Goal**: Establish complete text extraction and page processing pipeline
+**Status**: ✅ COMPLETED
 
-### Phase 2: Content Analysis (POC-4, POC-5, POC-6)
-**Duration**: 3 POCs
+### Phase 2: Content Structure (POC-4, POC-5)
+**Duration**: 2 POCs
 **Dependencies**: Phase 1 complete
-**Goal**: Add header detection, chunking, and cross-page merging
+**Goal**: Paragraph detection and header identification
+**Status**: 🔄 IN PROGRESS (Next: POC-4 Paragraph Detection)
 
-### Phase 3: Advanced Processing (POC-7, POC-8, POC-9)
-**Duration**: 3 POCs
+### Phase 3: Content Processing (POC-6)
+**Duration**: 1 POC
 **Dependencies**: Phase 2 complete
-**Goal**: Page numbers, image extraction, and link resolution
+**Goal**: Chunking algorithm on structured content
 
 ### Phase 4: Output Generation (POC-10)
 **Duration**: 1 POC
-**Dependencies**: All previous phases
-**Goal**: Generate final chapter-based output format
+**Dependencies**: Phase 3 complete
+**Goal**: Generate final output format
 
 ## Success Criteria for Each POC
 
@@ -354,8 +354,21 @@ Each POC will use the provided test file:
 - **Edge Cases**: Test unusual scenarios using different sections of the book
 - **Failure Cases**: Test with invalid inputs and error conditions
 
+## Architectural Issue Resolution ✅
+
+**ISSUE**: ✅ RESOLVED - Paragraphs were being detected before cross-page merging, creating broken sentence boundaries.
+
+**SOLUTION IMPLEMENTED**: 
+1. ✅ Integrated cross-page merging into Step 2.3 (Page Extraction)
+2. ✅ Optimized flow: Extract pages → Remove page numbers → Merge sentences
+3. ✅ Paragraph detection now ready to process clean, merged content
+
+**IMPACT**: ✅ COMPLETED - Architectural flaw eliminated through optimized pipeline design. Sentence merging now works correctly with 158 sentences successfully merged across 309 pages.
+
 ## Notes
 - POCs should be independent and focused on single requirements
 - Each POC should include sample data for testing
 - Implementation details should be technology-agnostic where possible
-- Focus on proving the concept works before optimizing 
+- Focus on proving the concept works before optimizing
+- ✅ **RESOLVED**: Cross-page merging now happens before paragraph detection (integrated in Step 2.3)
+- **NEXT FOCUS**: Implement paragraph detection on clean, merged page content 

@@ -1,0 +1,341 @@
+{
+  "processingTime": 288,
+  "detectionStats": {
+    "chaptersDetected": 10,
+    "tocSource": "pdf_bookmarks",
+    "tocEntriesFound": 10,
+    "patternMatches": 105,
+    "averageDetectionConfidence": 0.9000000000000001,
+    "pageOffset": 0
+  },
+  "extractionStats": {
+    "totalChapters": 8,
+    "totalWords": 558873,
+    "averageWordsPerChapter": 69859.125,
+    "averageQualityScore": 1,
+    "validChapters": 8,
+    "chaptersWithIssues": 0
+  },
+  "tocAnalysis": {
+    "source": "pdf_bookmarks",
+    "tocFound": true,
+    "tocEntries": [
+      {
+        "chapterTitle": "Introduction: Life itself",
+        "chapterNumber": 0,
+        "startingPage": 9,
+        "bookmarkTitle": "Introduction: Life itself"
+      },
+      {
+        "chapterTitle": "Discovering the nanocosm",
+        "chapterNumber": 1,
+        "startingPage": 28,
+        "bookmarkTitle": "1. Discovering the nanocosm"
+      },
+      {
+        "chapterTitle": "The path of carbon",
+        "chapterNumber": 2,
+        "startingPage": 63,
+        "bookmarkTitle": "2. The path of carbon"
+      },
+      {
+        "chapterTitle": "From gases to life",
+        "chapterNumber": 3,
+        "startingPage": 92,
+        "bookmarkTitle": "3. From gases to life"
+      },
+      {
+        "chapterTitle": "Revolutions",
+        "chapterNumber": 4,
+        "startingPage": 125,
+        "bookmarkTitle": "4. Revolutions"
+      },
+      {
+        "chapterTitle": "To the dark side",
+        "chapterNumber": 5,
+        "startingPage": 151,
+        "bookmarkTitle": "5. To the dark side"
+      },
+      {
+        "chapterTitle": "The flux capacitor",
+        "chapterNumber": 6,
+        "startingPage": 182,
+        "bookmarkTitle": "6. The flux capacitor"
+      },
+      {
+        "chapterTitle": "Epilogue: Self",
+        "chapterNumber": 99,
+        "startingPage": 212,
+        "bookmarkTitle": "Epilogue: Self"
+      },
+      {
+        "chapterTitle": "Appendix 1: Red protein mechanics",
+        "chapterNumber": 99,
+        "startingPage": 223,
+        "bookmarkTitle": "Appendix 1: Red protein mechanics"
+      },
+      {
+        "chapterTitle": "Appendix 2: The Krebs line",
+        "chapterNumber": 99,
+        "startingPage": 228,
+        "bookmarkTitle": "Appendix 2: The Krebs line"
+      }
+    ],
+    "pdfBookmarksAvailable": true
+  },
+  "patternAnalysis": {
+    "potentialChapters": 139,
+    "validatedChapters": 105,
+    "highConfidenceMatches": 0
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "startPosition": 795992,
+      "contentStartPosition": 795871,
+      "endPosition": 57931,
+      "rawContentLength": 737935,
+      "cleanedContentLength": 681565,
+      "contentStats": {
+        "rawCharacters": 738060,
+        "cleanedCharacters": 681569,
+        "rawWords": 115801,
+        "cleanedWords": 115366,
+        "rawLines": 12519,
+        "cleanedLines": 12100,
+        "compressionRatio": 0.9234601522911416
+      },
+      "pageRange": {
+        "startPage": 29,
+        "endPage": 316,
+        "totalPages": 288
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 9,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "startPosition": 57932,
+      "contentStartPosition": 57912,
+      "endPosition": 632129,
+      "rawContentLength": 574216,
+      "cleanedContentLength": 530771,
+      "contentStats": {
+        "rawCharacters": 574198,
+        "cleanedCharacters": 530772,
+        "rawWords": 90131,
+        "cleanedWords": 89802,
+        "rawLines": 9319,
+        "cleanedLines": 8987,
+        "compressionRatio": 0.9243710357751159
+      },
+      "pageRange": {
+        "startPage": 28,
+        "endPage": 246,
+        "totalPages": 219
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 28,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "startPosition": 632130,
+      "contentStartPosition": 632130,
+      "endPosition": 37211,
+      "rawContentLength": 594916,
+      "cleanedContentLength": 550132,
+      "contentStats": {
+        "rawCharacters": 594918,
+        "cleanedCharacters": 550133,
+        "rawWords": 93495,
+        "cleanedWords": 93153,
+        "rawLines": 9644,
+        "cleanedLines": 9302,
+        "compressionRatio": 0.9247207178132112
+      },
+      "pageRange": {
+        "startPage": 21,
+        "endPage": 246,
+        "totalPages": 226
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 63,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "startPosition": 37212,
+      "contentStartPosition": 37145,
+      "endPosition": 315300,
+      "rawContentLength": 278154,
+      "cleanedContentLength": 256328,
+      "contentStats": {
+        "rawCharacters": 278089,
+        "cleanedCharacters": 256329,
+        "rawWords": 43899,
+        "cleanedWords": 43749,
+        "rawLines": 4482,
+        "cleanedLines": 4321,
+        "compressionRatio": 0.9217516694295711
+      },
+      "pageRange": {
+        "startPage": 20,
+        "endPage": 125,
+        "totalPages": 106
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 92,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "startPosition": 315301,
+      "contentStartPosition": 315279,
+      "endPosition": 389870,
+      "rawContentLength": 74590,
+      "cleanedContentLength": 69009,
+      "contentStats": {
+        "rawCharacters": 74570,
+        "cleanedCharacters": 69010,
+        "rawWords": 11618,
+        "cleanedWords": 11560,
+        "rawLines": 1221,
+        "cleanedLines": 1160,
+        "compressionRatio": 0.9254391846587099
+      },
+      "pageRange": {
+        "startPage": 125,
+        "endPage": 151,
+        "totalPages": 27
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 125,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "To the dark side",
+      "chapterNumber": 5,
+      "startPosition": 389871,
+      "contentStartPosition": 389849,
+      "endPosition": 710311,
+      "rawContentLength": 320461,
+      "cleanedContentLength": 297006,
+      "contentStats": {
+        "rawCharacters": 320441,
+        "cleanedCharacters": 297007,
+        "rawWords": 49698,
+        "cleanedWords": 49557,
+        "rawLines": 5141,
+        "cleanedLines": 4997,
+        "compressionRatio": 0.9268695329249378
+      },
+      "pageRange": {
+        "startPage": 151,
+        "endPage": 272,
+        "totalPages": 122
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 151,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "startPosition": 710312,
+      "contentStartPosition": 710312,
+      "endPosition": 253918,
+      "rawContentLength": 456391,
+      "cleanedContentLength": 422977,
+      "contentStats": {
+        "rawCharacters": 456393,
+        "cleanedCharacters": 422978,
+        "rawWords": 71079,
+        "cleanedWords": 70850,
+        "rawLines": 7368,
+        "cleanedLines": 7139,
+        "compressionRatio": 0.9267845913499988
+      },
+      "pageRange": {
+        "startPage": 101,
+        "endPage": 272,
+        "totalPages": 172
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 182,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    },
+    {
+      "title": "Appendix 2: The Krebs line",
+      "chapterNumber": 99,
+      "startPosition": 253919,
+      "contentStartPosition": 253902,
+      "endPosition": 796463,
+      "rawContentLength": 542561,
+      "cleanedContentLength": 502279,
+      "contentStats": {
+        "rawCharacters": 542545,
+        "cleanedCharacters": 502280,
+        "rawWords": 85111,
+        "cleanedWords": 84836,
+        "rawLines": 9388,
+        "cleanedLines": 9110,
+        "compressionRatio": 0.925784957929757
+      },
+      "pageRange": {
+        "startPage": 100,
+        "endPage": 317,
+        "totalPages": 218
+      },
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.9,
+      "startingPage": 228,
+      "extractionQuality": {
+        "score": 1,
+        "isValid": true,
+        "issues": []
+      }
+    }
+  ]
+}
