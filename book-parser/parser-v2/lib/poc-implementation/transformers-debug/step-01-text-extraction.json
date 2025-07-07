@@ -1,11 +1,11 @@
 {
   "extractionMetadata": {
-    "characterCount": 796464,
+    "characterCount": 795052,
     "pageCount": 317,
-    "lineCount": 13516,
-    "wordCount": 125206,
+    "lineCount": 13213,
+    "wordCount": 124903,
     "literalNewlineCount": 0,
-    "extractionTime": "2025-07-06T16:14:08.765Z",
+    "extractionTime": "2025-07-07T14:18:09.069Z",
     "pdfInfo": {
       "pages": 317,
       "info": {
@@ -39,22 +39,22 @@
     "startsWithText": true,
     "endsWithText": true,
     "containsLiteralNewlines": false,
-    "averageWordsPerPage": 395
+    "averageWordsPerPage": 394
   },
   "textSamples": {
-    "beginning": "\n\n\n--- PAGE 1 ---\n\n--- END PAGE 1 ---\n\n\n\n--- PAGE 2 ---\n1 \nPraise for   Transformer \n‘Nick Lane’ s exploration of the building blocks that underlie life’ s big \nfundamental questions – the origin of life itself, ageing and disease – \nhave shaped my thinking since I first came across his work.  He is one of \nmy favourite science writers.’ \nBill Gates \n‘In this compulsively readable book, Lane takes us on a riveting journey , \nranging from the flow of ener gy to new ways of understanding cancer . ...",
-    "ending": "... \nDedication 5 \nContents 6 \nIntroduction: Life itself 8 \n1. Discovering the nanocosm 27 \n2. The path of carbon 62 \n3. From gases to life 91 \n4. Revolutions 124 \n5. T o the dark side 150 \n6. The flux capacitor 181 \nEpilogue: Self 211 \nEnvoi: ‘Like Most Revelations’ 219 \nThe forward Krebs cycle 220 \nThe reverse Krebs cycle 221 \nAppendix 1: Red protein mechanics 222 \nAppendix 2: The Krebs line 227 \nList of abbreviations 233 \nFurther reading 236 \nAcknowledgements 282 \nIndex 288\n--- END PAGE 317 ---\n",
+    "beginning": "\n\n\n--- PAGE 0 ---\n\n--- END PAGE 0 ---\n\n\n\n--- PAGE 1 ---\nPraise for   Transformer \n‘Nick Lane’ s exploration of the building blocks that underlie life’ s big \nfundamental questions – the origin of life itself, ageing and disease – \nhave shaped my thinking since I first came across his work.  He is one of \nmy favourite science writers.’ \nBill Gates \n‘In this compulsively readable book, Lane takes us on a riveting journey , \nranging from the flow of ener gy to new ways of understanding cancer . \nLa...",
+    "ending": "... \nDedication 5 \nContents 6 \nIntroduction: Life itself 8 \n1. Discovering the nanocosm 27 \n2. The path of carbon 62 \n3. From gases to life 91 \n4. Revolutions 124 \n5. T o the dark side 150 \n6. The flux capacitor 181 \nEpilogue: Self 211 \nEnvoi: ‘Like Most Revelations’ 219 \nThe forward Krebs cycle 220 \nThe reverse Krebs cycle 221 \nAppendix 1: Red protein mechanics 222 \nAppendix 2: The Krebs line 227 \nList of abbreviations 233 \nFurther reading 236 \nAcknowledgements 282 \nIndex 288\n--- END PAGE 316 ---\n",
     "firstLines": [
       "",
       "",
       "",
-      "--- PAGE 1 ---",
+      "--- PAGE 0 ---",
       "",
-      "--- END PAGE 1 ---",
+      "--- END PAGE 0 ---",
       "",
       "",
       "",
-      "--- PAGE 2 ---"
+      "--- PAGE 1 ---"
     ],
     "lastLines": [
       "The forward Krebs cycle 220 ",
@@ -65,7 +65,7 @@
       "Further reading 236 ",
       "Acknowledgements 282 ",
       "Index 288",
-      "--- END PAGE 317 ---",
+      "--- END PAGE 316 ---",
       ""
     ]
   }

@@ -1,14 +1,13 @@
 
 
 
+--- PAGE 0 ---
+
+--- END PAGE 0 ---
+
+
+
 --- PAGE 1 ---
-
---- END PAGE 1 ---
-
-
-
---- PAGE 2 ---
-1 
 Praise for   Transformer 
 ‘Nick Lane’ s exploration of the building blocks that underlie life’ s big 
 fundamental questions – the origin of life itself, ageing and disease – 
@@ -40,12 +39,11 @@ today.  I read with rapt attention.’
 Olivia Judson, author of  Dr Tatiana’ s Sex Advice to All Cr eation 
 ‘Nobody explains the inner secrets of the living cell better than Nick 
 Lane ... a series of riveting detective stories.’
---- END PAGE 2 ---
+--- END PAGE 1 ---
 
 
 
---- PAGE 3 ---
-2 
+--- PAGE 2 ---
 Richard Fortey , author of  Trilobite! 
 ‘An exhilarating account of the biophysics of life, stretching from the 
 first stirrings of living matter to the psychology of consciousness.  I felt 
@@ -64,21 +62,19 @@ the Emer gence of Spacetime
 new perspectives on how life itself works ... Biochemistry has never 
 looked more exciting.’ 
 Philip Ball, author of  Critical Mass
+--- END PAGE 2 ---
+
+
+
+--- PAGE 3 ---
+TRANSFORMER 
+The deep chemistry of life and death 
+NICK LANE
 --- END PAGE 3 ---
 
 
 
 --- PAGE 4 ---
-3 
-TRANSFORMER 
-The deep chemistry of life and death 
-NICK LANE
---- END PAGE 4 ---
-
-
-
---- PAGE 5 ---
-4 
 First published in Great Britain in 2022 by 
 Profile Books Ltd 
 29 Cloth Fair 
@@ -106,20 +102,18 @@ A CIP catalogue record for this book is available from the British Library .
 ISBN 978 1 78816 054 4 
 eISBN 978 1 78283 450 2 
 Typeset in Sabon by MacGuru Ltd
+--- END PAGE 4 ---
+
+
+
+--- PAGE 5 ---
+In memory of   
+Ian Ackland-Snow
 --- END PAGE 5 ---
 
 
 
 --- PAGE 6 ---
-5 
-In memory of   
-Ian Ackland-Snow
---- END PAGE 6 ---
-
-
-
---- PAGE 7 ---
-6 
 Contents 
 Introduction: Life itself 
 1.  Discovering the nanocosm 
@@ -138,21 +132,19 @@ List of abbr eviations
 Further r eading 
 Acknowledgements 
 Index
+--- END PAGE 6 ---
+
+
+
+--- PAGE 7 ---
+to this mortal pr ocess of continuing, it is the movement that cr eates the 
+form. 
+Richard Howard
 --- END PAGE 7 ---
 
 
 
 --- PAGE 8 ---
-7 
-to this mortal pr ocess of continuing, it is the movement that cr eates the 
-form. 
-Richard Howard
---- END PAGE 8 ---
-
-
-
---- PAGE 9 ---
-8 
 I NTRODUCTION 
 LIFE ITSELF 
 From  space  it  looks  grey  and  crystalline,  obliterating  the  blue-green 
@@ -188,12 +180,11 @@ mostly all we notice are the buildings.  The structure.
 A cell is a city of a sort.  It too has buildings, or at least physical 
 structures.  Unlike  our  own  constructions  a  cell  is  not  dominated  by 
 gravity, and is truly built in three dimensions.  If  you  shrink  yourself
---- END PAGE 9 ---
+--- END PAGE 8 ---
 
 
 
---- PAGE 10 ---
-9 
+--- PAGE 9 ---
 down to the size of a molecule,  the ‘cityscape’  is dizzying.  Membranes 
 sweep  past  your  view:  curving,  fluid  walls,  swooping  overhead  or 
 plunging  down below.  Traffic streams  past on colossal  cables,  extending 
@@ -234,12 +225,11 @@ gyrating  predator .  Some  350  years  after  van  Leeuwenhoek,  we  now
 know what most of these whirring parts do, what they’re  made of, how 
 they function.  We have taken them apart, in centrifuges  or with optical 
 tweezers,  read out the code that specifies  their structures,  deciphered  the
---- END PAGE 10 ---
+--- END PAGE 9 ---
 
 
 
---- PAGE 11 ---
-10 
+--- PAGE 10 ---
 regulatory  loops that lend an illusion  of purpose,  listed all their parts. 
 And yet underne ath it all, we are barely any closer to understanding  what 
 breathes  life into these  flicks of matter.  How did they first emerge from 
@@ -281,11 +271,11 @@ wrong  question,  which  can’t  be  answered  precisely  because  it  is  not
 meaningful.  A far better question goes back to the formative  years of 
 biology:  what processes  animate  cells and set them apart from inanimate 
 matter?  The idea that there is a vital force, that life is fundamentally
---- END PAGE 11 ---
+--- END PAGE 10 ---
 
 
 
---- PAGE 12 ---
+--- PAGE 11 ---
 1 1 
 different from inanimate  matter, was disproved  long ago and is now only 
 wheeled  out as a straw man to burn – even though  it’s an understandable 
@@ -325,12 +315,11 @@ To understand this flow of energy and matter and all it portends,  we must
 first look to where biology  has turned  a blind eye since the ascent  of 
 information.  The golden  age of biochemistry  began with a realisation 
 that  cells  are  not  made  of  an  amorphous  protoplasm  composed  of
---- END PAGE 12 ---
+--- END PAGE 11 ---
 
 
 
---- PAGE 13 ---
-12 
+--- PAGE 12 ---
 inscrutably  complex  ‘living’  molecules.  One of the founding fathers  of 
 biochemistry , Sir Frederick  Gowland  Hopkins,  dedicated  much of his 
 long  career through the first four decades of the twentieth  century  to 
@@ -371,12 +360,11 @@ incomprehensible  number .  You  might  say  that  there’s  a  lot  of  repeat
 streets in a cell (with the same thing happening in each of them) but there 
 may be several  hundred  vehicles  entering  a street  every second , each one 
 reliably  going through  exactly  the same succession.  This is the flux that
---- END PAGE 13 ---
+--- END PAGE 12 ---
 
 
 
---- PAGE 14 ---
-13 
+--- PAGE 13 ---
 makes up the metabolism  of the cell, which we will grapple  with in this 
 book.  Metabolism  is what keeps us alive – it is what being alive  is  – the 
 sum of the continuous transformations  of small molecules  on a timescale 
@@ -419,12 +407,11 @@ oxygen  or grow in its absence  is remarkably  similar  to how our own
 heart cells behave  in similar  circumstances.  In the 1920s,  another  great 
 Dutch  pioneer  of  microbiolo gy,  Albert  Kluyver ,  marshal led  new 
 evidence  for  the  unity  of  biochemistry .  His  slightly  maniacal  phrase
---- END PAGE 14 ---
+--- END PAGE 13 ---
 
 
 
---- PAGE 15 ---
-14 
+--- PAGE 14 ---
 ‘From the elephant  to butyric  acid bacterium  – it is all the same!’  (I hear 
 it  accompanied  by  a  burst  of  hysterical  laughter)  was  later  famously 
 paraphrased  as ‘Anything  found to be true of  E.  coli  must also be true of 
@@ -463,12 +450,11 @@ compared with, say , the twenty-six letters of the English alphabet, but the
 Morse code only has two letters and can convey  the same meaning.  We 
 might not enjoy listening  to the works of Shakespeare  in blips and bleeps 
 but  technically  there  is  no  loss  of  meaning,  and  the  canon  can  be
---- END PAGE 15 ---
+--- END PAGE 14 ---
 
 
 
---- PAGE 16 ---
-15 
+--- PAGE 15 ---
 reconstituted  in full.  The  same  goes  for  DNA;  indeed,  Shakespeare’ s 
 sonnets  have  been  encoded  in  synthetic  DNA.  Likewise,  the  3,000 
 million  letters that make up the entire human  genome  are enough  to code 
@@ -511,12 +497,11 @@ bearing  suggests;  nearly a third of offspring  are fathered  by philandering
 cheats.  Nothing  in biology  has escaped  digital  scrutiny .  But while our 
 exhaustive  exploration  of  the  digital  jungle  has  changed  the  way  we 
 think about everything,  it has also helped  us forget some lessons  from
---- END PAGE 16 ---
+--- END PAGE 15 ---
 
 
 
---- PAGE 17 ---
-16 
+--- PAGE 16 ---
 the past.  The ‘dynamic  side’ of biochemistry  now rarely escapes  the 
 pages of dusty textbook  histories.  It does not seem to add much to the 
 power of information.  That’s a fallacy.  This book aims to show that the 
@@ -555,12 +540,11 @@ of us who don’t solve the structure  of proteins  for a living look at the
 pages  of  journals  such  as  Nature   with  a  mixture  of  jealousy  and 
 admiration,  for every issue seems to contain  at least two papers detailing 
 the  atomic  structure  of  the  latest  machines.  In  comparison,  even  the
---- END PAGE 17 ---
+--- END PAGE 16 ---
 
 
 
---- PAGE 18 ---
-17 
+--- PAGE 17 ---
 whole genome  sequence  of another  domesticated  species,  once all the 
 rage, has begun to pale. 
 These two themes,  information  and structure,  have combined  as the 
@@ -601,12 +585,11 @@ frustration  travels  straight  to  the  genes,  where  contingency  plans  are
 immediately implemented.  Alternative  route too narrow  to accommodate 
 extra traffic flow?  No problem: widen the road.  Unlike  a city, where 
 harassed  local  authorities  may  procrastinate  for  months,  the  genes
---- END PAGE 18 ---
+--- END PAGE 17 ---
 
 
 
---- PAGE 19 ---
-18 
+--- PAGE 18 ---
 encoding  alternative  pathways  are  upregulated  in  hours,  in  effect 
 widening the bypasses to accommodate extra traf fic. 
 So the flux of energy and materials  through  the cell shifts.  It might 
@@ -645,12 +628,11 @@ how does the flux of materials  and energy through  one of my heart cells
 differ from that in one of yours?  It is closer to a satnav-enabled  road 
 map, showing  live congestion,  but it’s still a snapshot  in time.  We can 
 take a sample  of cells and look at the  distribution  of flux at one moment,
---- END PAGE 19 ---
+--- END PAGE 18 ---
 
 
 
---- PAGE 20 ---
-19 
+--- PAGE 19 ---
 or over a short period  of minutes  or hours. 
 3 
  Will it be the same next 
@@ -692,12 +674,11 @@ inert information  in the form of genes – our inheritance  includes this
 living metabolic  network  in the egg cell, a flame passed  from generation 
 to generation,  without  pause,  right back to the emergence of life.  Core 
 metabolism  has  changed  little  in  part  because  it  was  never  powered
---- END PAGE 20 ---
+--- END PAGE 19 ---
 
 
 
---- PAGE 21 ---
-20 
+--- PAGE 20 ---
 down in its four-billion-year  history.  The genes are custodians  of this 
 flame, but without the flame life is – dead. 
 Yet despite its unceasing  flow, metabolism  has been turned  on its 
@@ -735,12 +716,11 @@ the  cell,  while  the  inert  carcasses  of  water  and  carbon  dioxide  are
 discharged into the outside  world.  But why is it a cycle at all?  Why not 
 just a few simple steps?  Krebs himself suggested  one plausible  answer: 
 burning  very  small  carbon  skeletons  is  not  an  efficient  process,  he
---- END PAGE 21 ---
+--- END PAGE 20 ---
 
 
 
---- PAGE 22 ---
-21 
+--- PAGE 21 ---
 argued, so a cycle was necessary .  The later  discovery  of bacteria  that 
 burn tiny carbon skeletons perfectly well disproved that idea. 
 The  raison  d’être  for the Krebs cycle is muddied  even further  by the 
@@ -781,12 +761,11 @@ the Krebs cycle – how to offset the needs of energy generation  against
 the synthesis  of new organic molecules.  This question  brings the Krebs 
 cycle into sharp modern  focus but does not explain  why the cycle has a 
 yin and yang at all.
---- END PAGE 22 ---
+--- END PAGE 21 ---
 
 
 
---- PAGE 23 ---
-22 
+--- PAGE 22 ---
 In my view, we can’t hope to understand  what goes wrong in cancer 
 or Alzheimer ’s disease  if we do not know why the Krebs cycle is so 
 central  to the flow of both energy and matter in cells.  What rules govern 
@@ -827,12 +806,11 @@ This is the story of our planet from within our cells – what makes us
 the way we are, and ultimately  why we age and die, each of us in our 
 own tantalisingly  different ways.  I appreciate that biochemistry  is for 
 many people  an obscure  subject, full of runic symbols  that suggest  a
---- END PAGE 23 ---
+--- END PAGE 22 ---
 
 
 
---- PAGE 24 ---
-23 
+--- PAGE 23 ---
 priesthood  intent on concealing  the path to meaning.  Yet nothing  could 
 be further from the truth.  What is more meaningful  than the chemistry 
 that brings life alive?  Or the chemistry  that sends us to our death?  Or the 
@@ -871,12 +849,11 @@ the core of metabolism  lies in the Krebs cycle – as practised  by ancient
 bacteria  that run the cycle backwards (or forwards,  from their point of 
 view) reacting  the simple  gases hydrogen  and carbon  dioxide  to generate 
 the universal precursors of life.
---- END PAGE 24 ---
+--- END PAGE 23 ---
 
 
 
---- PAGE 25 ---
-24 
+--- PAGE 24 ---
 In  Chapter  3 , we’ll go right back to the beginning,  to see how this 
 same chemistry  can take place spontaneously  in nature,  and specifically 
 in deep-sea  hydrothermal  vents, where the reaction  between  H 2  and CO 2 
@@ -917,12 +894,11 @@ need  to  use  the  same  pathway  for  biosynthesis  as  well  as  energy
 generation.  As the flux through our Krebs cycle becomes  more sluggish 
 with  age,  intermediates  such  as  succinate  accumulate  and  trigger  the 
 ancestral  pathways  for  dealing  with  low  oxygen  levels,  driving
---- END PAGE 25 ---
+--- END PAGE 24 ---
 
 
 
---- PAGE 26 ---
-25 
+--- PAGE 25 ---
 inflammation,  cellular  growth  and proliferation,  all of which  promote 
 cancer. 
 In  Chapter 6 , we’ll examine  why Krebs-cycle  flux gets more sluggish 
@@ -963,20 +939,18 @@ in the cell does not necessarily  imply high flux – it might reflect  a high r
 flux, with the intermediate  being constantly  replenished  at high levels, or it could 
 reflect the opposite  – almost  no downstream  flux, so the intermediate  gradually 
 builds up; in effect, a car park.  To understand  which one requires  a lot of context
+--- END PAGE 25 ---
+
+
+
+--- PAGE 26 ---
+and subtle interpretation.  There are times when it feels as if metabolomics  should 
+just be called gnomics.
 --- END PAGE 26 ---
 
 
 
 --- PAGE 27 ---
-26 
-and subtle interpretation.  There are times when it feels as if metabolomics  should 
-just be called gnomics.
---- END PAGE 27 ---
-
-
-
---- PAGE 28 ---
-27 
 1 
 DISCOVERING THE NANOCOSM 
 Burlington  House,  Piccadilly ,  1932.  Its  stately  Victorian  façades  are 
@@ -1012,12 +986,11 @@ adding  precise  quantities  of amino acids to thin slices of living tissues
 and making  meticulous  measure ments of the gases emanating,  Krebs had 
 shown how cells make the waste-product  urea, excreted  in urine, through 
 a cycle of reactions.  This was not dead chemistry , but a dynamic  living
---- END PAGE 28 ---
+--- END PAGE 27 ---
 
 
 
---- PAGE 29 ---
-28 
+--- PAGE 28 ---
 process.  In  the  audience,  Hopkins’ s  many  friends  are  smiling.  They 
 know his obsession with the dynamic side of biochemistry .  And they also 
 know he’ s right. 
@@ -1058,12 +1031,11 @@ MRC  either),  Hopkins  did  occasionally  influence  their  direction  of
 research,  for example  convincin g the young Marjory  Stephenson  to work 
 on  bacterial  metabolism.  Her  pioneering  studies  (most  famously  on 
 bacteria  living  in  stagnant  river  waters,  causing  more  anguish  at  the
---- END PAGE 29 ---
+--- END PAGE 28 ---
 
 
 
---- PAGE 30 ---
-29 
+--- PAGE 29 ---
 MRC)  forced  open the doors of the Royal Society;  she was elected  its 
 first  female  Fellow  in  1945,  alongside  the  crystallographer  Kathleen 
 Lonsdale. 
@@ -1102,12 +1074,11 @@ You can imagine  that Hopkins’ s lab was very different to anything
 that Krebs had known  in Germany .  Years later, Krebs reflected  on what 
 he  called  ‘the  British  way  of  life’,  writing  that  ‘The  Cambridge 
 laboratory  included  people  of  many  dispositions,  convicti ons  and
---- END PAGE 30 ---
+--- END PAGE 29 ---
 
 
 
---- PAGE 31 ---
-30 
+--- PAGE 30 ---
 abilities.  I  saw  them  argue  without  quarrelling,  quarrel  without 
 suspecting,  suspect  without  abusing,  criticize  without  vilifying  or 
 ridiculing,  and praise without  flattering.’  I hope that Britain  today does 
@@ -1145,12 +1116,11 @@ called ‘powerhouses’  of the cell; but every scrap of knowledge  along the
 way was hard won.  And knowledge  comes tinged with the stories of how 
 it was won.  That’s only human.  The harder the discoveries,  the better the 
 stories – but also the more scope they have to colour our thinking.  Krebs
---- END PAGE 31 ---
+--- END PAGE 30 ---
 
 
 
---- PAGE 32 ---
-31 
+--- PAGE 31 ---
 started  out lacking  any blueprint  for how respiration  might work, and he 
 ended up with a detailed  set of steps in his famous,  justly eponymous 
 cycle.  Yet his approach  also coloured  the way successive  generations 
@@ -1188,12 +1158,11 @@ submer ged in a water-bath controlled  by a thermostat.  The apparatus
 needed  to measure  one biochem ical reaction  filled half a room, and still 
 gave an indirect  view of what was actually  happening,  for just a single 
 reaction  step.  It  took  unimaginable  patience  and  skill  to  figure  out
---- END PAGE 32 ---
+--- END PAGE 31 ---
 
 
 
---- PAGE 33 ---
-32 
+--- PAGE 32 ---
 exactly  what  was  going  on  in  the  multiple  steps  of  a  biochemical 
 pathway . 
 This method gives a good feel for how indirect  and convoluted  it is to 
@@ -1236,12 +1205,11 @@ arisen from the ferment  – blood pigments  by reduction,  leaf pigment  by
 oxidation.  For evidently , the ferment  existed  earlier  than haemoglobin 
 and chlorophyll.’  He wasn’t so far from the truth, as we’ll see in  Chapter 
 4 .
---- END PAGE 33 ---
+--- END PAGE 32 ---
 
 
 
---- PAGE 34 ---
-33 
+--- PAGE 33 ---
 I’ve  never  forgotten  reading  Warburg’s  Nobel  address,  where  he 
 described  all this, while I was sitting outside  my tent near Cader Idris in 
 Wales one beautiful  morning,  unable  to tear myself  away towards  the 
@@ -1281,12 +1249,11 @@ folk  sag  at  the  prospect.  Krebs  sometimes  ran  as  many  as  ten
 manometers  simultaneously  in  a  single  study.  He  would  add  known 
 amounts  of various  substances  that could be respired,  and measure  the 
 rate of respiration  in the presence  or absence  of respiratory  inhibitors.
---- END PAGE 34 ---
+--- END PAGE 33 ---
 
 
 
---- PAGE 35 ---
-34 
+--- PAGE 34 ---
 The devil really was in the detail.  For a modern-day  biochemist,  it is 
 hard to apprecia te just how little was known,  how utterly  opaque  the 
 workings  of the cell.  As usual in science,  some experiments  worked  well 
@@ -1326,12 +1293,11 @@ which as we’ve seen consumes  and releases  gases too.  And that’s where
 matters became interesting. 
 Krebs found that adding  amino acids increased  the rate of respiration 
 in his tissue slices, as did adding  carboxylic  acids.  But adding both of
---- END PAGE 35 ---
+--- END PAGE 34 ---
 
 
 
---- PAGE 36 ---
-35 
+--- PAGE 35 ---
 them together did not have an additive  effect on the rate of respiration; 
 rather, the breakdown  of amino acids (and the release  of ammonia)  was 
 inhibited   by  adding  carboxylic  acids.  You  can  imagine  how  many 
@@ -1362,12 +1328,11 @@ released captured and put to use?
 It is time to get acquainted  with the molecular  protagonists  of this 
 book.  What exactly  is a carboxylic  acid?  Let me draw one for you.  This 
 is the three-carbon pyruvic acid:
---- END PAGE 36 ---
+--- END PAGE 35 ---
 
 
 
---- PAGE 37 ---
-36 
+--- PAGE 36 ---
 I’m depicting  carbon  atoms as black balls, hydrogen  atoms as small grey 
 balls, and oxygen  atoms as white balls containing  the symbol O.  I’ve 
 drawn  the  atoms  roughly  to  scale.  Oxygen  is  slightly  smaller  than 
@@ -1396,12 +1361,11 @@ That’s because the  middle  carbon  atom in pyruvic  acid has a double  bond
 to oxygen, which likes nothing  better than getting  into a fight; the extra 
 bond tends to throw its weight  about.  That’s what makes pyruvic  acid a 
 touch unstable  and reactive.  Now the middle  oxygen  in my picture  is
---- END PAGE 37 ---
+--- END PAGE 36 ---
 
 
 
---- PAGE 38 ---
-37 
+--- PAGE 37 ---
 staring  back  at  me  like  Mad-Eye  Moody.  This  bad-ass  oxygen  is 
 technically  called an ‘alpha-ke to’ group,  but we don’t need to worry 
 about the terminology; we just need to know that it makes things happen. 
@@ -1431,12 +1395,11 @@ clarity.  But in reality  this charge is smeared  in space between  the two
 oxygen  atoms,  giving  a  ‘delocalised  cloud’  of  electrons  that  confers 
 symmetry  and  stability .  It  can  be  drawn  like  this,  giving  pyruvate 
 something of a Cheshire Cat grin:
---- END PAGE 38 ---
+--- END PAGE 37 ---
 
 
 
---- PAGE 39 ---
-38 
+--- PAGE 38 ---
 In  cells,  carboxylic  acids  are  normally  found  in  this  negatively 
 charged form, which changes  its name to end in ‘ate’.  Pyruvic  acid (with 
 a  proton)  becomes  ‘pyruvate’  after  it  has  lost  the  proton.  The  same 
@@ -1462,12 +1425,11 @@ Krebs knew that the six-carbon  glucose  is initially  split into two three-
 carbon  molecules  of pyruvate,  so a reasonable  working  assumption  was 
 that the interme diates should  be stripped  down to two carbons  and then 
 one carbon.  In other words,  the C3 pyruvate  should  be broken  down into
---- END PAGE 39 ---
+--- END PAGE 38 ---
 
 
 
---- PAGE 40 ---
-39 
+--- PAGE 39 ---
 the C2 acetate  and ultimately  the C1 CO 2 .  Yet it seemed  the opposite 
 happened.  Instead  of getting  shorter, the C3 pyruvate  somehow  became  a 
 C4 or even a C6 carboxylic  acid.  Why would the carbon  chain get longer 
@@ -1508,12 +1470,11 @@ to.  Szent-Györ gyi found that adding  small amounts  of C4 carboxylic
 acids, notably  succinate,  dramatically  increased  the rate of respiration 
 (by up to 600 per cent!!)  over prolonged  periods.  Yet when he analysed 
 exactly how much of the carboxylic acid remained in the muscle after the
---- END PAGE 40 ---
+--- END PAGE 39 ---
 
 
 
---- PAGE 41 ---
-40 
+--- PAGE 40 ---
 experiment, he found that  none  had disappeared.  These simple molecules 
 sped  up  reactions  without  being  consumed  themselves.  That  is,  by 
 definition,  a  catalyst .  It might appear  strange,  Szent-Györ gyi remarked, 
@@ -1540,12 +1501,11 @@ more perplexing.  The bottom  line is that succinate  was fairly unreactive
 yet had a general  catalytic  activity, unlike almost  anything  else known in 
 biology at the time.  Almost ... 
 Pulling hydr ogen
---- END PAGE 41 ---
+--- END PAGE 40 ---
 
 
 
---- PAGE 42 ---
-41 
+--- PAGE 41 ---
 Szent-Györ gyi had a hypothesis.  It’s an excellen t example  of how an 
 ingenious  hypothesis  can  drive  science  forward  down  a  blind  alley. 
 Luckily  not for long in this case.  The idea was this.  Succinate  was one of 
@@ -1575,12 +1535,11 @@ even more intriguing  examples  of hydrogen  transfer , somehow  linked to
 respiration. 
 Recall that respiration  consumes  oxygen  by reacting  it with hydrogen, 
 or more specifically  2H.  The product is water, or H 2 O.  Warburg had
---- END PAGE 42 ---
+--- END PAGE 41 ---
 
 
 
---- PAGE 43 ---
-42 
+--- PAGE 42 ---
 already  shown  that the enzyme  that catalyses  this final step is the haem 
 protein  cytochro me oxidase,  but it had to get its 2H from somewhere. 
 Szent-Györ gyi pictured  a shuttle of carriers  that stripped  2H from sugars, 
@@ -1621,12 +1580,11 @@ If C4 carboxylic  acids were merely hydrogen  carriers,  then as each
 2H was stripped  out from the sugar and passed  onto a carboxylic  acid, 
 then CO 2   should  be  released  from  the  skeletal  remains  of  the  sugar. 
 Remember  that  the  formula  for  glucose  is  C 6 H 12 O 6 .  Szent-Györ gyi
---- END PAGE 43 ---
+--- END PAGE 42 ---
 
 
 
---- PAGE 44 ---
-43 
+--- PAGE 43 ---
 imagined  that all the hydrogens  were stripped  out from glucose to give 
 six  sets  of  2H,  which  were  transferred  onto  the  C4  carboxy lic  acids 
 before being passed onwards  to oxygen  to form water.  Carboxylic  acids 
@@ -1665,12 +1623,11 @@ interconnected  steps, which ran from the C6 citrate via a C5 intermediate
 escaped  Krebs’s notice that these steps released  two CO 2  molecules,  as 
 the carboxylic  acids were clipped  down from six to four carbon  atoms in 
 length.  Presumably , these steps, in which CO 2  was pulled  out, needed
---- END PAGE 44 ---
+--- END PAGE 43 ---
 
 
 
---- PAGE 45 ---
-44 
+--- PAGE 44 ---
 oxygen  to go ahead.  Krebs also found that adding  citrate to his pigeon- 
 breast slices (he’d modified  Szent-Györ gyi’s method)  sped up respiration 
 in  a  similar  way  to  succinate.  Citrate  was  definitely  involved  in 
@@ -1709,12 +1666,11 @@ insight,  with just the degree  of unexpectedness  to be expected  of living
 systems, that Hopkins had celebrated at the Royal Society in 1932. 
 Krebs realised  that biochemical  cycles  are necessarily  catalytic.  In 
 essence,  adding  more of any constituent  gives rise to more of the next,
---- END PAGE 45 ---
+--- END PAGE 44 ---
 
 
 
---- PAGE 46 ---
-45 
+--- PAGE 45 ---
 and so on in turn, until the cycle has run full circle and regenerated  the 
 first constituent  again.  That explains why none of the constituents  are 
 consumed:  each one has to be regenerated  from its precursor  indefinitely . 
@@ -1754,12 +1710,11 @@ mattered  to Krebs.  It had recently been shown  that citrate could be made
 from oxaloacetate  and pyruvate , in effect welding  them together  under 
 quite harsh chemical  conditions,  and without  an enzyme.  If a similar 
 reaction  did operate  under normal metabolic  conditions,  catalysed  by an
---- END PAGE 46 ---
+--- END PAGE 45 ---
 
 
 
---- PAGE 47 ---
-46 
+--- PAGE 46 ---
 enzyme,  then Krebs had completed  a first draft of his cycle: pyruvate 
 was fed into the cycle by cobbling it onto  oxaloacetate,  equivalent  to 
 loading  a full trailer onto the tractor  unit.  It was a quick experiment  to 
@@ -1788,12 +1743,11 @@ named  the  overall  assemblage  acetyl  coenzyme  A   or  acetyl  CoA  for
 short.  This turned out to be perhaps  the single most central  molecule  in 
 metabolism  across the whole of life, from ancient  bacteria  to ourselves, 
 and we will encounter  it repeatedly .  Once formed,  acetyl CoA reacted
---- END PAGE 47 ---
+--- END PAGE 46 ---
 
 
 
---- PAGE 48 ---
-47 
+--- PAGE 47 ---
 with oxaloacetate  to make citrate.  So the ‘full trailer’ was really acetyl 
 CoA. 
 Lipmann  had trained  in Berlin in the late 1920s,  in the lab next door 
@@ -1824,12 +1778,11 @@ what makes  the composite  molecule more reactive  than acetate  itself
 Once activated  in this way, the C2 acetate  can be attached  onto the C4 
 oxaloacetate,  to  give  the  C6  citrate.  At  last,  everything  added  up 
 properly .  The process  by which glucose  is oxidised  goes like this.  First,
---- END PAGE 48 ---
+--- END PAGE 47 ---
 
 
 
---- PAGE 49 ---
-48 
+--- PAGE 48 ---
 the C6 glucose  is split into two molecules  of the C3 pyruvate , each of 
 which is broken  down to acetyl CoA.  These are then fed into the Krebs 
 cycle.  One complete  spin of the cycle (from pyruvate)  generates  three 
@@ -1869,12 +1822,11 @@ grounded  in his own development  of ancient  Greek theory  on ‘fluctids’
 and ‘statids’.  The examiners  dismissed  his work as ‘not really a thesis at 
 all’.  Mitchell’ s mentor, the distinguished  Polish biochemist  David Keilin, 
 commented  that  ‘Peter  is  too  original  for  his  examiners.’  He  finally
---- END PAGE 49 ---
+--- END PAGE 48 ---
 
 
 
---- PAGE 50 ---
-49 
+--- PAGE 49 ---
 passed  his  PhD  in  1951,  with  a  more  conventional  thesis  on  the 
 mechanism  of action of penicillin.  Like Francis  Crick, who took seven 
 years  to  complete  his  own  PhD  thesis,  having  taught  himself  the 
@@ -1914,12 +1866,11 @@ joined Marjory  Stephenson  in Cambridge  as a research  assistant  in 1946,
 first meeting  Mitchell  at departmental  tea in 1947.  She was struck by his 
 keen  intellect  and  wide-ranging  interests,  as  well  as  his  cultivated 
 ‘Beethovenian’  appearance,  with a flowing  mane of hair (he too later
---- END PAGE 50 ---
+--- END PAGE 49 ---
 
 
 
---- PAGE 51 ---
-50 
+--- PAGE 50 ---
 went deaf).  Moyle  herself  was an enthusiastic  musician,  who sang in 
 choirs throughout her life. 
 Marjory  Stephenson  could  hardly  have  been  more  prescient  in 
@@ -1962,12 +1913,11 @@ Many biochemists  were uncomf ortable  with this view, as it recalled  the
 discredited  idea of vitalism,  implying  that there was something  special 
 about living matter  that could not be reduced  to mere chemistry;  and 
 frankly, this view is still prevalent  today.  The goal of biochemistry  was
---- END PAGE 51 ---
+--- END PAGE 50 ---
 
 
 
---- PAGE 52 ---
-51 
+--- PAGE 51 ---
 to grind up tissue, isolate an enzyme, then measure  its precise  function in 
 as  pure  and  uncontaminated  a  preparation  as  was  humanly  possible. 
 Fermentation  was  the  classic  example:  it  did  indeed  proceed  in 
@@ -2011,12 +1961,11 @@ leaving  another  proton  nearby,  bound  onto  water)  is  called  NADH.
 10 
 NADH  will figure large later in this book, but for now, when you see the 
 term NADH, just focus on the ‘H’.  I hope you will develop  a Pavlovian
---- END PAGE 52 ---
+--- END PAGE 51 ---
 
 
 
---- PAGE 53 ---
-52 
+--- PAGE 52 ---
 response, and when you see NADH, you’ll think ‘Aha!  Once more this is 
 the beast that transfers  hydrogen,  or rather, the two electrons  and two 
 protons that constitute 2H!’ 
@@ -2060,12 +2009,11 @@ which  he  alone  was  awarded  the  Nobel  prize  in  1978.  Her  essential
 contribution  would surely not have been overlooked  today.  Mitchell  and 
 Moyle  together  published  a series of ground-breaking  papers  in  Nature 
 in the mid-1960s,  laying out the basic experimental  approaches  still used
---- END PAGE 53 ---
+--- END PAGE 52 ---
 
 
 
---- PAGE 54 ---
-53 
+--- PAGE 53 ---
 today.  Let me just give you a flavour (don’t worry about the details). 
 They  demonstr ated  that  mitochondrial  membranes  really  do  pump 
 protons  when given various  substrates  (including  succinate)  and oxygen, 
@@ -2096,12 +2044,11 @@ that the number of A TPs formed fr om a single NADH is not a
 whole number but a fraction (3.3 in humans) and can vary 
 depending on factors that have kept bioener geticists busy for 
 decades, right up to today .
---- END PAGE 54 ---
+--- END PAGE 53 ---
 
 
 
---- PAGE 55 ---
-54 
+--- PAGE 54 ---
 Such experiments  established  the indispensable  role of the membrane 
 in respiration,  as well as the basic topology  of proton  pumping  and ATP 
 synthesis,  but  said  little  about  how  protons  were  actually  pumped. 
@@ -2142,12 +2089,11 @@ pitches – all char ged with the power of a bolt of lightning.
 This  is  how  respiration  works  in  our  own  mitochondria ,  the 
 ‘powerhouses’  of  complex  cells.  When  Mitchell  was  developing  his 
 chemiosmotic  hypothesis,  in  the  mid-1960s,  Lynn  Margulis  was
---- END PAGE 55 ---
+--- END PAGE 54 ---
 
 
 
---- PAGE 56 ---
-55 
+--- PAGE 55 ---
 beginning  to marshal  the evidence that mitochondria  derived  from free- 
 living bacteria  that had moved  inside other  cells (in what’s called an 
 endosymbiosis)  nearly two billion years ago.  I’ve discussed the singular 
@@ -2186,12 +2132,11 @@ ammonia  plus the carboxylic  acids that enter the Krebs cycle.  By far the
 most common  amino acid that is shipped  around  the body from muscle 
 wasting  is glutamine.  This is converted  into the C5 carboxylic  acid α- 
 ketoglutarate.  The α-ketoglutarate  spins round the Krebs cycle to form
---- END PAGE 56 ---
+--- END PAGE 55 ---
 
 
 
---- PAGE 57 ---
-56 
+--- PAGE 56 ---
 ... more α-ketoglutarate.  Don’t think of the Krebs cycle as a furnace 
 burning or ganic molecules.  It’s catalytic – and it catalyses  the breakdown 
 of the 2C acetate,  not the carboxylic  acids themselves.  So  the  Krebs 
@@ -2231,12 +2176,11 @@ Adding  succinate  to pigeon-breast  muscle  raised the respiratory  rate
 by 600% because that tissue is poised  to oxidise  glucose  as quickly  as 
 possible,  to provide  energy for flying (and the tissue slices were supplied 
 with  plenty  of  glucose  needed  to  form  acetyl  CoA).  But  had  they
---- END PAGE 57 ---
+--- END PAGE 56 ---
 
 
 
---- PAGE 58 ---
-57 
+--- PAGE 57 ---
 repeated  the experiment  with liver tissue, they would not have seen the 
 same thing.  That’s because  the liver does all kinds of other jobs which 
 require  flux in and out of the Krebs cycle, such as making  glucose from 
@@ -2277,12 +2221,11 @@ cycle in animals  as largely dedicated to the breakdown  of organics; and
 that’s  still  how  it  is  presented  in  most  textbooks,  and  how  I  have 
 presented  it  in  this  chapter:  breakdown  is  its  primary  purpose,  and 
 synthesis  is secondary .  That impression  is strengthened  by the fact that
---- END PAGE 58 ---
+--- END PAGE 57 ---
 
 
 
---- PAGE 59 ---
-58 
+--- PAGE 58 ---
 key metabolic  branch-points  such as phosphoenol-pyruvate  lie outside 
 the mitochondria , off the Krebs cycle itself, which therefore  seems to fall 
 slightly  outside  the metabolic  centre of gravity  in animals.  Krebs knew 
@@ -2323,12 +2266,11 @@ diminishing pressure exerted by the consumption of oxygen.
 haemoglobin  of your red blood cells and displacing  oxygen,  but if you survived 
 that, CO would stifle respiration  in your cells for the same reasons.  The haem 
 protein  that Warburg discovered  is now called cytochrome  oxidase,  ‘cytochrome’
---- END PAGE 59 ---
+--- END PAGE 58 ---
 
 
 
---- PAGE 60 ---
-59 
+--- PAGE 59 ---
 meaning  ‘cell colour’.  Without cytochromes,  cells are nearly colourless  (in fact 
 they’re  a pale yellow  from flavins,  also discovered  by Warburg).  At much lower 
 levels, CO is an important  cellular  signal that operates  in part by modulating the 
@@ -2372,12 +2314,11 @@ medical problem, cancer , which took away most of what was dear to me.’
 6   Let  me  just  clarify  the  distinction  between  2H  and  H 2 .  It’s  an  important 
 difference  but might leave you feeling exasperated  with pedantic  scientists.  2H 
 refers to two hydrogen atoms,  which are typically  attached  to other molecules,
---- END PAGE 60 ---
+--- END PAGE 59 ---
 
 
 
---- PAGE 61 ---
-60 
+--- PAGE 60 ---
 such as the carboxylic  acids shown  in the figure.  A hydrogen  atom comprises  a 
 single proton  in the nucleus  along with a single electron  around  the nucleus.  2H 
 therefore  refers to two protons  and two electrons,  which  can be drawn from 
@@ -2421,12 +2362,11 @@ significance.  It fell to the great US biochemist  Albert  Lehninger  (author  o
 famous  textbook)  to show that the oxidation  of NADH  by oxygen  was linked to 
 ATP synthesis,  in two classic  papers in the late 1940s.  Lehninger ’s pioneering 
 work  on  bioener getics  included  demonstrating  that  respiration  takes  place  in
---- END PAGE 61 ---
+--- END PAGE 60 ---
 
 
 
---- PAGE 62 ---
-61 
+--- PAGE 61 ---
 mitochondria,  the ‘power-houses’  of the cell.  Yet for all his brilliance,  Lehninger 
 could not solve exactly  how  NADH  oxidation  was coupled  to ATP synthesis.  The 
 entire  field  got  stuck  for  two  decades.  It  took  Mitchell’ s  unprecedented 
@@ -2467,12 +2407,11 @@ errors,  Mitchell  was  in  fact  correct  about  one  of  the  most  baffling  
 mechanisms,  known  as the Q cycle, in which quinones  transfer  protons  across 
 the  membrane  through  precisely  the  type  of  spatial  coupling  proposed  by 
 Mitchell.
---- END PAGE 62 ---
+--- END PAGE 61 ---
 
 
 
---- PAGE 63 ---
-62 
+--- PAGE 62 ---
 2 
 THE P ATH OF CARBON 
 Picture  a  tree  in  new  leaf,  its  greens  fresh  and  luminous.  Or  a  giant 
@@ -2508,12 +2447,11 @@ it is the protein  that takes  carbon  dioxide  from the air and converts  it in
 organic  molecul es, the living  matter of all plants,  and ultimately  of you 
 and me.  It has an enigm atic name  – rubisco.  Originally  an affectionate 
 poke  at  a  pioneer  of  photosynthesis  research,  Sam  Wildman,  on  his
---- END PAGE 63 ---
+--- END PAGE 62 ---
 
 
 
---- PAGE 64 ---
-63 
+--- PAGE 63 ---
 retirement,  the  name  stuck  (it  was  admittedly  better  than  his  own 
 ‘fraction-1  protein’).  If rubisco  sounds  more  like a breakfast  cereal,  that 
 was precisely the point;  Wildman  had spent  some  years  trying  to produce 
@@ -2554,12 +2492,11 @@ carrot  of improv ed yields  dangling  distractingly  overhead.  Yet rubisco  �
 which  swiftly  came  to be seen as  the  enzyme  for carbon  fixation  – is 
 emblematic  of a more  interesting  and deeper  problem:  the dogma  of the 
 unity  of biochem istry.  In the Introduction,  we touched  on the value  of
---- END PAGE 64 ---
+--- END PAGE 63 ---
 
 
 
---- PAGE 65 ---
-64 
+--- PAGE 64 ---
 this idea; in this chapter , we’ll  see that it can be malignantly  misleading 
 too.  Every  dogma  has its day, but this particular  meme  still bedevils  the 
 textbooks.  The meme  is this: photosynthesis  converts  CO 2  into sugars 
@@ -2598,12 +2535,11 @@ bowels  of  the  Earth.  Many  had  no  need  for  the  sun.  If  we  want  to
 understand  the deep chemistry  of life (and death  ...) we must  shift our 
 gaze from the lofty pinnacles  of evolution  down  to the obscure  canyons 
 of creation.
---- END PAGE 65 ---
+--- END PAGE 64 ---
 
 
 
---- PAGE 66 ---
-65 
+--- PAGE 65 ---
 In this chapter , we’ll  see that some of the most  ancient  bacteri a turn 
 the  familiar  Krebs  cycle  on  its  head  –  they  use  it  in  reverse,  as  a 
 biosynthetic  engine  that  converts  the  gases  CO 2   and  H 2   into  organic 
@@ -2641,12 +2577,11 @@ centre  of a circular  vacuum  chamber, and their flight  is accele rated  by
 rapidly  reversing  an  electric  voltage  (thousands  or  millions  of  times 
 every  second)  while  applying  an external  magnetic  field that bends  their 
 course  into a circular  path.  With each acceleration  the circle  widens,  so
---- END PAGE 66 ---
+--- END PAGE 65 ---
 
 
 
---- PAGE 67 ---
-66 
+--- PAGE 66 ---
 the protons  spiral  out from the source.  The first ‘proton  merry-go-roun d’ 
 was  just  five  inches  in  diame ter,  but  larger  diameters  enabled  more 
 spirals,  and so greater  acceleration  and higher  energy.  By the end of the 
@@ -2690,12 +2625,11 @@ head  off  as  alchemists!’  By  the  1930s,  though,  transmu tation  was  so
 commonplace  that  it  had  become  a  matter  for  respectable 
 experimentation.  Indeed,  the  theory  was  so  unreliable  that  this 
 experimentation  was  necessary .  The  results  were  often  unpredictable,
---- END PAGE 67 ---
+--- END PAGE 66 ---
 
 
 
---- PAGE 68 ---
-67 
+--- PAGE 67 ---
 depending  on  the  energy  and  composition  of  the  beam  (protons  or 
 deuterons,  for  example)  as  well  as  the  duration  of  collisions  and  the 
 target material.  
@@ -2739,12 +2673,11 @@ the Nobel prize for his pioneering work on cyclotrons in 1939.
 3 
 This  bonding  experience  cemented  a  strong  friendship  between 
 Kamen  and  Ruben,  but  also  made  clear  the  importance  of  proper
---- END PAGE 68 ---
+--- END PAGE 67 ---
 
 
 
---- PAGE 69 ---
-68 
+--- PAGE 68 ---
 chemical  analysis  and preparation  in a physics  lab.  For the first time, 
 chemistry ,  even  biology ,  was  encouraged.  That  segued  into  the  pair 
 thinking  about  the  possible  applications  of  cleanly  prepared 
@@ -2797,12 +2730,11 @@ radioactive  molecules  and use the standard  methods  of organic  chemistry
 to identify  them.  By building  up a time-course,  Kamen  and Ruben  could 
 then track the path of carbon  in photosynthesis,  giving  a route  map for 
 the whole pathway .
---- END PAGE 69 ---
+--- END PAGE 68 ---
 
 
 
---- PAGE 70 ---
-69 
+--- PAGE 69 ---
 Beautiful,  simple ... and doom ed to failure.  Problems  dogged  them 
 from the beginning.  Their venture was a sideline for the Rad Lab, so they 
 were  only granted  occasional  access  to the powerful  37-inch  cyclotron. 
@@ -2842,12 +2774,11 @@ the first product  was a carboxylic  acid, with the same  kind of chemistry
 as Krebs-cycle  intermediates.  This could have signalled  the centrality  of 
 carboxylic  acids  and the  Krebs  cycle  for CO 2  fixation and so all of core 
 metabolism,  but the path was twisted.  I mentioned  in  Chapter  1  that the
---- END PAGE 70 ---
+--- END PAGE 69 ---
 
 
 
---- PAGE 71 ---
-70 
+--- PAGE 70 ---
 carboxylate  group  is essentially  a CO 2  unit, and it can break  off as such. 
 That’s true the other  way around  too; when  CO 2  is added  onto another 
 organic  molecule,  you end up with a carboxylic  acid.  The first step is 
@@ -2887,12 +2818,11 @@ part.  The vapour  trail formed  depends  on what kind of particle  is passing
 through  the  chamber .  A  proton  is  tiny  and  fast  moving.  It  whizzes 
 through  the  cloud  chamber ,  leaving  a  long,  spindly  vapour  trail  that 
 vanishes  in  an  instant,  a  ghostly  apparition.  Larger  particles  such  as
---- END PAGE 71 ---
+--- END PAGE 70 ---
 
 
 
---- PAGE 72 ---
-71 
+--- PAGE 71 ---
 alpha  particles  (the nuclei  of helium  atoms  with two protons  and two 
 neutrons) form shorter , stubbier trails. 
 What  Martin Kamen  noticed  was that when  he bombarded  a cloud 
@@ -2945,12 +2875,11 @@ Francisco  seeme d only too real a target.  The US government  took over
 the cyclotrons  at the Rad Lab to focus  on the production  of radioactive 
 isotopes,  notably  uranium  and plutonium.  Kamen  was put in charge of 
 developing  the new protocols.  Ruben  was set to work  in defending the
---- END PAGE 72 ---
+--- END PAGE 71 ---
 
 
 
---- PAGE 73 ---
-72 
+--- PAGE 72 ---
 US coastline  from  invasions  using the poison  gas phosgene.  Exhausted 
 from  working  long  hours  so  he  could  return  to  his  beloved  work  on 
 photosynthesis,  Ruben  fell  asleep  at  the  wheel  and  crashed  his  car. 
@@ -2996,12 +2925,11 @@ notion  that sugars  are the backbone  of biochemistry .  Only  the discerning
 power  of  
 14 
 C  could  mark  out  the  path  by  which  carbon  was  fixed  in
---- END PAGE 73 ---
+--- END PAGE 72 ---
 
 
 
---- PAGE 74 ---
-73 
+--- PAGE 73 ---
 photo-synthesis  at that time,  and only the Rad Lab had enough  
 14 
 C to do 
@@ -3048,12 +2976,11 @@ precise  place  on  the  paper,  depending  on  its  chemical  properties.  The
 radioactivity  emanating  from the  
 14 
 C would  then betray  its presence  as a
---- END PAGE 74 ---
+--- END PAGE 73 ---
 
 
 
---- PAGE 75 ---
-74 
+--- PAGE 74 ---
 dark  smudge on the photographic film.  For example, a specific  sugar  that 
 incorporated  
 14 
@@ -3088,12 +3015,11 @@ language  of science,  of human  comprehension,  of the rational  mind  – a
 simple  molecule  that made  sense.  All that in one dark smudge.  This is 
 why scientists  get so excited  about  the seemingly  abstruse.  That is no 
 smudge, it is a whole world!
---- END PAGE 75 ---
+--- END PAGE 74 ---
 
 
 
---- PAGE 76 ---
-75 
+--- PAGE 75 ---
 But  it  was  also  the  only  cheap  insight.  In  less  than  a  minute,  the 
 radioactivity  had spread  into many  other  products,  each one of which 
 took days, weeks, sometimes  months,  in the lab to identify , with the most 
@@ -3136,12 +3062,11 @@ arithmetic,  albeit a strange  numbers game.  Three  complete  turns  of the
 cycle  produce  six C3 molecules.  One of  these  could  be siphoned  off to 
 be used anywher e in metabolism,  while  the other  five C3 molecules  went 
 through  a rejigging  process  to regenerate  three  C5 molecules  – all the
---- END PAGE 76 ---
+--- END PAGE 75 ---
 
 
 
---- PAGE 77 ---
-76 
+--- PAGE 76 ---
 ribulose  bisphos phate  needed  to enable  another  three  turns  of the cycle. 
 The  full  scheme,  now  in  textbooks  as  the  Calvin–Benson  cycle,  was 
 published  in  the  classic  1954  paper,  ‘The  Path  of  Carbon  in 
@@ -3171,12 +3096,11 @@ dismissed  Benso n with the words  ‘It is time to go.’  Benson  had no place
 to  go,  and  Calvin  made  no  obvious  effort  on  his  behalf.  What  went 
 wrong?  Calvin’ s  own  cherished  ideas  on  photochemistry  had  recently 
 imploded,  so  his  greatest  achievements  in  the  field  were  more
---- END PAGE 77 ---
+--- END PAGE 76 ---
 
 
 
---- PAGE 78 ---
-77 
+--- PAGE 77 ---
 attributable  to  Benson,  which  must  have  rankled.  And  I  suspect  that 
 Benson  didn’t mince  his words  in telling  Calvin  what he thought  of some 
 of Calvin’ s more  wayward  ideas.  Benson  was certainly  capable  of being 
@@ -3217,12 +3141,11 @@ assimilation  of  CO 2   via  the  Calvin   cycle.’  You  can  imagine  that  
 anyone  had  the  temerity  to  claim  another  way  of  fixing  CO 2 ,  that 
 amounted  an insurrection  against the unity  of biochemistry , a rebellion 
 against  the king.  That’s exactly  what happened  next – and why it took so
---- END PAGE 78 ---
+--- END PAGE 77 ---
 
 
 
---- PAGE 79 ---
-78 
+--- PAGE 78 ---
 long to make any headway .  Has it really  made  headway , even today?  The 
 idea  that  CO 2   fixation   makes  sugars  is  still  the  paradigm  that  most 
 students  imbibe  today  – the central  dogma  of metabolism.  And so long 
@@ -3262,12 +3185,11 @@ stripping  the 2H from H 2 O through  the auspices  of chlorophyll.  The 2H
 in  turn  splits  into  electrons  and  protons,  which  then  follow  different 
 paths,  just as they do in respirat ion.  Remember  Peter Mitchell’ s ‘proton- 
 motive  force’  from  Chapter 1 .  In the case of photosynthesis,  a current  of
---- END PAGE 79 ---
+--- END PAGE 78 ---
 
 
 
---- PAGE 80 ---
-79 
+--- PAGE 79 ---
 electrons,  streaming  from water, powers  the extrusion  of protons  across  a 
 membrane, generating a proton-motive force.  This drives the synthesis of 
 ATP  through  that  extraordinary  nanoturbine,  the  ATP  synthase.  Plants 
@@ -3299,12 +3221,11 @@ would  make four, three turns make eight,  four turns sixteen,  and so on ...
 It could drive  growth  like a ... well,  like a bacterium.  Here’s what  they 
 had  in  mind  (I’m  just  slightly  simplifying  their  original  diagram  to 
 highlight the key points):
---- END PAGE 80 ---
+--- END PAGE 79 ---
 
 
 
---- PAGE 81 ---
-80 
+--- PAGE 80 ---
 Instead  of  pulling  out  hydrogen  and  CO 2   from  organic  molecules  to 
 generate  ATP, the reverse  Krebs  cycle  does the opposite:  it uses CO 2  and 
 hydrogen  to make  new organic  molecules  (and costs  some  ATP).  One 
@@ -3324,12 +3245,11 @@ reverse  cycle  is  slightly  longer  than  the  standard  cycle  running
 backwards:  it includes  several  extra carboxylic  acids  that are not usually 
 thought  of  as  Krebs-cycle  intermediates,  notably  acetyl  CoA  and 
 pyruvate  (plus  that metabolic  link between  carboxylic  acids  and sugars,
---- END PAGE 81 ---
+--- END PAGE 80 ---
 
 
 
---- PAGE 82 ---
-81 
+--- PAGE 81 ---
 phosphoenol-pyruvate,  as you can see on page  287 ).  The reverse  cycle 
 integrates  them  into  a  biosynthetic  engine  at  the  very  heart  of 
 metabolism,  in a way that makes  perfect  sense.  The Krebs cycle provides 
@@ -3374,12 +3294,11 @@ in  autotrophic  metabolism  became  obscured,  as  the  focus  shifted
 elsewhere.  I  was  astonished  when  I  first  looked  at  Benson’ s 
 autoradiographs:  I  had  expected  to  see  sugar  phosphates  but  instead  I 
 saw Krebs-cycle  intermediates  everywhere  – the same  carboxylic  acids
---- END PAGE 82 ---
+--- END PAGE 81 ---
 
 
 
---- PAGE 83 ---
-82 
+--- PAGE 82 ---
 that threw  Calvin  and Benson  off the trail for half a decade.  In one  sense 
 these  were  not  misleading  at  all.  They  pointed  to  something  equally 
 important:  sugars  are peripheral.  They’re  needed  for the Calvin–Benson 
@@ -3418,12 +3337,11 @@ as if they were  plants.  Even  so, the remaining  two carboxylation  steps
 (C2 to C3 and C4 to C5) were  taken  to be biochemically  impossible, 
 dismissed  as energetically  too unfavourable.  That meant  the cycle  as a 
 whole was deemed to be irreversible.
---- END PAGE 83 ---
+--- END PAGE 82 ---
 
 
 
---- PAGE 84 ---
-83 
+--- PAGE 83 ---
 Yet  tiny  sulfur  bacteria  could  apparently  reverse  the  Krebs  cycle 
 without problem.  They  did so by using  a small,  red protein  discovered  in 
 the early  1960s  which  seemed  to be capable  of magic  – this same  protein 
@@ -3454,12 +3372,11 @@ takes  the electrons  from the 2H and transfers  them  onto CO 2 , enabling  it
 to form a carbon-to-carbon bond: 
 Let’s not worry  about  exactly  how that works  here (it requires  several 
 steps;  see  Appendix  1   if  you  want  to  know  –  the  process  is  rather
---- END PAGE 84 ---
+--- END PAGE 83 ---
 
 
 
---- PAGE 85 ---
-84 
+--- PAGE 84 ---
 beautiful).  The  critical  point  here  is  that  ferredoxin  has  a  biologically 
 unparalleled  ability  to  press  electrons  onto  even  the  most  unreactive 
 molecules.  But  that  comes  at  a  cost.  Ferredoxin  reacts  spontaneously 
@@ -3494,12 +3411,11 @@ need sunlight to transfer the electr ons from 2H onto ferr edoxin
 .  In the pr esence of oxygen, Fd 
 2– 
  is danger ous as
---- END PAGE 85 ---
+--- END PAGE 84 ---
 
 
 
---- PAGE 86 ---
-85 
+--- PAGE 85 ---
 it can generate r eactive fr ee radicals.  This eventuality is lar gely 
 avoided by Fd 
 2– 
@@ -3547,12 +3463,11 @@ again.  So  it  could  be  that  photorespiration  acts  as  a  safety  valve,
 lowering  the  levels  of  reactive  ferredoxin  and  oxygen  simultaneously , 
 staving  off an impending  catastrophe.  Certainly , this can cost plants  a 
 sizeable  yield,  but at least they survive  to die another  day.  The penalty
---- END PAGE 86 ---
+--- END PAGE 85 ---
 
 
 
---- PAGE 87 ---
-86 
+--- PAGE 86 ---
 for replacing  rubisco  with an ‘improved’  enzyme  could  be sudden  death. 
 No doubt we’ll find out in due course. 
 All that reasoning  is consistent  with a relatively  late evolution  of the 
@@ -3592,12 +3507,11 @@ CoA is not catalysed by the familiar ‘citrate  synthase’  enzyme  from  our
 own  Krebs  cycle  running  backwards,  but  by  a  distinct  enzyme  called 
 ATP citrate lyase.  As it says on the tin, this enzyme  uses ATP to split 
 citrate  into acetyl CoA and oxaloacetate.  The gene encoding  ATP citrate
---- END PAGE 87 ---
+--- END PAGE 86 ---
 
 
 
---- PAGE 88 ---
-87 
+--- PAGE 87 ---
 lyase  was thought  to be present  in the genomes  of all bacteria  using  the 
 reverse  Krebs  cycle.  In phylogenetic  analyses,  this gene was taken  to be 
 diagnostic  for  the  presence  of  the  reverse  cycle;  that’s  the  basis  for 
@@ -3639,12 +3553,11 @@ has to be taken  into consideration  in synchronising  the reversals  in electri
 with the flight  of charged particles.  As a result,  the higher-powered  descendants 
 of cyclotrons are called synchrotrons.  The lar gest cyclic particle accelerator is the 
 Large Hadron Collider at CERN, in Geneva, with a diameter of 27 km.
---- END PAGE 88 ---
+--- END PAGE 87 ---
 
 
 
---- PAGE 89 ---
-88 
+--- PAGE 88 ---
 3  The very idea behind  the cyclotron  had been criticised  by no less a figure  than 
 Albert Einstein, who compared the idea of firing subatomic particles at a tar get to 
 be something  akin to shooting  birds  in the dark,  in a country  where  there  aren’t 
@@ -3690,12 +3603,11 @@ wonders.
 7  Calvin’ s wife Genevieve  took matters  in hand:  under  her strict  dietary  regime, 
 Calvin  lost 30 kg in weight  and quit smoking.  It would  be unfair  to blame  the 
 budget meeting for anything but the timing of his heart attack.
---- END PAGE 89 ---
+--- END PAGE 88 ---
 
 
 
---- PAGE 90 ---
-89 
+--- PAGE 89 ---
 8  Did you really  want to know  what they are?  A is fructose phosphate,  a six- 
 carbon  sugar.  B represents  several  different  sugars,  including  xylulose  phosphate 
 (C5),  erythrose  phosphate  (C4)  and  sedoheptulose  phosphate  (C7).  Yes,  it’s 
@@ -3740,12 +3652,11 @@ to develop  better  ways  of assessing  radically  new ideas  in science  – th
 lead to fundamentally  new ways  of seeing  the world,  and which  did so much  to 
 revolutionise  our  understanding  of  life,  the  universe  and  everything  in  the 
 twentieth century .
---- END PAGE 90 ---
+--- END PAGE 89 ---
 
 
 
---- PAGE 91 ---
-90 
+--- PAGE 90 ---
 11   NADP 
 + 
   is  a  phosphorylated  form  of  NAD 
@@ -3764,12 +3675,11 @@ electrons,  whereas  NADH  tends  to offload  its electrons,  leaving  it mostly
 NAD 
 + 
  form.  We’ll come back to the significance of NADPH in Chapter 5.
---- END PAGE 91 ---
+--- END PAGE 90 ---
 
 
 
---- PAGE 92 ---
-91 
+--- PAGE 91 ---
 3 
 FROM GASES T O LIFE 
 ‘Isn’t the deep ocean supposed  to be like a desert?’  Jack Corliss’ s voice 
@@ -3805,12 +3715,11 @@ and the ‘Garden  of Eden’ lacked biological  rigour, but no one had seen a
 field of giant tube worms  with feathery  red plumes  before.  The  Lulu 
 became  a voyage  of discovery  on a par with the moon landings .  ‘We all 
 started  jumping  up and down.  We were dancing off the walls.  It was
---- END PAGE 92 ---
+--- END PAGE 91 ---
 
 
 
---- PAGE 93 ---
-92 
+--- PAGE 92 ---
 chaos!’,  recalled  one  researcher .  This  was  an  unimagined  finding:  a 
 deep-sea  food  chain  that  apparently  did  not  depend  on  sunlight  or 
 photosynthesis, but lived on the gas hydrogen sulfide emanating from the 
@@ -3853,12 +3762,11 @@ was finally gaining credence,  as gene sequences  made it clear that not all
 autotrophic  bacteria depend  on the Calvin–Benson  cycle.  The time was 
 ripe for a new conception  of the origin of life.  In broad brushstroke,  the 
 reverse  Krebs  cycle  uses  iron–sulfur  proteins,  notably  ferredoxin,  to
---- END PAGE 93 ---
+--- END PAGE 92 ---
 
 
 
---- PAGE 94 ---
-93 
+--- PAGE 93 ---
 catalyse  the  reaction  between  carbon  dioxide  and  hydrogen,  forming 
 carboxylic  acids,  the  carbon  skeletons  from  which  all  other  cellular 
 building  blocks  are made.  The only problem  was that the reverse  Krebs 
@@ -3899,12 +3807,11 @@ genes  first,  autotrophy  or  heterotrophy ,  fast  chemistry  or  slow
 accumulation,  local or planetary  scales,  and biology  or chemistry  as the 
 ultimate  guide to life’s origin.  Don’t worry about the meanin g of all 
 these  terms  for  now.  Suffice  to  say  that  science  is  often  furiously
---- END PAGE 94 ---
+--- END PAGE 93 ---
 
 
 
---- PAGE 95 ---
-94 
+--- PAGE 94 ---
 passionate  and  opinionated  until  the  evidence  forces  a  reluctant 
 agreement,  which has not happened yet.  I should confess  to a personal 
 bias here: as a biochemist  with a particular  interest  in biologica l energy 
@@ -3947,12 +3854,11 @@ just a trivial outcome  of information  systems  that could be rewired,  if we
 are  smart  enough?  Is  the  difference  between  ageing  and  disease  an 
 intractable  outcome  of  metabolism,  written  into  cells  from  the  very 
 origin of life, or a question  for gene editing  and synthetic  biology to
---- END PAGE 95 ---
+--- END PAGE 94 ---
 
 
 
---- PAGE 96 ---
-95 
+--- PAGE 95 ---
 overcome?  That in turn boils down to genes first or metabolism  first? 
 The thrust of this book is that energy is primal  – energy flow shapes 
 genetic  information.  I will argue that the structure  of metabolism  was set 
@@ -3990,12 +3896,11 @@ There was also much less limestone  on the early Earth, for this tends
 to  form  in  relatively  alkaline  oceans.  We  know  from  the  geological 
 record that barely any limestone was laid down beneath the acidic oceans 
 of the early Earth.  Now, if all the carbon  in organic matter plus limestone
---- END PAGE 96 ---
+--- END PAGE 95 ---
 
 
 
---- PAGE 97 ---
-96 
+--- PAGE 96 ---
 were vaporised and returned  to the air and oceans  as CO 2 , its primordial 
 state, then that would give an atmospheric  pressure  of about 100 bars of 
 CO 2  (a bar being roughly  the modern  atmospheric  pressure  at sea level). 
@@ -4033,12 +3938,11 @@ CO 2 , were present  at the origin of life in nearly  unlimited  quantities.
 That certainly  can’t be said for the alternative  theories  based on gases 
 such as cyanide.  While relatively  stable forms such as ferricyanide  might 
 have accumulated  in warm ponds on land, there is little evidence  for that
---- END PAGE 97 ---
+--- END PAGE 96 ---
 
 
 
---- PAGE 98 ---
-97 
+--- PAGE 97 ---
 assertion,  and it would not begin to compare  quantitatively  with H 2  and 
 CO 2 . 
 Of course,  having  plentiful  H 2  and CO 2  is irrelevant  if they don’t 
@@ -4077,12 +3981,11 @@ fixation  across  the  living  world.  Just  one  of  these,  the  acetyl  CoA
 pathway , is found in both bacteria and archaea,  the two great prokaryotic 
 domains  of life, implying  that this was the only pathway  present  in their 
 common  ancestor ,  the  last  universal  common  ancestor  of  all  life
---- END PAGE 98 ---
+--- END PAGE 97 ---
 
 
 
---- PAGE 99 ---
-98 
+--- PAGE 98 ---
 (LUCA).  Like the Krebs cycle, the acetyl CoA pathway  depends  on H 2 
 and CO 2 , but in other respects  it seems to be even more ancient  – it is a 
 short, linear pathway that does not require  any additional  input of energy 
@@ -4121,12 +4024,11 @@ multiple  ways of making  Krebs-cycle  intermediates,  which eventually
 ‘crystallised’  into  five  different  pathways,  with  distinct  network 
 topologies  that  operate  optimally  under  diverse  condition s.  These 
 pathways form overlapping groups of Krebs-cycle intermediates.
---- END PAGE 99 ---
+--- END PAGE 98 ---
 
 
 
---- PAGE 100 ---
-99 
+--- PAGE 99 ---
 I mentioned the second  possibility  in the previous  chapter  – it could 
 be that the reverse  Krebs cycle is conserved  more widely  than had been 
 thought,  in archaea  as well as bacteria.  That might be true because  the 
@@ -4165,12 +4067,11 @@ public  in the early 1980s when called up as an expert  witness  at the
 McLean  versus Arkansas  trial, sometimes  known  as Scopes  II, after the 
 Scopes  ‘monkey  trial’ in the 1920s.  Both trials concerned  the teaching of 
 evolutionary  biology or ‘creation  science’  in schools.  Being a pioneer  of
---- END PAGE 100 ---
+--- END PAGE 99 ---
 
 
 
---- PAGE 101 ---
-100 
+--- PAGE 100 ---
 non-equilibrium  thermodynamic s, and with a lifelong  fascinat ion with 
 the origin of life, Morowitz  testified  against  the pervasive  idea that life 
 breaks  the second  law of thermodynamics  – the tendency  for entropy 
@@ -4211,12 +4112,11 @@ the dissipation  of heat means  that no pathway  is perfectly  reversible,
 hence ener gy flow powers the cycling of matter . 
 Always  an admirer  of the iconic metabolic  charts of biochem istry, 
 Morowitz  could not help but see the Krebs cycle as the perfect cyclone
---- END PAGE 101 ---
+--- END PAGE 100 ---
 
 
 
---- PAGE 102 ---
-101 
+--- PAGE 101 ---
 of  matter.  There  it  is,  at  the  centre  of  all  biochemical  charts,  linked 
 fundamentally  to  energy  flow.  Although  the  reverse  cycle  had  been 
 discovered  several  years before his 1968 book, Morowitz  had not at that 
@@ -4253,12 +4153,11 @@ treacherous  guide in science,  as in life.  Life is rarely simple  and there ar
 some  grave  problems  with  Morowitz’ s  view  too.  Perhaps  the  most 
 serious  was pointed  out by another  pioneering  origin-of-life  researcher , 
 Leslie Or gel.
---- END PAGE 102 ---
+--- END PAGE 101 ---
 
 
 
---- PAGE 103 ---
-102 
+--- PAGE 102 ---
 The reverse Kr ebs cycle r epeats its succession of steps, highlighted 
 in bold lettering.  Starting with ferr edoxin the r epeated steps ar e: 
 +CO 2 , +CO 2 , +2H, –H 2 O, +2H, +CoA.  The only differ ence on the 
@@ -4279,12 +4178,11 @@ possibility  of directed  pansperm ia – the idea that life was deliberately
 seeded  on Earth by an alien civilisation.  That conception  grew from the 
 problem  of  the  genetic  code,  which  Crick  had  pronounced  a  ‘frozen 
 accident’,  meaning  that the code was essentially  random,  and became
---- END PAGE 103 ---
+--- END PAGE 102 ---
 
 
 
---- PAGE 104 ---
-103 
+--- PAGE 103 ---
 universal  not because  it was better than any other code, but because 
 mutational  changes to any code, once established,  would be catastrophic, 
 hence could not occur.  We now know that’s not correct.  Even so, these 
@@ -4326,12 +4224,11 @@ without  enzymes  increasing  the selectivity  and yield of each step.  Then
 came the sucker  punch.  The first step of any cycle depends  on the yield 
 of the final step.  Fat chance  of autocatalysis.  Each cycle would have 
 precisely nothing to amplify .
---- END PAGE 104 ---
+--- END PAGE 103 ---
 
 
 
---- PAGE 105 ---
-104 
+--- PAGE 104 ---
 There’s no question  that Orgel had a powerful  point.  I think that it’s 
 fatal to the idea of the reverse Krebs cycle – as a strict cycle – being truly 
 prebiotic.  On the other hand, there is clearly  something  favoured  about 
@@ -4372,12 +4269,11 @@ years, that these Krebs line intermediates  do indeed  form spontaneously
 from CO 2  and H 2 .  That’s a big deal, because  it substantiates  a hypothesis 
 that already  has unique  explanat ory power in connecting  an omnipresent 
 geological  environment  – alkaline hydrothermal  vents – to the heart of
---- END PAGE 105 ---
+--- END PAGE 104 ---
 
 
 
---- PAGE 106 ---
-105 
+--- PAGE 105 ---
 biochemistry , the carboxylic  acids from which other cell components  are 
 made.  Experimental  work shows  that some of those cell components 
 (some  amino  acids,  sugars  and  fatty  acids)  really  can  be  made  from 
@@ -4415,12 +4311,11 @@ containing  iron and sulfur (such as greigite),  shown below as a wavy line
 to keep things simple.  Imagine  that a CO 2  molecule  comes  into close 
 apposition  with the surface  and is held in place by electrical  attractions 
 between  the oxygen  atoms and the mineral  surface,  depicted  here with
---- END PAGE 106 ---
+--- END PAGE 105 ---
 
 
 
---- PAGE 107 ---
-106 
+--- PAGE 106 ---
 dashed  lines.  I’m saying  ‘imagine  it’, but let me be clear: experiments 
 show  that  CO 2   adsorption  and  reduction,  as  I  describe  below,  does 
 indeed  happen.  Binding  to a  surface  works a bit like an enzyme,  feeding 
@@ -4450,12 +4345,11 @@ transfer  of  electrons  onto  CO 2   in  cells  today  (see  Appendix  1 ).  Th
 parallel  between  mineral  surfaces  and  enzymes  such  as  ferredoxin  is 
 remarkable:  the lattice structure  of iron and sulfur in minerals  such as 
 greigite  is nearly  identical  to the tiny clusters  of iron and sulfur that
---- END PAGE 107 ---
+--- END PAGE 106 ---
 
 
 
---- PAGE 108 ---
-107 
+--- PAGE 107 ---
 perform  the chemistry  in ferredoxin.  Both the minerals  and clusters  can 
 also incorporate  other metals  that transfer  pairs of electrons  even more 
 readily, especial ly nickel.  So how far does this parallel  between  enzymes 
@@ -4477,12 +4371,11 @@ They can then follow  the electrons onto CO 2  attached  to the surface.
 Overall,  the transfer  of electrons  and protons  onto CO 2  equates  to the 
 transfer  of hydrogen,  even in the absence  of hydrogen  itself.  Here’s a 
 sequence showing roughly what happens:
---- END PAGE 108 ---
+--- END PAGE 107 ---
 
 
 
---- PAGE 109 ---
-108 
+--- PAGE 108 ---
 As before,  the curly arrows  depict the movement  of a pair of electrons, 
 initially  from the surface  of the mineral  onto the carbon  atom, allowing 
 the oxygen atom to take back the electron  pair it had previously  donated 
@@ -4516,12 +4409,11 @@ to add a hydrogen atom onto the carbon, giving an or ganic molecule.  The
 same thing can happen  repeated ly.  So here’s what happens  next.  Notice 
 in the middle panel that the electron  pair on the oxygen  is quickly  shared 
 with a nearby proton, in this case forming an OH (an ‘alcohol’ group):
---- END PAGE 109 ---
+--- END PAGE 108 ---
 
 
 
---- PAGE 110 ---
-109 
+--- PAGE 109 ---
 The final step in this sequence  is another  repeat,  but this time the oxygen 
 takes its final bonding  pair of electrons  and detaches  as a hydroxide  ion 
 (OH 
@@ -4551,11 +4443,11 @@ already  an excess  of OH
 what’s  formed  overall  –  water!  This  is  what’s  called  a  dehydration 
 reaction:  water  is  being  removed  in  a  watery  environment.  It’s 
 sometimes said that this kind of dehydration is impossible at the origin of
---- END PAGE 110 ---
+--- END PAGE 109 ---
 
 
 
---- PAGE 111 ---
+--- PAGE 110 ---
 1 10 
 life, but of course cells do it all the time, albeit using enzymes  and ATP. 
 A deep secret of life is that enzymes  never pull water from a hat.  Rather, 
@@ -4589,11 +4481,11 @@ enzyme  carbon  monoxide  dehydrogenase  catalyses  exactly  this reaction.
 But  now  look  at  the  product.  This  bound  molecule  is  a  prebiotic 
 equivalent  to acetyl CoA – discovered,  if you recall, by Fritz Lipmann, 
 and one of the most important  molecules  in all metabolism.  We have just
---- END PAGE 111 ---
+--- END PAGE 110 ---
 
 
 
---- PAGE 112 ---
+--- PAGE 111 ---
 1 1 1 
 pulled it out of a hat by a simple  trick.  Rather  than being bound through 
 the sulfur to the handle  that is coenzyme  A, in this case the acetyl is 
@@ -4623,11 +4515,11 @@ experiments  that start with CO 2  and minerals.  But where exactly  are all
 these electrons  being replenished  from?  The answer  is simple:  hydrogen 
 gas,  bubbling  straight  out  of  alkaline  hydrothermal  vents.  If  the 
 concentration  of hydrogen  in hydrothermal  fluids is high, that tends to
---- END PAGE 112 ---
+--- END PAGE 111 ---
 
 
 
---- PAGE 113 ---
+--- PAGE 112 ---
 1 12 
 favour  the continuous  transfer  of electrons  from the surface,  forming  not 
 only Krebs-cycle  intermediates,  but also longer-chain carboxylic  acids – 
@@ -4664,11 +4556,11 @@ to transfer their electrons  onto ferredoxin,  which then passes  them onto
 CO 2 ?  There  are  several  ways  of  doing  that,  but  most  of  them  are 
 complex,  and  involve  multiple  enzymes,  so  don’t  seem  relevant  to 
 prebiotic chemistry .  The most intriguing possibility , which connects  cells
---- END PAGE 113 ---
+--- END PAGE 112 ---
 
 
 
---- PAGE 114 ---
+--- PAGE 113 ---
 1 13 
 to alkaline hydrothermal  vents, is that the reactivity  of both H 2  and CO 2 
 depends  on  the  local  concentr ation  of  H 
@@ -4718,11 +4610,11 @@ from H 2  to ferredoxin.  Two of the clusters  sit right next to a proton
 channel  in the membrane,  and their properties  depend  on proton binding, 
 which is to say, the local pH.  So, when Ech binds protons,  it can accept 
 electrons  from H 2  (in the jargon, it is more easily reduced).  And when
---- END PAGE 114 ---
+--- END PAGE 113 ---
 
 
 
---- PAGE 115 ---
+--- PAGE 114 ---
 1 14 
 the protons detach,  Ech becomes  more reactive,  and can now force its 
 electrons  onto ferredoxin,  which in turn pushes  them onto CO 2 .  Then 
@@ -4759,11 +4651,11 @@ absence  of  a  steep  pH  gradient.  This  is  beautiful  experimenta l
 verification  – for once, not slain by an ugly fact.  I take my hat off to 
 them. 
 Small steps, giant leaps
---- END PAGE 115 ---
+--- END PAGE 114 ---
 
 
 
---- PAGE 116 ---
+--- PAGE 115 ---
 1 15 
 How do we get from pores in hydrothermal  vents to the first cell-like 
 structures?  You can be forgiven for thinking  that these first few steps of 
@@ -4804,11 +4696,11 @@ If  you  are  unusually  alert,  you  may  have  noticed  a  discrepancy
 between  organic  synthesis  in  inorganic  pores  (where  I  talked  about 
 electrons  crossing  inorganic barriers)  and organic synthesis  in protocells 
 (where  I  talked  about  protons   crossing  cell  membranes).  The
---- END PAGE 116 ---
+--- END PAGE 115 ---
 
 
 
---- PAGE 117 ---
+--- PAGE 116 ---
 1 16 
 fundamental  requirement  is that H 2  is in alkaline  conditions,  while CO 2 
 is in acidic conditions.  In principle,  this arrangement  could be achieved 
@@ -4837,11 +4729,11 @@ Perhaps  the  most  important  property  of  this  system  is  that  it  can  in
 principle make copies of itself, and over time can become more complex. 
 For reasons  of physical  chemistry, new fatty acids will go straight  into 
 the membrane, whereas  a proportion  of amino acids should  interact  with
---- END PAGE 117 ---
+--- END PAGE 116 ---
 
 
 
---- PAGE 118 ---
+--- PAGE 117 ---
 1 17 
 iron  and  sulfide,  generating  more  ferredoxin-like  FeS  clusters.  The 
 protocells  with  the  most  FeS  clusters  should  make  the  most  new 
@@ -4886,11 +4778,11 @@ protocell  growth  (through  ‘selfish’  behaviour)  would  be  selected
 against. 
 9 
  Meaning  emerges with function.  In other words,  the genetic
---- END PAGE 118 ---
+--- END PAGE 117 ---
 
 
 
---- PAGE 119 ---
+--- PAGE 118 ---
 1 18 
 code had no need to ‘invent’  information  from nothing:  information  took 
 its meaning from protocell growth from the beginning.  From this point of 
@@ -4929,11 +4821,11 @@ enables  these difficult steps to happen  is ATP.  There’s an apparent  catch-
 22 here.  ATP synthesis is powered  by proton  gradients,  which rotate the 
 ATP synthase  motor, as noted in  Chapter  1 .  This awesome  nanomotor  is 
 unquestionably  a product  of genetic  information  and natural  selection;  it
---- END PAGE 119 ---
+--- END PAGE 118 ---
 
 
 
---- PAGE 120 ---
+--- PAGE 119 ---
 1 19 
 didn’t just pop into existence  by accident  in a prebiotic  world.  So if the 
 first cells needed ATP to make genes and proteins,  how did they manage 
@@ -4953,12 +4845,11 @@ really does – acetyl phosphate  is formed  from a two-carbon  precursor
 thioacetate.  Once formed,  acetyl phosphate  will pass its phosphate  onto 
 ADP (adenosine  diphosphate)  to form ATP at modest  (20 per cent) yield, 
 roughly like this:
---- END PAGE 120 ---
+--- END PAGE 119 ---
 
 
 
---- PAGE 121 ---
-120 
+--- PAGE 120 ---
 Silvana  Pinna, a PhD student  in my lab, has shown  that ATP synthesis  is 
 catalysed  beautifully  by ferric iron (Fe 
 3+ 
@@ -5000,12 +4891,11 @@ H 2   is  replenished,   and  the  same  reaction  can  happen  all  over  again
 Growth  is the non-stop  formation  of new organics  from the continuous 
 flow  and  reaction  of  gases  in  the  environment.  The  inorganic  pores 
 within  vents  are  the  perfect  homes  for  protocells  that  nestle  in  the
---- END PAGE 121 ---
+--- END PAGE 120 ---
 
 
 
---- PAGE 122 ---
-121 
+--- PAGE 121 ---
 crannies  and tap the local flow, growing,  dividing,  nestling,  growing. 
 Growing. 
 Let’s leave this chapter  with a pregnant  thought.  I have described  an 
@@ -5045,12 +4935,11 @@ have been the primordial ener gy source.
 3  The tradition  of synthetic  chemistry  aims to make the products  of interest, such 
 as  nucleotides,  at  high  yield,  ideally  uncontaminated  by  unwanted  products. 
 Synthetic  chemists  tend to have little interest  in the pathways  that biochemistry
---- END PAGE 122 ---
+--- END PAGE 121 ---
 
 
 
---- PAGE 123 ---
-122 
+--- PAGE 122 ---
 uses today, unless  the chemistry  seems logical  to them (and it often doesn’t). 
 Biologists  tend to think backwards.  Natural  selection  improves  selectivity  and 
 yield, so the first pathways  had to have lower selectivity  and yield, or there 
@@ -5094,12 +4983,11 @@ stars, planets, organic chemistry  and life as we know it to be possible.  They 
 ‘finely  tuned’.  Perhaps  there is a multiverse  in which different universes  have 
 different cosmological  constants,  and we have to live in one that was capable  of 
 giving  rise to us; or perhaps  there is some deeper  reason,  buried  in the laws of
---- END PAGE 123 ---
+--- END PAGE 122 ---
 
 
 
---- PAGE 124 ---
-123 
+--- PAGE 123 ---
 physics,  for the cosmological  constants to be what they are – a theory of every- 
 thing.  In similar vein, it looks increasingly  as if carbon  chemistry  is bound to 
 give rise to the core metabolism  of life as we know it.  What that might say about 
@@ -5127,12 +5015,11 @@ RNA polymerisation,  would  then depend  on that location.  This templating  of
 amino-acid  sequence  in  short  peptides  depends  on  the  sequence  of  letters  in 
 RNA,  giving  a  genetic  code  linked  directly  with  function,  that  can  evolve 
 through selection on protocell growth.
---- END PAGE 124 ---
+--- END PAGE 123 ---
 
 
 
---- PAGE 125 ---
-124 
+--- PAGE 124 ---
 4 
 REVOLUTIONS 
 You are not completely  spineles s.  You have a notochord:  a flexible  rod 
@@ -5170,12 +5057,11 @@ oxygenated  world, where there’s energy to burn.  If we could go back in
 time  and  take  a  muscle  biopsy  from  Hallucigenia , I would  be fairly 
 certain  about  one  thing:  it  would  have  a  full  oxidative  Krebs  cycle, 
 spinning  like  our  own.  And  I  would  wager  a  small  bet  that  some
---- END PAGE 125 ---
+--- END PAGE 124 ---
 
 
 
---- PAGE 126 ---
-125 
+--- PAGE 125 ---
 Cambrian  animals  that  survived  to  a  mature  age  would  suffer  from 
 cancer  and other degenerative  diseases  we know today, the scleroses  of 
 old age itself. 
@@ -5215,12 +5101,11 @@ years  ago,  to  the  chemistry  of  2H  and  O 2 ,  powering  the  Cambrian
 explosion  more than three billion  years later.  It turned, quite literally , 
 from the reverse  Krebs cycle, making  organics,  to our own oxidative 
 cycle, burning them, the revolution that powered the revolution.
---- END PAGE 126 ---
+--- END PAGE 125 ---
 
 
 
---- PAGE 127 ---
-126 
+--- PAGE 126 ---
 Why oxygen is unique 
 The path along which atmosph eric oxygen  rose to modern  levels was 
 long and tortuous.  We will picture  it from some of the more spectacular 
@@ -5259,12 +5144,11 @@ energy-history  of the Earth is the story of oxygen  in the air and oceans.
 It’s sobering  to realise  that without  the quantum  rules that govern  the 
 predominantly  two-electron  chemistry  of carbon,  versus the one-electron 
 behaviour of oxygen, the world that we know and love could not exist.
---- END PAGE 127 ---
+--- END PAGE 126 ---
 
 
 
---- PAGE 128 ---
-127 
+--- PAGE 127 ---
 This is how we know from physiology  that the Cambrian  explosion 
 was fuelled by nothing  other than the complete  oxidative  Krebs cycle. 
 It’s a numbers  game.  Aerobic  respiration  operates  at about 40 per cent 
@@ -5305,12 +5189,11 @@ involved  (and  later  in  the  book,  to  understand  what  goes  wrong  in
 ageing)  we need to take the long view, a view that goes right back to the 
 origin of life, where we left off in the previous  chapter.  There we talked 
 about the Krebs  line : a linear pathway  that arguably  preceded  the cycle
---- END PAGE 128 ---
+--- END PAGE 127 ---
 
 
 
---- PAGE 129 ---
-128 
+--- PAGE 128 ---
 itself.  So why did the Krebs line turn into a cycle in the first place?  And 
 how did this cycle flip directio n to link with aerobic  respiratio n?  How 
 did organisms  survive  when that happened?  Flipping  the direction  of the 
@@ -5348,12 +5231,11 @@ with less H 2 , or extract it from other sources  such as H 2 S.  Either way, al
 of  the  electrons   that  cells  need  to  grow  still  derive  from  geological 
 sources,  ultimately the Earth’s mantle,  which is rich in electron-dense 
 (technically , reduced)  metals  such as iron and nickel.  In contrast,  the
---- END PAGE 129 ---
+--- END PAGE 128 ---
 
 
 
---- PAGE 130 ---
-129 
+--- PAGE 129 ---
 atmosphere  and  hydrosphere  are  relatively  oxidised,  being  composed 
 mainly of gases such as CO 2  that are comparatively electron-poor , giving 
 them a relatively  positive  charge.  From this point of view the Earth is a 
@@ -5393,12 +5275,11 @@ released  is used to pump protons, just as in respiration.  On the early
 Earth, the most common  electron  acceptor  was not oxygen,  but most 
 likely CO 2  itself.  Transferring  2H onto CO 2  – repeatedly  – generates 
 methane (CH 4 ) and water (H 2 O) as waste products.  In this case, each 2H
---- END PAGE 130 ---
+--- END PAGE 129 ---
 
 
 
---- PAGE 131 ---
-130 
+--- PAGE 130 ---
 transferred  can pump two protons,  just a fifth of the energy available 
 from aerobic respiration.  Even so, repeating  this same process over and 
 over again does generate  a proton-motive  force sufficient  to drive CO 2 
@@ -5438,12 +5319,11 @@ bond energies) with her pioneering  computational  work on comparing
 protein  sequences  – the basis of modern  phylogenetics  – to reconstruct 
 the history of life on Earth like never before.  The beginning of it all was 
 her classic paper on ferredoxin in 1966.
---- END PAGE 131 ---
+--- END PAGE 130 ---
 
 
 
---- PAGE 132 ---
-131 
+--- PAGE 131 ---
 The idea that the details  of evolutionary  history  could be written in 
 the slight differences  in amino acid sequence  between  proteins  goes back 
 to Francis Crick in 1958, and was first applied  in the early 1960s by 
@@ -5483,12 +5363,11 @@ from  a  donor  (H 2 S)  to  an  acceptor  (ferredoxin)  and  then  onto  CO 2 ,
 without  the need for burning  fuel to power pumping  – the 40-fold cost 
 for methanogens.  The sun provide s this power instead.  But there is still a 
 serious  disadvantage  compared  with  the  more  familiar  oxygenic
---- END PAGE 132 ---
+--- END PAGE 131 ---
 
 
 
---- PAGE 133 ---
-132 
+--- PAGE 132 ---
 photosynthesis  (where  oxygen  is the waste),  for these bacteria  are still 
 plugged  into the planet,  in that all their electrons  derive from geological 
 sources such as volcanoes and hydrothermal vents. 
@@ -5528,12 +5407,11 @@ systems,  which were needed  to drive the reduction  of ferredoxi n and the
 synthesis  of ATP.  This world left its imprint  on biochemistry .  Before  we 
 explore  how the evolution  of oxygenic  photosynthesis  opened up new 
 horizons,  let’s first see how these limits are built into the universal core
---- END PAGE 133 ---
+--- END PAGE 132 ---
 
 
 
---- PAGE 134 ---
-133 
+--- PAGE 133 ---
 of biochemistry , for they are surprisingly  relevant  to the emergence of 
 animals in the Cambrian explosion. 
 Structur e of an energetically limited world 
@@ -5570,12 +5448,11 @@ respect,  it’s striking  that the ATP costs to make a single molecule  of
 pyruvate  via  the  reverse  Krebs  cycle  are  less  than  half  those  of  the 
 Calvin–Benson  cycle (which  with oxygenic  photosynthesis  doesn’t face 
 the  same  energy  constraints).  But  this  efficiency  only  works  under
---- END PAGE 134 ---
+--- END PAGE 133 ---
 
 
 
---- PAGE 135 ---
-134 
+--- PAGE 134 ---
 optimal  conditions,  where oxygen levels are close to zero, and so isn’t 
 easily divorced from location. 
 But you can’t always  be lucky, punk.  Sometimes you’ll get washed up 
@@ -5616,12 +5493,11 @@ bacteria  or  archaea.  The  clumps  were  usually  similar  in  size,  with  a
 comparable  distribution  of cells, even consistent  numbers  – a precise 
 stoichiometry .  This  stoichiometry  varied  with  the  cells’  colours, 
 reflecting  an  intimate  metabolic  relationship  between  the  cells:  how
---- END PAGE 135 ---
+--- END PAGE 134 ---
 
 
 
---- PAGE 136 ---
-135 
+--- PAGE 135 ---
 much waste product was produced  by one set of cells and consumed by 
 the  other,  how  far  gases  diffused  (or  electrons  hopped)  across  the 
 clumps,  and  no  doubt  other  unknown  subtleties.  But  whatever  the 
@@ -5659,12 +5535,11 @@ the direction of a reaction that is close to equilibrium
 can  be  pushed  in  the  forward  direction  if  the  concentration   of  A  is 
 increased,  by living next to a good source  of it (a vent will do), and B is 
 decreased, by removing it to form C:
---- END PAGE 136 ---
+--- END PAGE 135 ---
 
 
 
---- PAGE 137 ---
-136 
+--- PAGE 136 ---
 Until now we have considered  the Krebs  line  and posed the question: 
 why did it first become a cycle?  To sustain forwards flux down the Krebs 
 line, we need to have high concentrations  of early intermed iates and 
@@ -5700,12 +5575,11 @@ off  down  an  electron-transport  chain  embedded  in  the  membrane.
 Transiently  angry,  chlorophyll  snatches  a  replacement  from  the 
 sacrificial  gift offered by the trembling  priestly  protein.  This sacrifice  is 
 not some virgin to placate  a medieval  dragon,  but water.  Zap.  Repeat.
---- END PAGE 137 ---
+--- END PAGE 136 ---
 
 
 
---- PAGE 138 ---
-137 
+--- PAGE 137 ---
 Zap.  Repeat.  It really can do this all day.  Electrons  flow.  Chlorophyll 
 transduces  light into electricity .  For the first time, life is freed from the 
 churning  bowels  of our planet.  No  more  must  cells  rely  on  volcanic 
@@ -5747,12 +5621,11 @@ distinct  photosy stems used in earlier forms of photosynthesis  into the Z
 scheme,  oxygenic  photosynthesis  could now generate  ATP and reduce 
 ferredoxin  simultaneously .  Now,  the  power  of  the  sun  sets  electrons 
 flowing  from water – water everywhere!  – to synthesise  ATP in the first
---- END PAGE 138 ---
+--- END PAGE 137 ---
 
 
 
---- PAGE 139 ---
-138 
+--- PAGE 138 ---
 photosystem,  and then reduce  ferredoxin  in the second.  By transferring 
 electrons  from water right through  the two photosystems  linked in series 
 (through  the  Z  scheme)  oxygenic  photosynthesis  frees  life  from  its 
@@ -5793,12 +5666,11 @@ evidence  against an early evolution of  photosynthesis.  If all the oxygen
 being formed  reacted  swiftly  with methane,  there would be no trace of 
 oxygen  in  ancient  rocks.  I  admit  that  doesn’t  sound  plausible,  but 
 common  sense is the worst guide to the history  of life.  In fact, the levels
---- END PAGE 139 ---
+--- END PAGE 138 ---
 
 
 
---- PAGE 140 ---
-139 
+--- PAGE 139 ---
 of  atmospheric  oxygen  depend  on  exactly  such  a  balance  –  the  rate 
 oxygen  is produced  by photosy nthesis  minus the rate it is consumed  by 
 respiration,  rotting,  oxidation  of minerals  and so on.  Lumping  them all 
@@ -5854,12 +5726,11 @@ rubisco,  the outcome  is that organic carbon  becomes  slightly  enriched  in
 C over  
 13 
 C (compared with a standard  ratio) by around  30 per mille
---- END PAGE 140 ---
+--- END PAGE 139 ---
 
 
 
---- PAGE 141 ---
-140 
+--- PAGE 140 ---
 (30/1,000).  This difference  can be measured  in modern  plants as well as 
 in  traces  of  organic  matter  trapped  in  ancient  rocks.  The  bias  leaves 
 behind  a little more  
@@ -5923,12 +5794,11 @@ it means.  A fall in
 C relative  to  
 12 
 C implies that far more carbon  was
---- END PAGE 141 ---
+--- END PAGE 140 ---
 
 
 
---- PAGE 142 ---
-141 
+--- PAGE 141 ---
 oxidised  than was buried for millions  of years.  That in turn implies  that 
 oxygen  was being consumed,  stripped  out of the air, producing  a massive 
 oxygen  deficit.  Yet at the end of this period,  by the beginning  of the 
@@ -5973,12 +5843,11 @@ partially  evaporated  to  form  massive  deposits  of  evaporitic  sulfate
 minerals  such  as  gypsum.  When  the  drifting  continents  brought 
 Gondwana  together ,  around  560  million  years  ago,  these  great 
 accumulations  of sulfate  were raised up high as continents  collided  and
---- END PAGE 142 ---
+--- END PAGE 141 ---
 
 
 
---- PAGE 143 ---
-142 
+--- PAGE 142 ---
 mountain  ranges rose.  Eroding  from the uplifting  mountains,  a great flux 
 of sulfate  flooded  back into the oceans.  This flood reflected  the power of 
 plate tectonics,  but also the hand of chance:  the happenstance  position of 
@@ -6021,12 +5890,11 @@ circulatory  systems  that  could  be  actively  ventilated,  animals  that
 managed  to  deliver  scraps  of  oxygen  to  their  muscles  and  clear  out 
 excess  CO 2  or sulfide.  Those  tough survivors  had already  adapted  to 
 burrowing  through  the stagnant  muds, remaining  active in even the most
---- END PAGE 143 ---
+--- END PAGE 142 ---
 
 
 
---- PAGE 144 ---
-143 
+--- PAGE 143 ---
 stifling  conditions.  The gentle filter feeders  that had made it through  to 
 the Permian had low oxygen  requirements  but no circulatory  systems. 
 They died. 
@@ -6064,12 +5932,11 @@ cycle (see the scheme  below).  One prong of this fork is reductive, the
 other oxidative.  The reductive  prong begins  with the C2 acetyl CoA and 
 runs through the C3 pyruvate  to the C4 oxaloacetate,  then onto malate, 
 fumarate  and succinate.  This is the reverse  pathway  used in biosynthesis
---- END PAGE 144 ---
+--- END PAGE 143 ---
 
 
 
---- PAGE 145 ---
-144 
+--- PAGE 144 ---
 (as anticipated by Szent-Györ gyi in the 1930s)  that we have followed 
 over the last few chapters.  The oxidative  prong corresponds  to the first 
 few steps of Krebs’s own vision, where acetyl CoA instead  condenses 
@@ -6098,12 +5965,11 @@ Accumulation  of  succinate  is  a  powerful  signal  for  physiological
 adaptation  to low-oxygen  (hypoxic) conditions,  switching  many genes 
 on and off.  Conversely , when oxygen  is available  fumarate  reductase  is 
 switched  off, and an alternative  enzyme  is expressed  instead  – succinate
---- END PAGE 145 ---
+--- END PAGE 144 ---
 
 
 
---- PAGE 146 ---
-145 
+--- PAGE 145 ---
 dehydrogenase.  Although  structurally  very similar  (clearly  derived  from 
 a common ancestor)  this does exactly  the opposite,  stripping  electrons 
 from succinate to generate  fumarate,  feeding  the electrons  directly  into 
@@ -6144,12 +6010,11 @@ synthesis?  What is the difference  between  microbes  and multicellular
 organisms?  And  what  happened  in  that  traumatic  age  before  the 
 Cambrian  explosion?  Crawling  around  in the mud, snuffling through  the 
 sulfide,  growing   and  reproducing  in  this  stench,  puts  a  premium  on
---- END PAGE 146 ---
+--- END PAGE 145 ---
 
 
 
---- PAGE 147 ---
-146 
+--- PAGE 146 ---
 efficient energy use, as tight as that in the ancient  anaerobic  world.  And 
 the same principles can help to guide us here too. 
 The first principle  is to maximise  the driving  force – increase  the 
@@ -6189,12 +6054,11 @@ could underpin the evolution of complex multicellularity in animals.
 We’ve seen that bacteria  and archaea  often benefit  from company, 
 living symbiotically , with a precise  stoichiometry  in which one cell type 
 consumes  the waste products  of another .  That helps them to stabilise
---- END PAGE 147 ---
+--- END PAGE 146 ---
 
 
 
---- PAGE 148 ---
-147 
+--- PAGE 147 ---
 their metabolic  state, creating  a metabolic  homeostasis  that shields  them 
 from the vicissitudes of the environment.  The multiple  tissues  of animals 
 could be seen this way too; to some extent,  individual  tissues  maintain  a 
@@ -6234,12 +6098,11 @@ hundreds  or thousands  of genes, changing  the stable (epigenetic)  state of
 cells  and  tissues.  Tissue  function  eventually  becomes  strained, 
 biosynthetic  pathways  falter,  ATP  synthesis  declines  and  the  delicate 
 web of symbiosis between tissues begins to fray .  And so we age.
---- END PAGE 148 ---
+--- END PAGE 147 ---
 
 
 
---- PAGE 149 ---
-148 
+--- PAGE 148 ---
 1  Like many people of my generation,  I first came across  Pikaia  in an inspiring, 
 if flawed, book by Steven  Jay Gould,  Wonderful  Life .  Pikaia ’s standing  on the 
 evolutionary  path to vertebrates  has been queried  – for example,  it seems to have 
@@ -6283,12 +6146,11 @@ Innsbruck.
 4   The  eagle-eyed  will  notice  that  statement  is  slightly  ambiguous.  Citrate  is 
 broken  down into acetyl CoA plus oxaloacetate,  both of which can regenerate 
 citrate.  The trouble  here is that high levels of oxaloacetate  could interfere  with
---- END PAGE 149 ---
+--- END PAGE 148 ---
 
 
 
---- PAGE 150 ---
-149 
+--- PAGE 149 ---
 the synthesis  of more oxaloacetate  from acetyl CoA.  It therefore seems likely 
 that  the  reverse  Krebs  cycle  generally  regenerates  oxaloacetate,  whereas  the 
 acetyl CoA is bled off to form fatty acids, sugars  (via pyruvate)  and ATP (via 
@@ -6347,12 +6209,11 @@ levels plummeted  to nearly zero.  The idea that
 13 
 C variations  only reflect carbon 
 burial and oxygenation is clearly misguided.
---- END PAGE 150 ---
+--- END PAGE 149 ---
 
 
 
---- PAGE 151 ---
-150 
+--- PAGE 150 ---
 5 
 TO THE DARK SIDE 
 ‘The dream of every cell is to become two cells’ said François  Jacob, the 
@@ -6390,12 +6251,11 @@ When I first studied biochemistry  in the 1980s,  the answer  seemed
 tantalisingly  close.  A new paradigm  was emerging, of oncogenes  and 
 tumour-suppressor  genes.  These are the genes that control  the cell cycle, 
 which,  when mutated,  can drive cells to divide and divide,  heedless  of
---- END PAGE 151 ---
+--- END PAGE 150 ---
 
 
 
---- PAGE 152 ---
-151 
+--- PAGE 151 ---
 the context.  Ostensibly  random  mutations  began to make sense in much 
 the same way that scattered  dots, when joined  up dot to dot, begin to 
 depict a meaningful  image.  There is a scientific  thrill as understanding 
@@ -6436,12 +6296,11 @@ is too close to dogma.  Biology  is not only about information.  Just as
 human  delinque ncy  cannot  be  blamed  on  individuals  only,  but  partly 
 reflects  the society  in which we live, so the effects of oncogenes  said to 
 cause  cancer  are  not  set  in  stone,  but  take  their  meaning  from  the
---- END PAGE 152 ---
+--- END PAGE 151 ---
 
 
 
---- PAGE 153 ---
-152 
+--- PAGE 152 ---
 environment.  The idea that ‘one rogue cell’ causes  cancer  is a scientific 
 morality  tale.  The rogue cell is an unfortunate  product  of multiple  blind 
 hits to its genes, acts of arbitrary violence  in an uncaring  world.  By 
@@ -6482,12 +6341,11 @@ can  mutate  genes  (as  they  insert  into  DNA)  but  also  induce  cells  to
 proliferate  through  pulling  on the normal  levers of cell division.  Which 
 of these actually  causes cancer is unclear.  Perhaps  the greatest  risk factor 
 for cancer is older age: cancer incidence  increases  exponentially  with
---- END PAGE 153 ---
+--- END PAGE 152 ---
 
 
 
---- PAGE 154 ---
-153 
+--- PAGE 153 ---
 age.  People  over the age of fifty have around  ninety  times  the risk of 
 people  younger  than twenty-four .  I’m now in my mid-fifties.  My risk of 
 cancer  will double  by the time I’m in my early sixties,  and double again 
@@ -6525,12 +6383,11 @@ those that suppress  growth)?  In this chapter , we’ll see how the tension
 between  energy and growth,  the yin and yang of the Krebs cycle, begins 
 to explain the root cause of cancer . 
 The W arburg effect
---- END PAGE 154 ---
+--- END PAGE 153 ---
 
 
 
---- PAGE 155 ---
-154 
+--- PAGE 154 ---
 Otto Warburg was a genius.  He could have won the Nobel prize three 
 times and it would not have been undeserving.  In  some respects,  he was 
 half a century  ahead of his time.  From the 1930s,  he advocated  quitting 
@@ -6569,12 +6426,11 @@ It’s  striking  how  many  great  scientists  are  also  culturally  rounded
 people,  though I can’t help calling  to mind a quip from the great violinist 
 Fritz Kreisler to his friend Einstein – the two played  together  in string 
 quartets:  ‘You  know  Albert,  your  trouble  is  that  you  can’t  count!’
---- END PAGE 155 ---
+--- END PAGE 154 ---
 
 
 
---- PAGE 156 ---
-155 
+--- PAGE 155 ---
 Towards  the end of the First World War, Einstein  wrote to Otto at the 
 behest of his mother, urging him not to return to the Russian  front after 
 an injury (for which he was awarded  the Iron Cross)  but instead to go 
@@ -6616,12 +6472,11 @@ organic world is based,  is not so imperfect  that the greater  part of the
 applied  light energy is lost; on the contrary , the reaction  is like the world 
 itself, nearly perfect.’  To my mind, this remark  is in the same vein as 
 Einstein’ s reaction  to the quirkiness  of quantum  mechanics:  ‘God does
---- END PAGE 156 ---
+--- END PAGE 155 ---
 
 
 
---- PAGE 157 ---
-156 
+--- PAGE 156 ---
 not play  dice.’  The idea that life is nearly perfect  is alien to evolutionary 
 biologists,  who  see  messy  trade-of fs  everywhere.  Yet  Warburg  saw 
 nature through  a prism that filtered out the tortuous  complexity  of life. 
@@ -6652,12 +6507,11 @@ but still somewhat  intoxicating.  The accumulation  of lactate  normally
 betrays  a shortage  of oxygen:  an inability  to make enough  ATP through 
 the  Krebs  cycle  and  respiratio n.  Like  respiration ,  fermentation  also 
 produces  ATP, albeit barely a tenth as much.  The breakdown  of glucose
---- END PAGE 157 ---
+--- END PAGE 156 ---
 
 
 
---- PAGE 158 ---
-157 
+--- PAGE 157 ---
 to pyruvate (‘glycolysis’)  normally produces  two molecules  of ATP, plus 
 two molecules of NADH  (which  is to say the ‘2H’, usually  oxidised in 
 respiration).  The problem, when oxygen  is unavailable,  is that too much 
@@ -6699,12 +6553,11 @@ himself  as a Protestant  German  patriot,  the Nazis considered  him to be
 But he was swiftly reinstated,  under Göring’ s declaration  ‘I will decide 
 who is a Jew .’  The reasons are shrouded in mystery , but Hitler apparently 
 had a deep-seate d fear of cancer.  His mother, said to be the only person
---- END PAGE 158 ---
+--- END PAGE 157 ---
 
 
 
---- PAGE 159 ---
-158 
+--- PAGE 158 ---
 he ever truly loved, died from breast cancer  when Adolf was eighteen. 
 Her Jewish  doctor, Eduard  Bloch, wrote that ‘outwardly , Hitler’s love for 
 his mother was his most striking  feature.  I have never witnessed  a closer 
@@ -6743,12 +6596,11 @@ for  their  energy  needs.  Some  cancer  cells  even  take  up  lactate  from
 outside  and burn it in their mitochondria,  in what’s called the reverse 
 Warburg effect.  So, the Warburg effect is certainly not a universal  key to 
 cancer.  In which case, why has the number  of papers  citing it risen so
---- END PAGE 159 ---
+--- END PAGE 158 ---
 
 
 
---- PAGE 160 ---
-159 
+--- PAGE 159 ---
 swiftly  over the last decade?  Because  Warburg was not entirely  wrong 
 either.  He was onto something.  Just not quite the right thing. 
 Warburg’s  tendency  to  assert  truth  in  the  face  of  conflicting  data, 
@@ -6789,12 +6641,11 @@ know that many oncogenes,  tumour suppressor  genes and cancer  viruses
 do indeed all induce some form of metabolic rewiring. 
 Warburg was arguably  right that cancer  is fundamentally  a metabolic 
 rather than a genetic  disease,  but his focus on cell respiration  missed the
---- END PAGE 160 ---
+--- END PAGE 159 ---
 
 
 
---- PAGE 161 ---
-160 
+--- PAGE 160 ---
 main point.  For growth  is the key, and growth  needs more than ATP. 
 Respiration  undoubtedly  declines  as we age, but the underlying  problem 
 is not a shortfal l in ATP, but rather a shift in metabolic  flux and gene 
@@ -6837,12 +6688,11 @@ programmed  cell death.  Cancer  cells escape  this fate by making  more
 NADPH.  All in all, making  NADPH  is at least as important  as making 
 ATP for growth  (and so cancer),  and cells must wire their metabolism  to 
 get the balance between A TP, NADPH and carbon skeletons right.
---- END PAGE 161 ---
+--- END PAGE 160 ---
 
 
 
---- PAGE 162 ---
-161 
+--- PAGE 161 ---
 Here’s the problem.  Let’s start with glucose,  which I’m sure you’ll 
 remember  is  a  six-carbon  sugar.  A  single  molecule  of  glucose  could 
 produce  between  thirty and thirty-six  molecules  of ATP through  aerobic 
@@ -6883,12 +6733,11 @@ ATP.  The synthesis of RNA, DNA and especially  proteins  has higher
 ATP demands  (joining  monome rs together  in chains  costs ATP but not 
 carbon  or NADPH),  although  in this case the demand  depends  primarily 
 on how many proteins are actually  made.  The workhorses  of tissues  are
---- END PAGE 162 ---
+--- END PAGE 161 ---
 
 
 
---- PAGE 163 ---
-162 
+--- PAGE 162 ---
 ‘differentiated’  cells, so called because  they have plenty of recognisable 
 cellular  structures  under  the  microscope.  These  structures  are  made 
 largely of proteins, and protein  synthesis  has the highest  ATP costs of all. 
@@ -6929,12 +6778,11 @@ the C4 intermediate  succinate.  I’ve never forgotten hearing  about this for
 the first time from Christian  Frezza  in Cambridge,  before I gave a talk in 
 his department.  I have no idea what I talked about that day – but the 
 excitement  of his perspective  on the Krebs cycle in cancer  has never left
---- END PAGE 163 ---
+--- END PAGE 162 ---
 
 
 
---- PAGE 164 ---
-163 
+--- PAGE 163 ---
 me.  Since then, Frezza  and a few of his colleagues  around  the world 
 have reconceptualised  the role of the Krebs cycle and metabolic  flux in 
 cancer. 
@@ -6964,12 +6812,11 @@ electron  flow allows  the pumpin g of four protons  at complex  I, driving  a
 little  ATP  synthesis  in  animals  that  possess  the  fumarate  reductase 
 enzyme.  Overall,  it works like this (where  CI depicts  complex  I, CII is 
 complex II and the right-hand complex is the nanomotor A TP synthase):
---- END PAGE 164 ---
+--- END PAGE 163 ---
 
 
 
---- PAGE 165 ---
-164 
+--- PAGE 164 ---
 The  dotted  line  shows  the  transfer  of  two  electrons  from  NADH  to 
 fumarate.  The waste product,  succinate,  accumulates,  and can readily 
 escape  from the mitochondria.  Now, here’s the rub, which makes  this 
@@ -7009,12 +6856,11 @@ the protein can make it to the nucleus  in time, in the rare event of an
 oxygen emer gency. 
 So how does HIF 1 α  making it to the nucleus  in time save the cell from 
 certain  death?  Look at the genes that it targets.  They include genes for
---- END PAGE 165 ---
+--- END PAGE 164 ---
 
 
 
---- PAGE 166 ---
-165 
+--- PAGE 165 ---
 glycolysis,  which we’ve seen promote  ATP synthesis  in the absence  of 
 oxygen.  But the genes switched  on by HIF 1 α  also encode  proteins  that 
 drive growth  and inflammation.  When I talked about low oxygen,  you 
@@ -7054,12 +6900,11 @@ slight  impairme nts  in  Krebs-cycle  flux  give  a  read-out  of  succinate
 levels, which are counteracted  through  changes  in gene activity .  The list 
 of medical  conditions  where this mechanism  turns out to be relevant  is 
 sobering.  I’ll come back to a couple  of these in the next chapter  but just
---- END PAGE 166 ---
+--- END PAGE 165 ---
 
 
 
---- PAGE 167 ---
-166 
+--- PAGE 166 ---
 think for a moment  about the common  disorders  where oxygen  delivery 
 to  tissues  becomes  compromised.  Stroke.  Heart  attacks.  Dementia. 
 Arthritis.  Organ transplants.  Succinate  accumulation  is central  to them 
@@ -7095,12 +6940,11 @@ Another r eversal
 Most cancers  need no more than glucose  and glutamine  to grow.  These 
 substrates  serve all of their needs.  And of the two of them ... give the 
 cancers  glutamine.  I have a vivid memory  of discussing  glutamine  and
---- END PAGE 167 ---
+--- END PAGE 166 ---
 
 
 
---- PAGE 168 ---
-167 
+--- PAGE 167 ---
 the Krebs cycle with Salvador  Moncada  in his directorial  office at the 
 Wolfson Institute a decade  ago.  Moncada  had few equals  in bestriding 
 pharmaceutical  and  academic  research.  He  arrived  at  the  question  of 
@@ -7129,12 +6973,11 @@ whenever  I think of glutamine,  I  can’t  help  but  see  Moncada  pacing
 urgently before his blackboard.  Molecules acquire personality this way . 
 The  first  wave  of  the  storm  came  from  Navdeep  Chande l,  Ralph 
 DeBerardinis  and colleagues  in 2012.  They reported  in  Nature  that cells
---- END PAGE 168 ---
+--- END PAGE 167 ---
 
 
 
---- PAGE 169 ---
-168 
+--- PAGE 168 ---
 with defective  mitochondria  would habitually  drive part of their Krebs 
 cycle backwards,  to make citrate (C6) by reacting  α-ketoglutarate  (C5) 
 with CO 2   –  a  rare  case  of  carbon  fixation  in  animals,  equivalent  to 
@@ -7176,12 +7019,11 @@ around  reading  this book),  so demand  for ATP is low.  What’s going on
 inside your cells right now?  Everything  in your mitochondria  is linked in 
 series.  If demand for ATP is low, then ATP is not being consumed,  which 
 means that the ATP synthase  stops spinning.  So protons  no longer  flow
---- END PAGE 169 ---
+--- END PAGE 168 ---
 
 
 
---- PAGE 170 ---
-169 
+--- PAGE 169 ---
 through  the rotary motor of the ATP synthase  and remain  outside.  That 
 superchar ges the electrical  membrane  potential.  Respiration  can’t pump 
 protons  against  a superchar ged electrical  potential,  so electron  transfer  to 
@@ -7228,12 +7070,11 @@ though its rotary motor .  As protons flow back inside, membrane potential
 falls.  Now NADH can transfer  electrons  into the respiratory  chain again, 
 so NADH  levels fall.  The shift in the balance  between  NADPH  and 
 NADH  flips  the  direction  of  transhydrogenase  enzyme.  This  now
---- END PAGE 170 ---
+--- END PAGE 169 ---
 
 
 
---- PAGE 171 ---
-170 
+--- PAGE 170 ---
 transfers  2H  from  NADPH  onto  NAD 
 + 
 ,  which  raises  NADH  levels. 
@@ -7275,12 +7116,11 @@ because  they lock in a flux that is already  beneficial  for cancer cells.
 Mutations  keep the enzyme  jammed  in reverse  mode,  so it keeps on 
 making  citrate,  supporting  cancer  cell  growth.  Overall,  the  flux  from 
 glutamine looks something like the diagram on the next page:
---- END PAGE 171 ---
+--- END PAGE 170 ---
 
 
 
---- PAGE 172 ---
-171 
+--- PAGE 171 ---
 How glutamine sustains cancer gr owth: the ‘NH 3 ’ can be lost as 
 ammonia or transferr ed to amino acids and used for nucleotide 
 synthesis.  The α-ketoglutarate can form both citrate (for 
@@ -7304,12 +7144,11 @@ switch’  known  as acetylation.  The genes switched  on drive cell growth
 and proliferation  – another  signal that says  grow!  This epigenetic  switch 
 is reinforced  by the context.  The sirtuins are a group of enzymes  that 
 strip out the acetyl group,  switching  off the growth  signal.  But their
---- END PAGE 172 ---
+--- END PAGE 171 ---
 
 
 
---- PAGE 173 ---
-172 
+--- PAGE 172 ---
 activity  depends  on  the  availability  of  NADH.  The  sirtuins  normally 
 close down growth  and sexual  development  when times are lean, and 
 there’s little NADH  from food.  Conversely , if NADH  levels build up, 
@@ -7337,12 +7176,11 @@ needed  for biosynthesis.  From pyruvate,  you can form lactate  and be
 washed  out as waste.  Much of the lactate  excreted  by cancer  cells comes 
 from glutamine  in this way.  Alternatively , from pyruvate,  you can be 
 broken down to acetyl CoA.  And we’ve seen the havoc that can cause.
---- END PAGE 173 ---
+--- END PAGE 172 ---
 
 
 
---- PAGE 174 ---
-173 
+--- PAGE 173 ---
 You’re  not  out  of  choices  yet.  You  can  be  stripped  of  CO 2 ,  then 
 strapped  to  a  phosphate  to  form  the  C3  phosphoenol-pyruvate,  the 
 starting  point for sugar synthesis  via gluconeogenesis.  This pathway  is 
@@ -7367,12 +7205,11 @@ involving  the  Krebs  cycle.  It  works  like  this.  Glycerol  phosphate  is
 stripped  of 2H, which is fed into complex  III of the respirato ry chain 
 from  outside  the  mitochondria.  These  electrons  are  transferred  onto 
 oxygen  in  the  normal  way.  Glycerol  phosphate  can  be  recycled  by
---- END PAGE 174 ---
+--- END PAGE 173 ---
 
 
 
---- PAGE 175 ---
-174 
+--- PAGE 174 ---
 picking  up 2H (from NADH  in the cytosol)  again and again.  Overall, this 
 unusual  form of respiration  oxidises NADH  in the cytosol,  passing its 
 electrons  onto oxygen,  bolstering  the power of aerobic  glycoly sis.  Only 
@@ -7413,12 +7250,11 @@ maintains  a copious  supply  of free glutamine.  It’s as if a state provides
 free  fossil  fuels  for  the  filthiest  polluters.  Cancer  cells  often  acquire 
 mutations  in  genes  for  the  urea  cycle.  That  way,  excess  nitrogen  is 
 splurged as ammonia  rather than urea, promoting  this vicious  cycle while
---- END PAGE 175 ---
+--- END PAGE 174 ---
 
 
 
---- PAGE 176 ---
-175 
+--- PAGE 175 ---
 at once diverting  more aspartate into the synthesis  of nucleotides for 
 RNA and DNA.  If ever a cycle deserved to be called vicious, this is it. 
 Formation of glutamine fr om α-ketoglutarate.  Note that the first 
@@ -7446,12 +7282,11 @@ presence tends to switch of f growth signals.  It’s also  notoriously  tricky 
 make sugars from fats (although  it can be done via the C3 intermediary 
 acetone).  Yet even these metabolic  hurdles  are not insurmountable  for 
 cancer cells.
---- END PAGE 176 ---
+--- END PAGE 175 ---
 
 
 
---- PAGE 177 ---
-176 
+--- PAGE 176 ---
 I’ve  implied  that  cancer  is  primarily  a  metabolic  disease,  yet  if 
 anything  goes for metabolism,  then what actually  turns a cell cancerous? 
 You’ve probably  appreciated  by now that the underlying  problem  is an 
@@ -7490,12 +7325,11 @@ compensated  somewhat  through  suppression  of complex  I.  That brings
 us to the second problem.  Complex I is the beginning of the longest route 
 through  the  respiratory  chain,  and  the  only  entry  point  for  NADH 
 deriving  from the Krebs cycle.  Electrons  enter from NADH  and pass on
---- END PAGE 177 ---
+--- END PAGE 176 ---
 
 
 
---- PAGE 178 ---
-177 
+--- PAGE 177 ---
 down to oxygen,  powering  the extrusion  of ten protons  along the way. 
 We saw in  Chapter  1  that’s enough  to make three (and a bit) ATPs.  So 
 the decline in complex  I activity  with age means  that it’s no longer  so 
@@ -7535,12 +7369,11 @@ and a smile to light a room, who taught me much about how to write and
 think.  Full of zest.  Always  active.  A man who would run up mountains 
 for fun.  He was acutely  aware of his chances,  and exactly  what we know 
 or don’ t know about the treatments he was receiving; but also, how many
---- END PAGE 178 ---
+--- END PAGE 177 ---
 
 
 
---- PAGE 179 ---
-178 
+--- PAGE 178 ---
 imponderables  there  are.  How  much  uncertainty  about  elementary 
 questions.  We have a long way to go before  we can answer  all these 
 questions  and face a diagnosis  of cancer  without  fear.  In the meantime,  I 
@@ -7581,12 +7414,11 @@ unquestionably  applied to both Warburg and Haldane  – and a tendency  to enjo
 physical danger . 
 3  The reason NAD P H has more power than NADH  has nothing  to do with the 
 structure, which is functionally identical, but relates to how far each one has been
---- END PAGE 179 ---
+--- END PAGE 178 ---
 
 
 
---- PAGE 180 ---
-179 
+--- PAGE 179 ---
 pushed  away from its expected  chemical  equilibrium.  If oxygen  is present,  both 
 NADH  and  NADPH  should  be  entirely  oxidised  to  NAD 
 + 
@@ -7637,12 +7469,11 @@ ability to photosynthesise  altogether , but retained  their chloroplast  anyway
 called a plastid)  which they use for other purposes.  A famous  example  is the 
 malarial  parasite  Plasmodium  falciparum , which has a plastid  derived  from its 
 former  chloroplasts.  This has retained  some genes that derive from the original
---- END PAGE 180 ---
+--- END PAGE 179 ---
 
 
 
---- PAGE 181 ---
-180 
+--- PAGE 180 ---
 algal endosymbio nt, making  them an interesting  target for antimalarial  drugs (as 
 we don’ t have genes derived from algae, limiting the possibility of side ef fects). 
 7  Books tend to take their own direction  against  the best-laid  plans of the author. 
@@ -7667,12 +7498,11 @@ quarters.  Focusing  funding  on research  into human  cancer  would miss profou
 insights  deriving  from plant scientists.  In a similar  way, remember  that the gene 
 editing  technology  of CRISPR  was discovered  by scientists  studying  bacterial 
 immunity to viral infections.  Who knew they had an immune system?
---- END PAGE 181 ---
+--- END PAGE 180 ---
 
 
 
---- PAGE 182 ---
-181 
+--- PAGE 181 ---
 6 
 THE FLUX CAP ACITOR 
 ‘So how do you explain  me, then?’  The question is lobbed  like a hand 
@@ -7708,12 +7538,11 @@ never come.  So our genes are honed by selection  to optimise  fitness  in
 our  youth,  with  the  strength  of  selection  tailing  off  as  we  get  older. 
 Variants  of genes that cause harm, which would be purged by selection  if 
 their effects were felt earlier in life, are less likely to be elimina ted with
---- END PAGE 182 ---
+--- END PAGE 181 ---
 
 
 
---- PAGE 183 ---
-182 
+--- PAGE 182 ---
 age.  Obviously , a gene that causes  harm at the age of 150 cannot be 
 rooted out by selection  because  none of us survive  to that age.  According 
 to Medawar , much the same applies  to variants  of genes that cause harm 
@@ -7754,12 +7583,11 @@ our expected chronological  time (protected  by the wonders  of society),
 then we will be afflicted  by a maelstrom  of implacable  spectres that 
 consume  us from within.  To reverse  the afflictions  of older age would be 
 to counter the effects of hundreds,  nay thousands  or millions  of SNPs, a
---- END PAGE 183 ---
+--- END PAGE 182 ---
 
 
 
---- PAGE 184 ---
-183 
+--- PAGE 183 ---
 task tantamount  to Sisyphus  rolling  his boulder  up the mounta in: if not 
 strictly impossible, at least formidable. 
 So it came as a shock in the 1990s to discover  that a handful  of genes 
@@ -7800,12 +7628,11 @@ too,  regardless  of  their  upbringing.  For  comparison’ s  sake,  the
 heritability of height is about 0.8. 
 The problem  of missing  heritability is more startling  in this age of 
 genomics.  Genome-wide  association  studies  assign  additive  risk  to
---- END PAGE 184 ---
+--- END PAGE 183 ---
 
 
 
---- PAGE 185 ---
-184 
+--- PAGE 184 ---
 multiple  genetic variants.  If the known  heritability  of a disease  is 0.5 
 (from twin studies)  and the known  genetic  risk factors  account for that 
 full hereditary risk, then together  they should  add up to an overall risk of 
@@ -7844,12 +7671,11 @@ on the mitochon drial gene; it needs to cooperate  with the genes in the
 nucleus  too.  That cooperation  can be undermined  by incompatibilities 
 between  the mitochondria  and nuclear genes.  To study these interactions, 
 Wallace made ‘cybrids’,  in which the genes in the nucleus  came from
---- END PAGE 185 ---
+--- END PAGE 184 ---
 
 
 
---- PAGE 186 ---
-185 
+--- PAGE 185 ---
 one species  such as a mouse,  while the genes in the mitochondria  came 
 from another species, such as a hamster . 
 Wallace  found  that  antibiotic  resistance  broke  down  with  genetic 
@@ -7891,12 +7717,11 @@ Others  had already  established  the  idea of ‘uniparental  inheritance’  o
 mitochondrial  genes (the father’s mitochondrial  genes are usually  not 
 passed  on)  but  Wallace  used  a  spanking  new  method  (cutting  up 
 mitochondrial  DNA into diagnostic  chunks  using ‘restriction  enzymes’,
---- END PAGE 186 ---
+--- END PAGE 185 ---
 
 
 
---- PAGE 187 ---
-186 
+--- PAGE 186 ---
 which cut in different places depending  on the sequence)  to demonstrate 
 beyond  doubt that children  inherit their mitochondrial  genes from their 
 mother.  He went on to show that mitochondrial  genes can indeed  mutate, 
@@ -7939,12 +7764,11 @@ female,  now known  as ‘mitochondrial  Eve’, the ancestor  of all modern
 human  mitochondrial  DNA,  around  160,000  years  ago.  The  gradual 
 accumulation  of differences  in  mitochondrial  DNA between  diverging 
 groups  can be used to track the migrations  of humans  out of Africa into
---- END PAGE 187 ---
+--- END PAGE 186 ---
 
 
 
---- PAGE 188 ---
-187 
+--- PAGE 187 ---
 Eurasia  and eventually  to Australia  and the Americas.  While this gives a 
 two-dimensional  view, compared  with the richness  of whole genomes 
 used today, the broad outlines  of the story have been corrobo rated by 
@@ -7985,12 +7809,11 @@ landscapes.  These plates pack a punch that has echoed  down centuries.
 Vesalius  did  not  fear  to  pick  a  fight  with  the  ancients  on  points  of 
 anatomy .  Galen had been undisputed  for 1,400 years, but Vesalius  not 
 only dared to disagree;  he was usually  right.  His legacy  can be seen in
---- END PAGE 188 ---
+--- END PAGE 187 ---
 
 
 
---- PAGE 189 ---
-188 
+--- PAGE 188 ---
 any hospital today.  Go in, and you’ll be faced with signs pointing  to 
 Neurology ,  Nephrology ,  Cardiology ,  Ophthalmology ,  Rheumatology , 
 Gastroenterology , Gynaecology , and more.  Vesalius  would  be more at 
@@ -8031,12 +7854,11 @@ feeds back, shaping  forward  or reverse  flux through  the Krebs cycle.  As
 we saw in  Chapter  5 , if the electrical  potential  is too high (because  ATP 
 is not being consumed)  then Krebs-cycle  flux must slow or even reverse. 
 That  signals  directly  to  the  nucleus,  through  succinate  and  citrate,
---- END PAGE 189 ---
+--- END PAGE 188 ---
 
 
 
---- PAGE 190 ---
-189 
+--- PAGE 189 ---
 controlling  the activity  of thousands  of genes, the epigenetic  state of the 
 cell.  There  is  a  subtle  and  continuous  interplay  between  the  singing 
 membrane  potential,  flux through  the  Krebs  cycle  and  the  epigenetic 
@@ -8075,12 +7897,11 @@ confess to quite a strong fellow feeling.
 I knew little of this until Flo Camus arrived  in the lab next door to 
 mine  at  University  College  London.  She  had  done  her  PhD  in  fly 
 genetics  and mitochondrial  function in Melbourne  and was now full of
---- END PAGE 190 ---
+--- END PAGE 189 ---
 
 
 
---- PAGE 191 ---
-190 
+--- PAGE 190 ---
 ideas and plans – and as excited about mitochondria  as I am.  Flo was 
 particularly  interested  in a problem  known  as ‘mother ’s curse’,  and we 
 began to work together  on the question.  The problem  here is precisely 
@@ -8123,12 +7944,11 @@ cause  ‘hybrid  breakdown’,  attributed  to  incompatibilities  between
 mitochondrial  and  nuclear  genes.  So  what  about  crosses  between 
 divergent  populations  within  the  same  species?  Falling  in  love  with 
 people  from other cultures  is as human  as we can get, and I will always
---- END PAGE 191 ---
+--- END PAGE 190 ---
 
 
 
---- PAGE 192 ---
-191 
+--- PAGE 191 ---
 celebrate  it.  But we ought to know if hybrid  vigour  can be undermined 
 by a higher risk of mitochondria l diseases.  Spoiler  alert: I don’t think so. 
 But there’ s plenty else to ponder on here. 
@@ -8169,12 +7989,11 @@ The  cure  seemed  obvious:  lower  the  stress.  Give  the  flies  an
 antioxidant.  We tried one called NAC (for  N -acetylcysteine),  but it didn’t 
 affect the males much.  Yet it killed most of the females  in one fly line! 
 Just one line.  The other lines looked  a bit ropey but seemed  OK.  We
---- END PAGE 192 ---
+--- END PAGE 191 ---
 
 
 
---- PAGE 193 ---
-192 
+--- PAGE 192 ---
 didn’t say ‘That’s funny’;  it was anything  but.  It was quite shocking. 
 Exactly  the kind of unexpected  finding  that leads to places in science. 
 Giving  the flies an antioxidant  had little effect on the males but killed 
@@ -8213,12 +8032,11 @@ The answer  seems to be linked to the flux of ROS.  A really striking
 finding  was that ROS flux hardly  changed,  least of all in the powerful 
 flight muscles of the thorax – it remained  more or less constant,  despite 
 the suppression  of respiration  by NAC.  That’s surprising,  because  ROS
---- END PAGE 193 ---
+--- END PAGE 192 ---
 
 
 
---- PAGE 194 ---
-193 
+--- PAGE 193 ---
 are produced  by respiration,  so suppressing  respiration  should  have some 
 effect on ROS flux, yet there was no change.  A much lower rate of 
 respiration  was producing  the same overall  rate of ROS flux.  But could it 
@@ -8259,12 +8077,11 @@ downstream ef fects on the activity of thousands of genes.  By suppressing
 respiration,  NAC  has  to be having  serious  effects on the epigenetic  state 
 of tissues: which genes are switched on or off.  Enrique  Rodriguez  and 
 Gla Inwongwan  in my lab are looking  into that right now, so I can’t tell
---- END PAGE 194 ---
+--- END PAGE 193 ---
 
 
 
---- PAGE 195 ---
-194 
+--- PAGE 194 ---
 you any more details  yet, but I can give you a sense of what we think 
 might be going on. 
 The  normal  (reduced)  form  of  glutathione,  GSH,  contains  a  thiol 
@@ -8302,12 +8119,11 @@ the form GSSG in the flies that died.
 There are more layers.  GSH can also regenerate  thiols in proteins.  As 
 with GSSG,  oxidised  thiols in proteins tend to form disulfide  bridges.  By 
 linking  together  different bits of a protein,  disulfide  bridges  change the
---- END PAGE 195 ---
+--- END PAGE 194 ---
 
 
 
---- PAGE 196 ---
-195 
+--- PAGE 195 ---
 structure  and  function  of  proteins,  activating  or  deactivating   them  in 
 ways that are still imperfectly  understood.  You could think of this as a 
 simple  on–off  switch  for  a  protein.  But  there  might  be  hundreds  or 
@@ -8350,12 +8166,11 @@ complex  I, which in principle  decreases  ROS flux.  We know that ROS
 flux  was  in  fact  unchanged  in  muscle  tissue,  so  presumably  the 
 suppression  of  complex  I  did  indeed  bring  elevated  ROS  flux  back 
 within a normal  range.  We know that the only difference  between  our fly
---- END PAGE 196 ---
+--- END PAGE 195 ---
 
 
 
---- PAGE 197 ---
-196 
+--- PAGE 196 ---
 lines lay in their mitochondrial  DNA, so the primary  deficit had to be in 
 respiration.  We know that any deficit  in respiration  necessarily  disturbs 
 Krebs-cycle  flux, because  the Krebs cycle cannot  spin if NADH is not 
@@ -8394,12 +8209,11 @@ intend to use up any of mine running around doing exercises.’  If they had
 done so, they would likely have lived a little longer  (albeit  their heart 
 rate would  have slowed  down too).  My point is that there is a broad 
 correlation  between metabolic  rate (the rate of living)  and lifespan.  The
---- END PAGE 197 ---
+--- END PAGE 196 ---
 
 
 
---- PAGE 198 ---
-197 
+--- PAGE 197 ---
 faster we burn through  resources,  the faster we burn out.  Small animals 
 typically  have faster metabolic  rates and shorter  lifespans;  large animals 
 tend  to  have  lower  metabolic  rates  and  live  longer. 
@@ -8444,12 +8258,11 @@ in reproduction  or competing  for a mate?  How much do you want to
 spend on cleaning up the mess or preventing  the mess from building  up 
 in the first place?  The contrasting  answers  to these questions  explain 
 why lifespan  only correlates  loosely  with metabolic  rate – but to ignore
---- END PAGE 198 ---
+--- END PAGE 197 ---
 
 
 
---- PAGE 199 ---
-198 
+--- PAGE 198 ---
 metabolic  rate  altogether ,  as  somehow  old-fashioned  and  genetically 
 nebulous,  is to ignore  perhaps  the single most important  determinant  of 
 longevity:  how quickly  the cellular  machinery  needs to be built, how 
@@ -8489,12 +8302,11 @@ linking,  oxidation  by ROS or glycation  (the tendency  of sugars such as
 glucose  to react with proteins  and lipids, decorating  them with ‘sticky’ 
 tails).  Presumably , any incremental  damage does not impede  respiration 
 or  Krebs-cycle  flux  much  when  we’re  strutting  our  stuff  in  our
---- END PAGE 199 ---
+--- END PAGE 198 ---
 
 
 
---- PAGE 200 ---
-199 
+--- PAGE 199 ---
 reproductive  prime.  Respiration  is  efficient,  so  we  can  drive  both 
 biosynthesis  and  ATP  synthesis  through  the  normal  oxidative  Krebs 
 cycle.  To do so, we need to extract  carbon  skeletons  from the Krebs 
@@ -8548,12 +8360,11 @@ on the relative  allocation  of resources  to growth  or energy: the fittest
 individuals  have a respiratory  system  that is capable  of doing both at 
 once, with the Krebs cycle in full forwards  mode much of the time, 
 whereas  less fit individuals  can’t sustain  both biosynthesis  and energy
---- END PAGE 200 ---
+--- END PAGE 199 ---
 
 
 
---- PAGE 201 ---
-200 
+--- PAGE 200 ---
 metabolism  by forwards  flux, so must make a choice.  Their stunted  tail 
 or narrow eye-span  or less vibrant colour  betrays  a Krebs-cycle  flux 
 compromised  by deficient  interactions  between  the proteins  encoded  by 
@@ -8593,12 +8404,11 @@ spectre  of missing heritability  means that only a small proportion  of the
 established  genetic  risk  for  these  conditions  is  explained  by  known 
 variations  in  nuclear  genes.  So  how  exactly  are  age-related  diseases 
 linked with ageing?
---- END PAGE 201 ---
+--- END PAGE 200 ---
 
 
 
---- PAGE 202 ---
-201 
+--- PAGE 201 ---
 Our flies illumin ate part of the answer.  We all – even identical  twins – 
 have  a  unique  combination  of  mitochondrial  genes  set  against  our 
 nuclear  genomes.  The  flies  show  us  that  seemingly  trivial 
@@ -8639,12 +8449,11 @@ to the dwindlin g availability  of ATP and the shifting  pattern of gene
 activation  in the nucleus,  tissue by tissue.  By their very nature,  different 
 tissues  express  different genes, with the effects of each SNP depending 
 on which genes are active,  overlaid on the energetic and biosynthetic
---- END PAGE 202 ---
+--- END PAGE 201 ---
 
 
 
---- PAGE 203 ---
-202 
+--- PAGE 202 ---
 demands  of each tissue, and the ability of our weakening  mitochondria  to 
 meet those needs.  This in turn depends  on how our mitochondrial  genes 
 interact  with the unique  set of nuclear  genes that are expressed  in each 
@@ -8685,12 +8494,11 @@ islet mitochondr ia – damage  that’s typically  caused  by the reactivity  o
 glucose  itself – lowers  the membrane  potentials  achievable,  which saps 
 insulin  secretion.  As secreted insulin  levels fall, glucose  is taken up less 
 easily by the brain, despite  high levels in the bloodstream.  Perpetually
---- END PAGE 203 ---
+--- END PAGE 202 ---
 
 
 
---- PAGE 204 ---
-203 
+--- PAGE 203 ---
 high blood glucose  drives a vicious cycle, in which tissues  eventually 
 become  resistant  to  insulin.  And  that  gives  the  brain  a  particularly 
 serious  problem,  as it relies so heavily  on glucose.  It can’t simply  revert 
@@ -8742,12 +8550,11 @@ MAMs  attempt to compensate  for this  deficit by pumping  more Ca
 2+ 
  into 
 the  mitochondria,  activating  pyruvate  dehydrogenase  further  and
---- END PAGE 204 ---
+--- END PAGE 203 ---
 
 
 
---- PAGE 205 ---
-204 
+--- PAGE 204 ---
 rescuing  neuronal  function.  But excess  Ca 
 2+ 
  is itself damaging, and the 
@@ -8792,12 +8599,11 @@ sustained  by an incomprehensible  one hundred  billion  trillion  reactions
 (10 
 23 
 , or 100,000,000,000,  000,000,000,000).  I’m now in my mid-fifties,
---- END PAGE 205 ---
+--- END PAGE 204 ---
 
 
 
---- PAGE 206 ---
-205 
+--- PAGE 205 ---
 so  my  wrinkles  and  aches  and  pains  are  the  product  of  about  10 
 32 
 reactions  to  date,  roughly  a  billion  times  the  number  of  stars  in  the 
@@ -8838,12 +8644,11 @@ Animals  with the power of flight live as much as ten times longer  than
 their land-lubber  cousins  with a similar  body size or resting  metabolic 
 rate.  Recent  work  from  Gustavo  Barja  in  Madrid  suggests  that  these 
 longer-lived animals restrict  ROS flux from complex  I, simply  by down-
---- END PAGE 206 ---
+--- END PAGE 205 ---
 
 
 
---- PAGE 207 ---
-206 
+--- PAGE 206 ---
 regulating  a subunit  containing  the most reactive  iron–sulfur  cluster. 
 12 
 Far from suppressing  complex  I activity , restricting  ROS flux enables 
@@ -8885,12 +8690,11 @@ have imagined  the invisible  metabolic  flux dancing  through  genes that
 defines  us as individuals  and humans,  but they knew well how to live 
 and die.  We each need to learn that lesson  for ourselves.  The second 
 maxim  was ‘Nothing  to excess’.  Think about how hard it is to change
---- END PAGE 207 ---
+--- END PAGE 206 ---
 
 
 
---- PAGE 208 ---
-207 
+--- PAGE 207 ---
 our epigenetic state: we must sustain a new pattern  of flux moment  by 
 moment,  year after year.  Changes  that can’t be sustained  are no use – we 
 will slump back soon enough  into the metabolic  doldrums  of senescence. 
@@ -8931,12 +8735,11 @@ found in human  populations.  Thinking  about how selection  for mitochondrial
 quality  operates  gives striking  insights  into the developmental  architecture  of the 
 female  germline  –  why  germ  cells  proliferate  to  form  up  to  eight  million 
 immature  oocytes , why most of those die before  birth, why oocytes  are then
---- END PAGE 208 ---
+--- END PAGE 207 ---
 
 
 
---- PAGE 209 ---
-208 
+--- PAGE 208 ---
 effectively  put in ‘cold storage’  for decades,  and more.  None of this happens  in 
 the  male  germline  for  the  simple  reason  that  males  do  not  pass  on  their 
 mitochondria.  This is the deepest  distinction  between  the sexes, and arguably  the 
@@ -8979,12 +8782,11 @@ Sex, Suicide  for a critique  of this idea).  And it partly relates  to the econ
 size.  The great Canadian  comparative  biochemist  Peter Hochachka  showed  that 
 the demands  on visceral  organs such as the liver fall with body size, for reasons 
 that are not still not fully explained.
---- END PAGE 209 ---
+--- END PAGE 208 ---
 
 
 
---- PAGE 210 ---
-209 
+--- PAGE 209 ---
 6   ‘Mutator  mice’  have  an  error-prone  mitochondrial  DNA  polymerase  that 
 introduces  mutatio ns into mitochondrial  DNA.  Double  mutants  (in which both 
 copies  of the gene are error prone)  have very high numbers  of mitochondrial 
@@ -9029,12 +8831,11 @@ directly  toxic to proteins).  For a long time, it was thought  that insulin  do
 affect the uptake  of glucose  by the brain, hence the brain could not be ‘insulin 
 resistant’,  but more recent work indicates  that neurons  do indeed  become  insulin 
 resistant,  to the point that Alzheimer ’s disease  has been termed  ‘type 3 diabetes’.
---- END PAGE 210 ---
+--- END PAGE 209 ---
 
 
 
---- PAGE 211 ---
-210 
+--- PAGE 210 ---
 One paper by Paula Moreira  captures the nub of the problem  in her title: ‘Sweet 
 mitochondria – a shortcut to Alzheimer ’s disease’. 
 11  I take this number  from Joana Xavier, one of the stars of a rising generation  of 
@@ -9054,11 +8855,11 @@ why  mitochondri a  retain  genes  at  all;  he  argues  they  are  needed  to  
 respiration.  That  would  predict  there  are  evolutionary  costs  in  limiting  the 
 responsiveness  to  rapid  change,  perhaps  in  terms  of  adaptability  to  variable 
 environments or response to infections, but that’ s another story .
---- END PAGE 211 ---
+--- END PAGE 210 ---
 
 
 
---- PAGE 212 ---
+--- PAGE 211 ---
 21 1 
 E PILOGUE 
 SELF 
@@ -9095,12 +8896,11 @@ innermost chemistry of life.  I find this unsettling, but that’ s how it is.
 The  power  of  this  chemistry  to  self-organise,  to  grow,  to  form 
 protocells  animated by the same flux of gases into living matter, gave 
 meaning  and context  to genes and information.  For me, the first genes
---- END PAGE 212 ---
+--- END PAGE 211 ---
 
 
 
---- PAGE 213 ---
-212 
+--- PAGE 212 ---
 were  random  strings  of  a  few  letters  of  RNA,  polymerising  inside 
 protocells  growing  in those deep-sea  vents.  From the beginning, genes 
 copied  themselves  inside protocells,  spreading  when they promoted  cell 
@@ -9140,12 +8940,11 @@ emergent property of the complex  nervous  systems  of higher  animals,
 but is something  more fundame ntal that works at the level of cells.  This 
 means we can study consciousness  in some simple  experimental  models 
 such as fruit flies.  As Turin puts it, ‘While  it is not known  to what extent
---- END PAGE 213 ---
+--- END PAGE 212 ---
 
 
 
---- PAGE 214 ---
-213 
+--- PAGE 213 ---
 fruit  flies  are  conscious,  they  are  most  definitely  unconscious  when 
 exposed to chloroform or ether .’ 
 The mechanism  of general  anaesthesia  is one of the major unsolved 
@@ -9186,12 +8985,11 @@ known.  Even he admits  that brains emitting radio waves sounds  like the
 stuff of science fiction.  But it seems they do. 
 Let’s get back to xenon.  All this suggest s that xenon concentrates  in 
 the  hydrophobic  pockets  of  proteins  sitting  within  the  mitochondrial
---- END PAGE 214 ---
+--- END PAGE 213 ---
 
 
 
---- PAGE 215 ---
-214 
+--- PAGE 214 ---
 membranes,  and flits respiratory  electrons  straight  to oxygen.  The effect 
 must be subtle,  for too much would kill us, and overdose  is always  a risk 
 with anaesthetics.  But suppose  it’s true.  What next?  Instead  of electron 
@@ -9232,12 +9030,11 @@ attempting to measure the strength of electromagnetic fields in individual
 mitochondria.  But there are some broader  principles  too about the way 
 that electromagn etic fields interact  with each other – separate  fields can 
 interfere  with each other (cancelling out) or can link in phase to generate
---- END PAGE 215 ---
+--- END PAGE 214 ---
 
 
 
---- PAGE 216 ---
-215 
+--- PAGE 215 ---
 a stronger  field, operating  over a longer  distance.  Parallel  membranes, 
 such as the cristae membranes  of neuronal  mitochondria,  should  generate 
 stronger  fields that amplify  a signal and potentially  interact  with weaker 
@@ -9278,12 +9075,11 @@ Let’s put aside multicellular or ganisms with their nervous  systems and
 think about protists  such as paramecium,  which also generate  electrical 
 fields  on  their  mitochondrial  membranes.  Just  watch  their  amazing 
 behaviour  under the microscope,  the way they move around,  explore,
---- END PAGE 216 ---
+--- END PAGE 215 ---
 
 
 
---- PAGE 217 ---
-216 
+--- PAGE 216 ---
 graze,  give  chase  or  flee  from  predators,  struggle  for  their  lives,  or 
 regenerate  themselves,  whirring  parts  and  all,  after  some  disastrous 
 encounter .  This  behaviour  is  marvellous  and  sophisticated,  and  takes 
@@ -9324,12 +9120,11 @@ learnt  to  exploit,  called  CRISPR,  which  allow  for  sophisticated  gene
 editing.  If  the  bacterium   (or  indeed  its  ancestors)  has  had  an  earlier 
 exposure  to the virus, it can recognise  the viral DNA and marshal a 
 counterattack,  chopping  up the DNA into bits before the virus can copy
---- END PAGE 217 ---
+--- END PAGE 216 ---
 
 
 
---- PAGE 218 ---
-217 
+--- PAGE 217 ---
 itself.  But the time window  is short.  If there are too many phages,  then 
 there’s only one way out for the bacterium:  die, fast, for the good of its 
 kin.  How does it do this?  It yanks open pores in its cell membrane, 
@@ -9370,12 +9165,11 @@ molecule  of succinate  across the city, twenty  miles away?  In what sense
 are  you  part  of  the  same  entity,  the  same  self?  You  won’t  even  be 
 succinate  for long.  In a tiny fraction  of a second,  you will transform  into 
 malate,  then oxaloacetate,  or perhaps an amino acid or sugar.  You are a
---- END PAGE 218 ---
+--- END PAGE 217 ---
 
 
 
---- PAGE 219 ---
-218 
+--- PAGE 218 ---
 fleeting  moment  in the kaleidoscope  of metabolism,  shape-changing  a 
 billion times a second.  There’s no sense in which information  binds you. 
 Yet you are still part of an entity, a self.  Your flux through  the Krebs 
@@ -9393,12 +9187,11 @@ dancing  electromagnetic  fields, shifting  the mood, the living states of a
 bacterium.  You have just been part of something magic,  the flow of life 
 through  a living cell on this restless  planet of ours, the rush of change 
 that for ges the oneness of self.  You are a moment in a life.
---- END PAGE 219 ---
+--- END PAGE 218 ---
 
 
 
---- PAGE 220 ---
-219 
+--- PAGE 219 ---
 ENVOI 
 ‘Like Most Revelations’ 
 Richard Howard 
@@ -9418,26 +9211,23 @@ it is the movement that negates the form?
 Even though we give (give up) ourselves 
 to this mortal process of continuing, 
 it is the movement that creates the form.
+--- END PAGE 219 ---
+
+
+
+--- PAGE 220 ---
+The forward Kr ebs cycle
 --- END PAGE 220 ---
 
 
 
 --- PAGE 221 ---
-220 
-The forward Kr ebs cycle
+The r everse Kr ebs cycle
 --- END PAGE 221 ---
 
 
 
 --- PAGE 222 ---
-221 
-The r everse Kr ebs cycle
---- END PAGE 222 ---
-
-
-
---- PAGE 223 ---
-222 
 A PPENDIX  1 
 RED PROTEIN MECHANICS 
 The red protein  is ferredoxin,  one of the most ancient  and fundamental 
@@ -9461,12 +9251,11 @@ Let’s think about a specific  example – how acetate  (a C2 molecule)  is
 activated  to react with CO 2 , to form the C3 pyruvate.  In other words,  the 
 ‘R’ depicted  in the example  above corresponds  to a methyl  group (- 
 CH 3 ).  The first step goes like this:
---- END PAGE 223 ---
+--- END PAGE 222 ---
 
 
 
---- PAGE 224 ---
-223 
+--- PAGE 223 ---
 The problem  here is that the carboxylate  group (-COO 
 – 
 ) is not very 
@@ -9494,12 +9283,11 @@ willing to react.  In the final step, the CoA-S
 – 
  can now be substituted for a 
 molecule of CO 2 , giving the C3 pyruvate:
---- END PAGE 224 ---
+--- END PAGE 223 ---
 
 
 
---- PAGE 225 ---
-224 
+--- PAGE 224 ---
 You might still be wondering  what the ferredoxin  is doing here.  It’s 
 adding  on two electrons,  but where did they actually  go?  The easiest way 
 to see this is to think about what happens  when the CoA-S 
@@ -9527,12 +9315,11 @@ bond structure.  But this structure  is under some electrical  strain.  That’s
 because  the  oxygen  atoms  have  a  strong  tendency  to  pull  electrons 
 towards  themsel ves, giving them a slightly  negative  charge (not a full-on 
 electrical  charge), which is symbolised  by the Greek symbol  delta (δ).
---- END PAGE 225 ---
+--- END PAGE 224 ---
 
 
 
---- PAGE 226 ---
-225 
+--- PAGE 225 ---
 Each of the two oxygen  atoms therefore  has a δ 
 − 
 , whereas  the carbon 
@@ -9560,12 +9347,11 @@ instant  that the CoA-S
 exits the stage. 
 There’s only one other thing to notice here.  In the first scheme  above, 
 water is shown  as a product.  Yet that seems to have gone missing  in
---- END PAGE 226 ---
+--- END PAGE 225 ---
 
 
 
---- PAGE 227 ---
-226 
+--- PAGE 226 ---
 action in the various  reaction  steps I’ve depicted  above.  In fact, water is 
 never produced  as a separate  entity.  Look back at that first scheme  – 
 you’ll  see  that  the  oxygen  in  the  water  molecule  comes  from  the 
@@ -9580,12 +9366,11 @@ As happens so often in the chemistry  of life, the water is there alright,
 marked  by the dashed  lines (one of the oxygens  plus two of the protons 
 on the phosphate),  but it’s nowhere  to be seen as an independe nt entity. 
 Biology magics water away .
---- END PAGE 227 ---
+--- END PAGE 226 ---
 
 
 
---- PAGE 228 ---
-227 
+--- PAGE 227 ---
 A PPENDIX  2 
 THE KREBS LINE 
 In  Chapter  3 , we followed  the fate of CO 2  bound  to the surface  of a 
@@ -9614,12 +9399,11 @@ can’t recall where the CO comes  from).  Once again, the acetyl group
 hops across to join the CO (the same Fischer–T ropsch-type  chemistry), 
 this time giving  pyruvate  (or more technically , a pyruvyl  group),  again 
 bound onto the surface of the mineral:
---- END PAGE 228 ---
+--- END PAGE 227 ---
 
 
 
---- PAGE 229 ---
-228 
+--- PAGE 228 ---
 Just in case you don’t recognise  this as pyruvate,  let me draw in the final 
 step again, showing  it being released  as pyruvate,  which  I hope you 
 know and love by now: 
@@ -9637,12 +9421,11 @@ The next few steps build on what we’ve already  seen, but alter the
 pattern  slightly ,  because  pyruvate  possesses  an  extra  double-bonded 
 oxygen  on the first carbon  atom next to the carboxylate  group,  a so- 
 called  ‘alpha  carbon’.  This  arrangeme nt  is  unusually  reactive.  Here’s
---- END PAGE 229 ---
+--- END PAGE 228 ---
 
 
 
---- PAGE 230 ---
-229 
+--- PAGE 229 ---
 why that Mad-Eye  Moody  oxygen is so reactive,  which brings its own 
 inexorable chemistry . 
 Let me explain.  Pyruvate  exists in two states, one being more reactive 
@@ -9664,12 +9447,11 @@ here.  In this case, I’m not going to draw the pyruvate  with its normal
 Cheshire  Cat smile, but in the more conventional  way that emphasises 
 the charge on one of the two oxygens  of the carboxylate  group.  That way 
 you can see it interacting with the surface better:
---- END PAGE 230 ---
+--- END PAGE 229 ---
 
 
 
---- PAGE 231 ---
-230 
+--- PAGE 230 ---
 The curly arrows here depict a proton  acquiring  a pair of electrons  from 
 the  surface;  the  two  electrons  that  formerly  bound  the  hydrogen  to 
 pyruvate  now move to form the double  bond in enol pyruvate,  which is 
@@ -9694,12 +9476,11 @@ means an enol can bind to a mineral surface,  and once bound will be able
 to react with other bound molecules  such as CO, exactly  as we’ve seen 
 before.  Here’s the enol form of pyruvate binding  to a surface  and then 
 reacting with CO to form the C4 oxaloacetate:
---- END PAGE 231 ---
+--- END PAGE 230 ---
 
 
 
---- PAGE 232 ---
-231 
+--- PAGE 231 ---
 Notice  that I’m drawing  the carboxylate  group with its negative  charge 
 in  the  conventional  way  again  here,  to  emphasise  its  electrical 
 interactions  with  the  charged  surface.  I’ll  use  these  styles 
@@ -9718,12 +9499,11 @@ of  electrons  transfers  from  the  surface  onto  the  alpha  carbon  of
 oxaloacetate, allowing the oxygen to wrest its electrons from the carbon: 
 Remember  that we’re in a mildly  acidic environment,  where protons  are 
 plentiful.  I’m not showing  their movements  any more, but recall that two
---- END PAGE 232 ---
+--- END PAGE 231 ---
 
 
 
---- PAGE 233 ---
-232 
+--- PAGE 232 ---
 electrons  plus  two  protons  equates  to  the  addition  of  two  hydrogen 
 atoms,  one onto the alpha carbon  and the other onto the oxygen,  giving 
 the C4 malate (right-hand side). 
@@ -9756,12 +9536,11 @@ but the first few steps are exactly  as predicted  from first principl es, based
 on the known  reactivity  of carboxylic  acids, the known  behaviour  of 
 mineral  surfaces,  and  at  last,  the  results  of  some  revolutionary 
 experiments.
---- END PAGE 233 ---
+--- END PAGE 232 ---
 
 
 
---- PAGE 234 ---
-233 
+--- PAGE 233 ---
 ABBREVIA TIONS 
 2H  Two hydrogen  atoms (two electrons  plus two protons).  Can be extracted from 
 anywhere in a molecule and transferred onto another molecule. 
@@ -9804,12 +9583,11 @@ classic is the  4Fe4S  cluster.
 GSH  Glutathione.  GSH is the reduced  form (containing  H) and  GSSG  is the 
 oxidised  form  (where  an  H  has  been  extracted  from  each  of  two  GSH 
 molecules).  An important cellular antioxidant.
---- END PAGE 234 ---
+--- END PAGE 233 ---
 
 
 
---- PAGE 235 ---
-234 
+--- PAGE 234 ---
 GWAS  Genome-wide  association  studies.  Statistical  studies  that correlate  single- 
 letter dif ferences in DNA across whole genomes with the risk of diseases. 
 H 
@@ -9865,21 +9643,19 @@ oxygen  grabs single electrons  from FeS clusters  in the respiratory  chain to 
 -SH  A thiol, containing  a sulfur joined to a hydrogen,  which is quite reactive. 
 Found  in coenzyme  A, the amino acid cysteine  (and so many proteins) and the 
 antioxidant glutathione.
+--- END PAGE 234 ---
+
+
+
+--- PAGE 235 ---
+SNP   Single-nucleotid e  polymorphism  (pronounced  ‘snip’).  A  single-letter 
+change  in  DNA,  which  can  differ  between  individuals.  We  have  millions  of 
+SNPs, making us genetically dif ferent to each other .
 --- END PAGE 235 ---
 
 
 
 --- PAGE 236 ---
-235 
-SNP   Single-nucleotid e  polymorphism  (pronounced  ‘snip’).  A  single-letter 
-change  in  DNA,  which  can  differ  between  individuals.  We  have  millions  of 
-SNPs, making us genetically dif ferent to each other .
---- END PAGE 236 ---
-
-
-
---- PAGE 237 ---
-236 
 FURTHER READING 
 This is not a textbook or research  paper, so is not referenced  in a comprehensive 
 way.  But if you’ve  read this far, you will have become  deeply  embroiled  in the 
@@ -9915,12 +9691,11 @@ published scientific journal.  Includes a light-touch historical overview .
 The paradox of information in biology 
 Paul Davies,  The Demon in the Machine:  How Hidden  Webs of Information  are 
 Finally  Solving  the  Mystery  of  Life   (London,  Penguin,  2019).  An  eloquent
---- END PAGE 237 ---
+--- END PAGE 236 ---
 
 
 
---- PAGE 238 ---
-237 
+--- PAGE 237 ---
 manifesto  for reconceiving  the role that information  plays in life and its origin, 
 by a leading physicist  and thinker  who has long considered  the makeup of life. 
 Not  surprisingly ,  I  don’t  agree  with  all  he  writes,  but  I  notice  we  are  both 
@@ -9960,12 +9735,11 @@ brought  to an end the classical  era of microbiology , ceding  precedence  to t
 power of genetic  information.  Ironically , the scrambling  power  of lateral  gene 
 transfer  has  refocused  attention  on  physiology  as  an  organising  principle  in 
 bacterial evolution.
---- END PAGE 238 ---
+--- END PAGE 237 ---
 
 
 
---- PAGE 239 ---
-238 
+--- PAGE 238 ---
 The digital jungle 
 Horace  Freeland  Judson,  The Eighth Day of Creation.  Makers  of the Revolution 
 in  Biology ,  25th  Anniversary  Edition  (Cold  Spring  Harbor  Laboratory  Press, 
@@ -10004,12 +9778,11 @@ larger group; as close to the  paradigm  of molecular  medicine  as it possible 
 Deep unity of biochemistry – the conserved city-centr e plan 
 E.  Smith  and  H.  J.  Morowitz,  ‘Universality  in  intermediary  metabolism’, 
 Proceedings of the National Academy of Sciences USA  101 (2004) 13168–13173.
---- END PAGE 239 ---
+--- END PAGE 238 ---
 
 
 
---- PAGE 240 ---
-239 
+--- PAGE 239 ---
 Smith and Morowitz  take the case for the unity of biochemistry  right back to the 
 origin of life. 
 W.  Martin  and  M.  J.  Russell,  ‘On  the  origin  of  biochemistry  at  an  alkaline 
@@ -10048,12 +9821,11 @@ Chapter 1: Discovering the nanocosm
 Hopkins’ s biochemistry lab 
 F.  Gowland  Hopkins,  ‘Atomic  physics and vital activities’,  Nature  130 (1932) 
 869–871.  The  text  of  Gowland  Hopkins’ s  anniversary  address  to  the  Royal
---- END PAGE 240 ---
+--- END PAGE 239 ---
 
 
 
---- PAGE 241 ---
-240 
+--- PAGE 240 ---
 Society in 1932. 
 H.  H.  Dale, ‘Frederick  Gowland  Hopkins  1861–1947’,  Obituary  Notices  Fellows 
 Royal Society  6 (1948) 1 15–145.  An affectionate  biography  from Sir Henry Dale, 
@@ -10093,12 +9865,11 @@ P.  Oesper, ‘The history  of the Warburg apparatus.  Some reminiscences  on it
 use’,  Journal  of Chemical  Education  41 (1964)  294–296.  An enjoyably  breezy 
 short history  that explains  how Warburg’s name came to be associated  with an 
 instrument invented by T .  G.  Brodie and others.
---- END PAGE 241 ---
+--- END PAGE 240 ---
 
 
 
---- PAGE 242 ---
-241 
+--- PAGE 241 ---
 H.  Krebs,  ‘Otto Heinrich  Warburg.  1883–1970’,  Biographical  Memoirs  Fellows 
 of the Royal Society  18 (1972)  628–699.  Krebs’s generous  tribute to his scientific 
 mentor;  even Krebs was unable  to present  Warburg in a wholly  positive  light, 
@@ -10138,12 +9909,11 @@ H.  A.  Krebs,  ‘The intermediate metabolism  of carbohydrates’,  Lancet  23
 aimed at medics. 
 Frederic  L.  Holmes,  Hans Krebs: The Formation  of a Scientific  Life 1900–1933 . 
 Volume  1  (Oxford,  Oxford  University  Press,  1991).  A  monumental  tome  of
---- END PAGE 242 ---
+--- END PAGE 241 ---
 
 
 
---- PAGE 243 ---
-242 
+--- PAGE 242 ---
 extraordinary  scholarship,  drawing  on Krebs’s lab books in detail, with all their 
 exclamation  marks.  This volume deals with Krebs’s earlier years, leading  up to 
 the urea cycle. 
@@ -10183,12 +9953,11 @@ system is essential at the very start of life.’  Plus ça change.
 W.  P.  Jenks and R.  V.  Wolfenden,  ‘Fritz Albert Lipmann’,  Biographical  Memoirs 
 88 (2006)  246–266.  The US National  Academy  of Sciences  equivalent  to the 
 Royal Society  Memoirs .  Features  the memorable  closing  line that Lipmann  died
---- END PAGE 243 ---
+--- END PAGE 242 ---
 
 
 
---- PAGE 244 ---
-243 
+--- PAGE 243 ---
 ‘at the age of eighty-seven,  not long after having  learned  that his latest grant 
 application had been successful’.  Here at least, times have changed. 
 Peter Mitchell and chemiosmotic coupling 
@@ -10229,12 +9998,11 @@ by  Mitchell  and  Moyle  in  Nature   in  the  mid-1960 s,  less  heavily  cite
 Mitchell’ s original  paper on  chemiosmotic  coupling or his ‘little grey books’,  but 
 to my mind Moyle’s vital experimental  contribution  has not been sufficiently 
 recognised.
---- END PAGE 244 ---
+--- END PAGE 243 ---
 
 
 
---- PAGE 245 ---
-244 
+--- PAGE 244 ---
 P.  D.  Mitchell  and J.  Moyle,  ‘Evidence  discriminating  between  the chemical  and 
 the  chemiosmotic   mechanisms  of  electron  transport  phosphorylation ’,  Nature 
 208 (1965) 1205–1206.  A shorter  paper, again presenting  experimental  evidence 
@@ -10273,12 +10041,11 @@ University Press, 2021), a unique distillation from a remarkable nonagenarian.
 Evolution of the Kr ebs cycle 
 J.  E.  Baldwin  and H.  A.  Krebs,  ‘The evolution  of metabolic  cycles’,  Nature  291 
 (1981)  381–382.  An influential paper that stands out in my mind for not even
---- END PAGE 245 ---
+--- END PAGE 244 ---
 
 
 
---- PAGE 246 ---
-245 
+--- PAGE 245 ---
 mentioning  the reverse  Krebs cycle – which had been proposed  fifteen  years 
 earlier.  How blind are even the finest scientists. 
 H.  A.  Krebs and H.  L.  Kornber g,  Energy Transform ations  in Living  Matter:  A 
@@ -10317,12 +10084,11 @@ Lawrence and the Rad Lab
 Martin  D.  Kamen,  Radiant  Science,  Dark Politics.  A Memoi r of the Nuclear  Age 
 (Berkeley , University of California  Press, 1985).  A remarkable and absorbing 
 scientific  biography ,  with  many  memorable  character  portraits  of  the  leading
---- END PAGE 246 ---
+--- END PAGE 245 ---
 
 
 
---- PAGE 247 ---
-246 
+--- PAGE 246 ---
 physicists  and chemists  of the day, set in times of heightened  politics  and war.  A 
 unique record. 
 Oliver Morton,  Eating  the Sun: How Plants  Power the Planet  (London,  Fourth 
@@ -10364,12 +10130,11 @@ A.  A.  Benson,  ‘Followin g the path of carbon  in photosynthesis:  a persona
 Photosynthesis Resear ch  73 (2002)  29–49.  Benson  said little about his time with 
 Calvin  until decades  later, when he finally  broke his silence.  One senses he was 
 trying hard not to be bitter .
---- END PAGE 247 ---
+--- END PAGE 246 ---
 
 
 
---- PAGE 248 ---
-247 
+--- PAGE 247 ---
 A.  A.  Benson,  ‘Last  days  in  the  old  radiation  laboratory  (ORL),  Berkeley, 
 California,  1954’,  Photosynthesis  Resear ch   105  (2010)  209–212.  More 
 fascinating reminiscences from Andrew Benson. 
@@ -10408,12 +10173,11 @@ B.  B.  Buchanan,  R.  Sirevåg,  G.  Fuchs,  R.  N.  Ivanovsky , Y.  Igarashi, 
 R.  Tabita and I.  A.  Berg, ‘The Arnon–Buchanan  cycle: a retrospective,  1966– 
 2016’,  Photosynthesis Resear ch  134 (2017)  117–131.  A fascinating  compendium 
 of recollections  from the main protagonists  of the reverse  Krebs cycle, fifty years
---- END PAGE 248 ---
+--- END PAGE 247 ---
 
 
 
---- PAGE 249 ---
-248 
+--- PAGE 248 ---
 after it was first proposed  – by which time it is at last undisputed,  if not widely 
 known. 
 B.  B.  Buchanan,  ‘Daniel  I.  Arnon.  November  14, 1910–December  20, 1994’, 
@@ -10454,12 +10218,11 @@ when oxygen is present.
 Widespread reverse Kr ebs cycle 
 A.  Mall, J.  Sobotta,  C.  Huber  et al ., ‘Reversibility  of citrate  synthase  allows 
 autotrophic  growth of a thermophili c bacterium’,  Science  359 (2018) 563–567.  A
---- END PAGE 249 ---
+--- END PAGE 248 ---
 
 
 
---- PAGE 250 ---
-249 
+--- PAGE 249 ---
 seminal  discovery , that the canonical  ATP citrate lyase is not necessary  for the 
 reverse  Krebs cycle; the standard  enzyme  citrate synthase  is reversible  after all. 
 So do dogmas fall. 
@@ -10498,12 +10261,11 @@ W.  Martin,  J.  Baross,  D.  Kelley  and M.  J.  Russell,  ‘Hydrothermal  ven
 origin  of  life’,  Nature  Reviews  Microbiology   6  (2008)  805–814.  A  good 
 overview  of the different types of vent system  and their roles at the origin of life, 
 from two distinguished  marine  biologists, John Baross  and Deb Kelley, who had
---- END PAGE 250 ---
+--- END PAGE 249 ---
 
 
 
---- PAGE 251 ---
-250 
+--- PAGE 250 ---
 each  discovered  new  vent  systems,  alongside  Bill  Martin  and  Mike  Russell, 
 leading protagonists of how life might have started in such systems. 
 N.  H.  Sleep, D.  K.  Bird and E.  C.  Pope, ‘Serpentinite  and the dawn of life’, 
@@ -10543,12 +10305,11 @@ Krebs cycle.
 W.  Martin  and  M.  J.  Russell,  ‘On  the  origins  of  cells:  a  hypothesis  for  the 
 evolutionary  transitions  from  abiotic  geochemistry  to  chemoautotrophic 
 prokaryotes,  and  from  prokary otes  to  nucleated  cells’,  Philosophical
---- END PAGE 251 ---
+--- END PAGE 250 ---
 
 
 
---- PAGE 252 ---
-251 
+--- PAGE 251 ---
 Transactions  of the Royal Society  B  358 (2003)  59–85.  An all-time  classic  paper, 
 the kind of paper that draws young minds not just into the field but into science. 
 J.  Whitfield,  ‘Origin  of life: nascence  man’,  Nature  459 (2009)  316–319.  Rarely 
@@ -10588,12 +10349,11 @@ National  Academy  of Sciences  USA  109 (2012)  E821–830.  Armen  Mulkidjania
 is a distinguished  bioener geticist  who has had some strikingly  original ideas on 
 the origin of life involving  an unusual  form of ‘zinc sulfide  photosynthesis’  that 
 would have had to take place in high-pressure  atmospheres.  Here he teams up
---- END PAGE 252 ---
+--- END PAGE 251 ---
 
 
 
---- PAGE 253 ---
-252 
+--- PAGE 252 ---
 with some leading  phylogeneticists  including  the brilliant  and prolific  Eugene 
 Koonin.  I am unpersuaded, but Mulkidjanian’ s papers are always worth reading. 
 J.  D.  Sutherland,  ‘Studies on the origin of life: the end of the  beginning’,  Nature 
@@ -10635,12 +10395,11 @@ S.  J.  Varma, K.  B.  Muchowska,  P.  Chatelain  and J.  Moran,  ‘Native  iro
 CO 2   to  intermediates  and  end-produc ts  of  the  acetyl-CoA  pathway’,  Nature 
 Ecology  and Evolution  2 (2018)  1019–1024.  Joseph  Moran’ s group is unusual  in 
 that they trained  as synthetic  chemists,  yet are thinking  from a biochemical  point
---- END PAGE 253 ---
+--- END PAGE 252 ---
 
 
 
---- PAGE 254 ---
-253 
+--- PAGE 253 ---
 of view, looking  for similar  chemistry  to that still happening  in cells.  This is an 
 exciting  paper which links up with their own earlier work, showing  that various 
 intermediates  in the acetyl CoA pathway  as well as the reverse  Krebs cycle are 
@@ -10681,12 +10440,11 @@ advance  a striking  portrait  of the physiology  of LUCA  – as a population  
 simple  cells subsisting in vents in the neverland  between  the abiotic  and biotic. 
 While some details have been decried, the paper reinforces  the idea that LUCA 
 lived from H 2  and CO 2  using proton gradients and iron–sulfur proteins.
---- END PAGE 254 ---
+--- END PAGE 253 ---
 
 
 
---- PAGE 255 ---
-254 
+--- PAGE 254 ---
 R.  Braakman  and E.  Smith,  ‘The emergence and early evolution  of biological 
 carbon fixation’,  PLoS Computational Biology  8 (2012)  e1002455.  An extremely 
 neat  idea,  which  attempts  to  unite  phylogenetic  analysis  with  metabolic  flux 
@@ -10725,12 +10483,11 @@ Eric Smith and Harold  J.  Morowitz,  The Origin  and Nature of Life on Earth:  
 Emergence  of the Fourth  Geospher e  (Cambridge,  Cambridge  University  Press, 
 2016).  A magisterial  volume,  and  fitting final testament  of Morowitz,  written 
 with his long-term  collaborator , the equally  brilliant  Eric Smith.  Deserves  a place
---- END PAGE 255 ---
+--- END PAGE 254 ---
 
 
 
---- PAGE 256 ---
-255 
+--- PAGE 255 ---
 on the shelf of anyone  seriously  interested  in the origin of life.  Manages  to 
 present new ideas with admirable clarity , while being balanced and exhaustive. 
 J.  Trefil, H.  J.  Morowitz  and E.  Smith,  ‘The origin of life.  A case is made for the 
@@ -10769,12 +10526,11 @@ R.  K.  Thauer,  A.-K.  Kaster,  H.  Seedorf,  W.  Buckel  and  R.  Hedderich,
 conservation’,  Nature Reviews  Microbiology  6 (2008)  579–591.  A treasure-trove 
 of data and mechanisms  on the energetics of making  a living at the margins of 
 the thermodynamically permissible.
---- END PAGE 256 ---
+--- END PAGE 255 ---
 
 
 
---- PAGE 257 ---
-256 
+--- PAGE 256 ---
 V.  Sojo, B.  Herschy , A.  Whicher , E.  Camprubi  and N.  Lane, ‘The origin of life in 
 alkaline  hydrothermal  vents’,  Astrobiology  16 (2016)  181–197.  Our own attempt 
 to reconcile  the origins of life in alkaline  hydrothermal  vents with the divergence 
@@ -10813,12 +10569,11 @@ Interface  Focus   9  (2019)  20190073.  A  detailed  theoretical  paper  with  
 experimental  results,  showing  that protons  can cross iron–sulfur  barriers  two 
 million  times faster than hydroxide  ions going the other way, giving rise to very 
 steep pH gradients (as much as 3 or 4 pH units across single nanocrystals).
---- END PAGE 257 ---
+--- END PAGE 256 ---
 
 
 
---- PAGE 258 ---
-257 
+--- PAGE 257 ---
 R.  Hudson,  R.  de Graaf, M.  S.  Rodin,  A.  Ohno, N.  Lane, S.  E.  McGlynn,  Y.  M. 
 A.  Yamada,  R.  Nakamura,  L.  M.  Barge, D.  Braun and V.  Sojo, ‘CO 2  reduction 
 driven by a pH gradient’,  Proceedings  of the National  Academ y of Sciences  USA 
@@ -10859,12 +10614,11 @@ show that positive  feedbacks  between  organic molecules  (fatty acids and amin
 acids) and iron–su lfur clusters  drive a form of membrane  heredity  that makes it 
 possible  for protocells  to get better at copying  themselves.  The basis for much of 
 our own current thinking on the origins of the genetic code.
---- END PAGE 258 ---
+--- END PAGE 257 ---
 
 
 
---- PAGE 259 ---
-258 
+--- PAGE 258 ---
 R.  Nunes  Palmeira,  M.  Colnaghi,  S.  Harrison,  A.  Pomiankowski  and N.  Lane, 
 ‘The  limits  of  metabolic  heredity  in  protocells’,  available  on  BioRxiv 
 ( https://doi.or g/10.1101/2022.01.28.477904 ).  More  on  positive  feedbacks  and 
@@ -10903,12 +10657,11 @@ Stephen Jay Gould,  Wonderful  Life: The Burgess Shale and the History  of Natur
 (New  York,  W.  W.  Norton,  1989).  A  heady  book  that  must  have  drawn  a 
 generation  of young minds into palaeontology .  But it has not weathered  so well, 
 and pushes its central thesis a little too far .
---- END PAGE 259 ---
+--- END PAGE 258 ---
 
 
 
---- PAGE 260 ---
-259 
+--- PAGE 259 ---
 Daniel  C.  Dennett,  Darwin’ s Danger ous Idea: Evolution  and the Meanings  of 
 Life  (New York, Simon  & Schuster , 1995).  I never appreciate d what a razor- 
 sharp philosophical  mind could do to scientific  arguments  until I read this book, 
@@ -10949,12 +10702,11 @@ Geobiology  7 (2009)  1–7.  Quite a diatribe  against  the lazy ascription  of
 environmental change to the simple gas oxygen.  A valuable corrective. 
 O.  Judson,  ‘The energy expansions  of evolution’,  Nature Ecology  and Evolution 
 1 (2017)  0138.  A sweeping take from Olivia  Judson on how a succession  of
---- END PAGE 260 ---
+--- END PAGE 259 ---
 
 
 
---- PAGE 261 ---
-260 
+--- PAGE 260 ---
 energy revolutions  transformed  the potential  of life on Earth, from the origins  of 
 life to photosynthesis, oxygen and fire. 
 Electron bifur cation 
@@ -10996,12 +10748,11 @@ Journal  of Theoretical Biology  434 (2017)  58–67.  My own appraisal  of Lynn
 Margulis’s contribution  to cell evolution,  written  for a special  fiftieth  anniversary 
 issue of the journal in which she published  her classic  1967 paper on the origin 
 of eukaryotes.  An honour to contribute.
---- END PAGE 261 ---
+--- END PAGE 260 ---
 
 
 
---- PAGE 262 ---
-261 
+--- PAGE 261 ---
 Bacterial metabolism and syntr ophy 
 P.  Schönheit,  W.  Buckel  and  W.  F.  Martin,  ‘On  the  origin  of  heterotrophy’, 
 Trends in Micr obiology  24 (2016) 12–25.  An important  paper, which is so clearly 
@@ -11042,12 +10793,11 @@ Tim  Lenton  and  Andrew  Watson,  Revolutions  that  Made  the  Earth   (Oxford
 Oxford University Press, 2013).  A detailed  overview  of how the Earth system  (or 
 Gaia) can flip from one stable state to another  as conditions  change,  sometimes 
 abruptly .  The  intellectual  son  and  grandson  of  James  Lovelock  (using  PhD
---- END PAGE 262 ---
+--- END PAGE 261 ---
 
 
 
---- PAGE 263 ---
-262 
+--- PAGE 262 ---
 mentorship  as academic  lineage),  Lenton  and Watson know exactly  whereof  they 
 speak. 
 H.  C.  Betts, M.  N.  Puttick, J.  W.  Clark, T.  A.  Williams,  P.  C.  J.  Donoghue  and D. 
@@ -11088,12 +10838,11 @@ G.  Shields-Zhou  and L.  Och, ‘The case for a Neoproterozoic  oxygenation  ev
 geochemical  evidence  and biologica l consequences’,  GSA Today  21 (2011) 4–11. 
 A marshalling of the evidence  that the rise in oxygen  in the late Neoproterozoic 
 was linked to the Cambrian explosion.  Not a straightforward case!
---- END PAGE 263 ---
+--- END PAGE 262 ---
 
 
 
---- PAGE 264 ---
-263 
+--- PAGE 263 ---
 Active ventilation in animals 
 A.  H.  Knoll, R.  K.  Bambach,  D.  E.  Canfield  and J.  P.  Grotzinger , ‘Comparative 
 earth history and late Permian  mass extinction’,  Science  273: 452–457  (1996).  A 
@@ -11133,12 +10882,11 @@ read this paper after finishing  the book and would have said more about it if h
 I spotted  it earlier.  Argues that Krebs-cycle  intermedi ates were critical  to the 
 cross-talk  between  the host cells and endosymbionts  (proto-mitochondria)  that 
 gave rise to eukaryotic cells with lar ge, complex genomes.  They have to be right.
---- END PAGE 264 ---
+--- END PAGE 263 ---
 
 
 
---- PAGE 265 ---
-264 
+--- PAGE 264 ---
 L.  J.  Sweetlove,  K.  F.  Beard,  A.  Nunes-Nesi,  A.  R.  Fernie  and R.  G.  Ratcliffe, 
 ‘Not just a circle: flux modes  in the plant TCA cycle’,  Trends in Plant Sciences 
 15 (2010) 462–470.  A lovely analysis of dif ferent types of flux through the Krebs 
@@ -11178,12 +10926,11 @@ P.  Rous, ‘Surmise  and fact on the nature of cancer’,  Nature  183 (1959)  
 the same year that Rous received  the Nobel prize for his work on viruses as a 
 cause of cancer, and with a similar anger (but a completely  different view) to 
 Warburg’s papers.  Much has changed  since then, of course,  but his closing  line
---- END PAGE 265 ---
+--- END PAGE 264 ---
 
 
 
---- PAGE 266 ---
-265 
+--- PAGE 265 ---
 still bites: ‘Most serious  of all the results of the somatic  mutation  hypothesis  has 
 been its effect on research  workers.  It acts as a tranquillizer  on those who believe 
 in it, and this at a time when every worker  should  feel goaded  now and again by 
@@ -11223,12 +10970,11 @@ accomplishments,  while finding  kind words to allay Warburg’s less appealing
 side. 
 A.  M.  Otto, ‘Warburg effect(s)—a  biograp hical sketch  of Otto Warburg and his 
 impacts  on tumor metabolism’,  Cancer  & Metabolism  4 (2016)  5.  A lively and
---- END PAGE 266 ---
+--- END PAGE 265 ---
 
 
 
---- PAGE 267 ---
-266 
+--- PAGE 266 ---
 insightful piece that captures a lot of W arburg’s thinking that remains relevant for 
 a modern audience interested in cancer . 
 Martin  D.  Kamen,  Radiant  Science,  Dark Politics.  A Memoi r of the Nuclear  Age 
@@ -11269,12 +11015,11 @@ in cancer cells, which became  the basis for his work on cancer over the followi
 decades. 
 O.  Warburg, ‘On the origin of cancer  cells’,  Science  123 (1956)  309–314.  A 
 searing  piece that I quote from in some detail in my chapter.  Worth taking a look
---- END PAGE 267 ---
+--- END PAGE 266 ---
 
 
 
---- PAGE 268 ---
-267 
+--- PAGE 267 ---
 at the original for the full context. 
 Otto Heinrich Warburg,  The Prime  Cause  and Prevention  of Cancer  (Würzbur g, 
 Konrad  Triltsch,  1969).  A famous  manifesto,  following  on where his  Science 
@@ -11313,12 +11058,11 @@ chapter , in part because  I discussed  his ideas at some length  in  Chapter  6
 hardly need to say that he was one of the strongest  voices calling  attention to the 
 critical role of mitochondria in cancer . 
 An ancient switch
---- END PAGE 268 ---
+--- END PAGE 267 ---
 
 
 
---- PAGE 269 ---
-268 
+--- PAGE 268 ---
 P.  W.  Hochachka and K.  B.  Storey, ‘Metabolic  consequences  of diving in animals 
 and  man’,  Science   187  (1975)  613–621.  How  diving  animals  survive  long 
 periods  without  oxygen  – calling  attention  to  the importance  of fumarate  and 
@@ -11359,12 +11103,11 @@ Glutamine in cancer
 H.  Eagle,  ‘Nutrition  needs of mammalian  cells in tissue culture’,  Science  122 
 (1955)  501–514.  One of the first papers  to point to the addiction  of cancer  cells 
 to glutamine,  in this case in HeLa cells.  On that count, I feel obliged  to point you
---- END PAGE 269 ---
+--- END PAGE 268 ---
 
 
 
---- PAGE 270 ---
-269 
+--- PAGE 269 ---
 to an important  book by Rebecca  Skloot,  The Immortal  Life of Henrietta  Lacks 
 (Pan,  2011),  after  whom  HeLa  cells  were  named,  which  calls  attention  to  a 
 historical wrong. 
@@ -11405,12 +11148,11 @@ NAD- and NADP-linked  isocitrate  dehydrogenases  operate  in a substrate  cycle
 which contributes  to fine regulation  of the tricarboxylic  acid cycle activity  in 
 mitochondria’,  FEBS Letters  344 (1994)  109–116.  A lovely paper showing  how 
 the Krebs cycle can be turbochar ged.
---- END PAGE 270 ---
+--- END PAGE 269 ---
 
 
 
---- PAGE 271 ---
-270 
+--- PAGE 270 ---
 M.  Wagner, E.  Bertero,  A.  Nickel,  M.  Kohlhaas,  G.  E.  Gibson,  W.  Heggermont, 
 S.  Heymans  and  C.  Maack,  ‘Selective  NADH  communication  from  α- 
 ketoglutarate  dehydrogenase  to  mitochondrial  transhydrogenase  prevents 
@@ -11467,12 +11209,11 @@ inputs to the respiratory  chain in this book.  If you want diagrams, check out 
 paper. 
 Erich  Gnaiger ,  Mitochondrial  Pathways  and  Respiratory  Control.  An 
 Introduction  to OXPHOS  Analysis  (Innsbruck,  Bioener getics Communications,
---- END PAGE 271 ---
+--- END PAGE 270 ---
 
 
 
---- PAGE 272 ---
-271 
+--- PAGE 271 ---
 2020).  Available  here: https://doi:10.26124 /bec:2020-0002.  The ‘bible’ of fluo- 
 respirometry ,  privately  published  by  Erich  Gnaiger  in  the  tradition  of  Peter 
 Mitchell’ s ‘little grey books’;  this is the little blue book.  Gives practical  insights 
@@ -11510,12 +11251,11 @@ Williams  independently  put  forward  a  similar  view  of  ageing  to  Medawar
 known  forbiddingly  as  antagonistic  pleiotropy  (meaning  that  genes  can  have 
 positive  benefits  in youth that outweigh  disadvantages  with older age).  While 
 this book does not focus on ageing it is one of the finest and most influential
---- END PAGE 272 ---
+--- END PAGE 271 ---
 
 
 
---- PAGE 273 ---
-272 
+--- PAGE 272 ---
 pieces of evolutionary  thinking  of the twentieth  century , and should  be read by 
 all. 
 André Klarsfeld  and Frédéric  Revah,  The Biology  of Death:  Origins  of Mortality 
@@ -11553,12 +11293,11 @@ Doug W allace and advances in mitochondrial r esearch
 D.  C.  Wallace,  Y.  Pollack,  C.  L.  Bunn  and  J.  M.  Eisenstadt,  ‘Cytoplasmic 
 inheritance  in mammalian  tissue culture cells’,  In Vitro  12 (1976)  758–776.  The 
 paper from Doug W allace’s PhD thesis on cybrids treated with antibiotics.
---- END PAGE 273 ---
+--- END PAGE 272 ---
 
 
 
---- PAGE 274 ---
-273 
+--- PAGE 273 ---
 R.  E .  Giles, H.  Blanc, H.  M.  Cann and D.  C.  Wallace,  ‘Materna l inheritance  of 
 human  mitochondrial  DNA’,  Proceedings  of the National  Academy of Sciences 
 USA  77 (1980)  6715–671.  The first demonst ration that mitochondrial  DNA is 
@@ -11599,12 +11338,11 @@ the female germline  can be  understood  in terms of selection  against  detrime
 mutations in mitochondrial DNA. 
 D.  C.  Wallace, ‘Mitochondria  as chi’,  Genetics  179 (2008)  727–735.  Pushing  the 
 boundaries  of Western medicine,  with its twin pillars grounded  in the work of
---- END PAGE 274 ---
+--- END PAGE 273 ---
 
 
 
---- PAGE 275 ---
-274 
+--- PAGE 274 ---
 Vesalius  and Mendel.  An important  synthesis;  should  be required  reading  for 
 medical students. 
 Mitochondria in flies 
@@ -11643,12 +11381,11 @@ E.  Rodríguez,  F.  Grover  Thomas,  M.  F.  Camus  and  N.  Lane,  ‘Mito-nuc
 interactions  produce  diverging responses  to mild stress in  Drosophila  larvae’, 
 Frontiers  in Genetics  12 (2021)  734255.  Larvae  just eat and grow, placing  the 
 mitochondria  under different stress compared  with adult flies.  Giving  them the
---- END PAGE 275 ---
+--- END PAGE 274 ---
 
 
 
---- PAGE 276 ---
-275 
+--- PAGE 275 ---
 antioxidant  NAC caused  problems  in some lines but not others,  depending  on the 
 mitochondrial DNA. 
 M.  F.  Camus,  W.  Kotiadis,  H.  Carter, E.  Rodriguez  and N.  Lane, ‘Mitonuclear 
@@ -11688,12 +11425,11 @@ Cities  and  Companies   (London,  Weidenfeld  &  Nicolso n,  2017).  West  is  
 physicist  who has published  revolutionary  papers  on fractal  scaling,  with Brian 
 Enquist  and James Brown,  which I’m not citing individually  here.  There  are 
 plenty of objections,  but the ideas are stimulating.  Here, West develops  them at
---- END PAGE 276 ---
+--- END PAGE 275 ---
 
 
 
---- PAGE 277 ---
-276 
+--- PAGE 276 ---
 book length,  drawing  parallels  with companies  and cities that I haven’t seen 
 anyone do since the great polymath J.  B.  S.  Haldane. 
 Antioxidants don’ t work 
@@ -11734,12 +11470,11 @@ theory’.  According  to this theory there is no program  ‘for ageing’;  ra
 results  from the overrun  of other developmental  programs  that selection is too 
 weak, at older age, to shut down.  I explain the same observations  in terms of 
 respiratory suppression producing a shift in metabolic flux and epigenetic state.
---- END PAGE 277 ---
+--- END PAGE 276 ---
 
 
 
---- PAGE 278 ---
-277 
+--- PAGE 277 ---
 D.  Gems,  ‘The  aging–disease  false  dichotomy:  understanding  senescence  as 
 pathology’,  Frontiers  in Genetics  6 (2015)  12.  David Gems rails against  the idea 
 that ageing is somehow  normal  and ‘healthy’,  whereas  disease  is pathological. 
@@ -11778,12 +11513,11 @@ need to mind my diet.
 P.  I.  Moreira, ‘Sweet mitochondria: a shortcut to Alzheimer ’s disease’,  Journal of 
 Alzheimer ’s Disease  62 (2018)  1391–1401.  Never was there a more sinister  use 
 of  the  term  ‘sweet  mitochondria’  (the  term  ‘diabetes  mellitus’  means  sweet
---- END PAGE 278 ---
+--- END PAGE 277 ---
 
 
 
---- PAGE 279 ---
-278 
+--- PAGE 278 ---
 urine).  Paula  Moreira  discusses  how  diabetes-linked  defects  in  mitochondria 
 increase the risk of Alzheimer ’s disease. 
 D.  A.  Butterfield  and  B.  Halliwell,  ‘Oxidative  stress,  dysfunctional  glucose 
@@ -11822,12 +11556,11 @@ calculations  on the number  of metabolic reactions  per second  in cells.  They
 calculate  this particular  parameter , but they calculate  many other amazing  things 
 that you really should know about. 
 Epilogue: Self
---- END PAGE 279 ---
+--- END PAGE 278 ---
 
 
 
---- PAGE 280 ---
-279 
+--- PAGE 279 ---
 Anaesthetics and mitochondria 
 L.  Turin, E.  M.  C.  Skoulakis  and A.  P.  Horsfield,  ‘Electron  spin changes  during 
 general  anesthesia  in  Drosophila ’,  Proceedings  of  the  National  Academy  of 
@@ -11868,12 +11601,11 @@ mitochondrial membranes  generate  the EEG.
 Electrical fields in development 
 M.  Levin and C.  J.  Martyniuk,  ‘The bioelectric  code: an ancient  computational 
 medium  for dynamic  control  of growth  and form’,  Biosystems  164 (2018) 76–93.
---- END PAGE 280 ---
+--- END PAGE 279 ---
 
 
 
---- PAGE 281 ---
-280 
+--- PAGE 280 ---
 Michael  Levin is currently  doing some of the most exciting  work in biology . 
 Electrical  fields determine  developm ent; genes are secondary .  So far that mostly 
 goes for flat-worms, but could it be more general?  I think so. 
@@ -11915,12 +11647,11 @@ considerations  from physics  and physiology’,  Journal  of Consciousness  Stu
 Friston,  whose concept of free energy in this context  is sometimes  called ‘Friston 
 free energy’ to distinguish  it from more conventional  usage.  This formal  paper 
 summarises their ideas.
---- END PAGE 281 ---
+--- END PAGE 280 ---
 
 
 
---- PAGE 282 ---
-281 
+--- PAGE 281 ---
 J.  McFadden,  ‘Integrating  information  in the brain’s EM field: the cemi field 
 theory  of conscio usness’,  Neuroscience  of Consciousness  2020 (2020)  niaa016. 
 Johnjoe  McFadden  has  been  thinking  about  electrical  fields  in  relation  to 
@@ -11952,12 +11683,11 @@ is that they can only achieve  this when there is an electrical  membrane  poten
 – collapse  the potential  and bacteria  can’t figure out how to divide  in two.  I 
 suspect  that this loss of orientation  is just one manifestation  of how electrical 
 fields give cells their unity .
---- END PAGE 282 ---
+--- END PAGE 281 ---
 
 
 
---- PAGE 283 ---
-282 
+--- PAGE 282 ---
 ACKNOWLEDGEMENTS 
 This book opens with a description  of an empty city, lacking  the hurly 
 burly of people  and energy flow.  Little did I realise  when writing  that 
@@ -11994,12 +11724,11 @@ in fruit flies.  Before  reading  this book, you might have thought  those
 subjects  had little in common  beyond the centrality  of energy flow.  Yet 
 both groups, in their different ways, have been working  on Krebs-cycle 
 intermediates,  either as a product of CO 2  fixation at the origin of life, or
---- END PAGE 283 ---
+--- END PAGE 282 ---
 
 
 
---- PAGE 284 ---
-283 
+--- PAGE 283 ---
 as  the  severely   disturbed  downstream  consequences  of  mitonuclear 
 incompatibilities  in  ageing  flies.  Grappling  with  new  results  while 
 writing this book, sometimes watching cherished ideas implode, is one of 
@@ -12040,12 +11769,11 @@ me going through  darker days with unreasonably  enthusiastic  comments,
 to say nothing of the music,  conversation,  sea walks and good cheer.  We 
 used to climb together , but now we reminisce.  Allyson  Jones has also 
 read the whole book, pointing  out more stylistic  faux  pas  than I would
---- END PAGE 284 ---
+--- END PAGE 283 ---
 
 
 
---- PAGE 285 ---
-284 
+--- PAGE 284 ---
 care  to  admit,  while  celebrating  the  bigger  picture  and  occasionally 
 dredging  up some details  from her deeply  buried degree  in biochemistry . 
 She  racked  her  mind  over  possible  titles.  Titles  are  never  easy,  and 
@@ -12086,12 +11814,11 @@ whole book and made many penetrating  comments,  while celebrating  the
 bigger picture.  No one in the world today knows  more about the Krebs 
 cycle than Lee, yet he can still barely  trammel  his exciteme nt about 
 intermediary  metabolism.  I’ll never forget our lunch together, where we
---- END PAGE 285 ---
+--- END PAGE 284 ---
 
 
 
---- PAGE 286 ---
-285 
+--- PAGE 285 ---
 lost ourselves in a six-hour  discussion  on why the cycle is a cycle and 
 other abstruse questions.  Rarely  have science and pure pleasure  aligned 
 so closely .  And I thank Prof.  Christian  Frezza, who some years ago made 
@@ -12132,12 +11859,11 @@ alone in that).  That led me into a long and enjoyable  correspondence
 with Prof.  Derek Denton,  now in his nineties, yet still overflowing  with 
 energy and plans.  He had been drawn into the subject  through  his work 
 on salt balance and thirst in animals.  I confess that I had put the question
---- END PAGE 286 ---
+--- END PAGE 285 ---
 
 
 
---- PAGE 287 ---
-286 
+--- PAGE 286 ---
 aside until Derek invited  me to give the Derek Denton  Oration in the 
 Arts and Sciences in Melbourne  in 2019 – on condition  that I addressed 
 consciousness,  if  only  in  brief.  While  wrestling  with  the  question,  I 
@@ -12178,12 +11904,11 @@ legacy  is  to  influence  the  lives  of  others  for  the  better.  Ian  had  
 immense impact on my life.  He had buoyant  energy, warmth  of spirit and 
 a zestful sense that anything  is possible,  which would  make those he 
 touched  strive to be the best we can be.  I hadn’t appreciated  how many
---- END PAGE 287 ---
+--- END PAGE 286 ---
 
 
 
---- PAGE 288 ---
-287 
+--- PAGE 287 ---
 other people  felt the same until his funeral.  We will all remember  him 
 with love and admiration.  Heartfelt condolences to Mary Jane. 
 Last but not least, I thank Caroline Dawnay  of United  Agents,  and my 
@@ -12212,12 +11937,11 @@ Revelations’  to  my  attention,  and  Richard  Howard  for  his  gracious
 permission  to reprint  the poem.  It somehow  captures  the essence  of what 
 I  have  tried  to  say  in  this  book,  yet  in  a  few  lines  from  another 
 dimension.
---- END PAGE 288 ---
+--- END PAGE 287 ---
 
 
 
---- PAGE 289 ---
-288 
+--- PAGE 288 ---
 INDEX 
 Note: The index covers the main text and appendices.  The suffix ‘n’ plus 
 a number  indicates  a relevant  footnote  on that page.  Page numbers  in 
@@ -12253,12 +11977,11 @@ suppression of respiration  230 ,  259 –60,  262 ,  264
 alleles 
 compensatory  247 
 and individuality  234 –6,  238 ,  243
---- END PAGE 289 ---
+--- END PAGE 288 ---
 
 
 
---- PAGE 290 ---
-289 
+--- PAGE 289 ---
 ‘alpha-keto’ groups  41 ,  286 ,  299 
 see also  α-ketoglutarate (at ‘k’) 
 alternative oxidase  183 ,  228 n7,  262 n8 
@@ -12299,12 +12022,11 @@ early/primordial  76 ,  109 –10,  114 ,  119 ,  165
 of other planets  165 
 atmospheric oxygen balance  177 
 see also  GOE
---- END PAGE 290 ---
+--- END PAGE 289 ---
 
 
 
---- PAGE 291 ---
-290 
+--- PAGE 290 ---
 ATP (adenosine triphosphate)  302 
 in cellular respiration  56 –7,  64 
 formation without A TP synthase  144 ,  151 
@@ -12344,12 +12066,11 @@ rubisco in  108
 bacteria, autotrophic  85 n4,  102 ,  114 
 bacteria and archaea 
 acetyl CoA pathway in  122 –3,  151
---- END PAGE 291 ---
+--- END PAGE 290 ---
 
 
 
---- PAGE 292 ---
-291 
+--- PAGE 291 ---
 Krebs cycle and non-cycle  111 ,  184 –6 
 symbiosis among  170 ,  188 
 ‘balancer chromosomes’  245 ,  248 
@@ -12389,12 +12110,11 @@ building blocks of life, molecular
 as fundamental  4 ,  6 ,  9 –10,  131 
 Krebs cycle as source  20 ,  33 ,  115 ,  161 
 prebiotic  24 ,  275
---- END PAGE 292 ---
+--- END PAGE 291 ---
 
 
 
---- PAGE 293 ---
-292 
+--- PAGE 292 ---
 C4 carboxylic acids 
 in photosynthesis  93 ,  100 
 in respiration  33 ,  46 –8,  50 –2 
@@ -12437,12 +12157,11 @@ CARA (Council for At-Risk Academics)  31 n1
 carbon-1 1 ( 
 11 
 C)  80 –81,  83 –4,  85 n4,  178
---- END PAGE 293 ---
+--- END PAGE 292 ---
 
 
 
---- PAGE 294 ---
-293 
+--- PAGE 293 ---
 carbon-12 ( 
 12 
 C)  178 ,  180 –82 
@@ -12488,12 +12207,11 @@ thermodynamics and  22
 catalysts, protein  see  enzymes 
 cell death, programmed (apoptosis)  194 ,  205 ,  207 ,  213 ,  216 
 and mitochondria  242
---- END PAGE 294 ---
+--- END PAGE 293 ---
 
 
 
---- PAGE 295 ---
-294 
+--- PAGE 294 ---
 cell division  27 ,  192 ,  195 ,  283 
 cell-free extracts  62 
 cell nucleus, transplanting  195 
@@ -12536,12 +12254,11 @@ coenzyme A (CoA)  56 –7,  128 ,  140 ,  295 –6
 CoA-S 
 - 
   289 –90,  292
---- END PAGE 295 ---
+--- END PAGE 294 ---
 
 
 
---- PAGE 296 ---
-295 
+--- PAGE 295 ---
 see also  acetyl CoA; succinyl CoA 
 Cohen, Michael  278 
 Colnaghi, Marco  241 n2 
@@ -12581,12 +12298,11 @@ diabetes  21 ,  189 ,  243 ,  266 ,  268 n10
 diet 
 and drug response  15 
 and the ef fects of ageing  25 ,  232 ,  233 ,  264 ,  268 ,  272
---- END PAGE 296 ---
+--- END PAGE 295 ---
 
 
 
---- PAGE 297 ---
-296 
+--- PAGE 296 ---
 imposed on Calvin  94 n6 
 ketogenic diets  228 
 and mitochondrial function  25 ,  242 ,  249 ,  251 ,  264 
@@ -12626,12 +12342,11 @@ in anaesthesia  277 ,  279
 in carbon dioxide reduction  133 –41 
 by ferredoxin  288 
 electron-transport chains  174
---- END PAGE 297 ---
+--- END PAGE 296 ---
 
 
 
---- PAGE 298 ---
-297 
+--- PAGE 297 ---
 The Emer gence of Everything , by Morowitz  127 
 Emerson, Robert  199 –200 
 Enceladus  117 ,  120 
@@ -12671,12 +12386,11 @@ fermentation
 alcoholic  170 
 of glucose in cancer  197 ,  201 –2,  208 –9n4 
 of glucose with ageing  230
---- END PAGE 298 ---
+--- END PAGE 297 ---
 
 
 
---- PAGE 299 ---
-298 
+--- PAGE 298 ---
 see also  glycolysis, aerobic 
 ferredoxin (Fd) 
 amino acid sequence and antiquity  164 –7 
@@ -12716,12 +12430,11 @@ genes
 activated by HIF 1 α   212 ,  215 
 globin genes  187 
 late-acting genes  234 ,  236 –7
---- END PAGE 299 ---
+--- END PAGE 298 ---
 
 
 
---- PAGE 300 ---
-299 
+--- PAGE 299 ---
 origins in protocells  149 –50,  275 
 (reverse) Krebs cycle signalling  20 ,  185 ,  195 ,  211 –12,  215 
 whether preceded by metabolism  4 –6,  17 ,  118 ,  129 ,  150 
@@ -12764,12 +12477,11 @@ groups, chemical  38 –9n4
 growth 
 metabolic shift in cancer  196 ,  205 ,  209 ,  213 ,  223 –4 
 metabolic shift with age  231
---- END PAGE 300 ---
+--- END PAGE 299 ---
 
 
 
---- PAGE 301 ---
-300 
+--- PAGE 300 ---
 protocells  146 –7 
 GWAS (genome-wide association studies)  235 ,  237 ,  244 
 2H/H 2   see  hydrogen 
@@ -12809,12 +12521,11 @@ hydride ions  136 ,  297
 hydrogen (2H) 
 balanced in Krebs non-cycle  185 ,  201 
 in biosynthesis  73 ,  106 –7,  108 n11,  128 ,  206
---- END PAGE 301 ---
+--- END PAGE 300 ---
 
 
 
---- PAGE 302 ---
-301 
+--- PAGE 301 ---
 burned in respiration  49 –51,  55 –8,  63 –4,  159 ,  206 ,  254 –5,  261 
 2H and H 2  distinguished  47 –8n6 
 2H carriers in respiration  49 –51,  63 –4,  108 n11 
@@ -12853,12 +12564,11 @@ FeS clusters/surfaces  147 ,  151 ,  254 ,  255 n4
 growth of protocells with  147 
 in photosynthesis  174 
 and reverse Krebs cycle  118 –19
---- END PAGE 302 ---
+--- END PAGE 301 ---
 
 
 
---- PAGE 303 ---
-302 
+--- PAGE 302 ---
 spontaneous formation of 4Fe4S  146 
 isocitrate  128 ,  184 ,  185 ,  218 ,  220 –22,  286 ,  287 
 isocitrate dehydrogenase  218 –21 
@@ -12897,12 +12607,11 @@ membrane bound  211
 mutations af fecting  196 ,  209 –10,  215 ,  220 
 Krebs cycle fluxes 
 and ageing  25 ,  252 –3,  264 –7,  272 ,  280 –81
---- END PAGE 303 ---
+--- END PAGE 302 ---
 
 
 
---- PAGE 304 ---
-303 
+--- PAGE 303 ---
 in the brain  263 ,  266 ,  280 –81 
 in cancer cells  222 –3,  228 
 in fruit flies  255 –6 
@@ -12942,12 +12651,11 @@ biological time and  235 –6
 differences, men and women  247 
 metabolic rate and  256 –8,  270 –71 
 mitochondrial DNA and  272
---- END PAGE 304 ---
+--- END PAGE 303 ---
 
 
 
---- PAGE 305 ---
-304 
+--- PAGE 304 ---
 tissue symbiosis  190 
 lifestyle choices  25 ,  235 ,  264 ,  268 –9,  272 –3 
 light ener gy 
@@ -12987,12 +12695,11 @@ see also  mitochondrial membranes
 membrane bound enzymes  211 ,  219 –20,  222 ,  226 ,  253 
 see also  Ech 
 Mendel, Gregor  243 –4
---- END PAGE 305 ---
+--- END PAGE 304 ---
 
 
 
---- PAGE 306 ---
-305 
+--- PAGE 305 ---
 metabolic flux 
 complementarity  161 ,  189 
 numeric interpretation  8 ,  269 –70 
@@ -13033,12 +12740,11 @@ mitochondrial genome
 diseases  240 ,  247 –8,  263 –4 
 drug response  249 
 interactions with nuclear  238 –41
---- END PAGE 306 ---
+--- END PAGE 305 ---
 
 
 
---- PAGE 307 ---
-306 
+--- PAGE 306 ---
 mutations within  240 –41,  247 ,  254 n4,  257 
 offering improved lifespan  272 
 respiration ef ficiency  251 ,  254 –5n4 
@@ -13086,12 +12792,11 @@ NADP
 + 
 )  107 ,  108 n11,  109 ,  206 n3,  218 –19 
 NADPH
---- END PAGE 307 ---
+--- END PAGE 306 ---
 
 
 
---- PAGE 308 ---
-307 
+--- PAGE 307 ---
 in biosynthesis  206 –9,  224 ,  225 ,  264 
 and glutathione regeneration  252 –3,  255 
 and isocitrate dehydrogenase  218 –21 
@@ -13132,12 +12837,11 @@ oocytes and mitochondria  240 –42
 Oppenheimer , Robert  82 ,  88 ,  90 
 organ transplantation  214 
 Orgel, Leslie  128 –31
---- END PAGE 308 ---
+--- END PAGE 307 ---
 
 
 
---- PAGE 309 ---
-308 
+--- PAGE 308 ---
 origin of life 
 and hydrothermal vents  113 ,  117 ,  133 ,  152 –3 
 inevitability  127 ,  131 n7,  275 
@@ -13177,12 +12881,11 @@ and CO 2  reduction  142 –3
 pH gradient, hydrothermal vents  144 ,  146 
 phages (bacteriophages)  282 
 philosophical approaches  58 –9,  69 ,  99 ,  124 ,  203
---- END PAGE 309 ---
+--- END PAGE 308 ---
 
 
 
---- PAGE 310 ---
-309 
+--- PAGE 309 ---
 phosphoenol-pyruvate  70 –71,  73 ,  102 ,  122 ,  224 –5,  287 ,  296 –7 
 phosphoglycerate  92 ,  94 ,  96 ,  174 
 photophosphorylation  99 ,  105 
@@ -13223,12 +12926,11 @@ synthesis and A TP demand  208
 see also  enzymes 
 protists  3 –4,  161 ,  186 ,  276 ,  281 
 ‘protocells’  24 ,  117 ,  145 –50,  152 –3,  275
---- END PAGE 310 ---
+--- END PAGE 309 ---
 
 
 
---- PAGE 311 ---
-310 
+--- PAGE 310 ---
 proton gradients  64 ,  150 ,  152 ,  164 
 proton-motive force  61 ,  69 ,  143 ,  147 ,  162 –4,  220 
 powering A TP synthesis  65 –7,  66 ,  99 ,  163 
@@ -13267,11 +12969,11 @@ blocking with carbon monoxide  35
 efficiency of aerobic  159 
 Hans Krebs on  19 ,  32 –3,  37 –8 
 hydrogen transfer in  37 ,  47 –52
---- END PAGE 311 ---
+--- END PAGE 310 ---
 
 
 
---- PAGE 312 ---
+--- PAGE 311 ---
 31 1 
 as a mitochondrial function  32 ,  67 –8n13 
 photophosphorylation and  99 
@@ -13313,12 +13015,11 @@ RNA W orld hypothesis  129
 Rodriguez, Enrique  252 
 ROS (reactive oxygen species) 
 from mitochondrial complex I  230
---- END PAGE 312 ---
+--- END PAGE 311 ---
 
 
 
---- PAGE 313 ---
-312 
+--- PAGE 312 ---
 superchar ged membrane potentials  219 
 in transplant or gans  214 n5 
 see also  free radicals 
@@ -13358,12 +13059,11 @@ flight and ROS flux  271 –2
 operating on random RNA sequences  149 –51 
 self, sensation of  280 
 senescent (epigenetic) states  259 ,  262 ,  269 –72
---- END PAGE 313 ---
+--- END PAGE 312 ---
 
 
 
---- PAGE 314 ---
-313 
+--- PAGE 313 ---
 serpentinisation  120 ,  174 
 sex differences and mitochondria  239 –41,  247 
 sexual ornamentation  261 
@@ -13404,12 +13104,11 @@ sulfate as an oxidant  181
 sulfur, in CoA  57 ,  289 –90 
 sulfur bacteria  100 ,  104 –5,  114 
 Sweetlove, Lee  228 n7
---- END PAGE 314 ---
+--- END PAGE 313 ---
 
 
 
---- PAGE 315 ---
-314 
+--- PAGE 314 ---
 symbiosis 
 among bacteria and archaea  170 ,  188 
 endosymbiosis  69 ,  221 n6 
@@ -13447,12 +13146,11 @@ Vesalius, Andreas  243
 Viagra  216 
 viruses  205 ,  282 
 The Vital Question  (book)  281
---- END PAGE 315 ---
+--- END PAGE 314 ---
 
 
 
---- PAGE 316 ---
-315 
+--- PAGE 315 ---
 vitalism/vital force  5 ,  8 ,  62 
 vitamins C and E  44 –5,  48 ,  252 
 Wächtershäuser , Günter  115 –16 
@@ -13483,12 +13181,11 @@ Xavier, Joana  269 n11
 xenon  277 –8 
 Z scheme  175 ,  199 
 Zuckerkandl, Emil  165
---- END PAGE 316 ---
+--- END PAGE 315 ---
 
 
 
---- PAGE 317 ---
-316 
+--- PAGE 316 ---
 Table of Contents 
 Praise for T ransformer 1 
 Title Page 3 
@@ -13512,4 +13209,4 @@ List of abbreviations 233
 Further reading 236 
 Acknowledgements 282 
 Index 288
---- END PAGE 317 ---
+--- END PAGE 316 ---

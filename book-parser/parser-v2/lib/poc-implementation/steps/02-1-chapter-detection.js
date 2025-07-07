@@ -1,22 +1,21 @@
 /**
- * Step 2: Chapter Detection and Text Extraction
+ * Step 2.1: Chapter Detection
  * 
- * Combined step that detects chapter boundaries and extracts their content.
- * This step identifies chapters AND extracts their cleaned text content.
+ * Detects chapter boundaries from Table of Contents (TOC).
+ * This step identifies chapters and their metadata: names, page ranges, and text positions.
  * 
  * Hybrid approach combining PDF bookmark extraction with text-based analysis:
  * 1. Primary: Extract TOC from PDF bookmarks/outline
  * 2. Fallback: Text-based TOC analysis
  * 3. Pattern-based validation for content boundaries
- * 4. Extract and clean chapter content
- * 5. Generate content statistics and quality metrics
+ * 4. Generate chapter metadata with positions
  * 
  * Expected Input:
  * - pipelineState: { rawText: "extracted text...", ... }
  * - config: { INPUT_PDF: path, OUTPUT_DIR: path, DEBUG_DIR: path, ... }
  * 
  * Expected Output:
- * - { chapters: [{ ...metadata, content, cleanedContent, contentStats, extractionQuality }] }
+ * - { chapterMetadata: [{ title, chapterNumber, startPosition, endPosition, startingPage, confidence, detectionSource }] }
  */
 
 const fs = require('fs');
@@ -31,13 +30,13 @@ try {
 }
 
 /**
- * Execute chapter detection and text extraction step
+ * Execute chapter detection step
  * @param {Object} pipelineState - Current pipeline state
  * @param {Object} config - Configuration object
- * @returns {Object} - Updated state with chapter metadata and content
+ * @returns {Object} - Updated state with chapter metadata
  */
 async function execute(pipelineState, config) {
-    console.log('📚 Starting chapter detection and text extraction (Step 2)...');
+    console.log('🔍 Starting chapter detection (Step 2.1)...');
     
     // Validate prerequisites
     if (!pipelineState.rawText) {
@@ -46,10 +45,8 @@ async function execute(pipelineState, config) {
     
     try {
         const startTime = Date.now();
-        const lines = pipelineState.rawText.split('\n');
         
-        // PHASE 1: Chapter Detection
-        console.log('🔍 Phase 1: Detecting chapters...');
+        console.log('📋 Detecting chapters from TOC...');
         
         // Step 1: Try PDF bookmark extraction
         let tocAnalysis = null;
@@ -86,49 +83,7 @@ async function execute(pipelineState, config) {
             patternAnalysis
         );
         
-        // PHASE 2: Text Extraction
-        console.log('📝 Phase 2: Extracting chapter content...');
-        console.log(`📚 Extracting content for ${chapterMetadata.length} chapters...`);
-        
-        // Extract content for each chapter
-        const chapters = [];
-        for (let i = 0; i < chapterMetadata.length; i++) {
-            const metadata = chapterMetadata[i];
-            
-            console.log(`  📖 Processing: ${metadata.title}`);
-            
-            // Extract chapter text with comprehensive processing
-            const chapterExtraction = extractChapterText(
-                pipelineState.rawText, 
-                metadata.startPosition, 
-                metadata.endPosition, 
-                metadata.title
-            );
-            
-            if (chapterExtraction.isValid) {
-                // Combine metadata with extracted content
-                chapters.push({
-                    // Original metadata from detection
-                    ...metadata,
-                    
-                    // New content from extraction
-                    content: chapterExtraction.content,
-                    cleanedContent: chapterExtraction.cleanedContent,
-                    contentStats: chapterExtraction.stats,
-                    extractionQuality: chapterExtraction.quality,
-                    
-                    // Enhanced metadata
-                    contentStartPosition: chapterExtraction.contentStartPosition,
-                    pageRange: extractPageRange(chapterExtraction.content)
-                });
-                
-                console.log(`    ✅ ${chapterExtraction.stats.cleanedWords} words, quality: ${chapterExtraction.quality.score.toFixed(2)}`);
-            } else {
-                console.log(`    ⚠️  Chapter failed validation: ${chapterExtraction.quality.issues.join(', ')}`);
-            }
-        }
-        
-        // Generate combined statistics
+        // Generate statistics
         const detectionStats = {
             chaptersDetected: chapterMetadata.length,
             tocSource: tocSource,
@@ -139,24 +94,12 @@ async function execute(pipelineState, config) {
             pageOffset: pageOffset
         };
         
-        const extractionStats = {
-            totalChapters: chapters.length,
-            totalWords: chapters.reduce((sum, ch) => sum + ch.contentStats.cleanedWords, 0),
-            averageWordsPerChapter: chapters.length > 0 ? 
-                chapters.reduce((sum, ch) => sum + ch.contentStats.cleanedWords, 0) / chapters.length : 0,
-            averageQualityScore: chapters.length > 0 ? 
-                chapters.reduce((sum, ch) => sum + ch.extractionQuality.score, 0) / chapters.length : 0,
-            validChapters: chapters.filter(ch => ch.extractionQuality.isValid).length,
-            chaptersWithIssues: chapters.filter(ch => ch.extractionQuality.issues.length > 0).length,
-        };
-        
         const processingTime = Date.now() - startTime;
         
         // Save debug output
         const debugOutput = {
             processingTime,
             detectionStats,
-            extractionStats,
             tocAnalysis: {
                 source: tocSource,
                 tocFound: tocAnalysis && tocAnalysis.chapters.length > 0,
@@ -168,47 +111,39 @@ async function execute(pipelineState, config) {
                 validatedChapters: patternAnalysis.validatedChapters.length,
                 highConfidenceMatches: patternAnalysis.validatedChapters.filter(ch => ch.confidence > 0.8).length
             },
-            chapters: chapters.map(ch => ({
+            chapterMetadata: chapterMetadata.map(ch => ({
                 title: ch.title,
                 chapterNumber: ch.chapterNumber,
                 startPosition: ch.startPosition,
-                contentStartPosition: ch.contentStartPosition,
                 endPosition: ch.endPosition,
-                rawContentLength: ch.content.length,
-                cleanedContentLength: ch.cleanedContent.length,
-                contentStats: ch.contentStats,
-                pageRange: ch.pageRange,
-                detectionSource: ch.detectionSource,
-                confidence: ch.confidence,
                 startingPage: ch.startingPage,
-                extractionQuality: ch.extractionQuality
+                detectionSource: ch.detectionSource,
+                confidence: ch.confidence
             }))
         };
         
-        const debugFile = path.join(config.DEBUG_DIR, 'step-02-chapter-detection-and-text-extraction.json');
+        const debugFile = path.join(config.DEBUG_DIR, 'step-02-1-chapter-detection.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
         
-        console.log(`✅ Chapter detection and text extraction completed: ${chapters.length} chapters processed`);
+        console.log(`✅ Chapter detection completed: ${chapterMetadata.length} chapters detected`);
         console.log(`📊 Processing took ${processingTime}ms`);
-        console.log(`📚 Total words extracted: ${extractionStats.totalWords.toLocaleString()}`);
-        console.log(`⭐ Average quality score: ${extractionStats.averageQualityScore.toFixed(2)}`);
-        console.log(`✅ Valid chapters: ${extractionStats.validChapters}/${extractionStats.totalChapters}`);
+        console.log(`📋 TOC source: ${tocSource}`);
+        console.log(`⭐ Average confidence: ${detectionStats.averageDetectionConfidence.toFixed(2)}`);
         
         return {
-            chapters: chapters,
+            chapterMetadata: chapterMetadata,
             metadata: {
                 ...pipelineState.metadata,
-                chapterDetectionAndTextExtraction: {
+                chapterDetection: {
                     ...detectionStats,
-                    ...extractionStats,
                     processingTime,
-                    detectionMethod: 'hybrid_v1_poc2_with_extraction'
+                    detectionMethod: 'hybrid_v1_toc_detection'
                 }
             }
         };
         
     } catch (error) {
-        console.error('❌ Chapter detection and text extraction failed:', error.message);
+        console.error('❌ Chapter detection failed:', error.message);
         throw error;
     }
 }
@@ -242,6 +177,9 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
     // Check if we have page markers in text
     const hasPageMarkers = rawText.includes('--- PAGE');
     
+    // First, find all chapter positions
+    const chapterPositions = [];
+    
     for (let i = 0; i < authoritative.length; i++) {
         const tocEntry = authoritative[i];
         
@@ -262,23 +200,11 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
         const position = findChapterContentPosition(rawText, chapterTitle, chapterNumber);
         
         if (position) {
-            // Find end position
-            let endPosition = rawText.length - 1;
-            if (i < authoritative.length - 1) {
-                const nextChapter = authoritative[i + 1];
-                const nextTitle = nextChapter.chapterTitle || nextChapter.title;
-                const nextNumber = nextChapter.chapterNumber;
-                const nextPosition = findChapterContentPosition(rawText, nextTitle, nextNumber);
-                if (nextPosition) {
-                    endPosition = nextPosition.startPosition - 1;
-                }
-            }
-            
-            chapterMetadata.push({
+            chapterPositions.push({
+                index: i,
                 title: chapterTitle,
                 chapterNumber: chapterNumber,
                 startPosition: position.startPosition,
-                endPosition: endPosition,
                 startingPage: startingPage,
                 confidence: position.confidence,
                 detectionSource: tocSource
@@ -286,243 +212,36 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
         }
     }
     
+    // Sort chapters by their actual position in the text
+    chapterPositions.sort((a, b) => a.startPosition - b.startPosition);
+    
+    // Now assign end positions based on the sorted order
+    for (let i = 0; i < chapterPositions.length; i++) {
+        const chapter = chapterPositions[i];
+        
+        // Find end position
+        let endPosition = rawText.length - 1;
+        if (i < chapterPositions.length - 1) {
+            const nextChapter = chapterPositions[i + 1];
+            endPosition = nextChapter.startPosition - 1;
+        }
+        
+        chapterMetadata.push({
+            title: chapter.title,
+            chapterNumber: chapter.chapterNumber,
+            startPosition: chapter.startPosition,
+            endPosition: endPosition,
+            startingPage: chapter.startingPage, // Page numbers now already start from 0
+            confidence: chapter.confidence,
+            detectionSource: chapter.detectionSource
+        });
+    }
+    
     // Detect page number offset
     const pageOffset = hasPageMarkers ? detectPageNumberOffset(lines, chapterMetadata) : 0;
     
     return { chapterMetadata, pageOffset };
 }
-
-/**
- * Extract and process chapter text with comprehensive cleaning and validation
- * @param {string} rawText - Full text content
- * @param {number} startPosition - Chapter start character position
- * @param {number} endPosition - Chapter end character position
- * @param {string} chapterTitle - Chapter title for validation
- * @returns {Object} - Extraction results with content and metadata
- */
-function extractChapterText(rawText, startPosition, endPosition, chapterTitle) {
-    // Extract raw chapter content
-    const rawContent = rawText.substring(startPosition, endPosition + 1);
-    
-    // For page-based processing, we need to preserve page markers
-    // Look backward from startPosition to find the page marker
-    let contentStartPosition = startPosition;
-    
-    // Look backward up to 1000 characters to find the page marker
-    const searchStart = Math.max(0, startPosition - 1000);
-    const searchText = rawText.substring(searchStart, startPosition);
-    
-    const pageMarkerMatch = searchText.match(/---\s*PAGE\s+\d+\s*---[^\n]*\n?/g);
-    if (pageMarkerMatch) {
-        const lastPageMarker = pageMarkerMatch[pageMarkerMatch.length - 1];
-        const markerPosition = searchText.lastIndexOf(lastPageMarker);
-        if (markerPosition >= 0) {
-            contentStartPosition = searchStart + markerPosition;
-        }
-    }
-    
-    // Extract content preserving page markers
-    const contentOnly = rawText.substring(contentStartPosition, endPosition + 1);
-    
-    // Clean and process content (but preserve page markers)
-    const cleanedContent = cleanChapterContentPreservingPageMarkers(contentOnly);
-    
-    // Generate content statistics
-    const stats = generateContentStats(rawContent, cleanedContent);
-    
-    // Validate content quality
-    const quality = validateChapterContent(cleanedContent, chapterTitle, stats);
-    
-    return {
-        content: contentOnly.trim(),
-        cleanedContent: cleanedContent.trim(),
-        stats: stats,
-        quality: quality,
-        isValid: quality.isValid,
-        contentStartPosition: contentStartPosition
-    };
-}
-
-/**
- * Clean chapter content while preserving page markers
- * @param {string} content - Raw chapter content
- * @returns {string} - Cleaned content with page markers preserved
- */
-function cleanChapterContentPreservingPageMarkers(content) {
-    const lines = content.split('\n');
-    const cleanedLines = [];
-    
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const trimmedLine = line.trim();
-        
-        // Preserve page markers
-        if (trimmedLine.match(/^---\s*PAGE\s+\d+\s*---$/)) {
-            cleanedLines.push(line);
-            continue;
-        }
-        
-        // Preserve end page markers
-        if (trimmedLine.match(/^---\s*END\s+PAGE\s+\d+\s*---$/)) {
-            cleanedLines.push(line);
-            continue;
-        }
-        
-        // Remove headers and footers
-        if (isHeaderOrFooter(trimmedLine, i, lines)) {
-            continue;
-        }
-        
-        // Remove standalone page numbers
-        if (isPageNumber(trimmedLine)) {
-            continue;
-        }
-        
-        // Clean the line
-        const cleanedLine = cleanLine(trimmedLine);
-        
-        if (cleanedLine.length > 0) {
-            cleanedLines.push(cleanedLine);
-        } else if (trimmedLine.length === 0) {
-            // Preserve paragraph breaks
-            cleanedLines.push('');
-        }
-    }
-    
-    return cleanedLines.join('\n');
-}
-
-/**
- * Check if a line is a header or footer
- * @param {string} line - Line to check
- * @param {number} index - Line index
- * @param {Array} allLines - All lines
- * @returns {boolean} - True if header/footer
- */
-function isHeaderOrFooter(line, index, allLines) {
-    const lineUpper = line.toUpperCase();
-    
-    // Common headers/footers
-    if (lineUpper.match(/^(TRANSFORMERS?|NICK\s+LANE|LIFE\s+AND\s+DEATH)$/)) {
-        return true;
-    }
-    
-    // Short lines at beginning/end that are all caps
-    if ((index < 3 || index >= allLines.length - 3) && 
-        line.length < 50 && 
-        line === lineUpper && 
-        line.match(/^[A-Z\s]+$/)) {
-        return true;
-    }
-    
-    return false;
-}
-
-/**
- * Check if a line is just a page number
- * @param {string} line - Line to check
- * @returns {boolean} - True if page number
- */
-function isPageNumber(line) {
-    return line.match(/^\d+$/) && parseInt(line) > 0 && parseInt(line) < 1000;
-}
-
-/**
- * Clean a line by removing extra whitespace and formatting
- * @param {string} line - Line to clean
- * @returns {string} - Cleaned line
- */
-function cleanLine(line) {
-    // Only replace spaces and tabs, preserve newlines
-    return line.replace(/[ \t]+/g, ' ').trim();
-}
-
-/**
- * Generate content statistics
- * @param {string} rawContent - Raw content
- * @param {string} cleanedContent - Cleaned content
- * @returns {Object} - Content statistics
- */
-function generateContentStats(rawContent, cleanedContent) {
-    const rawWords = rawContent.split(/\s+/).filter(w => w.length > 0);
-    const cleanedWords = cleanedContent.split(/\s+/).filter(w => w.length > 0);
-    
-    return {
-        rawCharacters: rawContent.length,
-        cleanedCharacters: cleanedContent.length,
-        rawWords: rawWords.length,
-        cleanedWords: cleanedWords.length,
-        rawLines: rawContent.split('\n').length,
-        cleanedLines: cleanedContent.split('\n').length,
-        compressionRatio: rawContent.length > 0 ? cleanedContent.length / rawContent.length : 0
-    };
-}
-
-/**
- * Validate chapter content quality
- * @param {string} content - Chapter content
- * @param {string} chapterTitle - Chapter title
- * @param {Object} stats - Content statistics
- * @returns {Object} - Quality assessment
- */
-function validateChapterContent(content, chapterTitle, stats) {
-    const issues = [];
-    let score = 1.0;
-    
-    // Check minimum word count
-    if (stats.cleanedWords < 50) {
-        issues.push('very_short_content');
-        score -= 0.3;
-    }
-    
-    // Check if content is mostly page markers
-    const pageMarkerCount = (content.match(/---\s*PAGE\s+\d+\s*---/g) || []).length;
-    if (pageMarkerCount > stats.cleanedLines * 0.1) {
-        issues.push('too_many_page_markers');
-        score -= 0.2;
-    }
-    
-    // Check compression ratio
-    if (stats.compressionRatio < 0.3) {
-        issues.push('excessive_cleaning');
-        score -= 0.1;
-    }
-    
-    return {
-        score: Math.max(0, score),
-        isValid: score >= 0.5,
-        issues: issues
-    };
-}
-
-/**
- * Extract page range from content
- * @param {string} content - Chapter content
- * @returns {Object} - Page range
- */
-function extractPageRange(content) {
-    const pageMarkers = content.match(/---\s*PAGE\s+(\d+)\s*---/g);
-    if (!pageMarkers || pageMarkers.length === 0) {
-        return null;
-    }
-    
-    const pageNumbers = pageMarkers.map(marker => {
-        const match = marker.match(/---\s*PAGE\s+(\d+)\s*---/);
-        return match ? parseInt(match[1]) : null;
-    }).filter(num => num !== null);
-    
-    if (pageNumbers.length === 0) {
-        return null;
-    }
-    
-    return {
-        startPage: Math.min(...pageNumbers),
-        endPage: Math.max(...pageNumbers),
-        totalPages: pageNumbers.length
-    };
-}
-
-// === CHAPTER DETECTION FUNCTIONS ===
 
 /**
  * Find where the Table of Contents ends and actual content begins
@@ -592,56 +311,220 @@ function findTOCEndPosition(rawText) {
  * @returns {Object|null} - Position info or null
  */
 function findChapterContentPosition(rawText, chapterTitle, chapterNumber) {
-    // Create more flexible search patterns
-    const titleWords = chapterTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').split(/\s+/);
-    const titleCore = titleWords.slice(0, 3).join('\\s+'); // First 3 words
-    
-    const searchPatterns = [
-        // Chapter number + title (exact)
-        new RegExp(`^(chapter\\s+)?${chapterNumber}[\\s\\-:]+${chapterTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'img'),
-        // Just chapter number (for cases like "1" or "Chapter 1")
-        new RegExp(`^(chapter\\s+)?${chapterNumber}\\s*$`, 'img'),
-        // Title only (flexible)
-        new RegExp(`^${titleCore}`, 'img'),
-        // Full title (flexible spacing)
-        new RegExp(chapterTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+'), 'img')
-    ];
-    
     // Find where TOC ends and actual content begins
     const startSearchPosition = findTOCEndPosition(rawText);
     const searchText = rawText.substring(startSearchPosition);
     
-    for (const pattern of searchPatterns) {
-        const matches = [...searchText.matchAll(pattern)];
+    // Look for page markers that might indicate chapter starts
+    const lines = searchText.split('\n');
+    const candidates = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
         
-        for (const match of matches) {
-            const matchPosition = startSearchPosition + match.index;
-            const matchedText = match[0];
+        // Look for page markers first to establish context
+        const pageMarkerMatch = line.match(/^---\s*PAGE\s+(\d+)\s*---$/);
+        if (pageMarkerMatch) {
+            const pageNum = parseInt(pageMarkerMatch[1]);
             
-            // Get surrounding context to validate
-            const contextStart = Math.max(0, matchPosition - 200);
-            const contextEnd = Math.min(rawText.length, matchPosition + matchedText.length + 200);
-            const context = rawText.substring(contextStart, contextEnd);
-            
-            // Check if it's a standalone header (surrounded by newlines)
-            const beforeMatch = rawText.substring(Math.max(0, matchPosition - 20), matchPosition);
-            const afterMatch = rawText.substring(matchPosition + matchedText.length, Math.min(rawText.length, matchPosition + matchedText.length + 20));
-            
-            const isStandalone = beforeMatch.includes('\n') && afterMatch.includes('\n');
-            const isPageMarker = matchedText.includes('PAGE') && matchedText.includes('---');
-            
-            if (isStandalone && !isPageMarker) {
-                return {
-                    startPosition: matchPosition,
-                    confidence: 0.9,
-                    matchedPattern: pattern.source,
-                    matchedText: matchedText
-                };
+            // Look in the next few lines after page marker for chapter title
+            for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
+                const nextLine = lines[j].trim();
+                
+                // Skip empty lines and page end markers
+                if (!nextLine || nextLine.match(/^---\s*END\s+PAGE/)) {
+                    continue;
+                }
+                
+                // Check if this line matches our chapter title
+                if (isChapterTitleMatch(nextLine, chapterTitle, chapterNumber)) {
+                    const linePosition = lines.slice(0, j).join('\n').length;
+                    const absolutePosition = startSearchPosition + linePosition;
+                    
+                    // Additional validation: make sure this looks like a chapter header, not TOC
+                    const isValidChapterStart = validateChapterStart(nextLine, lines, j, pageNum, chapterTitle);
+                    
+                    if (isValidChapterStart) {
+                        candidates.push({
+                            position: absolutePosition,
+                            pageNumber: pageNum,
+                            matchedText: nextLine,
+                            confidence: calculateMatchConfidence(nextLine, chapterTitle, chapterNumber, pageNum)
+                        });
+                    }
+                }
             }
         }
     }
     
+    // If we found candidates, return the best one
+    if (candidates.length > 0) {
+        // Sort by confidence, then by position (prefer earlier)
+        candidates.sort((a, b) => {
+            if (Math.abs(a.confidence - b.confidence) < 0.1) {
+                return a.position - b.position; // Prefer earlier position
+            }
+            return b.confidence - a.confidence; // Prefer higher confidence
+        });
+        
+        const best = candidates[0];
+        return {
+            startPosition: best.position,
+            confidence: best.confidence,
+            matchedPattern: 'page_marker_context',
+            matchedText: best.matchedText,
+            pageNumber: best.pageNumber
+        };
+    }
+    
     return null;
+}
+
+/**
+ * Check if a line matches the chapter title
+ * @param {string} line - Line to check
+ * @param {string} chapterTitle - Expected chapter title
+ * @param {number} chapterNumber - Chapter number
+ * @returns {boolean} - True if match
+ */
+function isChapterTitleMatch(line, chapterTitle, chapterNumber) {
+    // Normalize both strings for comparison
+    const normalizedLine = line.toLowerCase().replace(/[^\w\s]/g, '').trim();
+    const normalizedTitle = chapterTitle.toLowerCase().replace(/[^\w\s]/g, '').trim();
+    
+    // Direct match
+    if (normalizedLine === normalizedTitle) {
+        return true;
+    }
+    
+    // Check for chapter number + title combinations
+    const chapterPatterns = [
+        `${chapterNumber} ${normalizedTitle}`,
+        `chapter ${chapterNumber} ${normalizedTitle}`,
+        normalizedTitle // Just the title
+    ];
+    
+    for (const pattern of chapterPatterns) {
+        if (normalizedLine === pattern.replace(/[^\w\s]/g, '').trim()) {
+            return true;
+        }
+    }
+    
+    // Check if line contains most of the title words
+    const titleWords = normalizedTitle.split(/\s+/).filter(w => w.length > 2);
+    const lineWords = normalizedLine.split(/\s+/);
+    
+    if (titleWords.length >= 2) {
+        const matchedWords = titleWords.filter(word => lineWords.some(lw => lw.includes(word) || word.includes(lw)));
+        if (matchedWords.length >= Math.min(3, titleWords.length)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+/**
+ * Validate that this is actually a chapter start, not just a TOC entry
+ * @param {string} line - The matched line
+ * @param {Array} lines - All lines
+ * @param {number} lineIndex - Index of the matched line
+ * @param {number} pageNumber - Page number
+ * @param {string} chapterTitle - Expected chapter title
+ * @returns {boolean} - True if this looks like a real chapter start
+ */
+function validateChapterStart(line, lines, lineIndex, pageNumber, chapterTitle) {
+    // Don't accept matches in very early pages (TOC area)
+    if (pageNumber < 7) {
+        return false;
+    }
+    
+    // Check if this is explicitly in a Contents/TOC section by looking for TOC patterns
+    const surroundingLines = lines.slice(Math.max(0, lineIndex - 3), lineIndex + 3).join(' ').toLowerCase();
+    if (surroundingLines.includes('contents') && surroundingLines.match(/\d+\s*$/)) {
+        // Line ends with page numbers, likely TOC
+        return false;
+    }
+    
+    // Look for chapter content following the title
+    const followingLines = lines.slice(lineIndex + 1, lineIndex + 8);
+    const followingText = followingLines.filter(l => l.trim().length > 0).join(' ');
+    
+    // Must have some content following
+    if (followingText.length < 50) {
+        return false;
+    }
+    
+    // Should not be followed immediately by numbered list (suggests TOC)
+    const nextNonEmptyLine = followingLines.find(l => l.trim().length > 0);
+    if (nextNonEmptyLine && nextNonEmptyLine.match(/^\d+\.\s+[A-Z]/)) {
+        return false;
+    }
+    
+    // Good indicators of a real chapter header:
+    
+    // All caps formatting suggests a real header
+    if (line === line.toUpperCase() && line.length > 5) {
+        return true;
+    }
+    
+    // Standalone line (surrounded by empty lines) suggests header
+    const prevLine = lineIndex > 0 ? lines[lineIndex - 1].trim() : '';
+    const nextLine = lineIndex < lines.length - 1 ? lines[lineIndex + 1].trim() : '';
+    if (prevLine.length === 0 && nextLine.length === 0 && line.length < 100) {
+        return true;
+    }
+    
+    // Has paragraph content following (not just short lines)
+    if (followingText.length > 200 && followingText.includes('.') && !followingText.match(/^\d+\./)) {
+        return true;
+    }
+    
+    // If page number is reasonable for chapter content
+    if (pageNumber >= 9 && pageNumber <= 300 && line.length < 80) {
+        return true;
+    }
+    
+    return false;
+}
+
+/**
+ * Calculate confidence score for a chapter title match
+ * @param {string} line - Matched line
+ * @param {string} chapterTitle - Expected title
+ * @param {number} chapterNumber - Chapter number
+ * @param {number} pageNumber - Page number where found
+ * @returns {number} - Confidence score 0-1
+ */
+function calculateMatchConfidence(line, chapterTitle, chapterNumber, pageNumber) {
+    let confidence = 0.5;
+    
+    // Exact match gets high confidence
+    if (line.toLowerCase().trim() === chapterTitle.toLowerCase().trim()) {
+        confidence = 0.95;
+    }
+    
+    // Contains chapter number
+    if (line.includes(chapterNumber.toString())) {
+        confidence += 0.1;
+    }
+    
+    // Reasonable page number (not too early, not too late)
+    if (pageNumber >= 8 && pageNumber <= 300) {
+        confidence += 0.1;
+    }
+    
+    // Shorter lines are more likely to be chapter titles
+    if (line.length < 100) {
+        confidence += 0.1;
+    }
+    
+    // All caps or title case suggests header
+    if (line === line.toUpperCase() || line.match(/^[A-Z][a-z]+(\s+[A-Z][a-z]+)*$/)) {
+        confidence += 0.1;
+    }
+    
+    return Math.min(1.0, confidence);
 }
 
 /**
@@ -747,7 +630,7 @@ async function getPageNumberFromDest(dest, doc) {
         if (Array.isArray(dest) && dest.length > 0) {
             const pageRef = dest[0];
             const pageIndex = await doc.getPageIndex(pageRef);
-            return pageIndex + 1;
+            return pageIndex; // Return 0-based page numbers to align with page markers
         }
         return null;
     } catch (error) {

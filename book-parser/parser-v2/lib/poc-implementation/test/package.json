@@ -1,0 +1,23 @@
+{
+  "name": "book-parser-poc-tests",
+  "version": "1.0.0",
+  "description": "Test suite for book parser POC implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test ./step-tests/**/*.test.js",
+    "test:watch": "node --test --watch ./step-tests/**/*.test.js",
+    "test:transformers": "node --test transformers-book-test.js",
+    "test:step1": "node --test ./step-tests/01-text-extraction.test.js",
+    "test:step2-1": "node --test ./step-tests/02-1-chapter-detection.test.js",
+    "test:step2-2": "node --test ./step-tests/02-2-chapter-content-extraction.test.js",
+    "test:step3": "node --test ./step-tests/03-page-extraction-and-cross-page-merging.test.js",
+    "test:step4": "node --test ./step-tests/04-paragraph-detection.test.js",
+    "test:step5": "node --test ./step-tests/05-header-detection.test.js",
+    "test:step6": "node --test ./step-tests/06-chunking-algorithm.test.js",
+    "test:step7": "node --test ./step-tests/07-page-assignment.test.js",
+    "test:step8": "node --test ./step-tests/08-output-generation.test.js"
+  },
+  "keywords": ["test", "parser", "book"],
+  "author": "",
+  "license": "ISC"
+} 

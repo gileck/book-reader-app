@@ -24,35 +24,73 @@ async function execute(pipelineState, config) {
     const startTime = Date.now();
     
     try {
-        // Load the working step 2.3 output directly
-        const workingOutputPath = path.join(__dirname, '../transformers-output/output-step-2.3.json');
-        if (!fs.existsSync(workingOutputPath)) {
-            throw new Error('Working step 2.3 output not found. Please ensure output-step-2.3.json exists.');
+        // Validate prerequisites - use pipeline state instead of reading files
+        if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
+            throw new Error('Step 2.2 (chapter content extraction) must be completed first. No chapters found in pipeline state.');
         }
         
-        const workingOutput = JSON.parse(fs.readFileSync(workingOutputPath, 'utf8'));
-        const chapters = workingOutput.chapters;
+        const inputChapters = pipelineState.chapters;
+        console.log(`📚 Processing from pipeline state: ${inputChapters.length} chapters`);
         
-        // Calculate statistics from the working output
-        const totalPages = chapters.reduce((sum, chapter) => sum + chapter.pages.length, 0);
-        const totalSentencesMerged = chapters.reduce((sum, chapter) => sum + (chapter.sentencesMerged || 0), 0);
+        // Extract pages from each chapter's content
+        const processedChapters = [];
+        let totalPages = 0;
+        let totalSentencesMerged = 0;
+        const debugPages = []; // For debug output with rawContent
         
-        console.log(`📚 Using working output: ${chapters.length} chapters, ${totalPages} pages`);
+        for (const chapter of inputChapters) {
+            console.log(`  📖 Processing chapter: ${chapter.title}`);
+            
+            // Extract pages from chapter content (includes rawContent for debug)
+            const pagesWithRaw = extractPagesFromChapterWithDebug(chapter);
+            
+            // Create clean pages for pipeline (without rawContent)
+            const pages = pagesWithRaw.map(page => ({
+                pageNumber: page.pageNumber,
+                content: page.content,
+                wordCount: page.wordCount
+            }));
+            
+            // Save pages with rawContent for debug
+            debugPages.push(...pagesWithRaw);
+            
+            // Perform cross-page sentence merging
+            const mergeResult = fixIncompleteSentencesWithinChapter(pages);
+            const mergedPages = mergeResult.pages;
+            const sentencesMerged = mergeResult.sentencesMerged;
+            totalSentencesMerged += sentencesMerged;
+            
+            // Create processed chapter
+            const processedChapter = {
+                title: chapter.title,
+                chapterNumber: chapter.chapterNumber,
+                pageNumberStart: chapter.pageNumberStart,
+                pageNumberEnd: chapter.pageNumberEnd,
+                pages: mergedPages,
+                sentencesMerged: sentencesMerged
+            };
+            
+            processedChapters.push(processedChapter);
+            totalPages += mergedPages.length;
+            
+            console.log(`    ✅ Extracted ${mergedPages.length} pages, merged ${sentencesMerged} sentences`);
+        }
         
         // Generate statistics
-        const extractionStats = generatePageExtractionStats(chapters);
+        const extractionStats = generatePageExtractionStats(processedChapters);
         
         // Save debug output
         const debugOutput = {
             extractionMetadata: {
                 totalPages: totalPages,
-                totalChapters: chapters.length,
+                totalChapters: processedChapters.length,
                 totalSentencesMerged: totalSentencesMerged,
                 extractionTime: new Date().toISOString(),
                 processingTime: Date.now() - startTime,
-                note: "Using working step 2.3 output as reference"
+                note: "Extracted pages from step 2.2 chapter content"
             },
-            pageStats: extractionStats
+            pageStats: extractionStats,
+            debugPages: debugPages
         };
         
         const debugFile = path.join(config.DEBUG_DIR, 'step-03-page-extraction-and-cross-page-merging.json');
@@ -65,12 +103,12 @@ async function execute(pipelineState, config) {
         console.log(`📄 Debug output: ${debugFile}`);
         
         return {
-            chapters: chapters,
+            chapters: processedChapters,
             metadata: {
                 ...pipelineState.metadata,
                 pageExtractionAndCrossPageMerging: {
                     totalPages: totalPages,
-                    totalChapters: chapters.length,
+                    totalChapters: processedChapters.length,
                     averageWordsPerPage: extractionStats.averageWordsPerPage,
                     sentencesMerged: totalSentencesMerged,
                     extractionTime: new Date().toISOString(),
@@ -86,11 +124,11 @@ async function execute(pipelineState, config) {
 }
 
 /**
- * Extract pages from a single chapter's content
+ * Extract pages from a single chapter's content (with rawContent for debug)
  * @param {Object} chapter - Chapter object with content
- * @returns {Array} - Array of page objects
+ * @returns {Array} - Array of page objects with rawContent for debugging
  */
-function extractPagesFromChapter(chapter) {
+function extractPagesFromChapterWithDebug(chapter) {
     const pages = [];
     const lines = chapter.content.split('\n');
     
@@ -106,15 +144,13 @@ function extractPagesFromChapter(chapter) {
         if (pageStartMatch) {
             // Save previous page if it exists
             if (currentPageNumber && currentPageContent.length > 0) {
-                const cleanContent = cleanPageContentWithoutPageNumbers(currentPageContent.join('\n'), currentPageNumber);
-                if (cleanContent.trim().length > 0) {
+                const content = cleanPageContentWithoutPageNumbers(currentPageContent.join('\n'), currentPageNumber);
+                if (content.trim().length > 0) {
                     pages.push({
                         pageNumber: currentPageNumber,
-                        chapterNumber: chapter.chapterNumber,
-                        chapterTitle: chapter.title,
-                        rawContent: currentPageContent.join('\n'),
-                        cleanContent: cleanContent,
-                        wordCount: cleanContent.split(/\s+/).filter(w => w.length > 0).length
+                        content: content,
+                        rawContent: currentPageContent.join('\n'), // For debug
+                        wordCount: content.split(/\s+/).filter(w => w.length > 0).length
                     });
                 }
             }
@@ -141,15 +177,79 @@ function extractPagesFromChapter(chapter) {
     
     // Handle last page
     if (currentPageNumber && currentPageContent.length > 0) {
-        const cleanContent = cleanPageContentWithoutPageNumbers(currentPageContent.join('\n'), currentPageNumber);
-        if (cleanContent.trim().length > 0) {
+        const content = cleanPageContentWithoutPageNumbers(currentPageContent.join('\n'), currentPageNumber);
+        if (content.trim().length > 0) {
             pages.push({
                 pageNumber: currentPageNumber,
-                chapterNumber: chapter.chapterNumber,
-                chapterTitle: chapter.title,
-                rawContent: currentPageContent.join('\n'),
-                cleanContent: cleanContent,
-                wordCount: cleanContent.split(/\s+/).filter(w => w.length > 0).length
+                content: content,
+                rawContent: currentPageContent.join('\n'), // For debug
+                wordCount: content.split(/\s+/).filter(w => w.length > 0).length
+            });
+        }
+    }
+    
+    return pages;
+}
+
+/**
+ * Extract pages from a single chapter's content
+ * @param {Object} chapter - Chapter object with content
+ * @returns {Array} - Array of page objects
+ */
+function extractPagesFromChapter(chapter) {
+    const pages = [];
+    const lines = chapter.content.split('\n');
+    
+    let currentPageContent = [];
+    let currentPageNumber = null;
+    let isInPageContent = false;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Detect page start markers
+        const pageStartMatch = line.match(/^---\s*PAGE\s+(\d+)\s*---$/);
+        if (pageStartMatch) {
+            // Save previous page if it exists
+            if (currentPageNumber && currentPageContent.length > 0) {
+                const content = cleanPageContentWithoutPageNumbers(currentPageContent.join('\n'), currentPageNumber);
+                if (content.trim().length > 0) {
+                    pages.push({
+                        pageNumber: currentPageNumber,
+                        content: content,
+                        wordCount: content.split(/\s+/).filter(w => w.length > 0).length
+                    });
+                }
+            }
+            
+            // Start new page
+            currentPageNumber = parseInt(pageStartMatch[1], 10);
+            currentPageContent = [];
+            isInPageContent = true;
+            continue;
+        }
+        
+        // Detect page end markers
+        const pageEndMatch = line.match(/^---\s*END\s+PAGE\s+\d+\s*---$/);
+        if (pageEndMatch) {
+            isInPageContent = false;
+            continue;
+        }
+        
+        // Collect page content
+        if (isInPageContent) {
+            currentPageContent.push(line);
+        }
+    }
+    
+    // Handle last page
+    if (currentPageNumber && currentPageContent.length > 0) {
+        const content = cleanPageContentWithoutPageNumbers(currentPageContent.join('\n'), currentPageNumber);
+        if (content.trim().length > 0) {
+            pages.push({
+                pageNumber: currentPageNumber,
+                content: content,
+                wordCount: content.split(/\s+/).filter(w => w.length > 0).length
             });
         }
     }
@@ -330,8 +430,6 @@ function removePageNumberFromStart(content, pageNumber) {
     return content;
 }
 
-
-
 /**
  * Fix incomplete sentences that are split across page boundaries within a single chapter
  * @param {Array} pages - Array of page objects for a single chapter
@@ -348,8 +446,8 @@ function fixIncompleteSentencesWithinChapter(pages) {
         const nextPage = pages[i + 1];
         
         // Check if current page ends with incomplete sentence
-        const currentContent = currentPage.cleanContent.trim();
-        const nextContent = nextPage.cleanContent.trim();
+        const currentContent = currentPage.content.trim();
+        const nextContent = nextPage.content.trim();
         
         if (currentContent.length > 0 && nextContent.length > 0) {
             const lastChar = currentContent[currentContent.length - 1];
@@ -364,12 +462,12 @@ function fixIncompleteSentencesWithinChapter(pages) {
                     
                     if (fragment.match(/[.!?]$/)) {
                         // Found sentence completion - merge it (no need to clean page numbers anymore)
-                        currentPage.cleanContent = currentContent + ' ' + fragment;
-                        nextPage.cleanContent = words.slice(wordIndex).join(' ').trim();
+                        currentPage.content = currentContent + ' ' + fragment;
+                        nextPage.content = words.slice(wordIndex).join(' ').trim();
                         
                         // Update word counts
-                        currentPage.wordCount = currentPage.cleanContent.split(/\s+/).filter(w => w.length > 0).length;
-                        nextPage.wordCount = nextPage.cleanContent.split(/\s+/).filter(w => w.length > 0).length;
+                        currentPage.wordCount = currentPage.content.split(/\s+/).filter(w => w.length > 0).length;
+                        nextPage.wordCount = nextPage.content.split(/\s+/).filter(w => w.length > 0).length;
                         
                         sentencesMerged++;
                         break;

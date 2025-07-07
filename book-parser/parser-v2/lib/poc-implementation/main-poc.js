@@ -32,7 +32,8 @@ const path = require('path');
 
 // Import step implementations
 const textExtraction = require('./steps/01-text-extraction');
-const chapterDetectionAndTextExtraction = require('./steps/02-chapter-detection-and-text-extraction');
+const chapterDetection = require('./steps/02-1-chapter-detection');
+const chapterContentExtraction = require('./steps/02-2-chapter-content-extraction');
 const pageExtractionAndCrossPageMerging = require('./steps/03-page-extraction-and-cross-page-merging');
 const paragraphDetection = require('./steps/04-paragraph-detection');
 const headerDetection = require('./steps/05-header-detection');
@@ -72,7 +73,8 @@ let PIPELINE_STATE = {
 // Step execution mapping
 const STEPS = {
     'step-1': textExtraction.execute,
-    'step-2': chapterDetectionAndTextExtraction.execute,
+    'step-2-1': chapterDetection.execute,
+    'step-2-2': chapterContentExtraction.execute,
     'step-3': pageExtractionAndCrossPageMerging.execute,
     'step-4': paragraphDetection.execute,
     'step-5': headerDetection.execute,
@@ -81,7 +83,8 @@ const STEPS = {
     'step-8': outputGeneration.execute,
     // Legacy aliases for backward compatibility
     'text-extraction': textExtraction.execute,
-    'chapter-detection-and-text-extraction': chapterDetectionAndTextExtraction.execute,
+    'chapter-detection': chapterDetection.execute,
+    'chapter-content-extraction': chapterContentExtraction.execute,
     'page-extraction-and-cross-page-merging': pageExtractionAndCrossPageMerging.execute,
     'paragraph-detection': paragraphDetection.execute,
     'header-detection': headerDetection.execute,
@@ -92,7 +95,8 @@ const STEPS = {
 
 const STEP_NAMES = [
     'step-1',
-    'step-2',
+    'step-2-1',
+    'step-2-2',
     'step-3',
     'step-4',
     'step-5',
@@ -104,7 +108,8 @@ const STEP_NAMES = [
 // Step descriptions for help text
 const STEP_DESCRIPTIONS = {
     'step-1': 'Extract raw text from PDF',
-    'step-2': 'Detect chapter boundaries and extract chapter content',
+    'step-2-1': 'Detect chapter boundaries from Table of Contents',
+    'step-2-2': 'Extract and clean chapter content',
     'step-3': 'Extract and clean individual pages + merge split sentences across pages',
     'step-4': 'Detect paragraph boundaries',
     'step-5': 'Detect headers using 6-rule system',
@@ -246,8 +251,8 @@ Usage:
 
 Available steps:
   step-1       - ${STEP_DESCRIPTIONS['step-1']}
-  step-2.1     - ${STEP_DESCRIPTIONS['step-2.1']}
-  step-2.2     - ${STEP_DESCRIPTIONS['step-2.2']}
+  step-2-1     - ${STEP_DESCRIPTIONS['step-2-1']}
+  step-2-2     - ${STEP_DESCRIPTIONS['step-2-2']}
   step-3       - ${STEP_DESCRIPTIONS['step-3']}
   step-4       - ${STEP_DESCRIPTIONS['step-4']}
   step-5       - ${STEP_DESCRIPTIONS['step-5']}
@@ -258,8 +263,8 @@ Available steps:
 
 Step execution modes:
   • Single step: node main-poc.js step-1
-  • Up to step: node main-poc.js step-2.2 
-    (runs step-1, step-2.1, step-2.2 and writes output.json)
+  • Up to step: node main-poc.js step-2-2 
+    (runs step-1, step-2-1, step-2-2 and writes output.json)
   • All steps: node main-poc.js all
 
 Options:
@@ -268,7 +273,7 @@ Options:
 Examples:
   node main-poc.js all
   node main-poc.js step-1
-  node main-poc.js step-2.2 --debug
+  node main-poc.js step-2-2 --debug
   node main-poc.js step-3
 `);
 }

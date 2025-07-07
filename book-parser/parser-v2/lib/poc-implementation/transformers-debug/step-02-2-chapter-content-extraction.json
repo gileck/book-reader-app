@@ -1,0 +1,82 @@
+{
+  "processingTime": 2,
+  "extractionStats": {
+    "totalChapters": 10,
+    "totalPages": 309,
+    "averagePagesPerChapter": 30.9,
+    "totalCharacters": 789810,
+    "averageCharactersPerChapter": 78981
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "pageNumberStart": 8,
+      "pageNumberEnd": 26,
+      "contentLength": 52610
+    },
+    {
+      "title": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "pageNumberStart": 27,
+      "pageNumberEnd": 61,
+      "contentLength": 94198
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "pageNumberStart": 62,
+      "pageNumberEnd": 90,
+      "contentLength": 78817
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "pageNumberStart": 91,
+      "pageNumberEnd": 123,
+      "contentLength": 83976
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "pageNumberStart": 124,
+      "pageNumberEnd": 149,
+      "contentLength": 74436
+    },
+    {
+      "title": "To the dark side",
+      "chapterNumber": 5,
+      "pageNumberStart": 150,
+      "pageNumberEnd": 180,
+      "contentLength": 82173
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "pageNumberStart": 181,
+      "pageNumberEnd": 210,
+      "contentLength": 87780
+    },
+    {
+      "title": "Epilogue: Self",
+      "chapterNumber": 99,
+      "pageNumberStart": 211,
+      "pageNumberEnd": 221,
+      "contentLength": 22737
+    },
+    {
+      "title": "Appendix 1: Red protein mechanics",
+      "chapterNumber": 99,
+      "pageNumberStart": 222,
+      "pageNumberEnd": 226,
+      "contentLength": 7228
+    },
+    {
+      "title": "Appendix 2: The Krebs line",
+      "chapterNumber": 99,
+      "pageNumberStart": 227,
+      "pageNumberEnd": 316,
+      "contentLength": 205855
+    }
+  ]
+}

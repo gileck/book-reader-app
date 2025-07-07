@@ -55,7 +55,7 @@ async function execute(pipelineState, config) {
         const pdfData = await pdfParse(pdfBuffer, {
             pagerender: async (pageData) => {
                 // Extract text for each page individually with page markers
-                const pageNum = pageData.pageIndex + 1;
+                const pageNum = pageData.pageIndex; // Start from 0 to align with book pages
                 
                 if (pageData.getTextContent) {
                     const textContent = await pageData.getTextContent();
@@ -72,7 +72,10 @@ async function execute(pipelineState, config) {
                         lastY = item.transform[5];
                     }
                     
-                    return `\n--- PAGE ${pageNum} ---\n${pageText.trim()}\n--- END PAGE ${pageNum} ---\n`;
+                    // Clean the page text by removing standalone page numbers at the beginning
+                    const cleanedPageText = removeStandalonePageNumber(pageText.trim(), pageNum);
+                    
+                    return `\n--- PAGE ${pageNum} ---\n${cleanedPageText}\n--- END PAGE ${pageNum} ---\n`;
                 } else {
                     return `\n--- PAGE ${pageNum} ---\n\n--- END PAGE ${pageNum} ---\n`;
                 }
@@ -260,6 +263,38 @@ function fallbackTextExtraction(config, pipelineState) {
 }
 
 /**
+ * Remove standalone page number at the beginning of page text
+ * @param {string} pageText - Raw page text
+ * @param {number} pageNum - Page number
+ * @returns {string} - Cleaned page text
+ */
+function removeStandalonePageNumber(pageText, pageNum) {
+    if (!pageText) return pageText;
+    
+    const lines = pageText.split('\n');
+    if (lines.length === 0) return pageText;
+    
+    // Check if the first few lines contain just the page number
+    for (let i = 0; i < Math.min(3, lines.length); i++) {
+        const line = lines[i].trim();
+        
+        // Check if this line is just the page number (or page number + 1 for book vs PDF numbering)
+        if (line === pageNum.toString() || 
+            line === (pageNum + 1).toString() || 
+            line === (pageNum - 1).toString()) {
+            // Remove this line
+            lines.splice(i, 1);
+            i--; // Adjust index since we removed an element
+        } else if (line.length > 0) {
+            // If we hit a non-empty line that's not a page number, stop checking
+            break;
+        }
+    }
+    
+    return lines.join('\n');
+}
+
+/**
  * Add estimated page markers when pagerender doesn't work
  * @param {string} text - Raw PDF text
  * @param {number} pageCount - Number of pages
@@ -267,7 +302,8 @@ function fallbackTextExtraction(config, pipelineState) {
  */
 function addEstimatedPageMarkers(text, pageCount) {
     if (!text || pageCount <= 1) {
-        return `\n--- PAGE 1 ---\n${text}\n--- END PAGE 1 ---\n`;
+        const cleanedText = removeStandalonePageNumber(text, 0);
+        return `\n--- PAGE 0 ---\n${cleanedText}\n--- END PAGE 0 ---\n`;
     }
     
     // Estimate page breaks by text length
@@ -277,13 +313,13 @@ function addEstimatedPageMarkers(text, pageCount) {
     let markedText = '';
     let currentPageStart = 0;
     
-    for (let page = 1; page <= pageCount; page++) {
+    for (let page = 0; page < pageCount; page++) {
         const pageStart = currentPageStart;
-        const pageEnd = page === pageCount ? textLength : currentPageStart + averagePageLength;
+        const pageEnd = page === pageCount - 1 ? textLength : currentPageStart + averagePageLength;
         
         // Try to break at a paragraph boundary near the estimated position
         let actualPageEnd = pageEnd;
-        if (page < pageCount) {
+        if (page < pageCount - 1) {
             // Look for paragraph break within ±10% of estimated position
             const searchRange = Math.floor(averagePageLength * 0.1);
             const searchStart = Math.max(pageEnd - searchRange, pageStart);
@@ -298,7 +334,8 @@ function addEstimatedPageMarkers(text, pageCount) {
         }
         
         const pageText = text.substring(pageStart, actualPageEnd);
-        markedText += `\n--- PAGE ${page} ---\n${pageText}\n--- END PAGE ${page} ---\n`;
+        const cleanedPageText = removeStandalonePageNumber(pageText, page);
+        markedText += `\n--- PAGE ${page} ---\n${cleanedPageText}\n--- END PAGE ${page} ---\n`;
         
         currentPageStart = actualPageEnd;
     }

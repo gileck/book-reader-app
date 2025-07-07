@@ -1,12 +1,12 @@
 /**
  * Step 4: Paragraph Detection
  * 
- * Detect paragraph boundaries in the page content from step 2.3.
+ * Detect paragraph boundaries in the page content from step 3.
  * This step creates clean paragraph structure for chunking.
  * 
  * Requirements:
  * - Paragraphs end when a sentence ends with punctuation AND is followed by a newline
- * - Process clean page content from step 2.3
+ * - Process clean page content from step 3
  * - Output: array of chapters, each chapter has array of paragraphs
  * - Each paragraph has pageNumber (start) and content
  * 
@@ -32,7 +32,7 @@ async function execute(pipelineState, config) {
     
     // Validate prerequisites
     if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
-        throw new Error('Step 2.3 (page extraction) must be completed first');
+        throw new Error('Step 3 (page extraction) must be completed first');
     }
     
     const startTime = Date.now();
