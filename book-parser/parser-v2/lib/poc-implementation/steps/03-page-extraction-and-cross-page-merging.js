@@ -454,24 +454,40 @@ function fixIncompleteSentencesWithinChapter(pages) {
             
             // If page doesn't end with sentence terminator, try to merge
             if (!['.', '!', '?', ':', ';'].includes(lastChar)) {
-                const words = nextContent.split(/\s+/);
+                // Find sentence completion while preserving original text structure
+                let fragmentEnd = -1;
+                let searchPosition = 0;
                 
-                // Look for sentence completion in first few words of next page
-                for (let wordIndex = 1; wordIndex <= Math.min(20, words.length); wordIndex++) {
-                    const fragment = words.slice(0, wordIndex).join(' ');
+                // Look for sentence completion in first part of next page
+                for (let charIndex = 1; charIndex <= Math.min(200, nextContent.length); charIndex++) {
+                    const char = nextContent[charIndex - 1];
                     
-                    if (fragment.match(/[.!?]$/)) {
-                        // Found sentence completion - merge it (no need to clean page numbers anymore)
-                        currentPage.content = currentContent + ' ' + fragment;
-                        nextPage.content = words.slice(wordIndex).join(' ').trim();
-                        
-                        // Update word counts
-                        currentPage.wordCount = currentPage.content.split(/\s+/).filter(w => w.length > 0).length;
-                        nextPage.wordCount = nextPage.content.split(/\s+/).filter(w => w.length > 0).length;
-                        
-                        sentencesMerged++;
-                        break;
+                    if (['.', '!', '?'].includes(char)) {
+                        // Found potential sentence end - check if it's followed by appropriate spacing
+                        if (charIndex === nextContent.length || 
+                            nextContent[charIndex] === ' ' || 
+                            nextContent[charIndex] === '\n' ||
+                            nextContent[charIndex] === '\t') {
+                            fragmentEnd = charIndex;
+                            break;
+                        }
                     }
+                }
+                
+                if (fragmentEnd > 0) {
+                    // Extract the fragment to complete the sentence
+                    const fragment = nextContent.substring(0, fragmentEnd);
+                    const remaining = nextContent.substring(fragmentEnd).trimStart();
+                    
+                    // Merge the fragment with current page
+                    currentPage.content = currentContent + ' ' + fragment;
+                    nextPage.content = remaining;
+                    
+                    // Update word counts
+                    currentPage.wordCount = currentPage.content.split(/\s+/).filter(w => w.length > 0).length;
+                    nextPage.wordCount = nextPage.content.split(/\s+/).filter(w => w.length > 0).length;
+                    
+                    sentencesMerged++;
                 }
             }
         }

@@ -2,16 +2,16 @@
   "extractionMetadata": {
     "totalPages": 309,
     "totalChapters": 10,
-    "totalSentencesMerged": 158,
-    "extractionTime": "2025-07-07T14:18:09.878Z",
-    "processingTime": 32,
+    "totalSentencesMerged": 196,
+    "extractionTime": "2025-07-07T14:25:10.781Z",
+    "processingTime": 28,
     "note": "Extracted pages from step 2.2 chapter content"
   },
   "pageStats": {
     "totalPages": 309,
     "totalWords": 121235,
     "averageWordsPerPage": 392.3462783171521,
-    "sentencesMerged": 158,
+    "sentencesMerged": 196,
     "chaptersProcessed": 10,
     "pagesPerChapter": {
       "0": 19,

@@ -1,41 +1,41 @@
 {
   "paragraphDetectionMetadata": {
-    "totalParagraphs": 711,
+    "totalParagraphs": 782,
     "totalChapters": 10,
-    "processingTime": 33,
-    "detectionTime": "2025-07-07T14:13:45.935Z"
+    "processingTime": 24,
+    "detectionTime": "2025-07-07T14:25:10.819Z"
   },
   "paragraphStats": {
-    "totalParagraphs": 711,
-    "averageParagraphsPerChapter": 71.1,
+    "totalParagraphs": 782,
+    "averageParagraphsPerChapter": 78.2,
     "paragraphsPerChapter": {
-      "0": 48,
-      "1": 88,
-      "2": 69,
-      "3": 78,
-      "4": 73,
-      "5": 69,
-      "6": 77,
-      "99": 182
+      "0": 54,
+      "1": 96,
+      "2": 71,
+      "3": 80,
+      "4": 72,
+      "5": 80,
+      "6": 83,
+      "99": 213
     },
-    "averageWordsPerParagraph": 170.51336146272854,
-    "averageSentencesPerParagraph": 10.458509142053446,
-    "minWordsPerParagraph": 9,
-    "maxWordsPerParagraph": 634,
+    "averageWordsPerParagraph": 155.0319693094629,
+    "averageSentencesPerParagraph": 9.466751918158568,
+    "minWordsPerParagraph": 5,
+    "maxWordsPerParagraph": 435,
     "minSentencesPerParagraph": 1,
-    "maxSentencesPerParagraph": 75,
+    "maxSentencesPerParagraph": 33,
     "wordCountDistribution": {
-      "under100": 102,
-      "between100And200": 511,
-      "over200": 98,
-      "percentageInTargetRange": 72
+      "under100": 35,
+      "between100And200": 631,
+      "over200": 116,
+      "percentageInTargetRange": 81
     }
   },
   "sampleParagraphs": [
     {
       "chapterTitle": "Introduction: Life itself",
       "chapterNumber": 0,
-      "paragraphCount": 48,
+      "paragraphCount": 54,
       "sampleParagraphs": [
         {
           "pageNumber": 8,
@@ -60,7 +60,7 @@
     {
       "chapterTitle": "Discovering the nanocosm",
       "chapterNumber": 1,
-      "paragraphCount": 88,
+      "paragraphCount": 96,
       "sampleParagraphs": [
         {
           "pageNumber": 27,
@@ -76,9 +76,9 @@
         },
         {
           "pageNumber": 28,
-          "contentPreview": "In the audience, Hopkins’ s many friends are smiling. They know his obsession with the dynamic side ...",
-          "wordCount": 188,
-          "sentencesCount": 12
+          "contentPreview": "In the audience, Hopkins’ s many friends are smiling. They\nknow his obsession with the dynamic side ...",
+          "wordCount": 276,
+          "sentencesCount": 17
         }
       ]
     }
