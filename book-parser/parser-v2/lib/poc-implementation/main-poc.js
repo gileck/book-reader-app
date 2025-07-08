@@ -14,6 +14,7 @@
  *   step-1    - text-extraction
  *   step-2    - chapter-detection-and-text-extraction (NEW)
  *   step-3    - page-extraction-and-cross-page-merging (NEW)
+ *   step-3-1  - link-detection (NEW)
  *   step-4    - paragraph-detection
  *   step-5    - header-detection
  *   step-6    - chunking-algorithm
@@ -35,6 +36,7 @@ const textExtraction = require('./steps/01-text-extraction');
 const chapterDetection = require('./steps/02-1-chapter-detection');
 const chapterContentExtraction = require('./steps/02-2-chapter-content-extraction');
 const pageExtractionAndCrossPageMerging = require('./steps/03-page-extraction-and-cross-page-merging');
+const linkDetection = require('./steps/03-1-link-detection');
 const paragraphDetection = require('./steps/04-paragraph-detection');
 const headerDetection = require('./steps/05-header-detection');
 const chunkingAlgorithm = require('./steps/06-chunking-algorithm');
@@ -44,6 +46,7 @@ const outputGeneration = require('./steps/08-output-generation');
 // Configuration
 const CONFIG = {
     INPUT_PDF: '/Users/gileck/projects/book-reader-app/files/Transformers/book.pdf',
+    PDF_PATH: '/Users/gileck/projects/book-reader-app/files/Transformers/book.pdf', // For link extraction
     OUTPUT_DIR: '/Users/gileck/projects/book-reader-app/book-parser/parser-v2/lib/poc-implementation/transformers-output',
     DEBUG_DIR: '/Users/gileck/projects/book-reader-app/book-parser/parser-v2/lib/poc-implementation/transformers-debug',
     CHUNK_TARGET_MIN: 80,
@@ -76,6 +79,7 @@ const STEPS = {
     'step-2-1': chapterDetection.execute,
     'step-2-2': chapterContentExtraction.execute,
     'step-3': pageExtractionAndCrossPageMerging.execute,
+    'step-3-1': linkDetection.execute,
     'step-4': paragraphDetection.execute,
     'step-5': headerDetection.execute,
     'step-6': chunkingAlgorithm.execute,
@@ -98,6 +102,7 @@ const STEP_NAMES = [
     'step-2-1',
     'step-2-2',
     'step-3',
+    'step-3-1',
     'step-4',
     'step-5',
     'step-6',
@@ -111,6 +116,7 @@ const STEP_DESCRIPTIONS = {
     'step-2-1': 'Detect chapter boundaries from Table of Contents',
     'step-2-2': 'Extract and clean chapter content',
     'step-3': 'Extract and clean individual pages + merge split sentences across pages',
+    'step-3-1': 'Detect and resolve internal links from PDF annotations',
     'step-4': 'Detect paragraph boundaries',
     'step-5': 'Detect headers using 6-rule system',
     'step-6': 'Create chunks with target word count',

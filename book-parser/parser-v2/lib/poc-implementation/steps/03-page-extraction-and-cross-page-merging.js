@@ -370,6 +370,15 @@ function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
             return true;
         }
         
+        // Pattern: Spaced-out page number like "1 1" instead of "11" or "1 0" instead of "10"
+        const spacedMatch = line.match(/^(\d)\s+(\d)$/);
+        if (spacedMatch) {
+            const reconstructedNumber = parseInt(spacedMatch[1] + spacedMatch[2]);
+            if (reconstructedNumber === bookPageNumber || reconstructedNumber === pageNumber) {
+                return true;
+            }
+        }
+        
         // Pattern: Page number followed by ONLY title words (but NOT chapter content)
         // Be more restrictive - only remove if it's clearly a header, not actual content
         if (line.match(/^\d+\s+[A-Z][A-Z\s]{2,20}$/) && !line.match(/[.,:;!?]/)) {
@@ -386,6 +395,15 @@ function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
         // Pattern: Just a page number
         if (line.match(/^\d+$/) && parseInt(line) === bookPageNumber) {
             return true;
+        }
+        
+        // Pattern: Spaced-out page number like "1 1" instead of "11" or "1 0" instead of "10"
+        const spacedMatch = line.match(/^(\d)\s+(\d)$/);
+        if (spacedMatch) {
+            const reconstructedNumber = parseInt(spacedMatch[1] + spacedMatch[2]);
+            if (reconstructedNumber === bookPageNumber || reconstructedNumber === pageNumber) {
+                return true;
+            }
         }
         
         // Pattern: Book title or author in footer
@@ -427,6 +445,36 @@ function removePageNumberFromStart(content, pageNumber) {
         return cleaned;
     }
     
+    // Check for spaced-out page numbers like "1 1" instead of "11"
+    // Check both book page number and pipeline page number
+    const pipelinePageNumberStr = pageNumber.toString();
+    
+    if (bookPageNumberStr.length === 2) {
+        const spacedBookPageNumber = `${bookPageNumberStr[0]} ${bookPageNumberStr[1]}`;
+        if (trimmedContent.startsWith(spacedBookPageNumber)) {
+            // Remove the spaced-out page number from the start
+            let cleaned = trimmedContent.substring(spacedBookPageNumber.length);
+            
+            // Remove any leading whitespace and newlines
+            cleaned = cleaned.replace(/^\s+/, '');
+            
+            return cleaned;
+        }
+    }
+    
+    if (pipelinePageNumberStr.length === 2) {
+        const spacedPipelinePageNumber = `${pipelinePageNumberStr[0]} ${pipelinePageNumberStr[1]}`;
+        if (trimmedContent.startsWith(spacedPipelinePageNumber)) {
+            // Remove the spaced-out page number from the start
+            let cleaned = trimmedContent.substring(spacedPipelinePageNumber.length);
+            
+            // Remove any leading whitespace and newlines
+            cleaned = cleaned.replace(/^\s+/, '');
+            
+            return cleaned;
+        }
+    }
+    
     return content;
 }
 
@@ -459,17 +507,76 @@ function fixIncompleteSentencesWithinChapter(pages) {
                 let searchPosition = 0;
                 
                 // Look for sentence completion in first part of next page
-                for (let charIndex = 1; charIndex <= Math.min(200, nextContent.length); charIndex++) {
+                // Track whether we're inside quotes to ignore punctuation within quotes
+                let insideQuotes = false;
+                let quoteChar = null;
+                
+                for (let charIndex = 1; charIndex <= Math.min(400, nextContent.length); charIndex++) {
                     const char = nextContent[charIndex - 1];
                     
-                    if (['.', '!', '?'].includes(char)) {
-                        // Found potential sentence end - check if it's followed by appropriate spacing
-                        if (charIndex === nextContent.length || 
-                            nextContent[charIndex] === ' ' || 
-                            nextContent[charIndex] === '\n' ||
-                            nextContent[charIndex] === '\t') {
-                            fragmentEnd = charIndex;
-                            break;
+                    // Track quote boundaries - handle both regular and smart quotes
+                    if (['"', "'", '\u2018', '\u2019', '\u201C', '\u201D'].includes(char)) {
+                        if (!insideQuotes) {
+                            // Starting a quote
+                            insideQuotes = true;
+                            quoteChar = char;
+                        } else if (
+                            char === quoteChar || 
+                            (quoteChar === '\u2018' && char === '\u2019') || // smart single quotes
+                            (quoteChar === '\u201C' && char === '\u201D')    // smart double quotes
+                        ) {
+                            // Ending the quote
+                            insideQuotes = false;
+                            quoteChar = null;
+                        }
+                    }
+                    
+                    // Only check for sentence endings if we're not inside quotes
+                    if (['.', '!', '?'].includes(char) && !insideQuotes) {
+                        // For periods, do additional checks to avoid abbreviations like "E. coli", "U.S.A"
+                        if (char === '.') {
+                            // Check if this is really a sentence ending
+                            if (charIndex === nextContent.length) {
+                                // End of content, treat as sentence end
+                                fragmentEnd = charIndex;
+                                break;
+                            } else if (nextContent[charIndex] === ' ' || nextContent[charIndex] === '\n' || nextContent[charIndex] === '\t') {
+                                // Period followed by whitespace - check if followed by capital letter
+                                let nextNonWhitespace = charIndex + 1;
+                                while (nextNonWhitespace < nextContent.length && /\s/.test(nextContent[nextNonWhitespace])) {
+                                    nextNonWhitespace++;
+                                }
+                                if (nextNonWhitespace < nextContent.length && /[A-Z]/.test(nextContent[nextNonWhitespace])) {
+                                    // Period + whitespace + capital letter = sentence ending
+                                    fragmentEnd = charIndex;
+                                    break;
+                                }
+                                // Otherwise, period + whitespace + lowercase = abbreviation, continue searching
+                            }
+                            // Period not followed by whitespace (like "U.S.A") = not sentence ending
+                        } else {
+                            // For exclamation and question marks, use existing logic (they're almost always sentence endings)
+                            // But also handle closing punctuation like quotes, parentheses after the sentence ending
+                            if (charIndex === nextContent.length) {
+                                fragmentEnd = charIndex;
+                                break;
+                            } else if (nextContent[charIndex] === ' ' || nextContent[charIndex] === '\n' || nextContent[charIndex] === '\t') {
+                                fragmentEnd = charIndex;
+                                break;
+                            } else if (/['"`\)\]\}\u2018\u2019\u201C\u201D]/.test(nextContent[charIndex])) {
+                                // Handle closing punctuation followed by whitespace
+                                let afterClosing = charIndex + 1;
+                                while (afterClosing < nextContent.length && /['"`\)\]\}\u2018\u2019\u201C\u201D]/.test(nextContent[afterClosing])) {
+                                    afterClosing++; // Skip multiple closing punctuation
+                                }
+                                if (afterClosing === nextContent.length || 
+                                    nextContent[afterClosing] === ' ' || 
+                                    nextContent[afterClosing] === '\n' ||
+                                    nextContent[afterClosing] === '\t') {
+                                    fragmentEnd = afterClosing;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }

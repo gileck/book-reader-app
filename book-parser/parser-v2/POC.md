@@ -56,19 +56,33 @@ This document outlines the Proof of Concept (POC) phase for the Book Parser v2.0
   - Processing time: 35ms
   - Output: `transformers-debug/step-02-3-page-extraction.json`
 
+- **Step 3-1: Link Detection** ✅ **NEWLY COMPLETED & FULLY VALIDATED**
+  - **BREAKTHROUGH**: Successfully implemented PDF link extraction and resolution
+  - **KEY ACHIEVEMENTS**:
+    1. **PDF Annotation Extraction**: Using PDF.js to extract 2214 internal links
+    2. **Page Number Conversion**: Fixed PDF 1-based → Book 0-based mapping
+    3. **Reverse Link Prevention**: Eliminated 117 duplicate bidirectional links
+    4. **Role-Based Classification**: Single `links` array with `role: "source"|"target"`
+    5. **Connected Link Tracing**: Same `linkId` for source-target pairs
+  - **VALIDATED RESULTS**: 200 clean PDF annotation links processed
+  - **ARCHITECTURAL DESIGN**: Links integrated between Step 3 and Step 4
+  - Processing time: 798ms
+  - Output: `transformers-debug/step-03-1-link-detection.json`
+
 #### **🔄 NEXT STEPS:**
-- **Step 3: Paragraph Detection** - Detect paragraph boundaries in clean, merged page content
-- **Step 4: Header Detection** - Implement 6-rule header detection system  
-- **Step 5: Chunking Algorithm** - Create 80-300 word chunks from paragraphs
-- **Step 6: Output Generation** - Generate final output.json
+- **Step 4: Paragraph Detection** - Detect paragraph boundaries in clean, merged page content
+- **Step 5: Header Detection** - Implement 6-rule header detection system  
+- **Step 6: Chunking Algorithm** - Create 80-300 word chunks from paragraphs
+- **Step 7: Output Generation** - Generate final output.json
 
-#### **Overall Progress: 67% complete (4/6 steps finished) - MAJOR PROGRESS MADE**
+#### **Overall Progress: 72% complete (5/7 steps finished) - LINK DETECTION BREAKTHROUGH**
 
-**Current Phase: Step 3 - Paragraph Detection**
-- **Foundation Complete**: Text extraction + Chapter detection + Page extraction (all tests passing)
+**Current Phase: Step 4 - Paragraph Detection**
+- **Foundation Complete**: Text extraction + Chapter detection + Page extraction + Link detection (all tests passing)
 - **Cross-Page Merging**: ✅ COMPLETE - Successfully integrated into Step 2.3
-- **Next Focus**: Implement paragraph boundary detection on clean, merged page content
-- **Status**: 🚀 READY TO IMPLEMENT - All prerequisites completed
+- **Link Detection**: ✅ COMPLETE - 200 PDF annotation links processed with role-based classification
+- **Next Focus**: Implement paragraph boundary detection on clean, merged page content with link integration
+- **Status**: 🚀 READY TO IMPLEMENT - All prerequisites completed, links ready for paragraph assignment
 
 ---
 
@@ -185,6 +199,29 @@ parser-v2/
 - Cross-page sentence merging working correctly
 - Page number interference eliminated
 - Clean merged content ready for paragraph detection
+
+### POC-3.1: Link Detection ✅ **NEWLY COMPLETED**
+**Requirement**: FR-5 (Link Resolution) - Extract and resolve internal PDF links
+**Goal**: Validate PDF annotation extraction and bidirectional link mapping
+
+**Implementation Status**: ✅ COMPLETED as Step 3-1 (Link Detection)
+- PDF annotation extraction using PDF.js `getAnnotations()` method
+- Page number conversion (PDF 1-based → Book 0-based) with offset correction
+- Reverse link detection and prevention (eliminated 117 duplicate connections)
+- Role-based link classification with single `links` array structure
+- Connected link tracing using shared `linkId` for source-target pairs
+
+**Key Technical Achievements**:
+- **PDF Processing**: Extracted 2214 raw internal links from PDF annotations
+- **Page Mapping**: Fixed page boundary misalignment with ±5 page search
+- **Data Structure**: Clean `{ linkId, sourcePageNumber, sourceText, targetPageNumber, targetText, type, role }` format
+- **Validation**: Filtered invalid links (years, page numbers, embedded text)
+- **Architecture**: Integrated between Step 3 (pages) and Step 4 (paragraphs)
+
+**Results**:
+- 200 valid PDF annotation links processed and mapped
+- Bidirectional link relationships established with unique IDs
+- Clean link data ready for paragraph and chunk assignment
 
 ### POC-4: Paragraph Detection 🔄 **NEXT TO IMPLEMENT**
 **Requirement**: FR-1 (Text Processing) - Detect paragraph boundaries within chapters

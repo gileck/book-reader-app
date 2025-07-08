@@ -2,32 +2,32 @@
   "paragraphDetectionMetadata": {
     "totalParagraphs": 782,
     "totalChapters": 10,
-    "processingTime": 24,
-    "detectionTime": "2025-07-07T14:25:10.819Z"
+    "processingTime": 26,
+    "detectionTime": "2025-07-08T08:40:30.660Z"
   },
   "paragraphStats": {
     "totalParagraphs": 782,
     "averageParagraphsPerChapter": 78.2,
     "paragraphsPerChapter": {
-      "0": 54,
-      "1": 96,
+      "0": 55,
+      "1": 95,
       "2": 71,
       "3": 80,
-      "4": 72,
+      "4": 71,
       "5": 80,
-      "6": 83,
+      "6": 85,
       "99": 213
     },
-    "averageWordsPerParagraph": 155.0319693094629,
-    "averageSentencesPerParagraph": 9.466751918158568,
-    "minWordsPerParagraph": 5,
+    "averageWordsPerParagraph": 155.02941176470588,
+    "averageSentencesPerParagraph": 9.468030690537084,
+    "minWordsPerParagraph": 11,
     "maxWordsPerParagraph": 435,
     "minSentencesPerParagraph": 1,
     "maxSentencesPerParagraph": 33,
     "wordCountDistribution": {
-      "under100": 35,
+      "under100": 36,
       "between100And200": 631,
-      "over200": 116,
+      "over200": 115,
       "percentageInTargetRange": 81
     }
   },
@@ -35,7 +35,7 @@
     {
       "chapterTitle": "Introduction: Life itself",
       "chapterNumber": 0,
-      "paragraphCount": 54,
+      "paragraphCount": 55,
       "sampleParagraphs": [
         {
           "pageNumber": 8,
@@ -60,7 +60,7 @@
     {
       "chapterTitle": "Discovering the nanocosm",
       "chapterNumber": 1,
-      "paragraphCount": 96,
+      "paragraphCount": 95,
       "sampleParagraphs": [
         {
           "pageNumber": 27,

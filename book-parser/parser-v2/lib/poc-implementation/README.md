@@ -15,11 +15,12 @@ Each step is implemented as a separate module in the `steps/` folder:
 1. **`01-text-extraction.js`** - Extract raw text from PDF with literal `\n` preservation ✅
 2. **`02-chapter-detection-and-text-extraction.js`** - Detect chapter boundaries and extract content ✅
 3. **`03-page-extraction-and-cross-page-merging.js`** - Extract pages and merge sentences split across pages ✅
-4. **`04-paragraph-detection.js`** - Detect paragraph boundaries on clean, merged text ⚠️
-5. **`05-header-detection.js`** - Detect headers using 6-rule validation system ⚠️
-6. **`06-chunking-algorithm.js`** - Create chunks with 80-300 word target ⚠️
-7. **`07-page-assignment.js`** - Assign accurate page numbers to final chunks ⚠️
-8. **`08-output-generation.js`** - Generate final output.json and summary.json ⚠️
+4. **`03-1-link-detection.js`** - Extract and resolve PDF internal links with bidirectional mapping ✅
+5. **`04-paragraph-detection.js`** - Detect paragraph boundaries on clean, merged text ⚠️
+6. **`05-header-detection.js`** - Detect headers using 6-rule validation system ⚠️
+7. **`06-chunking-algorithm.js`** - Create chunks with 80-300 word target ⚠️
+8. **`07-page-assignment.js`** - Assign accurate page numbers to final chunks ⚠️
+9. **`08-output-generation.js`** - Generate final output.json and summary.json ⚠️
 
 **Legend**: ✅ Implemented | ⚠️ Skeleton Only
 
@@ -33,7 +34,7 @@ PIPELINE_STATE = {
     rawText: null,
     
     // Chapter structure
-    chapters: [],           // Chapters with extracted content
+    chapters: [],           // Chapters with extracted content and pages
     
     // Content structure  
     paragraphs: [],         // Detected paragraphs
@@ -42,6 +43,7 @@ PIPELINE_STATE = {
     
     // Metadata
     pages: [],             // Page information
+    links: [],             // Internal PDF links with bidirectional mapping
     finalOutput: null,     // Generated output.json
     
     // Processing metadata
@@ -116,12 +118,13 @@ node main-poc.js step-2 --debug
 
 ## Implementation Status
 
-### ✅ Completed (3/8 steps - 37.5%)
+### ✅ Completed (4/9 steps - 44.4%)
 - **Step 1**: Text Extraction - 796,464 characters from 317 pages
 - **Step 2**: Chapter Detection and Text Extraction - 9 chapters with 123,976 words
 - **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with 158 merged sentences
+- **Step 3-1**: Link Detection - 200 PDF annotation links with bidirectional mapping
 
-### ⚠️ To Be Implemented (5/8 steps remaining)
+### ⚠️ To Be Implemented (5/9 steps remaining)
 - **Step 4**: Paragraph Detection (next priority)
 - **Step 5**: Header Detection
 - **Step 6**: Chunking Algorithm
@@ -219,11 +222,20 @@ The pipeline was optimized by combining related steps:
 - 796,464 characters extracted from 317 pages
 - 9 chapters detected and extracted (123,976 words)
 - 309 pages processed with 158 sentences merged across boundaries
-- Clean, merged content ready for paragraph detection
+- 200 PDF annotation links extracted and mapped with bidirectional relationships
+- Clean, merged content with link integration ready for paragraph detection
+
+**Link Detection Breakthrough** 🔗
+- PDF annotation extraction using PDF.js successfully implemented
+- Page number conversion (PDF 1-based → Book 0-based) corrected
+- Reverse link prevention eliminates 117 duplicate connections
+- Role-based link classification with unique ID tracing
+- Clean link data structure ready for paragraph assignment
 
 **Next Phase**: Content Structure Analysis
 - Step 4 (Paragraph Detection) ready for implementation
-- Foundation provides clean, merged text for analysis
+- Foundation provides clean, merged text with integrated link data
+- Link-aware paragraph detection can assign links to appropriate content blocks
 - No blockers - all prerequisites satisfied
 
 ## Next Steps
