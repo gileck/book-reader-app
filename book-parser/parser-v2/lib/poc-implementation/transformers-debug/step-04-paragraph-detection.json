@@ -2,9 +2,9 @@
   "paragraphDetectionMetadata": {
     "totalParagraphs": 782,
     "totalChapters": 10,
-    "totalLinksExtracted": 207,
-    "processingTime": 29,
-    "detectionTime": "2025-07-09T10:27:05.655Z"
+    "totalLinksExtracted": 206,
+    "processingTime": 36,
+    "detectionTime": "2025-07-09T11:39:20.751Z"
   },
   "paragraphStats": {
     "totalParagraphs": 782,
@@ -19,8 +19,8 @@
       "6": 85,
       "99": 213
     },
-    "averageWordsPerParagraph": 155.02941176470588,
-    "averageSentencesPerParagraph": 9.468030690537084,
+    "averageWordsPerParagraph": 155.02813299232736,
+    "averageSentencesPerParagraph": 9.507672634271099,
     "minWordsPerParagraph": 11,
     "maxWordsPerParagraph": 435,
     "minSentencesPerParagraph": 1,
@@ -33,8 +33,8 @@
     }
   },
   "linkStats": {
-    "totalLinks": 207,
-    "averageLinksPerChapter": 20.7,
+    "totalLinks": 206,
+    "averageLinksPerChapter": 20.6,
     "chaptersWithLinks": 8
   },
   "sampleParagraphs": [

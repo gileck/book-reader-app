@@ -300,15 +300,22 @@ function splitLargeParagraph(paragraph) {
  * @returns {Array} - Array of sentences
  */
 function splitIntoSentences(text) {
+    // First, protect footnote references by temporarily replacing them
+    // Handle patterns like: "sentence.\n2\nNext sentence" and "sentence.2\nNext sentence"
+    let protectedText = text.replace(/([.!?]+)\n(\d+)\n/g, '$1$2◊FOOTNOTE_BREAK◊');
+    protectedText = protectedText.replace(/([.!?]+)\s*(\d+)\s*\n/g, '$1$2◊FOOTNOTE_BREAK◊');
+    
     // Split on sentence endings followed by space and capital letter
-    const sentences = text.split(/([.!?]+\s+)(?=[A-Z])/);
+    const sentences = protectedText.split(/([.!?]+\s+)(?=[A-Z])/);
     const result = [];
     
     for (let i = 0; i < sentences.length; i += 2) {
         const sentence = sentences[i];
         const punctuation = sentences[i + 1] || '';
         if (sentence && sentence.trim()) {
-            result.push((sentence + punctuation).trim());
+            // Restore footnote breaks as regular line breaks
+            const cleanSentence = (sentence + punctuation).replace(/◊FOOTNOTE_BREAK◊/g, '\n');
+            result.push(cleanSentence.trim());
         }
     }
     
@@ -376,6 +383,7 @@ function detectParagraphsInPage(page) {
             // Check if next line starts a new paragraph or is empty
             const nextLineIndex = i + 1;
             let isEndOfParagraph = false;
+            let footnoteFound = false;
             
             if (nextLineIndex >= lines.length) {
                 // End of page = end of paragraph
@@ -385,14 +393,37 @@ function detectParagraphsInPage(page) {
                 for (let j = nextLineIndex; j < lines.length; j++) {
                     const nextLine = lines[j].trim();
                     if (nextLine.length > 0) {
-                        // Found next non-empty line, this ends the current paragraph
+                        // Check if next line is just a footnote reference (single digit(s))
+                        // If so, include it in current paragraph and continue looking
+                        if (/^\d+$/.test(nextLine)) {
+                            // This is a footnote reference, add it to current paragraph
+                            currentParagraphLines.push(nextLine);
+                            footnoteFound = true;
+                            i = j; // Skip ahead to the footnote line
+                            
+                            // Continue checking what comes after the footnote
+                            for (let k = j + 1; k < lines.length; k++) {
+                                const lineAfterFootnote = lines[k].trim();
+                                if (lineAfterFootnote.length > 0) {
+                                    // If there's content after footnote, end paragraph after including footnote
+                                    isEndOfParagraph = true;
+                                    break;
+                                }
+                            }
+                            // If no content after footnote, end paragraph
+                            if (!isEndOfParagraph) {
+                                isEndOfParagraph = true;
+                            }
+                            break;
+                        }
+                        // Found next non-empty line that's not a footnote, this ends the current paragraph
                         isEndOfParagraph = true;
                         break;
                     }
                 }
                 
                 // If we didn't find any more non-empty lines, this is end of paragraph
-                if (!isEndOfParagraph) {
+                if (!footnoteFound && !isEndOfParagraph) {
                     isEndOfParagraph = true;
                 }
             }
