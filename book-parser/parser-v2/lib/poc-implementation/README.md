@@ -15,7 +15,7 @@ Each step is implemented as a separate module in the `steps/` folder:
 1. **`01-text-extraction.js`** - Extract raw text from PDF with literal `\n` preservation ✅
 2. **`02-chapter-detection-and-text-extraction.js`** - Detect chapter boundaries and extract content ✅
 3. **`03-page-extraction-and-cross-page-merging.js`** - Extract pages and merge sentences split across pages ✅
-4. **`03-1-link-detection.js`** - Extract and resolve PDF internal links with bidirectional mapping ✅
+4. **`03-1-link-detection.js`** - Extract and resolve PDF internal links with coordinate-based target extraction ✅
 5. **`04-paragraph-detection.js`** - Detect paragraph boundaries on clean, merged text ⚠️
 6. **`05-header-detection.js`** - Detect headers using 6-rule validation system ⚠️
 7. **`06-chunking-algorithm.js`** - Create chunks with 80-300 word target ⚠️
@@ -43,7 +43,7 @@ PIPELINE_STATE = {
     
     // Metadata
     pages: [],             // Page information
-    links: [],             // Internal PDF links with bidirectional mapping
+    links: [],             // Internal PDF links with coordinate-based target extraction and cross-page support
     finalOutput: null,     // Generated output.json
     
     // Processing metadata
@@ -122,7 +122,7 @@ node main-poc.js step-2 --debug
 - **Step 1**: Text Extraction - 796,464 characters from 317 pages
 - **Step 2**: Chapter Detection and Text Extraction - 9 chapters with 123,976 words
 - **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with 158 merged sentences
-- **Step 3-1**: Link Detection - 200 PDF annotation links with bidirectional mapping
+- **Step 3-1**: Link Detection - 54 production-ready PDF annotation links with coordinate-based target extraction, cross-page merging support, and robust bidirectional system
 
 ### ⚠️ To Be Implemented (5/9 steps remaining)
 - **Step 4**: Paragraph Detection (next priority)

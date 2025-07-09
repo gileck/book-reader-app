@@ -7,15 +7,16 @@
  * Requirements:
  * - Paragraphs end when a sentence ends with punctuation AND is followed by a newline
  * - Process clean page content from step 3
+ * - Extract links that exist within paragraph content
  * - Output: array of chapters, each chapter has array of paragraphs
- * - Each paragraph has pageNumber (start) and content
+ * - Each paragraph has pageNumber (start), content, and links (if any)
  * 
  * Expected Input:
- * - pipelineState: { chapters: [...] with pages[].content, ... }
+ * - pipelineState: { chapters: [...] with pages[].content and pages[].links, ... }
  * - config: { OUTPUT_DIR: path, DEBUG_DIR: path, ... }
  * 
  * Expected Output:
- * - { chapters: [{ title, chapterNumber, paragraphs: [{ pageNumber, content }] }] }
+ * - { chapters: [{ title, chapterNumber, paragraphs: [{ pageNumber, content, links }] }] }
  */
 
 const fs = require('fs');
@@ -40,6 +41,7 @@ async function execute(pipelineState, config) {
     try {
         const chaptersWithParagraphs = [];
         let totalParagraphs = 0;
+        let totalLinksExtracted = 0;
         
         console.log(`📚 Processing ${pipelineState.chapters.length} chapters...`);
         
@@ -58,13 +60,20 @@ async function execute(pipelineState, config) {
             chaptersWithParagraphs.push(chapterWithParagraphs);
             totalParagraphs += paragraphs.length;
             
-            // Show word count distribution for this chapter
+            // Count links in this chapter
+            const chapterLinksCount = paragraphs.reduce((sum, p) => sum + (p.links ? p.links.length : 0), 0);
+            totalLinksExtracted += chapterLinksCount;
+            
+            // Show word count distribution and links for this chapter
             const wordCounts = paragraphs.map(p => p.wordCount || getWordCount(p.content));
             const under100 = wordCounts.filter(w => w < 100).length;
             const over200 = wordCounts.filter(w => w > 200).length;
             const inRange = wordCounts.filter(w => w >= 100 && w <= 200).length;
             
             console.log(`    ✅ ${paragraphs.length} paragraphs (${inRange} in range, ${under100} under 100, ${over200} over 200)`);
+            if (chapterLinksCount > 0) {
+                console.log(`    🔗 ${chapterLinksCount} links extracted`);
+            }
         }
         
         // Generate statistics
@@ -75,10 +84,16 @@ async function execute(pipelineState, config) {
             paragraphDetectionMetadata: {
                 totalParagraphs: totalParagraphs,
                 totalChapters: chaptersWithParagraphs.length,
+                totalLinksExtracted: totalLinksExtracted,
                 processingTime: Date.now() - startTime,
                 detectionTime: new Date().toISOString()
             },
             paragraphStats: stats,
+            linkStats: {
+                totalLinks: totalLinksExtracted,
+                averageLinksPerChapter: chaptersWithParagraphs.length > 0 ? totalLinksExtracted / chaptersWithParagraphs.length : 0,
+                chaptersWithLinks: chaptersWithParagraphs.filter(ch => ch.paragraphs.some(p => p.links && p.links.length > 0)).length
+            },
             sampleParagraphs: chaptersWithParagraphs.slice(0, 2).map(chapter => ({
                 chapterTitle: chapter.title,
                 chapterNumber: chapter.chapterNumber,
@@ -87,7 +102,9 @@ async function execute(pipelineState, config) {
                     pageNumber: p.pageNumber,
                     contentPreview: p.content.substring(0, 100) + '...',
                     wordCount: p.wordCount || getWordCount(p.content),
-                    sentencesCount: p.sentencesCount || getSentenceCount(p.content)
+                    sentencesCount: p.sentencesCount || getSentenceCount(p.content),
+                    linksCount: p.links ? p.links.length : 0,
+                    links: p.links || []
                 }))
             }))
         };
@@ -96,6 +113,7 @@ async function execute(pipelineState, config) {
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
         
         console.log(`✅ Paragraph detection completed: ${totalParagraphs} paragraphs detected`);
+        console.log(`🔗 Links extracted: ${totalLinksExtracted} links across ${chaptersWithParagraphs.filter(ch => ch.paragraphs.some(p => p.links && p.links.length > 0)).length} chapters`);
         console.log(`📊 Processing took ${Date.now() - startTime}ms`);
         console.log(`📄 Average paragraphs per chapter: ${Math.round(stats.averageParagraphsPerChapter)}`);
         console.log(`📏 Word count distribution: ${stats.wordCountDistribution.percentageInTargetRange}% in target range (100-200 words)`);
@@ -109,6 +127,7 @@ async function execute(pipelineState, config) {
                 paragraphDetection: {
                     totalParagraphs: totalParagraphs,
                     totalChapters: chaptersWithParagraphs.length,
+                    totalLinksExtracted: totalLinksExtracted,
                     averageParagraphsPerChapter: stats.averageParagraphsPerChapter,
                     processingTime: Date.now() - startTime,
                     detectionTime: new Date().toISOString()
@@ -184,68 +203,91 @@ function adjustParagraphSizes(paragraphs) {
 function combineSmallParagraphs(paragraphs, startIndex) {
     let combinedContent = paragraphs[startIndex].content;
     let combinedPageNumber = paragraphs[startIndex].pageNumber;
+    let combinedLinks = [...(paragraphs[startIndex].links || [])];
     let currentIndex = startIndex + 1;
     
     // Keep combining until we reach at least 100 words or run out of paragraphs
     while (currentIndex < paragraphs.length && getWordCount(combinedContent) < 100) {
         combinedContent += ' ' + paragraphs[currentIndex].content;
+        // Merge links from additional paragraphs
+        if (paragraphs[currentIndex].links) {
+            combinedLinks.push(...paragraphs[currentIndex].links);
+        }
         currentIndex++;
     }
     
     // If still under 100 words and we have more paragraphs, add one more
     if (currentIndex < paragraphs.length && getWordCount(combinedContent) < 100) {
         combinedContent += ' ' + paragraphs[currentIndex].content;
+        // Merge links from final paragraph
+        if (paragraphs[currentIndex].links) {
+            combinedLinks.push(...paragraphs[currentIndex].links);
+        }
         currentIndex++;
     }
+    
+    // Remove duplicate links (same linkId)
+    const uniqueLinks = removeDuplicateLinks(combinedLinks);
     
     return {
         paragraph: {
             pageNumber: combinedPageNumber,
-            content: combinedContent.trim(),
-            wordCount: getWordCount(combinedContent.trim()),
-            sentencesCount: getSentenceCount(combinedContent.trim())
+            content: combinedContent,
+            wordCount: getWordCount(combinedContent),
+            sentencesCount: getSentenceCount(combinedContent),
+            links: uniqueLinks
         },
         nextIndex: currentIndex
     };
 }
 
 /**
- * Split a large paragraph into smaller ones
+ * Split large paragraph into smaller ones
  * @param {Object} paragraph - Paragraph to split
  * @returns {Array} - Array of smaller paragraphs
  */
 function splitLargeParagraph(paragraph) {
-    const splitParagraphs = [];
     const sentences = splitIntoSentences(paragraph.content);
+    const splitParagraphs = [];
     
-    let currentContent = '';
+    let currentParagraphSentences = [];
+    let currentWordCount = 0;
     
     for (const sentence of sentences) {
-        const testContent = currentContent + (currentContent ? ' ' : '') + sentence;
-        const testWordCount = getWordCount(testContent);
+        const sentenceWordCount = getWordCount(sentence);
         
-        if (testWordCount > 200 && currentContent) {
-            // Current content is good, start new paragraph
+        // If adding this sentence would exceed 200 words, finish current paragraph
+        if (currentWordCount + sentenceWordCount > 200 && currentParagraphSentences.length > 0) {
+            const paragraphContent = currentParagraphSentences.join(' ');
+            const paragraphLinks = extractLinksFromContent(paragraphContent, paragraph.links || []);
+            
             splitParagraphs.push({
                 pageNumber: paragraph.pageNumber,
-                content: currentContent.trim(),
-                wordCount: getWordCount(currentContent.trim()),
-                sentencesCount: getSentenceCount(currentContent.trim())
+                content: paragraphContent,
+                wordCount: getWordCount(paragraphContent),
+                sentencesCount: getSentenceCount(paragraphContent),
+                links: paragraphLinks
             });
-            currentContent = sentence;
-        } else {
-            // Add sentence to current content
-            currentContent = testContent;
+            
+            currentParagraphSentences = [];
+            currentWordCount = 0;
         }
+        
+        currentParagraphSentences.push(sentence);
+        currentWordCount += sentenceWordCount;
     }
     
-    // Add remaining content
-    if (currentContent.trim()) {
+    // Handle remaining sentences
+    if (currentParagraphSentences.length > 0) {
+        const paragraphContent = currentParagraphSentences.join(' ');
+        const paragraphLinks = extractLinksFromContent(paragraphContent, paragraph.links || []);
+        
         splitParagraphs.push({
             pageNumber: paragraph.pageNumber,
-            content: currentContent.trim(),
-            wordCount: getWordCount(currentContent.trim()),
-            sentencesCount: getSentenceCount(currentContent.trim())
+            content: paragraphContent,
+            wordCount: getWordCount(paragraphContent),
+            sentencesCount: getSentenceCount(paragraphContent),
+            links: paragraphLinks
         });
     }
     
@@ -310,6 +352,7 @@ function detectParagraphsInPage(page) {
     }
     
     const content = page.content.trim();
+    const pageLinks = page.links || [];
     
     // Split content into lines
     const lines = content.split('\n');
@@ -358,11 +401,15 @@ function detectParagraphsInPage(page) {
                 // Create paragraph
                 const paragraphContent = currentParagraphLines.join('\n').trim();
                 if (paragraphContent.length > 0) {
+                    // Extract links that exist within this paragraph's content
+                    const paragraphLinks = extractLinksFromParagraph(paragraphContent, pageLinks);
+                    
                     paragraphs.push({
                         pageNumber: page.pageNumber,
                         content: paragraphContent,
                         wordCount: getWordCount(paragraphContent),
-                        sentencesCount: getSentenceCount(paragraphContent)
+                        sentencesCount: getSentenceCount(paragraphContent),
+                        links: paragraphLinks
                     });
                 }
                 currentParagraphLines = [];
@@ -374,11 +421,15 @@ function detectParagraphsInPage(page) {
     if (currentParagraphLines.length > 0) {
         const paragraphContent = currentParagraphLines.join('\n').trim();
         if (paragraphContent.length > 0) {
+            // Extract links that exist within this paragraph's content
+            const paragraphLinks = extractLinksFromParagraph(paragraphContent, pageLinks);
+            
             paragraphs.push({
                 pageNumber: page.pageNumber,
                 content: paragraphContent,
                 wordCount: getWordCount(paragraphContent),
-                sentencesCount: getSentenceCount(paragraphContent)
+                sentencesCount: getSentenceCount(paragraphContent),
+                links: paragraphLinks
             });
         }
     }
@@ -401,6 +452,95 @@ function endsWithSentenceTerminator(line) {
     
     // Check for sentence terminators
     return ['.', '!', '?', ':', ';'].includes(lastChar);
+}
+
+/**
+ * Extract links from paragraph content based on page links
+ * @param {string} paragraphContent - The content of the paragraph
+ * @param {Array} pageLinks - Links available on the page
+ * @returns {Array} - Array of links that exist within the paragraph content
+ */
+function extractLinksFromParagraph(paragraphContent, pageLinks) {
+    const paragraphLinks = [];
+    
+    // Check each page link to see if its source text exists in the paragraph
+    for (const link of pageLinks) {
+        if (link.sourceText && isSourceTextInParagraph(link.sourceText, paragraphContent)) {
+            paragraphLinks.push(link);
+        }
+    }
+    
+    return paragraphLinks;
+}
+
+/**
+ * Check if source text exists in paragraph content with flexible matching
+ * @param {string} sourceText - The source text to find
+ * @param {string} paragraphContent - The content to search in
+ * @returns {boolean} - True if source text is found
+ */
+function isSourceTextInParagraph(sourceText, paragraphContent) {
+    // First try exact match
+    if (paragraphContent.includes(sourceText)) {
+        return true;
+    }
+    
+    // For short numeric references (likely footnotes), try more flexible matching
+    if (/^\d+$/.test(sourceText.trim())) {
+        // Create regex pattern that matches the EXACT number with flexible whitespace
+        // But ensure it's not part of a larger word/number (like "Chapter 2" when looking for "3")
+        const escapedText = sourceText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const flexiblePattern = new RegExp(`(?:^|\\s|\\.|,|;|:|!|\\?)\\s*${escapedText}(?=\\s|$|\\.|,|;|:|!|\\?|\\n)`, 'g');
+        
+        if (flexiblePattern.test(paragraphContent)) {
+            return true;
+        }
+    }
+    
+    // For other text, try with normalized whitespace
+    const normalizedSource = sourceText.replace(/\s+/g, ' ').trim();
+    const normalizedContent = paragraphContent.replace(/\s+/g, ' ');
+    
+    return normalizedContent.includes(normalizedSource);
+}
+
+/**
+ * Extract links from content when splitting paragraphs
+ * @param {string} content - The text content to check
+ * @param {Array} originalLinks - The original links from the larger paragraph
+ * @returns {Array} - Array of links found within the content
+ */
+function extractLinksFromContent(content, originalLinks) {
+    const links = [];
+    
+    // Check each original link to see if its source text exists in this content
+    for (const link of originalLinks) {
+        if (link.sourceText && isSourceTextInParagraph(link.sourceText, content)) {
+            links.push(link);
+        }
+    }
+    
+    return links;
+}
+
+/**
+ * Remove duplicate links based on linkId
+ * @param {Array} links - Array of link objects
+ * @returns {Array} - Array of unique link objects
+ */
+function removeDuplicateLinks(links) {
+    const uniqueLinks = [];
+    const seen = new Set();
+
+    for (const link of links) {
+        const key = link.linkId || `${link.sourceText}-${link.targetText}`;
+        if (!seen.has(key)) {
+            uniqueLinks.push(link);
+            seen.add(key);
+        }
+    }
+    
+    return uniqueLinks;
 }
 
 /**

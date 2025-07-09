@@ -1,9 +1,9 @@
 {
   "linkDetectionMetadata": {
-    "totalLinks": 200,
+    "totalLinks": 173,
     "totalPdfLinks": 2214,
-    "processingTime": 807,
-    "detectionTime": "2025-07-09T07:33:41.938Z",
+    "processingTime": 949,
+    "detectionTime": "2025-07-09T10:27:05.609Z",
     "note": "Link detection and resolution from PDF annotations"
   },
   "pdfLinks": [
@@ -66457,7 +66457,7 @@
               "sourcePageNumber": 10,
               "sourceText": "1",
               "targetPageNumber": 25,
-              "targetText": "1 When I talk about energy flow, I’m really referring to what physicists call ‘free\nenergy’, which i...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66497,7 +66497,7 @@
               "sourcePageNumber": 15,
               "sourceText": "2",
               "targetPageNumber": 25,
-              "targetText": "2 There are all kinds of interactions between ‘regulatory RNAs’ that do not\ninvolve any proteins at ...",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66519,23 +66519,23 @@
           "pageNumber": 18,
           "content": "So the flux of energy and materials through the cell shifts. It might\nnot be quite as good as the main highway , but you could hardly tell the\ndifference. Now think about alternative routes in terms of how a drug\nacts. Target a particular gene or protein, and the cell redirects metabolic\nflux to minimis e obstructions to function. Just how well it can do this\ndepends on scores of other normally trivial genetic differences , or diet,\nor other forms of stress such as smoking, weight or age, and these\ndifferences account for many of the unpredictable responses to drug\ntreatments. Cancer is a prime example. Drugs typically work for some\npeople but not everyone, or work for a while and then start to falter. The\nproblem is not so much the target itself but the context. Cancer cells\ngrow and evolve. To do that they need to make all the building blocks for\ngrowth, which requires constant metabolic flux. Blocking flux at one\nparticular place is like closing a road – it’s only a matter of time before\nthe traffic finds another way through, perhaps facilitated by a new\ngenetic mutation , and the cell reverts to uncontrolled growth. Whereas\nnormal cells face constraints in their flux – they have certain tasks in a\ntissue, such as making hormones or neuro-transmitters, or detoxifying\npoisons – that’s not true of cancer, as we’ll see. Cancer cells simply\nswitch to another flux pattern and keep on growing. The problem is not\ninformation alone; the deeper, underlying problem is flux. It’s the\ndynamic side of biochemistry again.\nSatnav metabolism\nThere’s a new name for this that reflects the modern ‘omic’ age:\nmetabolomics. We have known all the steps in the major metabolic\npathways for decades – they were laboriously worked out, step by step,\nfrom the 1930s onwards, with a leap forward in the post-war years, when\nradioactive tracers enabled the fate of specific carbon atoms to be\ntracked (as we’ll see in Chapter 2 ). Metabolomics is much the same\nthing, but now with the aid of powerful techniques such as mass\nspectrometry . Instead of seeking the commonalities – the same metabolic\npathways in different cells – metabolomics looks for the differences:\nhow does the flux of materials and energy through one of my heart cells\ndiffer from that in one of yours? It is closer to a satnav-enabled road\nmap, showing live congestion, but it’s still a snapshot in time. We can\ntake a sample of cells and look at the distribution of flux at one moment, or over a short period of minutes or hours.\n3\nWill it be the same next\nweek, next month, next year?",
           "wordCount": 451,
-          "links": []
+          "links": [
+            {
+              "linkId": "link_18_3",
+              "sourcePageNumber": 18,
+              "sourceText": "3",
+              "targetPageNumber": 25,
+              "targetText": "3",
+              "type": "pdf_annotation",
+              "role": "source"
+            }
+          ]
         },
         {
           "pageNumber": 19,
           "content": "Start over. We are a long way from rising\nabove the cell and picturing the combined flux of energy and materials in\nreal time over a lifetime. Metabolism remains invisible and elusive, even\nif we know it keeps the cell alive.\nBut these subtle differences in flux also emphasise one dramatic way\nin which cells differ from cities. Different cities are similar in that they\nall have roads, but the actual road map obviously differs from town to\ntown. That’s partly true of cells too, but perhaps the most extraordinary\nfact is that all cells share the same basic road plan, at least for the city\ncentre itself. What differs is the congestion or the size of the roads, not\nthe layout. The unity of biochemistry means we all share the same city-\ncentre map. What defines this map? You might say ‘genes’, but that is far\nfrom true. We’ll see that genes did not ‘invent’ metabolism, but the\nreverse. In any case, genes change and evolve, but the pathways they are\nsupposed to code for remain essentially unchanged. As the poet Edna St\nVincent Millay wrote, ‘life isn’t one damn thing after another , it’s the\nsame damn thing again and again’. A bacterial cell living deep down in\nthe crust of the earth makes its letters for DNA through the same\nsuccession of steps that you do, even if many of its genes have diverged\nalmost beyond recognition. Genes are far more malleable than\nmetabolism. Likewise, if a gene in a cancer cell mutates, and now\npromotes uncontrolled cell growth, this does not open up some new\nmetabolic pathway, but rather diverts flux down existing pathways, even\nif it dramatically reverses the flow down a one-way street. Traffic flow\nmight change but the map itself rarely does.\nThe reason that city street-plans differ but the central metabolic maps\nof cells do not is quite simple: cells descend from a common ancestor ,\nbut cities do not. Cities are similar by analogy , not homology . When we\nthink about inheritance we tend to think about genes, but to leave any\ndescendants a cell must be capable of growing, repairing and ultimately\nreplicating itself, and to do that it needs a fully functional metabolic\nnetwork. To be alive means to have a continuous flow of energy and\nmaterials through this whole network, nanosecond by nanosecond,\nminute by minute, generation after generation. We do not merely inherit\ninert information in the form of genes – our inheritance includes this\nliving metabolic network in the egg cell, a flame passed from generation\nto generation, without pause, right back to the emergence of life. Core\nmetabolism has changed little in part because it was never powered down in its four-billion-year history.",
           "wordCount": 459,
-          "links": [
-            {
-              "linkId": "link_25_4",
-              "sourcePageNumber": 25,
-              "sourceText": "3",
-              "targetPageNumber": 19,
-              "targetText": "Start over. We are a long way from rising",
-              "type": "pdf_annotation",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 20,
@@ -66573,20 +66573,11 @@
           "wordCount": 480,
           "links": [
             {
-              "linkId": "link_25_4",
-              "sourcePageNumber": 25,
-              "sourceText": "3",
-              "targetPageNumber": 19,
-              "targetText": "Start over. We are a long way from rising",
-              "type": "pdf_annotation",
-              "role": "source"
-            },
-            {
               "linkId": "link_10_1",
               "sourcePageNumber": 10,
               "sourceText": "1",
               "targetPageNumber": 25,
-              "targetText": "1 When I talk about energy flow, I’m really referring to what physicists call ‘free\nenergy’, which i...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -66595,7 +66586,7 @@
               "sourcePageNumber": 15,
               "sourceText": "2",
               "targetPageNumber": 25,
-              "targetText": "2 There are all kinds of interactions between ‘regulatory RNAs’ that do not\ninvolve any proteins at ...",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -66604,7 +66595,7 @@
               "sourcePageNumber": 18,
               "sourceText": "3",
               "targetPageNumber": 25,
-              "targetText": "3 Even this can be hard to interpret",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -66653,7 +66644,7 @@
               "sourcePageNumber": 30,
               "sourceText": "1",
               "targetPageNumber": 58,
-              "targetText": "1 For balance it should be said that there were also some protests outside the lab\nagainst foreigner...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66675,7 +66666,7 @@
               "sourcePageNumber": 32,
               "sourceText": "2",
               "targetPageNumber": 58,
-              "targetText": "2 If you are sharp-eyed you might notice that the rates of oxygen consumption\nand CO 2 release count...",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "source"
             },
@@ -66684,7 +66675,7 @@
               "sourcePageNumber": 32,
               "sourceText": "3",
               "targetPageNumber": 58,
-              "targetText": "3 Carbon monoxide poisoning can kill you by binding to the iron in the\nhaemoglobin of your red blood...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66706,7 +66697,7 @@
               "sourcePageNumber": 34,
               "sourceText": "4",
               "targetPageNumber": 59,
-              "targetText": "4 A ‘group’ refers to a few atoms bound together within a molecule, which tend\nto stick together in ...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66746,7 +66737,7 @@
               "sourcePageNumber": 39,
               "sourceText": "5",
               "targetPageNumber": 59,
-              "targetText": "5 Szent-Györgyi had a way with words",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66768,7 +66759,7 @@
               "sourcePageNumber": 41,
               "sourceText": "6",
               "targetPageNumber": 59,
-              "targetText": "6 Let me just clarify the distinction between 2H and H 2 ",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66784,7 +66775,7 @@
               "sourcePageNumber": 42,
               "sourceText": "7",
               "targetPageNumber": 60,
-              "targetText": "7 He married Margaret Fieldhouse in 1938",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66830,7 +66821,7 @@
               "sourcePageNumber": 48,
               "sourceText": "8",
               "targetPageNumber": 60,
-              "targetText": "8 For the more astute accountants among you, some of the hydrogens burnt in\nfact derive from water, ...",
+              "targetText": "8",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66852,7 +66843,7 @@
               "sourcePageNumber": 50,
               "sourceText": "9",
               "targetPageNumber": 60,
-              "targetText": "9 Mitchel l had some wealth through his uncle, Sir Godfrey Mitchell, a\nconstruction engineer who had...",
+              "targetText": "9",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66862,17 +66853,7 @@
           "pageNumber": 51,
           "content": "Fermentation was the classic example: it did indeed proceed in\nhomogenised tissues. Other biochemical reactions did not work initially ,\nbut with better preparation methods were eventually demonstrated in\ncell-free extracts. So, while Warburg and Krebs contended that\nrespiration could only take place in intact cells, most biochemists\nthought it was only a matter of time and more meticulous methods before\nall biochemical processes could be demonstrated in purified\npreparations.\nFor Mitchell that view was anathema. The integrity of the membrane\nwas indispensable to the life of cells. The membrane is the thin oily layer\nthat surrounds all cells, barely six millionths of a millimetre (6\nnanometres) in thickness, enclosing the gel-like cytoplasm inside. Some\ncells such as plants, fungi and bacteria also have a more robust, mesh-\nlike cell wall, which prevents swelling and protects against mechanical\ninjury, while allowing the movement of small molecules in and out; but\nit is the flimsy membrane that matters here. Being composed of oily\nlipids, the membrane obstructs the transfer of char ged particles, even tiny\nprotons. If critical membranes sprang a leak to protons, the cell would\nswiftly die. Mitchell’ s profound insight was to see that this law applied\nnot only to the transport of materials in and out of bacterial cells, but to\nthe process of respiration itself. For ‘the living structure of cells’, read\n‘membrane’. To burn the 2H derived from the Krebs cycle, a membrane\nwas needed. That observation alone was enough for Mitchell to frame his\nwhole hypothesis. We’ll see that the Krebs cycle is intimately linked to\nthe electrical properties of this membrane, just as Mitchell predicted –\nbut in ways that neither Mitchell nor Krebs could have begun to imagine.\nSeparating charge\nI have talked about stripping hydrogen (2H) from molecules and feeding\nthem to oxygen. These 2H are not free in solution, nor are they shuttled\nby carboxylic acids, as Szent-G yörgyi once thought; it turned out they\nare bound to a large molecule called NAD\n+\n(or ‘nicotinamide adenine\ndinucleotide’, since you ask). The form of NAD\n+\nthat has picked up the\ncomponents of hydrogen (or more exactly, two electrons and one proton,\nleaving another proton nearby, bound onto water) is called NADH.\n10\nNADH will figure large later in this book, but for now, when you see the\nterm NADH, just focus on the ‘H’. I hope you will develop a Pavlovian response, and when you see NADH, you’ll think ‘Aha! Once more this is\nthe beast that transfers hydrogen, or rather, the two electrons and two\nprotons that constitute 2H!’\nIn cell respiratio n, NADH transfers its 2H to oxygen to form water\n(H 2 O), capturing some of the energy released in the process.",
           "wordCount": 456,
-          "links": [
-            {
-              "linkId": "link_51_10",
-              "sourcePageNumber": 51,
-              "sourceText": "10",
-              "targetPageNumber": 60,
-              "targetText": "10 NADH was also discovered by Warburg, but he failed to appreciate its full\nsignificance",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 52,
@@ -66880,20 +66861,20 @@
           "wordCount": 375,
           "links": [
             {
-              "linkId": "link_52_11",
+              "linkId": "link_52_10",
               "sourcePageNumber": 52,
               "sourceText": "11",
               "targetPageNumber": 61,
-              "targetText": "11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno\nInstitute in Cambridge...",
+              "targetText": "11",
               "type": "pdf_annotation",
               "role": "source"
             },
             {
-              "linkId": "link_52_12",
+              "linkId": "link_52_11",
               "sourcePageNumber": 52,
               "sourceText": "12",
               "targetPageNumber": 61,
-              "targetText": "12 There’s an irony here because Krebs and R",
+              "targetText": "12",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66911,11 +66892,11 @@
           "wordCount": 470,
           "links": [
             {
-              "linkId": "link_54_13",
+              "linkId": "link_54_12",
               "sourcePageNumber": 54,
               "sourceText": "13",
               "targetPageNumber": 61,
-              "targetText": "13 Although Mitchell had himself proposed conformational changes in proteins\nin his early work on ba...",
+              "targetText": "13",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -66949,7 +66930,7 @@
               "sourcePageNumber": 30,
               "sourceText": "1",
               "targetPageNumber": 58,
-              "targetText": "1 For balance it should be said that there were also some protests outside the lab\nagainst foreigner...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -66958,7 +66939,7 @@
               "sourcePageNumber": 32,
               "sourceText": "2",
               "targetPageNumber": 58,
-              "targetText": "2 If you are sharp-eyed you might notice that the rates of oxygen consumption\nand CO 2 release count...",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -66967,7 +66948,7 @@
               "sourcePageNumber": 32,
               "sourceText": "3",
               "targetPageNumber": 58,
-              "targetText": "3 Carbon monoxide poisoning can kill you by binding to the iron in the\nhaemoglobin of your red blood...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -66983,7 +66964,7 @@
               "sourcePageNumber": 34,
               "sourceText": "4",
               "targetPageNumber": 59,
-              "targetText": "4 A ‘group’ refers to a few atoms bound together within a molecule, which tend\nto stick together in ...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -66992,7 +66973,7 @@
               "sourcePageNumber": 39,
               "sourceText": "5",
               "targetPageNumber": 59,
-              "targetText": "5 Szent-Györgyi had a way with words",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67001,7 +66982,7 @@
               "sourcePageNumber": 41,
               "sourceText": "6",
               "targetPageNumber": 59,
-              "targetText": "6 Let me just clarify the distinction between 2H and H 2 ",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67017,7 +66998,7 @@
               "sourcePageNumber": 42,
               "sourceText": "7",
               "targetPageNumber": 60,
-              "targetText": "7 He married Margaret Fieldhouse in 1938",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67026,7 +67007,7 @@
               "sourcePageNumber": 48,
               "sourceText": "8",
               "targetPageNumber": 60,
-              "targetText": "8 For the more astute accountants among you, some of the hydrogens burnt in\nfact derive from water, ...",
+              "targetText": "8",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67035,16 +67016,7 @@
               "sourcePageNumber": 50,
               "sourceText": "9",
               "targetPageNumber": 60,
-              "targetText": "9 Mitchel l had some wealth through his uncle, Sir Godfrey Mitchell, a\nconstruction engineer who had...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_51_10",
-              "sourcePageNumber": 51,
-              "sourceText": "10",
-              "targetPageNumber": 60,
-              "targetText": "10 NADH was also discovered by Warburg, but he failed to appreciate its full\nsignificance",
+              "targetText": "9",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67056,29 +67028,29 @@
           "wordCount": 460,
           "links": [
             {
-              "linkId": "link_52_11",
+              "linkId": "link_52_10",
               "sourcePageNumber": 52,
               "sourceText": "11",
               "targetPageNumber": 61,
-              "targetText": "11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno\nInstitute in Cambridge...",
+              "targetText": "11",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_52_12",
+              "linkId": "link_52_11",
               "sourcePageNumber": 52,
               "sourceText": "12",
               "targetPageNumber": 61,
-              "targetText": "12 There’s an irony here because Krebs and R",
+              "targetText": "12",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_54_13",
+              "linkId": "link_54_12",
               "sourcePageNumber": 54,
               "sourceText": "13",
               "targetPageNumber": 61,
-              "targetText": "13 Although Mitchell had himself proposed conformational changes in proteins\nin his early work on ba...",
+              "targetText": "13",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67109,7 +67081,7 @@
               "sourcePageNumber": 63,
               "sourceText": "1",
               "targetPageNumber": 87,
-              "targetText": "1 The venture failed because in the late 1970s, when Wildman set up a pilot plant\nin North Carolina ...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67137,7 +67109,7 @@
               "sourcePageNumber": 66,
               "sourceText": "2",
               "targetPageNumber": 87,
-              "targetText": "2 This is sufficient ly below the speed of light not to require correction for the\neffects of relati...",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67153,7 +67125,7 @@
               "sourcePageNumber": 67,
               "sourceText": "3",
               "targetPageNumber": 88,
-              "targetText": "3 The very idea behind the cyclotron had been criticised by no less a figure than\nAlbert Einstein, w...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67175,7 +67147,7 @@
               "sourcePageNumber": 69,
               "sourceText": "4",
               "targetPageNumber": 88,
-              "targetText": "4 This unexpected finding took biologists some time to accept, yet CO 2 fixation\nin the dark had alr...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67197,7 +67169,7 @@
               "sourcePageNumber": 71,
               "sourceText": "5",
               "targetPageNumber": 88,
-              "targetText": "5 Neutrons? Yes, you heard right",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67231,7 +67203,7 @@
               "sourcePageNumber": 75,
               "sourceText": "6",
               "targetPageNumber": 88,
-              "targetText": "6 It is worth reflec ting that paper after paper published in top journal s can be\nessentially wrong",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "source"
             },
@@ -67240,7 +67212,7 @@
               "sourcePageNumber": 75,
               "sourceText": "7",
               "targetPageNumber": 88,
-              "targetText": "7 Calvin’ s wife Genevieve took matters in hand: under her strict dietary regime,\nCalvin lost 30 kg ...",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67256,7 +67228,7 @@
               "sourcePageNumber": 76,
               "sourceText": "8",
               "targetPageNumber": 89,
-              "targetText": "8 Did you really want to know what they are? A is fructose phosphate, a six-\ncarbon sugar",
+              "targetText": "8",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67266,17 +67238,7 @@
           "pageNumber": 77,
           "content": "And I suspect that\nBenson didn’t mince his words in telling Calvin what he thought of some\nof Calvin’ s more wayward ideas. Benson was certainly capable of being\ncaustic in his judgements. Calvin’ s wife Genevieve told Benson that\nCalvin would have another heart attack if he stayed. I wonder if Benson\ntreated Calvin with some measure of disdain; he had certainly stopped\ntelling him what he was doing on a daily basis. Be that as it may, Calvin\nonly diminished himself through his later actions. Seven years after\nBenson had gone, in 1961, Calvin was awarded the Nobel prize, alone,\nfor ‘his research on carbon dioxide assimilation in plants’. In his Nobel\nlecture, Calvin mentioned Benson just once, in passing. Even more\ndisturbingly , in 1991 Calvin published his autobiography , in which he\nairbrushed Benson from history . In a 175-page book there is no mention\nof Benson – not a word, or a photograph (in a book with 51 pictures), or\neven a citation of any co-authored paper, despite an extensive\nbibliography . He didn’t even cite the classic 1954 paper that made\nCalvin’ s name synonymous with the ‘Calvin cycle’. As Benson reflected\nmany years later, Calvin ‘didn’ t have to do that. He could have done it\nright.’\nI say the ‘Calvin cycle’. For many years that was indeed the\nestablished textbook name, and it certainly trips off the tongue – ease is\nsome sort of virtue. I am guilty here of not mentioning another key\nplayer in this story, James Bassham, who was instrumental in working\nout exactly which carbon atoms picked up a radioactive tag, and\nprecisely when – on a timescale of seconds. Many now refer to the\nCalvin–Benson–Bassham cycle, which is fair, if admittedly a bit of a\nmouthful.\n9\nMy point here is not about fairness but personal myth. Calvin was an\nunusually persuasive and charismatic man. He even featured on a 2011\nseries of US postage stamps dedicated to great American scientists,\nalongside Richa rd Feynman, Barbara McClintock, Linus Pauling and\nEdwin Hubble. Calvin’ s claim to fame was the one true path of carbon in\nphotosynthesis – this was the pathwa y of autotrophy , and Calvin was\nking. It was all about sugars. Here’s a typical assertion from the 1970s:\n‘One important property shared by all autotrophic species is the\nassimilation of CO 2 via the Calvin cycle.’ You can imagine that if\nanyone had the temerity to claim another way of fixing CO 2 , that\namounted an insurrection against the unity of biochemistry , a rebellion\nagainst the king. That’s exactly what happened next – and why it took so long to make any headway .",
           "wordCount": 452,
-          "links": [
-            {
-              "linkId": "link_77_9",
-              "sourcePageNumber": 77,
-              "sourceText": "9",
-              "targetPageNumber": 89,
-              "targetText": "9 Science is almost always a team effort, frequently with large groups of people,\nall of whom contri...",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 78,
@@ -67302,11 +67264,11 @@
           "wordCount": 471,
           "links": [
             {
-              "linkId": "link_81_10",
+              "linkId": "link_81_9",
               "sourcePageNumber": 81,
               "sourceText": "10",
               "targetPageNumber": 89,
-              "targetText": "10 Peer review is often lionised as the ‘gold standard’, and at its best can indeed\nwork extremely w...",
+              "targetText": "10",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67336,22 +67298,13 @@
           "wordCount": 441,
           "links": [
             {
-              "linkId": "link_85_11",
+              "linkId": "link_85_10",
               "sourcePageNumber": 85,
               "sourceText": "11",
               "targetPageNumber": 90,
-              "targetText": "+",
+              "targetText": "11",
               "type": "pdf_annotation",
               "role": "source"
-            },
-            {
-              "linkId": "link_88_12",
-              "sourcePageNumber": 88,
-              "sourceText": "11",
-              "targetPageNumber": 85,
-              "targetText": "11 NADPH doesn’ t have the potency to drive the Krebs cycle\nbackwards, but it can promote the sugar ...",
-              "type": "pdf_annotation",
-              "role": "target"
             }
           ]
         },
@@ -67371,7 +67324,7 @@
               "sourcePageNumber": 63,
               "sourceText": "1",
               "targetPageNumber": 87,
-              "targetText": "1 The venture failed because in the late 1970s, when Wildman set up a pilot plant\nin North Carolina ...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67380,7 +67333,7 @@
               "sourcePageNumber": 66,
               "sourceText": "2",
               "targetPageNumber": 87,
-              "targetText": "2 This is sufficient ly below the speed of light not to require correction for the\neffects of relati...",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67396,7 +67349,7 @@
               "sourcePageNumber": 67,
               "sourceText": "3",
               "targetPageNumber": 88,
-              "targetText": "3 The very idea behind the cyclotron had been criticised by no less a figure than\nAlbert Einstein, w...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67405,7 +67358,7 @@
               "sourcePageNumber": 69,
               "sourceText": "4",
               "targetPageNumber": 88,
-              "targetText": "4 This unexpected finding took biologists some time to accept, yet CO 2 fixation\nin the dark had alr...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67414,7 +67367,7 @@
               "sourcePageNumber": 71,
               "sourceText": "5",
               "targetPageNumber": 88,
-              "targetText": "5 Neutrons? Yes, you heard right",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67423,7 +67376,7 @@
               "sourcePageNumber": 75,
               "sourceText": "6",
               "targetPageNumber": 88,
-              "targetText": "6 It is worth reflec ting that paper after paper published in top journal s can be\nessentially wrong",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -67432,7 +67385,7 @@
               "sourcePageNumber": 75,
               "sourceText": "7",
               "targetPageNumber": 88,
-              "targetText": "7 Calvin’ s wife Genevieve took matters in hand: under her strict dietary regime,\nCalvin lost 30 kg ...",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67448,25 +67401,16 @@
               "sourcePageNumber": 76,
               "sourceText": "8",
               "targetPageNumber": 89,
-              "targetText": "8 Did you really want to know what they are? A is fructose phosphate, a six-\ncarbon sugar",
+              "targetText": "8",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_77_9",
-              "sourcePageNumber": 77,
-              "sourceText": "9",
-              "targetPageNumber": 89,
-              "targetText": "9 Science is almost always a team effort, frequently with large groups of people,\nall of whom contri...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_81_10",
+              "linkId": "link_81_9",
               "sourcePageNumber": 81,
               "sourceText": "10",
               "targetPageNumber": 89,
-              "targetText": "10 Peer review is often lionised as the ‘gold standard’, and at its best can indeed\nwork extremely w...",
+              "targetText": "10",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67478,11 +67422,11 @@
           "wordCount": 125,
           "links": [
             {
-              "linkId": "link_85_11",
+              "linkId": "link_85_10",
               "sourcePageNumber": 85,
               "sourceText": "11",
               "targetPageNumber": 90,
-              "targetText": "+",
+              "targetText": "11",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67513,7 +67457,7 @@
               "sourcePageNumber": 92,
               "sourceText": "1",
               "targetPageNumber": 121,
-              "targetText": "1 A veteran of many expeditions on the Alvin , typically lasting a full day at a\ntime, John Baross t...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67523,17 +67467,7 @@
           "pageNumber": 93,
           "content": "The only problem was that the reverse Krebs\ncycle requires an input of energy (ATP) to work, which in modern\nbacteria is normally obtained from photosynthesis. Deep down in the\nbible-black vents, where did the energy come from? Not from\nphotosynthesis, or its waste product oxygen.\n2\nTwo trailblazing scientists, the chemist Günter Wächtershäuser and\nthe geochemist Mike Russell, independently put forward detailed and\ncontrasting ideas on how iron sulfide minerals in vents might catalyse\nthe hydrogenation of carbon dioxide to form carboxylic acids.\nWächtershäuser conceived an elaborate scheme that he termed ‘pyrites\npulling’, which linked the synthesis of iron pyrites (fool’s gold) to the\nreverse Krebs cycle. While ingenious , it bore only a cursory resemblance\nto the pathway in bacteria. Russell, in contrast, thought in terms of the\ntopology of cell membranes, and specifically the use of proton gradients\nacross such membranes to power growth. I have to say that Mike\nRussell’ s ideas came as a revelation to me, and have guided my own\nthinking over nearly two decades now. He placed his hypothesis in an\nalternative type of submarine vent, riddled with labyrinths of cell-like\npores bounded by thin walls containing iron sulfide minerals. While\nunknown at the time, such vents were discovered nearly a decade later\nby Deborah Kelley, captaining the Alvin , almost exactly as Russell had\npredicted. But sometimes details obscure the big picture. Despite some\npersonal feuds (which Freud might dismiss as the narcissism of minor\ndifferences) both Russell and Wächtershäuser had envisaged life as\noriginating through autotrophic mechanisms, growing from gases such as\nCO 2 and H 2 by way of the reverse Krebs cycle. This radical conception\nopened up a rift of geological dimensions that persists to this day – did\nlife start from CO 2 and H 2 in deep-ocean hydrothermal vents, or in\nsurface waters where ultraviolet light energised gases such as cyanide, as\nargued by the venerable tradition of prebiotic chemistry going back to\nMiller?\nThese ideas are opposed in virtually every respect: deep oceans versus\nwarm ponds, light energy or chemical disequilibria, metabolism first or\ngenes first, autotrophy or heterotrophy , fast chemistry or slow\naccumulation, local or planetary scales, and biology or chemistry as the\nultimate guide to life’s origin. Don’t worry about the meanin g of all\nthese terms for now. Suffice to say that science is often furiously passionate and opinionated until the evidence forces a reluctant\nagreement, which has not happened yet.",
           "wordCount": 410,
-          "links": [
-            {
-              "linkId": "link_93_2",
-              "sourcePageNumber": 93,
-              "sourceText": "2",
-              "targetPageNumber": 121,
-              "targetText": "2 In fact, we now know that deep-sea vents produce enough near-infrared light to\npower photosynth es...",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 94,
@@ -67541,11 +67475,11 @@
           "wordCount": 440,
           "links": [
             {
-              "linkId": "link_94_3",
+              "linkId": "link_94_2",
               "sourcePageNumber": 94,
               "sourceText": "3",
               "targetPageNumber": 121,
-              "targetText": "3 The tradition of synthetic chemistry aims to make the products of interest, such\nas nucleotides, a...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67587,11 +67521,11 @@
           "wordCount": 405,
           "links": [
             {
-              "linkId": "link_100_4",
+              "linkId": "link_100_3",
               "sourcePageNumber": 100,
               "sourceText": "4",
               "targetPageNumber": 122,
-              "targetText": "4 Being by then something of a scientific celebrity (and by no means\nunsympathetic to religion), Mor...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67601,17 +67535,7 @@
           "pageNumber": 101,
           "content": "There it is, at the centre of all biochemical charts, linked\nfundamentally to energy flow. Although the reverse cycle had been\ndiscovered several years before his 1968 book, Morowitz had not at that\npoint integrated it into his thinking; but later on he came to see the\nreverse Krebs cycle as being dictated by thermodynamics. If energy flow\nthrough a system acts to organise that system through the cycling of\nmatter, and if this law applies as much to metabolism (and its origins) as\neverything else, then the Krebs cycle seems inevitable, ordained by the\nirresistible god of thermodynamics.\nEven better than that. As noted in the last chapter , the reverse Krebs\ncycle is autocata lytic. Starting with one molecule of the C4 oxaloacetate,\none spin of the reverse cycle generates two molecules of oxaloacetate;\nthe next spin generates four molecules, then eight, sixteen and so on. Not\nonly is this exponential growth, but each doubling forms a copy of the\noriginal, combining stability with growth.\n5\nNo wonder Morowitz was\nentranced. And it just kept on getting better. The idea of an autocatalytic\ncycle that turns CO 2 into organic molecules, dictated by the laws of\nthermodynamics, was lent even more force by the repetition of simple,\nalmost mundane, chemistry in the reverse Krebs cycle. This repetition\ndoes not occur in our shorter oxidative pathway (or in any of the other\nfive pathways of CO 2 fixation) but is manifest in the reverse Krebs\ncycle. Mundane repetition hints at inevitability – it is so deeply etched\ninto the fabric of nature that it just can’t stop happening, over and over\nagain (see figure on the next page).\nInevitable versus implausible\nMorowitz’ s conception is beautiful and full of meaning. It suggests that\nlife can’t help but emerge on any wet, rocky planet flooded with light\nfrom a nearby star. He even wrote a book, The Emergence of Everything ,\nwhich explores the limits of inevitability – where does the determinism\nof chemistry give way to the wiles of biology? But beauty can be a\ntreacherous guide in science, as in life. Life is rarely simple and there are\nsome grave problems with Morowitz’ s view too. Perhaps the most\nserious was pointed out by another pioneering origin-of-life researcher ,\nLeslie Or gel.",
           "wordCount": 384,
-          "links": [
-            {
-              "linkId": "link_101_5",
-              "sourcePageNumber": 101,
-              "sourceText": "5",
-              "targetPageNumber": 122,
-              "targetText": "5 Just in case you are confused ",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 102,
@@ -67625,11 +67549,11 @@
           "wordCount": 418,
           "links": [
             {
-              "linkId": "link_103_6",
+              "linkId": "link_103_4",
               "sourcePageNumber": 103,
               "sourceText": "6",
               "targetPageNumber": 122,
-              "targetText": "6 That of course raises its own questions about just how RNA acquires\ninformation, a problem so seve...",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67639,17 +67563,7 @@
           "pageNumber": 104,
           "content": "There’s no question that Orgel had a powerful point. I think that it’s\nfatal to the idea of the reverse Krebs cycle – as a strict cycle – being truly\nprebiotic. On the other hand, there is clearly something favoured about\nthe Krebs-cycle intermediates. They form spontaneously from CO 2 and\nH 2 , given the mineral catalysts and high pressure, to the exclusion of\nmany other possible products – chemistry that had not yet been\ndemonstrated in the lab before Orgel died. But equally importantly , they\nare not formed as a complete cycle, so Orgel’s point stands. And there is\nanother problem with a complete cycle. The side products are not\nunwanted at all: they make up the rest of metabolism. We want to form\namino acids, fatty acids and sugars from Krebs-cycle intermediates –\nthey are the real building blocks of cells. These, too, seem to be\nthermodynamically favoured products. Markus Ralser and colleagues\nhave shown that other central metabolic pathways, including\ngluconeogenesis and the pentose phosphate pathway , occur\nspontaneously in the absence of enzymes. Just to give a feel for how far\nthis favouritism goes, a PhD student in my lab, Stuart Harrison, is\ncurrently working on the synthesis of nucleotides from amino acids and\nsugars, following a prebiotic version of the metabolic pathway . Most of\nthe steps do indeed form the right products, given simple catalysts such\nas metal ions. The difficulty is getting all the steps to join up, but he is\nmaking exciting progress.\n7\nMy point here is more specific. The last thing that prebiotic chemistry\nneeds is the perfect autocatalytic cycle, which makes copies of itself at\nthe expense of all the side reactions that make up living cells. But a cycle\nthat bleeds off material with every spin ceases to be autocatalytic, and so\nbecomes far less beguiling to those who dream of an exponential lift-off\nin bacteria or biochemistry . It is just a cycle that probably can’t make it\nall the way around. A broken cycle.\nWhere does this leave us? Compromise can be a dirty word in\nscience, but it seems to me that there really is a pattern of mundane,\nrepetitious reactions that form Krebs-cycle intermediates in the right\norder, but initially just the first few steps, perhaps up to the C3 or C4\nintermediates. Not a cycle, but a straight line, let’s call it the Krebs line.\nWe’ve seen that there’s strong experimental evidence, from the last few\nyears, that these Krebs line intermediates do indeed form spontaneously\nfrom CO 2 and H 2 . That’s a big deal, because it substantiates a hypothesis\nthat already has unique explanat ory power in connecting an omnipresent\ngeological environment – alkaline hydrothermal vents – to the heart of biochemistry , the carboxylic acids from which other cell components are\nmade.",
           "wordCount": 475,
-          "links": [
-            {
-              "linkId": "link_104_7",
-              "sourcePageNumber": 104,
-              "sourceText": "7",
-              "targetPageNumber": 122,
-              "targetText": "7 The picture emerging is reminiscent of the anthropic principle – the idea that\nthe cosmological co...",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 105,
@@ -67729,20 +67643,20 @@
           "wordCount": 434,
           "links": [
             {
-              "linkId": "link_117_8",
+              "linkId": "link_117_5",
               "sourcePageNumber": 117,
               "sourceText": "8",
               "targetPageNumber": 123,
-              "targetText": "8 That wasn’t the original plan, but cracking the code is exciting and we’re on a\nroll",
+              "targetText": "8",
               "type": "pdf_annotation",
               "role": "source"
             },
             {
-              "linkId": "link_117_9",
+              "linkId": "link_117_6",
               "sourcePageNumber": 117,
               "sourceText": "9",
               "targetPageNumber": 123,
-              "targetText": "9 You might be wondering how a random string of RNA could affect protocell\ngrowth",
+              "targetText": "9",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67776,25 +67690,16 @@
               "sourcePageNumber": 92,
               "sourceText": "1",
               "targetPageNumber": 121,
-              "targetText": "1 A veteran of many expeditions on the Alvin , typically lasting a full day at a\ntime, John Baross t...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_93_2",
-              "sourcePageNumber": 93,
-              "sourceText": "2",
-              "targetPageNumber": 121,
-              "targetText": "2 In fact, we now know that deep-sea vents produce enough near-infrared light to\npower photosynth es...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_94_3",
+              "linkId": "link_94_2",
               "sourcePageNumber": 94,
               "sourceText": "3",
               "targetPageNumber": 121,
-              "targetText": "3 The tradition of synthetic chemistry aims to make the products of interest, such\nas nucleotides, a...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67806,38 +67711,20 @@
           "wordCount": 570,
           "links": [
             {
-              "linkId": "link_100_4",
+              "linkId": "link_100_3",
               "sourcePageNumber": 100,
               "sourceText": "4",
               "targetPageNumber": 122,
-              "targetText": "4 Being by then something of a scientific celebrity (and by no means\nunsympathetic to religion), Mor...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_101_5",
-              "sourcePageNumber": 101,
-              "sourceText": "5",
-              "targetPageNumber": 122,
-              "targetText": "5 Just in case you are confused ",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_103_6",
+              "linkId": "link_103_4",
               "sourcePageNumber": 103,
               "sourceText": "6",
               "targetPageNumber": 122,
-              "targetText": "6 That of course raises its own questions about just how RNA acquires\ninformation, a problem so seve...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_104_7",
-              "sourcePageNumber": 104,
-              "sourceText": "7",
-              "targetPageNumber": 122,
-              "targetText": "7 The picture emerging is reminiscent of the anthropic principle – the idea that\nthe cosmological co...",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67849,20 +67736,20 @@
           "wordCount": 290,
           "links": [
             {
-              "linkId": "link_117_8",
+              "linkId": "link_117_5",
               "sourcePageNumber": 117,
               "sourceText": "8",
               "targetPageNumber": 123,
-              "targetText": "8 That wasn’t the original plan, but cracking the code is exciting and we’re on a\nroll",
+              "targetText": "8",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_117_9",
+              "linkId": "link_117_6",
               "sourcePageNumber": 117,
               "sourceText": "9",
               "targetPageNumber": 123,
-              "targetText": "9 You might be wondering how a random string of RNA could affect protocell\ngrowth",
+              "targetText": "9",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -67887,7 +67774,7 @@
               "sourcePageNumber": 124,
               "sourceText": "1",
               "targetPageNumber": 148,
-              "targetText": "1 Like many people of my generation, I first came across Pikaia in an inspiring,\nif flawed, book by ...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67927,7 +67814,7 @@
               "sourcePageNumber": 129,
               "sourceText": "2",
               "targetPageNumber": 148,
-              "targetText": "2 But I can’t resist telling you anyway ",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67973,7 +67860,7 @@
               "sourcePageNumber": 135,
               "sourceText": "3",
               "targetPageNumber": 148,
-              "targetText": "3 Erich Gnaiger is a lar ger-than-life character , practically a legend in the world of\nrespirometry...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -67983,17 +67870,7 @@
           "pageNumber": 136,
           "content": "Until now we have considered the Krebs line and posed the question:\nwhy did it first become a cycle? To sustain forwards flux down the Krebs\nline, we need to have high concentrations of early intermed iates and\nlower concentrations of the later products. More specifically , we need to\nbe rid of the final product, citrate, to prevent flux oscillating back and\nforth through the pathway . That’s what is achieved when the Krebs line\nis converted into a complete cycle: the end product citrate doesn’t build\nup, but is removed by converting it into its own precursors such as acetyl\nCoA, the very things needed for more CO 2 fixation.\n4\nWhat’s more, the\nenzyme that catalyses this step (ATP citrate lyase) is effectively\nirreversible, as it consumes ATP to split citrate. So the reverse Krebs\ncycle really is an Oroboros: by swallowing its own tail, the cycle is\ncontinually pulling the forward reactions onwards. For me, the reverse\nKrebs cycle is an ethereal Oroboros at the very heart of life. It is no solid\nthing like a serpent, but a fleeting, invisible flux of molecules, still\nwhirling in a cycle after billions of years, sustained by the same atoms\nthat fuel the eternity of stars, hydrogen.\nThe dawn of photosynthesis\nSet against the tight constraints of this anaerobic world, imagine the\nfreedom offered by that everyday miracle, oxygenic photosynthesis.\nSilently humming in trees and algae and cyanobacteria, all use virtually\nthe same machinery to fix CO 2 and generate ATP. Oxygen is the waste\nproduct, cast away , the first great pollutant. Please remember that oxygen\ndoes not come from CO 2 – it comes from water, which is split apart to\nextract the hydrogen – 2H. That should sound familiar by now. It’s not\neasy to split water, hence the energy of the sun, focused to work by that\nmarvellous transducer chlorophyll. Literally a transducer , chlorophyll\nabsorbs a photon of light, red light, which excites an electron. The\nexcited electron , zapped away from its former owner, is swiftly spirited\noff down an electron-transport chain embedded in the membrane.\nTransiently angry, chlorophyll snatches a replacement from the\nsacrificial gift offered by the trembling priestly protein. This sacrifice is\nnot some virgin to placate a medieval dragon, but water. Zap. Repeat.",
           "wordCount": 385,
-          "links": [
-            {
-              "linkId": "link_136_4",
-              "sourcePageNumber": 136,
-              "sourceText": "4",
-              "targetPageNumber": 148,
-              "targetText": "4 The eagle-eyed will notice that statement is slightly ambiguous",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 137,
@@ -68019,11 +67896,11 @@
           "wordCount": 442,
           "links": [
             {
-              "linkId": "link_140_5",
+              "linkId": "link_140_4",
               "sourcePageNumber": 140,
               "sourceText": "5",
               "targetPageNumber": 149,
-              "targetText": "5 But here is a taster, in light of the driving forces we have been discussing in\nthis chapter ",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68041,11 +67918,11 @@
           "wordCount": 428,
           "links": [
             {
-              "linkId": "link_142_6",
+              "linkId": "link_142_5",
               "sourcePageNumber": 142,
               "sourceText": "6",
               "targetPageNumber": 149,
-              "targetText": "6 Certainly not Shields",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68091,7 +67968,7 @@
               "sourcePageNumber": 124,
               "sourceText": "1",
               "targetPageNumber": 148,
-              "targetText": "1 Like many people of my generation, I first came across Pikaia in an inspiring,\nif flawed, book by ...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -68100,7 +67977,7 @@
               "sourcePageNumber": 129,
               "sourceText": "2",
               "targetPageNumber": 148,
-              "targetText": "2 But I can’t resist telling you anyway ",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -68109,16 +67986,7 @@
               "sourcePageNumber": 135,
               "sourceText": "3",
               "targetPageNumber": 148,
-              "targetText": "3 Erich Gnaiger is a lar ger-than-life character , practically a legend in the world of\nrespirometry...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_136_4",
-              "sourcePageNumber": 136,
-              "sourceText": "4",
-              "targetPageNumber": 148,
-              "targetText": "4 The eagle-eyed will notice that statement is slightly ambiguous",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68130,20 +67998,20 @@
           "wordCount": 475,
           "links": [
             {
-              "linkId": "link_140_5",
+              "linkId": "link_140_4",
               "sourcePageNumber": 140,
               "sourceText": "5",
               "targetPageNumber": 149,
-              "targetText": "5 But here is a taster, in light of the driving forces we have been discussing in\nthis chapter ",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_142_6",
+              "linkId": "link_142_5",
               "sourcePageNumber": 142,
               "sourceText": "6",
               "targetPageNumber": 149,
-              "targetText": "6 Certainly not Shields",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68168,7 +68036,7 @@
               "sourcePageNumber": 150,
               "sourceText": "1",
               "targetPageNumber": 178,
-              "targetText": "1 This may sound surprising, as there has been much greater success in early\ndiagnosis and treatment...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68208,7 +68076,7 @@
               "sourcePageNumber": 155,
               "sourceText": "2",
               "targetPageNumber": 178,
-              "targetText": "2 Warburg actively enjoyed the war, which reminds me of J",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68248,7 +68116,7 @@
               "sourcePageNumber": 160,
               "sourceText": "3",
               "targetPageNumber": 178,
-              "targetText": "3 The reason NAD P H has more power than NADH has nothing to do with the\nstructure, which is functio...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68270,7 +68138,7 @@
               "sourcePageNumber": 162,
               "sourceText": "4",
               "targetPageNumber": 179,
-              "targetText": "4 Conversely , stem cells, which give rise to most new cells in tissues, are\ntypically not different...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68314,7 +68182,7 @@
               "sourcePageNumber": 166,
               "sourceText": "5",
               "targetPageNumber": 179,
-              "targetText": "5 My own PhD, back in the 1990s, addressed problems with oxygen delivery in\norgan transplantation",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68348,7 +68216,7 @@
               "sourcePageNumber": 170,
               "sourceText": "6",
               "targetPageNumber": 179,
-              "targetText": "6 The enzyme that breaks down citrate in the cytosol (in animals) is an ATP\ncitrate lyase – which is...",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68388,7 +68256,7 @@
               "sourcePageNumber": 175,
               "sourceText": "7",
               "targetPageNumber": 180,
-              "targetText": "7 Books tend to take their own direction against the best-laid plans of the author",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68416,7 +68284,7 @@
               "sourcePageNumber": 150,
               "sourceText": "1",
               "targetPageNumber": 178,
-              "targetText": "1 This may sound surprising, as there has been much greater success in early\ndiagnosis and treatment...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -68425,7 +68293,7 @@
               "sourcePageNumber": 155,
               "sourceText": "2",
               "targetPageNumber": 178,
-              "targetText": "2 Warburg actively enjoyed the war, which reminds me of J",
+              "targetText": "2",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -68434,7 +68302,7 @@
               "sourcePageNumber": 160,
               "sourceText": "3",
               "targetPageNumber": 178,
-              "targetText": "3 The reason NAD P H has more power than NADH has nothing to do with the\nstructure, which is functio...",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68450,7 +68318,7 @@
               "sourcePageNumber": 162,
               "sourceText": "4",
               "targetPageNumber": 179,
-              "targetText": "4 Conversely , stem cells, which give rise to most new cells in tissues, are\ntypically not different...",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -68459,7 +68327,7 @@
               "sourcePageNumber": 166,
               "sourceText": "5",
               "targetPageNumber": 179,
-              "targetText": "5 My own PhD, back in the 1990s, addressed problems with oxygen delivery in\norgan transplantation",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "target"
             },
@@ -68468,7 +68336,7 @@
               "sourcePageNumber": 170,
               "sourceText": "6",
               "targetPageNumber": 179,
-              "targetText": "6 The enzyme that breaks down citrate in the cytosol (in animals) is an ATP\ncitrate lyase – which is...",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68484,7 +68352,7 @@
               "sourcePageNumber": 175,
               "sourceText": "7",
               "targetPageNumber": 180,
-              "targetText": "7 Books tend to take their own direction against the best-laid plans of the author",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68533,7 +68401,7 @@
               "sourcePageNumber": 185,
               "sourceText": "1",
               "targetPageNumber": 207,
-              "targetText": "1 There are occasio nal examples of mitochondrial DNA inherited from the father\ntoo, very rarely in ...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68543,17 +68411,7 @@
           "pageNumber": 186,
           "content": "He went on to show that mitochondrial genes can indeed mutate,\ncausing diseases such as epilepsy , blindness and neuromuscular\ndegeneration. We now know of at least 300 diseases caused by mutations\nin mitochondria l genes (plus hundreds of others caused by mutations in\nthe nuclear genes that encode mitochondrial proteins). It’s a tragic story,\nyet just the tip of the iceber g of how mitochondria fashion our lives.\nMost mitochond rial mutations are not obviously detrimental. It can be\nhard to tell. Unlike nuclear genes, which normally come in two copies\n(one from each parent), mitochondrial genes come in packs, typically\nhundreds or thousands of copies per cell. A mature oocyte (egg cell) has\nnearly half a million copies. This means that a mutation, if present in\nonly a few copies, might be masked by numerous normal copies. But it\ncan be much more confusing. The same mitochondrial mutation often\nproduces differing outcomes at different doses, or if set against different\nnuclear genes, or in distinct tissues, or if interacting with other\nmitochondrial DNA in the same cell, much of which exhibits tortuously\ncomplex behaviour , making mitochondrial diseases elusive and esoteric\nto this day. For most of us, the complex group dynamics of mitochondria\nare avoided, at least earlier in life, through what amounts to a clean-up\noperation in the female germline, again first pointed out by Wallace. This\nclean-up means that each oocyte is packed with half a million near-\nidentical copies of mitochondrial DNA, very nearly a clone.\n2\nMost\novertly detrimental mutations seem to get sieved out in this process.\nThat’s why mitochondrial diseases directly affect only about 1 in 5,000\nof us. It’s also why mitochondrial genes tend to evolve much faster than\nnuclear genes; at least tenfold, and perhaps as much as fifty-fold faster in\nmost animals, including us. Mitochondrial genes are copied far more\nthan nuclear genes, and so they accumulate more mutations. While the\nmost detrimental mitochondrial mutations are eliminated in the germline,\nplenty of other variations can persist.\nThe fact that most mitochondrial variation is not obviously\ndetrimental offered some simplified glimpses into human origins and\nprehistory . By the 1990s, Wallace was tracking the tell-tale trail of\nmitochondrial variations in human populations back to an ancestral\nfemale, now known as ‘mitochondrial Eve’, the ancestor of all modern\nhuman mitochondrial DNA, around 160,000 years ago. The gradual\naccumulation of differences in mitochondrial DNA between diverging\ngroups can be used to track the migrations of humans out of Africa into Eurasia and eventually to Australia and the Americas.",
           "wordCount": 427,
-          "links": [
-            {
-              "linkId": "link_186_2",
-              "sourcePageNumber": 186,
-              "sourceText": "2",
-              "targetPageNumber": 207,
-              "targetText": "2 In his PhD with me and Andrew Pomiankowski, Marco Colnaghi has done\nsome beautiful mathematical mo...",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 187,
@@ -68579,11 +68437,11 @@
           "wordCount": 435,
           "links": [
             {
-              "linkId": "link_190_3",
+              "linkId": "link_190_2",
               "sourcePageNumber": 190,
               "sourceText": "3",
               "targetPageNumber": 208,
-              "targetText": "3 This is a fine example of how solving one evolutionary problem leads to\nanother ",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68619,11 +68477,11 @@
           "wordCount": 480,
           "links": [
             {
-              "linkId": "link_195_4",
+              "linkId": "link_195_3",
               "sourcePageNumber": 195,
               "sourceText": "4",
               "targetPageNumber": 208,
-              "targetText": "4 Biology is always more complex than you’d like it to be",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68641,20 +68499,20 @@
           "wordCount": 496,
           "links": [
             {
-              "linkId": "link_197_5",
+              "linkId": "link_197_4",
               "sourcePageNumber": 197,
               "sourceText": "5",
               "targetPageNumber": 208,
-              "targetText": "5 Quite why larger animals usually have a lower metabolic rate is surprisingly\nabstruse",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "source"
             },
             {
-              "linkId": "link_197_6",
+              "linkId": "link_197_5",
               "sourcePageNumber": 197,
               "sourceText": "6",
               "targetPageNumber": 209,
-              "targetText": "7 It might seem that this problem could be solved by upregulating ‘anaplerotic’\npathways – adding in...",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68672,11 +68530,11 @@
           "wordCount": 490,
           "links": [
             {
-              "linkId": "link_199_7",
+              "linkId": "link_199_6",
               "sourcePageNumber": 199,
               "sourceText": "7",
               "targetPageNumber": 209,
-              "targetText": "7 It might seem that this problem could be solved by upregulating ‘anaplerotic’\npathways – adding in...",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68686,17 +68544,7 @@
           "pageNumber": 200,
           "content": "Their stunted tail\nor narrow eye-span or less vibrant colour betrays a Krebs-cycle flux\ncompromised by deficient interactions between the proteins encoded by\nmitochondrial and nuclear genes. That makes the signal genuinely\nhonest; nothing less than optimal respiration can balance energy with\ngrowth.\nAny damage to the respiratory chain will tend to increase ROS flux,\nmost of which derives from the iron–sulfur clusters of comple x I. And\nultimately , the only way for animals to get this back under control is to\nsuppress complex I.\n8\nThe problem is that suppressing complex I slows\ndown the oxidation of NADH in mitochondria, promoting reverse Krebs-\ncycle flux and an epi-genetic shift linked to growth and general\ninflammation, as we saw with cancer – a senescent flux pattern. More\nATP is formed by fermentation, with electrons being fed into alternative\nsinks such as complex III (via the glycerol phosphate shunt), enabling\nthe pumping of six rather than ten protons for each 2H oxidised. Overall,\nwe have less energy, tend to gain in weight, find it harder to burst into\nexplosive action and suffer from chronic low-grade inflammation; aches\nand pains. Ageing, eh! On the positive side, this diminished state might\nbe stable for decades. But notice how far removed this is from the\nvenerable free-radical theory of ageing. ROS flux doesn’t rise sharply\nwith age, in some crescendo of oxidative damage. On the contrary , it\nbarely changes – we suppress our own cell respiration instead, slowing\ndown gently and losing function ... suf focating inwardly .\nWe’re all individuals\nAgeing reminds me of that absurd scene in Monty Python’ s Life of\nBrian , where Brian admonishes the crowd that they don’t need to follow\nanyone – they’re all individuals. The crowd chants back, ‘Yes, we’re all\nindividuals!’ apart from one lone, doleful voice who says ‘I’m not.’\nLikewise, we all get older in much the same way; we’re all part of the\ncrowd. Yet as I noted at the beginning of this chapter , we each succumb\nto different ailments with age, whether it be cancer, Alzheimer ’s disease\nor some heart condition. Take your pick. We’re all individuals. But the\nspectre of missing heritability means that only a small proportion of the\nestablished genetic risk for these conditions is explained by known\nvariations in nuclear genes. So how exactly are age-related diseases\nlinked with ageing?",
           "wordCount": 397,
-          "links": [
-            {
-              "linkId": "link_200_8",
-              "sourcePageNumber": 200,
-              "sourceText": "8",
-              "targetPageNumber": 209,
-              "targetText": "8 Plants and simple (tiny) animals don’t need to suppress complex I, as they can\nshort-circuit the r...",
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 201,
@@ -68716,20 +68564,20 @@
           "wordCount": 433,
           "links": [
             {
-              "linkId": "link_203_9",
+              "linkId": "link_203_7",
               "sourcePageNumber": 203,
               "sourceText": "9",
               "targetPageNumber": 209,
-              "targetText": "9 These are part of an extensive internal membrane system in cells called the\nendoplasmic reticulum,...",
+              "targetText": "9",
               "type": "pdf_annotation",
               "role": "source"
             },
             {
-              "linkId": "link_203_10",
+              "linkId": "link_203_8",
               "sourcePageNumber": 203,
               "sourceText": "10",
               "targetPageNumber": 209,
-              "targetText": "10 High glucose in the blood (hyperglycaemia) suppresses the uptake of glucose\nby neurons, via mecha...",
+              "targetText": "10",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68741,11 +68589,11 @@
           "wordCount": 462,
           "links": [
             {
-              "linkId": "link_204_11",
+              "linkId": "link_204_9",
               "sourcePageNumber": 204,
               "sourceText": "11",
               "targetPageNumber": 210,
-              "targetText": "11 I take this number from Joana Xavier, one of the stars of a rising generation of\nscientists who a...",
+              "targetText": "11",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -68761,17 +68609,7 @@
           "pageNumber": 206,
           "content": "They can\ngo on burning NADH with a Krebs cycle in full forward mode for much\nlonger. That in turn postpones the age-related shift to a senescen t\nepigenetic state. But not surprisi ngly, there are costs. Restricting ROS\nflux may have little effect on the accumulation of damaged proteins.\nRemember that ROS are less damaging than the lurid languag e used to\nlabel them would have you believe. Even so, a faster pace of living\nentails more turnover of molecular machinery , and therefore more\ndamage. Longer-lived animals must invest more in damage limitation.\nThe cost is ultimately fewer offspring per unit time, and we are back into\nstandard evolutionary biology .\nThese changes are the work of selection, even if they are relatively\nsimple and can occur over just a few generations. Our own lifespan is\nharder to modify, because our physiological limits are set by the genes\nthat we inherited – we can’t mix and match over generations to improve\nour performance. But we can influence metabolic steady states through\nour behaviour . To do so, we need to know ourselves. Remember that\nyour mitochondria are not the same as mine. We each have distinct\nmitochondrial DNA, set against kaleidoscopic nuclear genomes. Some\nmitochondrial DNA is associated with longer life and possibly lower\nROS flux. For example, one variant common in Japan is linked with half\nthe risk of age-related diseases and twice the likelihood of surviving to a\nhundred. In any case, differences in mitochondrial function have\ninevitable downstream effects on Krebs-cycle flux, gene activity and the\nrate of ageing. These differences are amplified or dampened by our\nlifestyle, our diet, activities or habits such as smoking, but what works\nbest for me might be quite different for you. The irony is that in our\nquest to understand the genes that seem to control ageing, we have\nbinned the very ones that are key to living well – the mitochondrial\ngenes, which channel the unceasing whirl of reactions that keep us alive\nat all.\nOver the entrance to the Temple of Apollo at Delphi, the Greeks\ninscribed three maxims. The first was ‘Know thyself’. They might never\nhave imagined the invisible metabolic flux dancing through genes that\ndefines us as individuals and humans, but they knew well how to live\nand die. We each need to learn that lesson for ourselves. The second\nmaxim was ‘Nothing to excess’. Think about how hard it is to change our epigenetic state: we must sustain a new pattern of flux moment by\nmoment, year after year.",
           "wordCount": 427,
-          "links": [
-            {
-              "linkId": "link_210_13",
-              "sourcePageNumber": 210,
-              "sourceText": "12",
-              "targetPageNumber": 206,
-              "targetText": "They can",
-              "type": "pdf_annotation",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 207,
@@ -68783,16 +68621,7 @@
               "sourcePageNumber": 185,
               "sourceText": "1",
               "targetPageNumber": 207,
-              "targetText": "1 There are occasio nal examples of mitochondrial DNA inherited from the father\ntoo, very rarely in ...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_186_2",
-              "sourcePageNumber": 186,
-              "sourceText": "2",
-              "targetPageNumber": 207,
-              "targetText": "2 In his PhD with me and Andrew Pomiankowski, Marco Colnaghi has done\nsome beautiful mathematical mo...",
+              "targetText": "1",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68804,29 +68633,29 @@
           "wordCount": 523,
           "links": [
             {
-              "linkId": "link_190_3",
+              "linkId": "link_190_2",
               "sourcePageNumber": 190,
               "sourceText": "3",
               "targetPageNumber": 208,
-              "targetText": "3 This is a fine example of how solving one evolutionary problem leads to\nanother ",
+              "targetText": "3",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_195_4",
+              "linkId": "link_195_3",
               "sourcePageNumber": 195,
               "sourceText": "4",
               "targetPageNumber": 208,
-              "targetText": "4 Biology is always more complex than you’d like it to be",
+              "targetText": "4",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_197_5",
+              "linkId": "link_197_4",
               "sourcePageNumber": 197,
               "sourceText": "5",
               "targetPageNumber": 208,
-              "targetText": "5 Quite why larger animals usually have a lower metabolic rate is surprisingly\nabstruse",
+              "targetText": "5",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68838,47 +68667,38 @@
           "wordCount": 499,
           "links": [
             {
-              "linkId": "link_197_6",
+              "linkId": "link_197_5",
               "sourcePageNumber": 197,
               "sourceText": "6",
               "targetPageNumber": 209,
-              "targetText": "7 It might seem that this problem could be solved by upregulating ‘anaplerotic’\npathways – adding in...",
+              "targetText": "6",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_199_7",
+              "linkId": "link_199_6",
               "sourcePageNumber": 199,
               "sourceText": "7",
               "targetPageNumber": 209,
-              "targetText": "7 It might seem that this problem could be solved by upregulating ‘anaplerotic’\npathways – adding in...",
+              "targetText": "7",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_200_8",
-              "sourcePageNumber": 200,
-              "sourceText": "8",
-              "targetPageNumber": 209,
-              "targetText": "8 Plants and simple (tiny) animals don’t need to suppress complex I, as they can\nshort-circuit the r...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_203_9",
+              "linkId": "link_203_7",
               "sourcePageNumber": 203,
               "sourceText": "9",
               "targetPageNumber": 209,
-              "targetText": "9 These are part of an extensive internal membrane system in cells called the\nendoplasmic reticulum,...",
+              "targetText": "9",
               "type": "pdf_annotation",
               "role": "target"
             },
             {
-              "linkId": "link_203_10",
+              "linkId": "link_203_8",
               "sourcePageNumber": 203,
               "sourceText": "10",
               "targetPageNumber": 209,
-              "targetText": "10 High glucose in the blood (hyperglycaemia) suppresses the uptake of glucose\nby neurons, via mecha...",
+              "targetText": "10",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -68890,29 +68710,11 @@
           "wordCount": 240,
           "links": [
             {
-              "linkId": "link_210_13",
-              "sourcePageNumber": 210,
-              "sourceText": "12",
-              "targetPageNumber": 206,
-              "targetText": "They can",
-              "type": "pdf_annotation",
-              "role": "source"
-            },
-            {
-              "linkId": "link_204_11",
+              "linkId": "link_204_9",
               "sourcePageNumber": 204,
               "sourceText": "11",
               "targetPageNumber": 210,
-              "targetText": "11 I take this number from Joana Xavier, one of the stars of a rising generation of\nscientists who a...",
-              "type": "pdf_annotation",
-              "role": "target"
-            },
-            {
-              "linkId": "link_205_12",
-              "sourcePageNumber": 205,
-              "sourceText": "12",
-              "targetPageNumber": 210,
-              "targetText": "12 Barja argues that this is linked to a programme of ageing: that ROS flux from\ncomplex I is delibe...",
+              "targetText": "11",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -69065,11 +68867,11 @@
           "wordCount": 237,
           "links": [
             {
-              "linkId": "link_308_59",
+              "linkId": "link_308_58",
               "sourcePageNumber": 308,
               "sourceText": "298",
               "targetPageNumber": 230,
-              "targetText": "The curly arrows here depict a proton acquiring a pair of electrons from",
+              "targetText": "specifically the tendency of the carbon–carbon double bond to react withgeneral, carbon–carbonespeci...",
               "type": "pdf_annotation",
               "role": "target"
             }
@@ -69921,15 +69723,6 @@
               "targetText": null,
               "type": "pdf_annotation",
               "role": "source"
-            },
-            {
-              "linkId": "link_303_45",
-              "sourcePageNumber": 303,
-              "sourceText": "185",
-              "targetPageNumber": 144,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
             }
           ]
         },
@@ -69939,7 +69732,7 @@
           "wordCount": 255,
           "links": [
             {
-              "linkId": "link_304_46",
+              "linkId": "link_304_45",
               "sourcePageNumber": 304,
               "sourceText": "185",
               "targetPageNumber": 144,
@@ -69948,10 +69741,19 @@
               "role": "source"
             },
             {
-              "linkId": "link_304_47",
+              "linkId": "link_304_46",
               "sourcePageNumber": 304,
               "sourceText": "286",
               "targetPageNumber": 220,
+              "targetText": null,
+              "type": "pdf_annotation",
+              "role": "source"
+            },
+            {
+              "linkId": "link_304_47",
+              "sourcePageNumber": 304,
+              "sourceText": "287",
+              "targetPageNumber": 221,
               "targetText": null,
               "type": "pdf_annotation",
               "role": "source"
@@ -69967,15 +69769,6 @@
             },
             {
               "linkId": "link_304_49",
-              "sourcePageNumber": 304,
-              "sourceText": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
-            },
-            {
-              "linkId": "link_304_50",
               "sourcePageNumber": 304,
               "sourceText": "222",
               "targetPageNumber": 171,
@@ -70003,7 +69796,7 @@
           "wordCount": 248,
           "links": [
             {
-              "linkId": "link_307_51",
+              "linkId": "link_307_50",
               "sourcePageNumber": 307,
               "sourceText": "225",
               "targetPageNumber": 173,
@@ -70012,7 +69805,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_307_52",
+              "linkId": "link_307_51",
               "sourcePageNumber": 307,
               "sourceText": ", 264",
               "targetPageNumber": 201,
@@ -70021,7 +69814,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_307_53",
+              "linkId": "link_307_52",
               "sourcePageNumber": 307,
               "sourceText": "222",
               "targetPageNumber": 171,
@@ -70030,7 +69823,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_307_54",
+              "linkId": "link_307_53",
               "sourcePageNumber": 307,
               "sourceText": ", 226",
               "targetPageNumber": 174,
@@ -70039,7 +69832,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_307_55",
+              "linkId": "link_307_54",
               "sourcePageNumber": 307,
               "sourceText": "225",
               "targetPageNumber": 173,
@@ -70048,7 +69841,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_307_56",
+              "linkId": "link_307_55",
               "sourcePageNumber": 307,
               "sourceText": "222",
               "targetPageNumber": 171,
@@ -70064,7 +69857,7 @@
           "wordCount": 246,
           "links": [
             {
-              "linkId": "link_308_57",
+              "linkId": "link_308_56",
               "sourcePageNumber": 308,
               "sourceText": "286",
               "targetPageNumber": 220,
@@ -70073,7 +69866,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_308_58",
+              "linkId": "link_308_57",
               "sourcePageNumber": 308,
               "sourceText": "287",
               "targetPageNumber": 221,
@@ -70082,11 +69875,11 @@
               "role": "source"
             },
             {
-              "linkId": "link_308_59",
+              "linkId": "link_308_58",
               "sourcePageNumber": 308,
               "sourceText": "298",
               "targetPageNumber": 230,
-              "targetText": "The curly arrows here depict a proton acquiring a pair of electrons from",
+              "targetText": "specifically the tendency of the carbon–carbon double bond to react withgeneral, carbon–carbonespeci...",
               "type": "pdf_annotation",
               "role": "source"
             }
@@ -70096,17 +69889,7 @@
           "pageNumber": 309,
           "content": "phosphoenol-pyruvate 70 –71, 73 , 102 , 122 , 224 –5, 287 , 296 –7\nphosphoglycerate 92 , 94 , 96 , 174\nphotophosphorylation 99 , 105\nphotorespiration 76 , 109\nphotosynthesis\nanoxygenic and oxygenic 166 –8, 175\nhydrothermal vents and 114 , 115 n2\n‘invented’ by cyanobacteria 78 , 283\nmechanism 82 –6, 103 , 199\nphosphoglycerate in 92\npreceded by respiration 36 , 167\nrange of locations 74 –5\nwater as the source of oxygen 173 –4\nphotosystems in oxygenic photosynthesis 167 , 175\nphylogenetic evidence 110 , 122 , 165 , 168\npigeon-breast muscle 45 , 52 , 71 , 189\nPikaia 156 , 183 –4\nPinna, Silvana 152\nplants\nas autotrophs 77 , 103\ncarbon fixation in 83 –5, 103\nevidence relevant to cancer 228 n7\nsynthesis of or ganics 107\nporphyrins see haem\nprebiotic chemistry 116 , 120 –21, 129 –32, 145 , 148 , 151 , 300 –301\npredators and prey 156 , 160 , 180 , 183 , 235 –6, 281\npressure and CO 2 reduction 142\n‘primordial soup’ idea 169\nprolyl hydroxylases 212\nproteins\nbreakdown in cancer 226\nchirality of amino acids 277\ndisulfide bridges 253 –4\nfolding mechanisms 13 , 258\npeptide templating 149 n9\nrubisco as the most abundant 75\nsynthesis and A TP demand 208\nsee also enzymes\nprotists 3 –4, 161 , 186 , 276 , 281\n‘protocells’ 24 , 117 , 145 –50, 152 –3, 275",
           "wordCount": 239,
-          "links": [
-            {
-              "linkId": "link_309_60",
-              "sourcePageNumber": 309,
-              "sourceText": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 310,
@@ -70114,7 +69897,7 @@
           "wordCount": 222,
           "links": [
             {
-              "linkId": "link_310_61",
+              "linkId": "link_310_59",
               "sourcePageNumber": 310,
               "sourceText": "147",
               "targetPageNumber": 116,
@@ -70123,7 +69906,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_310_62",
+              "linkId": "link_310_60",
               "sourcePageNumber": 310,
               "sourceText": "66",
               "targetPageNumber": 53,
@@ -70132,7 +69915,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_310_63",
+              "linkId": "link_310_61",
               "sourcePageNumber": 310,
               "sourceText": "121",
               "targetPageNumber": 97,
@@ -70141,7 +69924,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_310_64",
+              "linkId": "link_310_62",
               "sourcePageNumber": 310,
               "sourceText": "in",
               "targetPageNumber": 37,
@@ -70150,7 +69933,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_310_65",
+              "linkId": "link_310_63",
               "sourcePageNumber": 310,
               "sourceText": "287",
               "targetPageNumber": 221,
@@ -70166,34 +69949,7 @@
           "wordCount": 232,
           "links": [
             {
-              "linkId": "link_311_66",
-              "sourcePageNumber": 311,
-              "sourceText": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
-            },
-            {
-              "linkId": "link_311_67",
-              "sourcePageNumber": 311,
-              "sourceText": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
-            },
-            {
-              "linkId": "link_311_68",
-              "sourcePageNumber": 311,
-              "sourceText": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
-            },
-            {
-              "linkId": "link_311_69",
+              "linkId": "link_311_64",
               "sourcePageNumber": 311,
               "sourceText": "101",
               "targetPageNumber": 80,
@@ -70215,7 +69971,7 @@
           "wordCount": 221,
           "links": [
             {
-              "linkId": "link_313_70",
+              "linkId": "link_313_65",
               "sourcePageNumber": 313,
               "sourceText": "128",
               "targetPageNumber": 102,
@@ -70224,7 +69980,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_313_71",
+              "linkId": "link_313_66",
               "sourcePageNumber": 313,
               "sourceText": "215",
               "targetPageNumber": 166,
@@ -70233,7 +69989,7 @@
               "role": "source"
             },
             {
-              "linkId": "link_313_72",
+              "linkId": "link_313_67",
               "sourcePageNumber": 313,
               "sourceText": "222",
               "targetPageNumber": 171,
@@ -70247,17 +70003,7 @@
           "pageNumber": 314,
           "content": "symbiosis\namong bacteria and archaea 170 , 188\nendosymbiosis 69 , 221 n6\nbetween tissues 189 –90, 265\nSzent-Györ gyi, Albert 44 –52, 63 , 71 , 104 , 184 , 299\nThauer, Rolf 163 n2\nthermodynamics\nfavouring or ganic synthesis and life 150 , 275\nand the Krebs cycle 22 , 126\nlaws recast as information 4\nand metabolic rate 258 –9\nSecond law 124\nthioacetate 151 –2\nThompson, Craig 206 –7\ntissue slice experiments 28 , 33 –9, 51 –2, 71 , 189\ntissues\ndifferentiation 189 , 202 , 208 –9, 269\nflux complementarity 25 , 189 –90\nsymbiosis between 189 –90, 265\ntraffic analogy 7 –8, 14 –16, 53 –4\ntranshydrogenases, membrane 219 –20, 222 , 226 , 253\ntransmutation 27 , 81 , 88\ntricarboxylic acid cycle see Krebs cycle\ntrophic levels 159 –60\ntumour-suppressor genes 192 –3, 205\nTurin, Luca 276 –9\ntwin studies 236 –8, 245 , 248 , 263\nuncoupling proteins 228 n7, 262 n8\nurea 8 , 28 , 38 –9\nurea cycle 52 , 224 –7\nVan Leeuwenhoek, Antonie 3\nventilation in an anaerobic world 183\nvertebrates, ancestors of 155 –6\nVesalius, Andreas 243\nViagra 216\nviruses 205 , 282\nThe Vital Question (book) 281",
           "wordCount": 204,
-          "links": [
-            {
-              "linkId": "link_314_73",
-              "sourcePageNumber": 314,
-              "sourceText": "222",
-              "targetPageNumber": 171,
-              "targetText": null,
-              "type": "pdf_annotation",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "pageNumber": 315,

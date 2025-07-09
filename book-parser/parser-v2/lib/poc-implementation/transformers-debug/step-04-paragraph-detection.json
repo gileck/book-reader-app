@@ -2,8 +2,9 @@
   "paragraphDetectionMetadata": {
     "totalParagraphs": 782,
     "totalChapters": 10,
-    "processingTime": 26,
-    "detectionTime": "2025-07-08T08:40:30.660Z"
+    "totalLinksExtracted": 207,
+    "processingTime": 29,
+    "detectionTime": "2025-07-09T10:27:05.655Z"
   },
   "paragraphStats": {
     "totalParagraphs": 782,
@@ -31,6 +32,11 @@
       "percentageInTargetRange": 81
     }
   },
+  "linkStats": {
+    "totalLinks": 207,
+    "averageLinksPerChapter": 20.7,
+    "chaptersWithLinks": 8
+  },
   "sampleParagraphs": [
     {
       "chapterTitle": "Introduction: Life itself",
@@ -41,19 +47,25 @@
           "pageNumber": 8,
           "contentPreview": "I NTRODUCTION\nLIFE ITSELF\nFrom space it looks grey and crystalline, obliterating the blue-green\ncolo...",
           "wordCount": 132,
-          "sentencesCount": 10
+          "sentencesCount": 10,
+          "linksCount": 0,
+          "links": []
         },
         {
           "pageNumber": 8,
           "contentPreview": "No, of course not; they are cities. We know them intimately from the\ninside, even if most of us know...",
           "wordCount": 153,
-          "sentencesCount": 9
+          "sentencesCount": 9,
+          "linksCount": 0,
+          "links": []
         },
         {
           "pageNumber": 8,
           "contentPreview": "In my mind’s eye, we\ncould rise above the conurbation and picture this combined flux, map out\nthe ju...",
           "wordCount": 88,
-          "sentencesCount": 4
+          "sentencesCount": 4,
+          "linksCount": 0,
+          "links": []
         }
       ]
     },
@@ -66,19 +78,25 @@
           "pageNumber": 27,
           "contentPreview": "1\nDISCOVERING THE NANOCOSM\nBurlington House, Piccadilly , 1932. Its stately Victorian façades are\ngl...",
           "wordCount": 168,
-          "sentencesCount": 10
+          "sentencesCount": 10,
+          "linksCount": 0,
+          "links": []
         },
         {
           "pageNumber": 27,
           "contentPreview": "With a degree of trepidation that he’s careful to offset by his choice of\nwords, Hopkins moves on to...",
           "wordCount": 215,
-          "sentencesCount": 12
+          "sentencesCount": 12,
+          "linksCount": 0,
+          "links": []
         },
         {
           "pageNumber": 28,
           "contentPreview": "In the audience, Hopkins’ s many friends are smiling. They\nknow his obsession with the dynamic side ...",
           "wordCount": 276,
-          "sentencesCount": 17
+          "sentencesCount": 17,
+          "linksCount": 0,
+          "links": []
         }
       ]
     }
