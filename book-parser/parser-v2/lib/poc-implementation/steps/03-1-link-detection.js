@@ -439,7 +439,7 @@ async function addLinksToPages(pages, pdfLinks) {
                 // Find destination text if we have a valid destination page
                 let destinationText = null;
                 if (pdfLink.hasValidDestination && pdfLink.destinationPage) {
-                    destinationText = findDestinationText(pages, pdfLink.destinationPage, pdfLink.destinationCoordinates);
+                    destinationText = findDestinationText(pages, pdfLink.destinationPage, pdfLink.destinationCoordinates, pdfLink.linkText);
                 }
 
                 const linkSource = {
@@ -574,19 +574,45 @@ function findLinkInPageContent(pageContent, linkText) {
  * @param {Array} pages - All pages
  * @param {number} destinationPage - Target page number
  * @param {Object} destinationCoordinates - Coordinates on target page (optional)
+ * @param {string} sourceText - The source text (footnote number) to find
  * @returns {string|null} Text around the destination or null if not found
  */
-function findDestinationText(pages, destinationPage, destinationCoordinates) {
+function findDestinationText(pages, destinationPage, destinationCoordinates, sourceText) {
     const targetPage = pages.find(page => page.pageNumber === destinationPage);
     if (!targetPage) {
         return null;
     }
     
-    // For now, return the first part of the target page content
-    // In a more sophisticated implementation, we could use coordinates to find specific text
+    // If sourceText is provided, look for the specific footnote number
+    if (sourceText) {
+        // Create a pattern to look for the specific footnote number that matches sourceText
+        const footnotePattern = new RegExp(`(?:^|\\n)\\s*(${sourceText})\\s+([A-Z][^.]*)`);
+        const match = targetPage.content.match(footnotePattern);
+        
+        if (match) {
+            // Return the footnote number and the beginning of the text
+            const footnoteNumber = match[1];
+            const footnoteText = match[2];
+            const combinedText = `${footnoteNumber} ${footnoteText}`;
+            return combinedText.length > 100 ? combinedText.substring(0, 100) + '...' : combinedText;
+        }
+    }
+    
+    // Fallback: look for any footnote definition if no specific sourceText match
+    const genericFootnotePattern = /(?:^|\n)\s*(\d{1,2})\s+([A-Z][^.]*)/;
+    const match = targetPage.content.match(genericFootnotePattern);
+    
+    if (match) {
+        // Return the footnote number and the beginning of the text
+        const footnoteNumber = match[1];
+        const footnoteText = match[2];
+        const combinedText = `${footnoteNumber} ${footnoteText}`;
+        return combinedText.length > 100 ? combinedText.substring(0, 100) + '...' : combinedText;
+    }
+    
+    // Final fallback: return the first meaningful line (up to 100 characters)
     const contentLines = targetPage.content.split('\n').filter(line => line.trim().length > 0);
     if (contentLines.length > 0) {
-        // Return first meaningful line (up to 100 characters)
         const firstLine = contentLines[0].trim();
         return firstLine.length > 100 ? firstLine.substring(0, 100) + '...' : firstLine;
     }
