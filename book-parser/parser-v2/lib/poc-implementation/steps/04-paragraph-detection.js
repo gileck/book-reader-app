@@ -389,48 +389,66 @@ function detectParagraphsInPage(page) {
                 // End of page = end of paragraph
                 isEndOfParagraph = true;
             } else {
-                // Check if next non-empty line starts a new paragraph
+                // Look ahead to see what follows
                 for (let j = nextLineIndex; j < lines.length; j++) {
                     const nextLine = lines[j].trim();
-                    if (nextLine.length > 0) {
+                    
+                    if (nextLine === '') {
+                        // Empty line = end of paragraph
+                        isEndOfParagraph = true;
+                        break;
+                    }
+                    
+                    if (startsNewParagraph(nextLine)) {
+                        // New paragraph indicator = end of current paragraph
+                        isEndOfParagraph = true;
+                        break;
+                    }
+                    
+                    if (j === nextLineIndex) {
                         // Check if next line is just a footnote reference (single digit(s))
-                        // If so, include it in current paragraph and continue looking
                         if (/^\d+$/.test(nextLine)) {
-                            // This is a footnote reference, add it to current paragraph
+                            // This is a footnote reference, add it to current paragraph with newline preserved
                             currentParagraphLines.push(nextLine);
                             footnoteFound = true;
                             i = j; // Skip ahead to the footnote line
                             
-                            // Continue checking what comes after the footnote
+                            // Check what comes after the footnote to determine if paragraph should end
                             for (let k = j + 1; k < lines.length; k++) {
-                                const lineAfterFootnote = lines[k].trim();
-                                if (lineAfterFootnote.length > 0) {
-                                    // If there's content after footnote, end paragraph after including footnote
+                                const afterFootnote = lines[k].trim();
+                                if (afterFootnote === '') {
                                     isEndOfParagraph = true;
                                     break;
                                 }
-                            }
-                            // If no content after footnote, end paragraph
-                            if (!isEndOfParagraph) {
-                                isEndOfParagraph = true;
+                                if (startsNewParagraph(afterFootnote)) {
+                                    isEndOfParagraph = true;
+                                    break;
+                                }
+                                // If there's more content, continue building paragraph
+                                break;
                             }
                             break;
                         }
-                        // Found next non-empty line that's not a footnote, this ends the current paragraph
-                        isEndOfParagraph = true;
-                        break;
                     }
-                }
-                
-                // If we didn't find any more non-empty lines, this is end of paragraph
-                if (!footnoteFound && !isEndOfParagraph) {
-                    isEndOfParagraph = true;
+                    
+                    // If we reach here, continue building paragraph
+                    break;
                 }
             }
             
             if (isEndOfParagraph && currentParagraphLines.length > 0) {
-                // Create paragraph
-                const paragraphContent = currentParagraphLines.join('\n').trim();
+                // Create paragraph - preserve original structure including newlines before footnotes
+                let paragraphContent = currentParagraphLines.join('\n');
+                
+                // Don't trim if this could remove important formatting like footnote spacing
+                // Check for patterns like "sentence.\n1 word" which should preserve the newline before footnotes
+                if (/\.\n\d+\s+[A-Za-z]/.test(paragraphContent)) {
+                    // For footnote cases, only trim excessive whitespace at the very start/end, preserve internal structure
+                    paragraphContent = paragraphContent.replace(/^\s+/, '').replace(/\s+$/, '');
+                } else {
+                    paragraphContent = paragraphContent.trim();
+                }
+                
                 if (paragraphContent.length > 0) {
                     // Extract links that exist within this paragraph's content
                     const paragraphLinks = extractLinksFromParagraph(paragraphContent, pageLinks);
@@ -450,7 +468,17 @@ function detectParagraphsInPage(page) {
     
     // Handle any remaining content as a paragraph
     if (currentParagraphLines.length > 0) {
-        const paragraphContent = currentParagraphLines.join('\n').trim();
+        let paragraphContent = currentParagraphLines.join('\n');
+        
+        // Don't trim if this could remove important formatting like footnote spacing
+        // Check for patterns like "sentence.\n1 word" which should preserve the newline before footnotes
+        if (/\.\n\d+\s+[A-Za-z]/.test(paragraphContent)) {
+            // For footnote cases, only trim excessive whitespace at the very start/end, preserve internal structure
+            paragraphContent = paragraphContent.replace(/^\s+/, '').replace(/\s+$/, '');
+        } else {
+            paragraphContent = paragraphContent.trim();
+        }
+        
         if (paragraphContent.length > 0) {
             // Extract links that exist within this paragraph's content
             const paragraphLinks = extractLinksFromParagraph(paragraphContent, pageLinks);
@@ -483,6 +511,15 @@ function endsWithSentenceTerminator(line) {
     
     // Check for sentence terminators
     return ['.', '!', '?', ':', ';'].includes(lastChar);
+}
+
+/**
+ * Check if a line starts with a capital letter and is substantial content
+ * @param {string} line - Line to check
+ * @returns {boolean} - True if line is a new paragraph indicator
+ */
+function startsNewParagraph(line) {
+    return /^[A-Z]/.test(line) && line.length > 10; // Simple heuristic for substantial content
 }
 
 /**
