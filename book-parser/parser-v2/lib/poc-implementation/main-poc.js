@@ -35,6 +35,7 @@ const path = require('path');
 const textExtraction = require('./steps/01-text-extraction');
 const chapterDetection = require('./steps/02-1-chapter-detection');
 const chapterContentExtraction = require('./steps/02-2-chapter-content-extraction');
+const chapterNameCleaning = require('./steps/02-3-chapter-name-cleaning');
 const pageExtractionAndCrossPageMerging = require('./steps/03-page-extraction-and-cross-page-merging');
 const linkDetection = require('./steps/03-1-link-detection');
 const paragraphDetection = require('./steps/04-paragraph-detection');
@@ -78,6 +79,7 @@ const STEPS = {
     'step-1': textExtraction.execute,
     'step-2-1': chapterDetection.execute,
     'step-2-2': chapterContentExtraction.execute,
+    'step-2-3': chapterNameCleaning.execute,
     'step-3': pageExtractionAndCrossPageMerging.execute,
     'step-3-1': linkDetection.execute,
     'step-4': paragraphDetection.execute,
@@ -101,6 +103,7 @@ const STEP_NAMES = [
     'step-1',
     'step-2-1',
     'step-2-2',
+    'step-2-3',
     'step-3',
     'step-3-1',
     'step-4',
@@ -115,6 +118,7 @@ const STEP_DESCRIPTIONS = {
     'step-1': 'Extract raw text from PDF',
     'step-2-1': 'Detect chapter boundaries from Table of Contents',
     'step-2-2': 'Extract and clean chapter content',
+    'step-2-3': 'Clean chapter names/titles from beginning of chapter content',
     'step-3': 'Extract and clean individual pages + merge split sentences across pages',
     'step-3-1': 'Detect and resolve internal links from PDF annotations',
     'step-4': 'Detect paragraph boundaries',
