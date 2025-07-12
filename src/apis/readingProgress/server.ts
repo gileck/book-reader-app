@@ -30,6 +30,52 @@ export const readingProgressApis = {
                 throw new Error(`Invalid bookId format: ${bookId}`);
             }
 
+            // CRITICAL: Validate that currentChapter and currentChunk are not null/undefined
+            if (currentChapter === null || currentChapter === undefined) {
+                console.error('CRITICAL BUG: Attempt to save null currentChapter', {
+                    userId,
+                    bookId,
+                    currentChapter,
+                    currentChunk,
+                    requestData: request
+                });
+                throw new Error('Cannot save reading progress: currentChapter is null or undefined');
+            }
+
+            if (currentChunk === null || currentChunk === undefined) {
+                console.error('CRITICAL BUG: Attempt to save null currentChunk', {
+                    userId,
+                    bookId,
+                    currentChapter,
+                    currentChunk,
+                    requestData: request
+                });
+                throw new Error('Cannot save reading progress: currentChunk is null or undefined');
+            }
+
+            // Validate that they are valid numbers
+            if (typeof currentChapter !== 'number' || isNaN(currentChapter) || currentChapter < 0) {
+                console.error('CRITICAL BUG: Invalid currentChapter value', {
+                    userId,
+                    bookId,
+                    currentChapter,
+                    currentChunk,
+                    requestData: request
+                });
+                throw new Error(`Cannot save reading progress: currentChapter must be a valid number >= 0, got: ${currentChapter}`);
+            }
+
+            if (typeof currentChunk !== 'number' || isNaN(currentChunk) || currentChunk < 0) {
+                console.error('CRITICAL BUG: Invalid currentChunk value', {
+                    userId,
+                    bookId,
+                    currentChapter,
+                    currentChunk,
+                    requestData: request
+                });
+                throw new Error(`Cannot save reading progress: currentChunk must be a valid number >= 0, got: ${currentChunk}`);
+            }
+
             const result = await updateReadingPosition(
                 new ObjectId(userId),
                 new ObjectId(bookId),
@@ -106,18 +152,42 @@ export const readingProgressApis = {
                 };
             }
 
+            // Handle legacy data: default to chapter 1, chunk 0 if null values exist
+            let currentChapter = result.currentChapter;
+            let currentChunk = result.currentChunk;
+
+            if (currentChapter === null || currentChapter === undefined) {
+                console.warn('Found null currentChapter in database, defaulting to 1', {
+                    userId,
+                    bookId,
+                    savedChapter: result.currentChapter,
+                    savedChunk: result.currentChunk
+                });
+                currentChapter = 1;
+            }
+
+            if (currentChunk === null || currentChunk === undefined) {
+                console.warn('Found null currentChunk in database, defaulting to 0', {
+                    userId,
+                    bookId,
+                    savedChapter: result.currentChapter,
+                    savedChunk: result.currentChunk
+                });
+                currentChunk = 0;
+            }
+
             // Calculate enhanced progress information
             const { bookProgress, chapterProgress } = await calculateBookProgress(
                 new ObjectId(bookId),
-                result.currentChapter,
-                result.currentChunk
+                currentChapter,
+                currentChunk
             );
 
             const readingProgress: ReadingProgressClient = {
                 userId: result.userId.toString(),
                 bookId: result.bookId.toString(),
-                currentChapter: result.currentChapter,
-                currentChunk: result.currentChunk,
+                currentChapter: currentChapter,
+                currentChunk: currentChunk,
                 lastReadAt: result.lastReadAt,
                 chapterProgress,
                 bookProgress,

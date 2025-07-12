@@ -121,12 +121,12 @@ export const useReadingProgress = ({
             if (saveTimeoutRef.current) {
                 clearTimeout(saveTimeoutRef.current);
             }
-            // Fire and forget immediate save
-            if (bookId) {
+            // Fire and forget immediate save - but only if we have valid values
+            if (bookId && currentChapterNumber !== null && currentChunkIndex !== null) {
                 saveProgress();
             }
         };
-    }, [saveProgress, bookId]);
+    }, [saveProgress, bookId, currentChapterNumber, currentChunkIndex]);
 
     return {
         isLoadingProgress: false, // No longer loading since main hook handles this

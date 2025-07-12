@@ -7,11 +7,21 @@ export async function process(
     try {
         const { bookId, chapterNumber } = params;
 
-        if (!bookId || chapterNumber === undefined) {
-            throw new Error('Book ID and chapter number are required');
+        if (!bookId) {
+            throw new Error('Book ID is required');
         }
 
-        const chapter = await findChapterByBookAndNumber(bookId, chapterNumber);
+        // Handle null/undefined chapterNumber - default to chapter 1
+        let finalChapterNumber = chapterNumber;
+        if (chapterNumber === null || chapterNumber === undefined) {
+            console.warn('Received null/undefined chapterNumber, defaulting to 1', {
+                bookId,
+                originalChapterNumber: chapterNumber
+            });
+            finalChapterNumber = 1;
+        }
+
+        const chapter = await findChapterByBookAndNumber(bookId, finalChapterNumber);
 
         return {
             chapter: chapter ? {
