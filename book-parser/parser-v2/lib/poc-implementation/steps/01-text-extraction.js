@@ -1,13 +1,13 @@
 /**
- * Step 1: Text Extraction
+ * Step 1: Text Extraction (Fixed Page-by-Page Approach)
  * 
- * Extract raw text from PDF while preserving literal \n characters.
- * This is the foundation step that all other steps depend on.
+ * Extract raw text from PDF using proper page-by-page extraction with improved text joining.
+ * This approach uses pdfjs-dist for accurate page boundaries but fixes spacing issues.
  * 
  * Requirements:
- * - Extract complete text from PDF
+ * - Extract complete text from PDF without spacing issues
  * - Preserve literal \n characters (not convert to actual newlines)
- * - Handle multi-page PDFs correctly
+ * - Handle multi-page PDFs correctly with accurate page boundaries
  * - Provide character count and basic metadata
  * - Generate debug output for validation
  * 
@@ -23,93 +23,91 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Execute text extraction step
+ * Execute text extraction step using proper page-by-page extraction
  * @param {Object} pipelineState - Current pipeline state
  * @param {Object} config - Configuration object
  * @returns {Object} - Updated state with extracted text
  */
 async function execute(pipelineState, config) {
-    console.log('📄 Starting text extraction...');
-    
+    console.log('📄 Starting text extraction (Fixed page-by-page approach)...');
+
     // Check if PDF file exists
     if (!fs.existsSync(config.INPUT_PDF)) {
         throw new Error(`PDF file not found: ${config.INPUT_PDF}`);
     }
-    
+
     try {
         // Read PDF file
         console.log('📖 Reading PDF file...');
         const pdfBuffer = fs.readFileSync(config.INPUT_PDF);
-        
-        // Import pdf-parse dynamically (in case it's not installed)
-        let pdfParse;
+
+        // Import required libraries
+        let pdfjsLib;
         try {
-            pdfParse = require('pdf-parse');
+            pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
         } catch (importError) {
-            console.warn('⚠️  pdf-parse not installed, using fallback text extraction');
+            console.warn('⚠️  Required PDF libraries not installed, using fallback text extraction');
             return fallbackTextExtraction(config, pipelineState);
         }
-        
-        // Extract text using pdf-parse with page-by-page extraction
-        console.log('🔍 Extracting text from PDF with page markers...');
-        const pdfData = await pdfParse(pdfBuffer, {
-            pagerender: async (pageData) => {
-                // Extract text for each page individually with page markers
-                const pageNum = pageData.pageIndex; // Start from 0 to align with book pages
-                
-                if (pageData.getTextContent) {
-                    const textContent = await pageData.getTextContent();
-                    let pageText = '';
-                    let lastY = null;
-                    
-                    // Preserve line structure by checking Y positions
-                    for (const item of textContent.items) {
-                        if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
-                            // New line detected based on Y position change
-                            pageText += '\n';
-                        }
-                        pageText += item.str + ' ';
-                        lastY = item.transform[5];
-                    }
-                    
-                    // Clean the page text by removing standalone page numbers at the beginning
-                    const cleanedPageText = removeStandalonePageNumber(pageText.trim(), pageNum);
-                    
-                    return `\n--- PAGE ${pageNum} ---\n${cleanedPageText}\n--- END PAGE ${pageNum} ---\n`;
-                } else {
-                    return `\n--- PAGE ${pageNum} ---\n\n--- END PAGE ${pageNum} ---\n`;
-                }
+
+        // Load PDF document
+        console.log('🔍 Loading PDF document...');
+        const pdfDoc = await pdfjsLib.getDocument(pdfBuffer).promise;
+        const totalPages = pdfDoc.numPages;
+
+        console.log(`📄 Processing ${totalPages} pages...`);
+
+        // Process each page individually
+        let rawText = '';
+        const pageInfo = [];
+
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+            const page = await pdfDoc.getPage(pageNum);
+            const textContent = await page.getTextContent();
+
+            // Extract text with improved spacing logic
+            const pageText = extractCleanPageText(textContent, pageNum - 1);
+
+            // Add page markers
+            const pageStartPos = rawText.length;
+            rawText += `\n--- PAGE ${pageNum - 1} ---\n`;
+            rawText += pageText;
+            rawText += `\n--- END PAGE ${pageNum - 1} ---\n`;
+
+            // Store page info
+            pageInfo.push({
+                pageNumber: pageNum - 1,
+                startPosition: pageStartPos,
+                endPosition: rawText.length,
+                characterCount: pageText.length,
+                wordCount: pageText.split(/\s+/).filter(w => w.length > 0).length,
+                text: pageText
+            });
+
+            if (pageNum % 50 === 0) {
+                console.log(`   📄 Processed ${pageNum}/${totalPages} pages...`);
             }
-        });
-        
-        // If pagerender didn't work, fall back to regular extraction with manual page markers
-        let rawText;
-        if (pdfData.text && pdfData.text.includes('--- PAGE')) {
-            rawText = pdfData.text;
-        } else {
-            console.log('📄 Using fallback: adding estimated page markers...');
-            rawText = addEstimatedPageMarkers(pdfData.text, pdfData.numpages);
         }
-        
-        // Validate extraction
+
+        // Validate final result
         if (!rawText || rawText.trim().length === 0) {
-            throw new Error('PDF text extraction failed - no text found');
+            throw new Error('Text extraction failed - no final text found');
         }
-        
+
         // Calculate statistics
         const characterCount = rawText.length;
-        const pageCount = pdfData.numpages;
+        const pageCount = totalPages;
         const extractionTime = new Date().toISOString();
-        
+
         // Calculate additional metrics
         const lineCount = rawText.split('\n').length;
         const wordCount = rawText.split(/\s+/).filter(word => word.length > 0).length;
         const literalNewlineCount = (rawText.match(/\\n/g) || []).length;
-        
+
         // Generate text samples for validation
         const textSample = rawText.substring(0, 500);
         const textEnd = rawText.substring(Math.max(0, rawText.length - 500));
-        
+
         // Generate debug output
         const debugOutput = {
             extractionMetadata: {
@@ -119,35 +117,39 @@ async function execute(pipelineState, config) {
                 wordCount,
                 literalNewlineCount,
                 extractionTime,
-                pdfInfo: {
-                    pages: pdfData.numpages,
-                    info: pdfData.info || {},
-                    metadata: pdfData.metadata || {}
-                }
+                extractionMethod: 'page_by_page_fixed'
             },
             textValidation: {
                 hasContent: rawText.length > 0,
                 startsWithText: textSample.length > 0,
                 endsWithText: textEnd.length > 0,
                 containsLiteralNewlines: literalNewlineCount > 0,
-                averageWordsPerPage: Math.round(wordCount / pageCount)
+                averageWordsPerPage: Math.round(wordCount / pageCount),
+                hasPageMarkers: rawText.includes('--- PAGE')
             },
             textSamples: {
                 beginning: textSample + (rawText.length > 500 ? '...' : ''),
                 ending: (rawText.length > 500 ? '...' : '') + textEnd,
                 firstLines: rawText.split('\n').slice(0, 10),
                 lastLines: rawText.split('\n').slice(-10)
-            }
+            },
+            pageInfo: pageInfo.map(page => ({
+                pageNumber: page.pageNumber,
+                startPosition: page.startPosition,
+                endPosition: page.endPosition,
+                characterCount: page.characterCount,
+                wordCount: page.wordCount
+            }))
         };
-        
+
         // Save debug output
         const debugFile = path.join(config.DEBUG_DIR, 'step-01-text-extraction.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
-        
+
         // Save raw text for reference
         const rawTextFile = path.join(config.DEBUG_DIR, 'step-01-raw-text.txt');
         fs.writeFileSync(rawTextFile, rawText, 'utf8');
-        
+
         console.log(`✅ Text extraction completed successfully`);
         console.log(`📊 Statistics:`);
         console.log(`   - Characters: ${characterCount.toLocaleString()}`);
@@ -158,7 +160,7 @@ async function execute(pipelineState, config) {
         console.log(`   - Avg words/page: ${Math.round(wordCount / pageCount)}`);
         console.log(`📄 Debug output: ${debugFile}`);
         console.log(`📄 Raw text file: ${rawTextFile}`);
-        
+
         return {
             rawText: rawText,
             metadata: {
@@ -170,22 +172,85 @@ async function execute(pipelineState, config) {
                     wordCount,
                     literalNewlineCount,
                     extractionTime,
-                    averageWordsPerPage: Math.round(wordCount / pageCount)
+                    averageWordsPerPage: Math.round(wordCount / pageCount),
+                    extractionMethod: 'page_by_page_fixed'
                 }
             }
         };
-        
+
     } catch (error) {
         console.error('❌ Text extraction failed:', error.message);
-        
-        // Try fallback extraction if pdf-parse fails
-        if (error.message.includes('pdf-parse')) {
-            console.log('🔄 Attempting fallback text extraction...');
-            return fallbackTextExtraction(config, pipelineState);
-        }
-        
         throw error;
     }
+}
+
+/**
+ * Extract clean text from a page with improved spacing logic
+ * @param {Object} textContent - Text content from pdfjs-dist
+ * @param {number} pageNum - Page number (0-based)
+ * @returns {string} - Clean page text
+ */
+function extractCleanPageText(textContent, pageNum) {
+    if (!textContent || !textContent.items || textContent.items.length === 0) {
+        return '';
+    }
+
+    const items = textContent.items;
+    let pageText = '';
+    let lastY = null;
+    let lastX = null;
+
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const nextItem = i + 1 < items.length ? items[i + 1] : null;
+
+        const itemText = item.str;
+        if (!itemText || itemText.trim().length === 0) {
+            continue;
+        }
+
+        const currentY = item.transform[5];
+        const currentX = item.transform[4];
+
+        // Detect new lines based on Y position change
+        if (lastY !== null && Math.abs(currentY - lastY) > 5) {
+            pageText += '\n';
+        }
+
+        // Add the text
+        pageText += itemText;
+
+        // Determine if we need a space after this item
+        if (nextItem && nextItem.str && nextItem.str.trim().length > 0) {
+            const nextY = nextItem.transform[5];
+            const nextX = nextItem.transform[4];
+            const nextText = nextItem.str;
+
+            // Don't add space if:
+            // 1. Current text already ends with space or hyphen
+            // 2. Next text starts with space or punctuation
+            // 3. We're on a new line (Y position changed significantly)
+            // 4. Text items are very close together (part of same word)
+
+            const currentEndsWithSpace = /[\s-]$/.test(itemText);
+            const nextStartsWithSpaceOrPunct = /^[\s.,;:!?)\]}"']/.test(nextText);
+            const isNewLine = Math.abs(nextY - currentY) > 5;
+            const isVeryClose = Math.abs(nextX - (currentX + (item.width || itemText.length * 6))) < 2;
+
+            if (!currentEndsWithSpace &&
+                !nextStartsWithSpaceOrPunct &&
+                !isNewLine &&
+                !isVeryClose) {
+                pageText += ' ';
+            }
+        }
+
+        lastY = currentY;
+        lastX = currentX;
+    }
+
+    // Clean the page text by removing standalone page numbers at the beginning
+    return removeStandalonePageNumber(pageText.trim(), pageNum);
 }
 
 /**
@@ -196,151 +261,52 @@ async function execute(pipelineState, config) {
  */
 function fallbackTextExtraction(config, pipelineState) {
     console.log('📄 Using fallback text extraction...');
-    
+
     // Check if there's already a raw text file we can use
-    const possibleTextFiles = [
-        path.join(path.dirname(config.INPUT_PDF), 'raw-pdf-text.txt'),
-        path.join(path.dirname(config.INPUT_PDF), 'text.txt'),
-        path.join(path.dirname(config.INPUT_PDF), 'book.txt')
-    ];
-    
-    for (const textFile of possibleTextFiles) {
-        if (fs.existsSync(textFile)) {
-            console.log(`📖 Found existing text file: ${textFile}`);
-            
-            const rawText = fs.readFileSync(textFile, 'utf8');
-            
-            if (rawText && rawText.trim().length > 0) {
-                const characterCount = rawText.length;
-                const lineCount = rawText.split('\n').length;
-                const wordCount = rawText.split(/\s+/).filter(word => word.length > 0).length;
-                const extractionTime = new Date().toISOString();
-                
-                // Generate basic debug output
-                const debugOutput = {
-                    extractionMetadata: {
-                        characterCount,
-                        lineCount,
-                        wordCount,
-                        extractionTime,
-                        source: 'fallback_text_file',
-                        sourceFile: textFile
-                    },
-                    textSamples: {
-                        beginning: rawText.substring(0, 500) + (rawText.length > 500 ? '...' : ''),
-                        ending: (rawText.length > 500 ? '...' : '') + rawText.substring(Math.max(0, rawText.length - 500))
-                    }
-                };
-                
-                const debugFile = path.join(config.DEBUG_DIR, 'step-01-text-extraction.json');
-                fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
-                
-                console.log(`✅ Fallback text extraction completed`);
-                console.log(`📊 Characters: ${characterCount.toLocaleString()}`);
-                console.log(`📊 Lines: ${lineCount.toLocaleString()}`);
-                console.log(`📊 Words: ${wordCount.toLocaleString()}`);
-                
-                return {
-                    rawText: rawText,
-                    metadata: {
-                        ...pipelineState.metadata,
-                        textExtraction: {
-                            characterCount,
-                            lineCount,
-                            wordCount,
-                            extractionTime,
-                            source: 'fallback_text_file',
-                            sourceFile: textFile
-                        }
-                    }
-                };
+    const rawTextFile = path.join(config.DEBUG_DIR, 'step-01-raw-text.txt');
+    if (fs.existsSync(rawTextFile)) {
+        console.log('📄 Found existing raw text file, using it as fallback');
+        const rawText = fs.readFileSync(rawTextFile, 'utf8');
+
+        return {
+            rawText: rawText,
+            metadata: {
+                ...pipelineState.metadata,
+                textExtraction: {
+                    characterCount: rawText.length,
+                    pageCount: 'unknown',
+                    lineCount: rawText.split('\n').length,
+                    wordCount: rawText.split(/\s+/).filter(word => word.length > 0).length,
+                    literalNewlineCount: (rawText.match(/\\n/g) || []).length,
+                    extractionTime: new Date().toISOString(),
+                    fallbackUsed: true
+                }
             }
-        }
+        };
     }
-    
-    // If no fallback available, throw error
-    throw new Error('PDF text extraction failed and no fallback text file found. Please install pdf-parse: npm install pdf-parse');
+
+    throw new Error('No fallback text extraction available and pdfjs-dist failed');
 }
 
 /**
- * Remove standalone page number at the beginning of page text
- * @param {string} pageText - Raw page text
+ * Remove standalone page numbers from the beginning of page text
+ * @param {string} pageText - Text content of a page
  * @param {number} pageNum - Page number
  * @returns {string} - Cleaned page text
  */
 function removeStandalonePageNumber(pageText, pageNum) {
-    if (!pageText) return pageText;
-    
+    // Remove standalone page number at the beginning of the page
     const lines = pageText.split('\n');
-    if (lines.length === 0) return pageText;
-    
-    // Check if the first few lines contain just the page number
-    for (let i = 0; i < Math.min(3, lines.length); i++) {
-        const line = lines[i].trim();
-        
-        // Check if this line is just the page number (or page number + 1 for book vs PDF numbering)
-        if (line === pageNum.toString() || 
-            line === (pageNum + 1).toString() || 
-            line === (pageNum - 1).toString()) {
-            // Remove this line
-            lines.splice(i, 1);
-            i--; // Adjust index since we removed an element
-        } else if (line.length > 0) {
-            // If we hit a non-empty line that's not a page number, stop checking
-            break;
-        }
-    }
-    
-    return lines.join('\n');
-}
+    if (lines.length > 0) {
+        const firstLine = lines[0].trim();
 
-/**
- * Add estimated page markers when pagerender doesn't work
- * @param {string} text - Raw PDF text
- * @param {number} pageCount - Number of pages
- * @returns {string} - Text with estimated page markers
- */
-function addEstimatedPageMarkers(text, pageCount) {
-    if (!text || pageCount <= 1) {
-        const cleanedText = removeStandalonePageNumber(text, 0);
-        return `\n--- PAGE 0 ---\n${cleanedText}\n--- END PAGE 0 ---\n`;
-    }
-    
-    // Estimate page breaks by text length
-    const textLength = text.length;
-    const averagePageLength = Math.floor(textLength / pageCount);
-    
-    let markedText = '';
-    let currentPageStart = 0;
-    
-    for (let page = 0; page < pageCount; page++) {
-        const pageStart = currentPageStart;
-        const pageEnd = page === pageCount - 1 ? textLength : currentPageStart + averagePageLength;
-        
-        // Try to break at a paragraph boundary near the estimated position
-        let actualPageEnd = pageEnd;
-        if (page < pageCount - 1) {
-            // Look for paragraph break within ±10% of estimated position
-            const searchRange = Math.floor(averagePageLength * 0.1);
-            const searchStart = Math.max(pageEnd - searchRange, pageStart);
-            const searchEnd = Math.min(pageEnd + searchRange, textLength);
-            
-            for (let i = searchStart; i < searchEnd; i++) {
-                if (text[i] === '\n' && text[i + 1] === '\n') {
-                    actualPageEnd = i;
-                    break;
-                }
-            }
+        // Check if first line is just the page number
+        if (firstLine === pageNum.toString() || firstLine === (pageNum + 1).toString()) {
+            return lines.slice(1).join('\n');
         }
-        
-        const pageText = text.substring(pageStart, actualPageEnd);
-        const cleanedPageText = removeStandalonePageNumber(pageText, page);
-        markedText += `\n--- PAGE ${page} ---\n${cleanedPageText}\n--- END PAGE ${page} ---\n`;
-        
-        currentPageStart = actualPageEnd;
     }
-    
-    return markedText;
+
+    return pageText;
 }
 
 module.exports = {

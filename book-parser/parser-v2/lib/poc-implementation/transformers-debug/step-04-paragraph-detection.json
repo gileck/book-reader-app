@@ -1,52 +1,52 @@
 {
   "paragraphDetectionMetadata": {
-    "totalParagraphs": 777,
+    "totalParagraphs": 728,
     "totalChapters": 10,
-    "totalLinksExtracted": 200,
-    "processingTime": 57,
-    "detectionTime": "2025-07-09T13:01:41.836Z"
+    "totalLinksExtracted": 330,
+    "processingTime": 82,
+    "detectionTime": "2025-07-12T14:12:53.520Z"
   },
   "paragraphStats": {
-    "totalParagraphs": 777,
-    "averageParagraphsPerChapter": 77.7,
+    "totalParagraphs": 728,
+    "averageParagraphsPerChapter": 72.8,
     "paragraphsPerChapter": {
-      "0": 53,
-      "1": 95,
-      "2": 70,
-      "3": 77,
-      "4": 69,
-      "5": 82,
-      "6": 87,
-      "99": 212
+      "0": 47,
+      "1": 86,
+      "2": 65,
+      "3": 71,
+      "4": 66,
+      "5": 80,
+      "6": 85,
+      "99": 196
     },
-    "averageWordsPerParagraph": 156.02574002574002,
-    "averageSentencesPerParagraph": 9.566280566280566,
-    "minWordsPerParagraph": 11,
-    "maxWordsPerParagraph": 593,
+    "averageWordsPerParagraph": 151.3118131868132,
+    "averageSentencesPerParagraph": 10.206043956043956,
+    "minWordsPerParagraph": 10,
+    "maxWordsPerParagraph": 543,
     "minSentencesPerParagraph": 1,
-    "maxSentencesPerParagraph": 33,
+    "maxSentencesPerParagraph": 41,
     "wordCountDistribution": {
-      "under100": 48,
-      "between100And200": 617,
-      "over200": 112,
-      "percentageInTargetRange": 79
+      "under100": 43,
+      "between100And200": 611,
+      "over200": 74,
+      "percentageInTargetRange": 84
     }
   },
   "linkStats": {
-    "totalLinks": 200,
-    "averageLinksPerChapter": 20,
+    "totalLinks": 330,
+    "averageLinksPerChapter": 33,
     "chaptersWithLinks": 8
   },
   "sampleParagraphs": [
     {
       "chapterTitle": "Introduction: Life itself",
       "chapterNumber": 0,
-      "paragraphCount": 53,
+      "paragraphCount": 47,
       "sampleParagraphs": [
         {
           "pageNumber": 8,
-          "contentPreview": "I NTRODUCTION\nLIFE ITSELF\nFrom space it looks grey and crystalline, obliterating the blue-green\ncolo...",
-          "wordCount": 132,
+          "contentPreview": "From space it looks grey and crystalline, obliterating the blue-green\ncolours of the living Earth. I...",
+          "wordCount": 127,
           "sentencesCount": 10,
           "linksCount": 0,
           "links": []
@@ -54,7 +54,7 @@
         {
           "pageNumber": 8,
           "contentPreview": "No, of course not; they are cities. We know them intimately from the\ninside, even if most of us know...",
-          "wordCount": 153,
+          "wordCount": 152,
           "sentencesCount": 9,
           "linksCount": 0,
           "links": []
@@ -62,7 +62,7 @@
         {
           "pageNumber": 8,
           "contentPreview": "In my mind’s eye, we\ncould rise above the conurbation and picture this combined flux, map out\nthe ju...",
-          "wordCount": 88,
+          "wordCount": 86,
           "sentencesCount": 4,
           "linksCount": 0,
           "links": []
@@ -72,12 +72,12 @@
     {
       "chapterTitle": "Discovering the nanocosm",
       "chapterNumber": 1,
-      "paragraphCount": 95,
+      "paragraphCount": 86,
       "sampleParagraphs": [
         {
           "pageNumber": 27,
-          "contentPreview": "1\nDISCOVERING THE NANOCOSM\nBurlington House, Piccadilly , 1932. Its stately Victorian façades are\ngl...",
-          "wordCount": 168,
+          "contentPreview": "Burlington House, Piccadilly, 1932. Its stately Victorian façades are\nglittering with light at the f...",
+          "wordCount": 146,
           "sentencesCount": 10,
           "linksCount": 0,
           "links": []
@@ -85,15 +85,15 @@
         {
           "pageNumber": 27,
           "contentPreview": "With a degree of trepidation that he’s careful to offset by his choice of\nwords, Hopkins moves on to...",
-          "wordCount": 215,
+          "wordCount": 193,
           "sentencesCount": 12,
           "linksCount": 0,
           "links": []
         },
         {
           "pageNumber": 28,
-          "contentPreview": "In the audience, Hopkins’ s many friends are smiling. They\nknow his obsession with the dynamic side ...",
-          "wordCount": 276,
+          "contentPreview": "In the audience, Hopkins’s many friends are smiling. They\nknow his obsession with the dynamic side o...",
+          "wordCount": 241,
           "sentencesCount": 17,
           "linksCount": 0,
           "links": []

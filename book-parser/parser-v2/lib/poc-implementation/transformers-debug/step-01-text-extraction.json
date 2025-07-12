@@ -1,72 +1,2268 @@
 {
   "extractionMetadata": {
-    "characterCount": 795052,
+    "characterCount": 724822,
     "pageCount": 317,
-    "lineCount": 13213,
-    "wordCount": 124903,
+    "lineCount": 12566,
+    "wordCount": 113796,
     "literalNewlineCount": 0,
-    "extractionTime": "2025-07-10T08:15:55.187Z",
-    "pdfInfo": {
-      "pages": 317,
-      "info": {
-        "PDFFormatVersion": "1.4",
-        "IsAcroFormPresent": false,
-        "IsXFAPresent": false,
-        "Title": "Transformer: The Deep Chemistry of Life and Death",
-        "Author": "Nick Lane",
-        "Creator": "calibre (6.7.1) [http://calibre-ebook.com]",
-        "Producer": "calibre (6.7.1) [http://calibre-ebook.com]",
-        "CreationDate": "D:20240111031007+00'00'",
-        "ModDate": "D:20240110201008-07'00'"
-      },
-      "metadata": {
-        "_metadata": {
-          "dc:title": "Transformer: The Deep Chemistry of Life and Death",
-          "dc:description": "",
-          "dc:creator": "Nick Lane",
-          "dc:subject": "",
-          "dc:publisher": "Profile Books",
-          "dc:date": "2022-01-14T17:00:00-07:00",
-          "dc:language": "en",
-          "xmp:metadatadate": "2024-01-10T20:10:13.048159-07:00",
-          "calibre:timestamp": "2024-01-10T20:10:02.540929-07:00"
-        }
-      }
-    }
+    "extractionTime": "2025-07-12T14:25:35.526Z",
+    "extractionMethod": "page_by_page_fixed"
   },
   "textValidation": {
     "hasContent": true,
     "startsWithText": true,
     "endsWithText": true,
     "containsLiteralNewlines": false,
-    "averageWordsPerPage": 394
+    "averageWordsPerPage": 359,
+    "hasPageMarkers": true
   },
   "textSamples": {
-    "beginning": "\n\n\n--- PAGE 0 ---\n\n--- END PAGE 0 ---\n\n\n\n--- PAGE 1 ---\nPraise for   Transformer \n‘Nick Lane’ s exploration of the building blocks that underlie life’ s big \nfundamental questions – the origin of life itself, ageing and disease – \nhave shaped my thinking since I first came across his work.  He is one of \nmy favourite science writers.’ \nBill Gates \n‘In this compulsively readable book, Lane takes us on a riveting journey , \nranging from the flow of ener gy to new ways of understanding cancer . \nLa...",
-    "ending": "... \nDedication 5 \nContents 6 \nIntroduction: Life itself 8 \n1. Discovering the nanocosm 27 \n2. The path of carbon 62 \n3. From gases to life 91 \n4. Revolutions 124 \n5. T o the dark side 150 \n6. The flux capacitor 181 \nEpilogue: Self 211 \nEnvoi: ‘Like Most Revelations’ 219 \nThe forward Krebs cycle 220 \nThe reverse Krebs cycle 221 \nAppendix 1: Red protein mechanics 222 \nAppendix 2: The Krebs line 227 \nList of abbreviations 233 \nFurther reading 236 \nAcknowledgements 282 \nIndex 288\n--- END PAGE 316 ---\n",
+    "beginning": "\n--- PAGE 0 ---\n\n--- END PAGE 0 ---\n\n--- PAGE 1 ---\nPraise forTransformer\n‘Nick Lane’s exploration of the building blocks that underlie life’s big\nfundamental questions – the origin of life itself, ageing and disease –\nhave shaped my thinking since I first came across his work. He is one of\nmy favourite science writers.’\nBill Gates\n‘In this compulsively readable book, Lane takes us on a riveting journey,\nranging from the flow of energy to new ways of understanding cancer.\nLane provides a luminou...",
+    "ending": "...for Transformer1\nTitle Page3\nCopyright4\nDedication5\nContents6\nIntroduction: Life itself8\n1. Discovering the nanocosm27\n2. The path of carbon62\n3. From gases to life91\n4. Revolutions124\n5. To the dark side150\n6. The flux capacitor181\nEpilogue: Self211\nEnvoi: ‘Like Most Revelations’219\nThe forward Krebs cycle220\nThe reverse Krebs cycle221\nAppendix 1: Red protein mechanics222\nAppendix 2: The Krebs line227\nList of abbreviations233\nFurther reading236\nAcknowledgements282\nIndex288\n--- END PAGE 316 ---\n",
     "firstLines": [
-      "",
-      "",
       "",
       "--- PAGE 0 ---",
       "",
       "--- END PAGE 0 ---",
       "",
-      "",
-      "",
-      "--- PAGE 1 ---"
+      "--- PAGE 1 ---",
+      "Praise forTransformer",
+      "‘Nick Lane’s exploration of the building blocks that underlie life’s big",
+      "fundamental questions – the origin of life itself, ageing and disease –",
+      "have shaped my thinking since I first came across his work. He is one of"
     ],
     "lastLines": [
-      "The forward Krebs cycle 220 ",
-      "The reverse Krebs cycle 221 ",
-      "Appendix 1: Red protein mechanics 222 ",
-      "Appendix 2: The Krebs line 227 ",
-      "List of abbreviations 233 ",
-      "Further reading 236 ",
-      "Acknowledgements 282 ",
-      "Index 288",
+      "The forward Krebs cycle220",
+      "The reverse Krebs cycle221",
+      "Appendix 1: Red protein mechanics222",
+      "Appendix 2: The Krebs line227",
+      "List of abbreviations233",
+      "Further reading236",
+      "Acknowledgements282",
+      "Index288",
       "--- END PAGE 316 ---",
       ""
     ]
-  }
+  },
+  "pageInfo": [
+    {
+      "pageNumber": 0,
+      "startPosition": 0,
+      "endPosition": 36,
+      "characterCount": 0,
+      "wordCount": 0
+    },
+    {
+      "pageNumber": 1,
+      "startPosition": 36,
+      "endPosition": 1830,
+      "characterCount": 1758,
+      "wordCount": 273
+    },
+    {
+      "pageNumber": 2,
+      "startPosition": 1830,
+      "endPosition": 2884,
+      "characterCount": 1018,
+      "wordCount": 154
+    },
+    {
+      "pageNumber": 3,
+      "startPosition": 2884,
+      "endPosition": 2978,
+      "characterCount": 58,
+      "wordCount": 10
+    },
+    {
+      "pageNumber": 4,
+      "startPosition": 2978,
+      "endPosition": 4376,
+      "characterCount": 1362,
+      "wordCount": 232
+    },
+    {
+      "pageNumber": 5,
+      "startPosition": 4376,
+      "endPosition": 4441,
+      "characterCount": 29,
+      "wordCount": 5
+    },
+    {
+      "pageNumber": 6,
+      "startPosition": 4441,
+      "endPosition": 4856,
+      "characterCount": 379,
+      "wordCount": 60
+    },
+    {
+      "pageNumber": 7,
+      "startPosition": 4856,
+      "endPosition": 4986,
+      "characterCount": 94,
+      "wordCount": 16
+    },
+    {
+      "pageNumber": 8,
+      "startPosition": 4986,
+      "endPosition": 7361,
+      "characterCount": 2339,
+      "wordCount": 407
+    },
+    {
+      "pageNumber": 9,
+      "startPosition": 7361,
+      "endPosition": 10217,
+      "characterCount": 2820,
+      "wordCount": 461
+    },
+    {
+      "pageNumber": 10,
+      "startPosition": 10217,
+      "endPosition": 12969,
+      "characterCount": 2714,
+      "wordCount": 426
+    },
+    {
+      "pageNumber": 11,
+      "startPosition": 12969,
+      "endPosition": 15526,
+      "characterCount": 2519,
+      "wordCount": 403
+    },
+    {
+      "pageNumber": 12,
+      "startPosition": 15526,
+      "endPosition": 18345,
+      "characterCount": 2781,
+      "wordCount": 464
+    },
+    {
+      "pageNumber": 13,
+      "startPosition": 18345,
+      "endPosition": 21087,
+      "characterCount": 2704,
+      "wordCount": 440
+    },
+    {
+      "pageNumber": 14,
+      "startPosition": 21087,
+      "endPosition": 23707,
+      "characterCount": 2582,
+      "wordCount": 435
+    },
+    {
+      "pageNumber": 15,
+      "startPosition": 23707,
+      "endPosition": 26466,
+      "characterCount": 2721,
+      "wordCount": 444
+    },
+    {
+      "pageNumber": 16,
+      "startPosition": 26466,
+      "endPosition": 28946,
+      "characterCount": 2442,
+      "wordCount": 336
+    },
+    {
+      "pageNumber": 17,
+      "startPosition": 28946,
+      "endPosition": 31712,
+      "characterCount": 2728,
+      "wordCount": 461
+    },
+    {
+      "pageNumber": 18,
+      "startPosition": 31712,
+      "endPosition": 34309,
+      "characterCount": 2559,
+      "wordCount": 426
+    },
+    {
+      "pageNumber": 19,
+      "startPosition": 34309,
+      "endPosition": 37043,
+      "characterCount": 2696,
+      "wordCount": 456
+    },
+    {
+      "pageNumber": 20,
+      "startPosition": 37043,
+      "endPosition": 39619,
+      "characterCount": 2538,
+      "wordCount": 427
+    },
+    {
+      "pageNumber": 21,
+      "startPosition": 39619,
+      "endPosition": 42377,
+      "characterCount": 2720,
+      "wordCount": 438
+    },
+    {
+      "pageNumber": 22,
+      "startPosition": 42377,
+      "endPosition": 45134,
+      "characterCount": 2719,
+      "wordCount": 432
+    },
+    {
+      "pageNumber": 23,
+      "startPosition": 45134,
+      "endPosition": 47754,
+      "characterCount": 2582,
+      "wordCount": 446
+    },
+    {
+      "pageNumber": 24,
+      "startPosition": 47754,
+      "endPosition": 50550,
+      "characterCount": 2758,
+      "wordCount": 434
+    },
+    {
+      "pageNumber": 25,
+      "startPosition": 50550,
+      "endPosition": 53409,
+      "characterCount": 2821,
+      "wordCount": 480
+    },
+    {
+      "pageNumber": 26,
+      "startPosition": 53409,
+      "endPosition": 53553,
+      "characterCount": 106,
+      "wordCount": 17
+    },
+    {
+      "pageNumber": 27,
+      "startPosition": 53553,
+      "endPosition": 55870,
+      "characterCount": 2279,
+      "wordCount": 342
+    },
+    {
+      "pageNumber": 28,
+      "startPosition": 55870,
+      "endPosition": 58545,
+      "characterCount": 2637,
+      "wordCount": 394
+    },
+    {
+      "pageNumber": 29,
+      "startPosition": 58545,
+      "endPosition": 60927,
+      "characterCount": 2344,
+      "wordCount": 316
+    },
+    {
+      "pageNumber": 30,
+      "startPosition": 60927,
+      "endPosition": 63314,
+      "characterCount": 2349,
+      "wordCount": 340
+    },
+    {
+      "pageNumber": 31,
+      "startPosition": 63314,
+      "endPosition": 65805,
+      "characterCount": 2453,
+      "wordCount": 395
+    },
+    {
+      "pageNumber": 32,
+      "startPosition": 65805,
+      "endPosition": 68442,
+      "characterCount": 2599,
+      "wordCount": 418
+    },
+    {
+      "pageNumber": 33,
+      "startPosition": 68442,
+      "endPosition": 71144,
+      "characterCount": 2664,
+      "wordCount": 434
+    },
+    {
+      "pageNumber": 34,
+      "startPosition": 71144,
+      "endPosition": 73604,
+      "characterCount": 2422,
+      "wordCount": 386
+    },
+    {
+      "pageNumber": 35,
+      "startPosition": 73604,
+      "endPosition": 75594,
+      "characterCount": 1952,
+      "wordCount": 316
+    },
+    {
+      "pageNumber": 36,
+      "startPosition": 75594,
+      "endPosition": 77552,
+      "characterCount": 1920,
+      "wordCount": 311
+    },
+    {
+      "pageNumber": 37,
+      "startPosition": 77552,
+      "endPosition": 79390,
+      "characterCount": 1800,
+      "wordCount": 316
+    },
+    {
+      "pageNumber": 38,
+      "startPosition": 79390,
+      "endPosition": 81109,
+      "characterCount": 1681,
+      "wordCount": 268
+    },
+    {
+      "pageNumber": 39,
+      "startPosition": 81109,
+      "endPosition": 83788,
+      "characterCount": 2641,
+      "wordCount": 403
+    },
+    {
+      "pageNumber": 40,
+      "startPosition": 83788,
+      "endPosition": 85501,
+      "characterCount": 1675,
+      "wordCount": 264
+    },
+    {
+      "pageNumber": 41,
+      "startPosition": 85501,
+      "endPosition": 87161,
+      "characterCount": 1622,
+      "wordCount": 236
+    },
+    {
+      "pageNumber": 42,
+      "startPosition": 87161,
+      "endPosition": 89854,
+      "characterCount": 2655,
+      "wordCount": 438
+    },
+    {
+      "pageNumber": 43,
+      "startPosition": 89854,
+      "endPosition": 92401,
+      "characterCount": 2509,
+      "wordCount": 399
+    },
+    {
+      "pageNumber": 44,
+      "startPosition": 92401,
+      "endPosition": 94988,
+      "characterCount": 2549,
+      "wordCount": 398
+    },
+    {
+      "pageNumber": 45,
+      "startPosition": 94988,
+      "endPosition": 97745,
+      "characterCount": 2719,
+      "wordCount": 468
+    },
+    {
+      "pageNumber": 46,
+      "startPosition": 97745,
+      "endPosition": 99683,
+      "characterCount": 1900,
+      "wordCount": 318
+    },
+    {
+      "pageNumber": 47,
+      "startPosition": 99683,
+      "endPosition": 101727,
+      "characterCount": 2006,
+      "wordCount": 324
+    },
+    {
+      "pageNumber": 48,
+      "startPosition": 101727,
+      "endPosition": 104172,
+      "characterCount": 2407,
+      "wordCount": 390
+    },
+    {
+      "pageNumber": 49,
+      "startPosition": 104172,
+      "endPosition": 106906,
+      "characterCount": 2696,
+      "wordCount": 400
+    },
+    {
+      "pageNumber": 50,
+      "startPosition": 106906,
+      "endPosition": 109668,
+      "characterCount": 2724,
+      "wordCount": 418
+    },
+    {
+      "pageNumber": 51,
+      "startPosition": 109668,
+      "endPosition": 112241,
+      "characterCount": 2535,
+      "wordCount": 378
+    },
+    {
+      "pageNumber": 52,
+      "startPosition": 112241,
+      "endPosition": 114839,
+      "characterCount": 2560,
+      "wordCount": 390
+    },
+    {
+      "pageNumber": 53,
+      "startPosition": 114839,
+      "endPosition": 116757,
+      "characterCount": 1880,
+      "wordCount": 272
+    },
+    {
+      "pageNumber": 54,
+      "startPosition": 116757,
+      "endPosition": 119329,
+      "characterCount": 2534,
+      "wordCount": 358
+    },
+    {
+      "pageNumber": 55,
+      "startPosition": 119329,
+      "endPosition": 121937,
+      "characterCount": 2570,
+      "wordCount": 393
+    },
+    {
+      "pageNumber": 56,
+      "startPosition": 121937,
+      "endPosition": 124580,
+      "characterCount": 2605,
+      "wordCount": 435
+    },
+    {
+      "pageNumber": 57,
+      "startPosition": 124580,
+      "endPosition": 127349,
+      "characterCount": 2731,
+      "wordCount": 454
+    },
+    {
+      "pageNumber": 58,
+      "startPosition": 127349,
+      "endPosition": 130285,
+      "characterCount": 2898,
+      "wordCount": 456
+    },
+    {
+      "pageNumber": 59,
+      "startPosition": 130285,
+      "endPosition": 133675,
+      "characterCount": 3352,
+      "wordCount": 538
+    },
+    {
+      "pageNumber": 60,
+      "startPosition": 133675,
+      "endPosition": 136838,
+      "characterCount": 3125,
+      "wordCount": 484
+    },
+    {
+      "pageNumber": 61,
+      "startPosition": 136838,
+      "endPosition": 139734,
+      "characterCount": 2858,
+      "wordCount": 401
+    },
+    {
+      "pageNumber": 62,
+      "startPosition": 139734,
+      "endPosition": 142069,
+      "characterCount": 2297,
+      "wordCount": 358
+    },
+    {
+      "pageNumber": 63,
+      "startPosition": 142069,
+      "endPosition": 144752,
+      "characterCount": 2645,
+      "wordCount": 418
+    },
+    {
+      "pageNumber": 64,
+      "startPosition": 144752,
+      "endPosition": 147429,
+      "characterCount": 2639,
+      "wordCount": 423
+    },
+    {
+      "pageNumber": 65,
+      "startPosition": 147429,
+      "endPosition": 150005,
+      "characterCount": 2538,
+      "wordCount": 405
+    },
+    {
+      "pageNumber": 66,
+      "startPosition": 150005,
+      "endPosition": 152719,
+      "characterCount": 2676,
+      "wordCount": 374
+    },
+    {
+      "pageNumber": 67,
+      "startPosition": 152719,
+      "endPosition": 155257,
+      "characterCount": 2500,
+      "wordCount": 367
+    },
+    {
+      "pageNumber": 68,
+      "startPosition": 155257,
+      "endPosition": 157777,
+      "characterCount": 2482,
+      "wordCount": 404
+    },
+    {
+      "pageNumber": 69,
+      "startPosition": 157777,
+      "endPosition": 160403,
+      "characterCount": 2588,
+      "wordCount": 396
+    },
+    {
+      "pageNumber": 70,
+      "startPosition": 160403,
+      "endPosition": 162754,
+      "characterCount": 2313,
+      "wordCount": 367
+    },
+    {
+      "pageNumber": 71,
+      "startPosition": 162754,
+      "endPosition": 165461,
+      "characterCount": 2669,
+      "wordCount": 444
+    },
+    {
+      "pageNumber": 72,
+      "startPosition": 165461,
+      "endPosition": 168144,
+      "characterCount": 2645,
+      "wordCount": 424
+    },
+    {
+      "pageNumber": 73,
+      "startPosition": 168144,
+      "endPosition": 170622,
+      "characterCount": 2440,
+      "wordCount": 370
+    },
+    {
+      "pageNumber": 74,
+      "startPosition": 170622,
+      "endPosition": 172421,
+      "characterCount": 1761,
+      "wordCount": 265
+    },
+    {
+      "pageNumber": 75,
+      "startPosition": 172421,
+      "endPosition": 175127,
+      "characterCount": 2668,
+      "wordCount": 459
+    },
+    {
+      "pageNumber": 76,
+      "startPosition": 175127,
+      "endPosition": 176852,
+      "characterCount": 1687,
+      "wordCount": 229
+    },
+    {
+      "pageNumber": 77,
+      "startPosition": 176852,
+      "endPosition": 179424,
+      "characterCount": 2534,
+      "wordCount": 395
+    },
+    {
+      "pageNumber": 78,
+      "startPosition": 179424,
+      "endPosition": 181868,
+      "characterCount": 2406,
+      "wordCount": 356
+    },
+    {
+      "pageNumber": 79,
+      "startPosition": 181868,
+      "endPosition": 184000,
+      "characterCount": 2094,
+      "wordCount": 322
+    },
+    {
+      "pageNumber": 80,
+      "startPosition": 184000,
+      "endPosition": 185351,
+      "characterCount": 1313,
+      "wordCount": 204
+    },
+    {
+      "pageNumber": 81,
+      "startPosition": 185351,
+      "endPosition": 188073,
+      "characterCount": 2684,
+      "wordCount": 400
+    },
+    {
+      "pageNumber": 82,
+      "startPosition": 188073,
+      "endPosition": 190578,
+      "characterCount": 2467,
+      "wordCount": 381
+    },
+    {
+      "pageNumber": 83,
+      "startPosition": 190578,
+      "endPosition": 192588,
+      "characterCount": 1972,
+      "wordCount": 304
+    },
+    {
+      "pageNumber": 84,
+      "startPosition": 192588,
+      "endPosition": 194483,
+      "characterCount": 1857,
+      "wordCount": 289
+    },
+    {
+      "pageNumber": 85,
+      "startPosition": 194483,
+      "endPosition": 197078,
+      "characterCount": 2557,
+      "wordCount": 413
+    },
+    {
+      "pageNumber": 86,
+      "startPosition": 197078,
+      "endPosition": 199814,
+      "characterCount": 2698,
+      "wordCount": 447
+    },
+    {
+      "pageNumber": 87,
+      "startPosition": 199814,
+      "endPosition": 202651,
+      "characterCount": 2799,
+      "wordCount": 466
+    },
+    {
+      "pageNumber": 88,
+      "startPosition": 202651,
+      "endPosition": 205834,
+      "characterCount": 3145,
+      "wordCount": 502
+    },
+    {
+      "pageNumber": 89,
+      "startPosition": 205834,
+      "endPosition": 209116,
+      "characterCount": 3244,
+      "wordCount": 509
+    },
+    {
+      "pageNumber": 90,
+      "startPosition": 209116,
+      "endPosition": 209905,
+      "characterCount": 751,
+      "wordCount": 108
+    },
+    {
+      "pageNumber": 91,
+      "startPosition": 209905,
+      "endPosition": 212207,
+      "characterCount": 2264,
+      "wordCount": 354
+    },
+    {
+      "pageNumber": 92,
+      "startPosition": 212207,
+      "endPosition": 214909,
+      "characterCount": 2664,
+      "wordCount": 398
+    },
+    {
+      "pageNumber": 93,
+      "startPosition": 214909,
+      "endPosition": 217535,
+      "characterCount": 2588,
+      "wordCount": 379
+    },
+    {
+      "pageNumber": 94,
+      "startPosition": 217535,
+      "endPosition": 220227,
+      "characterCount": 2654,
+      "wordCount": 406
+    },
+    {
+      "pageNumber": 95,
+      "startPosition": 220227,
+      "endPosition": 222730,
+      "characterCount": 2465,
+      "wordCount": 407
+    },
+    {
+      "pageNumber": 96,
+      "startPosition": 222730,
+      "endPosition": 225334,
+      "characterCount": 2566,
+      "wordCount": 396
+    },
+    {
+      "pageNumber": 97,
+      "startPosition": 225334,
+      "endPosition": 227976,
+      "characterCount": 2604,
+      "wordCount": 391
+    },
+    {
+      "pageNumber": 98,
+      "startPosition": 227976,
+      "endPosition": 230587,
+      "characterCount": 2573,
+      "wordCount": 396
+    },
+    {
+      "pageNumber": 99,
+      "startPosition": 230587,
+      "endPosition": 233158,
+      "characterCount": 2533,
+      "wordCount": 402
+    },
+    {
+      "pageNumber": 100,
+      "startPosition": 233158,
+      "endPosition": 235871,
+      "characterCount": 2673,
+      "wordCount": 392
+    },
+    {
+      "pageNumber": 101,
+      "startPosition": 235871,
+      "endPosition": 238166,
+      "characterCount": 2255,
+      "wordCount": 374
+    },
+    {
+      "pageNumber": 102,
+      "startPosition": 238166,
+      "endPosition": 239568,
+      "characterCount": 1362,
+      "wordCount": 226
+    },
+    {
+      "pageNumber": 103,
+      "startPosition": 239568,
+      "endPosition": 242301,
+      "characterCount": 2693,
+      "wordCount": 431
+    },
+    {
+      "pageNumber": 104,
+      "startPosition": 242301,
+      "endPosition": 244999,
+      "characterCount": 2658,
+      "wordCount": 425
+    },
+    {
+      "pageNumber": 105,
+      "startPosition": 244999,
+      "endPosition": 247482,
+      "characterCount": 2443,
+      "wordCount": 407
+    },
+    {
+      "pageNumber": 106,
+      "startPosition": 247482,
+      "endPosition": 249508,
+      "characterCount": 1986,
+      "wordCount": 321
+    },
+    {
+      "pageNumber": 107,
+      "startPosition": 249508,
+      "endPosition": 250957,
+      "characterCount": 1409,
+      "wordCount": 219
+    },
+    {
+      "pageNumber": 108,
+      "startPosition": 250957,
+      "endPosition": 252840,
+      "characterCount": 1843,
+      "wordCount": 330
+    },
+    {
+      "pageNumber": 109,
+      "startPosition": 252840,
+      "endPosition": 254167,
+      "characterCount": 1287,
+      "wordCount": 222
+    },
+    {
+      "pageNumber": 110,
+      "startPosition": 254167,
+      "endPosition": 256123,
+      "characterCount": 1916,
+      "wordCount": 315
+    },
+    {
+      "pageNumber": 111,
+      "startPosition": 256123,
+      "endPosition": 258037,
+      "characterCount": 1874,
+      "wordCount": 286
+    },
+    {
+      "pageNumber": 112,
+      "startPosition": 258037,
+      "endPosition": 260481,
+      "characterCount": 2404,
+      "wordCount": 383
+    },
+    {
+      "pageNumber": 113,
+      "startPosition": 260481,
+      "endPosition": 263057,
+      "characterCount": 2536,
+      "wordCount": 409
+    },
+    {
+      "pageNumber": 114,
+      "startPosition": 263057,
+      "endPosition": 265344,
+      "characterCount": 2247,
+      "wordCount": 344
+    },
+    {
+      "pageNumber": 115,
+      "startPosition": 265344,
+      "endPosition": 268045,
+      "characterCount": 2661,
+      "wordCount": 411
+    },
+    {
+      "pageNumber": 116,
+      "startPosition": 268045,
+      "endPosition": 269937,
+      "characterCount": 1852,
+      "wordCount": 280
+    },
+    {
+      "pageNumber": 117,
+      "startPosition": 269937,
+      "endPosition": 272542,
+      "characterCount": 2565,
+      "wordCount": 349
+    },
+    {
+      "pageNumber": 118,
+      "startPosition": 272542,
+      "endPosition": 275104,
+      "characterCount": 2522,
+      "wordCount": 384
+    },
+    {
+      "pageNumber": 119,
+      "startPosition": 275104,
+      "endPosition": 276298,
+      "characterCount": 1154,
+      "wordCount": 193
+    },
+    {
+      "pageNumber": 120,
+      "startPosition": 276298,
+      "endPosition": 278981,
+      "characterCount": 2643,
+      "wordCount": 411
+    },
+    {
+      "pageNumber": 121,
+      "startPosition": 278981,
+      "endPosition": 281623,
+      "characterCount": 2602,
+      "wordCount": 390
+    },
+    {
+      "pageNumber": 122,
+      "startPosition": 281623,
+      "endPosition": 284823,
+      "characterCount": 3160,
+      "wordCount": 510
+    },
+    {
+      "pageNumber": 123,
+      "startPosition": 284823,
+      "endPosition": 286679,
+      "characterCount": 1816,
+      "wordCount": 275
+    },
+    {
+      "pageNumber": 124,
+      "startPosition": 286679,
+      "endPosition": 289042,
+      "characterCount": 2323,
+      "wordCount": 409
+    },
+    {
+      "pageNumber": 125,
+      "startPosition": 289042,
+      "endPosition": 291713,
+      "characterCount": 2631,
+      "wordCount": 406
+    },
+    {
+      "pageNumber": 126,
+      "startPosition": 291713,
+      "endPosition": 294308,
+      "characterCount": 2555,
+      "wordCount": 416
+    },
+    {
+      "pageNumber": 127,
+      "startPosition": 294308,
+      "endPosition": 297138,
+      "characterCount": 2790,
+      "wordCount": 458
+    },
+    {
+      "pageNumber": 128,
+      "startPosition": 297138,
+      "endPosition": 299708,
+      "characterCount": 2530,
+      "wordCount": 416
+    },
+    {
+      "pageNumber": 129,
+      "startPosition": 299708,
+      "endPosition": 302291,
+      "characterCount": 2543,
+      "wordCount": 406
+    },
+    {
+      "pageNumber": 130,
+      "startPosition": 302291,
+      "endPosition": 305036,
+      "characterCount": 2705,
+      "wordCount": 438
+    },
+    {
+      "pageNumber": 131,
+      "startPosition": 305036,
+      "endPosition": 307729,
+      "characterCount": 2653,
+      "wordCount": 412
+    },
+    {
+      "pageNumber": 132,
+      "startPosition": 307729,
+      "endPosition": 310430,
+      "characterCount": 2661,
+      "wordCount": 400
+    },
+    {
+      "pageNumber": 133,
+      "startPosition": 310430,
+      "endPosition": 312896,
+      "characterCount": 2426,
+      "wordCount": 376
+    },
+    {
+      "pageNumber": 134,
+      "startPosition": 312896,
+      "endPosition": 315699,
+      "characterCount": 2763,
+      "wordCount": 432
+    },
+    {
+      "pageNumber": 135,
+      "startPosition": 315699,
+      "endPosition": 318128,
+      "characterCount": 2389,
+      "wordCount": 387
+    },
+    {
+      "pageNumber": 136,
+      "startPosition": 318128,
+      "endPosition": 320417,
+      "characterCount": 2249,
+      "wordCount": 347
+    },
+    {
+      "pageNumber": 137,
+      "startPosition": 320417,
+      "endPosition": 323088,
+      "characterCount": 2631,
+      "wordCount": 409
+    },
+    {
+      "pageNumber": 138,
+      "startPosition": 323088,
+      "endPosition": 325838,
+      "characterCount": 2710,
+      "wordCount": 413
+    },
+    {
+      "pageNumber": 139,
+      "startPosition": 325838,
+      "endPosition": 328233,
+      "characterCount": 2355,
+      "wordCount": 373
+    },
+    {
+      "pageNumber": 140,
+      "startPosition": 328233,
+      "endPosition": 330820,
+      "characterCount": 2547,
+      "wordCount": 401
+    },
+    {
+      "pageNumber": 141,
+      "startPosition": 330820,
+      "endPosition": 333568,
+      "characterCount": 2708,
+      "wordCount": 438
+    },
+    {
+      "pageNumber": 142,
+      "startPosition": 333568,
+      "endPosition": 336162,
+      "characterCount": 2554,
+      "wordCount": 368
+    },
+    {
+      "pageNumber": 143,
+      "startPosition": 336162,
+      "endPosition": 338704,
+      "characterCount": 2502,
+      "wordCount": 394
+    },
+    {
+      "pageNumber": 144,
+      "startPosition": 338704,
+      "endPosition": 340625,
+      "characterCount": 1881,
+      "wordCount": 301
+    },
+    {
+      "pageNumber": 145,
+      "startPosition": 340625,
+      "endPosition": 343356,
+      "characterCount": 2691,
+      "wordCount": 413
+    },
+    {
+      "pageNumber": 146,
+      "startPosition": 343356,
+      "endPosition": 346051,
+      "characterCount": 2655,
+      "wordCount": 419
+    },
+    {
+      "pageNumber": 147,
+      "startPosition": 346051,
+      "endPosition": 348810,
+      "characterCount": 2719,
+      "wordCount": 399
+    },
+    {
+      "pageNumber": 148,
+      "startPosition": 348810,
+      "endPosition": 352060,
+      "characterCount": 3210,
+      "wordCount": 479
+    },
+    {
+      "pageNumber": 149,
+      "startPosition": 352060,
+      "endPosition": 354940,
+      "characterCount": 2840,
+      "wordCount": 467
+    },
+    {
+      "pageNumber": 150,
+      "startPosition": 354940,
+      "endPosition": 357197,
+      "characterCount": 2217,
+      "wordCount": 363
+    },
+    {
+      "pageNumber": 151,
+      "startPosition": 357197,
+      "endPosition": 359965,
+      "characterCount": 2728,
+      "wordCount": 438
+    },
+    {
+      "pageNumber": 152,
+      "startPosition": 359965,
+      "endPosition": 362799,
+      "characterCount": 2794,
+      "wordCount": 435
+    },
+    {
+      "pageNumber": 153,
+      "startPosition": 362799,
+      "endPosition": 365260,
+      "characterCount": 2421,
+      "wordCount": 407
+    },
+    {
+      "pageNumber": 154,
+      "startPosition": 365260,
+      "endPosition": 367855,
+      "characterCount": 2555,
+      "wordCount": 397
+    },
+    {
+      "pageNumber": 155,
+      "startPosition": 367855,
+      "endPosition": 370585,
+      "characterCount": 2690,
+      "wordCount": 431
+    },
+    {
+      "pageNumber": 156,
+      "startPosition": 370585,
+      "endPosition": 372634,
+      "characterCount": 2009,
+      "wordCount": 325
+    },
+    {
+      "pageNumber": 157,
+      "startPosition": 372634,
+      "endPosition": 375241,
+      "characterCount": 2567,
+      "wordCount": 421
+    },
+    {
+      "pageNumber": 158,
+      "startPosition": 375241,
+      "endPosition": 377825,
+      "characterCount": 2544,
+      "wordCount": 432
+    },
+    {
+      "pageNumber": 159,
+      "startPosition": 377825,
+      "endPosition": 380618,
+      "characterCount": 2753,
+      "wordCount": 448
+    },
+    {
+      "pageNumber": 160,
+      "startPosition": 380618,
+      "endPosition": 383361,
+      "characterCount": 2703,
+      "wordCount": 428
+    },
+    {
+      "pageNumber": 161,
+      "startPosition": 383361,
+      "endPosition": 386143,
+      "characterCount": 2742,
+      "wordCount": 442
+    },
+    {
+      "pageNumber": 162,
+      "startPosition": 386143,
+      "endPosition": 388729,
+      "characterCount": 2546,
+      "wordCount": 418
+    },
+    {
+      "pageNumber": 163,
+      "startPosition": 388729,
+      "endPosition": 390706,
+      "characterCount": 1937,
+      "wordCount": 313
+    },
+    {
+      "pageNumber": 164,
+      "startPosition": 390706,
+      "endPosition": 393382,
+      "characterCount": 2636,
+      "wordCount": 417
+    },
+    {
+      "pageNumber": 165,
+      "startPosition": 393382,
+      "endPosition": 396131,
+      "characterCount": 2709,
+      "wordCount": 429
+    },
+    {
+      "pageNumber": 166,
+      "startPosition": 396131,
+      "endPosition": 398315,
+      "characterCount": 2144,
+      "wordCount": 333
+    },
+    {
+      "pageNumber": 167,
+      "startPosition": 398315,
+      "endPosition": 400182,
+      "characterCount": 1827,
+      "wordCount": 258
+    },
+    {
+      "pageNumber": 168,
+      "startPosition": 400182,
+      "endPosition": 402877,
+      "characterCount": 2655,
+      "wordCount": 446
+    },
+    {
+      "pageNumber": 169,
+      "startPosition": 402877,
+      "endPosition": 405524,
+      "characterCount": 2607,
+      "wordCount": 386
+    },
+    {
+      "pageNumber": 170,
+      "startPosition": 405524,
+      "endPosition": 408055,
+      "characterCount": 2491,
+      "wordCount": 376
+    },
+    {
+      "pageNumber": 171,
+      "startPosition": 408055,
+      "endPosition": 409573,
+      "characterCount": 1478,
+      "wordCount": 242
+    },
+    {
+      "pageNumber": 172,
+      "startPosition": 409573,
+      "endPosition": 411407,
+      "characterCount": 1794,
+      "wordCount": 303
+    },
+    {
+      "pageNumber": 173,
+      "startPosition": 411407,
+      "endPosition": 412975,
+      "characterCount": 1528,
+      "wordCount": 220
+    },
+    {
+      "pageNumber": 174,
+      "startPosition": 412975,
+      "endPosition": 415780,
+      "characterCount": 2765,
+      "wordCount": 467
+    },
+    {
+      "pageNumber": 175,
+      "startPosition": 415780,
+      "endPosition": 417488,
+      "characterCount": 1668,
+      "wordCount": 259
+    },
+    {
+      "pageNumber": 176,
+      "startPosition": 417488,
+      "endPosition": 420055,
+      "characterCount": 2527,
+      "wordCount": 415
+    },
+    {
+      "pageNumber": 177,
+      "startPosition": 420055,
+      "endPosition": 422651,
+      "characterCount": 2556,
+      "wordCount": 424
+    },
+    {
+      "pageNumber": 178,
+      "startPosition": 422651,
+      "endPosition": 425496,
+      "characterCount": 2805,
+      "wordCount": 453
+    },
+    {
+      "pageNumber": 179,
+      "startPosition": 425496,
+      "endPosition": 428628,
+      "characterCount": 3092,
+      "wordCount": 478
+    },
+    {
+      "pageNumber": 180,
+      "startPosition": 428628,
+      "endPosition": 430551,
+      "characterCount": 1883,
+      "wordCount": 306
+    },
+    {
+      "pageNumber": 181,
+      "startPosition": 430551,
+      "endPosition": 432882,
+      "characterCount": 2291,
+      "wordCount": 397
+    },
+    {
+      "pageNumber": 182,
+      "startPosition": 432882,
+      "endPosition": 435701,
+      "characterCount": 2779,
+      "wordCount": 461
+    },
+    {
+      "pageNumber": 183,
+      "startPosition": 435701,
+      "endPosition": 438443,
+      "characterCount": 2702,
+      "wordCount": 427
+    },
+    {
+      "pageNumber": 184,
+      "startPosition": 438443,
+      "endPosition": 441121,
+      "characterCount": 2638,
+      "wordCount": 432
+    },
+    {
+      "pageNumber": 185,
+      "startPosition": 441121,
+      "endPosition": 443854,
+      "characterCount": 2693,
+      "wordCount": 413
+    },
+    {
+      "pageNumber": 186,
+      "startPosition": 443854,
+      "endPosition": 446642,
+      "characterCount": 2748,
+      "wordCount": 410
+    },
+    {
+      "pageNumber": 187,
+      "startPosition": 446642,
+      "endPosition": 449406,
+      "characterCount": 2724,
+      "wordCount": 410
+    },
+    {
+      "pageNumber": 188,
+      "startPosition": 449406,
+      "endPosition": 452194,
+      "characterCount": 2748,
+      "wordCount": 392
+    },
+    {
+      "pageNumber": 189,
+      "startPosition": 452194,
+      "endPosition": 454812,
+      "characterCount": 2578,
+      "wordCount": 426
+    },
+    {
+      "pageNumber": 190,
+      "startPosition": 454812,
+      "endPosition": 457503,
+      "characterCount": 2651,
+      "wordCount": 382
+    },
+    {
+      "pageNumber": 191,
+      "startPosition": 457503,
+      "endPosition": 460170,
+      "characterCount": 2627,
+      "wordCount": 385
+    },
+    {
+      "pageNumber": 192,
+      "startPosition": 460170,
+      "endPosition": 462778,
+      "characterCount": 2568,
+      "wordCount": 410
+    },
+    {
+      "pageNumber": 193,
+      "startPosition": 462778,
+      "endPosition": 465630,
+      "characterCount": 2812,
+      "wordCount": 466
+    },
+    {
+      "pageNumber": 194,
+      "startPosition": 465630,
+      "endPosition": 468069,
+      "characterCount": 2399,
+      "wordCount": 381
+    },
+    {
+      "pageNumber": 195,
+      "startPosition": 468069,
+      "endPosition": 470881,
+      "characterCount": 2772,
+      "wordCount": 458
+    },
+    {
+      "pageNumber": 196,
+      "startPosition": 470881,
+      "endPosition": 473459,
+      "characterCount": 2538,
+      "wordCount": 422
+    },
+    {
+      "pageNumber": 197,
+      "startPosition": 473459,
+      "endPosition": 476251,
+      "characterCount": 2752,
+      "wordCount": 434
+    },
+    {
+      "pageNumber": 198,
+      "startPosition": 476251,
+      "endPosition": 478910,
+      "characterCount": 2619,
+      "wordCount": 408
+    },
+    {
+      "pageNumber": 199,
+      "startPosition": 478910,
+      "endPosition": 481758,
+      "characterCount": 2808,
+      "wordCount": 458
+    },
+    {
+      "pageNumber": 200,
+      "startPosition": 481758,
+      "endPosition": 484208,
+      "characterCount": 2410,
+      "wordCount": 378
+    },
+    {
+      "pageNumber": 201,
+      "startPosition": 484208,
+      "endPosition": 486927,
+      "characterCount": 2679,
+      "wordCount": 394
+    },
+    {
+      "pageNumber": 202,
+      "startPosition": 486927,
+      "endPosition": 489759,
+      "characterCount": 2792,
+      "wordCount": 427
+    },
+    {
+      "pageNumber": 203,
+      "startPosition": 489759,
+      "endPosition": 492456,
+      "characterCount": 2657,
+      "wordCount": 420
+    },
+    {
+      "pageNumber": 204,
+      "startPosition": 492456,
+      "endPosition": 495096,
+      "characterCount": 2600,
+      "wordCount": 417
+    },
+    {
+      "pageNumber": 205,
+      "startPosition": 495096,
+      "endPosition": 497793,
+      "characterCount": 2657,
+      "wordCount": 420
+    },
+    {
+      "pageNumber": 206,
+      "startPosition": 497793,
+      "endPosition": 500501,
+      "characterCount": 2668,
+      "wordCount": 430
+    },
+    {
+      "pageNumber": 207,
+      "startPosition": 500501,
+      "endPosition": 503434,
+      "characterCount": 2893,
+      "wordCount": 488
+    },
+    {
+      "pageNumber": 208,
+      "startPosition": 503434,
+      "endPosition": 506623,
+      "characterCount": 3149,
+      "wordCount": 509
+    },
+    {
+      "pageNumber": 209,
+      "startPosition": 506623,
+      "endPosition": 509743,
+      "characterCount": 3080,
+      "wordCount": 477
+    },
+    {
+      "pageNumber": 210,
+      "startPosition": 509743,
+      "endPosition": 511200,
+      "characterCount": 1417,
+      "wordCount": 222
+    },
+    {
+      "pageNumber": 211,
+      "startPosition": 511200,
+      "endPosition": 513507,
+      "characterCount": 2267,
+      "wordCount": 353
+    },
+    {
+      "pageNumber": 212,
+      "startPosition": 513507,
+      "endPosition": 516225,
+      "characterCount": 2678,
+      "wordCount": 430
+    },
+    {
+      "pageNumber": 213,
+      "startPosition": 516225,
+      "endPosition": 519015,
+      "characterCount": 2750,
+      "wordCount": 417
+    },
+    {
+      "pageNumber": 214,
+      "startPosition": 519015,
+      "endPosition": 521747,
+      "characterCount": 2692,
+      "wordCount": 383
+    },
+    {
+      "pageNumber": 215,
+      "startPosition": 521747,
+      "endPosition": 524505,
+      "characterCount": 2718,
+      "wordCount": 433
+    },
+    {
+      "pageNumber": 216,
+      "startPosition": 524505,
+      "endPosition": 527257,
+      "characterCount": 2712,
+      "wordCount": 444
+    },
+    {
+      "pageNumber": 217,
+      "startPosition": 527257,
+      "endPosition": 530102,
+      "characterCount": 2805,
+      "wordCount": 458
+    },
+    {
+      "pageNumber": 218,
+      "startPosition": 530102,
+      "endPosition": 531321,
+      "characterCount": 1179,
+      "wordCount": 193
+    },
+    {
+      "pageNumber": 219,
+      "startPosition": 531321,
+      "endPosition": 532059,
+      "characterCount": 698,
+      "wordCount": 125
+    },
+    {
+      "pageNumber": 220,
+      "startPosition": 532059,
+      "endPosition": 532122,
+      "characterCount": 23,
+      "wordCount": 4
+    },
+    {
+      "pageNumber": 221,
+      "startPosition": 532122,
+      "endPosition": 532185,
+      "characterCount": 23,
+      "wordCount": 4
+    },
+    {
+      "pageNumber": 222,
+      "startPosition": 532185,
+      "endPosition": 533634,
+      "characterCount": 1409,
+      "wordCount": 246
+    },
+    {
+      "pageNumber": 223,
+      "startPosition": 533634,
+      "endPosition": 535015,
+      "characterCount": 1341,
+      "wordCount": 236
+    },
+    {
+      "pageNumber": 224,
+      "startPosition": 535015,
+      "endPosition": 536697,
+      "characterCount": 1642,
+      "wordCount": 290
+    },
+    {
+      "pageNumber": 225,
+      "startPosition": 536697,
+      "endPosition": 538077,
+      "characterCount": 1340,
+      "wordCount": 237
+    },
+    {
+      "pageNumber": 226,
+      "startPosition": 538077,
+      "endPosition": 538908,
+      "characterCount": 791,
+      "wordCount": 144
+    },
+    {
+      "pageNumber": 227,
+      "startPosition": 538908,
+      "endPosition": 540699,
+      "characterCount": 1751,
+      "wordCount": 324
+    },
+    {
+      "pageNumber": 228,
+      "startPosition": 540699,
+      "endPosition": 541828,
+      "characterCount": 1089,
+      "wordCount": 186
+    },
+    {
+      "pageNumber": 229,
+      "startPosition": 541828,
+      "endPosition": 543233,
+      "characterCount": 1365,
+      "wordCount": 234
+    },
+    {
+      "pageNumber": 230,
+      "startPosition": 543233,
+      "endPosition": 544596,
+      "characterCount": 1323,
+      "wordCount": 225
+    },
+    {
+      "pageNumber": 231,
+      "startPosition": 544596,
+      "endPosition": 545845,
+      "characterCount": 1209,
+      "wordCount": 164
+    },
+    {
+      "pageNumber": 232,
+      "startPosition": 545845,
+      "endPosition": 547725,
+      "characterCount": 1840,
+      "wordCount": 303
+    },
+    {
+      "pageNumber": 233,
+      "startPosition": 547725,
+      "endPosition": 549890,
+      "characterCount": 2125,
+      "wordCount": 310
+    },
+    {
+      "pageNumber": 234,
+      "startPosition": 549890,
+      "endPosition": 552454,
+      "characterCount": 2524,
+      "wordCount": 408
+    },
+    {
+      "pageNumber": 235,
+      "startPosition": 552454,
+      "endPosition": 552685,
+      "characterCount": 191,
+      "wordCount": 21
+    },
+    {
+      "pageNumber": 236,
+      "startPosition": 552685,
+      "endPosition": 555104,
+      "characterCount": 2379,
+      "wordCount": 353
+    },
+    {
+      "pageNumber": 237,
+      "startPosition": 555104,
+      "endPosition": 557743,
+      "characterCount": 2599,
+      "wordCount": 390
+    },
+    {
+      "pageNumber": 238,
+      "startPosition": 557743,
+      "endPosition": 560323,
+      "characterCount": 2540,
+      "wordCount": 360
+    },
+    {
+      "pageNumber": 239,
+      "startPosition": 560323,
+      "endPosition": 562795,
+      "characterCount": 2432,
+      "wordCount": 361
+    },
+    {
+      "pageNumber": 240,
+      "startPosition": 562795,
+      "endPosition": 565504,
+      "characterCount": 2669,
+      "wordCount": 384
+    },
+    {
+      "pageNumber": 241,
+      "startPosition": 565504,
+      "endPosition": 568001,
+      "characterCount": 2457,
+      "wordCount": 354
+    },
+    {
+      "pageNumber": 242,
+      "startPosition": 568001,
+      "endPosition": 570740,
+      "characterCount": 2699,
+      "wordCount": 379
+    },
+    {
+      "pageNumber": 243,
+      "startPosition": 570740,
+      "endPosition": 573503,
+      "characterCount": 2723,
+      "wordCount": 358
+    },
+    {
+      "pageNumber": 244,
+      "startPosition": 573503,
+      "endPosition": 576057,
+      "characterCount": 2514,
+      "wordCount": 336
+    },
+    {
+      "pageNumber": 245,
+      "startPosition": 576057,
+      "endPosition": 578550,
+      "characterCount": 2453,
+      "wordCount": 358
+    },
+    {
+      "pageNumber": 246,
+      "startPosition": 578550,
+      "endPosition": 581138,
+      "characterCount": 2548,
+      "wordCount": 391
+    },
+    {
+      "pageNumber": 247,
+      "startPosition": 581138,
+      "endPosition": 583780,
+      "characterCount": 2602,
+      "wordCount": 350
+    },
+    {
+      "pageNumber": 248,
+      "startPosition": 583780,
+      "endPosition": 586254,
+      "characterCount": 2434,
+      "wordCount": 335
+    },
+    {
+      "pageNumber": 249,
+      "startPosition": 586254,
+      "endPosition": 588818,
+      "characterCount": 2524,
+      "wordCount": 366
+    },
+    {
+      "pageNumber": 250,
+      "startPosition": 588818,
+      "endPosition": 591577,
+      "characterCount": 2719,
+      "wordCount": 384
+    },
+    {
+      "pageNumber": 251,
+      "startPosition": 591577,
+      "endPosition": 594363,
+      "characterCount": 2746,
+      "wordCount": 422
+    },
+    {
+      "pageNumber": 252,
+      "startPosition": 594363,
+      "endPosition": 597413,
+      "characterCount": 3010,
+      "wordCount": 446
+    },
+    {
+      "pageNumber": 253,
+      "startPosition": 597413,
+      "endPosition": 600387,
+      "characterCount": 2934,
+      "wordCount": 457
+    },
+    {
+      "pageNumber": 254,
+      "startPosition": 600387,
+      "endPosition": 603044,
+      "characterCount": 2617,
+      "wordCount": 393
+    },
+    {
+      "pageNumber": 255,
+      "startPosition": 603044,
+      "endPosition": 605532,
+      "characterCount": 2448,
+      "wordCount": 348
+    },
+    {
+      "pageNumber": 256,
+      "startPosition": 605532,
+      "endPosition": 608324,
+      "characterCount": 2752,
+      "wordCount": 414
+    },
+    {
+      "pageNumber": 257,
+      "startPosition": 608324,
+      "endPosition": 611150,
+      "characterCount": 2786,
+      "wordCount": 396
+    },
+    {
+      "pageNumber": 258,
+      "startPosition": 611150,
+      "endPosition": 613734,
+      "characterCount": 2544,
+      "wordCount": 372
+    },
+    {
+      "pageNumber": 259,
+      "startPosition": 613734,
+      "endPosition": 616536,
+      "characterCount": 2762,
+      "wordCount": 392
+    },
+    {
+      "pageNumber": 260,
+      "startPosition": 616536,
+      "endPosition": 619195,
+      "characterCount": 2619,
+      "wordCount": 360
+    },
+    {
+      "pageNumber": 261,
+      "startPosition": 619195,
+      "endPosition": 621916,
+      "characterCount": 2681,
+      "wordCount": 363
+    },
+    {
+      "pageNumber": 262,
+      "startPosition": 621916,
+      "endPosition": 624713,
+      "characterCount": 2757,
+      "wordCount": 402
+    },
+    {
+      "pageNumber": 263,
+      "startPosition": 624713,
+      "endPosition": 627455,
+      "characterCount": 2702,
+      "wordCount": 403
+    },
+    {
+      "pageNumber": 264,
+      "startPosition": 627455,
+      "endPosition": 630292,
+      "characterCount": 2797,
+      "wordCount": 455
+    },
+    {
+      "pageNumber": 265,
+      "startPosition": 630292,
+      "endPosition": 632837,
+      "characterCount": 2505,
+      "wordCount": 350
+    },
+    {
+      "pageNumber": 266,
+      "startPosition": 632837,
+      "endPosition": 635625,
+      "characterCount": 2748,
+      "wordCount": 411
+    },
+    {
+      "pageNumber": 267,
+      "startPosition": 635625,
+      "endPosition": 638206,
+      "characterCount": 2541,
+      "wordCount": 373
+    },
+    {
+      "pageNumber": 268,
+      "startPosition": 638206,
+      "endPosition": 641015,
+      "characterCount": 2769,
+      "wordCount": 416
+    },
+    {
+      "pageNumber": 269,
+      "startPosition": 641015,
+      "endPosition": 643817,
+      "characterCount": 2762,
+      "wordCount": 388
+    },
+    {
+      "pageNumber": 270,
+      "startPosition": 643817,
+      "endPosition": 646544,
+      "characterCount": 2687,
+      "wordCount": 382
+    },
+    {
+      "pageNumber": 271,
+      "startPosition": 646544,
+      "endPosition": 649075,
+      "characterCount": 2491,
+      "wordCount": 373
+    },
+    {
+      "pageNumber": 272,
+      "startPosition": 649075,
+      "endPosition": 651497,
+      "characterCount": 2382,
+      "wordCount": 368
+    },
+    {
+      "pageNumber": 273,
+      "startPosition": 651497,
+      "endPosition": 654302,
+      "characterCount": 2765,
+      "wordCount": 380
+    },
+    {
+      "pageNumber": 274,
+      "startPosition": 654302,
+      "endPosition": 656931,
+      "characterCount": 2589,
+      "wordCount": 358
+    },
+    {
+      "pageNumber": 275,
+      "startPosition": 656931,
+      "endPosition": 659642,
+      "characterCount": 2671,
+      "wordCount": 362
+    },
+    {
+      "pageNumber": 276,
+      "startPosition": 659642,
+      "endPosition": 662451,
+      "characterCount": 2769,
+      "wordCount": 428
+    },
+    {
+      "pageNumber": 277,
+      "startPosition": 662451,
+      "endPosition": 665124,
+      "characterCount": 2633,
+      "wordCount": 385
+    },
+    {
+      "pageNumber": 278,
+      "startPosition": 665124,
+      "endPosition": 667794,
+      "characterCount": 2630,
+      "wordCount": 355
+    },
+    {
+      "pageNumber": 279,
+      "startPosition": 667794,
+      "endPosition": 670414,
+      "characterCount": 2580,
+      "wordCount": 375
+    },
+    {
+      "pageNumber": 280,
+      "startPosition": 670414,
+      "endPosition": 673338,
+      "characterCount": 2884,
+      "wordCount": 422
+    },
+    {
+      "pageNumber": 281,
+      "startPosition": 673338,
+      "endPosition": 675589,
+      "characterCount": 2211,
+      "wordCount": 335
+    },
+    {
+      "pageNumber": 282,
+      "startPosition": 675589,
+      "endPosition": 678089,
+      "characterCount": 2460,
+      "wordCount": 427
+    },
+    {
+      "pageNumber": 283,
+      "startPosition": 678089,
+      "endPosition": 680890,
+      "characterCount": 2761,
+      "wordCount": 461
+    },
+    {
+      "pageNumber": 284,
+      "startPosition": 680890,
+      "endPosition": 683756,
+      "characterCount": 2826,
+      "wordCount": 476
+    },
+    {
+      "pageNumber": 285,
+      "startPosition": 683756,
+      "endPosition": 686476,
+      "characterCount": 2680,
+      "wordCount": 416
+    },
+    {
+      "pageNumber": 286,
+      "startPosition": 686476,
+      "endPosition": 689210,
+      "characterCount": 2694,
+      "wordCount": 464
+    },
+    {
+      "pageNumber": 287,
+      "startPosition": 689210,
+      "endPosition": 691076,
+      "characterCount": 1826,
+      "wordCount": 278
+    },
+    {
+      "pageNumber": 288,
+      "startPosition": 691076,
+      "endPosition": 692135,
+      "characterCount": 1019,
+      "wordCount": 152
+    },
+    {
+      "pageNumber": 289,
+      "startPosition": 692135,
+      "endPosition": 693379,
+      "characterCount": 1204,
+      "wordCount": 165
+    },
+    {
+      "pageNumber": 290,
+      "startPosition": 693379,
+      "endPosition": 694588,
+      "characterCount": 1169,
+      "wordCount": 176
+    },
+    {
+      "pageNumber": 291,
+      "startPosition": 694588,
+      "endPosition": 695698,
+      "characterCount": 1070,
+      "wordCount": 168
+    },
+    {
+      "pageNumber": 292,
+      "startPosition": 695698,
+      "endPosition": 697006,
+      "characterCount": 1268,
+      "wordCount": 197
+    },
+    {
+      "pageNumber": 293,
+      "startPosition": 697006,
+      "endPosition": 698219,
+      "characterCount": 1173,
+      "wordCount": 181
+    },
+    {
+      "pageNumber": 294,
+      "startPosition": 698219,
+      "endPosition": 699414,
+      "characterCount": 1155,
+      "wordCount": 173
+    },
+    {
+      "pageNumber": 295,
+      "startPosition": 699414,
+      "endPosition": 700586,
+      "characterCount": 1132,
+      "wordCount": 169
+    },
+    {
+      "pageNumber": 296,
+      "startPosition": 700586,
+      "endPosition": 701683,
+      "characterCount": 1057,
+      "wordCount": 157
+    },
+    {
+      "pageNumber": 297,
+      "startPosition": 701683,
+      "endPosition": 702809,
+      "characterCount": 1086,
+      "wordCount": 166
+    },
+    {
+      "pageNumber": 298,
+      "startPosition": 702809,
+      "endPosition": 703995,
+      "characterCount": 1146,
+      "wordCount": 163
+    },
+    {
+      "pageNumber": 299,
+      "startPosition": 703995,
+      "endPosition": 705330,
+      "characterCount": 1295,
+      "wordCount": 194
+    },
+    {
+      "pageNumber": 300,
+      "startPosition": 705330,
+      "endPosition": 706418,
+      "characterCount": 1048,
+      "wordCount": 148
+    },
+    {
+      "pageNumber": 301,
+      "startPosition": 706418,
+      "endPosition": 707803,
+      "characterCount": 1345,
+      "wordCount": 188
+    },
+    {
+      "pageNumber": 302,
+      "startPosition": 707803,
+      "endPosition": 709034,
+      "characterCount": 1191,
+      "wordCount": 170
+    },
+    {
+      "pageNumber": 303,
+      "startPosition": 709034,
+      "endPosition": 710291,
+      "characterCount": 1217,
+      "wordCount": 186
+    },
+    {
+      "pageNumber": 304,
+      "startPosition": 710291,
+      "endPosition": 711518,
+      "characterCount": 1187,
+      "wordCount": 181
+    },
+    {
+      "pageNumber": 305,
+      "startPosition": 711518,
+      "endPosition": 712758,
+      "characterCount": 1200,
+      "wordCount": 174
+    },
+    {
+      "pageNumber": 306,
+      "startPosition": 712758,
+      "endPosition": 713992,
+      "characterCount": 1194,
+      "wordCount": 172
+    },
+    {
+      "pageNumber": 307,
+      "startPosition": 713992,
+      "endPosition": 715277,
+      "characterCount": 1245,
+      "wordCount": 186
+    },
+    {
+      "pageNumber": 308,
+      "startPosition": 715277,
+      "endPosition": 716526,
+      "characterCount": 1209,
+      "wordCount": 181
+    },
+    {
+      "pageNumber": 309,
+      "startPosition": 716526,
+      "endPosition": 717754,
+      "characterCount": 1188,
+      "wordCount": 174
+    },
+    {
+      "pageNumber": 310,
+      "startPosition": 717754,
+      "endPosition": 718856,
+      "characterCount": 1062,
+      "wordCount": 159
+    },
+    {
+      "pageNumber": 311,
+      "startPosition": 718856,
+      "endPosition": 720077,
+      "characterCount": 1181,
+      "wordCount": 173
+    },
+    {
+      "pageNumber": 312,
+      "startPosition": 720077,
+      "endPosition": 721196,
+      "characterCount": 1079,
+      "wordCount": 161
+    },
+    {
+      "pageNumber": 313,
+      "startPosition": 721196,
+      "endPosition": 722382,
+      "characterCount": 1146,
+      "wordCount": 161
+    },
+    {
+      "pageNumber": 314,
+      "startPosition": 722382,
+      "endPosition": 723445,
+      "characterCount": 1023,
+      "wordCount": 150
+    },
+    {
+      "pageNumber": 315,
+      "startPosition": 723445,
+      "endPosition": 724279,
+      "characterCount": 794,
+      "wordCount": 121
+    },
+    {
+      "pageNumber": 316,
+      "startPosition": 724279,
+      "endPosition": 724822,
+      "characterCount": 503,
+      "wordCount": 70
+    }
+  ]
 }

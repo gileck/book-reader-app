@@ -75,6 +75,17 @@ export const useReadingProgress = ({
                 sessionTimeMinutes: sessionTimeMinutes > 0 ? sessionTimeMinutes : undefined
             });
 
+            // Check if the API returned an error
+            if (result.data && !result.data.success) {
+                console.error('Error saving reading progress:', result.data.error);
+                // Show user-friendly error message
+                if (result.data.error) {
+                    // You can replace this with your preferred notification system
+                    alert(`Reading Progress Error: ${result.data.error}`);
+                }
+                return;
+            }
+
             // Update progress data from server response
             if (result.data?.success && result.data.readingProgress) {
                 const progress = result.data.readingProgress;
@@ -91,6 +102,8 @@ export const useReadingProgress = ({
             sessionStartTime.current = Date.now();
         } catch (error) {
             console.error('Error saving reading progress:', error);
+            // Show generic error message for network/unexpected errors
+            alert('Unable to save reading progress. Please check your connection and try again.');
         }
     }, [userId, bookId, currentChapterNumber, currentChunkIndex, getCurrentSessionTime]);
 

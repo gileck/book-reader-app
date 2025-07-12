@@ -1,11 +1,11 @@
 {
-  "processingTime": 718,
+  "processingTime": 2038,
   "detectionStats": {
     "chaptersDetected": 10,
     "tocSource": "pdf_bookmarks",
     "tocEntriesFound": 10,
-    "patternMatches": 105,
-    "averageDetectionConfidence": 0.8300000000000001,
+    "patternMatches": 24,
+    "averageDetectionConfidence": 0.9,
     "pageOffset": 0
   },
   "tocAnalysis": {
@@ -76,70 +76,43 @@
     "pdfBookmarksAvailable": true
   },
   "patternAnalysis": {
-    "potentialChapters": 139,
-    "validatedChapters": 105,
+    "potentialChapters": 60,
+    "validatedChapters": 24,
     "highConfidenceMatches": 0
   },
   "chapterMetadata": [
     {
-      "title": "Introduction: Life itself",
-      "chapterNumber": 0,
-      "startPosition": 5219,
-      "endPosition": 5218,
-      "startingPage": 8,
-      "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7999999999999999
-    },
-    {
       "title": "Appendix 1: Red protein mechanics",
       "chapterNumber": 99,
-      "startPosition": 5219,
-      "endPosition": 5407,
+      "startPosition": 10704,
+      "endPosition": 10703,
       "startingPage": 222,
-      "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7999999999999999
-    },
-    {
-      "title": "The path of carbon",
-      "chapterNumber": 2,
-      "startPosition": 5408,
-      "endPosition": 11370,
-      "startingPage": 62,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7
     },
     {
       "title": "Appendix 2: The Krebs line",
       "chapterNumber": 99,
-      "startPosition": 11371,
-      "endPosition": 14195,
+      "startPosition": 10704,
+      "endPosition": 18721,
       "startingPage": 227,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7
     },
     {
-      "title": "The flux capacitor",
-      "chapterNumber": 6,
-      "startPosition": 14196,
-      "endPosition": 20011,
-      "startingPage": 181,
-      "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
-    },
-    {
-      "title": "From gases to life",
-      "chapterNumber": 3,
-      "startPosition": 20012,
-      "endPosition": 20011,
-      "startingPage": 91,
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "startPosition": 18722,
+      "endPosition": 18721,
+      "startingPage": 8,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7999999999999999
     },
     {
       "title": "Epilogue: Self",
       "chapterNumber": 99,
-      "startPosition": 20012,
-      "endPosition": 57836,
+      "startPosition": 18722,
+      "endPosition": 53570,
       "startingPage": 211,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7999999999999999
@@ -147,17 +120,35 @@
     {
       "title": "Discovering the nanocosm",
       "chapterNumber": 1,
-      "startPosition": 57837,
-      "endPosition": 314840,
+      "startPosition": 53571,
+      "endPosition": 139751,
       "startingPage": 27,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "startPosition": 139752,
+      "endPosition": 209922,
+      "startingPage": 62,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "startPosition": 209923,
+      "endPosition": 286697,
+      "startingPage": 91,
       "detectionSource": "pdf_bookmarks",
       "confidence": 1
     },
     {
       "title": "Revolutions",
       "chapterNumber": 4,
-      "startPosition": 314841,
-      "endPosition": 389280,
+      "startPosition": 286698,
+      "endPosition": 354958,
       "startingPage": 124,
       "detectionSource": "pdf_bookmarks",
       "confidence": 1
@@ -165,9 +156,18 @@
     {
       "title": "To the dark side",
       "chapterNumber": 5,
-      "startPosition": 389281,
-      "endPosition": 795051,
+      "startPosition": 354959,
+      "endPosition": 430569,
       "startingPage": 150,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "startPosition": 430570,
+      "endPosition": 724821,
+      "startingPage": 181,
       "detectionSource": "pdf_bookmarks",
       "confidence": 1
     }

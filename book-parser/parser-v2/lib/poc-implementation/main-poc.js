@@ -46,10 +46,10 @@ const outputGeneration = require('./steps/08-output-generation');
 
 // Configuration
 const CONFIG = {
-    INPUT_PDF: '/Users/gileck/projects/book-reader-app/files/Transformers/book.pdf',
-    PDF_PATH: '/Users/gileck/projects/book-reader-app/files/Transformers/book.pdf', // For link extraction
-    OUTPUT_DIR: '/Users/gileck/projects/book-reader-app/book-parser/parser-v2/lib/poc-implementation/transformers-output',
-    DEBUG_DIR: '/Users/gileck/projects/book-reader-app/book-parser/parser-v2/lib/poc-implementation/transformers-debug',
+    INPUT_PDF: path.join(__dirname, '../../../../files/Transformers/book.pdf'),
+    PDF_PATH: path.join(__dirname, '../../../../files/Transformers/book.pdf'), // For link extraction
+    OUTPUT_DIR: path.join(__dirname, './transformers-output'),
+    DEBUG_DIR: path.join(__dirname, './transformers-debug'),
     CHUNK_TARGET_MIN: 80,
     CHUNK_TARGET_MAX: 300,
     CHUNK_ABSOLUTE_MIN: 50,

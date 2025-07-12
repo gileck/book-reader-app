@@ -1,11 +1,11 @@
 {
-  "processingTime": 1,
+  "processingTime": 5,
   "cleaningStats": {
     "totalChapters": 10,
-    "totalCharactersRemoved": 233,
-    "averageCharactersRemovedPerChapter": 23.3,
-    "totalCharactersAfterCleaning": 789577,
-    "cleaningEfficiency": 0.02950947152715948
+    "totalCharactersRemoved": 219,
+    "averageCharactersRemovedPerChapter": 21.9,
+    "totalCharactersAfterCleaning": 719597,
+    "cleaningEfficiency": 0.030433701085468674
   },
   "chapters": [
     {
@@ -13,80 +13,80 @@
       "chapterNumber": 0,
       "pageNumberStart": 8,
       "pageNumberEnd": 26,
-      "contentLength": 52582,
-      "cleanedPreview": "--- PAGE 8 ---\nFrom  space  it  looks  grey  and  crystalline,  obliterating  the  blue-green \ncolours  of the living Earth.  It is criss-crossed  by irregular  patterns  and \nconvergent striations.  ..."
+      "contentLength": 48540,
+      "cleanedPreview": "--- PAGE 8 ---\nFrom space it looks grey and crystalline, obliterating the blue-green\ncolours of the living Earth. It is criss-crossed by irregular patterns and\nconvergent striations. There’s a central..."
     },
     {
       "title": "Discovering the nanocosm",
       "chapterNumber": 1,
       "pageNumberStart": 27,
       "pageNumberEnd": 61,
-      "contentLength": 94169,
-      "cleanedPreview": "--- PAGE 27 ---\nBurlington  House,  Piccadilly ,  1932.  Its  stately  Victorian  façades  are \nglittering  with light at the fag-end of a particularly  dismal  November .  A \nspry, silver-haired  gen..."
+      "contentLength": 86152,
+      "cleanedPreview": "--- PAGE 27 ---\nBurlington House, Piccadilly, 1932. Its stately Victorian façades are\nglittering with light at the fag-end of a particularly dismal November. A\nspry, silver-haired gentleman, immaculat..."
     },
     {
       "title": "The path of carbon",
       "chapterNumber": 2,
       "pageNumberStart": 62,
       "pageNumberEnd": 90,
-      "contentLength": 78793,
-      "cleanedPreview": "--- PAGE 62 ---\nPicture  a  tree  in  new  leaf,  its  greens  fresh  and  luminous.  Or  a  giant \nredwood,  towering  through  the mist, its needles  dark and bristling.  Dewy \ngrass  underfoot,  wi..."
+      "contentLength": 70148,
+      "cleanedPreview": "--- PAGE 62 ---\nPicture a tree in new leaf, its greens fresh and luminous. Or a giant\nredwood, towering through the mist, its needles dark and bristling. Dewy\ngrass underfoot, with patches of springy ..."
     },
     {
       "title": "From gases to life",
       "chapterNumber": 3,
       "pageNumberStart": 91,
       "pageNumberEnd": 123,
-      "contentLength": 83952,
-      "cleanedPreview": "--- PAGE 91 ---\n‘Isn’t the deep ocean supposed  to be like a desert?’  Jack Corliss’ s voice \ncrackled  from  the  depths  to  the  acoustic  telephone  aboard  the  Lulu . \nDescribed  as  a  floating..."
+      "contentLength": 76751,
+      "cleanedPreview": "--- PAGE 91 ---\n‘Isn’t the deep ocean supposed to be like a desert?’ Jack Corliss’s voice\ncrackled from the depths to the acoustic telephone aboard theLulu.\nDescribed as a floating junkyard, the Resea..."
     },
     {
       "title": "Revolutions",
       "chapterNumber": 4,
       "pageNumberStart": 124,
       "pageNumberEnd": 149,
-      "contentLength": 74420,
-      "cleanedPreview": "--- PAGE 124 ---\nYou are not completely  spineles s.  You have a notochord:  a flexible  rod \nmade of cartilage,  which in your descendants,  millions  of generations \nhence,  will develop  into a pro..."
+      "contentLength": 68245,
+      "cleanedPreview": "--- PAGE 124 ---\nYou are not completely spineless. You have a notochord: a flexible rod\nmade of cartilage, which in your descendants, millions of generations\nhence, will develop into a proper backbone..."
     },
     {
       "title": "To the dark side",
       "chapterNumber": 5,
       "pageNumberStart": 150,
       "pageNumberEnd": 180,
-      "contentLength": 82152,
-      "cleanedPreview": "--- PAGE 150 ---\n‘The dream of every cell is to become two cells’ said François  Jacob, the \nmost lyrical revolutionary  of molecular  biology .  No cell lives the dream \nso wholly or so senselessly  ..."
+      "contentLength": 75590,
+      "cleanedPreview": "--- PAGE 150 ---\n‘The dream of every cell is to become two cells’ said François Jacob, the\nmost lyrical revolutionary of molecular biology. No cell lives the dream\nso wholly or so senselessly as a can..."
     },
     {
       "title": "The flux capacitor",
       "chapterNumber": 6,
       "pageNumberStart": 181,
       "pageNumberEnd": 210,
-      "contentLength": 87756,
-      "cleanedPreview": "--- PAGE 181 ---\n‘So how do you explain  me, then?’  The question is lobbed  like a hand \ngrenade from the audience, intended to devastate the ‘expert’ standing on \nthe stage.  It’s a question  I’ve r..."
+      "contentLength": 80626,
+      "cleanedPreview": "--- PAGE 181 ---\n‘So how do you explain me, then?’ The question is lobbed like a hand\ngrenade from the audience, intended to devastate the ‘expert’ standing on\nthe stage. It’s a question I’ve received..."
     },
     {
       "title": "Epilogue: Self",
       "chapterNumber": 99,
       "pageNumberStart": 211,
       "pageNumberEnd": 221,
-      "contentLength": 22737,
-      "cleanedPreview": "--- PAGE 211 ---\n21 1 \nE PILOGUE \nSELF \n‘I think therefor e I am’ said Descartes,  in one of the most celebrated \nlines ever written.  But what am I, exactly?  An artificial  intelligence  can \nthink ..."
+      "contentLength": 20969,
+      "cleanedPreview": "--- PAGE 211 ---\n‘I think therefore I am’ said Descartes, in one of the most celebrated\nlines ever written. But what am I, exactly? An artificial intelligence can\nthink too, by definition, and therefo..."
     },
     {
       "title": "Appendix 1: Red protein mechanics",
       "chapterNumber": 99,
       "pageNumberStart": 222,
       "pageNumberEnd": 226,
-      "contentLength": 7191,
-      "cleanedPreview": "--- PAGE 222 ---\nThe red protein  is ferredoxin,  one of the most ancient  and fundamental \nproteins  across all of life.  It seems to have many jobs, but the common \ndenominator  is that it has unpar..."
+      "contentLength": 6689,
+      "cleanedPreview": "--- PAGE 222 ---\nThe red protein is ferredoxin, one of the most ancient and fundamental\nproteins across all of life. It seems to have many jobs, but the common\ndenominator is that it has unparalleled ..."
     },
     {
       "title": "Appendix 2: The Krebs line",
       "chapterNumber": 99,
       "pageNumberStart": 227,
       "pageNumberEnd": 316,
-      "contentLength": 205825,
-      "cleanedPreview": "--- PAGE 227 ---\nIn  Chapter  3 , we followed  the fate of CO 2  bound  to the surface  of a \nmineral,  through  to a C2 acetyl group bound to the surface.  This acetyl \ngroup is equival ent to acetyl..."
+      "contentLength": 185887,
+      "cleanedPreview": "--- PAGE 227 ---\nIn Chapter 3, we followed the fate of CO2bound to the surface of a\nmineral, through to a C2 acetyl group bound to the surface. This acetyl\ngroup is equivalent to acetyl CoA, one of th..."
     }
   ]
 }

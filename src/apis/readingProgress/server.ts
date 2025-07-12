@@ -23,11 +23,17 @@ export const readingProgressApis = {
 
             // Validate ObjectId format
             if (!userId || !ObjectId.isValid(userId)) {
-                throw new Error(`Invalid userId format: ${userId}`);
+                return {
+                    success: false,
+                    error: `Invalid userId format: ${userId}`
+                };
             }
 
             if (!bookId || !ObjectId.isValid(bookId)) {
-                throw new Error(`Invalid bookId format: ${bookId}`);
+                return {
+                    success: false,
+                    error: `Invalid bookId format: ${bookId}`
+                };
             }
 
             // CRITICAL: Validate that currentChapter and currentChunk are not null/undefined
@@ -39,7 +45,10 @@ export const readingProgressApis = {
                     currentChunk,
                     requestData: request
                 });
-                throw new Error('Cannot save reading progress: currentChapter is null or undefined');
+                return {
+                    success: false,
+                    error: 'Unable to save reading progress: Invalid chapter position. Please try refreshing the page.'
+                };
             }
 
             if (currentChunk === null || currentChunk === undefined) {
@@ -50,7 +59,10 @@ export const readingProgressApis = {
                     currentChunk,
                     requestData: request
                 });
-                throw new Error('Cannot save reading progress: currentChunk is null or undefined');
+                return {
+                    success: false,
+                    error: 'Unable to save reading progress: Invalid chunk position. Please try refreshing the page.'
+                };
             }
 
             // Validate that they are valid numbers
@@ -62,7 +74,10 @@ export const readingProgressApis = {
                     currentChunk,
                     requestData: request
                 });
-                throw new Error(`Cannot save reading progress: currentChapter must be a valid number >= 0, got: ${currentChapter}`);
+                return {
+                    success: false,
+                    error: 'Unable to save reading progress: Invalid chapter number. Please try refreshing the page.'
+                };
             }
 
             if (typeof currentChunk !== 'number' || isNaN(currentChunk) || currentChunk < 0) {
@@ -73,7 +88,10 @@ export const readingProgressApis = {
                     currentChunk,
                     requestData: request
                 });
-                throw new Error(`Cannot save reading progress: currentChunk must be a valid number >= 0, got: ${currentChunk}`);
+                return {
+                    success: false,
+                    error: 'Unable to save reading progress: Invalid chunk number. Please try refreshing the page.'
+                };
             }
 
             const result = await updateReadingPosition(
@@ -86,7 +104,10 @@ export const readingProgressApis = {
             );
 
             if (!result) {
-                throw new Error('Failed to update reading position');
+                return {
+                    success: false,
+                    error: 'Failed to update reading position. Please try again.'
+                };
             }
 
             // Calculate enhanced progress information
@@ -115,7 +136,10 @@ export const readingProgressApis = {
             };
         } catch (error) {
             console.error('Error updating reading position:', error);
-            throw error;
+            return {
+                success: false,
+                error: 'An unexpected error occurred while saving your reading progress. Please try again.'
+            };
         }
     },
 
@@ -127,16 +151,18 @@ export const readingProgressApis = {
             if (!userId || !ObjectId.isValid(userId)) {
                 console.error('Invalid userId format:', userId);
                 return {
-                    success: true,
-                    readingProgress: null
+                    success: false,
+                    readingProgress: null,
+                    error: 'Invalid user ID format'
                 };
             }
 
             if (!bookId || !ObjectId.isValid(bookId)) {
                 console.error('Invalid bookId format:', bookId);
                 return {
-                    success: true,
-                    readingProgress: null
+                    success: false,
+                    readingProgress: null,
+                    error: 'Invalid book ID format'
                 };
             }
 
@@ -202,7 +228,11 @@ export const readingProgressApis = {
             };
         } catch (error) {
             console.error('Error getting reading progress:', error);
-            throw error;
+            return {
+                success: false,
+                readingProgress: null,
+                error: 'An unexpected error occurred while loading your reading progress. Please try again.'
+            };
         }
     },
 
@@ -212,11 +242,17 @@ export const readingProgressApis = {
 
             // Validate ObjectId format
             if (!userId || !ObjectId.isValid(userId)) {
-                throw new Error(`Invalid userId format: ${userId}`);
+                return {
+                    success: false,
+                    error: `Invalid userId format: ${userId}`
+                };
             }
 
             if (!bookId || !ObjectId.isValid(bookId)) {
-                throw new Error(`Invalid bookId format: ${bookId}`);
+                return {
+                    success: false,
+                    error: `Invalid bookId format: ${bookId}`
+                };
             }
 
             const stats = await getReadingStats(
@@ -225,7 +261,10 @@ export const readingProgressApis = {
             );
 
             if (!stats) {
-                throw new Error('Failed to get reading statistics');
+                return {
+                    success: false,
+                    error: 'Failed to get reading statistics'
+                };
             }
 
             return {
@@ -234,7 +273,10 @@ export const readingProgressApis = {
             };
         } catch (error) {
             console.error('Error getting reading stats:', error);
-            throw error;
+            return {
+                success: false,
+                error: 'An unexpected error occurred while loading reading statistics. Please try again.'
+            };
         }
     }
 }; 

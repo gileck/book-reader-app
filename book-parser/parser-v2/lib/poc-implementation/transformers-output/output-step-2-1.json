@@ -1,64 +1,37 @@
 {
   "chapterMetadata": [
     {
-      "title": "Introduction: Life itself",
-      "chapterNumber": 0,
-      "startPosition": 5219,
-      "endPosition": 5218,
-      "startingPage": 8,
-      "confidence": 0.7999999999999999,
-      "detectionSource": "pdf_bookmarks"
-    },
-    {
       "title": "Appendix 1: Red protein mechanics",
       "chapterNumber": 99,
-      "startPosition": 5219,
-      "endPosition": 5407,
+      "startPosition": 10704,
+      "endPosition": 10703,
       "startingPage": 222,
-      "confidence": 0.7999999999999999,
-      "detectionSource": "pdf_bookmarks"
-    },
-    {
-      "title": "The path of carbon",
-      "chapterNumber": 2,
-      "startPosition": 5408,
-      "endPosition": 11370,
-      "startingPage": 62,
       "confidence": 0.7,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Appendix 2: The Krebs line",
       "chapterNumber": 99,
-      "startPosition": 11371,
-      "endPosition": 14195,
+      "startPosition": 10704,
+      "endPosition": 18721,
       "startingPage": 227,
       "confidence": 0.7,
       "detectionSource": "pdf_bookmarks"
     },
     {
-      "title": "The flux capacitor",
-      "chapterNumber": 6,
-      "startPosition": 14196,
-      "endPosition": 20011,
-      "startingPage": 181,
-      "confidence": 0.7,
-      "detectionSource": "pdf_bookmarks"
-    },
-    {
-      "title": "From gases to life",
-      "chapterNumber": 3,
-      "startPosition": 20012,
-      "endPosition": 20011,
-      "startingPage": 91,
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "startPosition": 18722,
+      "endPosition": 18721,
+      "startingPage": 8,
       "confidence": 0.7999999999999999,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Epilogue: Self",
       "chapterNumber": 99,
-      "startPosition": 20012,
-      "endPosition": 57836,
+      "startPosition": 18722,
+      "endPosition": 53570,
       "startingPage": 211,
       "confidence": 0.7999999999999999,
       "detectionSource": "pdf_bookmarks"
@@ -66,17 +39,35 @@
     {
       "title": "Discovering the nanocosm",
       "chapterNumber": 1,
-      "startPosition": 57837,
-      "endPosition": 314840,
+      "startPosition": 53571,
+      "endPosition": 139751,
       "startingPage": 27,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "startPosition": 139752,
+      "endPosition": 209922,
+      "startingPage": 62,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "startPosition": 209923,
+      "endPosition": 286697,
+      "startingPage": 91,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Revolutions",
       "chapterNumber": 4,
-      "startPosition": 314841,
-      "endPosition": 389280,
+      "startPosition": 286698,
+      "endPosition": 354958,
       "startingPage": 124,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
@@ -84,45 +75,55 @@
     {
       "title": "To the dark side",
       "chapterNumber": 5,
-      "startPosition": 389281,
-      "endPosition": 795051,
+      "startPosition": 354959,
+      "endPosition": 430569,
       "startingPage": 150,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "startPosition": 430570,
+      "endPosition": 724821,
+      "startingPage": 181,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-07-10T08:15:54.603Z",
+    "processingStartTime": "2025-07-12T14:13:06.601Z",
     "processingEndTime": null,
     "stepResults": {
       "step-1": {
         "success": true,
-        "duration": 620,
-        "timestamp": "2025-07-10T08:15:55.228Z"
+        "duration": 2387,
+        "timestamp": "2025-07-12T14:13:08.989Z"
       },
       "step-2-1": {
         "success": true,
-        "duration": 719,
-        "timestamp": "2025-07-10T08:15:55.952Z"
+        "duration": 2040,
+        "timestamp": "2025-07-12T14:13:11.047Z"
       }
     },
     "textExtraction": {
-      "characterCount": 795052,
+      "characterCount": 724822,
       "pageCount": 317,
-      "lineCount": 13213,
-      "wordCount": 124903,
+      "lineCount": 12566,
+      "wordCount": 113796,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-07-10T08:15:55.187Z",
-      "averageWordsPerPage": 394
+      "extractionTime": "2025-07-12T14:13:08.925Z",
+      "averageWordsPerPage": 359,
+      "extractionMethod": "page_by_page_fixed"
     },
     "chapterDetection": {
       "chaptersDetected": 10,
       "tocSource": "pdf_bookmarks",
       "tocEntriesFound": 10,
-      "patternMatches": 105,
-      "averageDetectionConfidence": 0.8300000000000001,
+      "patternMatches": 24,
+      "averageDetectionConfidence": 0.9,
       "pageOffset": 0,
-      "processingTime": 718,
+      "processingTime": 2038,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

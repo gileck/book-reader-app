@@ -34,7 +34,8 @@ export interface UpdateReadingPositionRequest {
 
 export interface UpdateReadingPositionResponse {
     success: boolean;
-    readingProgress: ReadingProgressClient;
+    readingProgress?: ReadingProgressClient;
+    error?: string;
 }
 
 export interface GetReadingProgressRequest {
@@ -45,6 +46,7 @@ export interface GetReadingProgressRequest {
 export interface GetReadingProgressResponse {
     success: boolean;
     readingProgress: ReadingProgressClient | null;
+    error?: string;
 }
 
 export interface GetReadingStatsRequest {
@@ -54,5 +56,6 @@ export interface GetReadingStatsRequest {
 
 export interface GetReadingStatsResponse {
     success: boolean;
-    stats: ReadingProgressStats;
+    stats?: ReadingProgressStats;
+    error?: string;
 } 
