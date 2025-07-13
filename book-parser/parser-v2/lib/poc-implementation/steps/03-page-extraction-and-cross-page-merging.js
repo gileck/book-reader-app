@@ -500,8 +500,30 @@ function fixIncompleteSentencesWithinChapter(pages) {
         if (currentContent.length > 0 && nextContent.length > 0) {
             const lastChar = currentContent[currentContent.length - 1];
             
-            // If page doesn't end with sentence terminator, try to merge
+            // If page doesn't end with sentence terminator, check what we're dealing with
             if (!['.', '!', '?', ':', ';'].includes(lastChar)) {
+                // Check if current page ends with a potential header
+                if (isPotentialHeader(currentContent, nextContent)) {
+                    // Potential header at end of current page - ensure it stays standalone
+                    const lastLine = getLastLine(currentContent);
+                    console.log(`🔧 Preserving header at end of page ${currentPage.pageNumber}: "${lastLine}"`);
+                    
+                    // Ensure the header has proper newlines around it
+                    if (!currentContent.endsWith('\n')) {
+                        currentPage.content = currentContent + '\n';
+                    }
+                    
+                    // Skip merging this page - let the header remain standalone
+                    continue;
+                }
+                
+                // Check if next page starts with capital letter - indicates new sentence, not continuation
+                const nextFirstChar = nextContent.trim()[0];
+                if (nextFirstChar && /[A-Z]/.test(nextFirstChar)) {
+                    console.log(`🔧 Skipping merge between pages ${currentPage.pageNumber}-${nextPage.pageNumber}: next page starts with capital letter "${nextFirstChar}"`);
+                    continue;
+                }
+                
                 // Find sentence completion while preserving original text structure
                 let fragmentEnd = -1;
                 let searchPosition = 0;
@@ -541,70 +563,146 @@ function fixIncompleteSentencesWithinChapter(pages) {
                                 fragmentEnd = charIndex;
                                 break;
                             } else if (nextContent[charIndex] === ' ' || nextContent[charIndex] === '\n' || nextContent[charIndex] === '\t') {
-                                // Period followed by whitespace - check if followed by capital letter
-                                let nextNonWhitespace = charIndex + 1;
-                                while (nextNonWhitespace < nextContent.length && /\s/.test(nextContent[nextNonWhitespace])) {
-                                    nextNonWhitespace++;
-                                }
-                                if (nextNonWhitespace < nextContent.length && /[A-Z]/.test(nextContent[nextNonWhitespace])) {
-                                    // Period + whitespace + capital letter = sentence ending
+                                // Check if next character is uppercase (strong sign of sentence end)
+                                const nextChar = nextContent[charIndex + 1];
+                                if (nextChar && /[A-Z]/.test(nextChar)) {
                                     fragmentEnd = charIndex;
                                     break;
                                 }
-                                // Otherwise, period + whitespace + lowercase = abbreviation, continue searching
-                            }
-                            // Period not followed by whitespace (like "U.S.A") = not sentence ending
-                        } else {
-                            // For exclamation and question marks, use existing logic (they're almost always sentence endings)
-                            // But also handle closing punctuation like quotes, parentheses after the sentence ending
-                            if (charIndex === nextContent.length) {
-                                fragmentEnd = charIndex;
-                                break;
-                            } else if (nextContent[charIndex] === ' ' || nextContent[charIndex] === '\n' || nextContent[charIndex] === '\t') {
-                                fragmentEnd = charIndex;
-                                break;
-                            } else if (/['"`\)\]\}\u2018\u2019\u201C\u201D]/.test(nextContent[charIndex])) {
-                                // Handle closing punctuation followed by whitespace
-                                let afterClosing = charIndex + 1;
-                                while (afterClosing < nextContent.length && /['"`\)\]\}\u2018\u2019\u201C\u201D]/.test(nextContent[afterClosing])) {
-                                    afterClosing++; // Skip multiple closing punctuation
-                                }
-                                if (afterClosing === nextContent.length || 
-                                    nextContent[afterClosing] === ' ' || 
-                                    nextContent[afterClosing] === '\n' ||
-                                    nextContent[afterClosing] === '\t') {
-                                    fragmentEnd = afterClosing;
+                                // Check if the word before the period is likely an abbreviation
+                                const beforePeriod = nextContent.substring(0, charIndex - 1);
+                                const lastWord = beforePeriod.split(/\s+/).pop();
+                                
+                                // Common abbreviations that shouldn't end sentences
+                                const abbreviations = ['Dr', 'Mr', 'Mrs', 'Ms', 'Prof', 'vs', 'etc', 'i.e', 'e.g', 'U.S', 'U.K', 'E.coli', 'H.pylori'];
+                                if (!abbreviations.includes(lastWord)) {
+                                    fragmentEnd = charIndex;
                                     break;
                                 }
                             }
+                        } else {
+                            // ! or ? - these are almost always sentence ends
+                            fragmentEnd = charIndex;
+                            break;
                         }
                     }
                 }
                 
                 if (fragmentEnd > 0) {
-                    // Extract the fragment to complete the sentence
+                    // Found sentence completion - merge the fragment
                     const fragment = nextContent.substring(0, fragmentEnd);
-                    const remaining = nextContent.substring(fragmentEnd).trimStart();
+                    const remainder = nextContent.substring(fragmentEnd).trim();
                     
-                    // Merge the fragment with current page
-                    currentPage.content = currentContent + ' ' + fragment;
-                    nextPage.content = remaining;
+                    // Merge current page with the fragment, preserving newline structure
+                    // Use a single space only if both parts don't already have proper spacing
+                    const needsSpace = !currentContent.endsWith('\n') && !currentContent.endsWith(' ') && 
+                                      !fragment.startsWith('\n') && !fragment.startsWith(' ');
+                    currentPage.content = currentContent + (needsSpace ? ' ' : '') + fragment;
                     
-                    // Update word counts
-                    currentPage.wordCount = currentPage.content.split(/\s+/).filter(w => w.length > 0).length;
-                    nextPage.wordCount = nextPage.content.split(/\s+/).filter(w => w.length > 0).length;
+                    // Update next page with the remainder
+                    if (remainder.length > 0) {
+                        nextPage.content = remainder;
+                        nextPage.rawContent = remainder;
+                        nextPage.wordCount = remainder.split(/\s+/).length;
+                    } else {
+                        // If no remainder, remove the next page
+                        pages.splice(i + 1, 1);
+                    }
+                    
+                    // Update current page metadata
+                    currentPage.rawContent = currentPage.content;
+                    currentPage.wordCount = currentPage.content.split(/\s+/).length;
                     
                     sentencesMerged++;
+                    
+                    console.log(`🔧 Merged sentence across pages ${currentPage.pageNumber}-${nextPage.pageNumber}: "${fragment}"`);
                 }
             }
         }
     }
     
-    // Return pages with merge count
-    return {
-        pages: pages,
-        sentencesMerged: sentencesMerged
-    };
+    return { pages, sentencesMerged };
+}
+
+/**
+ * Check if the end of current page looks like a potential header
+ * @param {string} currentContent - Content of current page
+ * @param {string} nextContent - Content of next page
+ * @returns {boolean} - True if it looks like a potential header
+ */
+function isPotentialHeader(currentContent, nextContent) {
+    // Get the last line of the current page
+    const lastLine = getLastLine(currentContent);
+    
+    // Get the first line of the next page
+    const firstLine = getFirstLine(nextContent);
+    
+    // Quick header detection rules (simplified version of Step 4 rules)
+    // Rule 1: Length - 2-5 words only
+    const words = lastLine.trim().split(/\s+/);
+    if (words.length < 2 || words.length > 5) {
+        return false;
+    }
+    
+    // Rule 2: No punctuation at end
+    if (/[.!?]$/.test(lastLine.trim())) {
+        return false;
+    }
+    
+    // Rule 3: Starts with capital letter
+    if (!/^[A-Z]/.test(lastLine.trim())) {
+        return false;
+    }
+    
+    // Rule 4: Previous line should end with sentence terminator
+    const lines = currentContent.split('\n');
+    if (lines.length < 2) {
+        return false;
+    }
+    
+    const previousLine = lines[lines.length - 2].trim();
+    if (previousLine && !/[.!?]$/.test(previousLine)) {
+        return false;
+    }
+    
+    // Rule 5: Next line should start with capital letter
+    if (firstLine && !/^[A-Z]/.test(firstLine.trim())) {
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Get the last non-empty line from content
+ * @param {string} content - Content to analyze
+ * @returns {string} - Last non-empty line
+ */
+function getLastLine(content) {
+    const lines = content.split('\n');
+    for (let i = lines.length - 1; i >= 0; i--) {
+        const line = lines[i].trim();
+        if (line) {
+            return line;
+        }
+    }
+    return '';
+}
+
+/**
+ * Get the first non-empty line from content
+ * @param {string} content - Content to analyze
+ * @returns {string} - First non-empty line
+ */
+function getFirstLine(content) {
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line) {
+            return line;
+        }
+    }
+    return '';
 }
 
 /**

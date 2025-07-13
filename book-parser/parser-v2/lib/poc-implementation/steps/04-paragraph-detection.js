@@ -1,35 +1,44 @@
 /**
- * Step 4: Paragraph Detection
+ * Step 4: Paragraph and Header Detection
  * 
- * Detect paragraph boundaries in the page content from step 3.
- * This step creates clean paragraph structure for chunking.
+ * Detect both paragraph boundaries and headers in the page content from step 3.
+ * This step creates a unified chunk structure with both paragraph and header chunks.
  * 
  * Requirements:
- * - Paragraphs end when a sentence ends with punctuation AND is followed by a newline
+ * - Headers must satisfy 6-rule detection system
+ * - Paragraphs cannot include headers - they end before headers and start after
  * - Process clean page content from step 3
  * - Extract links that exist within paragraph content
- * - Output: array of chapters, each chapter has array of paragraphs
- * - Each paragraph has pageNumber (start), content, and links (if any)
+ * - Output: array of chapters, each chapter has array of chunks (paragraph or header)
+ * - Each chunk has type, pageNumber, content, and links (if any)
+ * 
+ * Header Detection Rules (ALL must be satisfied):
+ * 1. Length: 2-5 words only
+ * 2. No Punctuation: Does not end with sentence punctuation (., !, ?)
+ * 3. Capitalization: Starts with a capital letter
+ * 4. Line Structure: Appears as standalone line
+ * 5. Context - Previous: Previous line ends with sentence-ending punctuation
+ * 6. Context - Next: Next line starts with a capital letter
  * 
  * Expected Input:
  * - pipelineState: { chapters: [...] with pages[].content and pages[].links, ... }
  * - config: { OUTPUT_DIR: path, DEBUG_DIR: path, ... }
  * 
  * Expected Output:
- * - { chapters: [{ title, chapterNumber, paragraphs: [{ pageNumber, content, links }] }] }
+ * - { chapters: [{ title, chapterNumber, chunks: [{ type, pageNumber, content, links, wordCount }] }] }
  */
 
 const fs = require('fs');
 const path = require('path');
 
 /**
- * Execute paragraph detection step
+ * Execute paragraph and header detection step
  * @param {Object} pipelineState - Current pipeline state
  * @param {Object} config - Configuration object
- * @returns {Object} - Updated pipeline state with paragraph structure
+ * @returns {Object} - Updated pipeline state with chunk structure
  */
 async function execute(pipelineState, config) {
-    console.log('📄 Starting paragraph detection (Step 4)...');
+    console.log('📄 Starting paragraph and header detection (Step 4)...');
     
     // Validate prerequisites
     if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
@@ -39,8 +48,10 @@ async function execute(pipelineState, config) {
     const startTime = Date.now();
     
     try {
-        const chaptersWithParagraphs = [];
+        const chaptersWithChunks = [];
+        let totalChunks = 0;
         let totalParagraphs = 0;
+        let totalHeaders = 0;
         let totalLinksExtracted = 0;
         
         console.log(`📚 Processing ${pipelineState.chapters.length} chapters...`);
@@ -48,250 +59,417 @@ async function execute(pipelineState, config) {
         for (const chapter of pipelineState.chapters) {
             console.log(`  📖 Processing chapter: ${chapter.title} (${chapter.pages.length} pages)`);
             
-            // Detect paragraphs across all pages in the chapter
-            const paragraphs = detectParagraphsInChapter(chapter);
+            // Process each page to detect chunks (paragraphs and headers)
+            const chapterChunks = detectChunksInChapter(chapter);
             
-            const chapterWithParagraphs = {
+            // Apply size optimization for paragraphs only
+            const optimizedChunks = optimizeChunkSizes(chapterChunks);
+            
+            // Count chunk types
+            const paragraphCount = optimizedChunks.filter(c => c.type === 'paragraph').length;
+            const headerCount = optimizedChunks.filter(c => c.type === 'header').length;
+            const chunkLinksCount = optimizedChunks.reduce((sum, c) => sum + (c.links ? c.links.length : 0), 0);
+            
+            totalChunks += optimizedChunks.length;
+            totalParagraphs += paragraphCount;
+            totalHeaders += headerCount;
+            totalLinksExtracted += chunkLinksCount;
+            
+            console.log(`    ✅ Created ${optimizedChunks.length} chunks (${paragraphCount} paragraphs, ${headerCount} headers)`);
+            
+
+            
+            chaptersWithChunks.push({
                 title: chapter.title,
                 chapterNumber: chapter.chapterNumber,
-                paragraphs: paragraphs
-            };
-            
-            chaptersWithParagraphs.push(chapterWithParagraphs);
-            totalParagraphs += paragraphs.length;
-            
-            // Count links in this chapter
-            const chapterLinksCount = paragraphs.reduce((sum, p) => sum + (p.links ? p.links.length : 0), 0);
-            totalLinksExtracted += chapterLinksCount;
-            
-            // Show word count distribution and links for this chapter
-            const wordCounts = paragraphs.map(p => p.wordCount || getWordCount(p.content));
-            const under100 = wordCounts.filter(w => w < 100).length;
-            const over200 = wordCounts.filter(w => w > 200).length;
-            const inRange = wordCounts.filter(w => w >= 100 && w <= 200).length;
-            
-            console.log(`    ✅ ${paragraphs.length} paragraphs (${inRange} in range, ${under100} under 100, ${over200} over 200)`);
-            if (chapterLinksCount > 0) {
-                console.log(`    🔗 ${chapterLinksCount} links extracted`);
-            }
+                pageNumberStart: chapter.pageNumberStart,
+                pageNumberEnd: chapter.pageNumberEnd,
+                chunks: optimizedChunks
+            });
         }
         
-        // Generate statistics
-        const stats = generateParagraphStats(chaptersWithParagraphs);
+        const endTime = Date.now();
+        const processingTime = endTime - startTime;
+        
+        console.log(`✅ Paragraph and header detection completed in ${processingTime}ms`);
+        console.log(`📊 Total chunks: ${totalChunks} (${totalParagraphs} paragraphs, ${totalHeaders} headers)`);
+        console.log(`🔗 Total links extracted: ${totalLinksExtracted}`);
+        
+        // Generate comprehensive statistics
+        const stats = generateChunkStats(chaptersWithChunks);
         
         // Save debug output
-        const debugOutput = {
-            paragraphDetectionMetadata: {
-                totalParagraphs: totalParagraphs,
-                totalChapters: chaptersWithParagraphs.length,
-                totalLinksExtracted: totalLinksExtracted,
-                processingTime: Date.now() - startTime,
-                detectionTime: new Date().toISOString()
-            },
-            paragraphStats: stats,
-            linkStats: {
-                totalLinks: totalLinksExtracted,
-                averageLinksPerChapter: chaptersWithParagraphs.length > 0 ? totalLinksExtracted / chaptersWithParagraphs.length : 0,
-                chaptersWithLinks: chaptersWithParagraphs.filter(ch => ch.paragraphs.some(p => p.links && p.links.length > 0)).length
-            },
-            sampleParagraphs: chaptersWithParagraphs.slice(0, 2).map(chapter => ({
-                chapterTitle: chapter.title,
-                chapterNumber: chapter.chapterNumber,
-                paragraphCount: chapter.paragraphs.length,
-                sampleParagraphs: chapter.paragraphs.slice(0, 3).map(p => ({
-                    pageNumber: p.pageNumber,
-                    contentPreview: p.content.substring(0, 100) + '...',
-                    wordCount: p.wordCount || getWordCount(p.content),
-                    sentencesCount: p.sentencesCount || getSentenceCount(p.content),
-                    linksCount: p.links ? p.links.length : 0,
-                    links: p.links || []
-                }))
-            }))
-        };
-        
-        const debugFile = path.join(config.DEBUG_DIR, 'step-04-paragraph-detection.json');
-        fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
-        
-        console.log(`✅ Paragraph detection completed: ${totalParagraphs} paragraphs detected`);
-        console.log(`🔗 Links extracted: ${totalLinksExtracted} links across ${chaptersWithParagraphs.filter(ch => ch.paragraphs.some(p => p.links && p.links.length > 0)).length} chapters`);
-        console.log(`📊 Processing took ${Date.now() - startTime}ms`);
-        console.log(`📄 Average paragraphs per chapter: ${Math.round(stats.averageParagraphsPerChapter)}`);
-        console.log(`📏 Word count distribution: ${stats.wordCountDistribution.percentageInTargetRange}% in target range (100-200 words)`);
-        console.log(`📝 Average sentences per paragraph: ${Math.round(stats.averageSentencesPerParagraph * 10) / 10}`);
-        console.log(`📄 Debug output: ${debugFile}`);
+        if (config.DEBUG_DIR) {
+            await saveDebugOutput(config.DEBUG_DIR, chaptersWithChunks, stats, processingTime);
+        }
         
         return {
-            chapters: chaptersWithParagraphs,
+            chapters: chaptersWithChunks,
             metadata: {
                 ...pipelineState.metadata,
-                paragraphDetection: {
-                    totalParagraphs: totalParagraphs,
-                    totalChapters: chaptersWithParagraphs.length,
-                    totalLinksExtracted: totalLinksExtracted,
-                    averageParagraphsPerChapter: stats.averageParagraphsPerChapter,
-                    processingTime: Date.now() - startTime,
-                    detectionTime: new Date().toISOString()
+                stepResults: {
+                    ...pipelineState.metadata.stepResults,
+                    'step-4': {
+                        totalChunks,
+                        totalParagraphs,
+                        totalHeaders,
+                        totalLinksExtracted,
+                        processingTime,
+                        stats
+                    }
                 }
             }
         };
         
     } catch (error) {
-        console.error('❌ Paragraph detection failed:', error.message);
+        console.error('❌ Error in paragraph and header detection:', error);
         throw error;
     }
 }
 
 /**
- * Detect paragraphs in a chapter by processing all its pages
- * @param {Object} chapter - Chapter object with pages
- * @returns {Array} - Array of paragraph objects
+ * Detect chunks (paragraphs and headers) in a chapter
+ * @param {Object} chapter - Chapter with pages
+ * @returns {Array} - Array of chunks with type, content, pageNumber, links
  */
-function detectParagraphsInChapter(chapter) {
-    const paragraphs = [];
+function detectChunksInChapter(chapter) {
+    const chunks = [];
     
-    // Process each page in the chapter
     for (const page of chapter.pages) {
-        const pageParagraphs = detectParagraphsInPage(page);
-        paragraphs.push(...pageParagraphs);
+        const pageChunks = detectChunksInPage(page);
+        chunks.push(...pageChunks);
     }
     
-    // Combine and adjust paragraphs to be between 100-200 words
-    const adjustedParagraphs = adjustParagraphSizes(paragraphs);
+
     
-    return adjustedParagraphs;
+    return chunks;
 }
 
 /**
- * Adjust paragraph sizes to be between 100-200 words
- * @param {Array} paragraphs - Array of paragraph objects
- * @returns {Array} - Adjusted paragraphs
+ * Detect chunks (paragraphs and headers) in a single page
+ * @param {Object} page - Page with content and links
+ * @returns {Array} - Array of chunks detected in this page
  */
-function adjustParagraphSizes(paragraphs) {
-    const adjustedParagraphs = [];
-    let i = 0;
+function detectChunksInPage(page) {
+    const chunks = [];
+    const lines = page.content.split('\n');
     
-    while (i < paragraphs.length) {
-        const currentParagraph = paragraphs[i];
-        const wordCount = currentParagraph.wordCount || getWordCount(currentParagraph.content);
+
+    
+    let currentParagraph = '';
+    let currentParagraphStartIndex = 0;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
         
-        if (wordCount < 100) {
-            // Combine with next paragraphs until we reach 100+ words
-            const combinedParagraph = combineSmallParagraphs(paragraphs, i);
-            adjustedParagraphs.push(combinedParagraph.paragraph);
-            i = combinedParagraph.nextIndex;
-        } else if (wordCount > 200) {
-            // Split large paragraph into smaller ones
-            const splitParagraphs = splitLargeParagraph(currentParagraph);
-            adjustedParagraphs.push(...splitParagraphs);
-            i++;
+        // Skip empty lines
+        if (!line) {
+            continue;
+        }
+        
+        // Check if current line is a header
+        if (isHeader(line, i, lines)) {
+            // If we have accumulated paragraph content, save it first
+            if (currentParagraph.trim()) {
+                chunks.push(createParagraphChunk(currentParagraph.trim(), page));
+                currentParagraph = '';
+            }
+            
+            // Create header chunk
+            chunks.push(createHeaderChunk(line, page));
+            currentParagraphStartIndex = i + 1;
         } else {
-            // Paragraph is the right size
-            adjustedParagraphs.push(currentParagraph);
-            i++;
+            // Add line to current paragraph
+            if (currentParagraph) {
+                currentParagraph += '\n' + line;
+            } else {
+                currentParagraph = line;
+}
+
+            // Check if paragraph ends (sentence terminator followed by potential new paragraph)
+            if (endsWithSentenceTerminator(line)) {
+                // Look ahead to see if next non-empty line starts a new paragraph or is a header
+                const nextContentIndex = findNextNonEmptyLine(lines, i + 1);
+                
+                if (nextContentIndex === -1 || // End of page
+                    startsNewParagraph(lines[nextContentIndex]) || // Next line starts new paragraph
+                    isHeader(lines[nextContentIndex], nextContentIndex, lines)) { // Next line is header
+                    
+                    // End current paragraph
+                    chunks.push(createParagraphChunk(currentParagraph.trim(), page));
+                    currentParagraph = '';
+                    currentParagraphStartIndex = nextContentIndex;
+                }
+            }
         }
     }
     
-    return adjustedParagraphs;
+    // Handle any remaining paragraph content
+    if (currentParagraph.trim()) {
+        chunks.push(createParagraphChunk(currentParagraph.trim(), page));
+    }
+    
+    return chunks;
 }
 
 /**
- * Combine small paragraphs with subsequent ones until target size is reached
- * @param {Array} paragraphs - Array of all paragraphs
- * @param {number} startIndex - Starting index
- * @returns {Object} - Combined paragraph and next index
+ * Check if a line is a header using the 6-rule system
+ * @param {string} line - Line to check
+ * @param {number} lineIndex - Index of the line
+ * @param {Array} allLines - All lines in the page
+ * @returns {boolean} - True if line is a header
  */
-function combineSmallParagraphs(paragraphs, startIndex) {
-    let combinedContent = paragraphs[startIndex].content;
-    let combinedPageNumber = paragraphs[startIndex].pageNumber;
-    let combinedLinks = [...(paragraphs[startIndex].links || [])];
-    let currentIndex = startIndex + 1;
-    
-    // Keep combining until we reach at least 100 words or run out of paragraphs
-    while (currentIndex < paragraphs.length && getWordCount(combinedContent) < 100) {
-        combinedContent += ' ' + paragraphs[currentIndex].content;
-        // Merge links from additional paragraphs
-        if (paragraphs[currentIndex].links) {
-            combinedLinks.push(...paragraphs[currentIndex].links);
-        }
-        currentIndex++;
+function isHeader(line, lineIndex, allLines) {
+    // Rule 1: Length - 2-5 words only
+    const words = line.trim().split(/\s+/);
+    if (words.length < 2 || words.length > 5) {
+        return false;
     }
     
-    // If still under 100 words and we have more paragraphs, add one more
-    if (currentIndex < paragraphs.length && getWordCount(combinedContent) < 100) {
-        combinedContent += ' ' + paragraphs[currentIndex].content;
-        // Merge links from final paragraph
-        if (paragraphs[currentIndex].links) {
-            combinedLinks.push(...paragraphs[currentIndex].links);
-        }
-        currentIndex++;
+    // Rule 2: No Punctuation - Does not end with sentence punctuation
+    if (/[.!?]$/.test(line.trim())) {
+        return false;
     }
     
-    // Remove duplicate links (same linkId)
-    const uniqueLinks = removeDuplicateLinks(combinedLinks);
+    // Rule 3: Capitalization - Starts with a capital letter
+    if (!/^[A-Z]/.test(line.trim())) {
+        return false;
+    }
+    
+    // Rule 4: Line Structure - Appears as standalone line (already handled by line splitting)
+    
+    // Rule 5: Context - Previous - Previous line ends with sentence-ending punctuation
+    const prevLine = findPreviousNonEmptyLine(allLines, lineIndex - 1);
+    if (prevLine !== null && !endsWithSentenceTerminator(prevLine)) {
+        return false;
+    }
+    
+    // Rule 6: Context - Next - Next line starts with a capital letter
+    const nextLine = findNextNonEmptyLine(allLines, lineIndex + 1);
+    if (nextLine !== -1 && !/^[A-Z]/.test(allLines[nextLine].trim())) {
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Find the previous non-empty line
+ * @param {Array} lines - All lines
+ * @param {number} startIndex - Index to start searching backwards from
+ * @returns {string|null} - Previous non-empty line or null if none found
+ */
+function findPreviousNonEmptyLine(lines, startIndex) {
+    for (let i = startIndex; i >= 0; i--) {
+        const line = lines[i].trim();
+        if (line) {
+            return line;
+        }
+    }
+    return null;
+}
+
+/**
+ * Find the next non-empty line
+ * @param {Array} lines - All lines
+ * @param {number} startIndex - Index to start searching from
+ * @returns {number} - Index of next non-empty line or -1 if none found
+ */
+function findNextNonEmptyLine(lines, startIndex) {
+    for (let i = startIndex; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line) {
+            return i;
+        }
+    }
+    return -1;
+    }
+    
+/**
+ * Create a paragraph chunk
+ * @param {string} content - Paragraph content
+ * @param {Object} page - Page object with pageNumber and links
+ * @returns {Object} - Paragraph chunk
+ */
+function createParagraphChunk(content, page) {
+    const links = extractLinksFromContent(content, page.links || []);
     
     return {
-        paragraph: {
-            pageNumber: combinedPageNumber,
-            content: combinedContent,
-            wordCount: getWordCount(combinedContent),
-            sentencesCount: getSentenceCount(combinedContent),
-            links: uniqueLinks
-        },
-        nextIndex: currentIndex
+        type: 'paragraph',
+        content: content,
+        pageNumber: page.pageNumber,
+        wordCount: getWordCount(content),
+        sentenceCount: getSentenceCount(content),
+        links: links
     };
 }
 
 /**
- * Split large paragraph into smaller ones
- * @param {Object} paragraph - Paragraph to split
- * @returns {Array} - Array of smaller paragraphs
+ * Create a header chunk
+ * @param {string} content - Header content
+ * @param {Object} page - Page object with pageNumber
+ * @returns {Object} - Header chunk
  */
-function splitLargeParagraph(paragraph) {
-    const sentences = splitIntoSentences(paragraph.content);
-    const splitParagraphs = [];
+function createHeaderChunk(content, page) {
+    return {
+        type: 'header',
+        content: content,
+        pageNumber: page.pageNumber,
+        wordCount: getWordCount(content),
+        sentenceCount: 1, // Headers are always one "sentence"
+        links: [] // Headers typically don't contain links
+    };
+}
+
+/**
+ * Optimize chunk sizes for paragraphs (merge small, split large)
+ * @param {Array} chunks - Array of chunks
+ * @returns {Array} - Optimized chunks
+ */
+function optimizeChunkSizes(chunks) {
+    const optimized = [];
     
-    let currentParagraphSentences = [];
-    let currentWordCount = 0;
+    for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        
+        // Headers are never optimized
+        if (chunk.type === 'header') {
+            optimized.push(chunk);
+            continue;
+        }
+        
+        // For paragraphs, apply size optimization
+        if (chunk.wordCount < 100) {
+            // Try to merge with next paragraph chunk
+            const mergedChunk = tryMergeWithNextParagraph(chunks, i);
+            if (mergedChunk) {
+                optimized.push(mergedChunk.merged);
+                
+                // Process any headers that were skipped during merge
+                for (let skipIndex = i + 1; skipIndex < mergedChunk.nextIndex; skipIndex++) {
+                    if (chunks[skipIndex].type === 'header') {
+                        optimized.push(chunks[skipIndex]);
+                    }
+                }
+                
+                i = mergedChunk.nextIndex; // Skip to the merged paragraph
+            } else {
+                optimized.push(chunk);
+            }
+        } else if (chunk.wordCount > 200) {
+            // Split large paragraph
+            const splitChunks = splitLargeParagraph(chunk);
+            optimized.push(...splitChunks);
+        } else {
+            optimized.push(chunk);
+        }
+    }
+    
+
+    
+    return optimized;
+}
+
+/**
+ * Try to merge current paragraph with next paragraph chunk
+ * @param {Array} chunks - All chunks
+ * @param {number} currentIndex - Current chunk index
+ * @returns {Object|null} - Merged chunk info or null if no merge possible
+ */
+function tryMergeWithNextParagraph(chunks, currentIndex) {
+    // Look for next paragraph chunk (skip headers)
+    for (let i = currentIndex + 1; i < chunks.length; i++) {
+        const nextChunk = chunks[i];
+        
+        if (nextChunk.type === 'header') {
+            // If there's a header between paragraphs, don't merge across it
+            // Headers indicate natural section boundaries
+            break;
+        }
+        
+        if (nextChunk.type === 'paragraph') {
+            const currentChunk = chunks[currentIndex];
+            
+            // Don't merge paragraphs from different pages unless they're consecutive
+            // This prevents merging content that was separated by headers at page boundaries
+            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
+                const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
+                if (pageDifference > 1) {
+                    break; // Don't merge across non-consecutive pages
+                }
+            }
+            
+            const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
+            
+            // Only merge if combined size is reasonable
+            if (combinedWordCount <= 300) {
+                return {
+                    merged: {
+                        type: 'paragraph',
+                        content: currentChunk.content + '\n' + nextChunk.content,
+                        pageNumber: currentChunk.pageNumber,
+                        wordCount: combinedWordCount,
+                        sentenceCount: currentChunk.sentenceCount + nextChunk.sentenceCount,
+                        links: [...(currentChunk.links || []), ...(nextChunk.links || [])]
+                    },
+                    nextIndex: i
+                };
+            }
+        }
+        
+        break; // Only check the next paragraph chunk
+    }
+    
+    return null;
+}
+
+/**
+ * Split a large paragraph into smaller chunks
+ * @param {Object} chunk - Large paragraph chunk
+ * @returns {Array} - Array of smaller chunks
+ */
+function splitLargeParagraph(chunk) {
+    const sentences = splitIntoSentences(chunk.content);
+    const chunks = [];
+    let currentContent = '';
+    let currentSentenceCount = 0;
     
     for (const sentence of sentences) {
         const sentenceWordCount = getWordCount(sentence);
+        const currentWordCount = getWordCount(currentContent);
         
-        // If adding this sentence would exceed 200 words, finish current paragraph
-        if (currentWordCount + sentenceWordCount > 200 && currentParagraphSentences.length > 0) {
-            const paragraphContent = currentParagraphSentences.join(' ');
-            const paragraphLinks = extractLinksFromContent(paragraphContent, paragraph.links || []);
-            
-            splitParagraphs.push({
-                pageNumber: paragraph.pageNumber,
-                content: paragraphContent,
-                wordCount: getWordCount(paragraphContent),
-                sentencesCount: getSentenceCount(paragraphContent),
-                links: paragraphLinks
+        if (currentWordCount + sentenceWordCount > 200 && currentContent.trim()) {
+            // Create chunk with current content
+            chunks.push({
+                type: 'paragraph',
+                content: currentContent.trim(),
+                pageNumber: chunk.pageNumber,
+                wordCount: currentWordCount,
+                sentenceCount: currentSentenceCount,
+                links: extractLinksFromContent(currentContent.trim(), chunk.links || [])
             });
             
-            currentParagraphSentences = [];
-            currentWordCount = 0;
+            currentContent = sentence;
+            currentSentenceCount = 1;
+        } else {
+            currentContent += (currentContent ? ' ' : '') + sentence;
+            currentSentenceCount++;
         }
-        
-        currentParagraphSentences.push(sentence);
-        currentWordCount += sentenceWordCount;
     }
     
-    // Handle remaining sentences
-    if (currentParagraphSentences.length > 0) {
-        const paragraphContent = currentParagraphSentences.join(' ');
-        const paragraphLinks = extractLinksFromContent(paragraphContent, paragraph.links || []);
-        
-        splitParagraphs.push({
-            pageNumber: paragraph.pageNumber,
-            content: paragraphContent,
-            wordCount: getWordCount(paragraphContent),
-            sentencesCount: getSentenceCount(paragraphContent),
-            links: paragraphLinks
+    // Add remaining content
+    if (currentContent.trim()) {
+        chunks.push({
+            type: 'paragraph',
+            content: currentContent.trim(),
+            pageNumber: chunk.pageNumber,
+            wordCount: getWordCount(currentContent),
+            sentenceCount: currentSentenceCount,
+            links: extractLinksFromContent(currentContent.trim(), chunk.links || [])
         });
     }
     
-    return splitParagraphs;
+    return chunks;
 }
 
 /**
@@ -300,371 +478,210 @@ function splitLargeParagraph(paragraph) {
  * @returns {Array} - Array of sentences
  */
 function splitIntoSentences(text) {
-    // First, protect footnote references by temporarily replacing them
-    // Handle patterns like: "sentence.\n2\nNext sentence" and "sentence.2\nNext sentence"
-    let protectedText = text.replace(/([.!?]+)\n(\d+)\n/g, '$1$2◊FOOTNOTE_BREAK◊');
-    protectedText = protectedText.replace(/([.!?]+)\s*(\d+)\s*\n/g, '$1$2◊FOOTNOTE_BREAK◊');
-    
-    // Split on sentence endings followed by space and capital letter
-    const sentences = protectedText.split(/([.!?]+\s+)(?=[A-Z])/);
-    const result = [];
-    
-    for (let i = 0; i < sentences.length; i += 2) {
-        const sentence = sentences[i];
-        const punctuation = sentences[i + 1] || '';
-        if (sentence && sentence.trim()) {
-            // Restore footnote breaks as regular line breaks
-            const cleanSentence = (sentence + punctuation).replace(/◊FOOTNOTE_BREAK◊/g, '\n');
-            result.push(cleanSentence.trim());
-        }
-    }
-    
-    return result;
+    // Split on sentence terminators, keeping the punctuation
+    const sentences = text.split(/(?<=[.!?])\s+/);
+    return sentences.filter(s => s.trim().length > 0);
 }
 
 /**
- * Get word count for a text
- * @param {string} text - Text to count words in
+ * Get word count of text
+ * @param {string} text - Text to count
  * @returns {number} - Word count
  */
 function getWordCount(text) {
-    return text.split(/\s+/).filter(word => word.length > 0).length;
+    return text.trim().split(/\s+/).length;
 }
 
 /**
- * Get sentence count for a text
- * @param {string} text - Text to count sentences in
+ * Get sentence count of text
+ * @param {string} text - Text to count
  * @returns {number} - Sentence count
  */
 function getSentenceCount(text) {
-    if (!text || text.trim().length === 0) {
-        return 0;
-    }
-    
-    // Split on sentence endings (.!?:;) and count non-empty parts
-    const sentences = text.split(/[.!?:;]+/).filter(sentence => sentence.trim().length > 0);
-    return sentences.length;
+    return (text.match(/[.!?]/g) || []).length;
 }
 
 /**
- * Detect paragraphs in a single page's content
- * @param {Object} page - Page object with content
- * @returns {Array} - Array of paragraph objects
- */
-function detectParagraphsInPage(page) {
-    const paragraphs = [];
-    
-    if (!page.content || page.content.trim().length === 0) {
-        return paragraphs;
-    }
-    
-    const content = page.content.trim();
-    const pageLinks = page.links || [];
-    
-    // Split content into lines
-    const lines = content.split('\n');
-    
-    let currentParagraphLines = [];
-    
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        
-        // Skip empty lines
-        if (line.length === 0) {
-            continue;
-        }
-        
-        // Add line to current paragraph
-        currentParagraphLines.push(line);
-        
-        // Check if this line ends a paragraph
-        // Paragraph ends when a sentence ends with punctuation AND is followed by a newline
-        if (endsWithSentenceTerminator(line)) {
-            // Check if next line starts a new paragraph or is empty
-            const nextLineIndex = i + 1;
-            let isEndOfParagraph = false;
-            let footnoteFound = false;
-            
-            if (nextLineIndex >= lines.length) {
-                // End of page = end of paragraph
-                isEndOfParagraph = true;
-            } else {
-                // Look ahead to see what follows
-                for (let j = nextLineIndex; j < lines.length; j++) {
-                    const nextLine = lines[j].trim();
-                    
-                    if (nextLine === '') {
-                        // Empty line = end of paragraph
-                        isEndOfParagraph = true;
-                        break;
-                    }
-                    
-                    if (startsNewParagraph(nextLine)) {
-                        // New paragraph indicator = end of current paragraph
-                        isEndOfParagraph = true;
-                        break;
-                    }
-                    
-                    if (j === nextLineIndex) {
-                        // Check if next line is just a footnote reference (single digit(s))
-                        if (/^\d+$/.test(nextLine)) {
-                            // This is a footnote reference, add it to current paragraph with newline preserved
-                            currentParagraphLines.push(nextLine);
-                            footnoteFound = true;
-                            i = j; // Skip ahead to the footnote line
-                            
-                            // Check what comes after the footnote to determine if paragraph should end
-                            for (let k = j + 1; k < lines.length; k++) {
-                                const afterFootnote = lines[k].trim();
-                                if (afterFootnote === '') {
-                                    isEndOfParagraph = true;
-                                    break;
-                                }
-                                if (startsNewParagraph(afterFootnote)) {
-                                    isEndOfParagraph = true;
-                                    break;
-                                }
-                                // If there's more content, continue building paragraph
-                                break;
-                            }
-                            break;
-                        }
-                    }
-                    
-                    // If we reach here, continue building paragraph
-                    break;
-                }
-            }
-            
-            if (isEndOfParagraph && currentParagraphLines.length > 0) {
-                // Create paragraph - preserve original structure including newlines before footnotes
-                let paragraphContent = currentParagraphLines.join('\n');
-                
-                // Don't trim if this could remove important formatting like footnote spacing
-                // Check for patterns like "sentence.\n1 word" which should preserve the newline before footnotes
-                if (/\.\n\d+\s+[A-Za-z]/.test(paragraphContent)) {
-                    // For footnote cases, only trim excessive whitespace at the very start/end, preserve internal structure
-                    paragraphContent = paragraphContent.replace(/^\s+/, '').replace(/\s+$/, '');
-                } else {
-                    paragraphContent = paragraphContent.trim();
-                }
-                
-                if (paragraphContent.length > 0) {
-                    // Extract links that exist within this paragraph's content
-                    const paragraphLinks = extractLinksFromParagraph(paragraphContent, pageLinks);
-                    
-                    paragraphs.push({
-                        pageNumber: page.pageNumber,
-                        content: paragraphContent,
-                        wordCount: getWordCount(paragraphContent),
-                        sentencesCount: getSentenceCount(paragraphContent),
-                        links: paragraphLinks
-                    });
-                }
-                currentParagraphLines = [];
-            }
-        }
-    }
-    
-    // Handle any remaining content as a paragraph
-    if (currentParagraphLines.length > 0) {
-        let paragraphContent = currentParagraphLines.join('\n');
-        
-        // Don't trim if this could remove important formatting like footnote spacing
-        // Check for patterns like "sentence.\n1 word" which should preserve the newline before footnotes
-        if (/\.\n\d+\s+[A-Za-z]/.test(paragraphContent)) {
-            // For footnote cases, only trim excessive whitespace at the very start/end, preserve internal structure
-            paragraphContent = paragraphContent.replace(/^\s+/, '').replace(/\s+$/, '');
-        } else {
-            paragraphContent = paragraphContent.trim();
-        }
-        
-        if (paragraphContent.length > 0) {
-            // Extract links that exist within this paragraph's content
-            const paragraphLinks = extractLinksFromParagraph(paragraphContent, pageLinks);
-            
-            paragraphs.push({
-                pageNumber: page.pageNumber,
-                content: paragraphContent,
-                wordCount: getWordCount(paragraphContent),
-                sentencesCount: getSentenceCount(paragraphContent),
-                links: paragraphLinks
-            });
-        }
-    }
-    
-    return paragraphs;
-}
-
-/**
- * Check if a line ends with sentence terminator punctuation
+ * Check if line ends with sentence terminator
  * @param {string} line - Line to check
  * @returns {boolean} - True if line ends with sentence terminator
  */
 function endsWithSentenceTerminator(line) {
-    if (!line || line.length === 0) {
-        return false;
-    }
-    
-    const trimmed = line.trim();
-    const lastChar = trimmed[trimmed.length - 1];
-    
-    // Check for sentence terminators
-    return ['.', '!', '?', ':', ';'].includes(lastChar);
+    return /[.!?]$/.test(line.trim());
 }
 
 /**
- * Check if a line starts with a capital letter and is substantial content
+ * Check if line starts a new paragraph
  * @param {string} line - Line to check
- * @returns {boolean} - True if line is a new paragraph indicator
+ * @returns {boolean} - True if line starts new paragraph
  */
 function startsNewParagraph(line) {
-    return /^[A-Z]/.test(line) && line.length > 10; // Simple heuristic for substantial content
+    return /^[A-Z]/.test(line.trim());
 }
 
 /**
- * Extract links from paragraph content based on page links
- * @param {string} paragraphContent - The content of the paragraph
- * @param {Array} pageLinks - Links available on the page
- * @returns {Array} - Array of links that exist within the paragraph content
+ * Extract links from content
+ * @param {string} content - Content to search for links
+ * @param {Array} pageLinks - Available links from the page
+ * @returns {Array} - Links found in content
  */
-function extractLinksFromParagraph(paragraphContent, pageLinks) {
-    const paragraphLinks = [];
+function extractLinksFromContent(content, pageLinks) {
+    if (!pageLinks || pageLinks.length === 0) {
+        return [];
+    }
     
-    // Check each page link to see if its source text exists in the paragraph
+    const foundLinks = [];
+    
     for (const link of pageLinks) {
-        if (link.sourceText && isSourceTextInParagraph(link.sourceText, paragraphContent)) {
-            paragraphLinks.push(link);
+        if (isSourceTextInContent(link.sourceText, content)) {
+            foundLinks.push({
+                text: link.sourceText,
+                targetPageNumber: link.targetPageNumber,
+                targetText: link.targetText,
+                linkId: link.linkId
+            });
         }
     }
     
-    return paragraphLinks;
+    return removeDuplicateLinks(foundLinks);
 }
 
 /**
- * Check if source text exists in paragraph content with flexible matching
- * @param {string} sourceText - The source text to find
- * @param {string} paragraphContent - The content to search in
+ * Check if source text is in content
+ * @param {string} sourceText - Source text to find
+ * @param {string} content - Content to search in
  * @returns {boolean} - True if source text is found
  */
-function isSourceTextInParagraph(sourceText, paragraphContent) {
-    // First try exact match
-    if (paragraphContent.includes(sourceText)) {
+function isSourceTextInContent(sourceText, content) {
+    // Direct match
+    if (content.includes(sourceText)) {
         return true;
     }
     
-    // For short numeric references (likely footnotes), try more flexible matching
-    if (/^\d+$/.test(sourceText.trim())) {
-        // Create regex pattern that matches the EXACT number with flexible whitespace
-        // But ensure it's not part of a larger word/number (like "Chapter 2" when looking for "3")
-        const escapedText = sourceText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const flexiblePattern = new RegExp(`(?:^|\\s|\\.|,|;|:|!|\\?)\\s*${escapedText}(?=\\s|$|\\.|,|;|:|!|\\?|\\n)`, 'g');
-        
-        if (flexiblePattern.test(paragraphContent)) {
-            return true;
-        }
+    // Flexible footnote matching
+    if (/^\d+$/.test(sourceText)) {
+        const patterns = [
+            new RegExp(`\\b${sourceText}\\b`),
+            new RegExp(`${sourceText}\\s*[.,;]`),
+            new RegExp(`\\s${sourceText}\\s*$`)
+        ];
+    
+        return patterns.some(pattern => pattern.test(content));
     }
     
-    // For other text, try with normalized whitespace
-    const normalizedSource = sourceText.replace(/\s+/g, ' ').trim();
-    const normalizedContent = paragraphContent.replace(/\s+/g, ' ');
-    
-    return normalizedContent.includes(normalizedSource);
+    return false;
 }
 
 /**
- * Extract links from content when splitting paragraphs
- * @param {string} content - The text content to check
- * @param {Array} originalLinks - The original links from the larger paragraph
- * @returns {Array} - Array of links found within the content
- */
-function extractLinksFromContent(content, originalLinks) {
-    const links = [];
-    
-    // Check each original link to see if its source text exists in this content
-    for (const link of originalLinks) {
-        if (link.sourceText && isSourceTextInParagraph(link.sourceText, content)) {
-            links.push(link);
-        }
-    }
-    
-    return links;
-}
-
-/**
- * Remove duplicate links based on linkId
- * @param {Array} links - Array of link objects
- * @returns {Array} - Array of unique link objects
+ * Remove duplicate links
+ * @param {Array} links - Links array
+ * @returns {Array} - Deduplicated links
  */
 function removeDuplicateLinks(links) {
-    const uniqueLinks = [];
     const seen = new Set();
-
-    for (const link of links) {
-        const key = link.linkId || `${link.sourceText}-${link.targetText}`;
-        if (!seen.has(key)) {
-            uniqueLinks.push(link);
-            seen.add(key);
+    return links.filter(link => {
+        const key = `${link.text}-${link.targetPageNumber}`;
+        if (seen.has(key)) {
+            return false;
         }
-    }
-    
-    return uniqueLinks;
+        seen.add(key);
+        return true;
+    });
 }
 
 /**
- * Generate statistics about paragraph detection
- * @param {Array} chapters - Array of chapters with paragraphs
- * @returns {Object} - Statistics object
+ * Generate comprehensive chunk statistics
+ * @param {Array} chapters - Chapters with chunks
+ * @returns {Object} - Statistics
  */
-function generateParagraphStats(chapters) {
-    const allParagraphs = chapters.flatMap(chapter => chapter.paragraphs);
-    const totalParagraphs = allParagraphs.length;
+function generateChunkStats(chapters) {
+    let totalChunks = 0;
+    let totalParagraphs = 0;
+    let totalHeaders = 0;
+    let totalWords = 0;
+    let totalLinks = 0;
     
-    const paragraphsPerChapter = {};
-    const wordsPerParagraph = [];
-    const sentencesPerParagraph = [];
+    const paragraphWordCounts = [];
+    const headerWordCounts = [];
     
-    chapters.forEach(chapter => {
-        paragraphsPerChapter[chapter.chapterNumber] = chapter.paragraphs.length;
-        
-        chapter.paragraphs.forEach(paragraph => {
-            const wordCount = paragraph.wordCount || getWordCount(paragraph.content);
-            const sentenceCount = paragraph.sentencesCount || getSentenceCount(paragraph.content);
-            wordsPerParagraph.push(wordCount);
-            sentencesPerParagraph.push(sentenceCount);
-        });
-    });
-    
-    const averageWordsPerParagraph = wordsPerParagraph.length > 0 
-        ? wordsPerParagraph.reduce((sum, count) => sum + count, 0) / wordsPerParagraph.length 
-        : 0;
-    
-    const averageSentencesPerParagraph = sentencesPerParagraph.length > 0 
-        ? sentencesPerParagraph.reduce((sum, count) => sum + count, 0) / sentencesPerParagraph.length 
-        : 0;
-    
-    // Calculate word count distribution
-    const under100 = wordsPerParagraph.filter(w => w < 100).length;
-    const between100And200 = wordsPerParagraph.filter(w => w >= 100 && w <= 200).length;
-    const over200 = wordsPerParagraph.filter(w => w > 200).length;
+    for (const chapter of chapters) {
+        for (const chunk of chapter.chunks) {
+            totalChunks++;
+            totalWords += chunk.wordCount;
+            totalLinks += chunk.links ? chunk.links.length : 0;
+            
+            if (chunk.type === 'paragraph') {
+                totalParagraphs++;
+                paragraphWordCounts.push(chunk.wordCount);
+            } else if (chunk.type === 'header') {
+                totalHeaders++;
+                headerWordCounts.push(chunk.wordCount);
+            }
+        }
+    }
     
     return {
-        totalParagraphs: totalParagraphs,
-        averageParagraphsPerChapter: chapters.length > 0 ? totalParagraphs / chapters.length : 0,
-        paragraphsPerChapter: paragraphsPerChapter,
-        averageWordsPerParagraph: averageWordsPerParagraph,
-        averageSentencesPerParagraph: averageSentencesPerParagraph,
-        minWordsPerParagraph: wordsPerParagraph.length > 0 ? Math.min(...wordsPerParagraph) : 0,
-        maxWordsPerParagraph: wordsPerParagraph.length > 0 ? Math.max(...wordsPerParagraph) : 0,
-        minSentencesPerParagraph: sentencesPerParagraph.length > 0 ? Math.min(...sentencesPerParagraph) : 0,
-        maxSentencesPerParagraph: sentencesPerParagraph.length > 0 ? Math.max(...sentencesPerParagraph) : 0,
-        wordCountDistribution: {
-            under100: under100,
-            between100And200: between100And200,
-            over200: over200,
-            percentageInTargetRange: totalParagraphs > 0 ? Math.round((between100And200 / totalParagraphs) * 100) : 0
+        totalChunks,
+        totalParagraphs,
+        totalHeaders,
+        totalWords,
+        totalLinks,
+        paragraphStats: {
+            count: totalParagraphs,
+            wordCounts: paragraphWordCounts,
+            averageWords: paragraphWordCounts.length > 0 ? paragraphWordCounts.reduce((a, b) => a + b, 0) / paragraphWordCounts.length : 0,
+            minWords: Math.min(...paragraphWordCounts),
+            maxWords: Math.max(...paragraphWordCounts)
+        },
+        headerStats: {
+            count: totalHeaders,
+            wordCounts: headerWordCounts,
+            averageWords: headerWordCounts.length > 0 ? headerWordCounts.reduce((a, b) => a + b, 0) / headerWordCounts.length : 0,
+            minWords: headerWordCounts.length > 0 ? Math.min(...headerWordCounts) : 0,
+            maxWords: headerWordCounts.length > 0 ? Math.max(...headerWordCounts) : 0
         }
     };
+}
+
+/**
+ * Save debug output
+ * @param {string} debugDir - Debug directory path
+ * @param {Array} chapters - Chapters with chunks
+ * @param {Object} stats - Processing statistics
+ * @param {number} processingTime - Processing time in ms
+ */
+async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
+    const debugOutput = {
+        timestamp: new Date().toISOString(),
+        processingTime: `${processingTime}ms`,
+        summary: {
+            totalChapters: chapters.length,
+            totalChunks: stats.totalChunks,
+            totalParagraphs: stats.totalParagraphs,
+            totalHeaders: stats.totalHeaders,
+            totalWords: stats.totalWords,
+            totalLinks: stats.totalLinks
+        },
+        statistics: stats,
+        chapters: chapters.map(chapter => ({
+            chapterNumber: chapter.chapterNumber,
+            title: chapter.title,
+            chunkCount: chapter.chunks.length,
+            paragraphCount: chapter.chunks.filter(c => c.type === 'paragraph').length,
+            headerCount: chapter.chunks.filter(c => c.type === 'header').length,
+            chunks: chapter.chunks.map(chunk => ({
+                type: chunk.type,
+                content: chunk.content.substring(0, 200) + (chunk.content.length > 200 ? '...' : ''),
+                pageNumber: chunk.pageNumber,
+                wordCount: chunk.wordCount,
+                sentenceCount: chunk.sentenceCount,
+                linkCount: chunk.links ? chunk.links.length : 0
+            }))
+        }))
+    };
+    
+    const debugPath = path.join(debugDir, 'step-04-paragraph-and-header-detection.json');
+    await fs.promises.writeFile(debugPath, JSON.stringify(debugOutput, null, 2));
 }
 
 module.exports = { execute }; 

@@ -158,6 +158,29 @@ async function execute(pipelineState, config) {
         console.log(`   - Words: ${wordCount.toLocaleString()}`);
         console.log(`   - Literal \\n: ${literalNewlineCount}`);
         console.log(`   - Avg words/page: ${Math.round(wordCount / pageCount)}`);
+        
+        // Validate text quality - check for overly long words
+        const wordValidation = validateWordLengths(rawText);
+        console.log(`📋 Word Length Validation:`);
+        console.log(`   - Longest word: ${wordValidation.longestWord.length} chars ("${wordValidation.longestWord.substring(0, 50)}...")`);
+        console.log(`   - Words > 20 chars: ${wordValidation.longWords.length}`);
+        console.log(`   - Words > 30 chars: ${wordValidation.veryLongWords.length}`);
+        console.log(`   - Words > 50 chars: ${wordValidation.suspiciousWords.length}`);
+        
+        if (wordValidation.longWords.length > 0) {
+            console.log(`⚠️  Words > 20 chars (potentially concatenated):`);
+            wordValidation.longWords.slice(0, 10).forEach((word, i) => {
+                console.log(`   ${i + 1}. ${word} (${word.length} chars)`);
+            });
+        }
+        
+        if (wordValidation.suspiciousWords.length > 0) {
+            console.log(`⚠️  Suspicious words (>50 chars, likely concatenated):`);
+            wordValidation.suspiciousWords.slice(0, 10).forEach((word, i) => {
+                console.log(`   ${i + 1}. ${word.substring(0, 80)}... (${word.length} chars)`);
+            });
+        }
+        
         console.log(`📄 Debug output: ${debugFile}`);
         console.log(`📄 Raw text file: ${rawTextFile}`);
 
@@ -217,32 +240,12 @@ function extractCleanPageText(textContent, pageNum) {
             pageText += '\n';
         }
 
-        // Add the text
+        // Add the text with simple spacing logic like v1
         pageText += itemText;
-
-        // Determine if we need a space after this item
-        if (nextItem && nextItem.str && nextItem.str.trim().length > 0) {
-            const nextY = nextItem.transform[5];
-            const nextX = nextItem.transform[4];
-            const nextText = nextItem.str;
-
-            // Don't add space if:
-            // 1. Current text already ends with space or hyphen
-            // 2. Next text starts with space or punctuation
-            // 3. We're on a new line (Y position changed significantly)
-            // 4. Text items are very close together (part of same word)
-
-            const currentEndsWithSpace = /[\s-]$/.test(itemText);
-            const nextStartsWithSpaceOrPunct = /^[\s.,;:!?)\]}"']/.test(nextText);
-            const isNewLine = Math.abs(nextY - currentY) > 5;
-            const isVeryClose = Math.abs(nextX - (currentX + (item.width || itemText.length * 6))) < 2;
-
-            if (!currentEndsWithSpace &&
-                !nextStartsWithSpaceOrPunct &&
-                !isNewLine &&
-                !isVeryClose) {
-                pageText += ' ';
-            }
+        
+        // Add space after each text item unless it's the last item or already ends with space
+        if (i < items.length - 1 && !itemText.endsWith(' ') && !itemText.endsWith('\n')) {
+            pageText += ' ';
         }
 
         lastY = currentY;
@@ -307,6 +310,38 @@ function removeStandalonePageNumber(pageText, pageNum) {
     }
 
     return pageText;
+}
+
+/**
+ * Validate word lengths to detect concatenated words
+ * @param {string} text - Text to validate
+ * @returns {Object} - Validation results
+ */
+function validateWordLengths(text) {
+    // Extract words (alphanumeric sequences)
+    const words = text.match(/[a-zA-Z0-9]+/g) || [];
+    
+    // Categorize words by length
+    const longWords = words.filter(word => word.length > 20);
+    const veryLongWords = words.filter(word => word.length > 30);
+    const suspiciousWords = words.filter(word => word.length > 50);
+    
+    // Find longest word
+    const longestWord = words.reduce((longest, current) => 
+        current.length > longest.length ? current : longest, ''
+    );
+    
+    // Sort suspicious words by length (descending)
+    suspiciousWords.sort((a, b) => b.length - a.length);
+    
+    return {
+        totalWords: words.length,
+        longWords: longWords,
+        veryLongWords: veryLongWords,
+        suspiciousWords: suspiciousWords,
+        longestWord: longestWord,
+        averageWordLength: words.reduce((sum, word) => sum + word.length, 0) / words.length
+    };
 }
 
 module.exports = {
