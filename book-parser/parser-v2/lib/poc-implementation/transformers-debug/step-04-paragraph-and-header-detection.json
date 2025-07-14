@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-13T14:52:58.929Z",
+  "timestamp": "2025-07-14T08:26:12.872Z",
   "processingTime": "22ms",
   "summary": {
     "totalChapters": 10,
@@ -7,14 +7,14 @@
     "totalParagraphs": 927,
     "totalHeaders": 109,
     "totalWords": 117708,
-    "totalLinks": 211
+    "totalLinks": 302
   },
   "statistics": {
     "totalChunks": 1036,
     "totalParagraphs": 927,
     "totalHeaders": 109,
     "totalWords": 117708,
-    "totalLinks": 211,
+    "totalLinks": 302,
     "paragraphStats": {
       "count": 927,
       "wordCounts": [
@@ -1130,7 +1130,7 @@
           "pageNumber": 10,
           "wordCount": 195,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -1570,7 +1570,7 @@
           "pageNumber": 25,
           "wordCount": 188,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -1715,7 +1715,7 @@
           "pageNumber": 32,
           "wordCount": 200,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -1723,7 +1723,7 @@
           "pageNumber": 32,
           "wordCount": 191,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -1907,7 +1907,7 @@
           "pageNumber": 39,
           "wordCount": 192,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -1979,7 +1979,7 @@
           "pageNumber": 42,
           "wordCount": 199,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2411,7 +2411,7 @@
           "pageNumber": 58,
           "wordCount": 196,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -2419,7 +2419,7 @@
           "pageNumber": 58,
           "wordCount": 179,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -2427,7 +2427,7 @@
           "pageNumber": 58,
           "wordCount": 83,
           "sentenceCount": 3,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -2459,7 +2459,7 @@
           "pageNumber": 59,
           "wordCount": 74,
           "sentenceCount": 3,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2467,7 +2467,7 @@
           "pageNumber": 60,
           "wordCount": 152,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 3
         },
         {
           "type": "paragraph",
@@ -2499,7 +2499,7 @@
           "pageNumber": 61,
           "wordCount": 197,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -2507,7 +2507,7 @@
           "pageNumber": 61,
           "wordCount": 175,
           "sentenceCount": 6,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2564,7 +2564,7 @@
           "pageNumber": 63,
           "wordCount": 182,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2636,7 +2636,7 @@
           "pageNumber": 66,
           "wordCount": 179,
           "sentenceCount": 5,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2860,7 +2860,7 @@
           "pageNumber": 75,
           "wordCount": 127,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3012,7 +3012,7 @@
           "pageNumber": 81,
           "wordCount": 178,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3148,7 +3148,7 @@
           "pageNumber": 87,
           "wordCount": 198,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -3156,7 +3156,7 @@
           "pageNumber": 87,
           "wordCount": 131,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3164,7 +3164,7 @@
           "pageNumber": 88,
           "wordCount": 196,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 3
         },
         {
           "type": "paragraph",
@@ -3172,7 +3172,7 @@
           "pageNumber": 88,
           "wordCount": 195,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -3180,7 +3180,7 @@
           "pageNumber": 88,
           "wordCount": 152,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -3188,7 +3188,7 @@
           "pageNumber": 89,
           "wordCount": 186,
           "sentenceCount": 13,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3204,7 +3204,7 @@
           "pageNumber": 89,
           "wordCount": 76,
           "sentenceCount": 4,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3261,7 +3261,7 @@
           "pageNumber": 92,
           "wordCount": 196,
           "sentenceCount": 6,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3469,7 +3469,7 @@
           "pageNumber": 100,
           "wordCount": 184,
           "sentenceCount": 5,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3541,7 +3541,7 @@
           "pageNumber": 103,
           "wordCount": 187,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3965,7 +3965,7 @@
           "pageNumber": 121,
           "wordCount": 188,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3973,7 +3973,7 @@
           "pageNumber": 121,
           "wordCount": 24,
           "sentenceCount": 1,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3989,7 +3989,7 @@
           "pageNumber": 122,
           "wordCount": 198,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -3997,7 +3997,7 @@
           "pageNumber": 122,
           "wordCount": 62,
           "sentenceCount": 3,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -4005,7 +4005,7 @@
           "pageNumber": 122,
           "wordCount": 179,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -4021,7 +4021,7 @@
           "pageNumber": 123,
           "wordCount": 195,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -4510,7 +4510,7 @@
           "pageNumber": 142,
           "wordCount": 193,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -4654,7 +4654,7 @@
           "pageNumber": 148,
           "wordCount": 193,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 3
         },
         {
           "type": "paragraph",
@@ -4662,7 +4662,7 @@
           "pageNumber": 148,
           "wordCount": 175,
           "sentenceCount": 7,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -4670,7 +4670,7 @@
           "pageNumber": 148,
           "wordCount": 151,
           "sentenceCount": 6,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -4686,7 +4686,7 @@
           "pageNumber": 149,
           "wordCount": 194,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -4983,7 +4983,7 @@
           "pageNumber": 160,
           "wordCount": 142,
           "sentenceCount": 6,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -5447,7 +5447,7 @@
           "pageNumber": 178,
           "wordCount": 188,
           "sentenceCount": 16,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -5455,7 +5455,7 @@
           "pageNumber": 178,
           "wordCount": 103,
           "sentenceCount": 3,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "header",
@@ -5471,7 +5471,7 @@
           "pageNumber": 179,
           "wordCount": 191,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 3
         },
         {
           "type": "paragraph",
@@ -5479,7 +5479,7 @@
           "pageNumber": 179,
           "wordCount": 198,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -5776,7 +5776,7 @@
           "pageNumber": 190,
           "wordCount": 191,
           "sentenceCount": 10,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -6064,7 +6064,7 @@
           "pageNumber": 199,
           "wordCount": 198,
           "sentenceCount": 11,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -6272,7 +6272,7 @@
           "pageNumber": 207,
           "wordCount": 186,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -6288,7 +6288,7 @@
           "pageNumber": 208,
           "wordCount": 158,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -6304,7 +6304,7 @@
           "pageNumber": 208,
           "wordCount": 191,
           "sentenceCount": 13,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -6320,7 +6320,7 @@
           "pageNumber": 209,
           "wordCount": 193,
           "sentenceCount": 11,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -6328,7 +6328,7 @@
           "pageNumber": 209,
           "wordCount": 199,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -6336,7 +6336,7 @@
           "pageNumber": 209,
           "wordCount": 99,
           "sentenceCount": 3,
-          "linkCount": 0
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -6344,7 +6344,7 @@
           "pageNumber": 210,
           "wordCount": 180,
           "sentenceCount": 8,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -9243,7 +9243,7 @@
           "pageNumber": 292,
           "wordCount": 201,
           "sentenceCount": 1,
-          "linkCount": 0
+          "linkCount": 5
         },
         {
           "type": "paragraph",
@@ -9299,7 +9299,7 @@
           "pageNumber": 299,
           "wordCount": 243,
           "sentenceCount": 1,
-          "linkCount": 0
+          "linkCount": 7
         },
         {
           "type": "paragraph",
@@ -9315,7 +9315,7 @@
           "pageNumber": 301,
           "wordCount": 201,
           "sentenceCount": 1,
-          "linkCount": 0
+          "linkCount": 4
         },
         {
           "type": "paragraph",

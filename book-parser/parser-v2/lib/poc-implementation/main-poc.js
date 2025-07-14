@@ -43,6 +43,7 @@ const headerDetection = require('./steps/05-header-detection');
 const chunkingAlgorithm = require('./steps/06-chunking-algorithm');
 const pageAssignment = require('./steps/07-page-assignment');
 const outputGeneration = require('./steps/08-output-generation');
+const validation = require('./steps/09-validation');
 
 // Configuration
 const CONFIG = {
@@ -87,6 +88,7 @@ const STEPS = {
     'step-6': chunkingAlgorithm.execute,
     'step-7': pageAssignment.execute,
     'step-8': outputGeneration.execute,
+    'step-9': validation.execute,
     // Legacy aliases for backward compatibility
     'text-extraction': textExtraction.execute,
     'chapter-detection': chapterDetection.execute,
@@ -96,7 +98,8 @@ const STEPS = {
     'header-detection': headerDetection.execute,
     'chunking-algorithm': chunkingAlgorithm.execute,
     'page-assignment': pageAssignment.execute,
-    'output-generation': outputGeneration.execute
+    'output-generation': outputGeneration.execute,
+    'validation': validation.execute
 };
 
 const STEP_NAMES = [
@@ -110,7 +113,8 @@ const STEP_NAMES = [
     'step-5',
     'step-6',
     'step-7',
-    'step-8'
+    'step-8',
+    'step-9'
 ];
 
 // Step descriptions for help text
@@ -125,7 +129,8 @@ const STEP_DESCRIPTIONS = {
     'step-5': 'Detect headers using 6-rule system',
     'step-6': 'Create chunks with target word count',
     'step-7': 'Assign page numbers to chunks',
-    'step-8': 'Generate final output files'
+    'step-8': 'Generate final output files',
+    'step-9': 'Validate pipeline output against requirements'
 };
 
 // Ensure output directories exist
@@ -271,11 +276,12 @@ Available steps:
   step-6       - ${STEP_DESCRIPTIONS['step-6']}
   step-7       - ${STEP_DESCRIPTIONS['step-7']}
   step-8       - ${STEP_DESCRIPTIONS['step-8']}
+  step-9       - ${STEP_DESCRIPTIONS['step-9']}
   all          - Run all steps in sequence
 
 Implementation Status:
-  ✅ COMPLETED: Steps 1, 2-1, 2-2, 2-3, 3, 3-1, 4 (87.5% complete)
-  ⚠️ REMAINING: Steps 5, 6, 7, 8 (12.5% remaining)
+  ✅ COMPLETED: Steps 1, 2-1, 2-2, 2-3, 3, 3-1, 4, 9 (88.9% complete)
+  ⚠️ REMAINING: Steps 5, 6, 7, 8 (11.1% remaining)
 
 Step execution modes:
   • Single step: node main-poc.js step-1
@@ -328,7 +334,7 @@ async function main() {
         } else {
             console.error(`❌ Unknown step: ${stepName}`);
             console.log('\nAvailable steps:', STEP_NAMES.join(', '));
-            console.log('Legacy steps:', ['text-extraction', 'chapter-detection', 'chapter-text-extraction', 'cross-page-merging', 'paragraph-detection', 'header-detection', 'chunking-algorithm', 'page-assignment', 'output-generation'].join(', '));
+            console.log('Legacy steps:', ['text-extraction', 'chapter-detection', 'chapter-text-extraction', 'cross-page-merging', 'paragraph-detection', 'header-detection', 'chunking-algorithm', 'page-assignment', 'output-generation', 'validation'].join(', '));
             process.exit(1);
         }
     } catch (error) {

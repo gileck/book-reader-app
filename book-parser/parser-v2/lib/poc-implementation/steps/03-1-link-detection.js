@@ -146,6 +146,11 @@ async function extractInternalLinksFromPDF(pdfPath, pdf = null) {
                         // Find the text that corresponds to this link
                         const linkText = findTextForAnnotation(annotation, textContent);
 
+                        // Skip if we couldn't extract valid link text
+                        if (!linkText || typeof linkText !== 'string' || linkText.trim() === '') {
+                            continue;
+                        }
+
                         // Extract destination coordinates from the dest array
                         const destinationCoordinates = extractDestinationCoordinates(annotation.dest);
 
@@ -287,6 +292,11 @@ function findTextForAnnotation(annotation, textContent) {
  * @returns {boolean} True if it's a valid link
  */
 function isValidLinkText(linkText, pageContent) {
+    // Skip if linkText is undefined or null
+    if (!linkText || typeof linkText !== 'string') {
+        return false;
+    }
+    
     // Skip if it's part of a larger word (like years: 1930s, page numbers, etc.)
     const linkPattern = new RegExp(`\\b${linkText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g');
     const standalonePattern = new RegExp(`(?:^|\\s|\\.|,|;|:)\\s*${linkText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(?=\\s|$|\\n)`, 'g');

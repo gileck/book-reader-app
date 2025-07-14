@@ -60,10 +60,15 @@ async function execute(pipelineState, config) {
             console.log(`  📖 Processing chapter: ${chapter.title} (${chapter.pages.length} pages)`);
             
             // Process each page to detect chunks (paragraphs and headers)
-            const chapterChunks = detectChunksInChapter(chapter);
+            const chapterChunks = detectChunksInChapter(chapter, chapter.chapterNumber);
             
             // Apply size optimization for paragraphs only
             const optimizedChunks = optimizeChunkSizes(chapterChunks);
+            
+            // Assign sequential chunk IDs after optimization
+            for (let i = 0; i < optimizedChunks.length; i++) {
+                optimizedChunks[i].chunkId = `${chapter.chapterNumber}_${i + 1}`;
+            }
             
             // Count chunk types
             const paragraphCount = optimizedChunks.filter(c => c.type === 'paragraph').length;
@@ -132,29 +137,47 @@ async function execute(pipelineState, config) {
  * @param {Object} chapter - Chapter with pages
  * @returns {Array} - Array of chunks with type, content, pageNumber, links
  */
-function detectChunksInChapter(chapter) {
+function detectChunksInChapter(chapter, chapterNumber) {
     const chunks = [];
     
     for (const page of chapter.pages) {
-        const pageChunks = detectChunksInPage(page);
+        const pageChunks = detectChunksInPage(page, chapterNumber, 0); // Pass 0 as placeholder
         chunks.push(...pageChunks);
     }
-    
-
     
     return chunks;
 }
 
 /**
+ * Generate a short prefix for chunk IDs based on chapter title
+ * @param {string} title - Chapter title
+ * @returns {string} - Short prefix for chunk IDs
+ */
+function generateChapterPrefix(title) {
+    // Take first few meaningful words and make them lowercase
+    const words = title.toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '') // Remove special characters
+        .split(/\s+/)
+        .filter(word => word.length > 2) // Filter out short words like "a", "of", "the"
+        .slice(0, 2); // Take first 2 meaningful words
+    
+    if (words.length === 0) {
+        return 'chapter';
+    }
+    
+    return words.join('_');
+}
+
+/**
  * Detect chunks (paragraphs and headers) in a single page
  * @param {Object} page - Page with content and links
+ * @param {number} chapterNumber - Chapter number for chunk IDs
+ * @param {number} startChunkCounter - Starting counter for chunk IDs
  * @returns {Array} - Array of chunks detected in this page
  */
-function detectChunksInPage(page) {
+function detectChunksInPage(page, chapterNumber, startChunkCounter) {
     const chunks = [];
     const lines = page.content.split('\n');
-    
-
     
     let currentParagraph = '';
     let currentParagraphStartIndex = 0;
@@ -171,12 +194,12 @@ function detectChunksInPage(page) {
         if (isHeader(line, i, lines)) {
             // If we have accumulated paragraph content, save it first
             if (currentParagraph.trim()) {
-                chunks.push(createParagraphChunk(currentParagraph.trim(), page));
+                chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
                 currentParagraph = '';
             }
             
             // Create header chunk
-            chunks.push(createHeaderChunk(line, page));
+            chunks.push(createHeaderChunk(line, page, ''));
             currentParagraphStartIndex = i + 1;
         } else {
             // Add line to current paragraph
@@ -184,7 +207,7 @@ function detectChunksInPage(page) {
                 currentParagraph += '\n' + line;
             } else {
                 currentParagraph = line;
-}
+            }
 
             // Check if paragraph ends (sentence terminator followed by potential new paragraph)
             if (endsWithSentenceTerminator(line)) {
@@ -196,7 +219,7 @@ function detectChunksInPage(page) {
                     isHeader(lines[nextContentIndex], nextContentIndex, lines)) { // Next line is header
                     
                     // End current paragraph
-                    chunks.push(createParagraphChunk(currentParagraph.trim(), page));
+                    chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
                     currentParagraph = '';
                     currentParagraphStartIndex = nextContentIndex;
                 }
@@ -206,7 +229,7 @@ function detectChunksInPage(page) {
     
     // Handle any remaining paragraph content
     if (currentParagraph.trim()) {
-        chunks.push(createParagraphChunk(currentParagraph.trim(), page));
+        chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
     }
     
     return chunks;
@@ -231,7 +254,7 @@ function isHeader(line, lineIndex, allLines) {
         return false;
     }
     
-    // Rule 3: Capitalization - Starts with a capital letter
+    // Rule 3: Capitalization: Starts with a capital letter
     if (!/^[A-Z]/.test(line.trim())) {
         return false;
     }
@@ -291,10 +314,11 @@ function findNextNonEmptyLine(lines, startIndex) {
  * @param {Object} page - Page object with pageNumber and links
  * @returns {Object} - Paragraph chunk
  */
-function createParagraphChunk(content, page) {
+function createParagraphChunk(content, page, chunkId) {
     const links = extractLinksFromContent(content, page.links || []);
     
     return {
+        chunkId: chunkId,
         type: 'paragraph',
         content: content,
         pageNumber: page.pageNumber,
@@ -310,8 +334,9 @@ function createParagraphChunk(content, page) {
  * @param {Object} page - Page object with pageNumber
  * @returns {Object} - Header chunk
  */
-function createHeaderChunk(content, page) {
+function createHeaderChunk(content, page, chunkId) {
     return {
+        chunkId: chunkId,
         type: 'header',
         content: content,
         pageNumber: page.pageNumber,
@@ -405,6 +430,7 @@ function tryMergeWithNextParagraph(chunks, currentIndex) {
             if (combinedWordCount <= 300) {
                 return {
                     merged: {
+                        chunkId: currentChunk.chunkId, // Keep original chunkId without suffix
                         type: 'paragraph',
                         content: currentChunk.content + '\n' + nextChunk.content,
                         pageNumber: currentChunk.pageNumber,
@@ -433,6 +459,7 @@ function splitLargeParagraph(chunk) {
     const chunks = [];
     let currentContent = '';
     let currentSentenceCount = 0;
+    let splitIndex = 1;
     
     for (const sentence of sentences) {
         const sentenceWordCount = getWordCount(sentence);
@@ -441,14 +468,16 @@ function splitLargeParagraph(chunk) {
         if (currentWordCount + sentenceWordCount > 200 && currentContent.trim()) {
             // Create chunk with current content
             chunks.push({
+                chunkId: chunk.chunkId,
                 type: 'paragraph',
                 content: currentContent.trim(),
                 pageNumber: chunk.pageNumber,
                 wordCount: currentWordCount,
                 sentenceCount: currentSentenceCount,
-                links: extractLinksFromContent(currentContent.trim(), chunk.links || [])
+                links: (chunk.links || []).filter(link => currentContent.trim().includes(link.text))
             });
             
+            splitIndex++;
             currentContent = sentence;
             currentSentenceCount = 1;
         } else {
@@ -460,12 +489,13 @@ function splitLargeParagraph(chunk) {
     // Add remaining content
     if (currentContent.trim()) {
         chunks.push({
+            chunkId: chunk.chunkId,
             type: 'paragraph',
             content: currentContent.trim(),
             pageNumber: chunk.pageNumber,
             wordCount: getWordCount(currentContent),
             sentenceCount: currentSentenceCount,
-            links: extractLinksFromContent(currentContent.trim(), chunk.links || [])
+            links: (chunk.links || []).filter(link => currentContent.trim().includes(link.text))
         });
     }
     
@@ -538,7 +568,8 @@ function extractLinksFromContent(content, pageLinks) {
                 text: link.sourceText,
                 targetPageNumber: link.targetPageNumber,
                 targetText: link.targetText,
-                linkId: link.linkId
+                linkId: link.linkId,
+                role: link.role
             });
         }
     }

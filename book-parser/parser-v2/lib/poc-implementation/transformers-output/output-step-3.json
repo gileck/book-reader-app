@@ -1881,33 +1881,33 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-07-13T14:52:56.489Z",
+    "processingStartTime": "2025-07-14T08:26:10.384Z",
     "processingEndTime": null,
     "stepResults": {
       "step-1": {
         "success": true,
-        "duration": 873,
-        "timestamp": "2025-07-13T14:52:57.367Z"
+        "duration": 816,
+        "timestamp": "2025-07-14T08:26:11.203Z"
       },
       "step-2-1": {
         "success": true,
-        "duration": 575,
-        "timestamp": "2025-07-13T14:52:57.947Z"
+        "duration": 582,
+        "timestamp": "2025-07-14T08:26:11.790Z"
       },
       "step-2-2": {
         "success": true,
         "duration": 2,
-        "timestamp": "2025-07-13T14:52:57.952Z"
+        "timestamp": "2025-07-14T08:26:11.795Z"
       },
       "step-2-3": {
         "success": true,
-        "duration": 1,
-        "timestamp": "2025-07-13T14:52:57.960Z"
+        "duration": 8,
+        "timestamp": "2025-07-14T08:26:11.826Z"
       },
       "step-3": {
         "success": true,
-        "duration": 37,
-        "timestamp": "2025-07-13T14:52:58.005Z"
+        "duration": 83,
+        "timestamp": "2025-07-14T08:26:11.939Z"
       }
     },
     "textExtraction": {
@@ -1916,7 +1916,7 @@
       "lineCount": 12566,
       "wordCount": 121377,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-07-13T14:52:57.314Z",
+      "extractionTime": "2025-07-14T08:26:11.158Z",
       "averageWordsPerPage": 383,
       "extractionMethod": "page_by_page_fixed"
     },
@@ -1927,7 +1927,7 @@
       "patternMatches": 89,
       "averageDetectionConfidence": 0.9099999999999999,
       "pageOffset": 0,
-      "processingTime": 573,
+      "processingTime": 582,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -1945,7 +1945,7 @@
       "averageCharactersRemovedPerChapter": 24.5,
       "totalCharactersAfterCleaning": 738333,
       "cleaningEfficiency": 0.033182859224767144,
-      "processingTime": 1,
+      "processingTime": 5,
       "cleaningMethod": "pattern_based_title_removal"
     },
     "pageExtractionAndCrossPageMerging": {
@@ -1953,8 +1953,8 @@
       "totalChapters": 10,
       "averageWordsPerPage": 380.93203883495147,
       "sentencesMerged": 182,
-      "extractionTime": "2025-07-13T14:52:58.005Z",
-      "processingTime": 37
+      "extractionTime": "2025-07-14T08:26:11.939Z",
+      "processingTime": 82
     }
   }
 }
