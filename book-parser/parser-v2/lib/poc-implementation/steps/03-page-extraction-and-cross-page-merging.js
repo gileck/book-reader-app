@@ -500,27 +500,54 @@ function fixIncompleteSentencesWithinChapter(pages) {
         if (currentContent.length > 0 && nextContent.length > 0) {
             const lastChar = currentContent[currentContent.length - 1];
             
-            // If page doesn't end with sentence terminator, check what we're dealing with
-            if (!['.', '!', '?', ':', ';'].includes(lastChar)) {
-                // Check if current page ends with a potential header
-                if (isPotentialHeader(currentContent, nextContent)) {
-                    // Potential header at end of current page - ensure it stays standalone
-                    const lastLine = getLastLine(currentContent);
-                    console.log(`🔧 Preserving header at end of page ${currentPage.pageNumber}: "${lastLine}"`);
-                    
-                    // Ensure the header has proper newlines around it
-                    if (!currentContent.endsWith('\n')) {
-                        currentPage.content = currentContent + '\n';
-                    }
-                    
-                    // Skip merging this page - let the header remain standalone
-                    continue;
+            // Check if current page ends with a potential header first
+            if (isPotentialHeader(currentContent, nextContent)) {
+                // Potential header at end of current page - ensure it stays standalone
+                const lastLine = getLastLine(currentContent);
+                console.log(`🔧 Preserving header at end of page ${currentPage.pageNumber}: "${lastLine}"`);
+                
+                // Ensure the header has proper newlines around it
+                if (!currentContent.endsWith('\n')) {
+                    currentPage.content = currentContent + '\n';
                 }
                 
-                // Check if next page starts with capital letter - indicates new sentence, not continuation
+                // Skip merging this page - let the header remain standalone
+                continue;
+            }
+            
+            // Check if pages should be merged based on paragraph structure
+            // Pages should be merged if:
+            // 1. Current page doesn't end with newline (incomplete paragraph), OR
+            // 2. Current page ends with sentence terminator but no paragraph break follows
+            const endsWithNewline = currentContent.endsWith('\n');
+            const endsWithSentenceTerminator = ['.', '!', '?', ':', ';'].includes(lastChar);
+            
+            let shouldMerge = false;
+            let reason = '';
+            
+            if (!endsWithSentenceTerminator) {
+                // Case 1: Incomplete sentence (existing logic)
+                shouldMerge = true;
+                reason = 'incomplete sentence';
+            } else if (endsWithSentenceTerminator && !endsWithNewline) {
+                // Case 2: Complete sentence but no paragraph break (new logic)
+                // This handles cases like "job. The dice were loaded." where there's no newline after "job."
+                shouldMerge = true;
+                reason = 'sentence terminator without paragraph break';
+            }
+            
+            if (!shouldMerge) {
+                continue;
+            }
+            
+            // Handle different merge scenarios
+            if (!endsWithSentenceTerminator) {
+                // Case 1: Incomplete sentence - need to find sentence completion
+                
+                // Additional check: skip if next page starts with capital (indicates new sentence)
                 const nextFirstChar = nextContent.trim()[0];
                 if (nextFirstChar && /[A-Z]/.test(nextFirstChar)) {
-                    console.log(`🔧 Skipping merge between pages ${currentPage.pageNumber}-${nextPage.pageNumber}: next page starts with capital letter "${nextFirstChar}"`);
+                    console.log(`🔧 Skipping merge between pages ${currentPage.pageNumber}-${nextPage.pageNumber}: incomplete sentence but next page starts with capital letter "${nextFirstChar}"`);
                     continue;
                 }
                 
@@ -617,6 +644,24 @@ function fixIncompleteSentencesWithinChapter(pages) {
                     
                     console.log(`🔧 Merged sentence across pages ${currentPage.pageNumber}-${nextPage.pageNumber}: "${fragment}"`);
                 }
+            } else if (endsWithSentenceTerminator && !endsWithNewline) {
+                // Case 2: Complete sentence but no paragraph break - merge entire next page
+                console.log(`🔧 Merging complete sentence without paragraph break between pages ${currentPage.pageNumber}-${nextPage.pageNumber}: "${reason}"`);
+                
+                // Merge the entire next page content since it's part of the same paragraph
+                // Use a single space only if both parts don't already have proper spacing
+                const needsSpace = !currentContent.endsWith('\n') && !currentContent.endsWith(' ') && 
+                                  !nextContent.startsWith('\n') && !nextContent.startsWith(' ');
+                currentPage.content = currentContent + (needsSpace ? ' ' : '') + nextContent;
+                
+                // Update current page metadata
+                currentPage.rawContent = currentPage.content;
+                currentPage.wordCount = currentPage.content.split(/\s+/).length;
+                
+                // Remove the next page since we merged it completely
+                pages.splice(i + 1, 1);
+                
+                sentencesMerged++;
             }
         }
     }

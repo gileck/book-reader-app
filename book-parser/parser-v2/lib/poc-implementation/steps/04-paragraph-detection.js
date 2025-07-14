@@ -214,8 +214,23 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                 // Look ahead to see if next non-empty line starts a new paragraph or is a header
                 const nextContentIndex = findNextNonEmptyLine(lines, i + 1);
                 
+                // Special case: if current line ends with initials and next line starts with a capital letter
+                // that could be continuing the same sentence (like another name), don't split
+                if (nextContentIndex !== -1 && endsWithInitials(line) && 
+                    /^[A-Z]/.test(lines[nextContentIndex].trim())) {
+                    continue; // Don't split, continue building the paragraph
+                }
+                
+                // NEW REQUIREMENT: Paragraphs MUST end with a newline after the sentence terminator
+                // Check if there's actually a line break structure that indicates a paragraph boundary
+                // Only end paragraph if:
+                // 1. We're at the end of the page, OR
+                // 2. There's an empty line between current line and next content, OR  
+                // 3. Next line is a header
+                const hasEmptyLineBetween = nextContentIndex > i + 1; // Gap indicates empty line(s)
+                
                 if (nextContentIndex === -1 || // End of page
-                    startsNewParagraph(lines[nextContentIndex]) || // Next line starts new paragraph
+                    hasEmptyLineBetween || // Empty line(s) between current and next content
                     isHeader(lines[nextContentIndex], nextContentIndex, lines)) { // Next line is header
                     
                     // End current paragraph
@@ -223,6 +238,8 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                     currentParagraph = '';
                     currentParagraphStartIndex = nextContentIndex;
                 }
+                // If next line immediately follows (no empty line) and starts with capital letter,
+                // treat it as continuing the same paragraph (like "The dice were loaded." case)
             }
         }
     }
@@ -537,7 +554,33 @@ function getSentenceCount(text) {
  * @returns {boolean} - True if line ends with sentence terminator
  */
 function endsWithSentenceTerminator(line) {
-    return /[.!?]$/.test(line.trim());
+    const trimmed = line.trim();
+    
+    // Check if it ends with sentence terminator
+    if (!/[.!?]$/.test(trimmed)) {
+        return false;
+    }
+    
+    // If it ends with a period, check if it's an initial (single capital letter followed by period)
+    if (trimmed.endsWith('.')) {
+        // Check if it's an initial like "J." or "H." at the end
+        if (/\b[A-Z]\.$/.test(trimmed)) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+/**
+ * Check if line ends with initials
+ * @param {string} line - Line to check
+ * @returns {boolean} - True if line ends with initials
+ */
+function endsWithInitials(line) {
+    if (!line) return false;
+    const trimmed = line.trim();
+    return /\b[A-Z]\.$/.test(trimmed);
 }
 
 /**

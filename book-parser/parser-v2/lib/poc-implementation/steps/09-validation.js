@@ -16,6 +16,17 @@ function countWords(text) {
 }
 
 /**
+ * Check if text ends with initials (single capital letter followed by period)
+ * @param {string} text - Text to check
+ * @returns {boolean} - True if text ends with initials
+ */
+function endsWithInitials(text) {
+    if (!text) return false;
+    const trimmed = text.trim();
+    return /\b[A-Z]\.$/.test(trimmed);
+}
+
+/**
  * Validate chapters array
  * @param {Array} chapters - Array of chapter objects
  * @returns {Object} - Validation result with errors separated by type
@@ -66,7 +77,8 @@ function validateChunks(chunks) {
         arrayCount: [],
         wordCount: [],
         capitalization: [],
-        chunkTypes: []
+        chunkTypes: [],
+        initials: []
     };
     const warnings = [];
 
@@ -99,7 +111,7 @@ function validateChunks(chunks) {
                 } else if (chunk.type === 'paragraph') {
                     // Paragraphs can start with capital letters, numbers (footnotes), special characters (quotes, etc.), 
                     // Greek letters, mathematical symbols, or lowercase letters (for continuations)
-                    const isValidStart = /[A-Za-z0-9'"'""«»„"‚'‛‹›αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ+\-=<>∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                    const isValidStart = /[A-Za-z0-9'"'''""«»„"‚'‛‹›\u2018\u2019αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ+\-=<>∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
                     if (!isValidStart) {
                         errorsByType.capitalization.push(`Paragraph ${chunkIdentifier}: Content must start with a valid character. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
@@ -111,6 +123,11 @@ function validateChunks(chunks) {
                 const wordCount = countWords(chunk.content);
                 if (wordCount < 80 || wordCount > 300) {
                     errorsByType.wordCount.push(`Paragraph ${chunkIdentifier}: Word count (${wordCount}) must be between 80 and 300 words`);
+                }
+                
+                // Check if paragraph ends with initials
+                if (endsWithInitials(chunk.content)) {
+                    errorsByType.initials.push(`Paragraph ${chunkIdentifier}: Paragraph should not end with initials. Content: "${chunk.content}"`);
                 }
             }
 

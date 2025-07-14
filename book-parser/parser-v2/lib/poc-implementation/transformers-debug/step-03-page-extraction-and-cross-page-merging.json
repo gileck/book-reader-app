@@ -1,30 +1,30 @@
 {
   "extractionMetadata": {
-    "totalPages": 309,
+    "totalPages": 258,
     "totalChapters": 10,
-    "totalSentencesMerged": 182,
-    "extractionTime": "2025-07-14T08:26:11.934Z",
-    "processingTime": 77,
+    "totalSentencesMerged": 202,
+    "extractionTime": "2025-07-14T14:20:05.837Z",
+    "processingTime": 32,
     "note": "Extracted pages from step 2.2 chapter content"
   },
   "pageStats": {
-    "totalPages": 309,
+    "totalPages": 258,
     "totalWords": 117708,
-    "averageWordsPerPage": 380.93203883495147,
-    "sentencesMerged": 182,
+    "averageWordsPerPage": 456.2325581395349,
+    "sentencesMerged": 202,
     "chaptersProcessed": 10,
     "pagesPerChapter": {
-      "0": 19,
-      "1": 35,
-      "2": 29,
-      "3": 33,
-      "4": 26,
-      "5": 31,
-      "6": 30,
-      "99": 90
+      "0": 17,
+      "1": 31,
+      "2": 22,
+      "3": 28,
+      "4": 22,
+      "5": 26,
+      "6": 28,
+      "99": 71
     },
     "minWordsPerPage": 4,
-    "maxWordsPerPage": 575
+    "maxWordsPerPage": 1004
   },
   "debugPages": [
     {
