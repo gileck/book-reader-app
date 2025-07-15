@@ -38,7 +38,6 @@ const path = require('path');
  * @returns {Object} - Updated pipeline state with chunk structure
  */
 async function execute(pipelineState, config) {
-    console.log('📄 Starting paragraph and header detection (Step 4)...');
     
     // Validate prerequisites
     if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
@@ -54,10 +53,8 @@ async function execute(pipelineState, config) {
         let totalHeaders = 0;
         let totalLinksExtracted = 0;
         
-        console.log(`📚 Processing ${pipelineState.chapters.length} chapters...`);
         
         for (const chapter of pipelineState.chapters) {
-            console.log(`  📖 Processing chapter: ${chapter.title} (${chapter.pages.length} pages)`);
             
             // Process each page to detect chunks (paragraphs and headers)
             const chapterChunks = detectChunksInChapter(chapter, chapter.chapterNumber);
@@ -80,7 +77,6 @@ async function execute(pipelineState, config) {
             totalHeaders += headerCount;
             totalLinksExtracted += chunkLinksCount;
             
-            console.log(`    ✅ Created ${optimizedChunks.length} chunks (${paragraphCount} paragraphs, ${headerCount} headers)`);
             
 
             
@@ -96,9 +92,6 @@ async function execute(pipelineState, config) {
         const endTime = Date.now();
         const processingTime = endTime - startTime;
         
-        console.log(`✅ Paragraph and header detection completed in ${processingTime}ms`);
-        console.log(`📊 Total chunks: ${totalChunks} (${totalParagraphs} paragraphs, ${totalHeaders} headers)`);
-        console.log(`🔗 Total links extracted: ${totalLinksExtracted}`);
         
         // Generate comprehensive statistics
         const stats = generateChunkStats(chaptersWithChunks);
@@ -758,4 +751,180 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
     await fs.promises.writeFile(debugPath, JSON.stringify(debugOutput, null, 2));
 }
 
-module.exports = { execute }; 
+/**
+ * Count words in a text string
+ * @param {string} text - The text to count words in
+ * @returns {number} - Number of words
+ */
+function countWords(text) {
+    if (!text || typeof text !== 'string') return 0;
+    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+}
+
+/**
+ * Check if text ends with initials (single capital letter followed by period)
+ * @param {string} text - Text to check
+ * @returns {boolean} - True if text ends with initials
+ */
+function endsWithInitials(text) {
+    if (!text) return false;
+    const trimmed = text.trim();
+    return /\b[A-Z]\.$/.test(trimmed);
+}
+
+/**
+ * Check if text ends with a common single-letter word (like "vitamin E", "point A", etc.)
+ * @param {string} text - Text to check
+ * @returns {boolean} - True if ends with common single-letter word
+ */
+function endsWithCommonSingleLetterWord(text) {
+    if (!text) return false;
+    const trimmed = text.trim();
+    
+    // Common patterns where single letters are valid endings
+    const commonPatterns = [
+        // Scientific/academic terms
+        /\bvitamin [a-zA-Z]\.?$/i,      // vitamin E, vitamin C, etc.
+        /\btype [a-zA-Z]\.?$/i,         // type A, type B, etc.
+        /\bpoint [a-zA-Z]\.?$/i,        // point A, point B, etc.
+        /\bfigure [a-zA-Z]\.?$/i,       // figure A, figure B, etc.
+        /\bappendix [a-zA-Z]\.?$/i,     // appendix A, appendix B, etc.
+        /\bsection [a-zA-Z]\.?$/i,      // section A, section B, etc.
+        /\bpart [a-zA-Z]\.?$/i,         // part A, part B, etc.
+        /\boption [a-zA-Z]\.?$/i,       // option A, option B, etc.
+        /\bclass [a-zA-Z]\.?$/i,        // class A, class B, etc.
+        /\bgrade [a-zA-Z]\.?$/i,        // grade A, grade B, etc.
+        /\bmodel [a-zA-Z]\.?$/i,        // model A, model B, etc.
+        /\bphase [a-zA-Z]\.?$/i,        // phase A, phase B, etc.
+        
+        // Names and initials (common pattern in academic writing)
+        /\b[A-Z]\.\s*[A-Z]\.$/,        // R. E., J. D., etc.
+        /\b[A-Z][a-z]+\s+[A-Z]\.$/,    // Smith J., Jones R., etc.
+        /\b[A-Z]\.\s*[A-Z][a-z]+$/,    // R. Smith, J. Jones, etc.
+        
+        // Chemical/molecular notation
+        /\b[A-Z][0-9]*[a-zA-Z]?\.?$/,  // H2O, CO2, etc.
+        
+        // Common abbreviations that might end paragraphs
+        /\betc\.$/i,                   // etc.
+        /\bi\.e\.$/i,                  // i.e.
+        /\be\.g\.$/i                   // e.g.
+    ];
+    
+    return commonPatterns.some(pattern => pattern.test(trimmed));
+}
+
+/**
+ * Validate paragraph and header detection results
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes
+ */
+function validate(output) {
+    const validationErrors = [];
+    
+    // Extract chunks from all chapters
+    const allChunks = [];
+    if (output.chapters) {
+        for (const chapter of output.chapters) {
+            if (chapter.chunks) {
+                allChunks.push(...chapter.chunks);
+            }
+        }
+    }
+    
+    // 1. chunks array has more than 5 items
+    if (!allChunks || allChunks.length <= 5) {
+        validationErrors.push(`Chunks array must have more than 5 items. Found: ${allChunks?.length || 0}`);
+    }
+    
+    if (allChunks && allChunks.length > 0) {
+        const chunks = allChunks;
+        
+        let hasParagraph = false;
+        let hasHeader = false;
+        
+        for (let i = 0; i < chunks.length; i++) {
+            const chunk = chunks[i];
+            const chapterInfo = chunk.chapterTitle ? ` (${chunk.chapterTitle})` : '';
+            const chunkIdentifier = chunk.chunkId || `chunk_${i + 1}`;
+            const fullChunkIdentifier = `${chunkIdentifier}${chapterInfo}`;
+            
+            // Track chunk types
+            if (chunk.type === 'paragraph') hasParagraph = true;
+            if (chunk.type === 'header') hasHeader = true;
+            
+            // Check required fields
+            if (!chunk.type || (chunk.type !== 'paragraph' && chunk.type !== 'header')) {
+                validationErrors.push(`${fullChunkIdentifier} has invalid type: "${chunk.type}"`);
+                continue;
+            }
+            
+            if (!chunk.content || typeof chunk.content !== 'string') {
+                validationErrors.push(`${fullChunkIdentifier} has no content`);
+                continue;
+            }
+            
+            // 2. all paragraph and headers start with a capital letter (or valid alternatives for paragraphs)
+            if (chunk.content.length > 0) {
+                const firstChar = chunk.content.charAt(0);
+                
+                if (chunk.type === 'header') {
+                    // Headers must start with a capital letter
+                    if (firstChar !== firstChar.toUpperCase() || !/[A-Z]/.test(firstChar)) {
+                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
+                    }
+                } else if (chunk.type === 'paragraph') {
+                    // Paragraphs can start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
+                    // Comprehensive character set for real book content
+                    const isValidStart = /[A-Za-z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                    if (!isValidStart) {
+                        validationErrors.push(`Paragraph ${fullChunkIdentifier} must start with a valid character. Found: "${chunk.content.substring(0, 20)}..."`);
+                    }
+                }
+            }
+            
+            // 3. word count validation
+            const wordCount = countWords(chunk.content);
+            
+            if (chunk.type === 'paragraph') {
+                // Paragraphs should be between 20 and 300 words for proper book content
+                if (wordCount < 20 || wordCount > 300) {
+                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 300 words`);
+                }
+                
+                // Check if paragraph ends with initials (but allow common words ending with single letters)
+                if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
+                    validationErrors.push(`Paragraph ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+                }
+            }
+            
+            if (chunk.type === 'header') {
+                // all headers are between 1 and 5 words
+                if (wordCount < 1 || wordCount > 5) {
+                    validationErrors.push(`Header ${fullChunkIdentifier} word count (${wordCount}) must be between 1 and 5 words. Content: "${chunk.content}"`);
+                }
+            }
+        }
+        
+        // 4. chunks array has valid types both "paragraph" and "header"
+        if (!hasParagraph) {
+            validationErrors.push('Chunks array must contain at least one paragraph');
+        }
+        if (!hasHeader) {
+            validationErrors.push('Chunks array must contain at least one header');
+        }
+    }
+    
+    // Report all validation errors at once
+    if (validationErrors.length > 0) {
+        console.error(`❌ Chunk validation failed with ${validationErrors.length} error(s):`);
+        validationErrors.forEach((error, index) => {
+            console.error(`  ${index + 1}. ${error}`);
+        });
+        return false;
+    }
+    
+    return true;
+}
+
+module.exports = { execute, validate }; 

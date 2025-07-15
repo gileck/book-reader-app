@@ -31,7 +31,6 @@ const path = require('path');
  * @returns {Object} - Updated state with cleaned chapter content
  */
 async function execute(pipelineState, config) {
-    console.log('🧹 Starting chapter name cleaning (Step 2.3)...');
     
     // Validate prerequisites
     if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
@@ -41,14 +40,11 @@ async function execute(pipelineState, config) {
     try {
         const startTime = Date.now();
         
-        console.log(`📝 Cleaning content for ${pipelineState.chapters.length} chapters...`);
-        
         // Clean content for each chapter
         const cleanedChapters = [];
         let totalCharactersRemoved = 0;
         
         for (const chapter of pipelineState.chapters) {
-            console.log(`  🧹 Processing: ${chapter.title}`);
             
             const originalLength = chapter.content.length;
             const cleanedContent = cleanChapterContent(chapter.title, chapter.chapterNumber, chapter.content);
@@ -64,7 +60,7 @@ async function execute(pipelineState, config) {
                 content: cleanedContent
             });
             
-            console.log(`    ✅ Removed ${charactersRemoved} characters (${((charactersRemoved / originalLength) * 100).toFixed(1)}%)`);
+            // Chapter content cleaned
         }
         
         // Generate cleaning statistics
@@ -97,11 +93,7 @@ async function execute(pipelineState, config) {
         const debugFile = path.join(config.DEBUG_DIR, 'step-02-3-chapter-name-cleaning.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
         
-        console.log(`✅ Chapter name cleaning completed: ${cleanedChapters.length} chapters processed`);
-        console.log(`📊 Processing took ${processingTime}ms`);
-        console.log(`🧹 Total characters removed: ${totalCharactersRemoved.toLocaleString()}`);
-        console.log(`📖 Average characters removed per chapter: ${Math.round(cleaningStats.averageCharactersRemovedPerChapter).toLocaleString()}`);
-        console.log(`📝 Total characters after cleaning: ${cleaningStats.totalCharactersAfterCleaning.toLocaleString()}`);
+        // Chapter name cleaning completed
         
         return {
             chapters: cleanedChapters,
@@ -152,9 +144,6 @@ function cleanChapterContent(title, chapterNumber, content) {
     for (const pattern of patterns) {
         const match = cleanedAfterPageMarker.match(pattern.regex);
         if (match) {
-            console.log(`    🎯 Matched pattern: ${pattern.description}`);
-            console.log(`    📝 Removing: "${match[0].replace(/\n/g, '\\n')}"`);
-            
             // Remove the matched content
             cleanedAfterPageMarker = cleanedAfterPageMarker.replace(pattern.regex, '');
             cleaned = true;
@@ -163,7 +152,7 @@ function cleanChapterContent(title, chapterNumber, content) {
     }
     
     if (!cleaned) {
-        console.log(`    ⚠️  No cleaning pattern matched for "${title}"`);
+        // No cleaning pattern matched
     }
     
     // Reconstruct the full content
@@ -221,6 +210,53 @@ function createCleaningPatterns(title, chapterNumber) {
     return patterns;
 }
 
+/**
+ * Validate chapter name cleaning results
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes
+ */
+function validate(output) {
+    const chapters = output.chapters;
+    
+    if (!chapters || chapters.length === 0) {
+        console.error('❌ Chapter name cleaning validation failed: No chapters found');
+        return false;
+    }
+    
+    // Check that each chapter still has content after cleaning
+    for (let i = 0; i < chapters.length; i++) {
+        const chapter = chapters[i];
+        
+        if (!chapter.content || typeof chapter.content !== 'string') {
+            console.error(`❌ Chapter name cleaning validation failed: Chapter ${i + 1} "${chapter.title}" has no content after cleaning`);
+            return false;
+        }
+        
+        // Check that content is still substantial after cleaning
+        if (chapter.content.length < 50) {
+            console.error(`❌ Chapter name cleaning validation failed: Chapter ${i + 1} "${chapter.title}" content too short after cleaning (${chapter.content.length} characters)`);
+            return false;
+        }
+        
+        // Check that content doesn't start with chapter titles (basic cleaning check)
+        const contentStart = chapter.content.substring(0, 100).toUpperCase();
+        const suspiciousPatterns = [
+            /^I\s*NTRODUCTION\s*\n/,
+            /^\d+\s*\n/,
+            /^A\s*PPENDIX/,
+            /^[A-Z\s]{10,}\s*\n/
+        ];
+        
+        const hasUncleanedTitle = suspiciousPatterns.some(pattern => pattern.test(contentStart));
+        if (hasUncleanedTitle) {
+            console.warn(`⚠️  Chapter ${i + 1} "${chapter.title}" may still contain uncleaned title at start: "${contentStart.substring(0, 50)}..."`);
+        }
+    }
+    
+    return true;
+}
+
 module.exports = {
-    execute
+    execute,
+    validate
 }; 

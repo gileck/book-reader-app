@@ -22,7 +22,6 @@ const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
  * @returns {Object} - Updated pipeline state with links added to pages
  */
 async function execute(pipelineState, config) {
-    console.log('🔗 Starting link detection and resolution (Step 3-1)...');
     
     const startTime = Date.now();
     
@@ -37,7 +36,6 @@ async function execute(pipelineState, config) {
             throw new Error('PDF file is required for link extraction. Check PDF_PATH in config.');
         }
         
-        console.log(`🔗 Extracting links from PDF: ${config.PDF_PATH}`);
         
         // Load PDF document for link extraction and coordinate-based text extraction
         const pdfBuffer = fs.readFileSync(config.PDF_PATH);
@@ -45,14 +43,12 @@ async function execute(pipelineState, config) {
         
         // Extract all internal links from PDF
         const pdfLinks = await extractInternalLinksFromPDF(config.PDF_PATH, pdf);
-        console.log(`📎 Found ${pdfLinks.length} internal links in PDF`);
         
         // Process each chapter
         const processedChapters = [];
         let totalLinksAdded = 0;
         
         for (const chapter of pipelineState.chapters) {
-            console.log(`  🔗 Processing links for chapter: ${chapter.title}`);
             
             // Add links to each page in the chapter
             const pagesWithLinks = await addLinksToPages(chapter.pages, pdfLinks, pdf);
@@ -65,7 +61,6 @@ async function execute(pipelineState, config) {
             };
             
             processedChapters.push(processedChapter);
-            console.log(`    ✅ Added ${chapterLinksCount} links to ${pagesWithLinks.length} pages`);
         }
         
         // Generate debug output
@@ -84,9 +79,6 @@ async function execute(pipelineState, config) {
         const debugFile = path.join(config.DEBUG_DIR, 'step-03-1-link-detection.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
         
-        console.log(`✅ Link detection completed: ${totalLinksAdded} links added to pages`);
-        console.log(`📊 Processing took ${Date.now() - startTime}ms`);
-        console.log(`📄 Debug output: ${debugFile}`);
         
         return {
             chapters: processedChapters,
@@ -456,7 +448,6 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                 
                 // Skip this link if the reverse connection already exists
                 if (existingConnections.has(reverseConnectionKey)) {
-                    console.log(`Skipping reverse link: ${actualSourcePage} -> ${pdfLink.destinationPage} (reverse of existing ${pdfLink.destinationPage} -> ${actualSourcePage})`);
                     continue;
                 }
                 
@@ -468,7 +459,6 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                 });
                 
                 if (existingForwardConnection && existingForwardConnection !== connectionKey) {
-                    console.log(`Skipping duplicate link: ${actualSourcePage} -> ${pdfLink.destinationPage} (already have connection ${existingForwardConnection})`);
                     continue;
                 }
                 
@@ -489,7 +479,6 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                     });
                     
                     if (hasForwardLinkToThisFootnotePage) {
-                        console.log(`Skipping reverse annotation link from footnote page: ${actualSourcePage} -> ${pdfLink.destinationPage} (already have forward link to footnote page ${actualSourcePage})`);
                         continue;
                     }
                 }
@@ -1030,4 +1019,70 @@ function findFootnoteDestination(footnoteNumber, allPages, sourcePage) {
     return null;
 }
 
-module.exports = { execute }; 
+/**
+ * Validate link detection results
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes
+ */
+function validate(output) {
+    const links = output.links;
+    
+    // Links are optional, so if there are none, that's still valid
+    if (!links || links.length === 0) {
+        return true;
+    }
+    
+    const linksByRole = { source: [], target: [] };
+    
+    // Group links by role and validate roles
+    for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        const linkIdentifier = link.linkId || `link_${i + 1}`;
+        
+        // Check that all links have valid roles
+        if (!link.role || (link.role !== 'source' && link.role !== 'target')) {
+            console.error(`❌ Link validation failed: Link ${linkIdentifier} must have role "source" or "target". Found: "${link.role}"`);
+            return false;
+        }
+        
+        // Check required fields
+        if (!link.linkId) {
+            console.error(`❌ Link validation failed: Link ${i + 1} missing linkId`);
+            return false;
+        }
+        
+        if (typeof link.pageNumber !== 'number' || link.pageNumber < 0) {
+            console.error(`❌ Link validation failed: Link ${linkIdentifier} has invalid page number: ${link.pageNumber}`);
+            return false;
+        }
+        
+        linksByRole[link.role].push(link);
+    }
+    
+    // Check that for each source link, there's a matching target link
+    for (const sourceLink of linksByRole.source) {
+        const matchingTarget = linksByRole.target.find(target => 
+            target.linkId === sourceLink.linkId
+        );
+        
+        if (!matchingTarget) {
+            console.error(`❌ Link validation failed: Source link with linkId "${sourceLink.linkId}" on page ${sourceLink.pageNumber} has no matching target link`);
+            return false;
+        }
+    }
+    
+    // Warn about orphaned target links (not a validation failure, just informational)
+    for (const targetLink of linksByRole.target) {
+        const matchingSource = linksByRole.source.find(source => 
+            source.linkId === targetLink.linkId
+        );
+        
+        if (!matchingSource) {
+            console.warn(`⚠️  Target link with linkId "${targetLink.linkId}" on page ${targetLink.pageNumber} has no matching source link`);
+        }
+    }
+    
+    return true;
+}
+
+module.exports = { execute, validate }; 

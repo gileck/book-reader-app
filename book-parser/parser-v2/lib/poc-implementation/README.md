@@ -52,7 +52,7 @@ PIPELINE_STATE = {
 
 ## Step Interface
 
-Each step module must export an `execute` function with this signature:
+Each step module must export an `execute` function and optionally a `validate` function with these signatures:
 
 ```javascript
 /**
@@ -69,8 +69,38 @@ async function execute(pipelineState, config) {
     };
 }
 
-module.exports = { execute };
+/**
+ * Validate the step output (optional but recommended)
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes, false otherwise
+ */
+function validate(output) {
+    // Validation logic specific to this step
+    // Return false and log errors if validation fails
+    return true;
+}
+
+module.exports = { execute, validate };
 ```
+
+## Per-Step Validation
+
+Each step now includes its own validation logic that runs immediately after execution:
+
+- **Fail-Fast Approach**: Pipeline stops immediately if any step validation fails
+- **Step-Specific Criteria**: Each step validates only its own output requirements
+- **Clear Error Messages**: Validation failures provide specific error details
+- **Production Safety**: Ensures data integrity at each pipeline stage
+
+### Validation Criteria by Step:
+
+1. **Step 1** (Text Extraction): Non-empty text, minimum length, metadata consistency
+2. **Step 2-1** (Chapter Detection): Chapter count, page number validation, continuity
+3. **Step 2-2** (Chapter Content): Content existence, minimum length, word counts
+4. **Step 2-3** (Chapter Cleaning): Content preservation, title removal verification  
+5. **Step 3** (Page Processing): Page structure, content validation, reasonable counts
+6. **Step 3-1** (Link Detection): Role validation, source-target matching, required fields
+7. **Step 4** (Paragraph/Header Detection): Chunk counts, types, word limits, capitalization
 
 ## Configuration
 
@@ -113,13 +143,14 @@ node main-poc.js step-2 --debug
 
 ## Implementation Status
 
-### ✅ PIPELINE COMPLETE (6/6 core steps - 100%)
-- **Step 1**: Text Extraction - 743,700 characters from 317 pages **[PRODUCTION-READY WITH SPACING FIX]**
-- **Step 2**: Chapter Detection and Text Extraction - 9 chapters with 123,976 words **[PRODUCTION-READY]**
-- **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with 158 merged sentences **[PRODUCTION-READY]**
-- **Step 3-1**: Link Detection - 54 production-ready PDF annotation links **[PRODUCTION-READY]**
-- **Step 4**: Paragraph and Header Detection - Unified chunks with 6-rule header detection **[PRODUCTION-READY]**
-- **Step 9**: Validation - Comprehensive output validation against requirements **[PRODUCTION-READY]**
+### ✅ PIPELINE COMPLETE (7/7 core steps - 100%)
+- **Step 1**: Text Extraction - 743,700 characters from 317 pages **[PRODUCTION-READY WITH SPACING FIX + VALIDATION]**
+- **Step 2.1**: Chapter Detection - 9 chapters detected **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 2.2**: Chapter Content Extraction - 123,976 words extracted **[PRODUCTION-READY WITH VALIDATION]** 
+- **Step 2.3**: Chapter Name Cleaning - Generic title patterns **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with 158 merged sentences **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 3-1**: Link Detection - 54 production-ready PDF annotation links **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 4**: Paragraph and Header Detection - Unified chunks with 6-rule header detection **[PRODUCTION-READY WITH VALIDATION]**
 
 ### 🎯 RECENT MAJOR IMPROVEMENTS
 
@@ -277,17 +308,16 @@ The pipeline was optimized by combining related steps:
 
 ## Current Status: PRODUCTION-READY ✅
 
-**Progress: 6/6 core steps completed (100%)**
-- Step 1: Text Extraction ✅ **[PRODUCTION-READY WITH SMART TEXT JOINING]**
-- Step 2.1: Chapter Detection ✅
-- Step 2.2: Chapter Text Extraction ✅
-- Step 2.3: Chapter Name Cleaning ✅
-- Step 3: Page Extraction and Cross-Page Merging ✅ **[WITH HEADER PRESERVATION]**
-- Step 3-1: Link Detection ✅ **[PRODUCTION-READY]**
-- Step 4: Paragraph and Header Detection ✅ **[PRODUCTION-READY WITH 6-RULE SYSTEM]**
-- Step 9: Validation ✅ **[PRODUCTION-READY WITH COMPREHENSIVE REQUIREMENTS VALIDATION]**
+**Progress: 7/7 core steps completed (100%)**
+- Step 1: Text Extraction ✅ **[PRODUCTION-READY WITH SMART TEXT JOINING + PER-STEP VALIDATION]**
+- Step 2.1: Chapter Detection ✅ **[WITH CONTINUITY VALIDATION]**
+- Step 2.2: Chapter Text Extraction ✅ **[WITH CONTENT VALIDATION]** 
+- Step 2.3: Chapter Name Cleaning ✅ **[WITH CLEANING VALIDATION]**
+- Step 3: Page Extraction and Cross-Page Merging ✅ **[WITH HEADER PRESERVATION + PAGE VALIDATION]**
+- Step 3-1: Link Detection ✅ **[WITH LINK ROLE VALIDATION]**
+- Step 4: Paragraph and Header Detection ✅ **[WITH 6-RULE SYSTEM + CHUNK VALIDATION]**
 
-**Current Phase: Production-Ready Pipeline**
+**Current Phase: Production-Ready Pipeline with Fail-Fast Validation**
 
 ### ✅ FOUNDATION COMPLETE
 - **Text Quality**: Professional-grade PDF extraction with perfect spacing (0 concatenated words)
@@ -339,6 +369,8 @@ The pipeline was optimized by combining related steps:
 - **Quality Assurance**: Professional text extraction and content structure
 - **Debug Infrastructure**: Comprehensive state tracking and error recovery
 - **Performance**: Optimized processing with detailed validation and timing
+- **Fail-Fast Validation**: Per-step validation with immediate error detection
+- **Data Integrity**: Each step validates its output before pipeline continues
 
 ---
 

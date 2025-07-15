@@ -19,7 +19,6 @@ const path = require('path');
  * @returns {Object} - Updated pipeline state with pages array
  */
 async function execute(pipelineState, config) {
-    console.log('📄 Starting page extraction and cross-page merging (Step 3)...');
     
     const startTime = Date.now();
     
@@ -30,7 +29,6 @@ async function execute(pipelineState, config) {
         }
         
         const inputChapters = pipelineState.chapters;
-        console.log(`📚 Processing from pipeline state: ${inputChapters.length} chapters`);
         
         // Extract pages from each chapter's content
         const processedChapters = [];
@@ -39,7 +37,6 @@ async function execute(pipelineState, config) {
         const debugPages = []; // For debug output with rawContent
         
         for (const chapter of inputChapters) {
-            console.log(`  📖 Processing chapter: ${chapter.title}`);
             
             // Extract pages from chapter content (includes rawContent for debug)
             const pagesWithRaw = extractPagesFromChapterWithDebug(chapter);
@@ -73,7 +70,6 @@ async function execute(pipelineState, config) {
             processedChapters.push(processedChapter);
             totalPages += mergedPages.length;
             
-            console.log(`    ✅ Extracted ${mergedPages.length} pages, merged ${sentencesMerged} sentences`);
         }
         
         // Generate statistics
@@ -96,11 +92,6 @@ async function execute(pipelineState, config) {
         const debugFile = path.join(config.DEBUG_DIR, 'step-03-page-extraction-and-cross-page-merging.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
         
-        console.log(`✅ Page extraction and cross-page merging completed: ${totalPages} pages extracted`);
-        console.log(`📊 Extraction took ${Date.now() - startTime}ms`);
-        console.log(`📄 Average words per page: ${Math.round(extractionStats.averageWordsPerPage)}`);
-        console.log(`🔧 Fixed sentences: ${totalSentencesMerged}`);
-        console.log(`📄 Debug output: ${debugFile}`);
         
         return {
             chapters: processedChapters,
@@ -504,7 +495,6 @@ function fixIncompleteSentencesWithinChapter(pages) {
             if (isPotentialHeader(currentContent, nextContent)) {
                 // Potential header at end of current page - ensure it stays standalone
                 const lastLine = getLastLine(currentContent);
-                console.log(`🔧 Preserving header at end of page ${currentPage.pageNumber}: "${lastLine}"`);
                 
                 // Ensure the header has proper newlines around it
                 if (!currentContent.endsWith('\n')) {
@@ -536,9 +526,13 @@ function fixIncompleteSentencesWithinChapter(pages) {
                 reason = 'sentence terminator without paragraph break';
             }
             
+
+            
             if (!shouldMerge) {
                 continue;
             }
+            
+
             
             // Handle different merge scenarios
             if (!endsWithSentenceTerminator) {
@@ -546,14 +540,18 @@ function fixIncompleteSentencesWithinChapter(pages) {
                 
                 // Additional check: skip if next page starts with capital (indicates new sentence)
                 const nextFirstChar = nextContent.trim()[0];
+                
+
+                
                 if (nextFirstChar && /[A-Z]/.test(nextFirstChar)) {
-                    console.log(`🔧 Skipping merge between pages ${currentPage.pageNumber}-${nextPage.pageNumber}: incomplete sentence but next page starts with capital letter "${nextFirstChar}"`);
                     continue;
                 }
                 
                 // Find sentence completion while preserving original text structure
                 let fragmentEnd = -1;
                 let searchPosition = 0;
+                
+
                 
                 // Look for sentence completion in first part of next page
                 // Track whether we're inside quotes to ignore punctuation within quotes
@@ -582,58 +580,87 @@ function fixIncompleteSentencesWithinChapter(pages) {
                     
                     // Only check for sentence endings if we're not inside quotes
                     if (['.', '!', '?'].includes(char) && !insideQuotes) {
+                        // Check if this sentence terminator is followed by a newline (true paragraph break)
+                        const nextChar = nextContent[charIndex];
+                        if (nextChar === '\n') {
+                            // Found sentence terminator followed by newline - this is a paragraph boundary
+                            // Include both the terminator and newline in the fragment
+                            fragmentEnd = charIndex + 1;
+                            break;
+                        }
+                        
                         // For periods, do additional checks to avoid abbreviations like "E. coli", "U.S.A"
+                        // But only if we haven't found a newline yet (continue looking for .\n)
                         if (char === '.') {
                             // Check if this is really a sentence ending
                             if (charIndex === nextContent.length) {
                                 // End of content, treat as sentence end
                                 fragmentEnd = charIndex;
                                 break;
-                            } else if (nextContent[charIndex] === ' ' || nextContent[charIndex] === '\n' || nextContent[charIndex] === '\t') {
-                                // Check if next character is uppercase (strong sign of sentence end)
-                                const nextChar = nextContent[charIndex + 1];
-                                if (nextChar && /[A-Z]/.test(nextChar)) {
-                                    fragmentEnd = charIndex;
-                                    break;
-                                }
+                            } else if (nextContent[charIndex] === ' ' || nextContent[charIndex] === '\t') {
                                 // Check if the word before the period is likely an abbreviation
                                 const beforePeriod = nextContent.substring(0, charIndex - 1);
                                 const lastWord = beforePeriod.split(/\s+/).pop();
                                 
                                 // Common abbreviations that shouldn't end sentences
                                 const abbreviations = ['Dr', 'Mr', 'Mrs', 'Ms', 'Prof', 'vs', 'etc', 'i.e', 'e.g', 'U.S', 'U.K', 'E.coli', 'H.pylori'];
-                                if (!abbreviations.includes(lastWord)) {
+                                if (abbreviations.includes(lastWord)) {
+                                    // This is likely an abbreviation, continue looking
+                                    continue;
+                                }
+                                
+                                // For non-abbreviations, check if next character suggests sentence ending
+                                const nextNonWhitespace = nextContent.substring(charIndex).trim()[0];
+                                if (nextNonWhitespace && /[A-Z]/.test(nextNonWhitespace)) {
+                                    // Accept this as sentence completion for incomplete sentences
                                     fragmentEnd = charIndex;
                                     break;
                                 }
+                                // For non-abbreviations, continue looking for .\n rather than stopping at first .
                             }
-                        } else {
-                            // ! or ? - these are almost always sentence ends
-                            fragmentEnd = charIndex;
-                            break;
                         }
+                        // For ! or ? without newline, continue looking for the next .\n
+                        // This allows sentences like "Really? Yes, absolutely.\n" to be handled correctly
                     }
                 }
+                
+
                 
                 if (fragmentEnd > 0) {
                     // Found sentence completion - merge the fragment
                     const fragment = nextContent.substring(0, fragmentEnd);
-                    const remainder = nextContent.substring(fragmentEnd).trim();
+                    const remainderWithWhitespace = nextContent.substring(fragmentEnd);
+                    const remainder = remainderWithWhitespace.trim();
                     
-                    // Merge current page with the fragment, preserving newline structure
-                    // Use a single space only if both parts don't already have proper spacing
-                    const needsSpace = !currentContent.endsWith('\n') && !currentContent.endsWith(' ') && 
-                                      !fragment.startsWith('\n') && !fragment.startsWith(' ');
-                    currentPage.content = currentContent + (needsSpace ? ' ' : '') + fragment;
+                    // Check if remainder should also be merged (no paragraph break)
+                    const remainderStartsWithNewline = remainderWithWhitespace.startsWith('\n');
+                    const shouldMergeRemainder = remainder.length > 0 && !remainderStartsWithNewline;
                     
-                    // Update next page with the remainder
-                    if (remainder.length > 0) {
-                        nextPage.content = remainder;
-                        nextPage.rawContent = remainder;
-                        nextPage.wordCount = remainder.split(/\s+/).length;
-                    } else {
-                        // If no remainder, remove the next page
+                    if (shouldMergeRemainder) {
+                        // Merge both fragment and remainder - they're part of the same paragraph
+                        const needsSpace = !currentContent.endsWith('\n') && !currentContent.endsWith(' ') && 
+                                          !fragment.startsWith('\n') && !fragment.startsWith(' ');
+                        currentPage.content = currentContent + (needsSpace ? ' ' : '') + fragment + ' ' + remainder;
+                        
+                        // Remove the next page since we merged it completely
                         pages.splice(i + 1, 1);
+                        
+                    } else {
+                        // Only merge the fragment, leave remainder as separate paragraph
+                        const needsSpace = !currentContent.endsWith('\n') && !currentContent.endsWith(' ') && 
+                                          !fragment.startsWith('\n') && !fragment.startsWith(' ');
+                        currentPage.content = currentContent + (needsSpace ? ' ' : '') + fragment;
+                        
+                        // Update next page with the remainder
+                        if (remainder.length > 0) {
+                            nextPage.content = remainder;
+                            nextPage.rawContent = remainder;
+                            nextPage.wordCount = remainder.split(/\s+/).length;
+                        } else {
+                            // If no remainder, remove the next page
+                            pages.splice(i + 1, 1);
+                        }
+                        
                     }
                     
                     // Update current page metadata
@@ -641,12 +668,9 @@ function fixIncompleteSentencesWithinChapter(pages) {
                     currentPage.wordCount = currentPage.content.split(/\s+/).length;
                     
                     sentencesMerged++;
-                    
-                    console.log(`🔧 Merged sentence across pages ${currentPage.pageNumber}-${nextPage.pageNumber}: "${fragment}"`);
                 }
             } else if (endsWithSentenceTerminator && !endsWithNewline) {
                 // Case 2: Complete sentence but no paragraph break - merge entire next page
-                console.log(`🔧 Merging complete sentence without paragraph break between pages ${currentPage.pageNumber}-${nextPage.pageNumber}: "${reason}"`);
                 
                 // Merge the entire next page content since it's part of the same paragraph
                 // Use a single space only if both parts don't already have proper spacing
@@ -781,4 +805,60 @@ function generatePageExtractionStats(chapters) {
     };
 }
 
-module.exports = { execute }; 
+/**
+ * Validate page extraction and cross-page merging results
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes
+ */
+function validate(output) {
+    const chapters = output.chapters;
+    
+    if (!chapters || chapters.length === 0) {
+        console.error('❌ Page extraction validation failed: No chapters found');
+        return false;
+    }
+    
+    let totalPages = 0;
+    
+    // Check that each chapter has pages
+    for (let i = 0; i < chapters.length; i++) {
+        const chapter = chapters[i];
+        
+        if (!chapter.pages || !Array.isArray(chapter.pages) || chapter.pages.length === 0) {
+            console.error(`❌ Page extraction validation failed: Chapter ${i + 1} "${chapter.title}" has no pages`);
+            return false;
+        }
+        
+        // Check each page has required fields
+        for (let j = 0; j < chapter.pages.length; j++) {
+            const page = chapter.pages[j];
+            
+            if (!page.content || typeof page.content !== 'string') {
+                console.error(`❌ Page extraction validation failed: Chapter ${i + 1} page ${j + 1} has no content`);
+                return false;
+            }
+            
+            if (typeof page.pageNumber !== 'number' || page.pageNumber < 0) {
+                console.error(`❌ Page extraction validation failed: Chapter ${i + 1} page ${j + 1} has invalid page number: ${page.pageNumber}`);
+                return false;
+            }
+            
+            if (typeof page.wordCount !== 'number' || page.wordCount < 0) {
+                console.error(`❌ Page extraction validation failed: Chapter ${i + 1} page ${j + 1} has invalid word count: ${page.wordCount}`);
+                return false;
+            }
+        }
+        
+        totalPages += chapter.pages.length;
+    }
+    
+    // Check that we have reasonable number of pages
+    if (totalPages < 10) {
+        console.error(`❌ Page extraction validation failed: Too few pages extracted (${totalPages}, expected at least 10)`);
+        return false;
+    }
+    
+    return true;
+}
+
+module.exports = { execute, validate }; 

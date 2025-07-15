@@ -27,8 +27,6 @@ const path = require('path');
  * @returns {Object} - Updated state with chapter content
  */
 async function execute(pipelineState, config) {
-    console.log('📝 Starting chapter content extraction (Step 2.2)...');
-    
     // Validate prerequisites
     if (!pipelineState.rawText) {
         throw new Error('Step 1 (text extraction) must be completed first');
@@ -41,8 +39,6 @@ async function execute(pipelineState, config) {
     try {
         const startTime = Date.now();
         
-        console.log(`📚 Extracting content for ${pipelineState.chapterMetadata.length} chapters...`);
-        
         // Sort chapters by starting page number first
         const sortedChapters = [...pipelineState.chapterMetadata].sort((a, b) => a.startingPage - b.startingPage);
         
@@ -51,7 +47,7 @@ async function execute(pipelineState, config) {
         for (let i = 0; i < sortedChapters.length; i++) {
             const metadata = sortedChapters[i];
             
-            console.log(`  📖 Processing: ${metadata.title}`);
+            // Processing chapter
             
             // Calculate page range for extraction
             const pageNumberStart = metadata.startingPage;
@@ -64,16 +60,20 @@ async function execute(pipelineState, config) {
                 pageNumberEnd
             );
             
+            // Calculate word count
+            const wordCount = content.split(/\s+/).filter(word => word.length > 0).length;
+            
             // Create simplified chapter object
             chapters.push({
                 title: metadata.title,
                 chapterNumber: metadata.chapterNumber,
                 pageNumberStart: pageNumberStart,
                 pageNumberEnd: pageNumberEnd,
-                content: content
+                content: content,
+                wordCount: wordCount
             });
             
-            console.log(`    ✅ Page range: ${pageNumberStart}-${pageNumberEnd} (${content.length} characters)`);
+            // Chapter processed
         }
         
         // Generate extraction statistics
@@ -105,12 +105,7 @@ async function execute(pipelineState, config) {
         const debugFile = path.join(config.DEBUG_DIR, 'step-02-2-chapter-content-extraction.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
         
-        console.log(`✅ Chapter content extraction completed: ${chapters.length} chapters processed`);
-        console.log(`📊 Processing took ${processingTime}ms`);
-        console.log(`📚 Total pages covered: ${extractionStats.totalPages.toLocaleString()}`);
-        console.log(`📖 Average pages per chapter: ${extractionStats.averagePagesPerChapter.toFixed(1)}`);
-        console.log(`📝 Total characters extracted: ${extractionStats.totalCharacters.toLocaleString()}`);
-        console.log(`📝 Average characters per chapter: ${Math.round(extractionStats.averageCharactersPerChapter).toLocaleString()}`);
+        // Chapter content extraction completed
         
         return {
             chapters: chapters,
@@ -209,4 +204,42 @@ function extractChapterContentByPages(rawText, pageNumberStart, pageNumberEnd) {
     return rawText.substring(startPos, endPos).trim();
 }
 
-module.exports = { execute }; 
+/**
+ * Validate chapter content extraction results
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes
+ */
+function validate(output) {
+    const chapters = output.chapters;
+    
+    if (!chapters || chapters.length === 0) {
+        console.error('❌ Chapter content validation failed: No chapters found');
+        return false;
+    }
+    
+    // Check that each chapter has content
+    for (let i = 0; i < chapters.length; i++) {
+        const chapter = chapters[i];
+        
+        if (!chapter.content || typeof chapter.content !== 'string') {
+            console.error(`❌ Chapter content validation failed: Chapter ${i + 1} "${chapter.title}" has no content`);
+            return false;
+        }
+        
+        // Check minimum content length (should have substantial content)
+        if (chapter.content.length < 100) {
+            console.error(`❌ Chapter content validation failed: Chapter ${i + 1} "${chapter.title}" content too short (${chapter.content.length} characters)`);
+            return false;
+        }
+        
+        // Check that wordCount exists and is reasonable
+        if (!chapter.wordCount || chapter.wordCount < 10) {
+            console.error(`❌ Chapter content validation failed: Chapter ${i + 1} "${chapter.title}" has invalid word count (${chapter.wordCount})`);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+module.exports = { execute, validate }; 

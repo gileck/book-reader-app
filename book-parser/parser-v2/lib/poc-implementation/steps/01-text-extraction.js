@@ -29,8 +29,6 @@ const path = require('path');
  * @returns {Object} - Updated state with extracted text
  */
 async function execute(pipelineState, config) {
-    console.log('📄 Starting text extraction (Fixed page-by-page approach)...');
-
     // Check if PDF file exists
     if (!fs.existsSync(config.INPUT_PDF)) {
         throw new Error(`PDF file not found: ${config.INPUT_PDF}`);
@@ -38,7 +36,6 @@ async function execute(pipelineState, config) {
 
     try {
         // Read PDF file
-        console.log('📖 Reading PDF file...');
         const pdfBuffer = fs.readFileSync(config.INPUT_PDF);
 
         // Import required libraries
@@ -51,11 +48,8 @@ async function execute(pipelineState, config) {
         }
 
         // Load PDF document
-        console.log('🔍 Loading PDF document...');
         const pdfDoc = await pdfjsLib.getDocument(pdfBuffer).promise;
         const totalPages = pdfDoc.numPages;
-
-        console.log(`📄 Processing ${totalPages} pages...`);
 
         // Process each page individually
         let rawText = '';
@@ -85,7 +79,7 @@ async function execute(pipelineState, config) {
             });
 
             if (pageNum % 50 === 0) {
-                console.log(`   📄 Processed ${pageNum}/${totalPages} pages...`);
+                // Processing progress
             }
         }
 
@@ -150,39 +144,8 @@ async function execute(pipelineState, config) {
         const rawTextFile = path.join(config.DEBUG_DIR, 'step-01-raw-text.txt');
         fs.writeFileSync(rawTextFile, rawText, 'utf8');
 
-        console.log(`✅ Text extraction completed successfully`);
-        console.log(`📊 Statistics:`);
-        console.log(`   - Characters: ${characterCount.toLocaleString()}`);
-        console.log(`   - Pages: ${pageCount}`);
-        console.log(`   - Lines: ${lineCount.toLocaleString()}`);
-        console.log(`   - Words: ${wordCount.toLocaleString()}`);
-        console.log(`   - Literal \\n: ${literalNewlineCount}`);
-        console.log(`   - Avg words/page: ${Math.round(wordCount / pageCount)}`);
-        
         // Validate text quality - check for overly long words
         const wordValidation = validateWordLengths(rawText);
-        console.log(`📋 Word Length Validation:`);
-        console.log(`   - Longest word: ${wordValidation.longestWord.length} chars ("${wordValidation.longestWord.substring(0, 50)}...")`);
-        console.log(`   - Words > 20 chars: ${wordValidation.longWords.length}`);
-        console.log(`   - Words > 30 chars: ${wordValidation.veryLongWords.length}`);
-        console.log(`   - Words > 50 chars: ${wordValidation.suspiciousWords.length}`);
-        
-        if (wordValidation.longWords.length > 0) {
-            console.log(`⚠️  Words > 20 chars (potentially concatenated):`);
-            wordValidation.longWords.slice(0, 10).forEach((word, i) => {
-                console.log(`   ${i + 1}. ${word} (${word.length} chars)`);
-            });
-        }
-        
-        if (wordValidation.suspiciousWords.length > 0) {
-            console.log(`⚠️  Suspicious words (>50 chars, likely concatenated):`);
-            wordValidation.suspiciousWords.slice(0, 10).forEach((word, i) => {
-                console.log(`   ${i + 1}. ${word.substring(0, 80)}... (${word.length} chars)`);
-            });
-        }
-        
-        console.log(`📄 Debug output: ${debugFile}`);
-        console.log(`📄 Raw text file: ${rawTextFile}`);
 
         return {
             rawText: rawText,
@@ -263,12 +226,9 @@ function extractCleanPageText(textContent, pageNum) {
  * @returns {Object} - Fallback extraction result
  */
 function fallbackTextExtraction(config, pipelineState) {
-    console.log('📄 Using fallback text extraction...');
-
     // Check if there's already a raw text file we can use
     const rawTextFile = path.join(config.DEBUG_DIR, 'step-01-raw-text.txt');
     if (fs.existsSync(rawTextFile)) {
-        console.log('📄 Found existing raw text file, using it as fallback');
         const rawText = fs.readFileSync(rawTextFile, 'utf8');
 
         return {
@@ -344,6 +304,40 @@ function validateWordLengths(text) {
     };
 }
 
+/**
+ * Validate text extraction results
+ * @param {Object} output - Output from execute function
+ * @returns {boolean} - True if validation passes
+ */
+function validate(output) {
+    // Check if rawText exists and is not empty
+    if (!output.rawText || typeof output.rawText !== 'string') {
+        console.error('❌ Validation failed: rawText is missing or not a string');
+        return false;
+    }
+    
+    // Check minimum length (should have substantial content)
+    if (output.rawText.length < 1000) {
+        console.error(`❌ Validation failed: rawText too short (${output.rawText.length} characters, expected at least 1000)`);
+        return false;
+    }
+    
+    // Check that metadata exists
+    if (!output.metadata || !output.metadata.textExtraction || !output.metadata.textExtraction.characterCount) {
+        console.error('❌ Validation failed: metadata missing or incomplete');
+        return false;
+    }
+    
+    // Check character count consistency
+    if (output.metadata.textExtraction.characterCount !== output.rawText.length) {
+        console.error(`❌ Validation failed: character count mismatch (metadata: ${output.metadata.textExtraction.characterCount}, actual: ${output.rawText.length})`);
+        return false;
+    }
+    
+    return true;
+}
+
 module.exports = {
-    execute
+    execute,
+    validate
 }; 
