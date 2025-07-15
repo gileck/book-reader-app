@@ -874,11 +874,11 @@ function validate(output) {
                         validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                 } else if (chunk.type === 'paragraph') {
-                    // Paragraphs can start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
-                    // Comprehensive character set for real book content
-                    const isValidStart = /[A-Za-z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                    // Paragraphs should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
+                    // but NOT lowercase letters (proper paragraph formatting)
+                    const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
                     if (!isValidStart) {
-                        validationErrors.push(`Paragraph ${fullChunkIdentifier} must start with a valid character. Found: "${chunk.content.substring(0, 20)}..."`);
+                        validationErrors.push(`Paragraph ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                 }
             }
