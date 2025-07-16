@@ -82,23 +82,18 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-07-15T15:35:38.370Z",
+    "processingStartTime": "2025-07-16T12:02:08.146Z",
     "processingEndTime": null,
     "stepResults": {
       "step-1": {
         "success": true,
-        "duration": 816,
-        "timestamp": "2025-07-15T15:35:39.186Z"
+        "duration": 810,
+        "timestamp": "2025-07-16T12:02:08.963Z"
       },
       "step-2-1": {
         "success": true,
-        "duration": 474,
-        "timestamp": "2025-07-15T15:35:39.666Z"
-      },
-      "step-2-2": {
-        "success": true,
-        "duration": 8,
-        "timestamp": "2025-07-15T15:35:39.677Z"
+        "duration": 466,
+        "timestamp": "2025-07-16T12:02:09.432Z"
       }
     },
     "textExtraction": {
@@ -107,7 +102,7 @@
       "lineCount": 12566,
       "wordCount": 121377,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-07-15T15:35:39.165Z",
+      "extractionTime": "2025-07-16T12:02:08.937Z",
       "averageWordsPerPage": 383,
       "extractionMethod": "page_by_page_fixed"
     },
@@ -118,7 +113,7 @@
       "patternMatches": 89,
       "averageDetectionConfidence": 0.9099999999999999,
       "pageOffset": 0,
-      "processingTime": 473,
+      "processingTime": 464,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {

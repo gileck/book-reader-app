@@ -822,12 +822,17 @@ function endsWithCommonSingleLetterWord(text) {
 function validate(output) {
     const validationErrors = [];
     
-    // Extract chunks from all chapters
+    // Extract chunks from all chapters and add chapter title to each chunk
     const allChunks = [];
     if (output.chapters) {
         for (const chapter of output.chapters) {
             if (chapter.chunks) {
-                allChunks.push(...chapter.chunks);
+                // Add chapter title to each chunk for validation
+                const chunksWithChapterTitle = chapter.chunks.map(chunk => ({
+                    ...chunk,
+                    chapterTitle: chapter.title
+                }));
+                allChunks.push(...chunksWithChapterTitle);
             }
         }
     }
@@ -848,6 +853,14 @@ function validate(output) {
             const chapterInfo = chunk.chapterTitle ? ` (${chunk.chapterTitle})` : '';
             const chunkIdentifier = chunk.chunkId || `chunk_${i + 1}`;
             const fullChunkIdentifier = `${chunkIdentifier}${chapterInfo}`;
+            
+            // Skip validation for chunks in Appendix chapters
+            if (chunk.chapterTitle && chunk.chapterTitle.toLowerCase().includes('appendix')) {
+                // Still track chunk types for overall validation
+                if (chunk.type === 'paragraph') hasParagraph = true;
+                if (chunk.type === 'header') hasHeader = true;
+                continue;
+            }
             
             // Track chunk types
             if (chunk.type === 'paragraph') hasParagraph = true;

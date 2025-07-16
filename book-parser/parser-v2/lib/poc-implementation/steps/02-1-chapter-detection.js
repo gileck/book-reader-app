@@ -15,7 +15,7 @@
  * - config: { INPUT_PDF: path, OUTPUT_DIR: path, DEBUG_DIR: path, ... }
  * 
  * Expected Output:
- * - { chapterMetadata: [{ title, chapterNumber, startPosition, endPosition, startingPage, confidence, detectionSource }] }
+ * - { chapterMetadata: [{ title, chapterNumber, startingPage, endPage, confidence, detectionSource }] }
  */
 
 const fs = require('fs');
@@ -105,9 +105,8 @@ async function execute(pipelineState, config) {
             chapterMetadata: chapterMetadata.map(ch => ({
                 title: ch.title,
                 chapterNumber: ch.chapterNumber,
-                startPosition: ch.startPosition,
-                endPosition: ch.endPosition,
                 startingPage: ch.startingPage,
+                endPage: ch.endPage,
                 detectionSource: ch.detectionSource,
                 confidence: ch.confidence
             }))
@@ -192,7 +191,6 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
                 index: i,
                 title: chapterTitle,
                 chapterNumber: chapterNumber,
-                startPosition: position.startPosition,
                 startingPage: startingPage,
                 confidence: position.confidence,
                 detectionSource: tocSource
@@ -200,26 +198,18 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
         }
     }
     
-    // Sort chapters by their actual position in the text
-    chapterPositions.sort((a, b) => a.startPosition - b.startPosition);
+    // Sort chapters by their starting page number
+    chapterPositions.sort((a, b) => a.startingPage - b.startingPage);
     
-    // Now assign end positions based on the sorted order
+    // Now assign end pages based on the sorted order
     for (let i = 0; i < chapterPositions.length; i++) {
         const chapter = chapterPositions[i];
-        
-        // Find end position
-        let endPosition = rawText.length - 1;
-        if (i < chapterPositions.length - 1) {
-            const nextChapter = chapterPositions[i + 1];
-            endPosition = nextChapter.startPosition - 1;
-        }
         
         chapterMetadata.push({
             title: chapter.title,
             chapterNumber: chapter.chapterNumber,
-            startPosition: chapter.startPosition,
-            endPosition: endPosition,
             startingPage: chapter.startingPage, // Page numbers now already start from 0
+            endPage: i < chapterPositions.length - 1 ? chapterPositions[i + 1].startingPage - 1 : null,
             confidence: chapter.confidence,
             detectionSource: chapter.detectionSource
         });
@@ -863,18 +853,7 @@ function validate(output) {
             return false;
         }
         
-        // Check that positions exist
-        if (chapter.startPosition === undefined || chapter.endPosition === undefined) {
-            console.error(`❌ Chapter validation failed: Chapter ${i + 1} "${chapter.title}": startPosition and endPosition are required`);
-            return false;
-        }
-        
-        // Check that startPosition < endPosition (skip if positions are not properly set)
-        if (chapter.startPosition !== undefined && chapter.endPosition !== undefined && 
-            chapter.startPosition >= chapter.endPosition) {
-            console.error(`❌ Chapter validation failed: Chapter ${i + 1} "${chapter.title}": startPosition (${chapter.startPosition}) must be less than endPosition (${chapter.endPosition})`);
-            // Note: Temporarily allowing this to pass for pipeline testing
-        }
+
     }
     
     return true;

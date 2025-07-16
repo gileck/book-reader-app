@@ -42,10 +42,10 @@ const paragraphDetection = require('./steps/04-paragraph-detection');
 
 // Configuration
 const CONFIG = {
-    INPUT_PDF: path.join(__dirname, '../../../../files/Transformers/book.pdf'),
-    PDF_PATH: path.join(__dirname, '../../../../files/Transformers/book.pdf'), // For link extraction
-    OUTPUT_DIR: path.join(__dirname, './transformers-output'),
-    DEBUG_DIR: path.join(__dirname, './transformers-debug'),
+    INPUT_PDF: '/Users/gileck/projects/temp1/files/Transformers/book.pdf',
+    PDF_PATH: '/Users/gileck/projects/temp1/files/Transformers/book.pdf',
+    OUTPUT_DIR: '/Users/gileck/projects/temp1/book-parser/parser-v2/lib/poc-implementation/transformers-output',
+    DEBUG_DIR: '/Users/gileck/projects/temp1/book-parser/parser-v2/lib/poc-implementation/transformers-debug',
     CHUNK_TARGET_MIN: 80,
     CHUNK_TARGET_MAX: 300,
     CHUNK_ABSOLUTE_MIN: 50,
@@ -149,6 +149,19 @@ async function executeStep(stepName) {
             case 'step-4': stepModule = paragraphDetection; break;
         }
 
+        // Update pipeline state with result
+        Object.assign(PIPELINE_STATE, result);
+
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+
+        // Save state after each step for debugging
+        savePipelineState();
+
+        // Write step-specific output file
+        const stepOutputFilename = `output-${stepName}.json`;
+        writeOutputFile(result, stepOutputFilename);
+
         // Run validation if the step has a validate function
         if (stepModule && typeof stepModule.validate === 'function') {
             // Capture any console.error messages during validation
@@ -170,12 +183,6 @@ async function executeStep(stepName) {
             }
         }
 
-        // Update pipeline state with result
-        Object.assign(PIPELINE_STATE, result);
-
-        const endTime = Date.now();
-        const duration = endTime - startTime;
-
         // Store step execution metadata
         PIPELINE_STATE.metadata.stepResults[stepName] = {
             success: true,
@@ -184,13 +191,6 @@ async function executeStep(stepName) {
         };
 
         console.log(`✓ ${stepName} completed (${duration}ms)`);
-
-        // Save state after each step for debugging
-        savePipelineState();
-
-        // Write step-specific output file
-        const stepOutputFilename = `output-${stepName}.json`;
-        writeOutputFile(result, stepOutputFilename);
 
         return result;
     } catch (error) {
