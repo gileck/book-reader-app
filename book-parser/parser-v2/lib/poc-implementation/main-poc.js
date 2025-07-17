@@ -32,13 +32,13 @@ const fs = require('fs');
 const path = require('path');
 
 // Import step implementations
-const textExtraction = require('./steps/01-text-extraction');
-const chapterDetection = require('./steps/02-1-chapter-detection');
-const chapterContentExtraction = require('./steps/02-2-chapter-content-extraction');
-const chapterNameCleaning = require('./steps/02-3-chapter-name-cleaning');
-const pageExtractionAndCrossPageMerging = require('./steps/03-page-extraction-and-cross-page-merging');
-const linkDetection = require('./steps/03-1-link-detection');
-const paragraphDetection = require('./steps/04-paragraph-detection');
+const textExtraction = require('./steps/01-text-extraction/01-text-extraction');
+const chapterDetection = require('./steps/02-1-chapter-detection/02-1-chapter-detection');
+const chapterContentExtraction = require('./steps/02-2-chapter-content-extraction/02-2-chapter-content-extraction');
+const chapterNameCleaning = require('./steps/02-3-chapter-name-cleaning/02-3-chapter-name-cleaning');
+const pageExtractionAndCrossPageMerging = require('./steps/03-page-extraction-and-cross-page-merging/03-page-extraction-and-cross-page-merging');
+const linkDetection = require('./steps/03-1-link-detection/03-1-link-detection');
+const paragraphDetection = require('./steps/04-paragraph-detection/04-paragraph-detection');
 
 // Configuration
 const CONFIG = {

@@ -10317,45 +10317,45 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-07-17T09:59:39.452Z",
+    "processingStartTime": "2025-07-17T11:45:15.967Z",
     "processingEndTime": null,
     "stepResults": {
       "step-1": {
         "success": true,
-        "duration": 936,
-        "timestamp": "2025-07-17T09:59:40.394Z"
+        "duration": 831,
+        "timestamp": "2025-07-17T11:45:16.809Z"
       },
       "step-2-1": {
         "success": true,
-        "duration": 531,
-        "timestamp": "2025-07-17T09:59:40.928Z"
+        "duration": 590,
+        "timestamp": "2025-07-17T11:45:17.402Z"
       },
       "step-2-2": {
         "success": true,
-        "duration": 10,
-        "timestamp": "2025-07-17T09:59:40.947Z"
+        "duration": 8,
+        "timestamp": "2025-07-17T11:45:17.418Z"
       },
       "step-2-3": {
         "success": true,
         "duration": 2,
-        "timestamp": "2025-07-17T09:59:40.958Z"
+        "timestamp": "2025-07-17T11:45:17.427Z"
       },
       "step-3": {
         "success": true,
-        "duration": 41,
-        "timestamp": "2025-07-17T09:59:41.014Z"
+        "duration": 35,
+        "timestamp": "2025-07-17T11:45:17.475Z"
       },
       "step-3-1": {
         "success": true,
-        "duration": 997,
-        "timestamp": "2025-07-17T09:59:42.024Z"
+        "duration": 873,
+        "timestamp": "2025-07-17T11:45:18.363Z"
       },
       "step-4": {
         "totalChunks": 904,
         "totalParagraphs": 796,
         "totalHeaders": 108,
         "totalLinksExtracted": 282,
-        "processingTime": 48,
+        "processingTime": 46,
         "stats": {
           "totalChunks": 904,
           "totalParagraphs": 796,
@@ -11291,7 +11291,7 @@
       "lineCount": 12566,
       "wordCount": 121377,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-07-17T09:59:40.367Z",
+      "extractionTime": "2025-07-17T11:45:16.782Z",
       "averageWordsPerPage": 383,
       "extractionMethod": "page_by_page_fixed"
     },
@@ -11302,7 +11302,7 @@
       "patternMatches": 89,
       "averageDetectionConfidence": 0.9099999999999999,
       "pageOffset": 0,
-      "processingTime": 529,
+      "processingTime": 589,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -11311,7 +11311,7 @@
       "averagePagesPerChapter": 30.9,
       "totalCharacters": 738578,
       "averageCharactersPerChapter": 73857.8,
-      "processingTime": 10,
+      "processingTime": 8,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -11328,14 +11328,14 @@
       "totalChapters": 10,
       "averageWordsPerPage": 381.0873786407767,
       "sentencesMerged": 212,
-      "extractionTime": "2025-07-17T09:59:40.999Z",
-      "processingTime": 41
+      "extractionTime": "2025-07-17T11:45:17.462Z",
+      "processingTime": 35
     },
     "linkDetection": {
       "totalLinks": 290,
       "totalPdfLinks": 2214,
-      "processingTime": 997,
-      "detectionTime": "2025-07-17T09:59:42.011Z"
+      "processingTime": 873,
+      "detectionTime": "2025-07-17T11:45:18.348Z"
     }
   }
 }

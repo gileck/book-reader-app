@@ -10,16 +10,21 @@ This is a modular implementation of the Book Parser POC with each step separated
 - **`main-poc.js`** - Orchestrates the entire pipeline, running steps sequentially and passing data between them
 
 ### Step Modules
-Each step is implemented as a separate module in the `steps/` folder:
+Each step is implemented as a separate module in its own folder within the `steps/` directory:
 
-1. **`01-text-extraction.js`** - Extract raw text from PDF with literal `\n` preservation ✅
-2. **`02-chapter-detection-and-text-extraction.js`** - Detect chapter boundaries and extract content ✅
-3. **`03-page-extraction-and-cross-page-merging.js`** - Extract pages and merge sentences split across pages ✅
-4. **`03-1-link-detection.js`** - Extract and resolve PDF internal links with coordinate-based target extraction ✅
-5. **`04-paragraph-detection.js`** - Detect paragraph boundaries and headers with unified chunk output ✅
-6. **`09-validation.js`** - Validate pipeline output against requirements and quality standards ✅
+1. **`01-text-extraction/`** - Extract raw text from PDF with literal `\n` preservation ✅
+2. **`02-1-chapter-detection/`** - Detect chapter boundaries from TOC ✅
+3. **`02-2-chapter-content-extraction/`** - Extract content for each chapter ✅  
+4. **`02-3-chapter-name-cleaning/`** - Clean chapter names and content ✅
+5. **`03-page-extraction-and-cross-page-merging/`** - Extract pages and merge sentences split across pages ✅
+6. **`03-1-link-detection/`** - Extract and resolve PDF internal links with coordinate-based target extraction ✅
+7. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers with unified chunk output ✅
 
 **Legend**: ✅ Implemented and Production-Ready
+
+Each step folder contains:
+- Main step implementation file (e.g., `01-text-extraction.js`)
+- Validation module file (e.g., `01-text-extraction-validation.js`)
 
 ## Pipeline State
 
@@ -69,8 +74,28 @@ async function execute(pipelineState, config) {
     };
 }
 
+module.exports = { execute, validate };
+```
+
+## Validation Architecture
+
+Each step has its validation code extracted to a separate validation file within its step folder:
+
+- `01-text-extraction/01-text-extraction-validation.js` - Validates text extraction output
+- `02-1-chapter-detection/02-1-chapter-detection-validation.js` - Validates chapter detection and includes helper functions
+- `02-2-chapter-content-extraction/02-2-chapter-content-extraction-validation.js` - Validates chapter content extraction
+- `02-3-chapter-name-cleaning/02-3-chapter-name-cleaning-validation.js` - Validates chapter name cleaning
+- `03-page-extraction-and-cross-page-merging/03-page-extraction-and-cross-page-merging-validation.js` - Validates page extraction with helper functions
+- `03-1-link-detection/03-1-link-detection-validation.js` - Validates link detection
+- `04-paragraph-detection/04-paragraph-detection-validation.js` - Validates paragraph detection with all helper functions
+
+### Validation Module Interface
+
+Each validation module exports a `validate` function and any helper functions:
+
+```javascript
 /**
- * Validate the step output (optional but recommended)
+ * Validate the step output
  * @param {Object} output - Output from execute function
  * @returns {boolean} - True if validation passes, false otherwise
  */
@@ -80,7 +105,42 @@ function validate(output) {
     return true;
 }
 
+module.exports = { validate, /* helper functions */ };
+```
+
+Main step files import validation functions from the same directory:
+
+```javascript
+const { validate } = require('./step-name-validation');
+
 module.exports = { execute, validate };
+```
+
+## Folder Structure
+
+```
+steps/
+├── 01-text-extraction/
+│   ├── 01-text-extraction.js
+│   └── 01-text-extraction-validation.js
+├── 02-1-chapter-detection/
+│   ├── 02-1-chapter-detection.js
+│   └── 02-1-chapter-detection-validation.js
+├── 02-2-chapter-content-extraction/
+│   ├── 02-2-chapter-content-extraction.js
+│   └── 02-2-chapter-content-extraction-validation.js
+├── 02-3-chapter-name-cleaning/
+│   ├── 02-3-chapter-name-cleaning.js
+│   └── 02-3-chapter-name-cleaning-validation.js
+├── 03-page-extraction-and-cross-page-merging/
+│   ├── 03-page-extraction-and-cross-page-merging.js
+│   └── 03-page-extraction-and-cross-page-merging-validation.js
+├── 03-1-link-detection/
+│   ├── 03-1-link-detection.js
+│   └── 03-1-link-detection-validation.js
+└── 04-paragraph-detection/
+    ├── 04-paragraph-detection.js
+    └── 04-paragraph-detection-validation.js
 ```
 
 ## Per-Step Validation
@@ -194,10 +254,42 @@ node main-poc.js step-2 --debug
 - ✅ 103 headers total detected (up from 57 after bug fixes)
 - ✅ No more incorrectly merged content across headers
 
+#### **Advanced Paragraph Merging System ✅** (January 2025)
+**Issue Addressed**: Small paragraphs (< 20 words) failing validation due to insufficient content.
+
+**Root Cause Discovery**:
+- Small paragraphs were being created during `splitLargeParagraph` operations
+- These split chunks were added AFTER the merging logic had already processed original chunks
+- No mechanism existed to merge newly created small paragraphs
+
+**Comprehensive Solution Implemented**:
+1. **Two-Pass Optimization System**: 
+   - First pass: Handles existing small paragraphs with neighbor merging
+   - Second pass: Processes small paragraphs created during splitting operations
+2. **Intelligent Merging Logic**:
+   - Attempts to merge with previous paragraph first (preferred)
+   - Falls back to next paragraph if previous merge fails
+   - Respects header boundaries and page constraints
+3. **Enhanced Link Validation**:
+   - Re-validates all links against merged content during paragraph combining
+   - Filters out invalid links that don't appear in merged text
+   - Preserves link integrity through `removeDuplicateLinks()` function
+4. **Advanced Footnote Detection**:
+   - Enhanced `isSourceTextInContent()` with strict footnote pattern matching
+   - Supports patterns: `. 8 For`, `9 Mitchell`, `(8)`, `[8]`, `8.`
+   - Prevents false matches (e.g., "1948" containing footnote "8")
+
+**Results Achieved**:
+- ✅ Zero small paragraph validation errors (all < 20 word paragraphs successfully merged)
+- ✅ Enhanced link preservation during merging operations
+- ✅ Robust footnote pattern matching preventing false positives
+- ✅ Production-ready paragraph optimization with comprehensive validation
+
 #### **Architecture Completeness ✅**
 - **Unified Output**: Step 4 outputs single `chunks` array with `type: "paragraph"|"header"`
 - **6-Rule Header Detection**: Comprehensive validation system for headers
-- **Smart Size Optimization**: Paragraph merging and splitting with header awareness
+- **Advanced Paragraph Optimization**: Two-pass merging system with intelligent neighbor selection
+- **Enhanced Link Validation**: Strict footnote patterns with merge-time re-validation
 - **Cross-Page Intelligence**: Preserves content structure across page boundaries
 
 ## Critical Text Extraction Improvements
@@ -334,10 +426,10 @@ The pipeline was optimized by combining related steps:
 - Step 2.2: Chapter Text Extraction ✅ **[WITH CONTENT VALIDATION]** 
 - Step 2.3: Chapter Name Cleaning ✅ **[WITH CLEANING VALIDATION]**
 - Step 3: Page Extraction and Cross-Page Merging ✅ **[WITH HEADER PRESERVATION + PAGE VALIDATION]**
-- Step 3-1: Link Detection ✅ **[WITH LINK ROLE VALIDATION]**
-- Step 4: Paragraph and Header Detection ✅ **[WITH 6-RULE SYSTEM + STRICT LINK VALIDATION]**
+- Step 3-1: Link Detection ✅ **[WITH ENHANCED LINK ROLE VALIDATION]**
+- Step 4: Paragraph and Header Detection ✅ **[WITH ADVANCED TWO-PASS OPTIMIZATION + ENHANCED FOOTNOTE VALIDATION]**
 
-**Current Phase: Production-Ready Pipeline with Fail-Fast Validation**
+**Current Phase: Production-Ready Pipeline with Advanced Optimization and Enhanced Debugging**
 
 ### ✅ FOUNDATION COMPLETE
 - **Text Quality**: Professional-grade PDF extraction with perfect spacing (0 concatenated words)
@@ -345,6 +437,13 @@ The pipeline was optimized by combining related steps:
 - **Page Processing**: 309 pages with intelligent cross-page sentence merging (158 merged)
 - **Link Integration**: 54 production-ready PDF annotation links with coordinate-based extraction
 - **Content Chunks**: Unified paragraph and header detection with 6-rule validation system
+- **Advanced Paragraph Optimization**: Two-pass merging system eliminating all small paragraph validation errors
+
+### ✅ DEBUGGING INFRASTRUCTURE ENHANCEMENT (January 2025)
+- **Pre-Validation Output Writing**: Output files now written before validation for debugging access
+- **Debug-Friendly Pipeline**: State preserved even when validation fails for analysis
+- **Enhanced Validation Logging**: Detailed neighbor information and merge failure reasons
+- **Transparent Error Correlation**: Clear mapping between validation errors and actual output content
 
 ### ✅ HEADER DETECTION MASTERY  
 - **Smart Cross-Page Logic**: Only merges lowercase sentence continuations, preserves headers
@@ -398,4 +497,4 @@ The pipeline was optimized by combining related steps:
 
 **Last Updated**: January 2025
 **Implementation Progress**: 7/7 core steps completed (100%)
-**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with professional-grade text extraction, strict link validation, intelligent content structure detection, and unified paragraph/header output 
+**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with professional-grade text extraction, advanced two-pass paragraph optimization, enhanced footnote validation, intelligent content structure detection, and unified paragraph/header output with comprehensive debugging infrastructure 

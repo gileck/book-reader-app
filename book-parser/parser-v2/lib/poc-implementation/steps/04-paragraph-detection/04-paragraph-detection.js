@@ -692,16 +692,7 @@ function endsWithSentenceTerminator(line) {
     return true;
 }
 
-/**
- * Check if line ends with initials
- * @param {string} line - Line to check
- * @returns {boolean} - True if line ends with initials
- */
-function endsWithInitials(line) {
-    if (!line) return false;
-    const trimmed = line.trim();
-    return /\b[A-Z]\.$/.test(trimmed);
-}
+// endsWithInitials function is now imported from validation module
 
 /**
  * Check if line starts a new paragraph
@@ -740,59 +731,9 @@ function extractLinksFromContent(content, pageLinks) {
     return removeDuplicateLinks(foundLinks);
 }
 
-/**
- * Check if source text is in content
- * @param {string} sourceText - Source text to find
- * @param {string} content - Content to search in
- * @returns {boolean} - True if source text is found
- */
-function isSourceTextInContent(sourceText, content) {
-    // For footnote numbers, use strict footnote pattern matching
-    if (/^\d+$/.test(sourceText)) {
-        return isFootnoteInContent(sourceText, content);
-    }
-    
-    // For non-numeric link text, use direct match
-    return content.includes(sourceText);
-}
+// isSourceTextInContent function is now imported from validation module
 
-/**
- * Check if a footnote number appears as a standalone footnote in content
- * @param {string} footnoteNumber - The footnote number to find
- * @param {string} content - Content to search in
- * @returns {boolean} - True if footnote is found as standalone reference
- */
-function isFootnoteInContent(footnoteNumber, content) {
-    // Footnote patterns that should match:
-    // ". 8 For" (period, space, number, space/punctuation)
-    // ".8 For" (period, number, space/punctuation)  
-    // " 8 For" (space, number, space/punctuation)
-    // "9 Mitchell" (start of content, number, space/punctuation)
-    // "(8)" (parentheses around number)
-    // "[8]" (brackets around number)
-    
-    const patterns = [
-        // Period followed by optional space, then number, then space or punctuation
-        new RegExp(`\\.\\s*${footnoteNumber}(?=\\s|[.,;:!?)]|$)`),
-        
-        // Space followed by number, then space or punctuation  
-        new RegExp(`\\s${footnoteNumber}(?=\\s|[.,;:!?)]|$)`),
-        
-        // Start of content, number, then space or punctuation
-        new RegExp(`^${footnoteNumber}(?=\\s|[.,;:!?)])`),
-        
-        // Number in parentheses
-        new RegExp(`\\(${footnoteNumber}\\)`),
-        
-        // Number in square brackets
-        new RegExp(`\\[${footnoteNumber}\\]`),
-        
-        // Number followed by period (like "8.")
-        new RegExp(`\\b${footnoteNumber}\\.`)
-    ];
-    
-    return patterns.some(pattern => pattern.test(content));
-}
+// isFootnoteInContent function is now imported from validation module
 
 /**
  * Remove duplicate links
@@ -906,247 +847,16 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
     await fs.promises.writeFile(debugPath, JSON.stringify(debugOutput, null, 2));
 }
 
-/**
- * Count words in a text string
- * @param {string} text - The text to count words in
- * @returns {number} - Number of words
- */
-function countWords(text) {
-    if (!text || typeof text !== 'string') return 0;
-    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-}
+// countWords function is now imported from validation module
 
-/**
- * Check if text ends with initials (single capital letter followed by period)
- * @param {string} text - Text to check
- * @returns {boolean} - True if text ends with initials
- */
-function endsWithInitials(text) {
-    if (!text) return false;
-    const trimmed = text.trim();
-    return /\b[A-Z]\.$/.test(trimmed);
-}
+// endsWithInitials function is now imported from validation module
 
-/**
- * Check if text ends with a common single-letter word (like "vitamin E", "point A", etc.)
- * @param {string} text - Text to check
- * @returns {boolean} - True if ends with common single-letter word
- */
-function endsWithCommonSingleLetterWord(text) {
-    if (!text) return false;
-    const trimmed = text.trim();
-    
-    // Common patterns where single letters are valid endings
-    const commonPatterns = [
-        // Scientific/academic terms
-        /\bvitamin [a-zA-Z]\.?$/i,      // vitamin E, vitamin C, etc.
-        /\btype [a-zA-Z]\.?$/i,         // type A, type B, etc.
-        /\bpoint [a-zA-Z]\.?$/i,        // point A, point B, etc.
-        /\bfigure [a-zA-Z]\.?$/i,       // figure A, figure B, etc.
-        /\bappendix [a-zA-Z]\.?$/i,     // appendix A, appendix B, etc.
-        /\bsection [a-zA-Z]\.?$/i,      // section A, section B, etc.
-        /\bpart [a-zA-Z]\.?$/i,         // part A, part B, etc.
-        /\boption [a-zA-Z]\.?$/i,       // option A, option B, etc.
-        /\bclass [a-zA-Z]\.?$/i,        // class A, class B, etc.
-        /\bgrade [a-zA-Z]\.?$/i,        // grade A, grade B, etc.
-        /\bmodel [a-zA-Z]\.?$/i,        // model A, model B, etc.
-        /\bphase [a-zA-Z]\.?$/i,        // phase A, phase B, etc.
-        
-        // Names and initials (common pattern in academic writing)
-        /\b[A-Z]\.\s*[A-Z]\.$/,        // R. E., J. D., etc.
-        /\b[A-Z][a-z]+\s+[A-Z]\.$/,    // Smith J., Jones R., etc.
-        /\b[A-Z]\.\s*[A-Z][a-z]+$/,    // R. Smith, J. Jones, etc.
-        
-        // Chemical/molecular notation
-        /\b[A-Z][0-9]*[a-zA-Z]?\.?$/,  // H2O, CO2, etc.
-        
-        // Common abbreviations that might end paragraphs
-        /\betc\.$/i,                   // etc.
-        /\bi\.e\.$/i,                  // i.e.
-        /\be\.g\.$/i                   // e.g.
-    ];
-    
-    return commonPatterns.some(pattern => pattern.test(trimmed));
-}
+// endsWithCommonSingleLetterWord function is now imported from validation module
 
-/**
- * Find the previous paragraph chunk (skipping headers)
- * @param {Array} chunks - All chunks
- * @param {number} currentIndex - Current chunk index
- * @returns {Object|null} - Previous paragraph chunk or null
- */
-function findPreviousParagraph(chunks, currentIndex) {
-    for (let i = currentIndex - 1; i >= 0; i--) {
-        if (chunks[i].type === 'paragraph') {
-            return chunks[i];
-        }
-    }
-    return null;
-}
+// findPreviousParagraph function is now imported from validation module
 
-/**
- * Find the next paragraph chunk (skipping headers)
- * @param {Array} chunks - All chunks
- * @param {number} currentIndex - Current chunk index
- * @returns {Object|null} - Next paragraph chunk or null
- */
-function findNextParagraph(chunks, currentIndex) {
-    for (let i = currentIndex + 1; i < chunks.length; i++) {
-        if (chunks[i].type === 'paragraph') {
-            return chunks[i];
-        }
-    }
-    return null;
-}
+// findNextParagraph function is now imported from validation module
 
-/**
- * Validate paragraph and header detection results
- * @param {Object} output - Output from execute function
- * @returns {boolean} - True if validation passes
- */
-function validate(output) {
-    const validationErrors = [];
-    
-    // Extract chunks from all chapters and add chapter title to each chunk
-    const allChunks = [];
-    if (output.chapters) {
-        for (const chapter of output.chapters) {
-            if (chapter.chunks) {
-                // Add chapter title to each chunk for validation
-                const chunksWithChapterTitle = chapter.chunks.map(chunk => ({
-                    ...chunk,
-                    chapterTitle: chapter.title
-                }));
-                allChunks.push(...chunksWithChapterTitle);
-            }
-        }
-    }
-    
-    // 1. chunks array has more than 5 items
-    if (!allChunks || allChunks.length <= 5) {
-        validationErrors.push(`Chunks array must have more than 5 items. Found: ${allChunks?.length || 0}`);
-    }
-    
-    if (allChunks && allChunks.length > 0) {
-        const chunks = allChunks;
-        
-        let hasParagraph = false;
-        let hasHeader = false;
-        
-        for (let i = 0; i < chunks.length; i++) {
-            const chunk = chunks[i];
-            const chapterInfo = chunk.chapterTitle ? ` (${chunk.chapterTitle})` : '';
-            const chunkIdentifier = chunk.chunkId || `chunk_${i + 1}`;
-            const fullChunkIdentifier = `${chunkIdentifier}${chapterInfo}`;
-            
-            // Skip validation for chunks in Appendix chapters
-            if (chunk.chapterTitle && chunk.chapterTitle.toLowerCase().includes('appendix')) {
-                // Still track chunk types for overall validation
-                if (chunk.type === 'paragraph') hasParagraph = true;
-                if (chunk.type === 'header') hasHeader = true;
-                continue;
-            }
-            
-            // Track chunk types
-            if (chunk.type === 'paragraph') hasParagraph = true;
-            if (chunk.type === 'header') hasHeader = true;
-            
-            // Check required fields
-            if (!chunk.type || (chunk.type !== 'paragraph' && chunk.type !== 'header')) {
-                validationErrors.push(`${fullChunkIdentifier} has invalid type: "${chunk.type}"`);
-                continue;
-            }
-            
-            if (!chunk.content || typeof chunk.content !== 'string') {
-                validationErrors.push(`${fullChunkIdentifier} has no content`);
-                continue;
-            }
-            
-            // 2. all paragraph and headers start with a capital letter (or valid alternatives for paragraphs)
-            if (chunk.content.length > 0) {
-                const firstChar = chunk.content.charAt(0);
-                
-                if (chunk.type === 'header') {
-                    // Headers must start with a capital letter
-                    if (firstChar !== firstChar.toUpperCase() || !/[A-Z]/.test(firstChar)) {
-                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
-                    }
-                } else if (chunk.type === 'paragraph') {
-                    // Paragraphs should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
-                    // but NOT lowercase letters (proper paragraph formatting)
-                    const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
-                    if (!isValidStart) {
-                        validationErrors.push(`Paragraph ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
-                    }
-                }
-            }
-            
-            // 3. word count validation
-            const wordCount = countWords(chunk.content);
-            
-            if (chunk.type === 'paragraph') {
-                // Paragraphs should be between 20 and 300 words for proper book content
-                if (wordCount < 20 || wordCount > 300) {
-                    let neighborInfo = '';
-                    if (wordCount < 20) {
-                        // Add information about neighboring paragraphs to understand why merging failed
-                        const prevParagraph = findPreviousParagraph(chunks, i);
-                        const nextParagraph = findNextParagraph(chunks, i);
-                        
-                        const prevInfo = prevParagraph ? 
-                            `previous: ${prevParagraph.chunkId} (${countWords(prevParagraph.content)} words, page ${prevParagraph.pageNumber})` : 
-                            'previous: none';
-                        const nextInfo = nextParagraph ? 
-                            `next: ${nextParagraph.chunkId} (${countWords(nextParagraph.content)} words, page ${nextParagraph.pageNumber})` : 
-                            'next: none';
-                        
-                        neighborInfo = ` - Neighbors: ${prevInfo}, ${nextInfo}`;
-                    }
-                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 300 words${neighborInfo}`);
-                }
-                
-                            // Check if paragraph ends with initials (but allow common words ending with single letters)
-            if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
-                validationErrors.push(`Paragraph ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
-            }
-        }
-        
-        if (chunk.type === 'header') {
-            // all headers are between 1 and 5 words
-            if (wordCount < 1 || wordCount > 5) {
-                validationErrors.push(`Header ${fullChunkIdentifier} word count (${wordCount}) must be between 1 and 5 words. Content: "${chunk.content}"`);
-            }
-        }
-        
-        // 5. link text validation - ensure all link text is actually present in chunk content
-        if (chunk.links && chunk.links.length > 0) {
-            for (const link of chunk.links) {
-                if (!isSourceTextInContent(link.text, chunk.content)) {
-                    validationErrors.push(`Link text "${link.text}" not found in ${fullChunkIdentifier} content`);
-                }
-            }
-        }
-        }
-        
-        // 4. chunks array has valid types both "paragraph" and "header"
-        if (!hasParagraph) {
-            validationErrors.push('Chunks array must contain at least one paragraph');
-        }
-        if (!hasHeader) {
-            validationErrors.push('Chunks array must contain at least one header');
-        }
-    }
-    
-    // Report all validation errors at once
-    if (validationErrors.length > 0) {
-        console.error(`❌ Chunk validation failed with ${validationErrors.length} error(s):`);
-        validationErrors.forEach((error, index) => {
-            console.error(`  ${index + 1}. ${error}`);
-        });
-        return false;
-    }
-    
-    return true;
-}
+const { validate, countWords, endsWithInitials, endsWithCommonSingleLetterWord, findPreviousParagraph, findNextParagraph, isSourceTextInContent } = require('./04-paragraph-detection-validation');
 
 module.exports = { execute, validate }; 
