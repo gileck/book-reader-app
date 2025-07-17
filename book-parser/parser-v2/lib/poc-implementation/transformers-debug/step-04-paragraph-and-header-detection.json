@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-07-16T12:02:10.408Z",
-  "processingTime": "39ms",
+  "timestamp": "2025-07-17T09:59:42.072Z",
+  "processingTime": "48ms",
   "summary": {
     "totalChapters": 10,
-    "totalChunks": 918,
-    "totalParagraphs": 810,
+    "totalChunks": 904,
+    "totalParagraphs": 796,
     "totalHeaders": 108,
     "totalWords": 117709,
-    "totalLinks": 299
+    "totalLinks": 282
   },
   "statistics": {
-    "totalChunks": 918,
-    "totalParagraphs": 810,
+    "totalChunks": 904,
+    "totalParagraphs": 796,
     "totalHeaders": 108,
     "totalWords": 117709,
-    "totalLinks": 299,
+    "totalLinks": 282,
     "paragraphStats": {
-      "count": 810,
+      "count": 796,
       "wordCounts": [
         194,
         188,
@@ -71,8 +71,7 @@
         138,
         188,
         191,
-        97,
-        14,
+        111,
         194,
         177,
         183,
@@ -164,8 +163,7 @@
         194,
         152,
         176,
-        183,
-        18,
+        201,
         197,
         175,
         84,
@@ -200,8 +198,7 @@
         79,
         177,
         197,
-        85,
-        4,
+        89,
         189,
         183,
         20,
@@ -318,8 +315,7 @@
         192,
         183,
         53,
-        198,
-        9,
+        207,
         181,
         25,
         158,
@@ -538,8 +534,7 @@
         195,
         193,
         89,
-        187,
-        16,
+        203,
         191,
         29,
         171,
@@ -618,8 +613,7 @@
         135,
         183,
         141,
-        187,
-        15,
+        202,
         179,
         96,
         166,
@@ -641,8 +635,7 @@
         60,
         159,
         190,
-        189,
-        16,
+        205,
         71,
         192,
         23,
@@ -651,13 +644,11 @@
         199,
         137,
         111,
-        195,
-        15,
+        210,
         139,
         198,
         54,
-        165,
-        6,
+        171,
         196,
         94,
         230,
@@ -683,8 +674,7 @@
         85,
         60,
         174,
-        186,
-        15,
+        201,
         190,
         184,
         117,
@@ -752,19 +742,16 @@
         194,
         37,
         118,
-        198,
-        12,
+        210,
         193,
         183,
-        52,
-        10,
+        62,
         176,
         194,
         33,
         93,
         166,
-        148,
-        3,
+        151,
         195,
         182,
         50,
@@ -772,8 +759,7 @@
         197,
         134,
         102,
-        199,
-        15,
+        214,
         68,
         187,
         198,
@@ -829,8 +815,8 @@
         143,
         71
       ],
-      "averageWords": 144.85555555555555,
-      "minWords": 3,
+      "averageWords": 147.4032663316583,
+      "minWords": 20,
       "maxWords": 230
     },
     "headerStats": {
@@ -954,8 +940,8 @@
     {
       "chapterNumber": 0,
       "title": "Introduction: Life itself",
-      "chunkCount": 61,
-      "paragraphCount": 55,
+      "chunkCount": 60,
+      "paragraphCount": 54,
       "headerCount": 6,
       "chunks": [
         {
@@ -1434,25 +1420,17 @@
           "type": "paragraph",
           "content": "In any\ncase, in stricter usage, the genetic code should be termed the genetic cipher. Cryptographers can get very cross about this. 3 Even this can be hard to interpret. A high concentration of some i...",
           "pageNumber": 25,
-          "wordCount": 97,
-          "sentenceCount": 5,
+          "wordCount": 111,
+          "sentenceCount": 6,
           "linkCount": 1
-        },
-        {
-          "type": "paragraph",
-          "content": "There are times when it feels as if metabolomics should\njust be called gnomics.",
-          "pageNumber": 26,
-          "wordCount": 14,
-          "sentenceCount": 1,
-          "linkCount": 0
         }
       ]
     },
     {
       "chapterNumber": 1,
       "title": "Discovering the nanocosm",
-      "chunkCount": 105,
-      "paragraphCount": 96,
+      "chunkCount": 104,
+      "paragraphCount": 95,
       "headerCount": 9,
       "chunks": [
         {
@@ -1589,7 +1567,7 @@
           "pageNumber": 32,
           "wordCount": 200,
           "sentenceCount": 10,
-          "linkCount": 2
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2205,7 +2183,7 @@
           "pageNumber": 58,
           "wordCount": 179,
           "sentenceCount": 7,
-          "linkCount": 2
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2229,7 +2207,7 @@
           "pageNumber": 59,
           "wordCount": 186,
           "sentenceCount": 10,
-          "linkCount": 2
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2245,7 +2223,7 @@
           "pageNumber": 60,
           "wordCount": 152,
           "sentenceCount": 7,
-          "linkCount": 3
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2253,23 +2231,15 @@
           "pageNumber": 60,
           "wordCount": 176,
           "sentenceCount": 7,
-          "linkCount": 2
+          "linkCount": 1
         },
         {
           "type": "paragraph",
           "content": "9 Mitchell had some wealth through his uncle, Sir Godfrey Mitchell, a\nconstruction engineer who had bought a small, insolvent construction company,\nGeorge Wimpey, in 1919. Under Godfrey’s dynamic dire...",
           "pageNumber": 60,
-          "wordCount": 183,
-          "sentenceCount": 7,
-          "linkCount": 2
-        },
-        {
-          "type": "paragraph",
-          "content": "Lehninger’s pioneering\nwork on bioenergetics included demonstrating that respiration takes place in mitochondria, the ‘power-houses’ of the cell.",
-          "pageNumber": 60,
-          "wordCount": 18,
-          "sentenceCount": 1,
-          "linkCount": 0
+          "wordCount": 201,
+          "sentenceCount": 8,
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2300,8 +2270,8 @@
     {
       "chapterNumber": 2,
       "title": "The path of carbon",
-      "chunkCount": 85,
-      "paragraphCount": 78,
+      "chunkCount": 84,
+      "paragraphCount": 77,
       "headerCount": 7,
       "chunks": [
         {
@@ -2334,7 +2304,7 @@
           "pageNumber": 63,
           "wordCount": 173,
           "sentenceCount": 6,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -2414,7 +2384,7 @@
           "pageNumber": 66,
           "wordCount": 175,
           "sentenceCount": 6,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -2446,7 +2416,7 @@
           "pageNumber": 67,
           "wordCount": 185,
           "sentenceCount": 10,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -2572,16 +2542,8 @@
           "type": "paragraph",
           "content": "That didn’t\nhappen because the prize cannot be awarded posthumously. Instead, the\ndiscovery, coupled with the untimely demise of their partnership, set in\ntrain a peculiar history that still influence...",
           "pageNumber": 72,
-          "wordCount": 85,
-          "sentenceCount": 3,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The dice were loaded.",
-          "pageNumber": 73,
-          "wordCount": 4,
-          "sentenceCount": 1,
+          "wordCount": 89,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -2942,7 +2904,7 @@
           "pageNumber": 88,
           "wordCount": 195,
           "sentenceCount": 10,
-          "linkCount": 2
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2950,7 +2912,7 @@
           "pageNumber": 88,
           "wordCount": 152,
           "sentenceCount": 9,
-          "linkCount": 2
+          "linkCount": 1
         },
         {
           "type": "paragraph",
@@ -2989,8 +2951,8 @@
     {
       "chapterNumber": 3,
       "title": "From gases to life",
-      "chunkCount": 93,
-      "paragraphCount": 88,
+      "chunkCount": 92,
+      "paragraphCount": 87,
       "headerCount": 5,
       "chunks": [
         {
@@ -3031,7 +2993,7 @@
           "pageNumber": 92,
           "wordCount": 77,
           "sentenceCount": 3,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -3597,16 +3559,8 @@
           "type": "paragraph",
           "content": "From this point of\nview, genetic information simply enables a more exact form of growth:\ngenes reproduce their own system more accurately and rapidly, which is\nto say they help protocells get better a...",
           "pageNumber": 118,
-          "wordCount": 198,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "It is the innermost sanctum of being. Our being.",
-          "pageNumber": 118,
-          "wordCount": 9,
-          "sentenceCount": 2,
+          "wordCount": 207,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -3711,7 +3665,7 @@
           "pageNumber": 122,
           "wordCount": 164,
           "sentenceCount": 8,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -4328,7 +4282,7 @@
           "pageNumber": 148,
           "wordCount": 193,
           "sentenceCount": 9,
-          "linkCount": 3
+          "linkCount": 2
         },
         {
           "type": "paragraph",
@@ -4697,7 +4651,7 @@
           "pageNumber": 162,
           "wordCount": 85,
           "sentenceCount": 4,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -5104,8 +5058,8 @@
     {
       "chapterNumber": 6,
       "title": "The flux capacitor",
-      "chunkCount": 96,
-      "paragraphCount": 91,
+      "chunkCount": 95,
+      "paragraphCount": 90,
       "headerCount": 5,
       "chunks": [
         {
@@ -5226,7 +5180,7 @@
           "pageNumber": 185,
           "wordCount": 200,
           "sentenceCount": 12,
-          "linkCount": 1
+          "linkCount": 0
         },
         {
           "type": "paragraph",
@@ -5488,16 +5442,8 @@
           "type": "paragraph",
           "content": "We know that any deficit in respiration necessarily disturbs\nKrebs-cycle flux, because the Krebs cycle cannot spin if NADH is not\nbeing oxidised in respiration. Finally, we know that regeneration of\nr...",
           "pageNumber": 196,
-          "wordCount": 187,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "I’m telling you all this\nbecause I could write almost exactly the same thing about ageing.",
-          "pageNumber": 196,
-          "wordCount": 16,
-          "sentenceCount": 1,
+          "wordCount": 203,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
@@ -6171,8 +6117,8 @@
     {
       "chapterNumber": 99,
       "title": "Appendix 2: The Krebs line",
-      "chunkCount": 276,
-      "paragraphCount": 212,
+      "chunkCount": 267,
+      "paragraphCount": 203,
       "headerCount": 64,
       "chunks": [
         {
@@ -6195,16 +6141,8 @@
           "type": "paragraph",
           "content": "Just in case you don’t recognise this as pyruvate, let me draw in the final\nstep again, showing it being released as pyruvate, which I hope you\nknow and love by now:\nWhen bound to the mineral surface,...",
           "pageNumber": 228,
-          "wordCount": 187,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Here’s why that Mad-Eye Moody oxygen is so reactive, which brings its own\ninexorable chemistry.",
-          "pageNumber": 228,
-          "wordCount": 15,
-          "sentenceCount": 1,
+          "wordCount": 202,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
@@ -6419,16 +6357,8 @@
           "type": "paragraph",
           "content": "A gripping story of the race to resolve the\nstructure of life’s protein-building factories, ending in the Nobel Prize for\nRamakrishnan. An exhilaratingly honest and thoughtful account, at times\nremini...",
           "pageNumber": 238,
-          "wordCount": 189,
-          "sentenceCount": 17,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Morowitz, ‘Universality in intermediary metabolism’,\nProceedings of the National Academy of Sciences USA 101 (2004) 13168–13173.",
-          "pageNumber": 238,
-          "wordCount": 16,
-          "sentenceCount": 1,
+          "wordCount": 205,
+          "sentenceCount": 18,
           "linkCount": 0
         },
         {
@@ -6539,16 +6469,8 @@
           "type": "paragraph",
           "content": "Albert Szent-Györgyi, ‘Lost in the Twentieth Century’, Annual Review of\nBiochemistry 32 (1963) 1–15. A short autobiography of one of the most brilliant\nand restless characters in biochemistry, includi...",
           "pageNumber": 241,
-          "wordCount": 195,
-          "sentenceCount": 25,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Puts\nSzent-Györgyi’s conception of carboxylic acids being the carriers of 2H to\noxygen into context.",
-          "pageNumber": 241,
-          "wordCount": 15,
-          "sentenceCount": 1,
+          "wordCount": 210,
+          "sentenceCount": 26,
           "linkCount": 0
         },
         {
@@ -6595,16 +6517,8 @@
           "type": "paragraph",
           "content": "G. D. Novelli and F. Lipmann, ‘The catalytic function of coenzyme A in citric\nacid synthesis’, Journal of Biological Chemistry 182 (1950) 213–228. The paper\nthat finally made sense of the first step o...",
           "pageNumber": 242,
-          "wordCount": 165,
-          "sentenceCount": 17,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Here at least, times have changed.",
-          "pageNumber": 243,
-          "wordCount": 6,
-          "sentenceCount": 1,
+          "wordCount": 171,
+          "sentenceCount": 18,
           "linkCount": 0
         },
         {
@@ -6923,16 +6837,8 @@
           "type": "paragraph",
           "content": "David W. Deamer, Assembling Life: How Can Life Begin on Earth and Other\nHabitable Planets? (Oxford, Oxford University Press, 2019). David Deamer has\nworked on the origin of life over several decades a...",
           "pageNumber": 251,
-          "wordCount": 186,
-          "sentenceCount": 20,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Here he teams up with some leading phylogeneticists including the brilliant and prolific Eugene\nKoonin.",
-          "pageNumber": 251,
-          "wordCount": 15,
-          "sentenceCount": 1,
+          "wordCount": 201,
+          "sentenceCount": 21,
           "linkCount": 0
         },
         {
@@ -7683,16 +7589,8 @@
           "type": "paragraph",
           "content": "T. A. Manolio, F. S. Collins, N. J. Cox et al. , ‘Finding the missing heritability of\ncomplex diseases’, Nature 461 (2009) 747–753. One of the first papers to spell\nout the problem which has only part...",
           "pageNumber": 272,
-          "wordCount": 198,
-          "sentenceCount": 33,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The\npaper from Doug Wallace’s PhD thesis on cybrids treated with antibiotics.",
-          "pageNumber": 272,
-          "wordCount": 12,
-          "sentenceCount": 1,
+          "wordCount": 210,
+          "sentenceCount": 34,
           "linkCount": 0
         },
         {
@@ -7715,16 +7613,8 @@
           "type": "paragraph",
           "content": "A mathematical model showing that the architecture of\nthe female germline can be understood in terms of selection against detrimental\nmutations in mitochondrial DNA. D. C. Wallace, ‘Mitochondria as ch...",
           "pageNumber": 273,
-          "wordCount": 52,
-          "sentenceCount": 5,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "An important synthesis; should be required reading for\nmedical students.",
-          "pageNumber": 274,
-          "wordCount": 10,
-          "sentenceCount": 1,
+          "wordCount": 62,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
@@ -7795,16 +7685,8 @@
           "type": "paragraph",
           "content": "Raymond Pearl, The Rate of Living. Being an Account of some Experimental\nStudies on the Biology of Life Duration (London, University of London Press,\n1928). Raymond Pearl’s rate of living theory fell ...",
           "pageNumber": 275,
-          "wordCount": 148,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "B. S. Haldane.",
-          "pageNumber": 276,
-          "wordCount": 3,
-          "sentenceCount": 3,
+          "wordCount": 151,
+          "sentenceCount": 12,
           "linkCount": 0
         },
         {
@@ -7891,16 +7773,8 @@
           "type": "paragraph",
           "content": "E. Area-Gomez and E. A. Schon, ‘On the pathogenesis of Alzheimer’s disease:\nthe MAM hypothesis’, FASEB Journal 31 (2017) 864–867. An extremely\ncoherent explanation for Alzheimer’s disease, linking mit...",
           "pageNumber": 278,
-          "wordCount": 199,
-          "sentenceCount": 28,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The membrane potential\nchanges quickly and can achieve the highest levels only in this way.",
-          "pageNumber": 278,
-          "wordCount": 15,
-          "sentenceCount": 1,
+          "wordCount": 214,
+          "sentenceCount": 29,
           "linkCount": 0
         },
         {

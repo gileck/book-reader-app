@@ -374,8 +374,34 @@ function optimizeChunkSizes(chunks) {
         }
         
         // For paragraphs, apply size optimization
-        if (chunk.wordCount < 100) {
-            // Try to merge with next paragraph chunk
+        if (chunk.wordCount < 20) {
+            // Merge very small paragraphs (< 20 words) to meet validation requirements
+            const mergedChunk = tryMergeWithNextParagraph(chunks, i);
+            if (mergedChunk) {
+                optimized.push(mergedChunk.merged);
+                
+                // Process any headers that were skipped during merge
+                for (let skipIndex = i + 1; skipIndex < mergedChunk.nextIndex; skipIndex++) {
+                    if (chunks[skipIndex].type === 'header') {
+                        optimized.push(chunks[skipIndex]);
+                    }
+                }
+                
+                i = mergedChunk.nextIndex; // Skip to the merged paragraph
+            } else {
+                // Try merging with previous paragraph if next merge failed
+                const mergedWithPrevious = tryMergeWithPreviousParagraph(optimized, chunk);
+                if (mergedWithPrevious) {
+                    // Replace the last optimized chunk with the merged version
+                    optimized[optimized.length - 1] = mergedWithPrevious;
+    
+                } else {
+    
+                    optimized.push(chunk);
+                }
+            }
+        } else if (chunk.wordCount < 100) {
+            // Try to merge medium-sized paragraphs for better optimization
             const mergedChunk = tryMergeWithNextParagraph(chunks, i);
             if (mergedChunk) {
                 optimized.push(mergedChunk.merged);
@@ -400,9 +426,48 @@ function optimizeChunkSizes(chunks) {
         }
     }
     
-
+    // Second pass: merge any small paragraphs that were created during splitting
+    const secondPassOptimized = [];
     
-    return optimized;
+    for (let i = 0; i < optimized.length; i++) {
+        const chunk = optimized[i];
+        
+        // Headers are never optimized
+        if (chunk.type === 'header') {
+            secondPassOptimized.push(chunk);
+            continue;
+        }
+        
+        if (chunk.type === 'paragraph' && chunk.wordCount < 20) {
+            // Try to merge with previous paragraph
+            const mergedWithPrevious = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
+            if (mergedWithPrevious) {
+                // Replace the last optimized chunk with the merged version
+                secondPassOptimized[secondPassOptimized.length - 1] = mergedWithPrevious;
+            } else {
+                // Try to merge with next paragraph
+                const mergedWithNext = tryMergeWithNextParagraph(optimized, i);
+                if (mergedWithNext) {
+                    secondPassOptimized.push(mergedWithNext.merged);
+                    
+                    // Process any headers that were skipped during merge
+                    for (let skipIndex = i + 1; skipIndex < mergedWithNext.nextIndex; skipIndex++) {
+                        if (optimized[skipIndex].type === 'header') {
+                            secondPassOptimized.push(optimized[skipIndex]);
+                        }
+                    }
+                    
+                    i = mergedWithNext.nextIndex; // Skip to the merged paragraph
+                } else {
+                    secondPassOptimized.push(chunk);
+                }
+            }
+        } else {
+            secondPassOptimized.push(chunk);
+        }
+    }
+    
+    return secondPassOptimized;
 }
 
 /**
@@ -436,17 +501,23 @@ function tryMergeWithNextParagraph(chunks, currentIndex) {
             
             const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
             
-            // Only merge if combined size is reasonable
-            if (combinedWordCount <= 300) {
+            // Only merge if combined size is reasonable (more generous for very small paragraphs)
+            const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
+            if (combinedWordCount <= maxCombinedSize) {
+                const mergedContent = currentChunk.content + '\n' + nextChunk.content;
+                // Get all potential links from both chunks and re-validate against merged content
+                const allPotentialLinks = [...(currentChunk.links || []), ...(nextChunk.links || [])];
+                const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
+                
                 return {
                     merged: {
                         chunkId: currentChunk.chunkId, // Keep original chunkId without suffix
                         type: 'paragraph',
-                        content: currentChunk.content + '\n' + nextChunk.content,
+                        content: mergedContent,
                         pageNumber: currentChunk.pageNumber,
                         wordCount: combinedWordCount,
                         sentenceCount: currentChunk.sentenceCount + nextChunk.sentenceCount,
-                        links: [...(currentChunk.links || []), ...(nextChunk.links || [])]
+                        links: removeDuplicateLinks(validLinks)
                     },
                     nextIndex: i
                 };
@@ -454,6 +525,59 @@ function tryMergeWithNextParagraph(chunks, currentIndex) {
         }
         
         break; // Only check the next paragraph chunk
+    }
+    
+    return null;
+}
+
+/**
+ * Try to merge current small paragraph with previous paragraph chunk
+ * @param {Array} optimizedChunks - Already processed chunks
+ * @param {Object} currentChunk - Current small chunk to merge
+ * @returns {Object|null} - Merged chunk or null if no merge possible
+ */
+function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
+    // Look backwards for the last paragraph chunk (skip headers)
+    for (let i = optimizedChunks.length - 1; i >= 0; i--) {
+        const previousChunk = optimizedChunks[i];
+        
+        if (previousChunk.type === 'header') {
+            // If there's a header between paragraphs, don't merge across it
+            continue;
+        }
+        
+        if (previousChunk.type === 'paragraph') {
+            // Don't merge paragraphs from different pages unless they're consecutive
+            if (previousChunk.pageNumber !== currentChunk.pageNumber) {
+                const pageDifference = currentChunk.pageNumber - previousChunk.pageNumber;
+                if (pageDifference > 1) {
+                    break; // Don't merge across non-consecutive pages
+                }
+            }
+            
+            const combinedWordCount = previousChunk.wordCount + currentChunk.wordCount;
+            
+            // Only merge if combined size is reasonable (more generous for very small paragraphs)
+            const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
+            if (combinedWordCount <= maxCombinedSize) {
+                const mergedContent = previousChunk.content + '\n' + currentChunk.content;
+                // Get all potential links from both chunks and re-validate against merged content
+                const allPotentialLinks = [...(previousChunk.links || []), ...(currentChunk.links || [])];
+                const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
+                
+                return {
+                    chunkId: previousChunk.chunkId, // Keep original chunkId
+                    type: 'paragraph',
+                    content: mergedContent,
+                    pageNumber: previousChunk.pageNumber,
+                    wordCount: combinedWordCount,
+                    sentenceCount: previousChunk.sentenceCount + currentChunk.sentenceCount,
+                    links: removeDuplicateLinks(validLinks)
+                };
+            }
+        }
+        
+        break; // Only check the most recent paragraph chunk
     }
     
     return null;
@@ -477,14 +601,15 @@ function splitLargeParagraph(chunk) {
         
         if (currentWordCount + sentenceWordCount > 200 && currentContent.trim()) {
             // Create chunk with current content
+            const trimmedContent = currentContent.trim();
             chunks.push({
                 chunkId: chunk.chunkId,
                 type: 'paragraph',
-                content: currentContent.trim(),
+                content: trimmedContent,
                 pageNumber: chunk.pageNumber,
                 wordCount: currentWordCount,
                 sentenceCount: currentSentenceCount,
-                links: (chunk.links || []).filter(link => currentContent.trim().includes(link.text))
+                links: (chunk.links || []).filter(link => isSourceTextInContent(link.text, trimmedContent))
             });
             
             splitIndex++;
@@ -498,14 +623,15 @@ function splitLargeParagraph(chunk) {
     
     // Add remaining content
     if (currentContent.trim()) {
+        const trimmedContent = currentContent.trim();
         chunks.push({
             chunkId: chunk.chunkId,
             type: 'paragraph',
-            content: currentContent.trim(),
+            content: trimmedContent,
             pageNumber: chunk.pageNumber,
             wordCount: getWordCount(currentContent),
             sentenceCount: currentSentenceCount,
-            links: (chunk.links || []).filter(link => currentContent.trim().includes(link.text))
+            links: (chunk.links || []).filter(link => isSourceTextInContent(link.text, trimmedContent))
         });
     }
     
@@ -529,7 +655,8 @@ function splitIntoSentences(text) {
  * @returns {number} - Word count
  */
 function getWordCount(text) {
-    return text.trim().split(/\s+/).length;
+    if (!text || typeof text !== 'string') return 0;
+    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 }
 
 /**
@@ -620,23 +747,51 @@ function extractLinksFromContent(content, pageLinks) {
  * @returns {boolean} - True if source text is found
  */
 function isSourceTextInContent(sourceText, content) {
-    // Direct match
-    if (content.includes(sourceText)) {
-        return true;
-    }
-    
-    // Flexible footnote matching
+    // For footnote numbers, use strict footnote pattern matching
     if (/^\d+$/.test(sourceText)) {
-        const patterns = [
-            new RegExp(`\\b${sourceText}\\b`),
-            new RegExp(`${sourceText}\\s*[.,;]`),
-            new RegExp(`\\s${sourceText}\\s*$`)
-        ];
-    
-        return patterns.some(pattern => pattern.test(content));
+        return isFootnoteInContent(sourceText, content);
     }
     
-    return false;
+    // For non-numeric link text, use direct match
+    return content.includes(sourceText);
+}
+
+/**
+ * Check if a footnote number appears as a standalone footnote in content
+ * @param {string} footnoteNumber - The footnote number to find
+ * @param {string} content - Content to search in
+ * @returns {boolean} - True if footnote is found as standalone reference
+ */
+function isFootnoteInContent(footnoteNumber, content) {
+    // Footnote patterns that should match:
+    // ". 8 For" (period, space, number, space/punctuation)
+    // ".8 For" (period, number, space/punctuation)  
+    // " 8 For" (space, number, space/punctuation)
+    // "9 Mitchell" (start of content, number, space/punctuation)
+    // "(8)" (parentheses around number)
+    // "[8]" (brackets around number)
+    
+    const patterns = [
+        // Period followed by optional space, then number, then space or punctuation
+        new RegExp(`\\.\\s*${footnoteNumber}(?=\\s|[.,;:!?)]|$)`),
+        
+        // Space followed by number, then space or punctuation  
+        new RegExp(`\\s${footnoteNumber}(?=\\s|[.,;:!?)]|$)`),
+        
+        // Start of content, number, then space or punctuation
+        new RegExp(`^${footnoteNumber}(?=\\s|[.,;:!?)])`),
+        
+        // Number in parentheses
+        new RegExp(`\\(${footnoteNumber}\\)`),
+        
+        // Number in square brackets
+        new RegExp(`\\[${footnoteNumber}\\]`),
+        
+        // Number followed by period (like "8.")
+        new RegExp(`\\b${footnoteNumber}\\.`)
+    ];
+    
+    return patterns.some(pattern => pattern.test(content));
 }
 
 /**
@@ -815,6 +970,36 @@ function endsWithCommonSingleLetterWord(text) {
 }
 
 /**
+ * Find the previous paragraph chunk (skipping headers)
+ * @param {Array} chunks - All chunks
+ * @param {number} currentIndex - Current chunk index
+ * @returns {Object|null} - Previous paragraph chunk or null
+ */
+function findPreviousParagraph(chunks, currentIndex) {
+    for (let i = currentIndex - 1; i >= 0; i--) {
+        if (chunks[i].type === 'paragraph') {
+            return chunks[i];
+        }
+    }
+    return null;
+}
+
+/**
+ * Find the next paragraph chunk (skipping headers)
+ * @param {Array} chunks - All chunks
+ * @param {number} currentIndex - Current chunk index
+ * @returns {Object|null} - Next paragraph chunk or null
+ */
+function findNextParagraph(chunks, currentIndex) {
+    for (let i = currentIndex + 1; i < chunks.length; i++) {
+        if (chunks[i].type === 'paragraph') {
+            return chunks[i];
+        }
+    }
+    return null;
+}
+
+/**
  * Validate paragraph and header detection results
  * @param {Object} output - Output from execute function
  * @returns {boolean} - True if validation passes
@@ -902,21 +1087,45 @@ function validate(output) {
             if (chunk.type === 'paragraph') {
                 // Paragraphs should be between 20 and 300 words for proper book content
                 if (wordCount < 20 || wordCount > 300) {
-                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 300 words`);
+                    let neighborInfo = '';
+                    if (wordCount < 20) {
+                        // Add information about neighboring paragraphs to understand why merging failed
+                        const prevParagraph = findPreviousParagraph(chunks, i);
+                        const nextParagraph = findNextParagraph(chunks, i);
+                        
+                        const prevInfo = prevParagraph ? 
+                            `previous: ${prevParagraph.chunkId} (${countWords(prevParagraph.content)} words, page ${prevParagraph.pageNumber})` : 
+                            'previous: none';
+                        const nextInfo = nextParagraph ? 
+                            `next: ${nextParagraph.chunkId} (${countWords(nextParagraph.content)} words, page ${nextParagraph.pageNumber})` : 
+                            'next: none';
+                        
+                        neighborInfo = ` - Neighbors: ${prevInfo}, ${nextInfo}`;
+                    }
+                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 300 words${neighborInfo}`);
                 }
                 
-                // Check if paragraph ends with initials (but allow common words ending with single letters)
-                if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
-                    validationErrors.push(`Paragraph ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+                            // Check if paragraph ends with initials (but allow common words ending with single letters)
+            if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
+                validationErrors.push(`Paragraph ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+            }
+        }
+        
+        if (chunk.type === 'header') {
+            // all headers are between 1 and 5 words
+            if (wordCount < 1 || wordCount > 5) {
+                validationErrors.push(`Header ${fullChunkIdentifier} word count (${wordCount}) must be between 1 and 5 words. Content: "${chunk.content}"`);
+            }
+        }
+        
+        // 5. link text validation - ensure all link text is actually present in chunk content
+        if (chunk.links && chunk.links.length > 0) {
+            for (const link of chunk.links) {
+                if (!isSourceTextInContent(link.text, chunk.content)) {
+                    validationErrors.push(`Link text "${link.text}" not found in ${fullChunkIdentifier} content`);
                 }
             }
-            
-            if (chunk.type === 'header') {
-                // all headers are between 1 and 5 words
-                if (wordCount < 1 || wordCount > 5) {
-                    validationErrors.push(`Header ${fullChunkIdentifier} word count (${wordCount}) must be between 1 and 5 words. Content: "${chunk.content}"`);
-                }
-            }
+        }
         }
         
         // 4. chunks array has valid types both "paragraph" and "header"
