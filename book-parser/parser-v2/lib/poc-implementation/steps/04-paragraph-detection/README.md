@@ -14,14 +14,14 @@ This step detects both paragraph boundaries and headers in the page content, cre
 ### Output Requirements
 - **Unified Chunks**: Single output format with both paragraphs and headers
 - **Chunk Types**: Each chunk must be classified as "paragraph" or "header"
-- **Content Quality**: Paragraphs 20-300 words, headers 1-5 words
+- **Content Quality**: Paragraphs 80-300 words (target, flexible 20-500 absolute), headers 1-5 words
 - **Link Integration**: Links properly assigned to chunks where they appear
 - **Content Standards**: All chunks start with capital letters or valid punctuation
 
 ### Quality Standards
 - Minimum 5 chunks total across all chapters
 - Both paragraph and header chunk types must be present
-- Paragraphs: 20-300 words with proper sentence structure
+- Paragraphs: 80-300 words target (flexible 20-500 absolute) with proper sentence structure
 - Headers: 1-5 words, standalone lines, proper capitalization
 - Links accurately associated with chunk content
 

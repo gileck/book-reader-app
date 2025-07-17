@@ -2,8 +2,8 @@
   "linkDetectionMetadata": {
     "totalLinks": 290,
     "totalPdfLinks": 2214,
-    "processingTime": 862,
-    "detectionTime": "2025-07-17T11:45:18.337Z",
+    "processingTime": 998,
+    "detectionTime": "2025-07-17T12:48:02.734Z",
     "note": "Link detection and resolution from PDF annotations"
   },
   "pdfLinks": [

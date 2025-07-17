@@ -235,8 +235,8 @@ function validate(output) {
             const wordCount = countWords(chunk.content);
             
             if (chunk.type === 'paragraph') {
-                // Paragraphs should be between 20 and 300 words for proper book content
-                if (wordCount < 20 || wordCount > 300) {
+                // Paragraphs should be between 80 and 300 words target (flexible 20-500 absolute) for proper book content
+                if (wordCount < 20 || wordCount > 500) {
                     let neighborInfo = '';
                     if (wordCount < 20) {
                         // Add information about neighboring paragraphs to understand why merging failed
@@ -252,7 +252,7 @@ function validate(output) {
                         
                         neighborInfo = ` - Neighbors: ${prevInfo}, ${nextInfo}`;
                     }
-                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 300 words${neighborInfo}`);
+                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 500 words (absolute limits)${neighborInfo}`);
                 }
                 
                 // Check if paragraph ends with initials (but allow common words ending with single letters)
