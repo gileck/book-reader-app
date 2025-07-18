@@ -1,0 +1,114 @@
+BOOK PARSING REPORT
+===================
+
+📖 PDF File: /Users/gil/Projects/book-reader-app/files/Transformers/book.pdf
+⏱️  Start Time: 2025-07-18T08:00:39.300Z
+⏱️  End Time: 2025-07-18T08:00:49.820Z
+⏱️  Total Duration: 10520ms
+✅ Success: true
+📊 Steps Executed: 8
+
+STEP-BY-STEP RESULTS
+====================
+
+STEP-1
+------
+✅ Success: true
+⏱️  Duration: 1958ms
+🕐 Timestamp: 2025-07-18T08:00:41.258Z
+✅ Validation: PASSED
+
+STEP-2-1
+--------
+✅ Success: true
+⏱️  Duration: 1791ms
+🕐 Timestamp: 2025-07-18T08:00:43.057Z
+✅ Validation: PASSED
+
+STEP-2-2
+--------
+✅ Success: true
+⏱️  Duration: 20ms
+🕐 Timestamp: 2025-07-18T08:00:43.079Z
+✅ Validation: PASSED
+
+STEP-2-3
+--------
+✅ Success: true
+⏱️  Duration: 7ms
+🕐 Timestamp: 2025-07-18T08:00:43.097Z
+✅ Validation: PASSED
+
+STEP-3
+------
+✅ Success: true
+⏱️  Duration: 138ms
+🕐 Timestamp: 2025-07-18T08:00:43.244Z
+✅ Validation: PASSED
+
+STEP-3-1
+--------
+✅ Success: true
+⏱️  Duration: 2555ms
+🕐 Timestamp: 2025-07-18T08:00:45.820Z
+✅ Validation: PASSED
+
+STEP-3-2
+--------
+✅ Success: true
+⏱️  Duration: 3815ms
+🕐 Timestamp: 2025-07-18T08:00:49.649Z
+✅ Validation: PASSED
+
+STEP-4
+------
+✅ Success: true
+⏱️  Duration: 128ms
+🕐 Timestamp: 2025-07-18T08:00:49.810Z
+✅ Validation: PASSED
+
+FINAL OUTPUT SUMMARY
+====================
+📚 Total Chapters: 10
+  Chapter 1: Introduction: Life itself
+    📄 Pages: 19
+    🔗 Links: 6
+  Chapter 2: Discovering the nanocosm
+    📄 Pages: 35
+    🖼️  Images: 9
+    🔗 Links: 24
+  Chapter 3: The path of carbon
+    📄 Pages: 29
+    🖼️  Images: 6
+    🔗 Links: 20
+  Chapter 4: From gases to life
+    📄 Pages: 33
+    🖼️  Images: 11
+    🔗 Links: 13
+  Chapter 5: Revolutions
+    📄 Pages: 26
+    🖼️  Images: 4
+    🔗 Links: 10
+  Chapter 6: To the dark side
+    📄 Pages: 31
+    🖼️  Images: 9
+    🔗 Links: 15
+  Chapter 7: The flux capacitor
+    📄 Pages: 30
+    🖼️  Images: 1
+    🔗 Links: 20
+  Chapter 8: Epilogue: Self
+    📄 Pages: 11
+    🖼️  Images: 2
+  Chapter 9: Appendix 1: Red protein mechanics
+    📄 Pages: 5
+    🖼️  Images: 8
+  Chapter 10: Appendix 2: The Krebs line
+    📄 Pages: 90
+    🖼️  Images: 8
+    🔗 Links: 182
+
+NOTE: output.json contains the final step output (step-4: paragraph detection)
+For complete data with images and links, see steps-output/step-3-2.json
+
+Report generated on: 2025-07-18T08:00:49.945Z

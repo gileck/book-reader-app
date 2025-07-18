@@ -1,5 +1,0 @@
-PARAGRAPH ANALYSIS:
-Line 21: "stem cells 203, 208n4"
-  StartX: 77, Y: 411
-  NextStartX: 77, IndentDiff: 0
-  ShouldBreak: false

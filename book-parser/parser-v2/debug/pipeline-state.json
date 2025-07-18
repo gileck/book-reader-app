@@ -1,0 +1,23 @@
+{
+  "rawText": null,
+  "chapterMetadata": [],
+  "chapters": [],
+  "mergedChapters": [],
+  "paragraphs": [],
+  "headers": [],
+  "chunks": [],
+  "pages": [],
+  "finalOutput": null,
+  "metadata": {
+    "processingStartTime": "2025-07-18T07:16:47.747Z",
+    "processingEndTime": null,
+    "stepResults": {
+      "step-1": {
+        "success": false,
+        "duration": 1,
+        "timestamp": "2025-07-18T07:16:47.749Z",
+        "error": "PDF file not found: /Users/gil/files/Transformers/book.pdf"
+      }
+    }
+  }
+}

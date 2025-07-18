@@ -11130,7 +11130,7 @@
   ],
   "metadata": {
     "processingStartTime": "2025-07-18T08:00:39.299Z",
-    "processingEndTime": "2025-07-18T08:00:49.820Z",
+    "processingEndTime": null,
     "stepResults": {
       "step-4": {
         "totalChunks": 962,

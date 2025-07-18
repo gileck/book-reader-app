@@ -1,1 +1,0 @@
-node ../../book-parser/parser/index.js ./book.pdf --debug

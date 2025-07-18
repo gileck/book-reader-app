@@ -1,7 +1,0 @@
-SMART PARAGRAPH DETECTION DEBUG:
-Original lines: 1
-Initial paragraphs: 1
-After merging: 1
-
-Paragraphs containing target text:
-Paragraph 0: "R. E . Giles, H. Blanc, H. M. Cann and D. C. Wallace, ‘Maternal inheritance of human mitochondrial DNA’, Proceedings of the National Academy of Sciences USA 77 (1980) 6715–671. The first demonstration..."

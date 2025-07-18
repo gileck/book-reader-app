@@ -1,6 +1,0 @@
-ALL ORIGINAL PARAGRAPHS BEFORE MERGING:
-Total paragraphs: 1
-Paragraphs < 60 words: 0
-Paragraphs >= 60 words: 1
-
-Paragraph 0 (93 words): "Table of Contents Praise for Transformer 1 Title Page 3 Copyright 4 Dedication 5 Contents 6 Introduction: Life itself 8 1. Discovering the nanocosm 27 2. The path of carbon 62 3. From gases to life 91 4. Revolutions 124 5. To the dark side 150 6. The flux capacitor 181 Epilogue: Self 211 Envoi: ‘Lik..."
