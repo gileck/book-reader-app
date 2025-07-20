@@ -15,6 +15,7 @@ export interface Book {
     isPublic: boolean;
     uploadedBy?: ObjectId;
     chapterStartNumber: number;
+    parserVersion?: number;          // 1 (original) or 2 (new parser) - NEW field
 }
 
 export type BookCreate = Omit<Book, '_id'>;

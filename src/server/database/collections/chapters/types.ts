@@ -1,10 +1,14 @@
 import { ObjectId } from 'mongodb';
 
-export interface LinkReference {
-    text: string;
-    targetChunk: number;
-    chapterNumber: number;
-    wordIndex?: number; // Index of the word within the chunk text for highlighting
+// Updated to match client-side ChunkLink interface for parser v2 compatibility
+export interface ChunkLink {
+    text: string;                    // Link text as it appears in content
+    targetPageNumber?: number;       // PDF page number target
+    targetText?: string;             // Target content context
+    linkId: string;                  // Unique link identifier
+    role: 'source' | 'target';       // Link role in relationship
+    targetChunk?: number;            // Target chunk index (if resolved)
+    chapterNumber?: number;          // Target chapter (if cross-chapter link)
 }
 
 export interface TextChunk {
@@ -13,9 +17,10 @@ export interface TextChunk {
     wordCount: number;
     type: 'text' | 'image' | 'header';
     pageNumber?: number;
+    sentenceCount?: number;          // New field for parser v2
     imageName?: string;
     imageAlt?: string;
-    links?: LinkReference[]; // Links within this chunk with word indices
+    links?: ChunkLink[];             // Updated to use ChunkLink interface
 }
 
 export interface ChapterContent {

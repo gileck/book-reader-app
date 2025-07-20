@@ -339,7 +339,7 @@ function createParagraphChunk(content, page, chunkId) {
 
     return {
         chunkId: chunkId,
-        type: 'paragraph',
+        type: 'text',
         content: content,
         pageNumber: page.pageNumber,
         wordCount: getWordCount(content),

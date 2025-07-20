@@ -127,7 +127,7 @@ function endsWithCommonSingleLetterWord(text) {
  */
 function findPreviousParagraph(chunks, currentIndex) {
     for (let i = currentIndex - 1; i >= 0; i--) {
-        if (chunks[i].type === 'paragraph') {
+        if (chunks[i].type === 'text') {
             return chunks[i];
         }
     }
@@ -142,7 +142,7 @@ function findPreviousParagraph(chunks, currentIndex) {
  */
 function findNextParagraph(chunks, currentIndex) {
     for (let i = currentIndex + 1; i < chunks.length; i++) {
-        if (chunks[i].type === 'paragraph') {
+        if (chunks[i].type === 'text') {
             return chunks[i];
         }
     }
@@ -192,17 +192,17 @@ function validate(output) {
             // Skip validation for chunks in Appendix chapters
             if (chunk.chapterTitle && chunk.chapterTitle.toLowerCase().includes('appendix')) {
                 // Still track chunk types for overall validation
-                if (chunk.type === 'paragraph') hasParagraph = true;
+                if (chunk.type === 'text') hasParagraph = true;
                 if (chunk.type === 'header') hasHeader = true;
                 continue;
             }
 
             // Track chunk types
-            if (chunk.type === 'paragraph') hasParagraph = true;
+            if (chunk.type === 'text') hasParagraph = true;
             if (chunk.type === 'header') hasHeader = true;
 
             // Check required fields
-            if (!chunk.type || (chunk.type !== 'paragraph' && chunk.type !== 'header' && chunk.type !== 'image')) {
+            if (!chunk.type || (chunk.type !== 'text' && chunk.type !== 'header' && chunk.type !== 'image')) {
                 validationErrors.push(`${fullChunkIdentifier} has invalid type: "${chunk.type}"`);
                 continue;
             }
@@ -234,12 +234,12 @@ function validate(output) {
                     if (firstChar !== firstChar.toUpperCase() || !/[A-Z]/.test(firstChar)) {
                         validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
-                } else if (chunk.type === 'paragraph') {
-                    // Paragraphs should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
-                    // but NOT lowercase letters (proper paragraph formatting)
+                } else if (chunk.type === 'text') {
+                    // Text chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
+                    // but NOT lowercase letters (proper text formatting)
                     const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
                     if (!isValidStart) {
-                        validationErrors.push(`Paragraph ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
+                        validationErrors.push(`Text chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                 }
             }
@@ -255,12 +255,12 @@ function validate(output) {
                 if (chunk.sentenceCount !== 0) {
                     validationErrors.push(`Image ${fullChunkIdentifier} should have sentenceCount of 0, found: ${chunk.sentenceCount}`);
                 }
-            } else if (chunk.type === 'paragraph') {
-                // Paragraphs should be between 80 and 300 words target (flexible 20-500 absolute) for proper book content
+            } else if (chunk.type === 'text') {
+                // Text chunks should be between 80 and 300 words target (flexible 20-500 absolute) for proper book content
                 if (wordCount < 20 || wordCount > 500) {
                     let neighborInfo = '';
                     if (wordCount < 20) {
-                        // Add information about neighboring paragraphs to understand why merging failed
+                        // Add information about neighboring text chunks to understand why merging failed
                         const prevParagraph = findPreviousParagraph(chunks, i);
                         const nextParagraph = findNextParagraph(chunks, i);
 
@@ -273,12 +273,12 @@ function validate(output) {
 
                         neighborInfo = ` - Neighbors: ${prevInfo}, ${nextInfo}`;
                     }
-                    validationErrors.push(`Paragraph ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 500 words (absolute limits)${neighborInfo}`);
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 500 words (absolute limits)${neighborInfo}`);
                 }
 
-                // Check if paragraph ends with initials (but allow common words ending with single letters)
+                // Check if text chunk ends with initials (but allow common words ending with single letters)
                 if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
-                    validationErrors.push(`Paragraph ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
                 }
             }
 
@@ -299,9 +299,9 @@ function validate(output) {
             }
         }
 
-        // 4. chunks array has valid types both "paragraph" and "header"
+        // 4. chunks array has valid types both "text" and "header"
         if (!hasParagraph) {
-            validationErrors.push('Chunks array must contain at least one paragraph');
+            validationErrors.push('Chunks array must contain at least one text chunk');
         }
         if (!hasHeader) {
             validationErrors.push('Chunks array must contain at least one header');

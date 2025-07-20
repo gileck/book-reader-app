@@ -1,0 +1,36 @@
+{
+  "titleCandidates": [
+    {
+      "text": "TRANSFORMER",
+      "confidence": 0.9,
+      "source": "title_page_pattern",
+      "pattern": 0
+    },
+    {
+      "text": "I NTRODUCTION \nLIFE ITSELF",
+      "confidence": 0.9,
+      "source": "title_page_pattern",
+      "pattern": 0
+    }
+  ],
+  "authorCandidates": [
+    {
+      "text": "Nick Lane",
+      "confidence": 0.95,
+      "source": "copyright"
+    }
+  ],
+  "publicationMatches": [
+    {
+      "type": "publisher",
+      "text": "publisher of this book"
+    }
+  ],
+  "languageConfidence": {
+    "language": "en",
+    "confidence": 0.8837772397094432,
+    "matches": 73,
+    "totalWords": 826
+  },
+  "processingTime": 8
+}

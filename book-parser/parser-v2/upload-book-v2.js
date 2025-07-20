@@ -105,19 +105,25 @@ async function uploadImagesToBlob(book, imagesPath, db) {
     const uploadedImages = await Promise.all(uploadPromises);
     console.log(`✅ Successfully uploaded ${uploadedImages.length} images to Vercel Blob`);
 
-    // Update book with relative imageBaseURL path
+    // Update book with relative imageBaseURL path and coverImage
     const relativeImagePath = `/${bookFolderName}/images/`;
     const booksCollection = db.collection('books');
     const chaptersCollection = db.collection('chapters');
 
+    // Set coverImage to the first uploaded image
+    const updateData = {
+        imageBaseURL: relativeImagePath,
+        updatedAt: new Date()
+    };
+
+    if (uploadedImages.length > 0) {
+        updateData.coverImage = `${relativeImagePath}${uploadedImages[0].filename}`;
+        console.log(`🖼️  Set cover image: ${updateData.coverImage}`);
+    }
+
     await booksCollection.updateOne(
         { _id: book._id },
-        {
-            $set: {
-                imageBaseURL: relativeImagePath,
-                updatedAt: new Date()
-            }
-        }
+        { $set: updateData }
     );
 
     console.log(`📚 Updated book with relative imageBaseURL: ${relativeImagePath}`);
@@ -161,31 +167,42 @@ async function uploadImagesToBlob(book, imagesPath, db) {
 }
 
 /**
- * Find output.json file in a book folder
+ * Find output.json file in a folder OR accept direct parser output
  */
-function findOutputFile(bookFolderPath) {
-    const outputPath = path.join(bookFolderPath, 'output.json');
+function findOutputFile(folderPath) {
+    // If it's a file path directly, use it
+    if (folderPath.endsWith('.json') && fs.existsSync(folderPath)) {
+        return folderPath;
+    }
+
+    // Look for output.json in the folder
+    const outputPath = path.join(folderPath, 'output.json');
 
     if (!fs.existsSync(outputPath)) {
-        throw new Error(`No output.json file found in folder: ${bookFolderPath}`);
+        throw new Error(`No output.json file found in folder: ${folderPath}`);
     }
 
     return outputPath;
 }
 
 /**
- * Find images folder in a book folder
+ * Find images folder in the output folder
  */
-function findImagesFolder(bookFolderPath) {
-    const imagesPath = path.join(bookFolderPath, 'images');
+function findImagesFolder(folderPath) {
+    // If it's a file, look in the same directory
+    const baseDir = folderPath.endsWith('.json')
+        ? path.dirname(folderPath)
+        : folderPath;
+
+    const imagesPath = path.join(baseDir, 'images');
 
     if (!fs.existsSync(imagesPath)) {
-        console.log(`⚠️  No images folder found in: ${bookFolderPath}`);
+        console.log(`⚠️  No images folder found in: ${baseDir}`);
         return null;
     }
 
     if (!fs.statSync(imagesPath).isDirectory()) {
-        console.log(`⚠️  'images' exists but is not a directory in: ${bookFolderPath}`);
+        console.log(`⚠️  'images' exists but is not a directory in: ${baseDir}`);
         return null;
     }
 
@@ -193,73 +210,83 @@ function findImagesFolder(bookFolderPath) {
 }
 
 /**
- * Convert parser v2 chunks to database format
- * Groups chunks by chapter number extracted from chunkId
+ * Convert parser final output to database format
+ * Works with the new simplified parser.js output format: { chapters: [...], metadata: {...} }
  */
-function convertV2ChunksToChapters(chunks, bookTitle) {
-    const chapterMap = new Map();
+function convertParserOutputToChapters(finalOutput, bookTitle) {
+    // Handle new simplified parser.js output format
+    if (finalOutput.chapters && Array.isArray(finalOutput.chapters)) {
+        console.log('📋 Processing simplified parser v2 output format...');
 
-    // Group chunks by chapter number
-    chunks.forEach(chunk => {
-        // Extract chapter number from chunkId (format: "chapterNum_chunkNum")
-        const chapterNumber = parseInt(chunk.chunkId.split('_')[0]);
+        const chapters = finalOutput.chapters.map(chapter => {
+            const convertedChunks = chapter.chunks.map((chunk, index) => {
+                // Map parser types to database schema types
+                let dbType = 'text'; // default
+                if (chunk.type === 'paragraph' || chunk.type === 'text') {
+                    dbType = 'text';
+                } else if (chunk.type === 'header') {
+                    dbType = 'header';
+                } else if (chunk.type === 'image') {
+                    dbType = 'image';
+                }
 
-        if (!chapterMap.has(chapterNumber)) {
-            chapterMap.set(chapterNumber, {
-                chapterNumber: chapterNumber,
-                title: `Chapter ${chapterNumber}`, // Default title
+                return {
+                    index: index,
+                    text: chunk.content || chunk.text || (chunk.type === 'image' ? chunk.imageAlt || '' : ''),
+                    wordCount: chunk.wordCount || 0,
+                    type: dbType,
+                    ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
+                    ...(chunk.sentenceCount !== undefined && { sentenceCount: chunk.sentenceCount }),
+                    ...(chunk.links && chunk.links.length > 0 && { links: chunk.links }),
+                    ...(chunk.imageName && { imageName: chunk.imageName }),
+                    ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
+                };
+            });
+
+            return {
+                chapterNumber: chapter.chapterNumber,
+                title: chapter.title || `Chapter ${chapter.chapterNumber}`,
                 content: {
-                    chunks: []
+                    chunks: convertedChunks
                 },
-                wordCount: 0,
+                wordCount: convertedChunks.reduce((sum, chunk) => sum + (chunk.wordCount || 0), 0),
                 createdAt: new Date(),
                 updatedAt: new Date()
-            });
-        }
+            };
+        });
 
-        const chapter = chapterMap.get(chapterNumber);
+        return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
+    }
 
-        // Convert v2 chunk format to original chunk format
-        const convertedChunk = {
-            index: chapter.content.chunks.length,
-            text: chunk.content || '',
-            wordCount: chunk.wordCount || 0,
-            type: chunk.type || 'text',
-            ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
-            ...(chunk.links && chunk.links.length > 0 && { links: chunk.links }),
-            ...(chunk.imageName && { imageName: chunk.imageName }),
-            ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
-        };
-
-        chapter.content.chunks.push(convertedChunk);
-        chapter.wordCount += convertedChunk.wordCount;
-    });
-
-    return Array.from(chapterMap.values()).sort((a, b) => a.chapterNumber - b.chapterNumber);
+    throw new Error('Parser output format not recognized. Expected simplified format with chapters array and metadata.');
 }
 
 /**
- * Extract book metadata from parser v2 output
+ * Extract book metadata from parser final output
  */
-function extractBookMetadata(parserV2Data) {
-    // Try to extract title from the raw text or use a placeholder
-    let title = 'Unknown Title';
-    if (parserV2Data.rawText) {
-        // Look for title patterns in the first few pages
-        const titleMatch = parserV2Data.rawText.match(/TRANSFORMER[^\n]*\n([^\n]+)/i) ||
-            parserV2Data.rawText.match(/^([A-Z][^.\n]{10,60})\s*$/m);
-        if (titleMatch && titleMatch[1]) {
-            title = titleMatch[1].trim();
-        }
+function extractBookMetadata(finalOutput) {
+    // Handle new simplified parser.js output format with basic metadata
+    if (finalOutput.metadata) {
+        const metadata = finalOutput.metadata;
+        return {
+            title: metadata.title || 'Unknown Title',
+            author: metadata.author || 'Unknown Author',
+            description: metadata.description || '',
+            language: metadata.language || 'en',
+            totalWords: 0, // Will be calculated from chapters
+            totalChapters: 0, // Will be calculated from chapters
+            parserVersion: metadata.parserVersion || 2
+        };
     }
 
+    // Fallback for missing metadata
     return {
-        title: title,
-        author: 'Unknown Author', // Parser v2 doesn't extract author
+        title: 'Unknown Title',
+        author: 'Unknown Author',
         description: '',
-        totalChapters: 0, // Will be calculated from chapters
-        totalWords: 0, // Will be calculated from chapters
-        language: 'en-US',
+        totalChapters: 0,
+        totalWords: 0,
+        language: 'en',
         parserVersion: 2
     };
 }
@@ -267,30 +294,30 @@ function extractBookMetadata(parserV2Data) {
 /**
  * Upload parsed book data from Parser v2 to MongoDB database and upload images to Vercel Blob
  * If a book with the same title exists, it will be updated with new content (keeping same ID)
- * @param {string} bookFolderPath - Path to the book folder containing output.json and images
+ * @param {string} outputFolderPath - Path to the parser output folder containing output.json and images/
  */
-async function uploadParsedBookV2(bookFolderPath) {
+async function uploadParsedBookV2(outputFolderPath) {
     const uri = 'mongodb+srv://gileck:jfxccnxeruiowqrioqsdjkla@cluster0.frtddwb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
     const dbName = 'book_reader_db'
 
-    // Validate input folder
-    if (!fs.existsSync(bookFolderPath)) {
-        console.error(`❌ Book folder not found: ${bookFolderPath}`);
+    // Validate input path (should be the output folder created by parser.js)
+    if (!fs.existsSync(outputFolderPath)) {
+        console.error(`❌ Output folder not found: ${outputFolderPath}`);
         process.exit(1);
     }
 
-    if (!fs.statSync(bookFolderPath).isDirectory()) {
-        console.error(`❌ Path is not a directory: ${bookFolderPath}`);
+    if (!fs.statSync(outputFolderPath).isDirectory()) {
+        console.error(`❌ Path must be the output directory created by parser.js: ${outputFolderPath}`);
         process.exit(1);
     }
 
-    // Find required files
+    // Find required files in the output folder
     let jsonPath, imagesPath;
     try {
-        jsonPath = findOutputFile(bookFolderPath);
+        jsonPath = findOutputFile(outputFolderPath);
         console.log(`📄 Found output file: ${path.basename(jsonPath)}`);
 
-        imagesPath = findImagesFolder(bookFolderPath);
+        imagesPath = findImagesFolder(outputFolderPath);
         if (imagesPath) {
             const imageFiles = fs.readdirSync(imagesPath, { recursive: true }).filter(file =>
                 /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
@@ -303,29 +330,29 @@ async function uploadParsedBookV2(bookFolderPath) {
     }
 
     // Load and validate JSON data
-    let parserV2Data;
+    let finalOutput;
     try {
         const jsonContent = fs.readFileSync(jsonPath, 'utf8');
-        parserV2Data = JSON.parse(jsonContent);
+        finalOutput = JSON.parse(jsonContent);
     } catch (error) {
-        console.error('❌ Error reading or parsing JSON file:', error.message);
+        console.error('❌ Error reading or parsing output.json file:', error.message);
         process.exit(1);
     }
 
-    // Validate parser v2 JSON structure
-    if (!parserV2Data.chunks || !Array.isArray(parserV2Data.chunks)) {
-        console.error('❌ Invalid parser v2 JSON structure. Expected { chunks: [...] }');
+    // Validate parser v2 JSON structure (should be simplified format)
+    if (!finalOutput.chapters || !finalOutput.metadata) {
+        console.error('❌ Invalid parser v2 output.json structure. Expected simplified format: { chapters: [...], metadata: { title, author } }');
         process.exit(1);
     }
 
-    console.log(`📊 Parser v2 data: ${parserV2Data.chunks.length} chunks found`);
+    console.log(`📊 Parser v2 final output: ${finalOutput.chapters.length} chapters found`);
 
     // Extract book metadata
-    const bookMetadata = extractBookMetadata(parserV2Data);
+    const bookMetadata = extractBookMetadata(finalOutput);
     console.log(`📖 Book metadata extracted: "${bookMetadata.title}"`);
 
-    // Convert v2 chunks to chapter format
-    const chapters = convertV2ChunksToChapters(parserV2Data.chunks, bookMetadata.title);
+    // Convert final output to chapter format
+    const chapters = convertParserOutputToChapters(finalOutput, bookMetadata.title);
     console.log(`📚 Converted to ${chapters.length} chapters`);
 
     // Update book metadata with actual counts
@@ -402,6 +429,8 @@ async function uploadParsedBookV2(bookFolderPath) {
             console.log(`   📖 Book created with ID: ${bookId}`);
         }
 
+
+
         // Prepare chapters data for database
         const chaptersToInsert = chapters.map(chapter => ({
             ...chapter,
@@ -456,6 +485,43 @@ async function uploadParsedBookV2(bookFolderPath) {
         } else if (!BLOB_READ_WRITE_TOKEN && imagesPath) {
             console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
             console.log('   Images remain in local folder and imageName references are preserved');
+        } else if (imagesPath && !uploadImages) {
+            // Set coverImage even when not uploading to blob
+            const imageFiles = [];
+            function findImageFiles(dir, relativePath = '') {
+                const files = fs.readdirSync(dir);
+                for (const file of files) {
+                    const fullPath = path.join(dir, file);
+                    const relativeFilePath = path.join(relativePath, file);
+
+                    if (fs.statSync(fullPath).isDirectory()) {
+                        findImageFiles(fullPath, relativeFilePath);
+                    } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file)) {
+                        imageFiles.push({
+                            localPath: fullPath,
+                            relativePath: relativeFilePath,
+                            filename: file
+                        });
+                    }
+                }
+            }
+            findImageFiles(imagesPath);
+
+            if (imageFiles.length > 0) {
+                const bookFolderName = finalBook.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+                const coverImage = `/${bookFolderName}/images/${imageFiles[0].filename}`;
+
+                await booksCollection.updateOne(
+                    { _id: bookId },
+                    {
+                        $set: {
+                            coverImage: coverImage,
+                            updatedAt: new Date()
+                        }
+                    }
+                );
+                console.log(`🖼️  Set cover image: ${coverImage}`);
+            }
         }
 
         console.log(`✅ Book ${isUpdate ? 'updated' : 'uploaded'} successfully!`);
@@ -489,28 +555,52 @@ async function uploadParsedBookV2(bookFolderPath) {
 // CLI usage help
 function showHelp() {
     console.log(`
-Usage: node upload-book-v2.js BOOK_FOLDER_PATH [OPTIONS]
+Usage: node upload-book-v2.js OUTPUT_FOLDER [OPTIONS]
 
 Arguments:
-  BOOK_FOLDER_PATH   Path to the book folder containing output.json and images/ (required)
+  OUTPUT_FOLDER      Path to parser output folder containing output.json and images/ (required)
 
 Options:
   --upload-images    Upload images to Vercel Blob (requires BLOB_READ_WRITE_TOKEN)
   --skip-images      Skip uploading images to Vercel Blob (only upload book content)
 
 Examples:
-  node upload-book-v2.js ../files/MyBook/
-  node upload-book-v2.js ../files/MyBook/ --upload-images
-  node upload-book-v2.js ./transformers-output/
-  node upload-book-v2.js /path/to/book-folder/ --skip-images
+  # Upload from parser output folder
+  node upload-book-v2.js ./output/
+  node upload-book-v2.js ../files/MyBook/output/ --upload-images
 
-Book folder structure (Parser v2):
-  MyBook/
-  ├── output.json       # Generated by parser v2 (required)
-  ├── images/           # Generated by parser v2 (optional)
+Required folder structure (created by parser.js):
+  output/
+  ├── output.json       # Simplified parser output with chapters and metadata only
+  ├── images/           # Extracted images (optional)
   │   └── *.jpg, *.png, etc.
-  ├── book.pdf          # Original PDF file
-  └── debug/            # Debug information (optional)
+  ├── steps/            # Individual step outputs (optional, for debugging)
+  │   ├── step-1.json
+  │   ├── step-2-1.json
+  │   └── ...
+  └── validation.json   # Validation results (optional)
+
+Output.json format:
+  {
+    "chapters": [
+      {
+        "title": "Chapter Title",
+        "chapterNumber": 1,
+        "chunks": [
+          {
+            "type": "paragraph|image|header",
+            "content": "text content",
+            "wordCount": 100,
+            ...
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "title": "Book Title",
+      "author": "Author Name"
+    }
+  }
 
 Behavior:
   - If a book with the same title already exists in the database, the script will update it
@@ -518,8 +608,7 @@ Behavior:
   - If no book with that title exists, a new book will be created
   - Parser version 2 is automatically added to the book metadata
   - Images will be uploaded to Vercel Blob only if --upload-images flag is provided
-  - The script converts the flat chunk structure from parser v2 to the chapter-based
-    structure expected by the database
+  - The script reads ONLY the output.json file and images/ folder
 
 Environment Variables:
   BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for image uploads (optional)
@@ -539,16 +628,16 @@ async function main() {
             process.exit(0);
         }
 
-        const bookFolderPath = args[0];
+        const outputFolderPath = args[0];
 
-        if (!bookFolderPath) {
-            console.error('❌ Book folder path is required');
+        if (!outputFolderPath) {
+            console.error('❌ Output folder path is required');
             showHelp();
             process.exit(1);
         }
 
         console.log('🚀 Starting parser v2 book upload...');
-        await uploadParsedBookV2(bookFolderPath);
+        await uploadParsedBookV2(outputFolderPath);
 
     } catch (error) {
         console.error('❌ Error:', error);

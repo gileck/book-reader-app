@@ -1,0 +1,109 @@
+{
+  "chapterMetadata": [
+    {
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "startingPage": 8,
+      "endPage": 26,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "startingPage": 27,
+      "endPage": 61,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "startingPage": 62,
+      "endPage": 90,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "startingPage": 91,
+      "endPage": 123,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "startingPage": 124,
+      "endPage": 149,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "To the dark side",
+      "chapterNumber": 5,
+      "startingPage": 150,
+      "endPage": 180,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "startingPage": 181,
+      "endPage": 210,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Epilogue: Self",
+      "chapterNumber": 99,
+      "startingPage": 211,
+      "endPage": 221,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Appendix 1: Red protein mechanics",
+      "chapterNumber": 99,
+      "startingPage": 222,
+      "endPage": 226,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Appendix 2: The Krebs line",
+      "chapterNumber": 99,
+      "startingPage": 227,
+      "endPage": null,
+      "confidence": 0.7,
+      "detectionSource": "pdf_bookmarks"
+    }
+  ],
+  "metadata": {
+    "processingStartTime": "2025-07-19T14:16:29.319Z",
+    "processingEndTime": null,
+    "stepResults": {},
+    "textExtraction": {
+      "characterCount": 743700,
+      "pageCount": 317,
+      "lineCount": 12566,
+      "wordCount": 121377,
+      "literalNewlineCount": 0,
+      "extractionTime": "2025-07-19T14:16:31.512Z",
+      "averageWordsPerPage": 383,
+      "extractionMethod": "page_by_page_fixed"
+    },
+    "chapterDetection": {
+      "chaptersDetected": 10,
+      "tocSource": "pdf_bookmarks",
+      "tocEntriesFound": 10,
+      "patternMatches": 89,
+      "averageDetectionConfidence": 0.9099999999999999,
+      "pageOffset": 0,
+      "processingTime": 1874,
+      "detectionMethod": "hybrid_v1_toc_detection"
+    }
+  }
+}

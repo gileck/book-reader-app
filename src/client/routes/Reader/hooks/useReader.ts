@@ -327,11 +327,6 @@ export const useReader = () => {
         isPlaying: audioPlayback.isPlaying
     });
 
-    // Sync audio playback chunk index with our state
-    if (audioPlayback.currentChunkIndex !== state.currentChunkIndex && !state.loading && state.currentChunkIndex !== null) {
-        audioPlayback.setCurrentChunkIndex(state.currentChunkIndex);
-    }
-
     const bookmarks = useBookmarks(
         bookId,
         state.chapter,

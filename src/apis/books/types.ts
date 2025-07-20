@@ -14,6 +14,7 @@ export interface BookClient {
     isPublic: boolean;
     uploadedBy?: string;
     chapterStartNumber: number;
+    parserVersion?: number;  // 1 (original) or 2 (new parser)
 }
 
 // Request payloads
@@ -27,6 +28,7 @@ export interface CreateBookPayload {
     language: string;
     isPublic: boolean;
     chapterStartNumber?: number;
+    parserVersion?: number;
 }
 
 export interface UpdateBookPayload {
@@ -39,6 +41,7 @@ export interface UpdateBookPayload {
     language?: string;
     isPublic?: boolean;
     chapterStartNumber?: number;
+    parserVersion?: number;
 }
 
 export interface GetBookPayload {

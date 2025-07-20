@@ -1,6 +1,5 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
-import { Box, Typography, CircularProgress, Paper, Fab } from '@mui/material';
-import { CenterFocusStrong as CenterIcon } from '@mui/icons-material';
+import { Box, Typography, CircularProgress, Paper } from '@mui/material';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
@@ -30,7 +29,6 @@ export const Reader = () => {
     } = useReader();
 
     const [chapterDialogOpen, setChapterDialogOpen] = useState(false);
-    const [isCurrentChunkVisible, setIsCurrentChunkVisible] = useState(true);
 
     // Navigate to book library if no books found
     useEffect(() => {
@@ -43,16 +41,22 @@ export const Reader = () => {
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    // Pre-compute and cache the mapping from absolute chunk indices to text chunk indices
+    // Enhanced chunk mapping for v2: handles mixed chunk types (text, header, image)
+    // Only text chunks participate in audio - headers and images are visual-only
     const chunkIndexMapping = useMemo(() => {
         if (!chapter) return { absoluteToText: new Map(), textToAbsolute: new Map(), textChunks: [] };
 
-        const textChunks = chapter.content.chunks.filter(c => c.type === 'text');
+        // Filter chunks to get only text chunks for audio processing
+        const textChunks = chapter.content.chunks.filter(c =>
+            c.type === 'text'
+        );
+
         const absoluteToText = new Map<number, number>();
         const textToAbsolute = new Map<number, number>();
 
         let textChunkIndex = 0;
         chapter.content.chunks.forEach((chunk, absoluteIndex) => {
+            // Only map text chunks for audio - skip headers and images
             if (chunk.type === 'text') {
                 absoluteToText.set(absoluteIndex, textChunkIndex);
                 textToAbsolute.set(textChunkIndex, absoluteIndex);
@@ -107,7 +111,11 @@ export const Reader = () => {
     const handleOptimizedSentenceClick = useMemo(() => {
         return (chunkIndex: number) => {
             const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return;
+            if (textChunkIndex === undefined) {
+                // This is a non-text chunk (header or image) - no audio action needed
+                console.log(`Chunk ${chunkIndex} is not a text chunk, skipping audio navigation`);
+                return;
+            }
 
             // Set the current chunk index in reader state (will sync to audio)
             navigation.setCurrentChunkIndex(textChunkIndex);
@@ -236,15 +244,15 @@ export const Reader = () => {
                         chapter={chapter}
                         book={book}
                         scrollContainerRef={scrollContainerRef}
-                        currentChunkIndex={currentChunkIndex}
                         getWordStyle={getOptimizedWordStyle}
                         getWordClassName={getOptimizedWordClassName}
                         getSentenceStyle={getOptimizedSentenceStyle}
                         getSentenceClassName={getOptimizedSentenceClassName}
                         handleWordClick={handleOptimizedWordClick}
                         handleSentenceClick={handleOptimizedSentenceClick}
-                        isChunkBookmarked={bookmarks.isChunkBookmarked}
-                        onCurrentChunkVisibilityChange={setIsCurrentChunkVisible}
+                        onNavigateToChapter={navigation.setCurrentChapterNumber}
+                        onNavigateToChunk={navigation.setCurrentChunkIndex}
+                        onNavigateToBookmark={navigation.handleNavigateToBookmark}
                     />
                 </Paper>
 
@@ -377,23 +385,7 @@ export const Reader = () => {
                     onChapterSelect={navigation.setCurrentChapterNumber}
                 />
 
-                {/* Floating scroll to current chunk button */}
-                {!isCurrentChunkVisible && (
-                    <Fab
-                        color="primary"
-                        onClick={handleScrollToCurrentChunk}
-                        sx={{
-                            position: 'fixed',
-                            bottom: { xs: 100, sm: 80 },
-                            right: 20,
-                            zIndex: 1000,
-                            opacity: 0.9
-                        }}
-                        size="medium"
-                    >
-                        <CenterIcon />
-                    </Fab>
-                )}
+                {/* TODO: Implement enhanced scroll-to-chunk for v2 mixed content */}
             </Box>
         </UserThemeProvider>
     );

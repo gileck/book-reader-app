@@ -22,6 +22,7 @@ export const BookLibrary = () => {
     const { settings, updateSettings } = useSettings();
     const [books, setBooks] = useState<BookWithProgress[]>([]);
     const [loading, setLoading] = useState(true);
+    const [progressLoading, setProgressLoading] = useState<Set<string>>(new Set());
     const [error, setError] = useState<string | null>(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<string | null>(null);
@@ -43,6 +44,7 @@ export const BookLibrary = () => {
             setLoading(true);
             setError(null);
 
+            // Phase 1: Load and display books immediately
             const booksResult = await getBooks({});
             if (!booksResult.data) {
                 throw new Error('Failed to load books');
@@ -50,34 +52,61 @@ export const BookLibrary = () => {
 
             const storedActiveBookId = localStorage.getItem('activeBookId');
 
-            const booksWithProgress: BookWithProgress[] = await Promise.all(
-                booksResult.data.books.map(async (book) => {
-                    try {
-                        const progressResult = await getReadingProgress({
-                            userId,
-                            bookId: book._id
-                        });
+            // Display books immediately without progress
+            const booksWithoutProgress: BookWithProgress[] = booksResult.data.books.map(book => ({
+                ...book,
+                isActive: book._id === storedActiveBookId
+            }));
 
-                        return {
-                            ...book,
-                            progress: progressResult.data?.readingProgress || undefined,
-                            isActive: book._id === storedActiveBookId
-                        };
-                    } catch (error) {
-                        console.warn(`Failed to load progress for book ${book._id}:`, error);
-                        return {
-                            ...book,
-                            isActive: book._id === storedActiveBookId
-                        };
-                    }
-                })
-            );
+            setBooks(booksWithoutProgress);
+            setLoading(false);
 
-            setBooks(booksWithProgress);
+            // Phase 2: Load reading progress for all books in parallel
+            const bookIds = booksResult.data.books.map(book => book._id);
+            setProgressLoading(new Set(bookIds));
+
+            // Load progress for all books in parallel
+            const progressPromises = booksResult.data.books.map(async (book) => {
+                try {
+                    const progressResult = await getReadingProgress({
+                        userId,
+                        bookId: book._id
+                    });
+
+                    // Update this specific book's progress
+                    setBooks(prevBooks =>
+                        prevBooks.map(prevBook =>
+                            prevBook._id === book._id
+                                ? { ...prevBook, progress: progressResult.data?.readingProgress || undefined }
+                                : prevBook
+                        )
+                    );
+
+                    // Remove from loading set
+                    setProgressLoading(prev => {
+                        const newSet = new Set(prev);
+                        newSet.delete(book._id);
+                        return newSet;
+                    });
+
+                } catch (error) {
+                    console.warn(`Failed to load progress for book ${book._id}:`, error);
+
+                    // Remove from loading set even on error
+                    setProgressLoading(prev => {
+                        const newSet = new Set(prev);
+                        newSet.delete(book._id);
+                        return newSet;
+                    });
+                }
+            });
+
+            // Wait for all progress calls to complete (optional, for cleanup)
+            await Promise.all(progressPromises);
+
         } catch (error) {
             console.error('Error loading books:', error);
             setError(error instanceof Error ? error.message : 'Failed to load books');
-        } finally {
             setLoading(false);
         }
     };
@@ -174,7 +203,7 @@ export const BookLibrary = () => {
                         : book
                 ));
                 setSaveSuccess(true);
-                
+
                 // Close dialog after showing success message briefly
                 setTimeout(() => {
                     closeEditDialog();
@@ -377,6 +406,13 @@ export const BookLibrary = () => {
                                                 ></div>
                                             </div>
                                         )}
+
+                                        {/* Progress loading indicator */}
+                                        {progressLoading.has(book._id) && (
+                                            <div className={styles.progressLoadingIndicator}>
+                                                <div className={styles.progressSpinner}></div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className={styles.bookInfo}>
@@ -412,7 +448,6 @@ export const BookLibrary = () => {
                                                     <span className={`${styles.statusBadge} ${styles[getReadingStatus(book.progress).toLowerCase().replace(' ', '-') as keyof typeof styles] || ''}`}>
                                                         {getReadingStatus(book.progress)}
                                                     </span>
-
                                                 </div>
 
                                                 <div className={styles.progressBar}>
@@ -424,6 +459,16 @@ export const BookLibrary = () => {
                                                 <div className={styles.progressDetails}>
                                                     <span>Chapter {book.progress.currentChapter || 1} of {book.totalChapters || 'N/A'}</span>
                                                     <span>{Math.round(book.progress.bookProgress)}% complete</span>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Show progress loading indicator if still loading */}
+                                        {progressLoading.has(book._id) && !book.progress && (
+                                            <div className={styles.progressSection}>
+                                                <div className={styles.progressLoadingText}>
+                                                    <span>Loading reading progress...</span>
+                                                    <div className={styles.progressSpinner}></div>
                                                 </div>
                                             </div>
                                         )}
@@ -820,10 +865,10 @@ export const BookLibrary = () => {
 
                         {/* Success/Error Messages */}
                         {saveSuccess && (
-                            <Box sx={{ 
-                                padding: 'var(--spacing-md)', 
-                                backgroundColor: 'var(--color-success)', 
-                                color: 'white', 
+                            <Box sx={{
+                                padding: 'var(--spacing-md)',
+                                backgroundColor: 'var(--color-success)',
+                                color: 'white',
                                 borderRadius: 'var(--border-radius-md)',
                                 textAlign: 'center',
                                 fontWeight: 500
@@ -831,12 +876,12 @@ export const BookLibrary = () => {
                                 ✓ Book updated successfully!
                             </Box>
                         )}
-                        
+
                         {saveError && (
-                            <Box sx={{ 
-                                padding: 'var(--spacing-md)', 
-                                backgroundColor: 'var(--color-error)', 
-                                color: 'white', 
+                            <Box sx={{
+                                padding: 'var(--spacing-md)',
+                                backgroundColor: 'var(--color-error)',
+                                color: 'white',
                                 borderRadius: 'var(--border-radius-md)',
                                 textAlign: 'center',
                                 fontWeight: 500

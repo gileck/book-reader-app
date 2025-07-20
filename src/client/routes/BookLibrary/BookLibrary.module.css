@@ -431,6 +431,38 @@
     font-weight: 500;
 }
 
+/* Progress Loading Indicators */
+.progressLoadingIndicator {
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-sm);
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.progressSpinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-background-secondary);
+    border-top: 2px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.progressLoadingText {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+.progressLoadingText .progressSpinner {
+    width: 12px;
+    height: 12px;
+}
+
 /* Book Actions */
 .bookActions {
     display: flex;
