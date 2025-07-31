@@ -1,8 +1,12 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Box, Typography, CircularProgress, Paper } from '@mui/material';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
+import { useChapterDialog } from './hooks/useChapterDialog';
+import { useChunkMapping } from './hooks/useChunkMapping';
+import { useContentContext } from './hooks/useContentContext';
+import { useScrollHandling } from './hooks/useScrollHandling';
 import { AudioControls } from '../../components/AudioControls';
 import { SpeedControlModal } from '../../components/SpeedControlModal';
 import { ThemeModal } from '../../components/ThemeModal';
@@ -28,7 +32,8 @@ export const Reader = () => {
         progress
     } = useReader();
 
-    const [chapterDialogOpen, setChapterDialogOpen] = useState(false);
+    // Initialize all hooks
+    const chapterDialog = useChapterDialog();
 
     // Navigate to book library if no books found
     useEffect(() => {
@@ -37,153 +42,34 @@ export const Reader = () => {
         }
     }, [loading, error, navigate]);
 
-    // console.log('chapter', {chapter: chapter?.chapterNumber, loading});
+    // Initialize chunk mapping hook
+    const chunkMapping = useChunkMapping(chapter, audio, navigation);
 
+    // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    // Enhanced chunk mapping for v2: handles mixed chunk types (text, header, image)
-    // Only text chunks participate in audio - headers and images are visual-only
-    const chunkIndexMapping = useMemo(() => {
-        if (!chapter) return { absoluteToText: new Map(), textToAbsolute: new Map(), textChunks: [] };
-
-        // Filter chunks to get only text chunks for audio processing
-        const textChunks = chapter.content.chunks.filter(c =>
-            c.type === 'text'
-        );
-
-        const absoluteToText = new Map<number, number>();
-        const textToAbsolute = new Map<number, number>();
-
-        let textChunkIndex = 0;
-        chapter.content.chunks.forEach((chunk, absoluteIndex) => {
-            // Only map text chunks for audio - skip headers and images
-            if (chunk.type === 'text') {
-                absoluteToText.set(absoluteIndex, textChunkIndex);
-                textToAbsolute.set(textChunkIndex, absoluteIndex);
-                textChunkIndex++;
-            }
-        });
-
-        return { absoluteToText, textToAbsolute, textChunks };
-    }, [chapter]);
-
-    // Optimized functions using cached mapping
-    const getOptimizedWordStyle = useMemo(() => {
-        return (chunkIndex: number, wordIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return {};
-            return audio.getWordStyle(textChunkIndex, wordIndex);
-        };
-    }, [audio.getWordStyle, chunkIndexMapping]);
-
-    const getOptimizedWordClassName = useMemo(() => {
-        return (chunkIndex: number, wordIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return '';
-            return audio.getWordClassName(textChunkIndex, wordIndex);
-        };
-    }, [audio.getWordClassName, chunkIndexMapping]);
-
-    const getOptimizedSentenceStyle = useMemo(() => {
-        return (chunkIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return {};
-            return audio.getSentenceStyle(textChunkIndex);
-        };
-    }, [audio.getSentenceStyle, chunkIndexMapping]);
-
-    const getOptimizedSentenceClassName = useMemo(() => {
-        return (chunkIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return '';
-            return audio.getSentenceClassName(textChunkIndex);
-        };
-    }, [audio.getSentenceClassName, chunkIndexMapping]);
-
-    const handleOptimizedWordClick = useMemo(() => {
-        return (chunkIndex: number, wordIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return;
-            audio.handleWordClick(textChunkIndex, wordIndex);
-        };
-    }, [audio.handleWordClick, chunkIndexMapping]);
-
-    const handleOptimizedSentenceClick = useMemo(() => {
-        return (chunkIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) {
-                // This is a non-text chunk (header or image) - no audio action needed
-                console.log(`Chunk ${chunkIndex} is not a text chunk, skipping audio navigation`);
-                return;
-            }
-
-            // Set the current chunk index in reader state (will sync to audio)
-            navigation.setCurrentChunkIndex(textChunkIndex);
-
-            // Also jump to the first word of that chunk
-            audio.handleWordClick(textChunkIndex, 0);
-        };
-    }, [chunkIndexMapping, navigation.setCurrentChunkIndex, audio.handleWordClick]);
-
-    // Optimized current chunk index calculation
-    const currentChunkIndex = useMemo(() => {
-        const currentTextChunk = chunkIndexMapping.textChunks[audio.currentChunkIndex];
-        if (!currentTextChunk) return 0;
-
-        return chunkIndexMapping.textToAbsolute.get(audio.currentChunkIndex) || 0;
-    }, [audio.currentChunkIndex, chunkIndexMapping]);
-
-    // Handle scrolling to chunk when loaded from URL parameters
-    useEffect(() => {
-        if (!loading && chapter && currentChunkIndex > 0) {
-            // Small delay to ensure the component has rendered and scrolling function is available
-            const timeoutId = setTimeout(() => {
-                handleScrollToCurrentChunk();
-            }, 500);
-
-            return () => clearTimeout(timeoutId);
-        }
-    }, [loading, chapter, currentChunkIndex]);
-
-    // Get current reading context for Q&A
-    const getCurrentSentence = () => {
-        if (!chapter || !audio.textChunks[audio.currentChunkIndex]) return '';
-        return audio.textChunks[audio.currentChunkIndex].text;
-    };
-
-    // Initialize bookQA hook first
+    // Initialize bookQA hook first with temporary context functions
     const bookQA = useBookQA({
         bookId: book?._id || '',
         bookTitle: book?.title || '',
         chapterNumber: chapter?.chapterNumber || 1,
         chapterTitle: chapter?.title || '',
-        currentSentence: getCurrentSentence(),
-        getLastSentences: () => getLastSentences
+        currentSentence: chapter && audio.textChunks[audio.currentChunkIndex] ? audio.textChunks[audio.currentChunkIndex].text : '',
+        getLastSentences: () => {
+            if (!chapter || audio.textChunks.length === 0) return '';
+            const contextCount = 3; // Default value, will be updated by bookQA
+            const startIndex = Math.max(0, audio.currentChunkIndex - contextCount);
+            const endIndex = Math.max(0, audio.currentChunkIndex);
+            if (startIndex >= endIndex) return '';
+            return audio.textChunks.slice(startIndex, endIndex).map(chunk => chunk.text).join(' ');
+        }
     });
 
-    // Define getLastSentences after bookQA is initialized using useMemo
-    const getLastSentences = useMemo(() => {
-        if (!chapter || audio.textChunks.length === 0) return '';
-        const contextCount = bookQA.contextLines;
-        const startIndex = Math.max(0, audio.currentChunkIndex - contextCount);
-        const endIndex = Math.max(0, audio.currentChunkIndex);
+    // Initialize content context hook with bookQA context lines
+    const contentContext = useContentContext(chapter, audio, bookQA);
 
-        if (startIndex >= endIndex) return '';
-
-        const lastSentences = audio.textChunks
-            .slice(startIndex, endIndex)
-            .map(chunk => chunk.text)
-            .join(' ');
-        return lastSentences;
-    }, [chapter, audio.textChunks, audio.currentChunkIndex, bookQA.contextLines]);
-
-    // Handle scrolling to current chunk
-    const handleScrollToCurrentChunk = () => {
-        const scrollFunction = (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
-        if (scrollFunction) {
-            scrollFunction();
-        }
-    };
+    // Initialize scroll handling hook
+    useScrollHandling(loading, chapter, chunkMapping.currentChunkIndex);
 
     if (loading) {
         return (
@@ -244,12 +130,12 @@ export const Reader = () => {
                         chapter={chapter}
                         book={book}
                         scrollContainerRef={scrollContainerRef}
-                        getWordStyle={getOptimizedWordStyle}
-                        getWordClassName={getOptimizedWordClassName}
-                        getSentenceStyle={getOptimizedSentenceStyle}
-                        getSentenceClassName={getOptimizedSentenceClassName}
-                        handleWordClick={handleOptimizedWordClick}
-                        handleSentenceClick={handleOptimizedSentenceClick}
+                        getWordStyle={chunkMapping.getOptimizedWordStyle}
+                        getWordClassName={chunkMapping.getOptimizedWordClassName}
+                        getSentenceStyle={chunkMapping.getOptimizedSentenceStyle}
+                        getSentenceClassName={chunkMapping.getOptimizedSentenceClassName}
+                        handleWordClick={chunkMapping.handleOptimizedWordClick}
+                        handleSentenceClick={chunkMapping.handleOptimizedSentenceClick}
                         onNavigateToChapter={navigation.setCurrentChapterNumber}
                         onNavigateToChunk={navigation.setCurrentChunkIndex}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
@@ -278,11 +164,11 @@ export const Reader = () => {
                     playbackSpeed={settings.playbackSpeed}
                     bookmarks={bookmarks.bookmarks}
                     currentChapterNumber={chapter.chapterNumber}
-                    currentChunkIndex={audio.currentChunkIndex}
+                    currentChunkIndex={chunkMapping.currentChunkIndex}
                     totalChapters={book.totalChapters}
                     onNavigateToBookmark={navigation.handleNavigateToBookmark}
                     progressData={progress}
-                    onChapters={() => setChapterDialogOpen(true)}
+                    onChapters={chapterDialog.openDialog}
                     minChapterNumber={book?.chapterStartNumber ?? 1}
                     ttsServiceAvailable={audio.ttsServiceAvailable}
                     ttsError={audio.ttsError}
@@ -338,13 +224,13 @@ export const Reader = () => {
                     currentBookTitle={book?.title || ''}
                     currentChapterTitle={chapter?.title || ''}
                     currentChapterNumber={chapter?.chapterNumber || 1}
-                    currentSentence={getCurrentSentence()}
+                    currentSentence={contentContext.getCurrentSentence()}
                     contextLines={bookQA.contextLines}
                     onContextLinesChange={bookQA.handleContextLinesChange}
                     selectedModelId={bookQA.selectedModelId}
                     onModelChange={bookQA.handleModelChange}
                     onSetReplyContext={bookQA.setReplyContext}
-                    getLastSentences={() => getLastSentences}
+                    getLastSentences={() => contentContext.getLastSentences}
                     answerLength={bookQA.answerLength}
                     answerLevel={bookQA.answerLevel}
                     answerStyle={bookQA.answerStyle}
@@ -380,8 +266,8 @@ export const Reader = () => {
                 <ChapterSelector
                     bookId={book?._id || ''}
                     currentChapterNumber={chapter?.chapterNumber || 1}
-                    open={chapterDialogOpen}
-                    onClose={() => setChapterDialogOpen(false)}
+                    open={chapterDialog.isOpen}
+                    onClose={chapterDialog.closeDialog}
                     onChapterSelect={navigation.setCurrentChapterNumber}
                 />
 
