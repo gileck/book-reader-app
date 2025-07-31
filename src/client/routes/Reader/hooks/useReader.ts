@@ -385,7 +385,9 @@ export const useReader = () => {
             bookProgress: readingProgress.progressData.bookProgress,
             totalReadingTime: readingProgress.progressData.totalReadingTime,
             currentSessionTime: readingProgress.getCurrentSessionTime(),
-            sessionsCount: readingProgress.progressData.sessionsCount
+            sessionsCount: readingProgress.progressData.sessionsCount,
+            alert: readingProgress.alert,
+            closeAlert: readingProgress.closeAlert
         },
 
         // Audio playback

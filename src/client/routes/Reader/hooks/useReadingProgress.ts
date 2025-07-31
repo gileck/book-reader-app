@@ -35,6 +35,16 @@ export const useReadingProgress = ({
         sessionsCount: 0
     });
 
+    const [alert, setAlert] = useState<{
+        open: boolean;
+        message: string;
+        severity: 'error' | 'warning' | 'info' | 'success';
+    }>({
+        open: false,
+        message: '',
+        severity: 'error'
+    });
+
     // Track session time when audio is playing
     useEffect(() => {
         if (isPlaying) {
@@ -60,6 +70,20 @@ export const useReadingProgress = ({
         return Math.round(accumulatedSessionTime.current / 60); // Convert to minutes
     }, []);
 
+    // Show alert function
+    const showAlert = useCallback((message: string, severity: 'error' | 'warning' | 'info' | 'success' = 'error') => {
+        setAlert({
+            open: true,
+            message,
+            severity
+        });
+    }, []);
+
+    // Close alert function
+    const closeAlert = useCallback(() => {
+        setAlert(prev => ({ ...prev, open: false }));
+    }, []);
+
     // Save reading progress with session time
     const saveProgress = useCallback(async () => {
         if (!bookId) return;
@@ -80,8 +104,7 @@ export const useReadingProgress = ({
                 console.error('Error saving reading progress:', result.data.error);
                 // Show user-friendly error message
                 if (result.data.error) {
-                    // You can replace this with your preferred notification system
-                    alert(`Reading Progress Error: ${result.data.error}`);
+                    showAlert(`Reading Progress Error: ${result.data.error}`, 'error');
                 }
                 return;
             }
@@ -103,9 +126,9 @@ export const useReadingProgress = ({
         } catch (error) {
             console.error('Error saving reading progress:', error);
             // Show generic error message for network/unexpected errors
-            alert('Unable to save reading progress. Please check your connection and try again.');
+            showAlert('Unable to save reading progress. Please check your connection and try again.', 'error');
         }
-    }, [userId, bookId, currentChapterNumber, currentChunkIndex, getCurrentSessionTime]);
+    }, [userId, bookId, currentChapterNumber, currentChunkIndex, getCurrentSessionTime, showAlert]);
 
     // Debounced save when position changes - only after initial load is complete
     useEffect(() => {
@@ -144,6 +167,8 @@ export const useReadingProgress = ({
     return {
         isLoadingProgress: false, // No longer loading since main hook handles this
         progressData,
-        getCurrentSessionTime
+        getCurrentSessionTime,
+        alert,
+        closeAlert
     };
 }; 

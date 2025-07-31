@@ -35,21 +35,21 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             return null;
         }
 
+        // Determine engine based on voice tier
+        const getEngine = (voiceTier?: string) => {
+            switch (voiceTier) {
+                case 'standard': return 'standard';
+                case 'neural': return 'neural';
+                case 'long-form': return 'long-form';
+                case 'generative': return 'generative';
+                default: return 'neural'; // fallback
+            }
+        };
+
+        const ssmlText = this.generateSSMLWithMarks(text);
+        const engine = getEngine(config.voiceTier);
+
         try {
-            const ssmlText = this.generateSSMLWithMarks(text);
-
-            // Determine engine based on voice tier
-            const getEngine = (voiceTier?: string) => {
-                switch (voiceTier) {
-                    case 'standard': return 'standard';
-                    case 'neural': return 'neural';
-                    case 'long-form': return 'long-form';
-                    case 'generative': return 'generative';
-                    default: return 'neural'; // fallback
-                }
-            };
-
-            const engine = getEngine(config.voiceTier);
 
             // First, get speech marks for timing
             const speechMarksCommand = new SynthesizeSpeechCommand({
@@ -60,6 +60,11 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
                 OutputFormat: 'json',
                 SpeechMarkTypes: ['ssml'],
                 Engine: engine as 'standard' | 'neural' | 'long-form' | 'generative'
+            });
+
+            console.log('speechMarksCommand', {
+                ssmlTextLength: ssmlText.length,
+                textLength: text.length,
             });
 
             const speechMarksResponse = await client.send(speechMarksCommand);
@@ -123,7 +128,45 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
 
             return result;
         } catch (error) {
-            console.error('Polly TTS synthesis error:', error);
+            // Enhanced error logging with text length information
+            const originalTextLength = text.length;
+            const ssmlTextLength = ssmlText.length;
+            const billableText = ssmlText.replace(/<[^>]*>/g, '');
+            const billableCharCount = billableText.length;
+            
+            const textLengthInfo = `How long was the provided text: ${originalTextLength} characters (original), ${ssmlTextLength} characters (with SSML markup), ${billableCharCount} characters (billable)`;
+            
+            console.error(`Polly TTS synthesis error: ${textLengthInfo}`, {
+                error: error,
+                textMetrics: {
+                    originalTextLength,
+                    ssmlTextLength,
+                    billableCharCount,
+                    ssmlOverhead: ssmlTextLength - originalTextLength,
+                    compressionRatio: (ssmlTextLength / originalTextLength).toFixed(2)
+                },
+                config: {
+                    voiceId: config.voiceId,
+                    voiceTier: config.voiceTier,
+                    engine: getEngine(config.voiceTier)
+                }
+            });
+            
+            // Specific handling for text length exceeded errors
+            if (error && typeof error === 'object' && 'name' in error && error.name === 'TextLengthExceededException') {
+                console.error(`❌ AWS Polly Text Length Exceeded - ${textLengthInfo}`, {
+                    message: 'The text provided exceeds AWS Polly\'s maximum character limit',
+                    limits: {
+                        'standard_neural': '3000 characters (SSML)',
+                        'long-form': '100,000 characters (plain text), 200,000 characters (SSML)',
+                        'generative': '3000 characters (SSML)'
+                    },
+                    recommendation: originalTextLength > 2000 
+                        ? 'Consider splitting the text into smaller chunks or using long-form voice tier'
+                        : 'The SSML markup is adding significant overhead. Consider reducing mark density.'
+                });
+            }
+            
             return null;
         }
     }

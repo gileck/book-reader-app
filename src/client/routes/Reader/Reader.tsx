@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Box, Typography, CircularProgress, Paper } from '@mui/material';
+import { Box, Typography, CircularProgress, Paper, Alert, Snackbar } from '@mui/material';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
@@ -270,6 +270,22 @@ export const Reader = () => {
                     onClose={chapterDialog.closeDialog}
                     onChapterSelect={navigation.setCurrentChapterNumber}
                 />
+
+                {/* Reading Progress Error Alert */}
+                <Snackbar
+                    open={progress.alert.open}
+                    autoHideDuration={6000}
+                    onClose={progress.closeAlert}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert 
+                        onClose={progress.closeAlert} 
+                        severity={progress.alert.severity}
+                        sx={{ width: '100%' }}
+                    >
+                        {progress.alert.message}
+                    </Alert>
+                </Snackbar>
 
                 {/* TODO: Implement enhanced scroll-to-chunk for v2 mixed content */}
             </Box>

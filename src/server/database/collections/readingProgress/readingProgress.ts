@@ -87,26 +87,33 @@ export const updateReadingPosition = async (
     const bookObjectId = typeof bookId === 'string' ? new ObjectId(bookId) : bookId;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const update: Record<string, any> = {
-        currentChapter,
-        currentChunk,
-        lastReadAt: new Date(),
-        updatedAt: new Date()
+    const updateDoc: Record<string, any> = {
+        $set: {
+            currentChapter,
+            currentChunk,
+            lastReadAt: new Date(),
+            updatedAt: new Date()
+        }
     };
 
+    const incOperations: Record<string, number> = {};
+
     if (wordsRead !== undefined) {
-        update.$inc = { totalWordsRead: wordsRead };
+        incOperations.totalWordsRead = wordsRead;
     }
 
     // Add session time tracking
     if (sessionTimeMinutes !== undefined && sessionTimeMinutes > 0) {
-        update.$inc = update.$inc || {};
-        update.$inc.totalReadingTimeMinutes = sessionTimeMinutes;
+        incOperations.totalReadingTimeMinutes = sessionTimeMinutes;
+    }
+
+    if (Object.keys(incOperations).length > 0) {
+        updateDoc.$inc = incOperations;
     }
 
     const result = await collection.findOneAndUpdate(
         { userId: userObjectId, bookId: bookObjectId },
-        { $set: update },
+        updateDoc,
         { returnDocument: 'after', upsert: true }
     );
 
