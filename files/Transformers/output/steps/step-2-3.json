@@ -72,7 +72,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-07-19T14:16:29.319Z",
+    "processingStartTime": "2025-08-01T12:06:48.867Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -81,7 +81,7 @@
       "lineCount": 12566,
       "wordCount": 121377,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-07-19T14:16:31.512Z",
+      "extractionTime": "2025-08-01T12:06:52.226Z",
       "averageWordsPerPage": 383,
       "extractionMethod": "page_by_page_fixed"
     },
@@ -92,7 +92,7 @@
       "patternMatches": 89,
       "averageDetectionConfidence": 0.9099999999999999,
       "pageOffset": 0,
-      "processingTime": 1874,
+      "processingTime": 2897,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -101,7 +101,7 @@
       "averagePagesPerChapter": 30.9,
       "totalCharacters": 738578,
       "averageCharactersPerChapter": 73857.8,
-      "processingTime": 22,
+      "processingTime": 40,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -110,7 +110,7 @@
       "averageCharactersRemovedPerChapter": 24.5,
       "totalCharactersAfterCleaning": 738333,
       "cleaningEfficiency": 0.033182859224767144,
-      "processingTime": 1,
+      "processingTime": 2,
       "cleaningMethod": "pattern_based_title_removal"
     }
   }

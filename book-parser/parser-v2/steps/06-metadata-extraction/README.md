@@ -1,4 +1,4 @@
-# Step 5: Metadata Extraction
+# Step 6: Metadata Extraction
 
 ## Overview
 

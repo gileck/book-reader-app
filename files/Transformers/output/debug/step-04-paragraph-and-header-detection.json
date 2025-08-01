@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-07-19T14:16:40.592Z",
-  "processingTime": "185ms",
+  "timestamp": "2025-08-01T12:07:08.314Z",
+  "processingTime": "784ms",
   "summary": {
     "totalChapters": 10,
-    "totalChunks": 971,
-    "totalParagraphs": 680,
+    "totalChunks": 962,
+    "totalParagraphs": 796,
     "totalHeaders": 108,
     "totalWords": 117709,
     "totalLinks": 282
   },
   "statistics": {
-    "totalChunks": 971,
-    "totalParagraphs": 680,
+    "totalChunks": 962,
+    "totalParagraphs": 796,
     "totalHeaders": 108,
     "totalWords": 117709,
     "totalLinks": 282,
     "paragraphStats": {
-      "count": 680,
+      "count": 796,
       "wordCounts": [
         194,
         188,
@@ -29,17 +29,20 @@
         100,
         197,
         128,
+        53,
         187,
         192,
         114,
         153,
         179,
         122,
+        137,
         196,
         95,
         196,
         185,
         70,
+        65,
         192,
         153,
         163,
@@ -47,17 +50,20 @@
         123,
         198,
         65,
+        168,
         191,
         193,
         83,
         187,
         50,
+        188,
         197,
         189,
         79,
         184,
         200,
         94,
+        133,
         184,
         128,
         165,
@@ -71,11 +77,13 @@
         183,
         192,
         74,
+        118,
         181,
         73,
         193,
         187,
         47,
+        85,
         186,
         108,
         200,
@@ -84,6 +92,7 @@
         199,
         176,
         76,
+        177,
         200,
         60,
         178,
@@ -92,6 +101,8 @@
         116,
         200,
         141,
+        102,
+        177,
         197,
         195,
         51,
@@ -105,6 +116,7 @@
         196,
         184,
         44,
+        144,
         178,
         124,
         199,
@@ -114,6 +126,7 @@
         134,
         175,
         193,
+        199,
         175,
         36,
         160,
@@ -124,6 +137,7 @@
         92,
         186,
         97,
+        122,
         174,
         178,
         57,
@@ -134,6 +148,7 @@
         94,
         182,
         108,
+        110,
         200,
         188,
         60,
@@ -162,9 +177,11 @@
         31,
         189,
         120,
+        107,
         179,
         175,
         98,
+        162,
         185,
         48,
         173,
@@ -195,15 +212,18 @@
         196,
         165,
         73,
+        50,
         190,
         167,
         176,
         180,
+        197,
         175,
         197,
         85,
         188,
         32,
+        188,
         176,
         171,
         187,
@@ -223,6 +243,7 @@
         186,
         187,
         194,
+        124,
         189,
         191,
         192,
@@ -254,6 +275,7 @@
         85,
         178,
         99,
+        98,
         157,
         105,
         172,
@@ -264,6 +286,7 @@
         128,
         191,
         159,
+        63,
         186,
         158,
         190,
@@ -276,6 +299,7 @@
         156,
         197,
         144,
+        55,
         177,
         180,
         174,
@@ -321,6 +345,7 @@
         94,
         193,
         122,
+        147,
         190,
         194,
         41,
@@ -341,6 +366,8 @@
         67,
         198,
         192,
+        187,
+        169,
         191,
         192,
         55,
@@ -351,6 +378,7 @@
         179,
         167,
         167,
+        104,
         187,
         194,
         82,
@@ -401,6 +429,7 @@
         79,
         182,
         86,
+        164,
         187,
         188,
         75,
@@ -412,6 +441,7 @@
         90,
         186,
         143,
+        85,
         188,
         148,
         186,
@@ -422,6 +452,7 @@
         64,
         172,
         132,
+        55,
         198,
         127,
         196,
@@ -444,6 +475,7 @@
         108,
         187,
         77,
+        115,
         196,
         138,
         192,
@@ -468,6 +500,7 @@
         60,
         189,
         102,
+        154,
         183,
         200,
         61,
@@ -491,6 +524,7 @@
         60,
         160,
         128,
+        154,
         191,
         175,
         103,
@@ -514,6 +548,7 @@
         89,
         189,
         62,
+        135,
         195,
         200,
         42,
@@ -565,6 +600,8 @@
         196,
         199,
         93,
+        189,
+        125,
         200,
         65,
         155,
@@ -573,6 +610,7 @@
         97,
         162,
         86,
+        135,
         183,
         141,
         202,
@@ -589,30 +627,53 @@
         197,
         183,
         56,
+        27,
+        128,
         188,
         97,
+        167,
+        60,
+        159,
         190,
         205,
+        71,
         192,
         23,
+        68,
+        28,
         199,
         137,
+        111,
         210,
+        139,
         198,
         54,
+        171,
         196,
         94,
+        230,
+        177,
+        91,
         194,
         89,
+        138,
         200,
         118,
+        193,
         187,
         34,
+        71,
+        98,
+        155,
+        50,
         188,
         162,
         52,
+        169,
         159,
         85,
+        60,
+        174,
         201,
         190,
         184,
@@ -620,47 +681,67 @@
         157,
         164,
         37,
+        103,
+        147,
         191,
         87,
         178,
         48,
+        113,
+        46,
         198,
         199,
         65,
         189,
         187,
         64,
+        52,
         188,
         118,
+        51,
         164,
         180,
         122,
+        72,
         172,
         143,
         192,
         22,
         183,
         22,
+        189,
         187,
         42,
         185,
         51,
+        184,
         199,
         195,
+        90,
         183,
         184,
         42,
         184,
         197,
         35,
+        189,
         179,
         23,
         185,
         77,
+        139,
+        72,
         199,
         166,
+        129,
         183,
         62,
+        159,
+        63,
+        75,
+        194,
+        37,
+        118,
         210,
         193,
         183,
@@ -668,12 +749,21 @@
         176,
         194,
         33,
+        93,
+        166,
+        151,
         195,
         182,
         50,
+        71,
         197,
         134,
+        102,
         214,
+        68,
+        187,
+        198,
+        194,
         183,
         107,
         195,
@@ -695,13 +785,39 @@
         67,
         161,
         145,
+        161,
+        178,
+        182,
+        169,
         201,
+        190,
+        184,
+        174,
+        161,
+        168,
+        174,
         201,
-        201
+        157,
+        201,
+        193,
+        193,
+        192,
+        176,
+        175,
+        196,
+        187,
+        182,
+        172,
+        180,
+        162,
+        173,
+        155,
+        143,
+        71
       ],
-      "averageWords": 149.64411764705883,
+      "averageWords": 147.4032663316583,
       "minWords": 20,
-      "maxWords": 214
+      "maxWords": 230
     },
     "headerStats": {
       "count": 108,
@@ -825,7 +941,7 @@
       "chapterNumber": 0,
       "title": "Introduction: Life itself",
       "chunkCount": 60,
-      "paragraphCount": 48,
+      "paragraphCount": 54,
       "headerCount": 6,
       "chunks": [
         {
@@ -925,7 +1041,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "To understand this flow of energy and matter and all it portends, we must\nfirst look to where biology has turned a blind eye since the ascent of\ninformation. The golden age of biochemistry began with ...",
           "pageNumber": 11,
           "wordCount": 53,
@@ -981,7 +1097,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "’ (I hear\nit accompanied by a burst of hysterical laughter) was later famously\nparaphrased as ‘Anything found to be true of E. coli must also be true of\nelephants.’ While deliberately mischievous, the...",
           "pageNumber": 14,
           "wordCount": 137,
@@ -1037,7 +1153,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "The ‘dynamic side’ of biochemistry now rarely escapes the\npages of dusty textbook histories. It does not seem to add much to the\npower of information. That’s a fallacy. This book aims to show that the...",
           "pageNumber": 16,
           "wordCount": 65,
@@ -1117,7 +1233,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "There’s a new name for this that reflects the modern ‘omic’ age:\nmetabolomics. We have known all the steps in the major metabolic\npathways for decades – they were laboriously worked out, step by step,...",
           "pageNumber": 18,
           "wordCount": 168,
@@ -1173,7 +1289,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Generations of biochemistry and medical students have been obliged to\nlearn the steps of the Krebs cycle by rote. Despite its iconic status it has\nearned little love or real understanding. That’s part...",
           "pageNumber": 20,
           "wordCount": 188,
@@ -1229,7 +1345,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Yet nothing could\nbe further from the truth. What is more meaningful than the chemistry\nthat brings life alive? Or the chemistry that sends us to our death? Or the\nchemistry that forges our conscious ...",
           "pageNumber": 23,
           "wordCount": 133,
@@ -1314,7 +1430,7 @@
       "chapterNumber": 1,
       "title": "Discovering the nanocosm",
       "chunkCount": 113,
-      "paragraphCount": 86,
+      "paragraphCount": 95,
       "headerCount": 9,
       "chunks": [
         {
@@ -1358,7 +1474,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "But Hopkins’s real mission was the development of biochemistry as\nan experimental discipline, with its own methodology and way of seeing\nthe world. It was vibrant and fun. The lab’s journal, Brighter\n...",
           "pageNumber": 29,
           "wordCount": 118,
@@ -1422,7 +1538,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Yet his approach also coloured the way successive generations\nhave thought about respiration ever since, to the point that the Krebs\ncycle has become virtually synonymous with respiration. As we saw i...",
           "pageNumber": 31,
           "wordCount": 85,
@@ -1502,7 +1618,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "The devil really was in the detail. For a modern-day biochemist, it is\nhard to appreciate just how little was known, how utterly opaque the\nworkings of the cell. As usual in science, some experiments ...",
           "pageNumber": 34,
           "wordCount": 177,
@@ -1598,7 +1714,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Pyruvic acid (with\na proton) becomes ‘pyruvate’ after it has lost the proton. The same\nconvention applies to all carboxylic acids. Notice too that the\ncarboxylate group has the formula CO 2 , and it c...",
           "pageNumber": 38,
           "wordCount": 102,
@@ -1614,7 +1730,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Having now familiarised ourselves with the nature of carboxylic acids,\nlet’s return to Krebs, who was wrestling with their fate. We’ve seen that\npyruvate itself plays a central role in respiration, ye...",
           "pageNumber": 38,
           "wordCount": 177,
@@ -1758,7 +1874,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Krebs also found that adding citrate to his pigeon-\nbreast slices (he’d modified Szent-Györgyi’s method) sped up respiration\nin a similar way to succinate. Citrate was definitely involved in\nrespirati...",
           "pageNumber": 44,
           "wordCount": 144,
@@ -1862,7 +1978,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "These are then fed into the Krebs\ncycle. One complete spin of the cycle (from pyruvate) generates three\nmolecules of CO 2 and five sets of 2H, equivalent to five molecules of\nH 2 .\n8\nThis hydrogen is ...",
           "pageNumber": 48,
           "wordCount": 199,
@@ -1966,7 +2082,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "I have talked about stripping hydrogen (2H) from molecules and feeding\nthem to oxygen. These 2H are not free in solution, nor are they shuttled\nby carboxylic acids, as Szent-Györgyi once thought; it t...",
           "pageNumber": 51,
           "wordCount": 122,
@@ -2070,7 +2186,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Imagine you’re starving. You are beginning to break down the proteins\nin your own muscles for the energy you need to keep going. Nothing\nmuch can be harvested from the proteins themselves; it’s their\n...",
           "pageNumber": 55,
           "wordCount": 110,
@@ -2227,7 +2343,7 @@
       "chapterNumber": 2,
       "title": "The path of carbon",
       "chunkCount": 90,
-      "paragraphCount": 71,
+      "paragraphCount": 77,
       "headerCount": 7,
       "chunks": [
         {
@@ -2319,7 +2435,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "The story of rubisco goes back to the development of cyclotrons in the\n1930s by Ernest Lawrence and Stanley Livingstone at the ‘Rad Lab’\n(radiation laboratory) in Berkeley, California. A cyclotron acc...",
           "pageNumber": 65,
           "wordCount": 107,
@@ -2351,7 +2467,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "11\nC has a half-life of just 20 minutes, meaning that half of\nit will have decomposed back to boron (by emitting ‘positrons’) every 20\nminutes. After two hours, nearly 99% of\n11\nC will have decayed ba...",
           "pageNumber": 67,
           "wordCount": 162,
@@ -2647,7 +2763,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Has it really made headway, even today? The\nidea that CO 2 fixation makes sugars is still the paradigm that most\nstudents imbibe today – the central dogma of metabolism. And so long\nas it stays that w...",
           "pageNumber": 78,
           "wordCount": 50,
@@ -2703,7 +2819,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "One\ncomplete turn of the cycle regenerates the starting point plus another\nmolecule – oxaloacetate in the figure above. Because oxaloacetate is\nitself an intermediate, it too can spin round the cycle ...",
           "pageNumber": 80,
           "wordCount": 197,
@@ -2767,7 +2883,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "The problem facing Arnon and Buchanan was not only the unity of\nbiochemistry and the dominating personality of Calvin; the idea of a\nreverse cycle also seemed to go against thermodynamics. Szent-Györg...",
           "pageNumber": 82,
           "wordCount": 188,
@@ -2943,7 +3059,7 @@
           "linkCount": 1
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "+\nis a phosphorylated form of NAD\n+\n(nicotinamide adenine\ndinucleotide), which we met in the previous chapter as the main carrier\nresponsible for transferring 2H from Krebs-cycle intermediates to oxyg...",
           "pageNumber": 90,
           "wordCount": 124,
@@ -2956,7 +3072,7 @@
       "chapterNumber": 3,
       "title": "From gases to life",
       "chunkCount": 103,
-      "paragraphCount": 84,
+      "paragraphCount": 87,
       "headerCount": 5,
       "chunks": [
         {
@@ -3216,7 +3332,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Morowitz’s conception is beautiful and full of meaning. It suggests that\nlife can’t help but emerge on any wet, rocky planet flooded with light\nfrom a nearby star. He even wrote a book, The Emergence ...",
           "pageNumber": 101,
           "wordCount": 98,
@@ -3320,7 +3436,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Consider what happens close to a charged surface, let’s say a mineral\ncontaining iron and sulfur (such as greigite), shown below as a wavy line\nto keep things simple. Imagine that a CO 2 molecule come...",
           "pageNumber": 105,
           "wordCount": 63,
@@ -3480,7 +3596,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "On the other hand, if the\nconcentration of hydrogen is lower, then smaller carboxylic acids are\nmore likely to be released from the surface, as electrons flow back onto\nthe barrier. So the ultimate so...",
           "pageNumber": 112,
           "wordCount": 55,
@@ -3789,7 +3905,7 @@
       "chapterNumber": 4,
       "title": "Revolutions",
       "chunkCount": 82,
-      "paragraphCount": 70,
+      "paragraphCount": 74,
       "headerCount": 4,
       "chunks": [
         {
@@ -3921,7 +4037,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Let’s cast our minds back to the emergence of life in deep-sea\nhydrothermal vents. With a steady supply of H 2 and free proton\ngradients, everything that’s needed is already in place. Growth can be\nco...",
           "pageNumber": 128,
           "wordCount": 147,
@@ -4097,7 +4213,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "To sustain forwards flux down the Krebs\nline, we need to have high concentrations of early intermediates and\nlower concentrations of the later products. More specifically, we need to\nbe rid of the fin...",
           "pageNumber": 136,
           "wordCount": 187,
@@ -4113,7 +4229,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Set against the tight constraints of this anaerobic world, imagine the\nfreedom offered by that everyday miracle, oxygenic photosynthesis.\nSilently humming in trees and algae and cyanobacteria, all use...",
           "pageNumber": 136,
           "wordCount": 169,
@@ -4225,7 +4341,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Named after the Shuram Formation in Oman, this carbonate-rich\nsedimentary rock contains the single largest ‘negative isotope excursion’\nin Earth’s history. Beginning in strata dated to 560 million yea...",
           "pageNumber": 140,
           "wordCount": 104,
@@ -4454,7 +4570,7 @@
       "chapterNumber": 5,
       "title": "To the dark side",
       "chunkCount": 99,
-      "paragraphCount": 80,
+      "paragraphCount": 84,
       "headerCount": 6,
       "chunks": [
         {
@@ -4682,7 +4798,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Warburg’s position on cancer owed more to his philosophy than it did to\nhis experiments, just as it did with photosynthesis. The basic problem\nwith the Warburg effect – the propensity of cancers to fe...",
           "pageNumber": 158,
           "wordCount": 164,
@@ -4786,7 +4902,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "The first mutations in genes encoding Krebs-cycle enzymes to be linked\nwith cancer were found in succinate dehydrogenase and fumarate\nhydratase. Both these mutations block Krebs-cycle flow in the vici...",
           "pageNumber": 162,
           "wordCount": 85,
@@ -4890,7 +5006,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Most cancers need no more than glucose and glutamine to grow. These\nsubstrates serve all of their needs. And of the two of them ... give the\ncancers glutamine. I have a vivid memory of discussing glut...",
           "pageNumber": 166,
           "wordCount": 55,
@@ -5122,7 +5238,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "I’ve implied that cancer is primarily a metabolic disease, yet if\nanything goes for metabolism, then what actually turns a cell cancerous?\nYou’ve probably appreciated by now that the underlying proble...",
           "pageNumber": 176,
           "wordCount": 115,
@@ -5255,7 +5371,7 @@
       "chapterNumber": 6,
       "title": "The flux capacitor",
       "chunkCount": 96,
-      "paragraphCount": 87,
+      "paragraphCount": 90,
       "headerCount": 5,
       "chunks": [
         {
@@ -5355,7 +5471,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "One voice above all has sung the importance of mitochondria in human\nhealth for nearly half a century: Doug Wallace. Wallace trained as a\ngeneticist, completing his PhD in microbiology and human genet...",
           "pageNumber": 184,
           "wordCount": 154,
@@ -5555,7 +5671,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "So what was killing the female flies? We don’t know for sure, but we did\nmeasure one big difference between the males and females, and between\nthe female line that died versus those that seemed fine. ...",
           "pageNumber": 192,
           "wordCount": 154,
@@ -5771,7 +5887,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Ageing reminds me of that absurd scene in Monty Python’s Life of\nBrian , where Brian admonishes the crowd that they don’t need to follow\nanyone – they’re all individuals. The crowd chants back, ‘Yes, ...",
           "pageNumber": 200,
           "wordCount": 135,
@@ -6032,7 +6148,7 @@
       "chapterNumber": 99,
       "title": "Epilogue: Self",
       "chunkCount": 27,
-      "paragraphCount": 21,
+      "paragraphCount": 23,
       "headerCount": 2,
       "chunks": [
         {
@@ -6204,7 +6320,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "There’s no sense in which information binds you.\nYet you are still part of an entity, a self. Your flux through the Krebs\ncycle is linked, moment by moment, with the balance of metabolism,\nwith how mu...",
           "pageNumber": 218,
           "wordCount": 189,
@@ -6212,7 +6328,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "ENVOI\n‘Like Most Revelations’\nRichard Howard\nIt is the movement that incites the form,\ndiscovered as a downward rapture – yes,\nit is the movement that delights the form,\nsustained by its own velocity....",
           "pageNumber": 219,
           "wordCount": 125,
@@ -6257,7 +6373,7 @@
       "chapterNumber": 99,
       "title": "Appendix 1: Red protein mechanics",
       "chunkCount": 17,
-      "paragraphCount": 8,
+      "paragraphCount": 9,
       "headerCount": 0,
       "chunks": [
         {
@@ -6381,7 +6497,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "In fact, water is\nnever produced as a separate entity. Look back at that first scheme –\nyou’ll see that the oxygen in the water molecule comes from the\ncarboxylate group – and ends up on the phosphate...",
           "pageNumber": 226,
           "wordCount": 135,
@@ -6401,8 +6517,8 @@
     {
       "chapterNumber": 99,
       "title": "Appendix 2: The Krebs line",
-      "chunkCount": 284,
-      "paragraphCount": 125,
+      "chunkCount": 275,
+      "paragraphCount": 203,
       "headerCount": 64,
       "chunks": [
         {
@@ -6598,7 +6714,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "SNP Single-nucleotide polymorphism (pronounced ‘snip’). A single-letter\nchange in DNA, which can differ between individuals. We have millions of\nSNPs, making us genetically different to each other.",
           "pageNumber": 235,
           "wordCount": 27,
@@ -6614,7 +6730,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "This is not a textbook or research paper, so is not referenced in a comprehensive\nway. But if you’ve read this far, you will have become deeply embroiled in the\nwider literature. This literature can b...",
           "pageNumber": 236,
           "wordCount": 128,
@@ -6646,7 +6762,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Not surprisingly, I don’t agree with all he writes, but I notice we are both\nsearching for meaning in fields, whether they be electrical or informational (or\nthe same thing).\nErwin Schrödinger, What I...",
           "pageNumber": 237,
           "wordCount": 167,
@@ -6662,7 +6778,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Hopkins & Biochemistry 1861–1947. Papers concerning Sir Frederick Gowland\nHopkins, OM, PRS, with a selection of his addresses and a bibliography of his\npublications. (Cambridge, W. Heffer & Sons, 1949...",
           "pageNumber": 237,
           "wordCount": 60,
@@ -6678,7 +6794,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "D. D. Woods, ‘Albert Jan Kluyver’, Biographical Memoirs of Fellows of the\nRoyal Society 3 (1957) 109–128. A wonderful resource from the Royal Society –\nshort biographical obituaries of their fellows s...",
           "pageNumber": 237,
           "wordCount": 159,
@@ -6710,7 +6826,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Smith and Morowitz take the case for the unity of biochemistry right back to the\norigin of life.\nW. Martin and M. J. Russell, ‘On the origin of biochemistry at an alkaline\nhydrothermal vent’, Philosop...",
           "pageNumber": 239,
           "wordCount": 71,
@@ -6750,7 +6866,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "L. Orgel, ‘The implausibility of metabolic cycles on the prebiotic Earth’, PLoS\nBiology 6 (2008) e18. Orgel didn’t mince his words, also describing the idea that\nmetal ions or minerals could catalyse ...",
           "pageNumber": 239,
           "wordCount": 68,
@@ -6766,7 +6882,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Hopkins’s biochemistry lab\nF. Gowland Hopkins, ‘Atomic physics and vital activities’, Nature 130 (1932)\n869–871. The text of Gowland Hopkins’s anniversary address to the Royal Society in 1932.",
           "pageNumber": 239,
           "wordCount": 28,
@@ -6798,19 +6914,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Otto Warburg, The Oxygen-Transferring Ferment of Respiration, Nobel Lecture,\n10 December 1931. Available from:\nwww.nobelprize.org/prizes/medicine/1931/warburg/lecture/. A marvellous and\ninspiring piec...",
           "pageNumber": 240,
-          "wordCount": 72,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "H. Krebs, ‘Otto Heinrich Warburg. 1883–1970’, Biographical Memoirs Fellows\nof the Royal Society 18 (1972) 628–699. Krebs’s generous tribute to his scientific\nmentor; even Krebs was unable to present W...",
-          "pageNumber": 241,
-          "wordCount": 39,
-          "sentenceCount": 4,
+          "wordCount": 111,
+          "sentenceCount": 15,
           "linkCount": 0
         },
         {
@@ -6838,7 +6946,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "H. A. Krebs and W. A. Johnson, ‘The role of citric acid in intermediary\nmetabolism in animal tissues’, Enzymologica 4 (1937) 148–156. The classic non-\nNature paper on the Krebs cycle, written with W. ...",
           "pageNumber": 241,
           "wordCount": 139,
@@ -6870,19 +6978,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "G. D. Novelli and F. Lipmann, ‘The catalytic function of coenzyme A in citric\nacid synthesis’, Journal of Biological Chemistry 182 (1950) 213–228. The paper\nthat finally made sense of the first step o...",
           "pageNumber": 242,
-          "wordCount": 165,
-          "sentenceCount": 17,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "Here at least, times have changed.",
-          "pageNumber": 243,
-          "wordCount": 6,
-          "sentenceCount": 1,
+          "wordCount": 171,
+          "sentenceCount": 18,
           "linkCount": 0
         },
         {
@@ -6918,19 +7018,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "P. D. Mitchell and J. Moyle, ‘Stoichiometry of proton translocation through the\nrespiratory chain and adenosine triphosphatase systems of rat liver\nmitochondria’, Nature 208 (1965) 147–151. One of the...",
           "pageNumber": 243,
-          "wordCount": 69,
-          "sentenceCount": 5,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "P. D. Mitchell and J. Moyle, ‘Evidence discriminating between the chemical and\nthe chemiosmotic mechanisms of electron transport phosphorylation’, Nature\n208 (1965) 1205–1206. A shorter paper, again p...",
-          "pageNumber": 244,
-          "wordCount": 161,
-          "sentenceCount": 22,
+          "wordCount": 230,
+          "sentenceCount": 27,
           "linkCount": 0
         },
         {
@@ -6942,7 +7034,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "M. Wikström, ‘Recollections. How I became a biochemist’, IUBMB Life 60\n(2008) 414–417. A memoir of the later ‘ox phos wars’, over the mechanism of\nproton pumping, especially cytochrome oxidase. Mitche...",
           "pageNumber": 244,
           "wordCount": 177,
@@ -6958,19 +7050,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "J. E. Baldwin and H. A. Krebs, ‘The evolution of metabolic cycles’, Nature 291\n(1981) 381–382. An influential paper that stands out in my mind for not even mentioning the reverse Krebs cycle – which h...",
           "pageNumber": 244,
-          "wordCount": 41,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "How blind are even the finest scientists.\nH. A. Krebs and H. L. Kornberg, Energy Transformations in Living Matter: A\nSurvey (Berlin, Springer, 1957). Rather surprisingly described by James Watson\nas t...",
-          "pageNumber": 245,
-          "wordCount": 50,
-          "sentenceCount": 7,
+          "wordCount": 91,
+          "sentenceCount": 13,
           "linkCount": 0
         },
         {
@@ -7006,19 +7090,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Martin D. Kamen, Radiant Science, Dark Politics. A Memoir of the Nuclear Age\n(Berkeley, University of California Press, 1985). A remarkable and absorbing\nscientific biography, with many memorable char...",
           "pageNumber": 245,
-          "wordCount": 47,
-          "sentenceCount": 4,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "A\nunique record.\nOliver Morton, Eating the Sun: How Plants Power the Planet (London, Fourth\nEstate, 2009). A delightful book, as gripping as a novel on the history of\nphotosynthesis, before broadening...",
-          "pageNumber": 246,
-          "wordCount": 91,
-          "sentenceCount": 7,
+          "wordCount": 138,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
@@ -7046,7 +7122,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "A. A. Benson, ‘Last days in the old radiation laboratory (ORL), Berkeley,\nCalifornia, 1954’, Photosynthesis Research 105 (2010) 209–212. More\nfascinating reminiscences from Andrew Benson.\nT. D. Sharke...",
           "pageNumber": 247,
           "wordCount": 193,
@@ -7078,7 +7154,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "B. B. Buchanan, ‘Daniel I. Arnon. November 14, 1910–December 20, 1994’,\nBiographical Memoirs 80 (2001) 2–20. A brief biography of Daniel Arnon (in\nthe US National Academy of Sciences collection) from ...",
           "pageNumber": 248,
           "wordCount": 71,
@@ -7094,7 +7170,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Don Braben, Scientific Freedom: The Elixir of Civilization (San Francisco, Stripe\nPress, 2020). A fine book that makes the case for rethinking how science is\nfunded. Peer review is deeply conservative...",
           "pageNumber": 248,
           "wordCount": 98,
@@ -7110,7 +7186,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "J. Ormerod, ‘“Every dogma has its day”: a personal look at carbon metabolism in\nphotosynthetic bacteria’, Photosynthesis Research 76 (2003) 135–143. Yes, I\nstole his phrase. A very personable account ...",
           "pageNumber": 248,
           "wordCount": 155,
@@ -7126,7 +7202,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "A. Mall, J. Sobotta, C. Huber et al ., ‘Reversibility of citrate synthase allows\nautotrophic growth of a thermophilic bacterium’, Science 359 (2018) 563–567. A seminal discovery, that the canonical AT...",
           "pageNumber": 248,
           "wordCount": 50,
@@ -7158,7 +7234,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "N. H. Sleep, D. K. Bird and E. C. Pope, ‘Serpentinite and the dawn of life’,\nPhilosophical Transactions of the Royal Society B 366 (2011) 2857–2869. An\nexcellent article that considers how the geologi...",
           "pageNumber": 250,
           "wordCount": 169,
@@ -7190,7 +7266,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "An all-time classic paper,\nthe kind of paper that draws young minds not just into the field but into science.\nJ. Whitfield, ‘Origin of life: nascence man’, Nature 459 (2009) 316–319. Rarely\ndoes Natur...",
           "pageNumber": 251,
           "wordCount": 60,
@@ -7206,7 +7282,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "D. S. Kelley, J. A. Karson, D. K. Blackman, G. L. Früh-Green, D. A. Butterfield,\nM. D. Lilley, E. J. Olson, M. O. Schrenk, K. K. Roe, G. T. Lebon, P. Rivizzigno;\nAT3-60 Shipboard Party, ‘An off-axis h...",
           "pageNumber": 251,
           "wordCount": 174,
@@ -7286,7 +7362,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "M. C. Weiss, F. L. Sousa, N. Mrnjavac, S. Neukirchen, M. Roettger, S. Nelson-\nSathi and W. F. Martin, ‘The physiology and habitat of the last universal\ncommon ancestor’, Nature Microbiology 1 (2016) 1...",
           "pageNumber": 253,
           "wordCount": 103,
@@ -7294,7 +7370,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "R. Braakman and E. Smith, ‘The emergence and early evolution of biological\ncarbon fixation’, PLoS Computational Biology 8 (2012) e1002455. An extremely\nneat idea, which attempts to unite phylogenetic ...",
           "pageNumber": 254,
           "wordCount": 147,
@@ -7350,7 +7426,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "G. D. Cody, N. Z. Boctor, R. M. Hazen, J. A. Brandes, H. J. Morowitz, H. S.\nYodor Jr, ‘Geochemical roots of autotrophic carbon fixation: hydrothermal\nexperiments in the system citric acid, H 2 O-(±FeS...",
           "pageNumber": 255,
           "wordCount": 113,
@@ -7366,7 +7442,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "R. K. Thauer, A.-K. Kaster, H. Seedorf, W. Buckel and R. Hedderich,\n‘Methanogenic archaea: ecologically relevant differences in energy\nconservation’, Nature Reviews Microbiology 6 (2008) 579–591. A tr...",
           "pageNumber": 255,
           "wordCount": 46,
@@ -7422,7 +7498,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "R. Nunes Palmeira, M. Colnaghi, S. Harrison, A. Pomiankowski and N. Lane,\n‘The limits of metabolic heredity in protocells’, available on BioRxiv\n(https://doi.org/10.1101/2022.01.28.477904). More on po...",
           "pageNumber": 258,
           "wordCount": 52,
@@ -7462,7 +7538,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Cambrian explosion\nStephen Jay Gould, Wonderful Life: The Burgess Shale and the History of Nature\n(New York, W. W. Norton, 1989). A heady book that must have drawn a\ngeneration of young minds into pal...",
           "pageNumber": 258,
           "wordCount": 51,
@@ -7502,7 +7578,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "W. Buckel and R. K. Thauer, ‘Flavin-based electron bifurcation, ferredoxin,\nflavodoxin, and anaerobic respiration with protons (Ech) or NAD\n+\n(Rnf) as\nelectron acceptors: a historical review’, Frontie...",
           "pageNumber": 260,
           "wordCount": 72,
@@ -7582,7 +7658,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "H. C. Betts, M. N. Puttick, J. W. Clark, T. A. Williams, P. C. J. Donoghue and D.\nPisani, ‘Integrated genomic and fossil evidence illuminates life’s early evolution\nand eukaryote origin’, Nature Ecolo...",
           "pageNumber": 262,
           "wordCount": 189,
@@ -7646,7 +7722,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Laurence A. Moran, Robert Horton, Gray Scrimgeour and Marc Perry, Principles\nof Biochemistry , 5th edn (London, Pearson, 2011). One of the few biochemistry\ntextbooks that deals with evolution in a ser...",
           "pageNumber": 263,
           "wordCount": 184,
@@ -7678,7 +7754,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "P. Rous, ‘Surmise and fact on the nature of cancer’, Nature 183 (1959) 1357–\n1361. Quite a diatribe against the somatic mutation theory of cancer, written in\nthe same year that Rous received the Nobel...",
           "pageNumber": 264,
           "wordCount": 90,
@@ -7734,7 +7810,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Otto Heinrich Warburg, The Prime Cause and Prevention of Cancer (Würzburg,\nKonrad Triltsch, 1969). A famous manifesto, following on where his Science\npaper left off. The booklet was developed from a l...",
           "pageNumber": 267,
           "wordCount": 189,
@@ -7798,7 +7874,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "E. T. Chouchani, V. R. Pell, E. Gaude et al. , ‘Ischaemic accumulation of\nsuccinate controls reperfusion injury through mitochondrial ROS’, Nature 515\n(2014) 431–435. A barnstorming paper that finally...",
           "pageNumber": 268,
           "wordCount": 139,
@@ -7814,7 +7890,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "H. Eagle, ‘Nutrition needs of mammalian cells in tissue culture’, Science 122\n(1955) 501–514. One of the first papers to point to the addiction of cancer cells\nto glutamine, in this case in HeLa cells...",
           "pageNumber": 268,
           "wordCount": 72,
@@ -7846,19 +7922,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "L. A. Sazanov and J. B. Jackson, ‘Proton-translocating transhydrogenase and\nNAD- and NADP-linked isocitrate dehydrogenases operate in a substrate cycle\nwhich contributes to fine regulation of the tric...",
           "pageNumber": 269,
-          "wordCount": 49,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "M. Wagner, E. Bertero, A. Nickel, M. Kohlhaas, G. E. Gibson, W. Heggermont,\nS. Heymans and C. Maack, ‘Selective NADH communication from α-\nketoglutarate dehydrogenase to mitochondrial transhydrogenase...",
-          "pageNumber": 270,
-          "wordCount": 80,
-          "sentenceCount": 12,
+          "wordCount": 129,
+          "sentenceCount": 18,
           "linkCount": 0
         },
         {
@@ -7894,19 +7962,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "A. E. McDonald, N. Pichaud and C. A. Darveau. ‘“Alternative” fuels\ncontributing to mitochondrial electron transport: Importance of non-classical\npathways in the diversity of animal metabolism’, Compar...",
           "pageNumber": 270,
-          "wordCount": 99,
-          "sentenceCount": 12,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "Available here: https://doi:10.26124/bec:2020-0002. The ‘bible’ of fluo-\nrespirometry, privately published by Erich Gnaiger in the tradition of Peter\nMitchell’s ‘little grey books’; this is the little...",
-          "pageNumber": 271,
-          "wordCount": 60,
-          "sentenceCount": 5,
+          "wordCount": 159,
+          "sentenceCount": 17,
           "linkCount": 0
         },
         {
@@ -7918,7 +7978,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "R. DeBerardinis and T. Cheng, ‘Q’s next: the diverse functions of glutamine in\nmetabolism, cell biology and cancer’, Oncogene 29 (2010) 313–324. Puts\nforward the disturbing notion that cancers ‘delibe...",
           "pageNumber": 271,
           "wordCount": 63,
@@ -7934,7 +7994,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "D. D. Weber, S. Aminzadeh-Gohari, J. Tulipan, L. Catalano, R. G. Feichtinger\nand B. Kofler, ‘Ketogenic diet in the treatment of cancer – where do we stand?’,\nMolecular Metabolism 33 (2020) 102–121. A ...",
           "pageNumber": 271,
           "wordCount": 75,
@@ -7950,7 +8010,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Evolutionary ideas of ageing\nPeter Medawar, An Unsolved Problem of Biology (London, H. K. Lewis, 1952).\nThe book from his inaugural lecture at UCL, which put forward a new theory of\nageing that is sti...",
           "pageNumber": 271,
           "wordCount": 194,
@@ -7958,7 +8018,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "André Klarsfeld and Frédéric Revah, The Biology of Death: Origins of Mortality\n(Ithaca, NY, Cornell University Press, 2000). A delightful romp through the\nstrangeness of ageing and death in nature. Ro...",
           "pageNumber": 272,
           "wordCount": 37,
@@ -7974,7 +8034,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Carl Zimmer, She Has Her Mother’s Laugh: The Powers, Perversions and\nPotential of Heredity (London, Penguin Random House, 2018). A magisterial\nvolume on the history and future of genetics, with excell...",
           "pageNumber": 272,
           "wordCount": 118,
@@ -8054,7 +8114,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "M. F. Camus, W. Kotiadis, H. Carter, E. Rodriguez and N. Lane, ‘Mitonuclear\ninteractions produce extreme differences in response to redox stress’, available as\na preprint on BioRxiv (https://doi.org/1...",
           "pageNumber": 275,
           "wordCount": 93,
@@ -8070,7 +8130,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "P. Korge, G. Calmettes and J. N. Weiss, ‘Increased reactive oxygen species\nproduction during reductive stress: the roles of mitochondrial glutathione and\nthioredoxin reductase’, Biochimica Biophysica ...",
           "pageNumber": 275,
           "wordCount": 166,
@@ -8086,19 +8146,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Raymond Pearl, The Rate of Living. Being an Account of some Experimental\nStudies on the Biology of Life Duration (London, University of London Press,\n1928). Raymond Pearl’s rate of living theory fell ...",
           "pageNumber": 275,
-          "wordCount": 148,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "B. S. Haldane.",
-          "pageNumber": 276,
-          "wordCount": 3,
-          "sentenceCount": 3,
+          "wordCount": 151,
+          "sentenceCount": 12,
           "linkCount": 0
         },
         {
@@ -8134,7 +8186,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "D. Gems, ‘The aging–disease false dichotomy: understanding senescence as\npathology’, Frontiers in Genetics 6 (2015) 12. David Gems rails against the idea\nthat ageing is somehow normal and ‘healthy’, w...",
           "pageNumber": 277,
           "wordCount": 71,
@@ -8166,7 +8218,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Paula Moreira discusses how diabetes-linked defects in mitochondria\nincrease the risk of Alzheimer’s disease.\nD. A. Butterfield and B. Halliwell, ‘Oxidative stress, dysfunctional glucose\nmetabolism an...",
           "pageNumber": 278,
           "wordCount": 102,
@@ -8198,7 +8250,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Ron Milo and Rob Phillips, Cell Biology by the Numbers (New York, Garland\nScience, 2016). Engaging, quantitative answers to all the questions you never\nknew you had about cells. I’m citing this book i...",
           "pageNumber": 278,
           "wordCount": 68,
@@ -8222,7 +8274,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "L. Turin, E. M. C. Skoulakis and A. P. Horsfield, ‘Electron spin changes during\ngeneral anesthesia in Drosophila ’, Proceedings of the National Academy of\nSciences USA 111 (2014) E3524–E3533. Luca Tur...",
           "pageNumber": 279,
           "wordCount": 187,
@@ -8238,7 +8290,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "M. X. Cohen, ‘Where does EEG come from and what does it mean?’, Trends in\nNeurosciences 40 (2017) 208–218. Well worth a read. The fact that we’ve known\nabout the electroencephalogram for a century, an...",
           "pageNumber": 279,
           "wordCount": 198,
@@ -8254,19 +8306,11 @@
           "linkCount": 0
         },
         {
-          "type": "text",
-          "content": "M. Levin and C. J. Martyniuk, ‘The bioelectric code: an ancient computational\nmedium for dynamic control of growth and form’, Biosystems 164 (2018) 76–93.",
+          "type": "paragraph",
+          "content": "M. Levin and C. J. Martyniuk, ‘The bioelectric code: an ancient computational\nmedium for dynamic control of growth and form’, Biosystems 164 (2018) 76–93.\nMichael Levin is currently doing some of the ...",
           "pageNumber": 279,
-          "wordCount": 24,
-          "sentenceCount": 4,
-          "linkCount": 0
-        },
-        {
-          "type": "text",
-          "content": "Michael Levin is currently doing some of the most exciting work in biology.\nElectrical fields determine development; genes are secondary. So far that mostly\ngoes for flat-worms, but could it be more g...",
-          "pageNumber": 280,
-          "wordCount": 170,
-          "sentenceCount": 23,
+          "wordCount": 194,
+          "sentenceCount": 27,
           "linkCount": 0
         },
         {
@@ -8446,7 +8490,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "INDEX\nNote: The index covers the main text and appendices. The suffix ‘n’ plus\na number indicates a relevant footnote on that page. Page numbers in\nitalics indicate illustrations.\nAcademic Assistance ...",
           "pageNumber": 288,
           "wordCount": 161,
@@ -8454,7 +8498,7 @@
           "linkCount": 5
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "‘alpha-keto’ groups 41, 286, 299\nsee also α-ketoglutarate (at ‘k’)\nalternative oxidase 183, 228n7, 262n8\nAlvin (submersible) 112–13, 115\nAlzheimer’s disease 21, 28, 266–8, 280\namino acids\nbiosynthesis...",
           "pageNumber": 289,
           "wordCount": 178,
@@ -8462,7 +8506,7 @@
           "linkCount": 9
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "ATP (adenosine triphosphate) 302\nin cellular respiration 56–7, 64\nformation without ATP synthase 144, 151\nsynthesis 65–8, 98–105, 187–8\nyields from respiration and fermentation 201–2, 207\nATP citrate ...",
           "pageNumber": 290,
           "wordCount": 182,
@@ -8470,7 +8514,7 @@
           "linkCount": 8
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Krebs cycle and non-cycle 111, 184–6\nsymbiosis among 170, 188\n‘balancer chromosomes’ 245, 248\nBaldwin, Ernest 59\nBarja, Gustavo 271\nBaross, John 113–14\nBassham, James 97\nBenson, Andrew 91, 93–7, 100, ...",
           "pageNumber": 291,
           "wordCount": 169,
@@ -8486,7 +8530,7 @@
           "linkCount": 5
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "carbon-12 (\n12\nC) 178, 180–82\ncarbon-13 (\n13\nC) 88, 178–80, 182n6\ncarbon-14 (\n14\nC) 79, 86–92, 99, 102, 178\ncarbon capture and sequestration 34–5n2, 177\ncarbon dioxide (CO 2 )\nactivation by ATP or fer...",
           "pageNumber": 293,
           "wordCount": 190,
@@ -8494,7 +8538,7 @@
           "linkCount": 4
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "cell division 27, 192, 195, 283\ncell-free extracts 62\ncell nucleus, transplanting 195\ncells\nas batteries 162\ncellular level consciousness 276\ncity analogy 1–2, 14, 17–18\ncolour 35–6n3\nemission of radi...",
           "pageNumber": 294,
           "wordCount": 184,
@@ -8502,7 +8546,7 @@
           "linkCount": 9
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "see also acetyl CoA; succinyl CoA\nCohen, Michael 278\nColnaghi, Marco 241n2\ncomplexes I, II, III see respiratory chain\nconsciousness 274–84\nevidence from anaesthetics 276–8\nand membrane potentials 278,...",
           "pageNumber": 295,
           "wordCount": 174,
@@ -8510,7 +8554,7 @@
           "linkCount": 2
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "imposed on Calvin 94n6\nketogenic diets 228\nand mitochondrial function 25, 242, 249, 251, 264\nWallace on 242\nWarburg on 197\ndifferentiation, tissues 189, 202, 208–9, 269\ndiseases\nchronic infections and...",
           "pageNumber": 296,
           "wordCount": 161,
@@ -8518,7 +8562,7 @@
           "linkCount": 6
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "The Emergence of Everything , by Morowitz 127\nEmerson, Robert 199–200\nEnceladus 117, 120\nendoplasmic reticulum 266n9\nendosymbiosis 69, 221n6\nenergetics\nof early life 168\nof fixed carbon 160\nof living ...",
           "pageNumber": 297,
           "wordCount": 168,
@@ -8526,7 +8570,7 @@
           "linkCount": 7
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "see also glycolysis, aerobic\nferredoxin (Fd)\namino acid sequence and antiquity 164–7\nancient metabolic pathways 121–2, 142\ndetailed mechanism of action 288–93\ndiscovery and properties 105–10, 114\nEch ...",
           "pageNumber": 298,
           "wordCount": 174,
@@ -8542,7 +8586,7 @@
           "linkCount": 6
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "protocells 146–7\nGWAS (genome-wide association studies) 235, 237, 244\n2H/H 2 see hydrogen\nhaem pigments 35–6\nsee also chlorophyll; cytochrome oxidase\nhaemoglobin 35–6, 114, 165, 183, 187\nHaldane, JBS ...",
           "pageNumber": 300,
           "wordCount": 157,
@@ -8558,7 +8602,7 @@
           "linkCount": 4
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "spontaneous formation of 4Fe4S 146\nisocitrate 128 , 184, 185 , 218, 220–22, 286 , 287\nisocitrate dehydrogenase 218–21\nisotope studies 144\nsee also carbon-12; carbon-13; radioisotopes\nJacob, François 1...",
           "pageNumber": 302,
           "wordCount": 193,
@@ -8566,7 +8610,7 @@
           "linkCount": 18
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "in the brain 263, 266, 280–81\nin cancer cells 222–3, 228\nin fruit flies 255–6\nmitonuclear mismatches and 262, 264–7\npotential reversal 186, 214, 244, 262\nKrebs cycle intermediates 51–2\nautocatalysis a...",
           "pageNumber": 303,
           "wordCount": 193,
@@ -8574,7 +8618,7 @@
           "linkCount": 6
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "tissue symbiosis 190\nlifestyle choices 25, 235, 264, 268–9, 272–3\nlight energy\ninfrared, and photosynthesis 115n2\npowering ATP synthesis 105\nsynthesis of organics in plants 107\n‘Like most revelations’...",
           "pageNumber": 304,
           "wordCount": 192,
@@ -8582,7 +8626,7 @@
           "linkCount": 10
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "metabolic flux\ncomplementarity 161, 189\nnumeric interpretation 8, 269–70\nredirected in cancer 16, 26, 205, 210\nas reversible 153, 168–9\nsignalling function 20–21, 244\nand stream of consciousness 26, 2...",
           "pageNumber": 305,
           "wordCount": 176,
@@ -8590,7 +8634,7 @@
           "linkCount": 0
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "mutations within 240–41, 247, 254n4, 257\noffering improved lifespan 272\nrespiration efficiency 251, 254–5n4\nuniparental inheritance 239–40, 246n2\nmitochondrial membranes\nand anaesthesia 277–8\ncharge o...",
           "pageNumber": 306,
           "wordCount": 175,
@@ -8598,7 +8642,7 @@
           "linkCount": 5
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "in biosynthesis 206–9, 224, 225 , 264\nand glutathione regeneration 252–3, 255\nand isocitrate dehydrogenase 218–21\nKrebs reversal and cancer 217–21\nin photosynthesis and photorespiration 107–9\nprogramm...",
           "pageNumber": 307,
           "wordCount": 196,
@@ -8606,7 +8650,7 @@
           "linkCount": 7
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "origin of life\nand hydrothermal vents 113, 117, 133, 152–3\ninevitability 127, 131n7, 275\nmetabolism preceding genes 4–5, 118, 150\noxygen as inimical 157\nprocesses summarised 275\nornithine 52–3\nthe Oro...",
           "pageNumber": 308,
           "wordCount": 187,
@@ -8614,7 +8658,7 @@
           "linkCount": 6
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "phosphoenol-pyruvate 70–71, 73, 102, 122, 224–5, 287 , 296–7\nphosphoglycerate 92, 94, 96, 174\nphotophosphorylation 99, 105\nphotorespiration 76, 109\nphotosynthesis\nanoxygenic and oxygenic 166–8, 175\nhy...",
           "pageNumber": 309,
           "wordCount": 182,
@@ -8622,7 +8666,7 @@
           "linkCount": 5
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "proton gradients 64, 150, 152, 164\nproton-motive force 61, 69, 143, 147 , 162–4, 220\npowering ATP synthesis 65–7, 66 , 99, 163\nprotons\nin acidic environments 137–8\npumped by 2H transfers 68n13, 164, 2...",
           "pageNumber": 310,
           "wordCount": 172,
@@ -8630,7 +8674,7 @@
           "linkCount": 6
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "as a mitochondrial function 32, 67–8n13\nphotophosphorylation and 99\nas preceding photosynthesis 36\nrole of NADH 108n11\nrole of succinate 211–14\nsuppression by antioxidants 250–52, 254\nsuppression with...",
           "pageNumber": 311,
           "wordCount": 180,
@@ -8638,7 +8682,7 @@
           "linkCount": 7
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "supercharged membrane potentials 219\nin transplant organs 214n5\nsee also free radicals\nROS flux 230, 244, 249–55, 257n5, 259, 261–2, 270–72\nroundabout analogy 24, 54, 70–72, 188, 260, 270\nthe Royal So...",
           "pageNumber": 312,
           "wordCount": 162,
@@ -8646,7 +8690,7 @@
           "linkCount": 2
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "serpentinisation 120, 174\nsex differences and mitochondria 239–41, 247\nsexual ornamentation 261\nShields, Graham 180–81, 182n6\nShuram excursion 180–81, 182n6, 183\nSir Hans Krebs Trust 31n1, 49–50n7\nSir...",
           "pageNumber": 313,
           "wordCount": 173,
@@ -8654,7 +8698,7 @@
           "linkCount": 9
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "symbiosis\namong bacteria and archaea 170, 188\nendosymbiosis 69, 221n6\nbetween tissues 189–90, 265\nSzent-Györgyi, Albert 44–52, 63, 71, 104, 184, 299\nThauer, Rolf 163n2\nthermodynamics\nfavouring organic...",
           "pageNumber": 314,
           "wordCount": 155,
@@ -8662,7 +8706,7 @@
           "linkCount": 5
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "vitalism/vital force 5, 8, 62\nvitamins C and E 44–5, 48, 252\nWächtershäuser, Günter 115–16\nWalker, Sara 130n6\nWalker, Sir John 67–8n13\nWallace, Doug 238–44, 279\nWarburg, Emil 197\nWarburg, Otto\non canc...",
           "pageNumber": 315,
           "wordCount": 143,
@@ -8670,7 +8714,7 @@
           "linkCount": 1
         },
         {
-          "type": "text",
+          "type": "paragraph",
           "content": "Discovering the nanocosm 27\n2. The path of carbon 62\n3. From gases to life 91\n4. Revolutions 124\n5. To the dark side 150\n6. The flux capacitor 181\nEpilogue: Self 211\nEnvoi: ‘Like Most Revelations’ 219...",
           "pageNumber": 316,
           "wordCount": 71,

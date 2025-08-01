@@ -3,8 +3,8 @@
     "totalImages": 58,
     "totalExtractedImages": 60,
     "imagesFolderPath": "./images",
-    "processingTime": 4018,
-    "extractionTime": "2025-07-19T14:16:40.369Z",
+    "processingTime": 7134,
+    "extractionTime": "2025-08-01T12:07:07.136Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [

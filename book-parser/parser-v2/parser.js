@@ -21,7 +21,8 @@ const pageExtractionAndCrossPageMerging = require('./steps/03-page-extraction-an
 const linkDetection = require('./steps/03-1-link-detection/03-1-link-detection');
 const imageExtraction = require('./steps/03-2-image-extraction/03-2-image-extraction');
 const paragraphDetection = require('./steps/04-paragraph-detection/04-paragraph-detection');
-const metadataExtraction = require('./steps/05-metadata-extraction/05-metadata-extraction');
+const sentenceDetection = require('./steps/05-sentence-detection/05-sentence-detection');
+const metadataExtraction = require('./steps/06-metadata-extraction/06-metadata-extraction');
 
 // Step execution mapping
 const STEPS = {
@@ -33,7 +34,8 @@ const STEPS = {
     'step-3-1': linkDetection.execute,
     'step-3-2': imageExtraction.execute,
     'step-4': paragraphDetection.execute,
-    'step-5': metadataExtraction.execute,
+    'step-5': sentenceDetection.execute,
+    'step-6': metadataExtraction.execute,
 };
 
 const STEP_NAMES = [
@@ -45,7 +47,8 @@ const STEP_NAMES = [
     'step-3-1',
     'step-3-2',
     'step-4',
-    'step-5'
+    'step-5',
+    'step-6'
 ];
 
 // Step validation mapping
@@ -58,7 +61,8 @@ const STEP_MODULES = {
     'step-3-1': linkDetection,
     'step-3-2': imageExtraction,
     'step-4': paragraphDetection,
-    'step-5': metadataExtraction,
+    'step-5': sentenceDetection,
+    'step-6': metadataExtraction,
 };
 
 /**
@@ -366,7 +370,8 @@ function getStepDescriptions() {
         'step-3-1': 'Detect and resolve internal links from PDF annotations (with validation)',
         'step-3-2': 'Extract embedded images from PDF and map to pages (with validation)',
         'step-4': 'Detect paragraph boundaries with size optimization (with validation)',
-        'step-5': 'Extract and clean metadata from PDF (with validation)'
+        'step-5': 'Convert paragraphs to sentences with paragraph indexing (with validation)',
+        'step-6': 'Extract and clean metadata from PDF (with validation)'
     };
 }
 

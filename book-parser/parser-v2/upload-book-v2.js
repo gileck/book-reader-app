@@ -237,6 +237,7 @@ function convertParserOutputToChapters(finalOutput, bookTitle) {
                     type: dbType,
                     ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
                     ...(chunk.sentenceCount !== undefined && { sentenceCount: chunk.sentenceCount }),
+                    ...(chunk.paragraphIndex !== undefined && { paragraphIndex: chunk.paragraphIndex }),
                     ...(chunk.links && chunk.links.length > 0 && { links: chunk.links }),
                     ...(chunk.imageName && { imageName: chunk.imageName }),
                     ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })

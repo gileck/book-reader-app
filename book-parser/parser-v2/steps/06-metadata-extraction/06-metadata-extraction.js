@@ -1,5 +1,5 @@
 /**
- * Step 5: Metadata Extraction
+ * Step 6: Metadata Extraction
  * 
  * Extract comprehensive book metadata from the parsed content including title, author,
  * publication information, and calculated statistics.
@@ -30,7 +30,7 @@ async function execute(pipelineState, config) {
     try {
         // Validate prerequisites
         if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
-            throw new Error('Step 4 (paragraph detection) must be completed first. No chapters found in pipeline state.');
+            throw new Error('Step 5 (sentence detection) must be completed first. No chapters found in pipeline state.');
         }
 
         if (!pipelineState.rawText) {
@@ -407,10 +407,10 @@ function extractPublicationInfo(rawText) {
 function calculateStatistics(chapters) {
     let totalWords = 0;
     let totalSentences = 0;
-    let totalParagraphs = 0;
     let totalImages = 0;
     let totalLinks = 0;
     const chapterTitles = [];
+    const uniqueParagraphIndexes = new Set();
 
     chapters.forEach(chapter => {
         chapterTitles.push(chapter.title);
@@ -420,8 +420,9 @@ function calculateStatistics(chapters) {
                 totalWords += chunk.wordCount || 0;
                 totalSentences += chunk.sentenceCount || 0;
 
-                if (chunk.type === 'text') {
-                    totalParagraphs++;
+                if (chunk.type === 'text' && chunk.paragraphIndex) {
+                    // Count unique paragraph indexes to get true paragraph count
+                    uniqueParagraphIndexes.add(`${chapter.chapterNumber}_${chunk.paragraphIndex}`);
                 } else if (chunk.type === 'image') {
                     totalImages++;
                 }
@@ -432,6 +433,8 @@ function calculateStatistics(chapters) {
             });
         }
     });
+
+    const totalParagraphs = uniqueParagraphIndexes.size;
 
     return {
         totalChapters: chapters.length,

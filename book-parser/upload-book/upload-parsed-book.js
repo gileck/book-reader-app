@@ -243,11 +243,21 @@ async function uploadParsedBook(bookFolderPath) {
         process.exit(1);
     }
 
-    // Validate JSON structure
-    if (!bookData.book || !bookData.chapters || !Array.isArray(bookData.chapters)) {
-        console.error('❌ Invalid JSON structure. Expected { book: {...}, chapters: [...] }');
+    // Validate JSON structure (supports both old and new parser formats)
+    const hasOldFormat = bookData.book && bookData.chapters;
+    const hasNewFormat = bookData.metadata && bookData.chapters;
+
+    if (!hasOldFormat && !hasNewFormat) {
+        console.error('❌ Invalid JSON structure. Expected either:');
+        console.error('   • Parser v1: { book: {...}, chapters: [...] }');
+        console.error('   • Parser v2: { metadata: {...}, chapters: [...] }');
         process.exit(1);
     }
+
+    // Normalize to consistent format (use metadata if available, otherwise book)
+    const bookMetadata = bookData.metadata || bookData.book;
+    const parserVersion = bookData.metadata ? 2 : 1;
+    console.log(`📖 Detected parser v${parserVersion} format`);
 
     const client = new MongoClient(uri);
 
@@ -262,7 +272,7 @@ async function uploadParsedBook(bookFolderPath) {
         console.log('✅ Connected successfully!');
 
         // Check if book already exists by title
-        const existingBook = await booksCollection.findOne({ title: bookData.book.title });
+        const existingBook = await booksCollection.findOne({ title: bookMetadata.title });
         let bookId;
         let isUpdate = false;
 
@@ -270,10 +280,10 @@ async function uploadParsedBook(bookFolderPath) {
             // Book exists - update it (default behavior)
             bookId = existingBook._id;
             isUpdate = true;
-            console.log(`📚 Book "${bookData.book.title}" already exists with ID: ${bookId}`);
+            console.log(`📚 Book "${bookMetadata.title}" already exists with ID: ${bookId}`);
             console.log(`🔄 Updating existing book content...`);
             console.log(`   📊 Previous: ${existingBook.totalChapters} chapters, ${existingBook.totalWords?.toLocaleString() || 'unknown'} words`);
-            console.log(`   📊 New:      ${bookData.book.totalChapters} chapters, ${bookData.book.totalWords.toLocaleString()} words`);
+            console.log(`   📊 New:      ${bookMetadata.totalChapters} chapters, ${bookMetadata.totalWords?.toLocaleString() || 'unknown'} words`);
 
             // Delete existing chapters for this book
             const deleteChaptersResult = await chaptersCollection.deleteMany({ bookId: bookId });
@@ -281,14 +291,15 @@ async function uploadParsedBook(bookFolderPath) {
 
             // Update book metadata
             const bookUpdateData = {
-                author: bookData.book.author,
-                description: bookData.book.description,
-                coverImage: bookData.book.coverImage ? `/${bookData.book.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-')}/images/${bookData.book.coverImage}` : null,
-                totalChapters: bookData.book.totalChapters,
-                totalWords: bookData.book.totalWords,
-                language: bookData.book.language || 'en-US',
+                author: bookMetadata.author,
+                description: bookMetadata.description,
+                coverImage: bookMetadata.coverImage ? `/${bookMetadata.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-')}/images/${bookMetadata.coverImage}` : null,
+                totalChapters: bookMetadata.totalChapters,
+                totalWords: bookMetadata.totalWords,
+                language: bookMetadata.language || 'en-US',
+                parserVersion: parserVersion,  // Track parser version
                 updatedAt: new Date(),
-                isPublic: bookData.book.isPublic !== undefined ? bookData.book.isPublic : true
+                isPublic: bookMetadata.isPublic !== undefined ? bookMetadata.isPublic : true
             };
 
             const bookUpdateResult = await booksCollection.updateOne(
@@ -299,19 +310,20 @@ async function uploadParsedBook(bookFolderPath) {
 
         } else {
             // Book doesn't exist - create new one
-            console.log(`📖 Creating new book: "${bookData.book.title}"`);
+            console.log(`📖 Creating new book: "${bookMetadata.title}"`);
 
             const bookToInsert = {
-                title: bookData.book.title,
-                author: bookData.book.author,
-                description: bookData.book.description,
-                coverImage: bookData.book.coverImage ? `/${bookData.book.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-')}/images/${bookData.book.coverImage}` : null,
-                totalChapters: bookData.book.totalChapters,
-                totalWords: bookData.book.totalWords,
-                language: bookData.book.language || 'en-US',
-                createdAt: new Date(bookData.book.createdAt) || new Date(),
+                title: bookMetadata.title,
+                author: bookMetadata.author,
+                description: bookMetadata.description,
+                coverImage: bookMetadata.coverImage ? `/${bookMetadata.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-')}/images/${bookMetadata.coverImage}` : null,
+                totalChapters: bookMetadata.totalChapters,
+                totalWords: bookMetadata.totalWords,
+                language: bookMetadata.language || 'en-US',
+                parserVersion: parserVersion,  // Track parser version
+                createdAt: new Date(bookMetadata.extractedAt || bookMetadata.createdAt) || new Date(),
                 updatedAt: new Date(),
-                isPublic: bookData.book.isPublic !== undefined ? bookData.book.isPublic : true,
+                isPublic: bookMetadata.isPublic !== undefined ? bookMetadata.isPublic : true,
                 uploadedBy: null // Set to actual user ID if available
             };
 
@@ -328,10 +340,12 @@ async function uploadParsedBook(bookFolderPath) {
             content: {
                 chunks: chapter.content.chunks.map(chunk => ({
                     index: chunk.index,
-                    text: chunk.text,
+                    text: chunk.text || chunk.content,  // Support both text and content fields
                     wordCount: chunk.wordCount,
                     type: chunk.type || 'text',
                     ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
+                    ...(chunk.sentenceCount !== undefined && { sentenceCount: chunk.sentenceCount }),
+                    ...(chunk.paragraphIndex !== undefined && { paragraphIndex: chunk.paragraphIndex }),
                     ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }), // Keep imageUrl for now, will be converted to imageName
                     ...(chunk.imageName && { imageName: chunk.imageName }),
                     ...(chunk.imageAlt && { imageAlt: chunk.imageAlt }),
@@ -361,7 +375,7 @@ async function uploadParsedBook(bookFolderPath) {
         const actualChapterCount = await chaptersCollection.countDocuments({ bookId: bookId });
         const actualWordCount = chaptersToInsert.reduce((sum, chapter) => sum + chapter.wordCount, 0);
 
-        if (actualChapterCount !== bookData.book.totalChapters || actualWordCount !== bookData.book.totalWords) {
+        if (actualChapterCount !== bookMetadata.totalChapters || actualWordCount !== bookMetadata.totalWords) {
             console.log(`🔧 Updating book totals...`);
             await booksCollection.updateOne(
                 { _id: bookId },
@@ -380,7 +394,7 @@ async function uploadParsedBook(bookFolderPath) {
 
         // Upload images to Vercel Blob if available and not skipped
         const skipImages = process.argv.includes('--skip-images');
-        
+
         if (skipImages) {
             console.log('⏭️  Skipping image upload (--skip-images flag provided)');
         } else if (BLOB_READ_WRITE_TOKEN && imagesPath) {
@@ -397,10 +411,10 @@ async function uploadParsedBook(bookFolderPath) {
         console.log(`📚 Chapters: ${actualChapterCount}`);
         console.log(`📝 Total words: ${actualWordCount.toLocaleString()}`);
         console.log(`🔄 Operation: ${isUpdate ? 'Updated existing book' : 'Created new book'}`);
-        
+
         if (isUpdate) {
             const totalChunks = chaptersToInsert.reduce((sum, ch) => sum + ch.content.chunks.length, 0);
-            const imageChunks = chaptersToInsert.reduce((sum, ch) => 
+            const imageChunks = chaptersToInsert.reduce((sum, ch) =>
                 sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
             console.log(`📊 Summary: Updated ${actualChapterCount} chapters with ${totalChunks} total chunks (${totalChunks - imageChunks} text + ${imageChunks} images)`);
         }

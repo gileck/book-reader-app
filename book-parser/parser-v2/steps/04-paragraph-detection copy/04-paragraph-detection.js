@@ -1,15 +1,17 @@
 /**
- * Step 4: Paragraph and Header Detection
+ * Step 4: Sentence Detection and Paragraph Separation
  * 
- * Detect both paragraph boundaries and headers in the page content from step 3.
- * This step creates a unified chunk structure with both paragraph and header chunks.
+ * Detect paragraph boundaries and split them into individual sentences.
+ * Create sentence chunks and paragraph separator chunks.
  * 
  * Requirements:
- * - Headers must satisfy 6-rule detection system
- * - Paragraphs cannot include headers - they end before headers and start after
+ * - Detect paragraph boundaries using existing logic
+ * - Split each paragraph into individual sentences
+ * - Create sentence chunks (type: 'text') for each sentence
+ * - Insert paragraph separator chunks (type: 'paragraphSeparator') between paragraphs
  * - Process clean page content from step 3
- * - Extract links that exist within paragraph content
- * - Output: array of chapters, each chapter has array of chunks (paragraph or header)
+ * - Extract links that exist within sentence content
+ * - Output: array of chapters, each chapter has array of chunks (sentence, header, or paragraphSeparator)
  * - Each chunk has type, pageNumber, content, and links (if any)
  * 
  * Header Detection Rules (ALL must be satisfied):
@@ -56,11 +58,11 @@ async function execute(pipelineState, config) {
 
         for (const chapter of pipelineState.chapters) {
 
-            // Process each page to detect chunks (paragraphs and headers)
+            // Process each page to detect chunks (sentences, headers, and paragraph separators)
             const chapterChunks = detectChunksInChapter(chapter, chapter.chapterNumber);
 
-            // Apply size optimization for paragraphs only
-            const optimizedChunks = optimizeChunkSizes(chapterChunks);
+            // Combine small sentence chunks to meet minimum word count requirements
+            const optimizedChunks = combineSmallSentenceChunks(chapterChunks);
 
             // Assign sequential chunk IDs after optimization
             for (let i = 0; i < optimizedChunks.length; i++) {
@@ -68,13 +70,14 @@ async function execute(pipelineState, config) {
             }
 
             // Count chunk types
-            const paragraphCount = optimizedChunks.filter(c => c.type === 'paragraph').length;
+            const sentenceCount = optimizedChunks.filter(c => c.type === 'text').length;
             const headerCount = optimizedChunks.filter(c => c.type === 'header').length;
             const imageCount = optimizedChunks.filter(c => c.type === 'image').length;
+            const separatorCount = optimizedChunks.filter(c => c.type === 'paragraphSeparator').length;
             const chunkLinksCount = optimizedChunks.reduce((sum, c) => sum + (c.links ? c.links.length : 0), 0);
 
             totalChunks += optimizedChunks.length;
-            totalParagraphs += paragraphCount;
+            totalParagraphs += sentenceCount; // For compatibility, counting sentences as "paragraphs"
             totalHeaders += headerCount;
             totalLinksExtracted += chunkLinksCount;
 
@@ -172,7 +175,7 @@ function generateChapterPrefix(title) {
 }
 
 /**
- * Detect chunks (paragraphs and headers) in a single page
+ * Detect chunks (sentences, headers, and paragraph separators) in a single page
  * @param {Object} page - Page with content and links
  * @param {number} chapterNumber - Chapter number for chunk IDs
  * @param {number} startChunkCounter - Starting counter for chunk IDs
@@ -195,9 +198,13 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
 
         // Check if current line is a header
         if (isHeader(line, i, lines)) {
-            // If we have accumulated paragraph content, save it first
+            // If we have accumulated paragraph content, process it into sentences first
             if (currentParagraph.trim()) {
-                chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                const sentenceChunks = createSentenceChunks(currentParagraph.trim(), page, '');
+                chunks.push(...sentenceChunks);
+
+                // Add paragraph separator after the paragraph (before the header)
+                chunks.push(createParagraphSeparatorChunk(page, ''));
                 currentParagraph = '';
             }
 
@@ -224,32 +231,42 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                     continue; // Don't split, continue building the paragraph
                 }
 
-                // NEW REQUIREMENT: Paragraphs MUST end with a newline after the sentence terminator
-                // Check if there's actually a line break structure that indicates a paragraph boundary
-                // Only end paragraph if:
+                // Enhanced paragraph boundary detection
+                // End paragraph if:
                 // 1. We're at the end of the page, OR
                 // 2. There's an empty line between current line and next content, OR  
-                // 3. Next line is a header
+                // 3. Next line is a header, OR
+                // 4. Current sentence indicates a natural paragraph break
                 const hasEmptyLineBetween = nextContentIndex > i + 1; // Gap indicates empty line(s)
+                const isNaturalParagraphBreak = isNaturalParagraphBoundary(line, nextContentIndex !== -1 ? lines[nextContentIndex] : null);
 
                 if (nextContentIndex === -1 || // End of page
                     hasEmptyLineBetween || // Empty line(s) between current and next content
-                    isHeader(lines[nextContentIndex], nextContentIndex, lines)) { // Next line is header
+                    (nextContentIndex !== -1 && isHeader(lines[nextContentIndex], nextContentIndex, lines)) || // Next line is header
+                    isNaturalParagraphBreak) { // Natural semantic paragraph break
 
-                    // End current paragraph
-                    chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                    // End current paragraph - convert to sentence chunks
+                    const sentenceChunks = createSentenceChunks(currentParagraph.trim(), page, '');
+                    chunks.push(...sentenceChunks);
+
+                    // Add paragraph separator after the paragraph (if not at end of page)
+                    if (nextContentIndex !== -1) {
+                        chunks.push(createParagraphSeparatorChunk(page, ''));
+                    }
+
                     currentParagraph = '';
                     currentParagraphStartIndex = nextContentIndex;
                 }
                 // If next line immediately follows (no empty line) and starts with capital letter,
-                // treat it as continuing the same paragraph (like "The dice were loaded." case)
+                // treat it as continuing the same paragraph unless it's a natural break
             }
         }
     }
 
     // Handle any remaining paragraph content
     if (currentParagraph.trim()) {
-        chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+        const sentenceChunks = createSentenceChunks(currentParagraph.trim(), page, '');
+        chunks.push(...sentenceChunks);
     }
 
     return chunks;
@@ -329,22 +346,58 @@ function findNextNonEmptyLine(lines, startIndex) {
 }
 
 /**
- * Create a paragraph chunk
- * @param {string} content - Paragraph content
+ * Create sentence chunks from paragraph content
+ * @param {string} paragraphContent - Full paragraph content
  * @param {Object} page - Page object with pageNumber and links
- * @returns {Object} - Paragraph chunk
+ * @param {string} baseChunkId - Base chunk ID for numbering
+ * @returns {Array} - Array of sentence chunks
  */
-function createParagraphChunk(content, page, chunkId) {
-    const links = extractLinksFromContent(content, page.links || []);
+function createSentenceChunks(paragraphContent, page, baseChunkId) {
+    const sentences = splitIntoSentences(paragraphContent);
+    const chunks = [];
+    const paragraphLinks = extractLinksFromContent(paragraphContent, page.links || []);
 
+    for (let i = 0; i < sentences.length; i++) {
+        const sentence = sentences[i].trim();
+        if (!sentence) continue;
+
+        // Clean sentence content by removing newlines and normalizing whitespace
+        const cleanSentence = sentence.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+
+        // Find links that belong to this specific sentence (check against cleaned content)
+        const sentenceLinks = paragraphLinks.filter(link =>
+            isSourceTextInContent(link.text, cleanSentence)
+        );
+
+        chunks.push({
+            chunkId: baseChunkId,
+            type: 'text',
+            content: cleanSentence,
+            pageNumber: page.pageNumber,
+            wordCount: getWordCount(cleanSentence),
+            sentenceCount: 1, // Each chunk is exactly one sentence
+            links: sentenceLinks
+        });
+    }
+
+    return chunks;
+}
+
+/**
+ * Create a paragraph separator chunk
+ * @param {Object} page - Page object with pageNumber
+ * @param {string} chunkId - Chunk ID
+ * @returns {Object} - Paragraph separator chunk
+ */
+function createParagraphSeparatorChunk(page, chunkId) {
     return {
         chunkId: chunkId,
-        type: 'paragraph',
-        content: content,
+        type: 'paragraphSeparator',
+        content: '', // Empty content for separators
         pageNumber: page.pageNumber,
-        wordCount: getWordCount(content),
-        sentenceCount: getSentenceCount(content),
-        links: links
+        wordCount: 0,
+        sentenceCount: 0,
+        links: []
     };
 }
 
@@ -391,297 +444,227 @@ function createImageChunk(image, page, chunkId) {
 }
 
 /**
- * Optimize chunk sizes for paragraphs (merge small, split large)
- * @param {Array} chunks - Array of chunks
- * @returns {Array} - Optimized chunks
+ * Combine small sentence chunks to meet minimum word count requirements
+ * @param {Array} chunks - Array of chunks (sentences, headers, separators)
+ * @returns {Array} - Optimized chunks with combined sentences
  */
-function optimizeChunkSizes(chunks) {
+function combineSmallSentenceChunks(chunks) {
     const optimized = [];
+    const MIN_WORDS = 50;
+    const MAX_WORDS = 200;
 
     for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
 
-        // Headers and images are never optimized
-        if (chunk.type === 'header' || chunk.type === 'image') {
+        // Headers, images, and separators are never combined
+        if (chunk.type === 'header' || chunk.type === 'image' || chunk.type === 'paragraphSeparator') {
             optimized.push(chunk);
             continue;
         }
 
-        // For paragraphs, apply size optimization
-        if (chunk.wordCount < 20) {
-            // Merge very small paragraphs (< 20 words) to meet validation requirements
-            const mergedChunk = tryMergeWithNextParagraph(chunks, i);
-            if (mergedChunk) {
-                optimized.push(mergedChunk.merged);
-
-                // Process any headers that were skipped during merge
-                for (let skipIndex = i + 1; skipIndex < mergedChunk.nextIndex; skipIndex++) {
-                    if (chunks[skipIndex].type === 'header') {
-                        optimized.push(chunks[skipIndex]);
-                    }
-                }
-
-                i = mergedChunk.nextIndex; // Skip to the merged paragraph
+        // For text chunks, check if they need combining
+        if (chunk.type === 'text' && chunk.wordCount < MIN_WORDS) {
+            // Try to combine with next text chunks
+            const combinedChunk = tryMergeWithNextSentences(chunks, i, MIN_WORDS, MAX_WORDS);
+            if (combinedChunk) {
+                optimized.push(combinedChunk.merged);
+                i = combinedChunk.nextIndex; // Skip to after the merged chunks
             } else {
-                // Try merging with previous paragraph if next merge failed
-                const mergedWithPrevious = tryMergeWithPreviousParagraph(optimized, chunk);
+                // Try combining with previous text chunk if next merge failed
+                const mergedWithPrevious = tryMergeWithPreviousSentence(optimized, chunk, MIN_WORDS, MAX_WORDS);
                 if (mergedWithPrevious) {
                     // Replace the last optimized chunk with the merged version
                     optimized[optimized.length - 1] = mergedWithPrevious;
-
                 } else {
-
+                    // Can't merge, keep as is (validation will catch this)
                     optimized.push(chunk);
                 }
             }
-        } else if (chunk.wordCount < 100) {
-            // Try to merge medium-sized paragraphs for better optimization
-            const mergedChunk = tryMergeWithNextParagraph(chunks, i);
-            if (mergedChunk) {
-                optimized.push(mergedChunk.merged);
-
-                // Process any headers that were skipped during merge
-                for (let skipIndex = i + 1; skipIndex < mergedChunk.nextIndex; skipIndex++) {
-                    if (chunks[skipIndex].type === 'header') {
-                        optimized.push(chunks[skipIndex]);
-                    }
-                }
-
-                i = mergedChunk.nextIndex; // Skip to the merged paragraph
-            } else {
-                optimized.push(chunk);
-            }
-        } else if (chunk.wordCount > 200) {
-            // Split large paragraph
-            const splitChunks = splitLargeParagraph(chunk);
-            optimized.push(...splitChunks);
         } else {
             optimized.push(chunk);
         }
     }
 
-    // Second pass: merge any small paragraphs that were created during splitting
-    const secondPassOptimized = [];
-
-    for (let i = 0; i < optimized.length; i++) {
-        const chunk = optimized[i];
-
-        // Headers are never optimized
-        if (chunk.type === 'header') {
-            secondPassOptimized.push(chunk);
-            continue;
-        }
-
-        if (chunk.type === 'paragraph' && chunk.wordCount < 20) {
-            // Try to merge with previous paragraph
-            const mergedWithPrevious = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
-            if (mergedWithPrevious) {
-                // Replace the last optimized chunk with the merged version
-                secondPassOptimized[secondPassOptimized.length - 1] = mergedWithPrevious;
-            } else {
-                // Try to merge with next paragraph
-                const mergedWithNext = tryMergeWithNextParagraph(optimized, i);
-                if (mergedWithNext) {
-                    secondPassOptimized.push(mergedWithNext.merged);
-
-                    // Process any headers that were skipped during merge
-                    for (let skipIndex = i + 1; skipIndex < mergedWithNext.nextIndex; skipIndex++) {
-                        if (optimized[skipIndex].type === 'header') {
-                            secondPassOptimized.push(optimized[skipIndex]);
-                        }
-                    }
-
-                    i = mergedWithNext.nextIndex; // Skip to the merged paragraph
-                } else {
-                    secondPassOptimized.push(chunk);
-                }
-            }
-        } else {
-            secondPassOptimized.push(chunk);
-        }
-    }
-
-    return secondPassOptimized;
+    return optimized;
 }
 
 /**
- * Try to merge current paragraph with next paragraph chunk
+ * Try to merge current sentence with following sentence chunks
  * @param {Array} chunks - All chunks
  * @param {number} currentIndex - Current chunk index
+ * @param {number} minWords - Minimum word count target
+ * @param {number} maxWords - Maximum word count limit
  * @returns {Object|null} - Merged chunk info or null if no merge possible
  */
-function tryMergeWithNextParagraph(chunks, currentIndex) {
-    // Look for next paragraph chunk (skip headers)
+function tryMergeWithNextSentences(chunks, currentIndex, minWords, maxWords) {
+    const currentChunk = chunks[currentIndex];
+    let combinedContent = currentChunk.content;
+    let combinedWordCount = currentChunk.wordCount;
+    let combinedSentenceCount = currentChunk.sentenceCount;
+    let combinedLinks = [...(currentChunk.links || [])];
+    let lastMergedIndex = currentIndex;
+
+    // Look for next text chunks to merge (skip headers and separators)
     for (let i = currentIndex + 1; i < chunks.length; i++) {
         const nextChunk = chunks[i];
 
-        if (nextChunk.type === 'header') {
-            // If there's a header between paragraphs, don't merge across it
-            // Headers indicate natural section boundaries
+        // Stop if we hit a paragraph separator (don't merge across paragraph boundaries)
+        if (nextChunk.type === 'paragraphSeparator') {
             break;
         }
 
-        if (nextChunk.type === 'paragraph') {
-            const currentChunk = chunks[currentIndex];
-
-            // Don't merge paragraphs from different pages unless they're consecutive
-            // This prevents merging content that was separated by headers at page boundaries
-            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
-                const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
-                if (pageDifference > 1) {
-                    break; // Don't merge across non-consecutive pages
-                }
-            }
-
-            const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
-
-            // Only merge if combined size is reasonable (more generous for very small paragraphs)
-            const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
-            if (combinedWordCount <= maxCombinedSize) {
-                const mergedContent = currentChunk.content + '\n' + nextChunk.content;
-                // Get all potential links from both chunks and re-validate against merged content
-                const allPotentialLinks = [...(currentChunk.links || []), ...(nextChunk.links || [])];
-                const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
-
-                return {
-                    merged: {
-                        chunkId: currentChunk.chunkId, // Keep original chunkId without suffix
-                        type: 'paragraph',
-                        content: mergedContent,
-                        pageNumber: currentChunk.pageNumber,
-                        wordCount: combinedWordCount,
-                        sentenceCount: currentChunk.sentenceCount + nextChunk.sentenceCount,
-                        links: removeDuplicateLinks(validLinks)
-                    },
-                    nextIndex: i
-                };
-            }
-        }
-
-        break; // Only check the next paragraph chunk
-    }
-
-    return null;
-}
-
-/**
- * Try to merge current small paragraph with previous paragraph chunk
- * @param {Array} optimizedChunks - Already processed chunks
- * @param {Object} currentChunk - Current small chunk to merge
- * @returns {Object|null} - Merged chunk or null if no merge possible
- */
-function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
-    // Look backwards for the last paragraph chunk (skip headers)
-    for (let i = optimizedChunks.length - 1; i >= 0; i--) {
-        const previousChunk = optimizedChunks[i];
-
-        if (previousChunk.type === 'header') {
-            // If there's a header between paragraphs, don't merge across it
+        // Skip headers and images
+        if (nextChunk.type === 'header' || nextChunk.type === 'image') {
             continue;
         }
 
-        if (previousChunk.type === 'paragraph') {
-            // Don't merge paragraphs from different pages unless they're consecutive
-            if (previousChunk.pageNumber !== currentChunk.pageNumber) {
-                const pageDifference = currentChunk.pageNumber - previousChunk.pageNumber;
+        // Try merging with this text chunk
+        if (nextChunk.type === 'text') {
+            const newWordCount = combinedWordCount + nextChunk.wordCount;
+
+            // Don't merge if it would exceed max words
+            if (newWordCount > maxWords) {
+                break;
+            }
+
+            // Don't merge chunks from different pages unless they're consecutive
+            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
+                const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
                 if (pageDifference > 1) {
-                    break; // Don't merge across non-consecutive pages
+                    break;
                 }
             }
 
-            const combinedWordCount = previousChunk.wordCount + currentChunk.wordCount;
+            // Merge this chunk
+            combinedContent += ' ' + nextChunk.content;
+            combinedWordCount = newWordCount;
+            combinedSentenceCount += nextChunk.sentenceCount;
+            combinedLinks.push(...(nextChunk.links || []));
+            lastMergedIndex = i;
 
-            // Only merge if combined size is reasonable (more generous for very small paragraphs)
-            const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
-            if (combinedWordCount <= maxCombinedSize) {
-                const mergedContent = previousChunk.content + '\n' + currentChunk.content;
-                // Get all potential links from both chunks and re-validate against merged content
-                const allPotentialLinks = [...(previousChunk.links || []), ...(currentChunk.links || [])];
-                const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
-
-                return {
-                    chunkId: previousChunk.chunkId, // Keep original chunkId
-                    type: 'paragraph',
-                    content: mergedContent,
-                    pageNumber: previousChunk.pageNumber,
-                    wordCount: combinedWordCount,
-                    sentenceCount: previousChunk.sentenceCount + currentChunk.sentenceCount,
-                    links: removeDuplicateLinks(validLinks)
-                };
+            // Stop if we've reached the minimum word count
+            if (combinedWordCount >= minWords) {
+                break;
             }
         }
+    }
 
-        break; // Only check the most recent paragraph chunk
+    // Only return merged chunk if we actually merged with something and meet minimum
+    if (lastMergedIndex > currentIndex && combinedWordCount >= minWords) {
+        // Re-validate links against merged content
+        const validLinks = combinedLinks.filter(link =>
+            isSourceTextInContent(link.text, combinedContent)
+        );
+
+        return {
+            merged: {
+                chunkId: currentChunk.chunkId,
+                type: 'text',
+                content: combinedContent,
+                pageNumber: currentChunk.pageNumber,
+                wordCount: combinedWordCount,
+                sentenceCount: combinedSentenceCount,
+                links: removeDuplicateLinks(validLinks)
+            },
+            nextIndex: lastMergedIndex
+        };
     }
 
     return null;
 }
 
 /**
- * Split a large paragraph into smaller chunks
- * @param {Object} chunk - Large paragraph chunk
- * @returns {Array} - Array of smaller chunks
+ * Try to merge current small sentence with previous text chunk
+ * @param {Array} optimizedChunks - Already processed chunks
+ * @param {Object} currentChunk - Current small chunk to merge
+ * @param {number} minWords - Minimum word count target
+ * @param {number} maxWords - Maximum word count limit
+ * @returns {Object|null} - Merged chunk or null if no merge possible
  */
-function splitLargeParagraph(chunk) {
-    const sentences = splitIntoSentences(chunk.content);
-    const chunks = [];
-    let currentContent = '';
-    let currentSentenceCount = 0;
-    let splitIndex = 1;
+function tryMergeWithPreviousSentence(optimizedChunks, currentChunk, minWords, maxWords) {
+    // Look backwards for the last text chunk (skip headers and separators)
+    for (let i = optimizedChunks.length - 1; i >= 0; i--) {
+        const previousChunk = optimizedChunks[i];
 
-    for (const sentence of sentences) {
-        const sentenceWordCount = getWordCount(sentence);
-        const currentWordCount = getWordCount(currentContent);
-
-        if (currentWordCount + sentenceWordCount > 200 && currentContent.trim()) {
-            // Create chunk with current content
-            const trimmedContent = currentContent.trim();
-            chunks.push({
-                chunkId: chunk.chunkId,
-                type: 'paragraph',
-                content: trimmedContent,
-                pageNumber: chunk.pageNumber,
-                wordCount: currentWordCount,
-                sentenceCount: currentSentenceCount,
-                links: (chunk.links || []).filter(link => isSourceTextInContent(link.text, trimmedContent))
-            });
-
-            splitIndex++;
-            currentContent = sentence;
-            currentSentenceCount = 1;
-        } else {
-            currentContent += (currentContent ? ' ' : '') + sentence;
-            currentSentenceCount++;
+        // Skip headers, images, and separators
+        if (previousChunk.type === 'header' || previousChunk.type === 'image' || previousChunk.type === 'paragraphSeparator') {
+            continue;
         }
+
+        if (previousChunk.type === 'text') {
+            const combinedWordCount = previousChunk.wordCount + currentChunk.wordCount;
+
+            // Don't merge if it would exceed max words
+            if (combinedWordCount > maxWords) {
+                break;
+            }
+
+            // Don't merge chunks from different pages unless they're consecutive
+            if (previousChunk.pageNumber !== currentChunk.pageNumber) {
+                const pageDifference = currentChunk.pageNumber - previousChunk.pageNumber;
+                if (pageDifference > 1) {
+                    break;
+                }
+            }
+
+            const mergedContent = previousChunk.content + ' ' + currentChunk.content;
+            const allPotentialLinks = [...(previousChunk.links || []), ...(currentChunk.links || [])];
+            const validLinks = allPotentialLinks.filter(link =>
+                isSourceTextInContent(link.text, mergedContent)
+            );
+
+            return {
+                chunkId: previousChunk.chunkId,
+                type: 'text',
+                content: mergedContent,
+                pageNumber: previousChunk.pageNumber,
+                wordCount: combinedWordCount,
+                sentenceCount: previousChunk.sentenceCount + currentChunk.sentenceCount,
+                links: removeDuplicateLinks(validLinks)
+            };
+        }
+
+        break; // Only check the most recent text chunk
     }
 
-    // Add remaining content
-    if (currentContent.trim()) {
-        const trimmedContent = currentContent.trim();
-        chunks.push({
-            chunkId: chunk.chunkId,
-            type: 'paragraph',
-            content: trimmedContent,
-            pageNumber: chunk.pageNumber,
-            wordCount: getWordCount(currentContent),
-            sentenceCount: currentSentenceCount,
-            links: (chunk.links || []).filter(link => isSourceTextInContent(link.text, trimmedContent))
-        });
-    }
-
-    return chunks;
+    return null;
 }
 
 /**
- * Split text into sentences
+ * Split text into sentences, handling footnotes properly
  * @param {string} text - Text to split
  * @returns {Array} - Array of sentences
  */
 function splitIntoSentences(text) {
-    // Split on sentence terminators, keeping the punctuation
-    const sentences = text.split(/(?<=[.!?])\s+/);
-    return sentences.filter(s => s.trim().length > 0);
+    // Simple but reliable sentence splitting that preserves sentence integrity
+    const sentences = [];
+
+    // Split on sentence terminators followed by whitespace and capital letter or end of text
+    // This preserves the terminator with the sentence and avoids creating fragments
+    const sentenceRegex = /([.!?]+)\s+(?=[A-Z]|$)/g;
+
+    let lastIndex = 0;
+    let match;
+
+    while ((match = sentenceRegex.exec(text)) !== null) {
+        // Extract sentence from lastIndex to end of current match
+        const sentence = text.substring(lastIndex, match.index + match[1].length).trim();
+        if (sentence) {
+            sentences.push(sentence);
+        }
+        lastIndex = match.index + match[0].length;
+    }
+
+    // Add any remaining content as the last sentence
+    const remaining = text.substring(lastIndex).trim();
+    if (remaining) {
+        sentences.push(remaining);
+    }
+
+    return sentences.filter(s => s.length > 0);
 }
+
+// Removed shouldSplitSentence function - using simpler regex-based approach
 
 /**
  * Get word count of text
@@ -727,6 +710,73 @@ function endsWithSentenceTerminator(line) {
 }
 
 // endsWithInitials function is now imported from validation module
+
+/**
+ * Check if this represents a natural paragraph boundary
+ * @param {string} currentLine - Current line ending with sentence terminator
+ * @param {string} nextLine - Next line (or null if end of content)
+ * @returns {boolean} - True if this should be a paragraph break
+ */
+function isNaturalParagraphBoundary(currentLine, nextLine) {
+    if (!currentLine || !nextLine) return false;
+
+    const currentTrimmed = currentLine.trim();
+    const nextTrimmed = nextLine.trim();
+
+    // Patterns that typically end paragraphs
+    const paragraphEnders = [
+        // Rhetorical questions often end paragraphs
+        /\?$/,
+        // Short, emphatic statements
+        /^.{1,50}[.!]$/,
+        // Transition words/phrases that start new paragraphs
+    ];
+
+    // Patterns that typically start new paragraphs
+    const paragraphStarters = [
+        // Transition words and phrases
+        /^(But|However|Nevertheless|Meanwhile|Furthermore|Moreover|Therefore|Thus|Hence|Consequently|In contrast|On the other hand|For example|For instance|In addition|Finally|Firstly|Secondly|Similarly|Likewise)/,
+        // Temporal transitions
+        /^(Now|Then|Later|Earlier|Previously|Subsequently|Meanwhile|Today|Yesterday|Tomorrow)/,
+        // Logical transitions
+        /^(Yet|Still|Even so|Despite|Although|While|Whereas)/,
+        // Topic shifts
+        /^(The|This|That|These|Those|Such|Another|Other|Some|Many|Few|Several|Most|All)/,
+        // Direct address or questions
+        /^(You|We|I|What|Why|How|When|Where|Who)/,
+        // Numbers or lists
+        /^(\d+\.|First|Second|Third|Fourth|Fifth)/
+    ];
+
+    // Check if current line has paragraph-ending characteristics
+    const currentEndsNaturally = paragraphEnders.some(pattern => pattern.test(currentTrimmed));
+
+    // Check if next line starts a new topic/thought
+    const nextStartsNaturally = paragraphStarters.some(pattern => pattern.test(nextTrimmed));
+
+    // Specific patterns for academic/scientific text
+    // Short questions often end paragraphs
+    if (/^.{5,50}\?$/.test(currentTrimmed)) {
+        return true;
+    }
+
+    // Very short emphatic statements (like "Dead." "No." "Yes.")
+    if (/^[A-Z][a-z]{0,10}[.!]$/.test(currentTrimmed)) {
+        return true;
+    }
+
+    // Topic transitions
+    if (nextStartsNaturally && currentTrimmed.length > 30) {
+        return true;
+    }
+
+    // Dialogue or quotes often indicate paragraph breaks
+    if (/["']$/.test(currentTrimmed) && /^[A-Z]/.test(nextTrimmed)) {
+        return true;
+    }
+
+    return false;
+}
 
 /**
  * Check if line starts a new paragraph
@@ -793,12 +843,13 @@ function removeDuplicateLinks(links) {
  */
 function generateChunkStats(chapters) {
     let totalChunks = 0;
-    let totalParagraphs = 0;
+    let totalSentences = 0;
     let totalHeaders = 0;
+    let totalSeparators = 0;
     let totalWords = 0;
     let totalLinks = 0;
 
-    const paragraphWordCounts = [];
+    const sentenceWordCounts = [];
     const headerWordCounts = [];
 
     for (const chapter of chapters) {
@@ -807,28 +858,31 @@ function generateChunkStats(chapters) {
             totalWords += chunk.wordCount;
             totalLinks += chunk.links ? chunk.links.length : 0;
 
-            if (chunk.type === 'paragraph') {
-                totalParagraphs++;
-                paragraphWordCounts.push(chunk.wordCount);
+            if (chunk.type === 'text') {
+                totalSentences++;
+                sentenceWordCounts.push(chunk.wordCount);
             } else if (chunk.type === 'header') {
                 totalHeaders++;
                 headerWordCounts.push(chunk.wordCount);
+            } else if (chunk.type === 'paragraphSeparator') {
+                totalSeparators++;
             }
         }
     }
 
     return {
         totalChunks,
-        totalParagraphs,
+        totalSentences,
         totalHeaders,
+        totalSeparators,
         totalWords,
         totalLinks,
-        paragraphStats: {
-            count: totalParagraphs,
-            wordCounts: paragraphWordCounts,
-            averageWords: paragraphWordCounts.length > 0 ? paragraphWordCounts.reduce((a, b) => a + b, 0) / paragraphWordCounts.length : 0,
-            minWords: Math.min(...paragraphWordCounts),
-            maxWords: Math.max(...paragraphWordCounts)
+        sentenceStats: {
+            count: totalSentences,
+            wordCounts: sentenceWordCounts,
+            averageWords: sentenceWordCounts.length > 0 ? sentenceWordCounts.reduce((a, b) => a + b, 0) / sentenceWordCounts.length : 0,
+            minWords: sentenceWordCounts.length > 0 ? Math.min(...sentenceWordCounts) : 0,
+            maxWords: sentenceWordCounts.length > 0 ? Math.max(...sentenceWordCounts) : 0
         },
         headerStats: {
             count: totalHeaders,
@@ -854,8 +908,9 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
         summary: {
             totalChapters: chapters.length,
             totalChunks: stats.totalChunks,
-            totalParagraphs: stats.totalParagraphs,
+            totalSentences: stats.totalSentences,
             totalHeaders: stats.totalHeaders,
+            totalSeparators: stats.totalSeparators,
             totalWords: stats.totalWords,
             totalLinks: stats.totalLinks
         },
@@ -864,8 +919,9 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
             chapterNumber: chapter.chapterNumber,
             title: chapter.title,
             chunkCount: chapter.chunks.length,
-            paragraphCount: chapter.chunks.filter(c => c.type === 'paragraph').length,
+            sentenceCount: chapter.chunks.filter(c => c.type === 'text').length,
             headerCount: chapter.chunks.filter(c => c.type === 'header').length,
+            separatorCount: chapter.chunks.filter(c => c.type === 'paragraphSeparator').length,
             chunks: chapter.chunks.map(chunk => ({
                 type: chunk.type,
                 content: chunk.content.substring(0, 200) + (chunk.content.length > 200 ? '...' : ''),

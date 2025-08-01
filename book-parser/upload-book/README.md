@@ -6,7 +6,7 @@ This directory contains scripts for uploading parsed books and their images to t
 
 ### 1. upload-parsed-book.js
 
-Uploads a parsed book (text content and metadata) to the MongoDB database with enhanced validation for page-aware content.
+Uploads a parsed book (text content and metadata) to the MongoDB database with support for both Parser v1 and Parser v2 formats.
 
 #### Usage
 ```bash
@@ -23,10 +23,15 @@ node upload-parsed-book.js ../files/MyBook/
 node upload-parsed-book.js ./books/transformers/ --force
 ```
 
-#### New Features (2024)
-- **Page-Aware Validation**: Validates chunks with page numbers and proper correlation
-- **Enhanced Chunk Support**: Handles text chunks with pageNumber fields and improved image chunks
-- **Parser Summary Recognition**: Compatible with new parser-summary.json output files
+#### Parser Format Support
+- **Parser v1 Format**: `{ book: {...}, chapters: [...] }` - Legacy format
+- **Parser v2 Format**: `{ metadata: {...}, chapters: [...] }` - New optimized format with sentence-level chunks
+- **Automatic Detection**: Script automatically detects and handles both formats
+- **New v2 Features**: 
+  - Sentence-level chunking with `paragraphIndex` for paragraph grouping
+  - Enhanced metadata with comprehensive book statistics
+  - `sentenceCount` tracking for improved content analysis
+  - Parser version tracking (`parserVersion: 2`) in database
 
 ### 2. upload-images-to-vercel-blob.js
 

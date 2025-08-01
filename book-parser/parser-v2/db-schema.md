@@ -6,8 +6,9 @@ This document defines the MongoDB database schema changes and additions for book
 
 Parser v2 introduces significant improvements to the book parsing and database storage:
 
-- **Flat chunk structure** → Chapter-based organization during upload
-- **Enhanced chunk types**: `text`, `header`, `image` (vs original `text`, `image`)
+- **Advanced pipeline** → 6-step processing: Text → Chapters → Pages → Links → Images → Paragraphs → Sentences → Metadata
+- **Sentence-level chunking** with `paragraphIndex` for paragraph grouping
+- **Enhanced chunk types**: `text`, `header`, `image` with sentence optimization
 - **Parser version tracking** with `parserVersion` field
 - **Advanced link detection** with PDF annotation support
 - **Clean schema** focused on essential user data
@@ -71,6 +72,9 @@ interface TextChunk {
   // NEW: Sentence count (parser v2)
   sentenceCount?: number;
   
+  // NEW: Paragraph grouping (parser v2 - step 5)
+  paragraphIndex?: number;              // Groups sentences by original paragraph
+  
   // Image properties (type: 'image')
   imageName?: string;
   imageAlt?: string;
@@ -93,45 +97,62 @@ interface ChunkLink {
 
 ## Parser v2 Input Format
 
-Parser v2 produces a flat chunk structure that gets converted to chapters during upload:
+Parser v2 produces a sentence-optimized chunk structure that gets converted to chapters during upload:
 
 ```json
 {
   "rawText": "Complete extracted PDF text...",
-  "chunks": [
+  "chapters": [
     {
-      "chunkId": "1_0",
-      "type": "text", 
-      "content": "This is the opening paragraph of chapter 1...",
-      "pageNumber": 15,
-      "wordCount": 87,
-      "sentenceCount": 4,
-      "links": [
+      "chapterNumber": 1,
+      "title": "Introduction to Transformers",
+      "chunks": [
         {
-          "text": "see chapter 3",
-          "targetPageNumber": 45,
-          "linkId": "link_15_001",
-          "role": "source"
+          "chunkId": "1_0",
+          "type": "text", 
+          "content": "This is the first sentence of the opening paragraph.",
+          "pageNumber": 15,
+          "paragraphIndex": 1,
+          "wordCount": 12,
+          "sentenceCount": 1,
+          "links": []
+        },
+        {
+          "chunkId": "1_1",
+          "type": "text", 
+          "content": "This continues the same paragraph with reference to chapter 3.",
+          "pageNumber": 15,
+          "paragraphIndex": 1,
+          "wordCount": 11,
+          "sentenceCount": 1,
+          "links": [
+            {
+              "text": "chapter 3",
+              "targetPageNumber": 45,
+              "linkId": "link_15_001",
+              "role": "source"
+            }
+          ]
+        },
+        {
+          "chunkId": "1_2",
+          "type": "header",
+          "content": "Key Concepts",
+          "pageNumber": 15,
+          "wordCount": 2,
+          "sentenceCount": 0,
+          "links": []
+        },
+        {
+          "chunkId": "1_3", 
+          "type": "image",
+          "imageName": "page-015-image-1.jpg",
+          "imageAlt": "Figure 1.1: Transformer Architecture",
+          "pageNumber": 15,
+          "extracted": true,
+          "placeholder": false
         }
       ]
-    },
-    {
-      "chunkId": "1_1",
-      "type": "header",
-      "content": "Introduction to Transformers",
-      "pageNumber": 15,
-      "wordCount": 3,
-      "sentenceCount": 0,
-      "links": []
-    },
-    {
-      "chunkId": "1_2", 
-      "type": "image",
-      "imageName": "page-015-image-1.jpg",
-      "imageAlt": "Figure 1.1: Transformer Architecture",
-      "pageNumber": 15,
-      "extracted": true,
-      "placeholder": false
     }
   ]
 }
@@ -139,15 +160,21 @@ Parser v2 produces a flat chunk structure that gets converted to chapters during
 
 ## Conversion Process
 
-The upload script (`upload-book-v2.js`) converts the flat structure to database format:
+The upload script (`upload-book-v2.js`) converts the sentence-optimized structure to database format:
 
-### 1. Chapter Extraction
+### 1. Chapter Organization
 ```javascript
-// Extract chapter number from chunkId: "1_0" → chapter 1
-const chapterNumber = parseInt(chunk.chunkId.split('_')[0]);
+// Chapters are already organized in parser v2 output
+pipelineState.chapters.forEach(chapter => {
+  const chapterData = {
+    chapterNumber: chapter.chapterNumber,
+    title: chapter.title,
+    content: { chunks: [] }
+  };
+});
 ```
 
-### 2. Chunk Conversion
+### 2. Chunk Conversion with Paragraph Grouping
 ```javascript
 // Convert parser v2 chunk to database format
 const convertedChunk = {
@@ -156,7 +183,8 @@ const convertedChunk = {
   wordCount: chunk.wordCount || 0,
   type: chunk.type || 'text',
   pageNumber: chunk.pageNumber,
-  sentenceCount: chunk.sentenceCount,
+  sentenceCount: chunk.sentenceCount || 1,
+  paragraphIndex: chunk.paragraphIndex,    // NEW: Paragraph grouping
   links: chunk.links,
   imageName: chunk.imageName,
   imageAlt: chunk.imageAlt
@@ -166,8 +194,11 @@ const convertedChunk = {
 ### 3. Metadata Integration
 ```javascript
 const bookMetadata = {
-  title: extractedTitle,
-  author: 'Unknown Author',
+  title: pipelineState.metadata?.title || 'Unknown Title',
+  author: pipelineState.metadata?.author || 'Unknown Author',
+  totalChapters: pipelineState.metadata?.totalChapters || 0,
+  totalWords: pipelineState.metadata?.totalWords || 0,
+  language: pipelineState.metadata?.language || 'en',
   parserVersion: 2
 };
 ```

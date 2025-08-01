@@ -1,5 +1,5 @@
 /**
- * Validation functions for Step 4: Paragraph Detection
+ * Validation functions for Step 5: Sentence Detection and Combination
  */
 
 /**
@@ -120,37 +120,7 @@ function endsWithCommonSingleLetterWord(text) {
 }
 
 /**
- * Find the previous paragraph chunk (skipping headers)
- * @param {Array} chunks - All chunks
- * @param {number} currentIndex - Current chunk index
- * @returns {Object|null} - Previous paragraph chunk or null
- */
-function findPreviousParagraph(chunks, currentIndex) {
-    for (let i = currentIndex - 1; i >= 0; i--) {
-        if (chunks[i].type === 'paragraph') {
-            return chunks[i];
-        }
-    }
-    return null;
-}
-
-/**
- * Find the next paragraph chunk (skipping headers)
- * @param {Array} chunks - All chunks
- * @param {number} currentIndex - Current chunk index
- * @returns {Object|null} - Next paragraph chunk or null
- */
-function findNextParagraph(chunks, currentIndex) {
-    for (let i = currentIndex + 1; i < chunks.length; i++) {
-        if (chunks[i].type === 'paragraph') {
-            return chunks[i];
-        }
-    }
-    return null;
-}
-
-/**
- * Validate paragraph and header detection results
+ * Validate sentence detection results
  * @param {Object} output - Output from execute function
  * @returns {boolean} - True if validation passes
  */
@@ -180,8 +150,9 @@ function validate(output) {
     if (allChunks && allChunks.length > 0) {
         const chunks = allChunks;
 
-        let hasParagraph = false;
+        let hasSentence = false;
         let hasHeader = false;
+        let paragraphIndexes = new Set();
 
         for (let i = 0; i < chunks.length; i++) {
             const chunk = chunks[i];
@@ -192,21 +163,27 @@ function validate(output) {
             // Skip validation for chunks in Appendix chapters
             if (chunk.chapterTitle && chunk.chapterTitle.toLowerCase().includes('appendix')) {
                 // Still track chunk types for overall validation
-                if (chunk.type === 'text') hasParagraph = true;
+                if (chunk.type === 'text') hasSentence = true;
                 if (chunk.type === 'header') hasHeader = true;
                 continue;
             }
 
-            // Track chunk types
-            if (chunk.type === 'paragraph') hasParagraph = true;
+            // Track chunk types and paragraph indexes
+            if (chunk.type === 'text') {
+                hasSentence = true;
+                if (chunk.paragraphIndex) {
+                    paragraphIndexes.add(chunk.paragraphIndex);
+                }
+            }
             if (chunk.type === 'header') hasHeader = true;
 
             // Check required fields
-            if (!chunk.type || (chunk.type !== 'paragraph' && chunk.type !== 'header' && chunk.type !== 'image')) {
+            if (!chunk.type || (chunk.type !== 'text' && chunk.type !== 'header' && chunk.type !== 'image')) {
                 validationErrors.push(`${fullChunkIdentifier} has invalid type: "${chunk.type}"`);
                 continue;
             }
 
+            // Content validation
             if (!chunk.content || typeof chunk.content !== 'string') {
                 validationErrors.push(`${fullChunkIdentifier} has no content`);
                 continue;
@@ -224,9 +201,12 @@ function validate(output) {
                 if (typeof chunk.extracted !== 'boolean') {
                     validationErrors.push(`Image ${fullChunkIdentifier} must have extracted boolean flag`);
                 }
-                // Content is optional for images (can be imageAlt or description)
+                // paragraphIndex should be null for images
+                if (chunk.paragraphIndex !== null) {
+                    validationErrors.push(`Image ${fullChunkIdentifier} should have paragraphIndex: null`);
+                }
             } else if (chunk.content.length > 0) {
-                // For paragraphs and headers, validate content format
+                // For sentences and headers, validate content format
                 const firstChar = chunk.content.charAt(0);
 
                 if (chunk.type === 'header') {
@@ -234,12 +214,21 @@ function validate(output) {
                     if (firstChar !== firstChar.toUpperCase() || !/[A-Z]/.test(firstChar)) {
                         validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
-                } else if (chunk.type === 'paragraph') {
-                    // Paragraph chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
+                    // Headers should have paragraphIndex: null
+                    if (chunk.paragraphIndex !== null) {
+                        validationErrors.push(`Header ${fullChunkIdentifier} should have paragraphIndex: null`);
+                    }
+                } else if (chunk.type === 'text') {
+                    // Sentence chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
                     // but NOT lowercase letters (proper text formatting)
                     const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
                     if (!isValidStart) {
-                        validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
+                        validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
+                    }
+
+                    // Sentence chunks must have a valid paragraphIndex
+                    if (!chunk.paragraphIndex || typeof chunk.paragraphIndex !== 'number' || chunk.paragraphIndex < 1) {
+                        validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must have a valid paragraphIndex (positive number). Found: ${chunk.paragraphIndex}`);
                     }
                 }
             }
@@ -255,30 +244,28 @@ function validate(output) {
                 if (chunk.sentenceCount !== 0) {
                     validationErrors.push(`Image ${fullChunkIdentifier} should have sentenceCount of 0, found: ${chunk.sentenceCount}`);
                 }
-            } else if (chunk.type === 'paragraph') {
-                // Paragraph chunks should be between 80 and 300 words target (flexible 20-500 absolute) for proper book content
-                if (wordCount < 20 || wordCount > 500) {
-                    let neighborInfo = '';
-                    if (wordCount < 20) {
-                        // Add information about neighboring paragraph chunks to understand why merging failed
-                        const prevParagraph = findPreviousParagraph(chunks, i);
-                        const nextParagraph = findNextParagraph(chunks, i);
-
-                        const prevInfo = prevParagraph ?
-                            `previous: ${prevParagraph.chunkId} (${countWords(prevParagraph.content)} words, page ${prevParagraph.pageNumber})` :
-                            'previous: none';
-                        const nextInfo = nextParagraph ?
-                            `next: ${nextParagraph.chunkId} (${countWords(nextParagraph.content)} words, page ${nextParagraph.pageNumber})` :
-                            'next: none';
-
-                        neighborInfo = ` - Neighbors: ${prevInfo}, ${nextInfo}`;
-                    }
-                    validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 500 words (absolute limits)${neighborInfo}`);
+            } else if (chunk.type === 'text') {
+                // Text chunks are combined sentences that must meet minimum word count requirements
+                // Minimum 50 words, maximum 200 words for optimal processing
+                if (wordCount < 50) {
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be at least 50 words. Content: "${chunk.content.substring(0, 100)}..."`);
+                } else if (wordCount > 200) {
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) exceeds maximum of 200 words. Content: "${chunk.content.substring(0, 100)}..."`);
                 }
 
-                // Check if paragraph chunk ends with initials (but allow common words ending with single letters)
-                if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
-                    validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+                // Check if text chunk has reasonable sentence count (1 or more)
+                if (chunk.sentenceCount < 1) {
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} should have at least 1 sentence, found: ${chunk.sentenceCount}`);
+                }
+
+                // Check if text chunk ends with proper sentence terminator (but allow exceptions for fragments, lists, etc.)
+                if (wordCount > 3 && !/[.!?]$/.test(chunk.content.trim()) && !endsWithCommonSingleLetterWord(chunk.content)) {
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
+                }
+
+                // Check that text content contains no newline characters
+                if (chunk.content.includes('\n')) {
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} should not contain newline characters. Content: "${chunk.content}"`);
                 }
             }
 
@@ -299,18 +286,32 @@ function validate(output) {
             }
         }
 
-        // 4. chunks array has valid types both "paragraph" and "header"
-        if (!hasParagraph) {
-            validationErrors.push('Chunks array must contain at least one paragraph chunk');
+        // 4. chunks array has valid types: "text" and "header"
+        if (!hasSentence) {
+            validationErrors.push('Chunks array must contain at least one sentence chunk (type: text)');
         }
         if (!hasHeader) {
-            validationErrors.push('Chunks array must contain at least one header');
+            validationErrors.push('Chunks array must contain at least one header chunk');
+        }
+
+        // Validate paragraph indexing
+        if (paragraphIndexes.size === 0) {
+            validationErrors.push('Must have at least one paragraph with valid paragraphIndex');
+        } else {
+            // Check for sequential paragraph indexes starting from 1
+            const sortedIndexes = Array.from(paragraphIndexes).sort((a, b) => a - b);
+            for (let i = 0; i < sortedIndexes.length; i++) {
+                if (sortedIndexes[i] !== i + 1) {
+                    validationErrors.push(`Paragraph indexes should be sequential starting from 1. Found gap at index ${i + 1}, got ${sortedIndexes[i]}`);
+                    break;
+                }
+            }
         }
     }
 
     // Report all validation errors at once
     if (validationErrors.length > 0) {
-        console.error(`❌ Chunk validation failed with ${validationErrors.length} error(s):`);
+        console.error(`❌ Sentence chunk validation failed with ${validationErrors.length} error(s):`);
         validationErrors.forEach((error, index) => {
             console.error(`  ${index + 1}. ${error}`);
         });
@@ -325,8 +326,6 @@ module.exports = {
     countWords,
     endsWithInitials,
     endsWithCommonSingleLetterWord,
-    findPreviousParagraph,
-    findNextParagraph,
     isSourceTextInContent,
     isFootnoteInContent
 }; 

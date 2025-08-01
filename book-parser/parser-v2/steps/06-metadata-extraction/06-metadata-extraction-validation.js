@@ -1,5 +1,5 @@
 /**
- * Validation for Step 5: Metadata Extraction
+ * Validation for Step 6: Metadata Extraction
  * 
  * Validates that comprehensive book metadata has been properly extracted
  * and all required fields are present with correct data types.
