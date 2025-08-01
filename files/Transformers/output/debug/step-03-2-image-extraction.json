@@ -2,9 +2,9 @@
   "imageExtractionMetadata": {
     "totalImages": 58,
     "totalExtractedImages": 60,
-    "imagesFolderPath": "./images",
-    "processingTime": 7134,
-    "extractionTime": "2025-08-01T12:07:07.136Z",
+    "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/Transformers/output/images",
+    "processingTime": 6515,
+    "extractionTime": "2025-08-01T15:00:53.364Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [

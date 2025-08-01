@@ -332,13 +332,13 @@ async function uploadParsedBook(bookFolderPath) {
             console.log(`   📖 Book created with ID: ${bookId}`);
         }
 
-        // Prepare chapters data for database
+        // Prepare chapters data for database (Parser v2 format only)
         const chaptersToInsert = bookData.chapters.map(chapter => ({
             bookId: bookId,
             chapterNumber: chapter.chapterNumber,
             title: chapter.title,
             content: {
-                chunks: chapter.content.chunks.map(chunk => ({
+                chunks: chapter.chunks.map(chunk => ({
                     index: chunk.index,
                     text: chunk.text || chunk.content,  // Support both text and content fields
                     wordCount: chunk.wordCount,
@@ -405,8 +405,8 @@ async function uploadParsedBook(bookFolderPath) {
         }
 
         console.log(`✅ Book ${isUpdate ? 'updated' : 'uploaded'} successfully!`);
-        console.log(`📖 Title: "${bookData.book.title}"`);
-        console.log(`👤 Author: ${bookData.book.author}`);
+        console.log(`📖 Title: "${bookData.metadata.title}"`);
+        console.log(`👤 Author: ${bookData.metadata.author}`);
         console.log(`🆔 Book ID: ${bookId}`);
         console.log(`📚 Chapters: ${actualChapterCount}`);
         console.log(`📝 Total words: ${actualWordCount.toLocaleString()}`);

@@ -5682,7 +5682,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-01T12:06:48.867Z",
+    "processingStartTime": "2025-08-01T15:00:36.130Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -5691,7 +5691,7 @@
       "lineCount": 12566,
       "wordCount": 121377,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-01T12:06:52.226Z",
+      "extractionTime": "2025-08-01T15:00:40.169Z",
       "averageWordsPerPage": 383,
       "extractionMethod": "page_by_page_fixed"
     },
@@ -5702,7 +5702,7 @@
       "patternMatches": 89,
       "averageDetectionConfidence": 0.9099999999999999,
       "pageOffset": 0,
-      "processingTime": 2897,
+      "processingTime": 2689,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -5711,7 +5711,7 @@
       "averagePagesPerChapter": 30.9,
       "totalCharacters": 738578,
       "averageCharactersPerChapter": 73857.8,
-      "processingTime": 40,
+      "processingTime": 31,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -5720,7 +5720,7 @@
       "averageCharactersRemovedPerChapter": 24.5,
       "totalCharactersAfterCleaning": 738333,
       "cleaningEfficiency": 0.033182859224767144,
-      "processingTime": 2,
+      "processingTime": 5,
       "cleaningMethod": "pattern_based_title_removal"
     },
     "pageExtractionAndCrossPageMerging": {
@@ -5728,21 +5728,21 @@
       "totalChapters": 10,
       "averageWordsPerPage": 381.0873786407767,
       "sentencesMerged": 212,
-      "extractionTime": "2025-08-01T12:06:55.404Z",
-      "processingTime": 149
+      "extractionTime": "2025-08-01T15:00:43.380Z",
+      "processingTime": 253
     },
     "linkDetection": {
       "totalLinks": 290,
       "totalPdfLinks": 2214,
-      "processingTime": 4550,
-      "detectionTime": "2025-08-01T12:06:59.977Z"
+      "processingTime": 3394,
+      "detectionTime": "2025-08-01T15:00:46.830Z"
     },
     "imageExtraction": {
       "totalImages": 58,
       "totalExtractedImages": 60,
-      "imagesFolderPath": "./images",
-      "processingTime": 7159,
-      "extractionTime": "2025-08-01T12:07:07.161Z"
+      "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/Transformers/output/images",
+      "processingTime": 6534,
+      "extractionTime": "2025-08-01T15:00:53.383Z"
     }
   }
 }

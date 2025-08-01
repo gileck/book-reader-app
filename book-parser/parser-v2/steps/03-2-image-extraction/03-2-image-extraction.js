@@ -248,7 +248,7 @@ async function extractImages(pdfPath, config) {
     // Return both images and folder information
     return {
         images,
-        imagesFolderPath: './images'
+        imagesFolderPath: imagesDir
     };
 }
 

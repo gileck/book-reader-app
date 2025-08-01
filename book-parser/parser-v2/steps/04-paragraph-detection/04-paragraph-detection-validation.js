@@ -9,32 +9,36 @@
  * @returns {boolean} - True if footnote is found as standalone reference
  */
 function isFootnoteInContent(footnoteNumber, content) {
-    // Footnote patterns that should match:
-    // ". 8 For" (period, space, number, space/punctuation)
-    // ".8 For" (period, number, space/punctuation)  
-    // " 8 For" (space, number, space/punctuation)
-    // "9 Mitchell" (start of content, number, space/punctuation)
+    // Footnote patterns that should match ONLY actual footnotes:
+    // ". 8 For" (period, space, number, space - classic footnote pattern)
+    // ".8 For" (period, number, space - no space after period)  
+    // "9 Mitchell" (start of content, number, space - footnote at beginning)
     // "(8)" (parentheses around number)
     // "[8]" (brackets around number)
+    // "8." (number followed by period)
+
+    // IMPORTANT: Avoid matching regular numbers in text like "2 per cent"
 
     const patterns = [
-        // Period followed by optional space, then number, then space or punctuation
-        new RegExp(`\\.\\s*${footnoteNumber}(?=\\s|[.,;:!?)]|$)`),
+        // Pattern 1: Period followed by optional space, then number, then space
+        // This matches ". 2 The" but NOT "Barely 2 per"
+        new RegExp(`\\.\\s*${footnoteNumber}(?=\\s)`),
 
-        // Space followed by number, then space or punctuation  
-        new RegExp(`\\s${footnoteNumber}(?=\\s|[.,;:!?)]|$)`),
+        // Pattern 2: Start of content, number followed by space and capital letter
+        // This matches "2 The" at start but NOT "2 per cent" in middle
+        new RegExp(`^${footnoteNumber}(?=\\s+[A-Z])`),
 
-        // Start of content, number, then space or punctuation
-        new RegExp(`^${footnoteNumber}(?=\\s|[.,;:!?)])`),
-
-        // Number in parentheses
+        // Pattern 3: Number in parentheses
         new RegExp(`\\(${footnoteNumber}\\)`),
 
-        // Number in square brackets
+        // Pattern 4: Number in square brackets
         new RegExp(`\\[${footnoteNumber}\\]`),
 
-        // Number followed by period (like "8.")
-        new RegExp(`\\b${footnoteNumber}\\.`)
+        // Pattern 5: Number followed by period at word boundary
+        new RegExp(`\\b${footnoteNumber}\\.(?!\\s*per|\\s*percent)`),
+
+        // Pattern 6: End of sentence with footnote (period, space, number at end)
+        new RegExp(`\\.\\s+${footnoteNumber}\\s*$`)
     ];
 
     return patterns.some(pattern => pattern.test(content));

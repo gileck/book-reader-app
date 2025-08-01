@@ -53,6 +53,26 @@ export const useBookmarks = (
         updateState({ isBookmarked: !!currentBookmark });
     }, [state.bookmarks, chapter, currentChunkIndex, updateState]);
 
+    // Helper function to calculate sentence index within paragraph for Parser v2
+    const calculateSentenceIndexInParagraph = useCallback((chunkIndex: number): number | undefined => {
+        if (!chapter) return undefined;
+
+        const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
+        const currentChunk = textChunks[chunkIndex];
+        if (!currentChunk || currentChunk.paragraphIndex === undefined) return undefined;
+
+        // Count sentences in the same paragraph that come before this chunk
+        let sentenceIndex = 0;
+        for (let i = 0; i < chunkIndex; i++) {
+            const chunk = textChunks[i];
+            if (chunk.paragraphIndex === currentChunk.paragraphIndex) {
+                sentenceIndex++;
+            }
+        }
+
+        return sentenceIndex;
+    }, [chapter]);
+
     const handleBookmark = useCallback(async () => {
         if (!chapter || !bookId) return;
 
@@ -62,11 +82,17 @@ export const useBookmarks = (
 
         const previewText = currentChunk.text.substring(0, 100) + (currentChunk.text.length > 100 ? '...' : '');
 
+        // Enhanced bookmark creation with paragraph context (Parser v2)
+        const paragraphIndex = currentChunk.paragraphIndex;
+        const sentenceIndex = calculateSentenceIndexInParagraph(currentChunkIndex);
+
         try {
             const result = await toggleBookmark({
                 bookId,
                 chapterNumber: chapter.chapterNumber,
                 chunkIndex: currentChunkIndex,
+                paragraphIndex,
+                sentenceIndex,
                 previewText
             });
 
@@ -89,7 +115,7 @@ export const useBookmarks = (
         } catch (error) {
             console.error('Error toggling bookmark:', error);
         }
-    }, [chapter, bookId, currentChunkIndex, state.bookmarks, updateState]);
+    }, [chapter, bookId, currentChunkIndex, state.bookmarks, updateState, calculateSentenceIndexInParagraph]);
 
     const isChunkBookmarked = useCallback((chunkIndex: number) => {
         if (!chapter) return false;

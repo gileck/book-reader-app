@@ -5,6 +5,8 @@ export interface BookmarkClient {
     bookId: string;
     chapterNumber: number;
     chunkIndex: number;
+    paragraphIndex?: number;     // Paragraph containing the bookmarked sentence (Parser v2)
+    sentenceIndex?: number;      // Position within paragraph (Parser v2)
     customName?: string;
     previewText: string;
     createdAt: string;
@@ -16,6 +18,8 @@ export interface CreateBookmarkPayload {
     bookId: string;
     chapterNumber: number;
     chunkIndex: number;
+    paragraphIndex?: number;     // Parser v2 enhancement
+    sentenceIndex?: number;      // Parser v2 enhancement
     customName?: string;
     previewText: string;
 }
@@ -41,6 +45,8 @@ export interface ToggleBookmarkPayload {
     bookId: string;
     chapterNumber: number;
     chunkIndex: number;
+    paragraphIndex?: number;     // Parser v2 enhancement
+    sentenceIndex?: number;      // Parser v2 enhancement
     customName?: string;
     previewText: string;
 }

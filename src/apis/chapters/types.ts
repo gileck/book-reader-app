@@ -16,6 +16,7 @@ export interface TextChunkClient {
     type: 'text' | 'image' | 'header';
     pageNumber?: number;
     sentenceCount?: number;          // New field for parser v2
+    paragraphIndex?: number;         // New field for parser v2 - groups sentences into paragraphs
     imageName?: string;
     imageAlt?: string;
     links?: ChunkLink[];             // New field for advanced link detection (parser v2)

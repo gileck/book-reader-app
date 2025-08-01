@@ -502,15 +502,7 @@
           "paragraphIndex": 23,
           "wordCount": 54,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 25,
-              "targetText": "2",
-              "linkId": "link_15_2",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "0_50",
@@ -3369,15 +3361,7 @@
           "paragraphIndex": 84,
           "wordCount": 75,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 58,
-              "targetText": "2",
-              "linkId": "link_32_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "1_195",
@@ -3425,15 +3409,7 @@
           "paragraphIndex": 85,
           "wordCount": 62,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 58,
-              "targetText": "2",
-              "linkId": "link_32_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "1_199",
@@ -3443,15 +3419,7 @@
           "paragraphIndex": 85,
           "wordCount": 57,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 58,
-              "targetText": "2",
-              "linkId": "link_32_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "1_200",
@@ -3462,13 +3430,6 @@
           "wordCount": 83,
           "sentenceCount": 2,
           "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 58,
-              "targetText": "2",
-              "linkId": "link_32_2",
-              "role": "target"
-            },
             {
               "text": "3",
               "targetPageNumber": 58,
@@ -3572,15 +3533,7 @@
           "paragraphIndex": 89,
           "wordCount": 74,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "6",
-              "targetPageNumber": 59,
-              "targetText": "6",
-              "linkId": "link_41_6",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "1_209",
@@ -3656,15 +3609,7 @@
           "paragraphIndex": 92,
           "wordCount": 80,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "9",
-              "targetPageNumber": 60,
-              "targetText": "9",
-              "linkId": "link_50_9",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "1_215",
@@ -4353,15 +4298,7 @@
           "paragraphIndex": 27,
           "wordCount": 78,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "5",
-              "targetPageNumber": 88,
-              "targetText": "5",
-              "linkId": "link_71_5",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "2_55",
@@ -4664,15 +4601,7 @@
           "paragraphIndex": 39,
           "wordCount": 66,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "7",
-              "targetPageNumber": 88,
-              "targetText": "7",
-              "linkId": "link_75_7",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "2_84",
@@ -4712,15 +4641,7 @@
           "paragraphIndex": 41,
           "wordCount": 61,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "8",
-              "targetPageNumber": 89,
-              "targetText": "8",
-              "linkId": "link_76_8",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "2_88",
@@ -5436,15 +5357,7 @@
           "paragraphIndex": 68,
           "wordCount": 56,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 87,
-              "targetText": "2",
-              "linkId": "link_66_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "2_156",
@@ -5454,15 +5367,7 @@
           "paragraphIndex": 68,
           "wordCount": 119,
           "sentenceCount": 5,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 87,
-              "targetText": "2",
-              "linkId": "link_66_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "2_157",
@@ -5831,15 +5736,7 @@
           "paragraphIndex": 3,
           "wordCount": 84,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "1",
-              "targetPageNumber": 121,
-              "targetText": "1",
-              "linkId": "link_92_1",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "3_8",
@@ -7874,15 +7771,7 @@
           "paragraphIndex": 86,
           "wordCount": 58,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "9",
-              "targetPageNumber": 123,
-              "targetText": "9",
-              "linkId": "link_117_6",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "3_198",
@@ -8258,15 +8147,7 @@
           "paragraphIndex": 16,
           "wordCount": 53,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_35",
@@ -8276,15 +8157,7 @@
           "paragraphIndex": 16,
           "wordCount": 74,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_36",
@@ -8294,15 +8167,7 @@
           "paragraphIndex": 17,
           "wordCount": 64,
           "sentenceCount": 4,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_37",
@@ -8330,15 +8195,7 @@
           "paragraphIndex": 17,
           "wordCount": 52,
           "sentenceCount": 3,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_39",
@@ -8348,15 +8205,7 @@
           "paragraphIndex": 18,
           "wordCount": 41,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_40",
@@ -9097,15 +8946,7 @@
           "paragraphIndex": 48,
           "wordCount": 104,
           "sentenceCount": 6,
-          "links": [
-            {
-              "text": "5",
-              "targetPageNumber": 149,
-              "targetText": "5",
-              "linkId": "link_140_4",
-              "role": "source"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_111",
@@ -9614,15 +9455,7 @@
           "paragraphIndex": 70,
           "wordCount": 51,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_159",
@@ -9632,22 +9465,7 @@
           "paragraphIndex": 70,
           "wordCount": 124,
           "sentenceCount": 5,
-          "links": [
-            {
-              "text": "3",
-              "targetPageNumber": 148,
-              "targetText": "3",
-              "linkId": "link_135_3",
-              "role": "target"
-            },
-            {
-              "text": "2",
-              "targetPageNumber": 148,
-              "targetText": "2",
-              "linkId": "link_129_2",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "4_160",
@@ -11678,15 +11496,7 @@
           "paragraphIndex": 78,
           "wordCount": 51,
           "sentenceCount": 2,
-          "links": [
-            {
-              "text": "1",
-              "targetPageNumber": 178,
-              "targetText": "1",
-              "linkId": "link_150_1",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "5_183",
@@ -11743,13 +11553,6 @@
           "wordCount": 73,
           "sentenceCount": 3,
           "links": [
-            {
-              "text": "4",
-              "targetPageNumber": 179,
-              "targetText": "4",
-              "linkId": "link_162_4",
-              "role": "target"
-            },
             {
               "text": "5",
               "targetPageNumber": 179,
@@ -13981,15 +13784,7 @@
           "paragraphIndex": 86,
           "wordCount": 75,
           "sentenceCount": 4,
-          "links": [
-            {
-              "text": "6",
-              "targetPageNumber": 209,
-              "targetText": "6",
-              "linkId": "link_197_5",
-              "role": "target"
-            }
-          ]
+          "links": []
         },
         {
           "chunkId": "6_195",
@@ -19312,13 +19107,6 @@
               "role": "source"
             },
             {
-              "text": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "linkId": "link_288_2",
-              "role": "source"
-            },
-            {
               "text": ", 151, 214, 289",
               "targetPageNumber": 165,
               "targetText": null,
@@ -19369,13 +19157,6 @@
               "targetPageNumber": 91,
               "targetText": null,
               "linkId": "link_289_8",
-              "role": "source"
-            },
-            {
-              "text": "225",
-              "targetPageNumber": 173,
-              "targetText": null,
-              "linkId": "link_289_9",
               "role": "source"
             },
             {
@@ -19432,24 +19213,10 @@
               "role": "source"
             },
             {
-              "text": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "linkId": "link_290_17",
-              "role": "source"
-            },
-            {
               "text": ", 67, 69, 99, 150–51, 211, 218",
               "targetPageNumber": 118,
               "targetText": null,
               "linkId": "link_290_18",
-              "role": "source"
-            },
-            {
-              "text": "128",
-              "targetPageNumber": 102,
-              "targetText": null,
-              "linkId": "link_290_19",
               "role": "source"
             },
             {
@@ -19545,13 +19312,6 @@
               "role": "source"
             },
             {
-              "text": "185",
-              "targetPageNumber": 144,
-              "targetText": null,
-              "linkId": "link_292_30",
-              "role": "source"
-            },
-            {
               "text": ", 217,",
               "targetPageNumber": 167,
               "targetText": null,
@@ -19644,27 +19404,6 @@
               "role": "source"
             },
             {
-              "text": "286",
-              "targetPageNumber": 220,
-              "targetText": null,
-              "linkId": "link_294_41",
-              "role": "source"
-            },
-            {
-              "text": "128",
-              "targetPageNumber": 102,
-              "targetText": null,
-              "linkId": "link_294_42",
-              "role": "source"
-            },
-            {
-              "text": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "linkId": "link_294_43",
-              "role": "source"
-            },
-            {
               "text": ", 300–",
               "targetPageNumber": 232,
               "targetText": "the C4 malate (right-hand side).The final step we’ll consider involves the loss of the alcohol (OH)g...",
@@ -19733,13 +19472,6 @@
               "targetPageNumber": 125,
               "targetText": null,
               "linkId": "link_296_51",
-              "role": "source"
-            },
-            {
-              "text": "147",
-              "targetPageNumber": 116,
-              "targetText": null,
-              "linkId": "link_296_52",
               "role": "source"
             },
             {
@@ -19828,13 +19560,6 @@
           "sentenceCount": 1,
           "links": [
             {
-              "text": "128",
-              "targetPageNumber": 102,
-              "targetText": null,
-              "linkId": "link_298_62",
-              "role": "source"
-            },
-            {
               "text": ", 163",
               "targetPageNumber": 129,
               "targetText": null,
@@ -19878,13 +19603,6 @@
               "targetPageNumber": 15,
               "targetText": null,
               "linkId": "link_299_67",
-              "role": "source"
-            },
-            {
-              "text": "217",
-              "targetPageNumber": 167,
-              "targetText": null,
-              "linkId": "link_299_68",
               "role": "source"
             },
             {
@@ -19941,24 +19659,10 @@
               "role": "source"
             },
             {
-              "text": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "linkId": "link_300_75",
-              "role": "source"
-            },
-            {
               "text": "in",
               "targetPageNumber": 57,
               "targetText": null,
               "linkId": "link_300_76",
-              "role": "source"
-            },
-            {
-              "text": "128",
-              "targetPageNumber": 102,
-              "targetText": null,
-              "linkId": "link_300_77",
               "role": "source"
             },
             {
@@ -19987,13 +19691,6 @@
               "role": "source"
             },
             {
-              "text": "147",
-              "targetPageNumber": 116,
-              "targetText": null,
-              "linkId": "link_301_80",
-              "role": "source"
-            },
-            {
               "text": "as",
               "targetPageNumber": 10,
               "targetText": null,
@@ -20019,24 +19716,10 @@
           "sentenceCount": 1,
           "links": [
             {
-              "text": "128",
-              "targetPageNumber": 102,
-              "targetText": null,
-              "linkId": "link_302_85",
-              "role": "source"
-            },
-            {
               "text": ", 184,",
               "targetPageNumber": 143,
               "targetText": null,
               "linkId": "link_302_86",
-              "role": "source"
-            },
-            {
-              "text": "185",
-              "targetPageNumber": 144,
-              "targetText": null,
-              "linkId": "link_302_87",
               "role": "source"
             },
             {
@@ -20047,31 +19730,10 @@
               "role": "source"
             },
             {
-              "text": "286",
-              "targetPageNumber": 220,
-              "targetText": null,
-              "linkId": "link_302_89",
-              "role": "source"
-            },
-            {
-              "text": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "linkId": "link_302_90",
-              "role": "source"
-            },
-            {
               "text": "Keilin, David 59, 64, 198, 200",
               "targetPageNumber": 48,
               "targetText": null,
               "linkId": "link_302_91",
-              "role": "source"
-            },
-            {
-              "text": "101",
-              "targetPageNumber": 80,
-              "targetText": null,
-              "linkId": "link_302_92",
               "role": "source"
             },
             {
@@ -20086,20 +19748,6 @@
               "targetPageNumber": 167,
               "targetText": null,
               "linkId": "link_302_95",
-              "role": "source"
-            },
-            {
-              "text": "222",
-              "targetPageNumber": 171,
-              "targetText": null,
-              "linkId": "link_302_96",
-              "role": "source"
-            },
-            {
-              "text": "227",
-              "targetPageNumber": 175,
-              "targetText": null,
-              "linkId": "link_302_98",
               "role": "source"
             },
             {
@@ -20170,13 +19818,6 @@
               "role": "source"
             },
             {
-              "text": "225",
-              "targetPageNumber": 173,
-              "targetText": null,
-              "linkId": "link_303_109",
-              "role": "source"
-            },
-            {
               "text": ", 226",
               "targetPageNumber": 174,
               "targetText": null,
@@ -20230,31 +19871,10 @@
               "role": "source"
             },
             {
-              "text": "185",
-              "targetPageNumber": 144,
-              "targetText": null,
-              "linkId": "link_304_116",
-              "role": "source"
-            },
-            {
               "text": ", 283,",
               "targetPageNumber": 217,
               "targetText": null,
               "linkId": "link_304_117",
-              "role": "source"
-            },
-            {
-              "text": "286",
-              "targetPageNumber": 220,
-              "targetText": null,
-              "linkId": "link_304_118",
-              "role": "source"
-            },
-            {
-              "text": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "linkId": "link_304_119",
               "role": "source"
             },
             {
@@ -20269,13 +19889,6 @@
               "targetPageNumber": 94,
               "targetText": null,
               "linkId": "link_304_122",
-              "role": "source"
-            },
-            {
-              "text": "222",
-              "targetPageNumber": 171,
-              "targetText": null,
-              "linkId": "link_304_123",
               "role": "source"
             }
           ]
@@ -20353,13 +19966,6 @@
               "role": "source"
             },
             {
-              "text": "222",
-              "targetPageNumber": 171,
-              "targetText": null,
-              "linkId": "link_307_130",
-              "role": "source"
-            },
-            {
               "text": ", 226",
               "targetPageNumber": 174,
               "targetText": null,
@@ -20424,27 +20030,6 @@
               "targetPageNumber": 169,
               "targetText": null,
               "linkId": "link_308_139",
-              "role": "source"
-            },
-            {
-              "text": "286",
-              "targetPageNumber": 220,
-              "targetText": null,
-              "linkId": "link_308_140",
-              "role": "source"
-            },
-            {
-              "text": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "linkId": "link_308_141",
-              "role": "source"
-            },
-            {
-              "text": "298",
-              "targetPageNumber": 230,
-              "targetText": "specifically the tendency of the carbon–carbon double bond to react withgeneral, carbon–carbonespeci...",
-              "linkId": "link_308_142",
               "role": "source"
             }
           ]
@@ -20512,38 +20097,10 @@
               "role": "source"
             },
             {
-              "text": "147",
-              "targetPageNumber": 116,
-              "targetText": null,
-              "linkId": "link_310_149",
-              "role": "source"
-            },
-            {
-              "text": "66",
-              "targetPageNumber": 53,
-              "targetText": null,
-              "linkId": "link_310_150",
-              "role": "source"
-            },
-            {
-              "text": "121",
-              "targetPageNumber": 97,
-              "targetText": null,
-              "linkId": "link_310_151",
-              "role": "source"
-            },
-            {
               "text": "in",
               "targetPageNumber": 37,
               "targetText": null,
               "linkId": "link_310_152",
-              "role": "source"
-            },
-            {
-              "text": "287",
-              "targetPageNumber": 221,
-              "targetText": null,
-              "linkId": "link_310_153",
               "role": "source"
             }
           ]
@@ -20583,13 +20140,6 @@
               "targetPageNumber": 173,
               "targetText": null,
               "linkId": "link_311_157",
-              "role": "source"
-            },
-            {
-              "text": "101",
-              "targetPageNumber": 80,
-              "targetText": null,
-              "linkId": "link_311_158",
               "role": "source"
             },
             {
@@ -20664,31 +20214,10 @@
               "role": "source"
             },
             {
-              "text": "128",
-              "targetPageNumber": 102,
-              "targetText": null,
-              "linkId": "link_313_166",
-              "role": "source"
-            },
-            {
               "text": ", 184,",
               "targetPageNumber": 143,
               "targetText": null,
               "linkId": "link_313_167",
-              "role": "source"
-            },
-            {
-              "text": "215",
-              "targetPageNumber": 166,
-              "targetText": null,
-              "linkId": "link_313_168",
-              "role": "source"
-            },
-            {
-              "text": "222",
-              "targetPageNumber": 171,
-              "targetText": null,
-              "linkId": "link_313_169",
               "role": "source"
             },
             {

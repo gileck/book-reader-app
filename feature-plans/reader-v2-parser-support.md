@@ -275,12 +275,12 @@ const scrollToSentenceChunk = useCallback((chunkIndex: number, paragraphIndex?: 
 - **User Experience**: Users are accustomed to current chunk navigation patterns
 - **Performance Requirements**: Need to handle 1,600+ sentence chunks efficiently
 
-### **Open Questions**
-1. **Performance Threshold**: What's the acceptable rendering performance for 1,600+ chunks?
-2. **Fallback Behavior**: How should the system handle corrupted or incomplete v2 data?
-3. **User Experience**: How to communicate the enhanced precision to users?
-4. **Analytics Impact**: How will sentence-level navigation affect reading analytics?
-5. **Caching Strategy**: What level of caching is needed for paragraph grouping?
+### **Implementation Decisions**
+1. **Performance Threshold**: Acceptable to render 1,600+ chunks without special optimizations
+2. **Fallback Behavior**: Show error message indicating what data is missing
+3. **User Experience**: No need to communicate enhanced precision to users
+4. **Analytics Impact**: Leave reading analytics unchanged
+5. **Caching Strategy**: No special caching needed for paragraph grouping
 
 ### **Risks**
 - **Performance Risk**: App might become slow with high chunk counts

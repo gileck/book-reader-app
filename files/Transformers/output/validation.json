@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "totalDuration": 19913,
-    "timestamp": "2025-08-01T12:07:08.994Z",
+    "totalDuration": 18894,
+    "timestamp": "2025-08-01T15:00:55.051Z",
     "success": true,
     "totalSteps": 10,
     "validatedSteps": 9,
@@ -11,56 +11,56 @@
     "step-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:06:52.280Z",
-      "duration": 0
+      "timestamp": "2025-08-01T15:00:40.238Z",
+      "duration": 1
     },
     "step-2-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:06:55.187Z",
-      "duration": 0
+      "timestamp": "2025-08-01T15:00:42.953Z",
+      "duration": 1
     },
     "step-2-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:06:55.230Z",
+      "timestamp": "2025-08-01T15:00:42.985Z",
       "duration": 0
     },
     "step-2-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:06:55.245Z",
+      "timestamp": "2025-08-01T15:00:43.054Z",
       "duration": 1
     },
     "step-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:06:55.408Z",
-      "duration": 4
+      "timestamp": "2025-08-01T15:00:43.407Z",
+      "duration": 27
     },
     "step-3-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:06:59.978Z",
-      "duration": 1
+      "timestamp": "2025-08-01T15:00:46.831Z",
+      "duration": 0
     },
     "step-3-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:07:07.163Z",
+      "timestamp": "2025-08-01T15:00:53.386Z",
       "duration": 2
     },
     "step-4": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:07:08.344Z",
-      "duration": 18
+      "timestamp": "2025-08-01T15:00:54.317Z",
+      "duration": 34
     },
     "step-5": null,
     "step-6": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-01T12:07:08.723Z",
+      "timestamp": "2025-08-01T15:00:54.985Z",
       "duration": 1
     }
   }

@@ -145,13 +145,13 @@ export const useAudioPlayback = (
     }, []);
 
     const textChunks = chapter?.content.chunks
-    .filter(chunk => chunk.type === 'text')
-    .map(chunk => ({
-        ...chunk,
-        text: chunk.text.replaceAll('\n', ' ') || ''
-    })) || [];
+        .filter(chunk => chunk.type === 'text')
+        .map(chunk => ({
+            ...chunk,
+            text: chunk.text.replaceAll('\n', ' ') || ''
+        })) || [];
 
-    console.log('textChunks', {textChunks});
+    // console.log('textChunks', {textChunks});
 
     // Clear audio cache when voice changes or chapter changes
     useEffect(() => {

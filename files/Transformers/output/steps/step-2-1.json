@@ -82,7 +82,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-01T12:06:48.867Z",
+    "processingStartTime": "2025-08-01T15:00:36.130Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -91,7 +91,7 @@
       "lineCount": 12566,
       "wordCount": 121377,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-01T12:06:52.226Z",
+      "extractionTime": "2025-08-01T15:00:40.169Z",
       "averageWordsPerPage": 383,
       "extractionMethod": "page_by_page_fixed"
     },
@@ -102,7 +102,7 @@
       "patternMatches": 89,
       "averageDetectionConfidence": 0.9099999999999999,
       "pageOffset": 0,
-      "processingTime": 2897,
+      "processingTime": 2689,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }
