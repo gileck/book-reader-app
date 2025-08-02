@@ -1,1 +1,0 @@
-node book-parser/parser/index.js ./files/"The Breathing Cure"/book.pdf --debug 

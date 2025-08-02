@@ -274,8 +274,8 @@ function isHeader(line, lineIndex, allLines) {
         return false;
     }
 
-    // Rule 3: Capitalization: Starts with a capital letter
-    if (!/^[A-Z]/.test(line.trim())) {
+    // Rule 3: Capitalization: Starts with a capital letter OR page number + capital letter
+    if (!/^[A-Z]/.test(line.trim()) && !/^\d+\s+[A-Z]/.test(line.trim())) {
         return false;
     }
 
@@ -354,9 +354,8 @@ function createParagraphChunk(content, page, chunkId) {
  * @param {Object} page - Page object with pageNumber
  * @returns {Object} - Header chunk
  */
-function createHeaderChunk(content, page, chunkId) {
+function createHeaderChunk(content, page) {
     return {
-        chunkId: chunkId,
         type: 'header',
         content: content,
         pageNumber: page.pageNumber,

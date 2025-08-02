@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Box } from '@mui/material';
 import { HeaderChunk } from './chunks/HeaderChunk';
 import { ImageChunk } from './chunks/ImageChunk';
@@ -13,12 +13,6 @@ interface ReaderContentProps {
     chapter: ChapterClient;
     book: BookClient;
     scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-    getWordStyle: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
-    getWordClassName: (chunkIndex: number, wordIndex: number) => string;
-    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
-    getSentenceClassName: (chunkIndex: number) => string;
-    handleWordClick: (chunkIndex: number, wordIndex: number) => void;
-    handleSentenceClick: (chunkIndex: number) => void;
     onNavigateToChapter: (chapterNumber: number) => void;
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
@@ -28,22 +22,52 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     chapter,
     book,
     scrollContainerRef,
-    getWordStyle,
-    getWordClassName,
-    getSentenceStyle,
-    getSentenceClassName,
-    handleWordClick,
-    handleSentenceClick,
     onNavigateToChapter,
     onNavigateToChunk,
     onNavigateToBookmark
 }) => {
+    // Wrap onNavigateToChunk to add manual scrolling
+    const handleNavigateToChunk = useCallback((chunkIndex: number) => {
+        console.log('🚀 ReaderContent: Navigating to chunk', chunkIndex, typeof chunkIndex === 'string' ? '(chunk ID)' : '(array index)');
+        // onNavigateToChunk(chunkIndex);
+
+        // Manual scroll fallback - try multiple selectors
+        setTimeout(() => {
+            console.log('🔍 Manual scroll attempt for chunk', chunkIndex);
+
+            // Try different selectors - support both chunk ID and array index
+            const selectors = [
+                `#text-chunk-${chunkIndex}`,           // Primary: text chunk with chunk ID
+                `#header-chunk-${chunkIndex}`,         // Primary: header chunk with chunk ID  
+                `#image-chunk-${chunkIndex}`,          // Primary: image chunk with chunk ID
+                `[data-chunk-id="${chunkIndex}"]`,     // Secondary: direct chunk ID lookup  
+                `[data-chunk-index="${chunkIndex}"]`,  // Legacy: array index
+                `[data-paragraph-index][data-chunk-index="${chunkIndex}"]` // Legacy with paragraph
+            ];
+
+            for (const selector of selectors) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    console.log('✅ Found element with selector:', selector);
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                        inline: 'nearest'
+                    });
+                    return;
+                }
+            }
+
+            console.log('❌ No element found for chunk', chunkIndex);
+        }, 100);
+    }, [onNavigateToChunk]);
+
     // Enhanced navigation for v2 link handling
     const { handleLinkNavigation } = useEnhancedNavigation({
         chapter,
         currentChapterNumber: chapter.chapterNumber,
         onNavigateToChapter,
-        onNavigateToChunk,
+        onNavigateToChunk: handleNavigateToChunk,
         onNavigateToBookmark
     });
 
@@ -89,12 +113,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                             key={index}
                             chunk={chunk}
                             chunkIndex={index}
-                            getWordStyle={getWordStyle}
-                            getWordClassName={getWordClassName}
-                            getSentenceStyle={getSentenceStyle}
-                            getSentenceClassName={getSentenceClassName}
-                            handleWordClick={handleWordClick}
-                            handleSentenceClick={handleSentenceClick}
                             handleLinkClick={handleLinkNavigation}
                         />
                     );
@@ -127,12 +145,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 <ChunkRenderer
                     paragraphGroups={paragraphGroups}
                     book={book}
-                    getWordStyle={getWordStyle}
-                    getWordClassName={getWordClassName}
-                    getSentenceStyle={getSentenceStyle}
-                    getSentenceClassName={getSentenceClassName}
-                    handleWordClick={handleWordClick}
-                    handleSentenceClick={handleSentenceClick}
                     handleLinkClick={handleLinkNavigation}
                     getFlatChunkIndex={getFlatChunkIndex}
                 />

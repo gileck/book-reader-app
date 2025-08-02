@@ -338,94 +338,95 @@ async function uploadParsedBook(bookFolderPath) {
             chapterNumber: chapter.chapterNumber,
             title: chapter.title,
             content: {
-                chunks: chapter.chunks.map(chunk => ({
-                    index: chunk.index,
-                    text: chunk.text || chunk.content,  // Support both text and content fields
-                    wordCount: chunk.wordCount,
-                    type: chunk.type || 'text',
-                    ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
-                    ...(chunk.sentenceCount !== undefined && { sentenceCount: chunk.sentenceCount }),
-                    ...(chunk.paragraphIndex !== undefined && { paragraphIndex: chunk.paragraphIndex }),
-                    ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }), // Keep imageUrl for now, will be converted to imageName
-                    ...(chunk.imageName && { imageName: chunk.imageName }),
-                    ...(chunk.imageAlt && { imageAlt: chunk.imageAlt }),
-                    ...(chunk.links && { links: chunk.links })
-                }))
+                chunks: chapter.chunks.map((chunk, arrayIndex) => {
+                    return {
+                        index: arrayIndex,  // Use array position as index
+                        text: chunk.text || chunk.content,  // Support both text and content fields
+                        wordCount: chunk.wordCount,
+                        type: chunk.type || 'text',
+                        ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
+                        ...(chunk.sentenceCount !== undefined && { sentenceCount: chunk.sentenceCount }),
+                        ...(chunk.paragraphIndex !== undefined && { paragraphIndex: chunk.paragraphIndex }),
+                        ...(chunk.imageUrl && { imageUrl: chunk.imageUrl }), // Keep imageUrl for now, will be converted to imageName
+                        ...(chunk.imageName && { imageName: chunk.imageName }),
+                        ...(chunk.imageAlt && { imageAlt: chunk.imageAlt }),
+                        ...(chunk.links && { links: chunk.links })
+                    }))
             },
-            wordCount: chapter.wordCount,
-            createdAt: new Date(),
+    wordCount: chapter.wordCount,
+        createdAt: new Date(),
             updatedAt: new Date()
-        }));
+}));
 
-        // Insert chapters in batches to handle large books
-        const batchSize = 10;
-        let insertedCount = 0;
+// Insert chapters in batches to handle large books
+const batchSize = 10;
+let insertedCount = 0;
 
-        console.log(`📚 ${isUpdate ? 'Updating' : 'Inserting'} ${chaptersToInsert.length} chapters...`);
+console.log(`📚 ${isUpdate ? 'Updating' : 'Inserting'} ${chaptersToInsert.length} chapters...`);
 
-        for (let i = 0; i < chaptersToInsert.length; i += batchSize) {
-            const batch = chaptersToInsert.slice(i, i + batchSize);
-            const batchResult = await chaptersCollection.insertMany(batch);
-            insertedCount += batchResult.insertedCount;
+for (let i = 0; i < chaptersToInsert.length; i += batchSize) {
+    const batch = chaptersToInsert.slice(i, i + batchSize);
+    const batchResult = await chaptersCollection.insertMany(batch);
+    insertedCount += batchResult.insertedCount;
 
-            console.log(`   Inserted chapters ${i + 1}-${Math.min(i + batchSize, chaptersToInsert.length)} (${insertedCount}/${chaptersToInsert.length})`);
+    console.log(`   Inserted chapters ${i + 1}-${Math.min(i + batchSize, chaptersToInsert.length)} (${insertedCount}/${chaptersToInsert.length})`);
+}
+
+// Verify totals and update book if needed
+const actualChapterCount = await chaptersCollection.countDocuments({ bookId: bookId });
+const actualWordCount = chaptersToInsert.reduce((sum, chapter) => sum + chapter.wordCount, 0);
+
+if (actualChapterCount !== bookMetadata.totalChapters || actualWordCount !== bookMetadata.totalWords) {
+    console.log(`🔧 Updating book totals...`);
+    await booksCollection.updateOne(
+        { _id: bookId },
+        {
+            $set: {
+                totalChapters: actualChapterCount,
+                totalWords: actualWordCount,
+                updatedAt: new Date()
+            }
         }
+    );
+}
 
-        // Verify totals and update book if needed
-        const actualChapterCount = await chaptersCollection.countDocuments({ bookId: bookId });
-        const actualWordCount = chaptersToInsert.reduce((sum, chapter) => sum + chapter.wordCount, 0);
+// Get the updated book document for image upload
+const finalBook = await booksCollection.findOne({ _id: bookId });
 
-        if (actualChapterCount !== bookMetadata.totalChapters || actualWordCount !== bookMetadata.totalWords) {
-            console.log(`🔧 Updating book totals...`);
-            await booksCollection.updateOne(
-                { _id: bookId },
-                {
-                    $set: {
-                        totalChapters: actualChapterCount,
-                        totalWords: actualWordCount,
-                        updatedAt: new Date()
-                    }
-                }
-            );
-        }
+// Upload images to Vercel Blob if available and not skipped
+const skipImages = process.argv.includes('--skip-images');
 
-        // Get the updated book document for image upload
-        const finalBook = await booksCollection.findOne({ _id: bookId });
+if (skipImages) {
+    console.log('⏭️  Skipping image upload (--skip-images flag provided)');
+} else if (BLOB_READ_WRITE_TOKEN && imagesPath) {
+    await uploadImagesToBlob(finalBook, imagesPath, db);
+} else if (!BLOB_READ_WRITE_TOKEN && imagesPath) {
+    console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
+    console.log('   Images remain in local folder and imageUrl references are preserved');
+}
 
-        // Upload images to Vercel Blob if available and not skipped
-        const skipImages = process.argv.includes('--skip-images');
+console.log(`✅ Book ${isUpdate ? 'updated' : 'uploaded'} successfully!`);
+console.log(`📖 Title: "${bookData.metadata.title}"`);
+console.log(`👤 Author: ${bookData.metadata.author}`);
+console.log(`🆔 Book ID: ${bookId}`);
+console.log(`📚 Chapters: ${actualChapterCount}`);
+console.log(`📝 Total words: ${actualWordCount.toLocaleString()}`);
+console.log(`🔄 Operation: ${isUpdate ? 'Updated existing book' : 'Created new book'}`);
 
-        if (skipImages) {
-            console.log('⏭️  Skipping image upload (--skip-images flag provided)');
-        } else if (BLOB_READ_WRITE_TOKEN && imagesPath) {
-            await uploadImagesToBlob(finalBook, imagesPath, db);
-        } else if (!BLOB_READ_WRITE_TOKEN && imagesPath) {
-            console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
-            console.log('   Images remain in local folder and imageUrl references are preserved');
-        }
-
-        console.log(`✅ Book ${isUpdate ? 'updated' : 'uploaded'} successfully!`);
-        console.log(`📖 Title: "${bookData.metadata.title}"`);
-        console.log(`👤 Author: ${bookData.metadata.author}`);
-        console.log(`🆔 Book ID: ${bookId}`);
-        console.log(`📚 Chapters: ${actualChapterCount}`);
-        console.log(`📝 Total words: ${actualWordCount.toLocaleString()}`);
-        console.log(`🔄 Operation: ${isUpdate ? 'Updated existing book' : 'Created new book'}`);
-
-        if (isUpdate) {
-            const totalChunks = chaptersToInsert.reduce((sum, ch) => sum + ch.content.chunks.length, 0);
-            const imageChunks = chaptersToInsert.reduce((sum, ch) =>
-                sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
-            console.log(`📊 Summary: Updated ${actualChapterCount} chapters with ${totalChunks} total chunks (${totalChunks - imageChunks} text + ${imageChunks} images)`);
-        }
+if (isUpdate) {
+    const totalChunks = chaptersToInsert.reduce((sum, ch) => sum + ch.content.chunks.length, 0);
+    const imageChunks = chaptersToInsert.reduce((sum, ch) =>
+        sum + ch.content.chunks.filter(chunk => chunk.type === 'image').length, 0);
+    console.log(`📊 Summary: Updated ${actualChapterCount} chapters with ${totalChunks} total chunks (${totalChunks - imageChunks} text + ${imageChunks} images)`);
+}
 
     } catch (error) {
-        console.error('❌ Error uploading book:', error);
-        process.exit(1);
-    } finally {
-        await client.close();
-        console.log('🔌 Database connection closed.');
-    }
+    console.error('❌ Error uploading book:', error);
+    process.exit(1);
+} finally {
+    await client.close();
+    console.log('🔌 Database connection closed.');
+}
 }
 
 // CLI usage help

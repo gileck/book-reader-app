@@ -26,27 +26,20 @@ export const useChunkMapping = (
     audio: AudioActions,
     navigation: NavigationActions
 ) => {
-    // Enhanced chunk mapping for v2: handles mixed chunk types (text, header, image)
-    // Only text chunks participate in audio - headers and images are visual-only
+    // SIMPLIFIED: No more mapping needed! Audio system now uses absolute indexing
     const chunkIndexMapping = useMemo((): ChunkMapping => {
         if (!chapter) return { absoluteToText: new Map(), textToAbsolute: new Map(), textChunks: [] };
 
-        // Filter chunks to get only text chunks for audio processing
-        const textChunks = chapter.content.chunks.filter(c =>
-            c.type === 'text'
-        );
+        // All chunks with absolute indexing - much simpler!
+        const textChunks = chapter.content.chunks;
 
+        // Create identity mappings (absolute index = audio index)
         const absoluteToText = new Map<number, number>();
         const textToAbsolute = new Map<number, number>();
 
-        let textChunkIndex = 0;
         chapter.content.chunks.forEach((chunk, absoluteIndex) => {
-            // Only map text chunks for audio - skip headers and images
-            if (chunk.type === 'text') {
-                absoluteToText.set(absoluteIndex, textChunkIndex);
-                textToAbsolute.set(textChunkIndex, absoluteIndex);
-                textChunkIndex++;
-            }
+            absoluteToText.set(absoluteIndex, absoluteIndex);
+            textToAbsolute.set(absoluteIndex, absoluteIndex);
         });
 
         return { absoluteToText, textToAbsolute, textChunks };
@@ -55,68 +48,55 @@ export const useChunkMapping = (
     // Optimized functions using cached mapping
     const getOptimizedWordStyle = useMemo(() => {
         return (chunkIndex: number, wordIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return {};
-            return audio.getWordStyle(textChunkIndex, wordIndex);
+            // SIMPLIFIED: Direct indexing - no conversion needed!
+            return audio.getWordStyle(chunkIndex, wordIndex);
         };
-    }, [audio.getWordStyle, chunkIndexMapping]);
+    }, [audio.getWordStyle]);
 
     const getOptimizedWordClassName = useMemo(() => {
         return (chunkIndex: number, wordIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return '';
-            return audio.getWordClassName(textChunkIndex, wordIndex);
+            // SIMPLIFIED: Direct indexing - no conversion needed!
+            return audio.getWordClassName(chunkIndex, wordIndex);
         };
-    }, [audio.getWordClassName, chunkIndexMapping]);
+    }, [audio.getWordClassName]);
 
     const getOptimizedSentenceStyle = useMemo(() => {
         return (chunkIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return {};
-            return audio.getSentenceStyle(textChunkIndex);
+            // SIMPLIFIED: Direct indexing - no conversion needed!
+            return audio.getSentenceStyle(chunkIndex);
         };
-    }, [audio.getSentenceStyle, chunkIndexMapping]);
+    }, [audio.getSentenceStyle]);
 
     const getOptimizedSentenceClassName = useMemo(() => {
         return (chunkIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return '';
-            return audio.getSentenceClassName(textChunkIndex);
+            // SIMPLIFIED: Direct indexing - no conversion needed!
+            return audio.getSentenceClassName(chunkIndex);
         };
-    }, [audio.getSentenceClassName, chunkIndexMapping]);
+    }, [audio.getSentenceClassName]);
 
     const handleOptimizedWordClick = useMemo(() => {
         return (chunkIndex: number, wordIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) return;
-            audio.handleWordClick(textChunkIndex, wordIndex);
+            // SIMPLIFIED: Direct indexing - no conversion needed!
+            audio.handleWordClick(chunkIndex, wordIndex);
         };
-    }, [audio.handleWordClick, chunkIndexMapping]);
+    }, [audio.handleWordClick]);
 
     const handleOptimizedSentenceClick = useMemo(() => {
         return (chunkIndex: number) => {
-            const textChunkIndex = chunkIndexMapping.absoluteToText.get(chunkIndex);
-            if (textChunkIndex === undefined) {
-                // This is a non-text chunk (header or image) - no audio action needed
-                console.log(`Chunk ${chunkIndex} is not a text chunk, skipping audio navigation`);
-                return;
-            }
+            // SIMPLIFIED: Direct indexing - audio system now handles non-text chunks gracefully
 
             // Set the current chunk index in reader state (will sync to audio)
-            navigation.setCurrentChunkIndex(textChunkIndex);
+            navigation.setCurrentChunkIndex(chunkIndex);
 
-            // Also jump to the first word of that chunk
-            audio.handleWordClick(textChunkIndex, 0);
+            // Also jump to the first word of that chunk (audio system will skip if non-text)
+            audio.handleWordClick(chunkIndex, 0);
         };
-    }, [chunkIndexMapping, navigation.setCurrentChunkIndex, audio.handleWordClick]);
+    }, [navigation.setCurrentChunkIndex, audio.handleWordClick]);
 
-    // Optimized current chunk index calculation
+    // SIMPLIFIED: Current chunk index is now direct (no conversion needed)
     const currentChunkIndex = useMemo(() => {
-        const currentTextChunk = audio.textChunks[audio.currentChunkIndex];
-        if (!currentTextChunk) return 0;
-
-        return chunkIndexMapping.textToAbsolute.get(audio.currentChunkIndex) || 0;
-    }, [audio.currentChunkIndex, audio.textChunks, chunkIndexMapping]);
+        return audio.currentChunkIndex;
+    }, [audio.currentChunkIndex]);
 
     return {
         chunkIndexMapping,

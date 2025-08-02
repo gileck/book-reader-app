@@ -46,6 +46,7 @@ export const ImageChunk: React.FC<ImageChunkProps> = ({
                 position: 'relative'
             }}
             id={`image-chunk-${chunkIndex}`}
+            data-chunk-index={chunkIndex}
         >
             {imageLoading && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>

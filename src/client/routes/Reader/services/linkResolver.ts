@@ -2,6 +2,7 @@ import { ChunkLink, ChapterClient } from '@/apis/chapters/types';
 import { BookClient } from '@/apis/books/types';
 import { getChapterByNumber } from '@/apis/chapters/client';
 
+
 interface NavigationTarget {
     chapterNumber: number;
     chunkIndex?: number;
@@ -13,7 +14,7 @@ interface NavigationTarget {
 
 export class LinkResolver {
     /**
-     * Resolve a link to its target location
+     * Resolve a link to its target location (DRAMATICALLY SIMPLIFIED with Step 5.1)
      */
     static async resolveLink(
         link: ChunkLink,
@@ -21,7 +22,19 @@ export class LinkResolver {
         currentChapter: ChapterClient
     ): Promise<NavigationTarget | null> {
         try {
-            // Direct chapter and chunk reference (most reliable)
+            // 🚀 FAST PATH: Direct chunk array index reference (Step 5.1)
+            const targetChunkIndex = link.role === 'source' ? link.targetChunkIndex : link.sourceChunkIndex;
+            if (targetChunkIndex !== undefined) {
+                const targetChapterNumber = link.chapterNumber || currentChapter.chapterNumber;
+                console.log(`🚀 Fast link resolution: chunk index ${targetChunkIndex} → chapter ${targetChapterNumber}`);
+                return {
+                    chapterNumber: targetChapterNumber,
+                    chunkIndex: targetChunkIndex,
+                    success: true
+                };
+            }
+
+            // LEGACY: Direct chapter and chunk reference (v1 compatibility)
             if (link.chapterNumber !== undefined && link.targetChunk !== undefined) {
                 return {
                     chapterNumber: link.chapterNumber,
@@ -30,7 +43,7 @@ export class LinkResolver {
                 };
             }
 
-            // Page reference - try current chapter first
+            // FALLBACK: Page reference (much slower)
             if (link.targetPageNumber !== undefined) {
                 const pageTarget = await this.resolvePageReference(
                     link.targetPageNumber,
@@ -40,7 +53,7 @@ export class LinkResolver {
                 if (pageTarget) return pageTarget;
             }
 
-            // Chapter reference without specific chunk
+            // FALLBACK: Chapter reference without specific chunk
             if (link.chapterNumber !== undefined) {
                 return {
                     chapterNumber: link.chapterNumber,
@@ -48,7 +61,7 @@ export class LinkResolver {
                 };
             }
 
-            // Text-based reference (fallback)
+            // FALLBACK: Text-based reference (slowest)
             if (link.targetText) {
                 const textTarget = await this.resolveTextReference(
                     link.targetText,

@@ -33,81 +33,81 @@ export const useEnhancedNavigation = ({
         };
     }, [chapter]);
 
-    // Find text chunk index (for audio) from absolute chunk index
-    const findTextChunkIndex = useCallback((absoluteChunkIndex: number): number => {
-        if (!chapter) return 0;
+    // REMOVED: findTextChunkIndex - no longer needed!
+    // We now use absolute chunk indexes directly, eliminating expensive conversion
 
-        let textChunkIndex = 0;
-        for (let i = 0; i < absoluteChunkIndex && i < chapter.content.chunks.length; i++) {
-            if (chapter.content.chunks[i].type === 'text') {
-                textChunkIndex++;
-            }
-        }
-
-        return Math.max(0, textChunkIndex - 1); // Convert to 0-based index
-    }, [chapter]);
-
-    // Handle navigation to a specific link target
+    // Handle navigation to a specific link target (DRAMATICALLY SIMPLIFIED with Step 5.1)
     const handleLinkNavigation = useCallback(async (link: ChunkLink) => {
-        console.log('Navigating to link:', link);
+        console.log('🔗 Navigating to link:', link);
 
         try {
-            // Case 1: Cross-chapter reference with specific chunk
-            if (link.chapterNumber !== undefined && link.targetChunk !== undefined) {
-                if (link.chapterNumber === currentChapterNumber) {
-                    // Same chapter - just navigate to chunk
-                    const textChunkIndex = findTextChunkIndex(link.targetChunk);
-                    onNavigateToChunk(textChunkIndex);
+            // 🚀 FAST PATH: Direct chunk array index reference (Step 5.1)
+            const targetChunkIndex = link.role === 'source' ? link.targetChunkIndex : link.sourceChunkIndex;
+            if (targetChunkIndex !== undefined) {
+                console.log(`🚀 Fast navigation to chunk index ${targetChunkIndex}`);
+
+                // Handle cross-chapter navigation if chapter number is provided
+                if (link.chapterNumber !== undefined && link.chapterNumber !== currentChapterNumber) {
+                    onNavigateToBookmark(link.chapterNumber, targetChunkIndex);
                 } else {
-                    // Different chapter - use bookmark navigation pattern
-                    const textChunkIndex = findTextChunkIndex(link.targetChunk);
-                    onNavigateToBookmark(link.chapterNumber, textChunkIndex);
+                    // Same chapter - navigate directly using chunk array index
+                    onNavigateToChunk(targetChunkIndex);
                 }
                 return;
             }
 
-            // Case 2: Page reference within current chapter
+            // LEGACY PATH: v1 compatibility - Cross-chapter reference with specific chunk
+            if (link.chapterNumber !== undefined && link.targetChunk !== undefined) {
+                console.log('📚 Legacy navigation to chapter/chunk:', link.chapterNumber, link.targetChunk);
+                if (link.chapterNumber === currentChapterNumber) {
+                    onNavigateToChunk(link.targetChunk);
+                } else {
+                    onNavigateToBookmark(link.chapterNumber, link.targetChunk);
+                }
+                return;
+            }
+
+            // SLOW FALLBACK: Page reference within current chapter
             if (link.targetPageNumber !== undefined) {
+                console.log('📄 Page-based navigation (slower):', link.targetPageNumber);
                 const targetChunk = findChunkByPage(link.targetPageNumber);
                 if (targetChunk) {
-                    const textChunkIndex = findTextChunkIndex(targetChunk.index);
-                    onNavigateToChunk(textChunkIndex);
+                    onNavigateToChunk(targetChunk.index);
                 } else {
                     console.warn(`Page ${link.targetPageNumber} not found in current chapter`);
-                    // Could implement cross-chapter page search here
                 }
                 return;
             }
 
-            // Case 3: Chapter reference without specific chunk
+            // SLOW FALLBACK: Chapter reference without specific chunk
             if (link.chapterNumber !== undefined) {
+                console.log('📖 Chapter-only navigation:', link.chapterNumber);
                 if (link.chapterNumber !== currentChapterNumber) {
                     onNavigateToChapter(link.chapterNumber);
                 }
                 return;
             }
 
-            // Case 4: Textual references (try to resolve)
+            // SLOWEST FALLBACK: Text-based search
             if (link.targetText) {
+                console.log('🔍 Text-based navigation (slowest):', link.targetText);
                 const targetChunk = findChunkByText(link.targetText);
                 if (targetChunk) {
-                    const textChunkIndex = findTextChunkIndex(targetChunk.index);
-                    onNavigateToChunk(textChunkIndex);
+                    onNavigateToChunk(targetChunk.index);
                 } else {
                     console.warn(`Target text "${link.targetText}" not found in current chapter`);
                 }
                 return;
             }
 
-            console.warn('Unable to navigate - link target not recognized:', link);
+            console.warn('⚠️ Unable to navigate - no valid target found:', link);
 
         } catch (error) {
-            console.error('Error navigating to link:', error);
+            console.error('❌ Error navigating to link:', error);
         }
     }, [
         currentChapterNumber,
         findChunkByPage,
-        findTextChunkIndex,
         onNavigateToChapter,
         onNavigateToChunk,
         onNavigateToBookmark
@@ -135,12 +135,11 @@ export const useEnhancedNavigation = ({
     const navigateToPage = useCallback((pageNumber: number) => {
         const targetChunk = findChunkByPage(pageNumber);
         if (targetChunk) {
-            const textChunkIndex = findTextChunkIndex(targetChunk.index);
-            onNavigateToChunk(textChunkIndex);
+            onNavigateToChunk(targetChunk.index);
             return true;
         }
         return false;
-    }, [findChunkByPage, findTextChunkIndex, onNavigateToChunk]);
+    }, [findChunkByPage, onNavigateToChunk]);
 
     // Navigate to a specific chapter and optionally a chunk/page within it
     const navigateToChapterAndLocation = useCallback((
@@ -150,23 +149,20 @@ export const useEnhancedNavigation = ({
         if (chapterNumber === currentChapterNumber && location) {
             // Same chapter, just navigate to location
             if (location.chunkIndex !== undefined) {
-                const textChunkIndex = findTextChunkIndex(location.chunkIndex);
-                onNavigateToChunk(textChunkIndex);
+                onNavigateToChunk(location.chunkIndex);
             } else if (location.pageNumber !== undefined) {
                 navigateToPage(location.pageNumber);
             }
         } else {
             // Different chapter
             if (location?.chunkIndex !== undefined) {
-                const textChunkIndex = findTextChunkIndex(location.chunkIndex);
-                onNavigateToBookmark(chapterNumber, textChunkIndex);
+                onNavigateToBookmark(chapterNumber, location.chunkIndex);
             } else {
                 onNavigateToChapter(chapterNumber);
             }
         }
     }, [
         currentChapterNumber,
-        findTextChunkIndex,
         navigateToPage,
         onNavigateToChapter,
         onNavigateToChunk,
@@ -178,7 +174,6 @@ export const useEnhancedNavigation = ({
         navigateToPage,
         navigateToChapterAndLocation,
         findChunkByPage,
-        findChunkByText,
-        findTextChunkIndex
+        findChunkByText
     };
 }; 

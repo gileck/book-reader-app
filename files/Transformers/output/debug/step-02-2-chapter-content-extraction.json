@@ -1,11 +1,11 @@
 {
-  "processingTime": 31,
+  "processingTime": 21,
   "extractionStats": {
-    "totalChapters": 10,
+    "totalChapters": 9,
     "totalPages": 309,
-    "averagePagesPerChapter": 30.9,
-    "totalCharacters": 738578,
-    "averageCharactersPerChapter": 73857.8
+    "averagePagesPerChapter": 34.333333333333336,
+    "totalCharacters": 728520,
+    "averageCharactersPerChapter": 80946.66666666667
   },
   "chapters": [
     {
@@ -13,70 +13,63 @@
       "chapterNumber": 0,
       "pageNumberStart": 8,
       "pageNumberEnd": 26,
-      "contentLength": 49562
+      "contentLength": 48926
     },
     {
       "title": "Discovering the nanocosm",
       "chapterNumber": 1,
       "pageNumberStart": 27,
       "pageNumberEnd": 61,
-      "contentLength": 88482
+      "contentLength": 87336
     },
     {
       "title": "The path of carbon",
       "chapterNumber": 2,
       "pageNumberStart": 62,
       "pageNumberEnd": 90,
-      "contentLength": 72205
+      "contentLength": 71198
     },
     {
       "title": "From gases to life",
       "chapterNumber": 3,
       "pageNumberStart": 91,
-      "pageNumberEnd": 123,
-      "contentLength": 78882
-    },
-    {
-      "title": "Revolutions",
-      "chapterNumber": 4,
-      "pageNumberStart": 124,
       "pageNumberEnd": 149,
-      "contentLength": 69919
+      "contentLength": 146860
     },
     {
       "title": "To the dark side",
       "chapterNumber": 5,
       "pageNumberStart": 150,
       "pageNumberEnd": 180,
-      "contentLength": 77321
+      "contentLength": 76342
     },
     {
       "title": "The flux capacitor",
       "chapterNumber": 6,
       "pageNumberStart": 181,
       "pageNumberEnd": 210,
-      "contentLength": 82465
+      "contentLength": 81408
     },
     {
       "title": "Epilogue: Self",
       "chapterNumber": 99,
       "pageNumberStart": 211,
       "pageNumberEnd": 221,
-      "contentLength": 21454
+      "contentLength": 21197
     },
     {
       "title": "Appendix 1: Red protein mechanics",
       "chapterNumber": 99,
       "pageNumberStart": 222,
       "pageNumberEnd": 226,
-      "contentLength": 6865
+      "contentLength": 6772
     },
     {
       "title": "Appendix 2: The Krebs line",
       "chapterNumber": 99,
       "pageNumberStart": 227,
       "pageNumberEnd": 316,
-      "contentLength": 191423
+      "contentLength": 188481
     }
   ]
 }

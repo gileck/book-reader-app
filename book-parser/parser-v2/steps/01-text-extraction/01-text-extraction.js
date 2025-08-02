@@ -54,10 +54,18 @@ async function execute(pipelineState, config) {
         // Process each page individually
         let rawText = '';
         const pageInfo = [];
+        const rawTextContentItems = []; // Store raw PDF.js textContent.items for debugging
 
         for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
             const page = await pdfDoc.getPage(pageNum);
             const textContent = await page.getTextContent();
+
+            // Store raw textContent.items for this page (before any processing)
+            rawTextContentItems.push({
+                pageNumber: pageNum - 1,
+                totalItems: textContent.items ? textContent.items.length : 0,
+                items: textContent.items || []
+            });
 
             // Extract text with improved spacing logic
             const pageText = extractCleanPageText(textContent, pageNum - 1);
@@ -111,7 +119,8 @@ async function execute(pipelineState, config) {
                 wordCount,
                 literalNewlineCount,
                 extractionTime,
-                extractionMethod: 'page_by_page_fixed'
+                extractionMethod: 'page_by_page_fixed',
+                totalTextContentItems: rawTextContentItems.reduce((sum, page) => sum + page.totalItems, 0)
             },
             textValidation: {
                 hasContent: rawText.length > 0,
@@ -133,7 +142,15 @@ async function execute(pipelineState, config) {
                 endPosition: page.endPosition,
                 characterCount: page.characterCount,
                 wordCount: page.wordCount
-            }))
+            })),
+            rawTextContentSummary: {
+                totalPages: rawTextContentItems.length,
+                totalItems: rawTextContentItems.reduce((sum, page) => sum + page.totalItems, 0),
+                averageItemsPerPage: Math.round(rawTextContentItems.reduce((sum, page) => sum + page.totalItems, 0) / rawTextContentItems.length),
+                pagesWithItems: rawTextContentItems.filter(page => page.totalItems > 0).length,
+                pagesWithoutItems: rawTextContentItems.filter(page => page.totalItems === 0).length,
+                saveLocation: 'step-01-raw-textcontent-items.json'
+            }
         };
 
         // Save debug output
@@ -144,11 +161,16 @@ async function execute(pipelineState, config) {
         const rawTextFile = path.join(config.DEBUG_DIR, 'step-01-raw-text.txt');
         fs.writeFileSync(rawTextFile, rawText, 'utf8');
 
+        // Save raw textContent.items (untouched PDF.js output) for debugging
+        const rawTextContentFile = path.join(config.DEBUG_DIR, 'step-01-raw-textcontent-items.json');
+        fs.writeFileSync(rawTextContentFile, JSON.stringify(rawTextContentItems, null, 2));
+
         // Validate text quality - check for overly long words
         const wordValidation = validateWordLengths(rawText);
 
         return {
             rawText: rawText,
+            rawTextContentItems: rawTextContentItems, // Include raw PDF.js textContent.items for debugging
             metadata: {
                 ...pipelineState.metadata,
                 textExtraction: {
@@ -159,7 +181,8 @@ async function execute(pipelineState, config) {
                     literalNewlineCount,
                     extractionTime,
                     averageWordsPerPage: Math.round(wordCount / pageCount),
-                    extractionMethod: 'page_by_page_fixed'
+                    extractionMethod: 'page_by_page_fixed',
+                    totalTextContentItems: rawTextContentItems.reduce((sum, page) => sum + page.totalItems, 0)
                 }
             }
         };
@@ -183,36 +206,27 @@ function extractCleanPageText(textContent, pageNum) {
 
     const items = textContent.items;
     let pageText = '';
-    let lastY = null;
-    let lastX = null;
 
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
-        const nextItem = i + 1 < items.length ? items[i + 1] : null;
 
         const itemText = item.str;
         if (!itemText || itemText.trim().length === 0) {
             continue;
         }
 
-        const currentY = item.transform[5];
-        const currentX = item.transform[4];
-
-        // Detect new lines based on Y position change
-        if (lastY !== null && Math.abs(currentY - lastY) > 5) {
-            pageText += '\n';
-        }
-
-        // Add the text with simple spacing logic like v1
+        // Add the text
         pageText += itemText;
-        
-        // Add space after each text item unless it's the last item or already ends with space
-        if (i < items.length - 1 && !itemText.endsWith(' ') && !itemText.endsWith('\n')) {
-            pageText += ' ';
-        }
 
-        lastY = currentY;
-        lastX = currentX;
+        // Use PDF.js hasEOL property to determine line breaks - much more reliable!
+        if (item.hasEOL) {
+            pageText += '\n';
+        } else {
+            // Add space after each text item unless it's the last item or already ends with space
+            if (i < items.length - 1 && !itemText.endsWith(' ')) {
+                pageText += ' ';
+            }
+        }
     }
 
     // Clean the page text by removing standalone page numbers at the beginning
@@ -280,20 +294,20 @@ function removeStandalonePageNumber(pageText, pageNum) {
 function validateWordLengths(text) {
     // Extract words (alphanumeric sequences)
     const words = text.match(/[a-zA-Z0-9]+/g) || [];
-    
+
     // Categorize words by length
     const longWords = words.filter(word => word.length > 20);
     const veryLongWords = words.filter(word => word.length > 30);
     const suspiciousWords = words.filter(word => word.length > 50);
-    
+
     // Find longest word
-    const longestWord = words.reduce((longest, current) => 
+    const longestWord = words.reduce((longest, current) =>
         current.length > longest.length ? current : longest, ''
     );
-    
+
     // Sort suspicious words by length (descending)
     suspiciousWords.sort((a, b) => b.length - a.length);
-    
+
     return {
         totalWords: words.length,
         longWords: longWords,
@@ -315,25 +329,25 @@ function validate(output) {
         console.error('❌ Validation failed: rawText is missing or not a string');
         return false;
     }
-    
+
     // Check minimum length (should have substantial content)
     if (output.rawText.length < 1000) {
         console.error(`❌ Validation failed: rawText too short (${output.rawText.length} characters, expected at least 1000)`);
         return false;
     }
-    
+
     // Check that metadata exists
     if (!output.metadata || !output.metadata.textExtraction || !output.metadata.textExtraction.characterCount) {
         console.error('❌ Validation failed: metadata missing or incomplete');
         return false;
     }
-    
+
     // Check character count consistency
     if (output.metadata.textExtraction.characterCount !== output.rawText.length) {
         console.error(`❌ Validation failed: character count mismatch (metadata: ${output.metadata.textExtraction.characterCount}, actual: ${output.rawText.length})`);
         return false;
     }
-    
+
     return true;
 }
 

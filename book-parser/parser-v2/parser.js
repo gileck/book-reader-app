@@ -22,6 +22,7 @@ const linkDetection = require('./steps/03-1-link-detection/03-1-link-detection')
 const imageExtraction = require('./steps/03-2-image-extraction/03-2-image-extraction');
 const paragraphDetection = require('./steps/04-paragraph-detection/04-paragraph-detection');
 const sentenceDetection = require('./steps/05-sentence-detection/05-sentence-detection');
+const linkChunkReferences = require('./steps/05-1-link-chunk-references/05-1-link-chunk-references');
 const metadataExtraction = require('./steps/06-metadata-extraction/06-metadata-extraction');
 
 // Step execution mapping
@@ -35,6 +36,7 @@ const STEPS = {
     'step-3-2': imageExtraction.execute,
     'step-4': paragraphDetection.execute,
     'step-5': sentenceDetection.execute,
+    'step-5-1': linkChunkReferences.execute,
     'step-6': metadataExtraction.execute,
 };
 
@@ -48,6 +50,7 @@ const STEP_NAMES = [
     'step-3-2',
     'step-4',
     'step-5',
+    'step-5-1',
     'step-6'
 ];
 
@@ -62,6 +65,7 @@ const STEP_MODULES = {
     'step-3-2': imageExtraction,
     'step-4': paragraphDetection,
     'step-5': sentenceDetection,
+    'step-5-1': linkChunkReferences,
     'step-6': metadataExtraction,
 };
 
@@ -371,6 +375,7 @@ function getStepDescriptions() {
         'step-3-2': 'Extract embedded images from PDF and map to pages (with validation)',
         'step-4': 'Detect paragraph boundaries with size optimization (with validation)',
         'step-5': 'Convert paragraphs to sentences with paragraph indexing (with validation)',
+        'step-5-1': 'Add chunk references to links for bidirectional navigation (with validation)',
         'step-6': 'Extract and clean metadata from PDF (with validation)'
     };
 }

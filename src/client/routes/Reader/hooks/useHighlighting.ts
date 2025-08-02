@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 import { createHighlightingStrategy, type HighlightingContext } from '../highlighting';
-import { useSettings } from '../../../settings/SettingsContext';
 
 export const useHighlighting = (
     currentChunkIndex: number,
@@ -11,7 +10,6 @@ export const useHighlighting = (
     onWordClick: (chunkIndex: number, wordIndex: number) => void,
     onNavigateToChunk: (chunkIndex: number) => void
 ) => {
-    const { settings, updateSettings } = useSettings();
 
     const context: HighlightingContext = useMemo(() => ({
         currentChunkIndex,
@@ -23,17 +21,16 @@ export const useHighlighting = (
     }), [currentChunkIndex, currentWordIndex, highlightColor, chapter, onWordClick, onNavigateToChunk]);
 
     const strategy = useMemo(() =>
-        createHighlightingStrategy(settings.highlightingMode || 'word', context),
-        [settings.highlightingMode, context]
+        createHighlightingStrategy('word', context),
+        [context]
     );
 
     const toggleMode = () => {
-        const newMode = settings.highlightingMode === 'word' ? 'sentence' : 'word';
-        updateSettings({ highlightingMode: newMode });
+        // Mode toggling functionality removed for simplicity
     };
 
     return {
-        mode: settings.highlightingMode || 'word',
+        mode: 'word',
         getWordStyle: strategy.getWordStyle.bind(strategy),
         getWordClassName: strategy.getWordClassName.bind(strategy),
         handleWordClick: strategy.handleWordClick.bind(strategy),

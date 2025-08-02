@@ -85,6 +85,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                     m: 0
                 }}
                 id={`header-chunk-${chunkIndex}`}
+                data-chunk-index={chunkIndex}
             >
                 {chunk.text}
             </Typography>

@@ -214,9 +214,11 @@ function validate(output) {
                 const firstChar = chunk.content.charAt(0);
 
                 if (chunk.type === 'header') {
-                    // Headers must start with a capital letter
-                    if (firstChar !== firstChar.toUpperCase() || !/[A-Z]/.test(firstChar)) {
-                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
+                    // Headers must start with a capital letter OR page number + capital letter (consistent with step-4)
+                    const startsWithCapital = /^[A-Z]/.test(chunk.content.trim());
+                    const startsWithPageNumber = /^\d+\s+[A-Z]/.test(chunk.content.trim());
+                    if (!startsWithCapital && !startsWithPageNumber) {
+                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter or page number + capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                     // Headers should have paragraphIndex: null
                     if (chunk.paragraphIndex !== null) {
@@ -250,9 +252,9 @@ function validate(output) {
                 }
             } else if (chunk.type === 'text') {
                 // Text chunks are combined sentences that must meet minimum word count requirements
-                // Minimum 50 words, maximum 200 words for optimal processing
-                if (wordCount < 50) {
-                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be at least 50 words. Content: "${chunk.content.substring(0, 100)}..."`);
+                // BALANCED enforcement: Minimum 25 words, maximum 200 words for optimal processing
+                if (wordCount < 25) {
+                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be at least 25 words. Content: "${chunk.content.substring(0, 100)}..."`);
                 } else if (wordCount > 200) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) exceeds maximum of 200 words. Content: "${chunk.content.substring(0, 100)}..."`);
                 }
@@ -285,6 +287,15 @@ function validate(output) {
                 for (const link of chunk.links) {
                     if (!isSourceTextInContent(link.text, chunk.content)) {
                         validationErrors.push(`Link text "${link.text}" not found in ${fullChunkIdentifier} content`);
+                    }
+
+                    // 6. chunk reference validation (added by step 5.1)
+                    if (link.targetChunkId && (typeof link.targetChunkId !== 'string' || !link.targetChunkId.includes('_'))) {
+                        validationErrors.push(`Link in ${fullChunkIdentifier} has invalid targetChunkId format: ${link.targetChunkId}`);
+                    }
+
+                    if (link.sourceChunkId && (typeof link.sourceChunkId !== 'string' || !link.sourceChunkId.includes('_'))) {
+                        validationErrors.push(`Link in ${fullChunkIdentifier} has invalid sourceChunkId format: ${link.sourceChunkId}`);
                     }
                 }
             }

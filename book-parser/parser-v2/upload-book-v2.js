@@ -231,14 +231,28 @@ function convertParserOutputToChapters(finalOutput, bookTitle) {
                 }
 
                 return {
-                    index: index,
+                    index: index,  // Use array position as index
                     text: chunk.content || chunk.text || (chunk.type === 'image' ? chunk.imageAlt || '' : ''),
                     wordCount: chunk.wordCount || 0,
                     type: dbType,
                     ...(chunk.pageNumber !== undefined && { pageNumber: chunk.pageNumber }),
                     ...(chunk.sentenceCount !== undefined && { sentenceCount: chunk.sentenceCount }),
                     ...(chunk.paragraphIndex !== undefined && { paragraphIndex: chunk.paragraphIndex }),
-                    ...(chunk.links && chunk.links.length > 0 && { links: chunk.links }),
+                    ...(chunk.links && chunk.links.length > 0 && {
+                        links: chunk.links.map(link => ({
+                            text: link.text,
+                            targetPageNumber: link.targetPageNumber,
+                            targetText: link.targetText,
+                            linkId: link.linkId,
+                            role: link.role,
+                            // Step 5.1 chunk array indexes
+                            ...(link.targetChunkIndex !== undefined && { targetChunkIndex: link.targetChunkIndex }),
+                            ...(link.sourceChunkIndex !== undefined && { sourceChunkIndex: link.sourceChunkIndex }),
+                            // Legacy fields for compatibility
+                            ...(link.targetChunk !== undefined && { targetChunk: link.targetChunk }),
+                            ...(link.chapterNumber !== undefined && { chapterNumber: link.chapterNumber })
+                        }))
+                    }),
                     ...(chunk.imageName && { imageName: chunk.imageName }),
                     ...(chunk.imageAlt && { imageAlt: chunk.imageAlt })
                 };

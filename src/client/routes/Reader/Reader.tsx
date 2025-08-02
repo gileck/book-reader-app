@@ -130,12 +130,6 @@ export const Reader = () => {
                         chapter={chapter}
                         book={book}
                         scrollContainerRef={scrollContainerRef}
-                        getWordStyle={chunkMapping.getOptimizedWordStyle}
-                        getWordClassName={chunkMapping.getOptimizedWordClassName}
-                        getSentenceStyle={chunkMapping.getOptimizedSentenceStyle}
-                        getSentenceClassName={chunkMapping.getOptimizedSentenceClassName}
-                        handleWordClick={chunkMapping.handleOptimizedWordClick}
-                        handleSentenceClick={chunkMapping.handleOptimizedSentenceClick}
                         onNavigateToChapter={navigation.setCurrentChapterNumber}
                         onNavigateToChunk={navigation.setCurrentChunkIndex}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
@@ -278,8 +272,8 @@ export const Reader = () => {
                     onClose={progress.closeAlert}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 >
-                    <Alert 
-                        onClose={progress.closeAlert} 
+                    <Alert
+                        onClose={progress.closeAlert}
                         severity={progress.alert.severity}
                         sx={{ width: '100%' }}
                     >

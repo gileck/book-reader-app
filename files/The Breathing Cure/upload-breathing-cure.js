@@ -7,17 +7,17 @@ const fs = require('fs');
 const { uploadParsedBookV2 } = require('../../book-parser/parser-v2/upload-book-v2.js');
 
 /**
- * Upload the processed Transformers book to the database
+ * Upload the processed The Breathing Cure book to the database
  * This script uses the existing upload-book utilities to upload the
- * Transformers book that was processed by the parser pipeline.
+ * The Breathing Cure book that was processed by the parser pipeline.
  */
 
-async function uploadTransformersBook() {
-    const bookTitle = "TRANSFORMER";
-    const bookFolderPath = __dirname; // Current directory (files/Transformers/)
+async function uploadBreathingCureBook() {
+    const bookTitle = "THE BREATHING CURE";
+    const bookFolderPath = __dirname; // Current directory (files/The Breathing Cure/)
     const outputPath = path.join(bookFolderPath, 'output');
 
-    console.log('🧬 Uploading Transformers book...');
+    console.log('🫁 Uploading The Breathing Cure book...');
     console.log(`📁 Book folder: ${bookFolderPath}`);
     console.log(`📄 Output path: ${outputPath}`);
 
@@ -26,7 +26,7 @@ async function uploadTransformersBook() {
     if (!fs.existsSync(outputJsonPath)) {
         console.error('❌ Error: output.json not found!');
         console.error(`   Expected at: ${outputJsonPath}`);
-        console.error('   Make sure you have run the parser first with: node run-transformers.js');
+        console.error('   Make sure you have run the parser first with: node run-breathing-cure.js');
         process.exit(1);
     }
 
@@ -45,7 +45,7 @@ async function uploadTransformersBook() {
         console.log('\n🚀 Starting parser v2 upload process...');
         await uploadParsedBookV2(outputPath);
 
-        console.log('\n✅ Transformers book uploaded successfully with Parser v2!');
+        console.log('\n✅ The Breathing Cure book uploaded successfully with Parser v2!');
         console.log('📖 The book should now be available in the Book Reader App');
         console.log('🔗 Enhanced with bidirectional link navigation (Step 5.1)');
         console.log('🖼️  Images uploaded to Vercel Blob (if --upload-images flag used)');
@@ -76,15 +76,15 @@ async function main() {
         // Show help if requested
         if (args.includes('--help') || args.includes('-h')) {
             console.log(`
-🧬 Transformers Book Upload Script (Parser v2)
+🫁 The Breathing Cure Book Upload Script (Parser v2)
 
 Description:
-  Uploads the processed Transformers book to the Book Reader App database using Parser v2.
-  This script uses the enhanced output from run-transformers.js with bidirectional link
+  Uploads the processed The Breathing Cure book to the Book Reader App database using Parser v2.
+  This script uses the enhanced output from run-breathing-cure.js with bidirectional link
   navigation and uploads both the book content and images.
 
 Usage:
-  node upload-transformers.js [--upload-images] [--skip-images]
+  node upload-breathing-cure.js [--upload-images] [--skip-images]
 
 Options:
   --upload-images    Upload images to Vercel Blob (requires BLOB_READ_WRITE_TOKEN)
@@ -92,14 +92,14 @@ Options:
   --help             Show this help message
 
 Prerequisites:
-  1. Run the parser first: node run-transformers.js
+  1. Run the parser first: node run-breathing-cure.js
   2. Ensure .env file is configured with MONGODB_URI
   3. Set BLOB_READ_WRITE_TOKEN for image uploads (if using --upload-images)
 
 Examples:
-  node upload-transformers.js                    # Upload book content only
-  node upload-transformers.js --upload-images    # Upload with images to Vercel Blob
-  node upload-transformers.js --skip-images      # Explicit skip images
+  node upload-breathing-cure.js                    # Upload book content only
+  node upload-breathing-cure.js --upload-images    # Upload with images to Vercel Blob
+  node upload-breathing-cure.js --skip-images      # Explicit skip images
 `);
             process.exit(0);
         }
@@ -110,7 +110,7 @@ Examples:
             console.log('🔄 Force upload mode enabled - will overwrite existing book');
         }
 
-        await uploadTransformersBook();
+        await uploadBreathingCureBook();
 
     } catch (error) {
         console.error('❌ Error:', error.message);
@@ -123,4 +123,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = { uploadTransformersBook };
+module.exports = { uploadBreathingCureBook };

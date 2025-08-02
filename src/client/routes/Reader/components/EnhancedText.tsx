@@ -1,153 +1,40 @@
-import React, { useEffect, useRef } from 'react';
-import { Box } from '@mui/material';
+import React, { useEffect } from 'react';
 import { TextChunkClient, ChunkLink } from '@/apis/chapters/types';
 import { linkCssClasses } from '../styles/linkStyles';
 
 interface EnhancedTextProps {
     chunk: TextChunkClient;
-    chunkIndex: number;
     onLinkClick: (link: ChunkLink) => void;
-    getWordStyle?: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
-    getWordClassName?: (chunkIndex: number, wordIndex: number) => string;
-    getSentenceStyle?: (chunkIndex: number) => React.CSSProperties;
-    getSentenceClassName?: (chunkIndex: number) => string;
-    handleWordClick?: (chunkIndex: number, wordIndex: number) => void;
-    handleSentenceClick?: (chunkIndex: number) => void;
 }
+
+/**
+ * Find footnote pattern in text - only matches specific footnote formats
+ * @param text - The full text to search in
+ * @param linkText - The footnote number to find (e.g., "1", "2")
+ * @returns Index of the footnote number, or -1 if not found in correct pattern
+ */
+const findFootnotePattern = (text: string, linkText: string): number => {
+    // Pattern 1: ". {number} {Capital letter}" (e.g., ". 1 The", ". 2 If")
+    const dotPattern = new RegExp(`\\. ${linkText} [A-Z]`, 'g');
+    const match = dotPattern.exec(text);
+    if (match) {
+        // Return index of the number, not the dot
+        return match.index + 2; // Skip ". " to point to the number
+    }
+
+    // Pattern 2: "{number} {Capital letter}" at start of chunk
+    const startPattern = new RegExp(`^${linkText} [A-Z]`);
+    if (startPattern.test(text)) {
+        return 0; // Number is at the very start
+    }
+
+    return -1; // No valid footnote pattern found
+};
 
 export const EnhancedText: React.FC<EnhancedTextProps> = ({
     chunk,
-    chunkIndex,
-    onLinkClick,
-    getWordStyle,
-    getWordClassName,
-    getSentenceStyle,
-    getSentenceClassName,
-    handleWordClick,
-    handleSentenceClick
+    onLinkClick
 }) => {
-    const textRef = useRef<HTMLDivElement>(null);
-
-    // Helper function to escape regex special characters
-    const escapeRegExp = (string: string): string => {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    };
-
-    // Determine link type based on content
-    const getLinkType = (link: ChunkLink): string => {
-        const text = link.text.toLowerCase();
-
-        // Check if it's a footnote (numbers, or numbers in brackets/parentheses)
-        if (/^[\(\[\s]*\d+[\)\]\s]*$/.test(link.text.trim())) {
-            return 'footnote';
-        }
-
-        // Check if it's a page reference
-        if (text.includes('page') || text.includes('p.') || /^p\d+/.test(text)) {
-            return 'page-reference';
-        }
-
-        // Check if it's a chapter reference
-        if (text.includes('chapter') || text.includes('section') || text.includes('see')) {
-            return 'cross-reference';
-        }
-
-        // Default to cross-reference
-        return 'cross-reference';
-    };
-
-    // Process text with links to make them clickable
-    const processTextWithLinks = (): string => {
-        let processedText = chunk.text;
-        const links = chunk.links || [];
-
-        if (links.length === 0) {
-            return processedText;
-        }
-
-        // Sort links by text length (longest first) to avoid partial replacements
-        const sortedLinks = [...links].sort((a, b) => b.text.length - a.text.length);
-
-        sortedLinks.forEach(link => {
-            const linkType = getLinkType(link);
-            const escapedText = escapeRegExp(link.text);
-
-            // Create a more flexible regex that handles whitespace variations
-            const linkRegex = new RegExp(`\\b${escapedText}\\b`, 'g');
-
-            const replacement = `<span class="clickable-link ${linkType}" data-link-id="${link.linkId}" data-link-type="${linkType}">${link.text}</span>`;
-
-            processedText = processedText.replace(linkRegex, replacement);
-        });
-
-        return processedText;
-    };
-
-    // Handle clicks on links
-    const handleLinkClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-
-        if (target.classList.contains('clickable-link')) {
-            event.preventDefault();
-            const linkId = target.getAttribute('data-link-id');
-
-            if (linkId && chunk.links) {
-                const link = chunk.links.find(l => l.linkId === linkId);
-                if (link) {
-                    onLinkClick(link);
-                }
-            }
-        }
-    };
-
-    // Process text with word-level styling if needed
-    const renderWithWordStyling = (): React.JSX.Element => {
-        if (!getWordStyle && !getWordClassName && !handleWordClick) {
-            // No word-level styling needed, use enhanced text with links
-            return (
-                <div
-                    dangerouslySetInnerHTML={{ __html: processTextWithLinks() }}
-                    onClick={handleLinkClick}
-                />
-            );
-        }
-
-        // Split text into words for individual styling
-        const words = chunk.text.split(/(\s+)/);
-        let wordIndex = 0;
-
-        return (
-            <div onClick={handleLinkClick}>
-                {words.map((word, index) => {
-                    if (/\s/.test(word)) {
-                        // This is whitespace, render as-is
-                        return <span key={index}>{word}</span>;
-                    }
-
-                    const currentWordIndex = wordIndex++;
-                    const wordStyle = getWordStyle ? getWordStyle(chunkIndex, currentWordIndex) : {};
-                    const wordClassName = getWordClassName ? getWordClassName(chunkIndex, currentWordIndex) : '';
-
-                    return (
-                        <span
-                            key={index}
-                            style={wordStyle}
-                            className={wordClassName}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                if (handleWordClick) {
-                                    handleWordClick(chunkIndex, currentWordIndex);
-                                }
-                            }}
-                        >
-                            {word}
-                        </span>
-                    );
-                })}
-            </div>
-        );
-    };
-
     // Add CSS for link styles
     useEffect(() => {
         const styleId = 'enhanced-text-styles';
@@ -159,25 +46,123 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         }
     }, []);
 
-    const sentenceStyle = getSentenceStyle ? getSentenceStyle(chunkIndex) : {};
-    const sentenceClassName = getSentenceClassName ? getSentenceClassName(chunkIndex) : '';
+    // Render text with JSX, making links clickable
+    const renderTextWithLinks = () => {
+        const text = chunk.text;
+        const links = chunk.links || [];
 
-    return (
-        <Box
-            ref={textRef}
-            sx={{
-                cursor: handleSentenceClick ? 'pointer' : 'default',
-                ...sentenceStyle
-            }}
-            className={sentenceClassName}
-            onClick={(e) => {
-                // Only trigger sentence click if not clicking on a word or link
-                if (handleSentenceClick && e.target === e.currentTarget) {
-                    handleSentenceClick(chunkIndex);
+        // Check if this chunk contains target links (footnote definitions)
+        // Target links are the actual footnote content that should be formatted as "1) Text..."
+        const hasTargetLinks = links.some(link => link.role === 'target');
+
+        if (hasTargetLinks) {
+            // For target links, format as footnote definitions: "1) Text..."
+            return (
+                <div style={{ marginTop: '1em', lineHeight: 1.6 }}>
+                    {links.map((link, i) => (
+                        <div key={`target-${i}`} style={{ marginBottom: '0.5em' }}>
+                            <span
+                                className="clickable-link target"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onLinkClick(link);
+                                }}
+                                style={{
+                                    cursor: 'pointer',
+                                    color: '#1976d2',
+                                    fontWeight: 500
+                                }}
+                            >
+                                {link.text})
+                            </span>
+                            {' '}
+                            {text.replace(link.text, '').trim()}
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        if (links.length === 0) {
+            return <>{text}</>;
+        }
+
+        // Handle source links (footnote references) as superscript
+        // Source links are the clickable numbers in the text that reference footnotes
+        const linkPositions: Array<{ start: number; end: number; link: ChunkLink }> = [];
+
+        links.forEach(link => {
+            if (link.role === 'source') {
+                // Only match footnotes with specific patterns:
+                // 1. ". {number} {Capital letter}" (e.g., ". 1 The", ". 2 If")
+                // 2. "{number} {Capital letter}" at start of chunk
+                const footnoteIndex = findFootnotePattern(text, link.text);
+                if (footnoteIndex !== -1) {
+                    linkPositions.push({
+                        start: footnoteIndex,
+                        end: footnoteIndex + link.text.length,
+                        link
+                    });
                 }
-            }}
-        >
-            {renderWithWordStyling()}
-        </Box>
-    );
+            }
+        });
+
+        // Sort by start position
+        linkPositions.sort((a, b) => a.start - b.start);
+
+        // Build JSX elements
+        const elements: React.ReactNode[] = [];
+        let currentIndex = 0;
+
+        linkPositions.forEach((linkPos, i) => {
+            // Add text before the link
+            if (currentIndex < linkPos.start) {
+                elements.push(text.slice(currentIndex, linkPos.start));
+            }
+
+            // Add the clickable footnote link as superscript
+            elements.push(
+                <sup
+                    key={`source-${i}`}
+                    className="clickable-link footnote"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onLinkClick(linkPos.link);
+                    }}
+                    style={{
+                        cursor: 'pointer',
+                        color: '#1976d2',
+                        textDecoration: 'none',
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        padding: '0 2px',
+                        borderRadius: '2px',
+                        lineHeight: 1,
+                        transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#e3f2fd';
+                        e.currentTarget.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                >
+                    {linkPos.link.text}
+                </sup>
+            );
+
+            currentIndex = linkPos.end;
+        });
+
+        // Add remaining text after the last link
+        if (currentIndex < text.length) {
+            elements.push(text.slice(currentIndex));
+        }
+
+        return <>{elements}</>;
+    };
+
+    return <div>{renderTextWithLinks()}</div>;
 }; 

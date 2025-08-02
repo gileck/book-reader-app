@@ -144,12 +144,11 @@ export const useAudioPlayback = (
         setState(prev => ({ ...prev, ...partialState }));
     }, []);
 
-    const textChunks = chapter?.content.chunks
-        .filter(chunk => chunk.type === 'text')
-        .map(chunk => ({
-            ...chunk,
-            text: chunk.text.replaceAll('\n', ' ') || ''
-        })) || [];
+    // SIMPLIFIED: Use all chunks with absolute indexing, handle non-text gracefully
+    const allChunks = chapter?.content.chunks.map(chunk => ({
+        ...chunk,
+        text: chunk.type === 'text' ? (chunk.text.replaceAll('\n', ' ') || '') : ''
+    })) || [];
 
     // console.log('textChunks', {textChunks});
 
@@ -198,15 +197,15 @@ export const useAudioPlayback = (
 
     // Audio generation effect - triggered by chunk index changes only
     useEffect(() => {
-        if (!chapter || state.currentChunkIndex >= textChunks.length) return;
+        if (!chapter || state.currentChunkIndex >= allChunks.length) return;
 
         const fetchChunk = async (index: number) => {
             if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) {
                 return;
             }
 
-            const chunk = textChunks[index];
-            if (!chunk) return;
+            const chunk = allChunks[index];
+            if (!chunk || chunk.type !== 'text') return; // Skip non-text chunks
 
             pendingRequests.current.add(index);
 
@@ -292,13 +291,13 @@ export const useAudioPlayback = (
 
         // Fetch current and next 2 chunks
         fetchChunk(state.currentChunkIndex);
-        if (state.currentChunkIndex < textChunks.length - 1) {
+        if (state.currentChunkIndex < allChunks.length - 1) {
             fetchChunk(state.currentChunkIndex + 1);
         }
-        if (state.currentChunkIndex < textChunks.length - 2) {
+        if (state.currentChunkIndex < allChunks.length - 2) {
             fetchChunk(state.currentChunkIndex + 2);
         }
-    }, [chapter, state.currentChunkIndex, textChunks, selectedVoice, selectedProvider, currentChapterNumber]);
+    }, [chapter, state.currentChunkIndex, allChunks, selectedVoice, selectedProvider, currentChapterNumber]);
 
     // Word highlighting logic
     useEffect(() => {
@@ -351,7 +350,7 @@ export const useAudioPlayback = (
     }, [state.audioChunks, state.currentChunkIndex, wordSpeedOffset, currentChapterNumber]);
 
     const onAudioFinished = useCallback(() => {
-        if (state.currentChunkIndex < textChunks.length - 1) {
+        if (state.currentChunkIndex < allChunks.length - 1) {
             const nextIndex = state.currentChunkIndex + 1;
             updateState({ currentChunkIndex: nextIndex });
             onChunkChange?.(nextIndex);
@@ -367,7 +366,7 @@ export const useAudioPlayback = (
                 }
             }, 100);
         }
-    }, [state.currentChunkIndex, state.audioChunks, textChunks.length, playbackSpeed, updateState, onChunkChange]);
+    }, [state.currentChunkIndex, state.audioChunks, allChunks.length, playbackSpeed, updateState, onChunkChange]);
 
     const handlePlay = useCallback(async () => {
         const audioData = state.audioChunks[state.currentChunkIndex];
@@ -432,7 +431,7 @@ export const useAudioPlayback = (
     }, [state.currentChunkIndex, state.isPlaying, state.audioChunks, playbackSpeed, handlePause, updateState, onChunkChange]);
 
     const handleNextChunk = useCallback(() => {
-        if (state.currentChunkIndex < textChunks.length - 1) {
+        if (state.currentChunkIndex < allChunks.length - 1) {
             const wasPlaying = state.isPlaying;
             handlePause();
             updateState({ currentWordIndex: 0 });
@@ -459,18 +458,18 @@ export const useAudioPlayback = (
                 setTimeout(waitForAudio, 100);
             }
         }
-    }, [state.currentChunkIndex, state.isPlaying, state.audioChunks, textChunks.length, playbackSpeed, handlePause, updateState, onChunkChange]);
+    }, [state.currentChunkIndex, state.isPlaying, state.audioChunks, allChunks.length, playbackSpeed, handlePause, updateState, onChunkChange]);
 
     const setCurrentChunkIndex = useCallback((index: number) => {
         updateState({ currentChunkIndex: index, currentWordIndex: 0 });
     }, [updateState]);
 
     const preloadChunk = useCallback(async (index: number) => {
-        if (!chapter || index >= textChunks.length || index < 0) return;
+        if (!chapter || index >= allChunks.length || index < 0) return;
         if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) return;
 
-        const chunk = textChunks[index];
-        if (!chunk) return;
+        const chunk = allChunks[index];
+        if (!chunk || chunk.type !== 'text') return; // Skip non-text chunks
 
         pendingRequests.current.add(index);
 
@@ -519,7 +518,7 @@ export const useAudioPlayback = (
         } finally {
             pendingRequests.current.delete(index);
         }
-    }, [chapter, textChunks, selectedVoice, selectedProvider]);
+    }, [chapter, allChunks, selectedVoice, selectedProvider]);
 
     const getWordStyle = useCallback((chunkIndex: number, wordIndex: number) => {
         // CSS handles highlighting for current chunk with loaded audio
@@ -608,7 +607,7 @@ export const useAudioPlayback = (
         currentWordIndex: state.currentWordIndex,
         isPlaying: state.isPlaying,
         isCurrentChunkLoading,
-        textChunks,
+        textChunks: allChunks, // Now contains all chunks with absolute indexing
         handlePlay,
         handlePause,
         handleWordClick,

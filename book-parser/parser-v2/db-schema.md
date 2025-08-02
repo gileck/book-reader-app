@@ -6,11 +6,12 @@ This document defines the MongoDB database schema changes and additions for book
 
 Parser v2 introduces significant improvements to the book parsing and database storage:
 
-- **Advanced pipeline** → 6-step processing: Text → Chapters → Pages → Links → Images → Paragraphs → Sentences → Metadata
+- **Advanced pipeline** → 6+ step processing: Text → Chapters → Pages → Links → Images → Paragraphs → Sentences → Link References → Metadata
 - **Sentence-level chunking** with `paragraphIndex` for paragraph grouping
 - **Enhanced chunk types**: `text`, `header`, `image` with sentence optimization
 - **Parser version tracking** with `parserVersion` field
 - **Advanced link detection** with PDF annotation support
+- **Bidirectional link navigation** with direct chunk references (Step 5.1)
 - **Clean schema** focused on essential user data
 
 ## Schema Changes from Parser v1
@@ -83,13 +84,19 @@ interface TextChunk {
   links?: ChunkLink[];
 }
 
-// NEW: Advanced link structure
+// NEW: Advanced link structure (Parser v2 with Step 5.1)
 interface ChunkLink {
   text: string;                    // Link text as it appears in content
   targetPageNumber?: number;       // PDF page number target
   targetText?: string;             // Target content context
   linkId: string;                  // Unique link identifier
   role: 'source' | 'target';       // Link role in relationship
+  
+  // NEW: Step 5.1 chunk references for bidirectional navigation
+  targetChunkId?: string;          // Direct reference to target chunk (for source links)
+  sourceChunkId?: string;          // Direct reference to source chunk (for target links)
+  
+  // DEPRECATED: Legacy fields (still supported for v1 compatibility)
   targetChunk?: number;            // Target chunk index (if resolved)
   chapterNumber?: number;          // Target chapter (if cross-chapter link)
 }
@@ -130,7 +137,8 @@ Parser v2 produces a sentence-optimized chunk structure that gets converted to c
               "text": "chapter 3",
               "targetPageNumber": 45,
               "linkId": "link_15_001",
-              "role": "source"
+              "role": "source",
+              "targetChunkId": "3_1"
             }
           ]
         },

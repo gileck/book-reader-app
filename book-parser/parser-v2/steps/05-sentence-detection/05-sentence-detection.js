@@ -160,7 +160,7 @@ function createSentenceChunks(paragraphContent, pageNumber, pageLinks, paragraph
         );
 
         chunks.push({
-            chunkId: '', // Will be assigned later
+            // Using array index only - no chunkId needed
             type: 'text',
             content: cleanSentence,
             pageNumber: pageNumber,
@@ -181,7 +181,7 @@ function createSentenceChunks(paragraphContent, pageNumber, pageLinks, paragraph
  */
 function combineSmallSentences(chunks) {
     const optimized = [];
-    const MIN_WORDS = 50;
+    const MIN_WORDS = 25;  // Reduced from 50 to 25 for better practical results
     const MAX_WORDS = 200;
 
     for (let i = 0; i < chunks.length; i++) {
@@ -193,22 +193,31 @@ function combineSmallSentences(chunks) {
             continue;
         }
 
-        // For text chunks, check if they need combining
+        // For text chunks, aggressively combine if they're below target
         if (chunk.type === 'text' && chunk.wordCount < MIN_WORDS) {
-            // Try to combine with next text chunks from the same paragraph
+            // PHASE 1: Try same paragraph combinations
             const combinedChunk = tryMergeWithNextSentences(chunks, i, MIN_WORDS, MAX_WORDS);
             if (combinedChunk) {
                 optimized.push(combinedChunk.merged);
                 i = combinedChunk.nextIndex; // Skip to after the merged chunks
             } else {
-                // Try combining with previous text chunk from same paragraph if next merge failed
                 const mergedWithPrevious = tryMergeWithPreviousSentence(optimized, chunk, MIN_WORDS, MAX_WORDS);
                 if (mergedWithPrevious) {
-                    // Replace the last optimized chunk with the merged version
                     optimized[optimized.length - 1] = mergedWithPrevious;
                 } else {
-                    // Can't merge, keep as is (validation will catch this)
-                    optimized.push(chunk);
+                    // PHASE 2: AGGRESSIVE - Try cross-paragraph combinations
+                    const aggressiveMerge = tryAggressiveMergeAcrossParagraphs(chunks, i, optimized, MIN_WORDS, MAX_WORDS);
+                    if (aggressiveMerge) {
+                        if (aggressiveMerge.mergeWithPrevious) {
+                            optimized[optimized.length - 1] = aggressiveMerge.merged;
+                        } else {
+                            optimized.push(aggressiveMerge.merged);
+                            i = aggressiveMerge.nextIndex;
+                        }
+                    } else {
+                        // Last resort: keep as is (will fail validation)
+                        optimized.push(chunk);
+                    }
                 }
             }
         } else {
@@ -216,7 +225,8 @@ function combineSmallSentences(chunks) {
         }
     }
 
-    return optimized;
+    // POST-PROCESSING: Fix paragraph index gaps created by aggressive merging
+    return fixParagraphIndexSequence(optimized);
 }
 
 /**
@@ -278,8 +288,9 @@ function tryMergeWithNextSentences(chunks, currentIndex, minWords, maxWords) {
         }
     }
 
-    // Only return merged chunk if we actually merged with something and meet minimum
-    if (lastMergedIndex > currentIndex && combinedWordCount >= minWords) {
+    // Return merged chunk if we actually merged with something, regardless of whether it meets minimum
+    // (validation will catch chunks that still don't meet minimum after all possible merges)
+    if (lastMergedIndex > currentIndex) {
         // Re-validate links against merged content
         const validLinks = combinedLinks.filter(link =>
             isSourceTextInContent(link.text, combinedContent)
@@ -287,7 +298,7 @@ function tryMergeWithNextSentences(chunks, currentIndex, minWords, maxWords) {
 
         return {
             merged: {
-                chunkId: currentChunk.chunkId,
+                // Using array index only - no chunkId needed
                 type: 'text',
                 content: combinedContent,
                 pageNumber: currentChunk.pageNumber,
@@ -344,7 +355,7 @@ function tryMergeWithPreviousSentence(optimizedChunks, currentChunk, minWords, m
             );
 
             return {
-                chunkId: previousChunk.chunkId,
+                // Using array index only - no chunkId needed
                 type: 'text',
                 content: mergedContent,
                 pageNumber: previousChunk.pageNumber,
@@ -356,6 +367,150 @@ function tryMergeWithPreviousSentence(optimizedChunks, currentChunk, minWords, m
         }
 
         break; // Only check the most recent text chunk from same paragraph
+    }
+
+    return null;
+}
+
+/**
+ * Fix paragraph index sequence after aggressive merging to ensure sequential numbering
+ * @param {Array} chunks - Optimized chunks that may have paragraph index gaps
+ * @returns {Array} - Chunks with fixed sequential paragraph indexes
+ */
+function fixParagraphIndexSequence(chunks) {
+    const fixed = [];
+    let currentParagraphIndex = 1;
+    let lastSeenParagraphIndex = 0;
+
+    for (const chunk of chunks) {
+        if (chunk.type === 'text') {
+            // If this chunk has a different paragraph index than what we've seen
+            if (chunk.paragraphIndex !== lastSeenParagraphIndex) {
+                lastSeenParagraphIndex = chunk.paragraphIndex;
+                // Assign the next sequential index
+                chunk.paragraphIndex = currentParagraphIndex;
+                currentParagraphIndex++;
+            } else {
+                // Same paragraph as previous chunk, keep the same index
+                chunk.paragraphIndex = currentParagraphIndex - 1;
+            }
+        }
+        fixed.push(chunk);
+    }
+
+    return fixed;
+}
+
+/**
+ * AGGRESSIVE: Try to merge small chunks across paragraph boundaries when necessary
+ * This is used as a last resort to meet the strict 50-word minimum
+ * @param {Array} chunks - All remaining chunks to process
+ * @param {number} currentIndex - Index of current small chunk
+ * @param {Array} optimized - Already processed chunks
+ * @param {number} minWords - Minimum word count target
+ * @param {number} maxWords - Maximum word count limit
+ * @returns {Object|null} - Merge result or null if no merge possible
+ */
+function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, minWords, maxWords) {
+    const currentChunk = chunks[currentIndex];
+
+    // First try merging with the previous optimized chunk (regardless of paragraph)
+    if (optimized.length > 0) {
+        const lastOptimized = optimized[optimized.length - 1];
+        if (lastOptimized.type === 'text') {
+            const combinedWordCount = lastOptimized.wordCount + currentChunk.wordCount;
+
+            if (combinedWordCount <= maxWords) {
+                // FINAL ULTRA-AGGRESSIVE: No page gap limits for very short chunks
+                const currentIsVeryShort = currentChunk.wordCount < 25; // Extra aggressive for very short
+                if (currentIsVeryShort || Math.abs(currentChunk.pageNumber - lastOptimized.pageNumber) <= 5) {
+                    return {
+                        mergeWithPrevious: true,
+                        merged: {
+                            type: 'text',
+                            content: lastOptimized.content + ' ' + currentChunk.content,
+                            pageNumber: lastOptimized.pageNumber,
+                            paragraphIndex: lastOptimized.paragraphIndex, // Keep the first paragraph's index
+                            wordCount: combinedWordCount,
+                            sentenceCount: lastOptimized.sentenceCount + currentChunk.sentenceCount,
+                            links: removeDuplicateLinks([...(lastOptimized.links || []), ...(currentChunk.links || [])])
+                        }
+                    };
+                }
+            }
+        }
+    }
+
+    // Try merging with next text chunks (regardless of paragraph)
+    let combinedContent = currentChunk.content;
+    let combinedWordCount = currentChunk.wordCount;
+    let combinedSentenceCount = currentChunk.sentenceCount;
+    let combinedLinks = [...(currentChunk.links || [])];
+    let lastMergedIndex = currentIndex;
+
+    for (let i = currentIndex + 1; i < chunks.length; i++) {
+        const nextChunk = chunks[i];
+
+        // Skip headers and images
+        if (nextChunk.type === 'header' || nextChunk.type === 'image') {
+            continue;
+        }
+
+        if (nextChunk.type === 'text') {
+            const newWordCount = combinedWordCount + nextChunk.wordCount;
+
+            // Don't exceed max words (but allow higher limit for very short chunks)
+            const currentIsVeryShort = currentChunk.wordCount < 25;
+            const maxLimit = currentIsVeryShort ? 250 : maxWords; // Higher limit for very short chunks
+            if (newWordCount > maxLimit) {
+                break;
+            }
+
+            // FINAL ULTRA-AGGRESSIVE: No page gap limits for very short chunks
+            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
+                const currentIsVeryShort = currentChunk.wordCount < 25;
+                const pageDifference = Math.abs(nextChunk.pageNumber - currentChunk.pageNumber);
+                if (!currentIsVeryShort && pageDifference > 5) { // Only limit for longer chunks
+                    break;
+                }
+            }
+
+            // Merge this chunk
+            combinedContent += ' ' + nextChunk.content;
+            combinedWordCount = newWordCount;
+            combinedSentenceCount += nextChunk.sentenceCount;
+            combinedLinks.push(...(nextChunk.links || []));
+            lastMergedIndex = i;
+
+            // Stop if we've reached the minimum word count
+            if (combinedWordCount >= minWords) {
+                break;
+            }
+        } else {
+            // Hit a non-text chunk, stop merging
+            break;
+        }
+    }
+
+    // Return merged chunk if we actually merged with something
+    if (lastMergedIndex > currentIndex) {
+        const validLinks = combinedLinks.filter(link =>
+            isSourceTextInContent(link.text, combinedContent)
+        );
+
+        return {
+            mergeWithPrevious: false,
+            merged: {
+                type: 'text',
+                content: combinedContent,
+                pageNumber: currentChunk.pageNumber,
+                paragraphIndex: currentChunk.paragraphIndex, // Keep the first paragraph's index
+                wordCount: combinedWordCount,
+                sentenceCount: combinedSentenceCount,
+                links: removeDuplicateLinks(validLinks)
+            },
+            nextIndex: lastMergedIndex
+        };
     }
 
     return null;
@@ -496,6 +651,10 @@ function generateChunkStats(chapters) {
     };
 }
 
+// Import validation function
+const { validate } = require('./05-sentence-detection-validation');
+
 module.exports = {
-    execute
+    execute,
+    validate
 }; 

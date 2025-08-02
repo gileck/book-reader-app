@@ -234,9 +234,11 @@ function validate(output) {
                 const firstChar = chunk.content.charAt(0);
 
                 if (chunk.type === 'header') {
-                    // Headers must start with a capital letter
-                    if (firstChar !== firstChar.toUpperCase() || !/[A-Z]/.test(firstChar)) {
-                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
+                    // Headers must start with a capital letter OR page number + capital letter
+                    const startsWithCapital = /^[A-Z]/.test(chunk.content.trim());
+                    const startsWithPageNumber = /^\d+\s+[A-Z]/.test(chunk.content.trim());
+                    if (!startsWithCapital && !startsWithPageNumber) {
+                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter or page number + capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                 } else if (chunk.type === 'paragraph') {
                     // Paragraph chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
