@@ -150,8 +150,6 @@ export const useAudioPlayback = (
         text: chunk.type === 'text' ? (chunk.text.replaceAll('\n', ' ') || '') : ''
     })) || [];
 
-    // console.log('textChunks', {textChunks});
-
     // Clear audio cache when voice changes or chapter changes
     useEffect(() => {
         // Stop all existing audio first

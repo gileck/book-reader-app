@@ -8,15 +8,12 @@ export const useScrollHandling = (
 ) => {
     // Enhanced scroll-to-sentence with paragraph context for Parser v2
     const scrollToSentenceChunk = useCallback((chunkIndex: number, paragraphIndex?: number) => {
-        console.log('🔍 scrollToSentenceChunk called with:', { chunkIndex, paragraphIndex });
 
         // Try paragraph-aware targeting first (Parser v2)
         if (paragraphIndex !== undefined) {
             const selector = `[data-paragraph-index="${paragraphIndex}"][data-chunk-index="${chunkIndex}"]`;
-            console.log('🎯 Trying paragraph-aware selector:', selector);
             const sentenceElement = document.querySelector(selector);
             if (sentenceElement) {
-                console.log('✅ Found paragraph-aware element, scrolling');
                 sentenceElement.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center',
@@ -28,10 +25,8 @@ export const useScrollHandling = (
 
         // Fallback to chunk index targeting (Parser v1 & v2 compatibility)
         const fallbackSelector = `[data-chunk-index="${chunkIndex}"]`;
-        console.log('🎯 Trying fallback selector:', fallbackSelector);
         const fallbackElement = document.querySelector(fallbackSelector);
         if (fallbackElement) {
-            console.log('✅ Found fallback element, scrolling');
             fallbackElement.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
@@ -42,10 +37,8 @@ export const useScrollHandling = (
 
         // Fallback to legacy text-chunk ID targeting
         const legacySelector = `#text-chunk-${chunkIndex}`;
-        console.log('🎯 Trying legacy selector:', legacySelector);
         const legacyElement = document.querySelector(legacySelector);
         if (legacyElement) {
-            console.log('✅ Found legacy element, scrolling');
             legacyElement.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
@@ -54,7 +47,6 @@ export const useScrollHandling = (
             return true;
         }
 
-        console.log('❌ No suitable element found for scrolling to chunk', chunkIndex);
         return false;
     }, []);
 
@@ -107,12 +99,9 @@ export const useScrollHandling = (
 
     // Handle scrolling to chunk when loaded from URL parameters
     useEffect(() => {
-        console.log('📍 useScrollHandling effect triggered:', { loading, chapter: !!chapter, currentChunkIndex });
         if (!loading && chapter && currentChunkIndex > 0) {
-            console.log('🎯 Attempting to scroll to chunk:', currentChunkIndex);
             // Small delay to ensure the component has rendered and DOM elements are available
             const timeoutId = setTimeout(() => {
-                console.log('⏰ Executing scroll to chunk:', currentChunkIndex);
                 handleScrollToCurrentChunk();
             }, 500);
 

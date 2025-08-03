@@ -38,13 +38,11 @@ export const useEnhancedNavigation = ({
 
     // Handle navigation to a specific link target (DRAMATICALLY SIMPLIFIED with Step 5.1)
     const handleLinkNavigation = useCallback(async (link: ChunkLink) => {
-        console.log('🔗 Navigating to link:', link);
 
         try {
             // 🚀 FAST PATH: Direct chunk array index reference (Step 5.1)
             const targetChunkIndex = link.role === 'source' ? link.targetChunkIndex : link.sourceChunkIndex;
             if (targetChunkIndex !== undefined) {
-                console.log(`🚀 Fast navigation to chunk index ${targetChunkIndex}`);
 
                 // Handle cross-chapter navigation if chapter number is provided
                 if (link.chapterNumber !== undefined && link.chapterNumber !== currentChapterNumber) {
@@ -58,7 +56,6 @@ export const useEnhancedNavigation = ({
 
             // LEGACY PATH: v1 compatibility - Cross-chapter reference with specific chunk
             if (link.chapterNumber !== undefined && link.targetChunk !== undefined) {
-                console.log('📚 Legacy navigation to chapter/chunk:', link.chapterNumber, link.targetChunk);
                 if (link.chapterNumber === currentChapterNumber) {
                     onNavigateToChunk(link.targetChunk);
                 } else {
@@ -69,7 +66,6 @@ export const useEnhancedNavigation = ({
 
             // SLOW FALLBACK: Page reference within current chapter
             if (link.targetPageNumber !== undefined) {
-                console.log('📄 Page-based navigation (slower):', link.targetPageNumber);
                 const targetChunk = findChunkByPage(link.targetPageNumber);
                 if (targetChunk) {
                     onNavigateToChunk(targetChunk.index);
@@ -81,7 +77,6 @@ export const useEnhancedNavigation = ({
 
             // SLOW FALLBACK: Chapter reference without specific chunk
             if (link.chapterNumber !== undefined) {
-                console.log('📖 Chapter-only navigation:', link.chapterNumber);
                 if (link.chapterNumber !== currentChapterNumber) {
                     onNavigateToChapter(link.chapterNumber);
                 }
