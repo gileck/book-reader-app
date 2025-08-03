@@ -85,7 +85,6 @@ export const useEnhancedNavigation = ({
 
             // SLOWEST FALLBACK: Text-based search
             if (link.targetText) {
-                console.log('🔍 Text-based navigation (slowest):', link.targetText);
                 const targetChunk = findChunkByText(link.targetText);
                 if (targetChunk) {
                     onNavigateToChunk(targetChunk.index);

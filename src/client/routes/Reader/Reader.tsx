@@ -133,6 +133,10 @@ export const Reader = () => {
                         onNavigateToChapter={navigation.setCurrentChapterNumber}
                         onNavigateToChunk={navigation.setCurrentChunkIndex}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
+                        getWordStyle={audio.getWordStyle}
+                        getWordClassName={audio.getWordClassName}
+                        getSentenceStyle={audio.getSentenceStyle}
+                        getSentenceClassName={audio.getSentenceClassName}
                     />
                 </Paper>
 
@@ -281,7 +285,7 @@ export const Reader = () => {
                     </Alert>
                 </Snackbar>
 
-                {/* TODO: Implement enhanced scroll-to-chunk for v2 mixed content */}
+
             </Box>
         </UserThemeProvider>
     );
