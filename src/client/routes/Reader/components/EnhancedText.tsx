@@ -4,7 +4,9 @@ import { linkCssClasses } from '../styles/linkStyles';
 
 interface EnhancedTextProps {
     chunk: TextChunkClient;
+    chunkIndex: number;
     onLinkClick: (link: ChunkLink) => void;
+    // Note: Word highlighting now handled outside React via DOM manipulation
 }
 
 /**
@@ -33,6 +35,7 @@ const findFootnotePattern = (text: string, linkText: string): number => {
 
 export const EnhancedText: React.FC<EnhancedTextProps> = ({
     chunk,
+    chunkIndex,
     onLinkClick
 }) => {
     // Add CSS for link styles
@@ -45,6 +48,48 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
             document.head.appendChild(style);
         }
     }, []);
+
+    // Helper function to render text with word-level highlighting
+    const renderTextWithHighlighting = (text: string) => {
+        const words = text.split(/\s+/).filter(word => word.length > 0);
+        return (
+            <>
+                {words.map((word, wordIndex) => (
+                    <React.Fragment key={wordIndex}>
+                        <span
+                            data-chunk-index={chunkIndex}
+                            data-word-index={wordIndex}
+                            data-word-id={`chunk-${chunkIndex}-word-${wordIndex}`}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            {word}
+                        </span>
+                        {wordIndex < words.length - 1 && ' '}
+                    </React.Fragment>
+                ))}
+            </>
+        );
+    };
+
+    // Helper function to render elements with highlighting applied to text parts
+    const renderElementsWithHighlighting = (elements: React.ReactNode[]) => {
+        return (
+            <>
+                {elements.map((element, elementIndex) => {
+                    // If element is a string, apply word highlighting
+                    if (typeof element === 'string') {
+                        return (
+                            <React.Fragment key={elementIndex}>
+                                {renderTextWithHighlighting(element)}
+                            </React.Fragment>
+                        );
+                    }
+                    // If element is JSX (like links), return as-is
+                    return element;
+                })}
+            </>
+        );
+    };
 
     // Render text with JSX, making links clickable
     const renderTextWithLinks = () => {
@@ -84,7 +129,8 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         }
 
         if (links.length === 0) {
-            return <>{text}</>;
+            // Split text into words for highlighting
+            return renderTextWithHighlighting(text);
         }
 
         // Handle source links (footnote references) as superscript
@@ -161,7 +207,7 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
             elements.push(text.slice(currentIndex));
         }
 
-        return <>{elements}</>;
+        return renderElementsWithHighlighting(elements);
     };
 
     return <div>{renderTextWithLinks()}</div>;

@@ -23,100 +23,55 @@ const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
     ttsServiceAvailable: true
 });
 
-// CSS animation utilities
-const generateWordAnimationCSS = (
-    chunkIndex: number,
-    timepoints: TTSTimepoint[],
-    highlightColor: string,
-    wordSpeedOffset: number,
-    isPlaying: boolean = false
-) => {
-    const keyframesName = `word-highlight-chunk-${chunkIndex}`;
+// DOM-BASED WORD HIGHLIGHTING SYSTEM
+// Word highlighting runs outside React rendering flow via direct DOM manipulation
 
-    // Generate CSS for each word with calculated duration
-    const wordStyles = timepoints.map((tp, wordIndex) => {
-        const startTime = tp.timeSeconds - (wordSpeedOffset / 1000);
+/**
+ * DOM Highlighting API - manipulates word highlighting classes directly on DOM elements
+ */
+const WordHighlightingAPI = {
+    // Set highlight color CSS custom property on document root
+    setHighlightColor: (color: string) => {
+        document.documentElement.style.setProperty('--highlight-color', color);
+    },
 
-        // Calculate duration: time until next word or 0.8s default for last word
-        const nextTimepoint = timepoints[wordIndex + 1];
-        const duration = nextTimepoint
-            ? (nextTimepoint.timeSeconds - tp.timeSeconds)
-            : 0.8; // Default duration for last word
-
-        // Ensure minimum duration of 0.2s and maximum of 2s
-        const safeDuration = Math.max(0.2, Math.min(duration, 2));
-
-        return `
-            .chunk-${chunkIndex}-word-${wordIndex}.css-animated {
-                animation: ${keyframesName} ${safeDuration}s ease-out ${startTime}s both;
-                animation-play-state: ${isPlaying ? 'running' : 'paused'};
-            }
-        `;
-    }).join('\n');
-
-    // More subtle keyframes that stay highlighted for the duration
-    const keyframes = `
-        @keyframes ${keyframesName} {
-            0% { 
-                background-color: transparent;
-                color: inherit;
-            }
-            5% { 
-                background-color: ${highlightColor || '#fff3e0'};
-                color: inherit;
-                border-radius: 3px;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            }
-            85% { 
-                background-color: ${highlightColor || '#fff3e0'};
-                color: inherit;
-                border-radius: 3px;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            }
-            100% { 
-                background-color: transparent;
-                color: inherit;
-                box-shadow: none;
-            }
+    // Add highlight class to a specific word
+    highlightWord: (chunkIndex: number, wordIndex: number) => {
+        const wordElement = document.querySelector(`[data-word-id="chunk-${chunkIndex}-word-${wordIndex}"]`);
+        if (wordElement) {
+            wordElement.classList.add('highlight-word');
         }
-    `;
+    },
 
-    return keyframes + '\n' + wordStyles;
-};
-
-const generateChunkAnimationCSS = (
-    chunkIndex: number,
-    sentenceHighlightColor: string
-) => {
-
-    // Static highlighting without animation - instant feedback
-    const chunkStyle = `
-        .chunk-${chunkIndex}.current-chunk.css-animated {
-            background-color: ${sentenceHighlightColor || '#f8f9fa'};
-            border-radius: 0 4px 4px 0;
-            padding: 4px 8px 4px 8px;
-            margin-left: -3px;
-            transition: none; /* No animation for instant feedback */
+    // Remove highlight class from a specific word
+    unhighlightWord: (chunkIndex: number, wordIndex: number) => {
+        const wordElement = document.querySelector(`[data-word-id="chunk-${chunkIndex}-word-${wordIndex}"]`);
+        if (wordElement) {
+            wordElement.classList.remove('highlight-word');
         }
-    `;
+    },
 
-    return chunkStyle;
-};
+    // Clear all word highlights
+    clearAllHighlights: () => {
+        const highlightedWords = document.querySelectorAll('.highlight-word');
+        highlightedWords.forEach(element => {
+            element.classList.remove('highlight-word');
+        });
+    },
 
-const injectCSS = (css: string, id: string) => {
-    // Remove existing style element if present
-    const existingStyle = document.getElementById(id);
-    if (existingStyle) {
-        existingStyle.remove();
+    // Highlight words in a sentence range
+    highlightSentence: (chunkIndex: number, startWordIndex: number, endWordIndex: number) => {
+        for (let i = startWordIndex; i <= endWordIndex; i++) {
+            WordHighlightingAPI.highlightWord(chunkIndex, i);
+        }
+    },
+
+    // Check if a word element exists in DOM
+    wordExists: (chunkIndex: number, wordIndex: number): boolean => {
+        const wordElement = document.querySelector(`[data-word-id="chunk-${chunkIndex}-word-${wordIndex}"]`);
+        return !!wordElement;
     }
-
-    // Create and inject new style element
-    const style = document.createElement('style');
-    style.id = id;
-    style.textContent = css;
-    document.head.appendChild(style);
 };
-
 
 
 export const useAudioPlayback = (
@@ -160,11 +115,11 @@ export const useAudioPlayback = (
             audio.load();
         });
 
-        // Clear all CSS animations
-        const existingWordStyles = document.querySelectorAll('style[id^="word-animation-chunk-"]');
-        existingWordStyles.forEach(style => style.remove());
-        const existingChunkStyles = document.querySelectorAll('style[id^="chunk-animation-chunk-"]');
-        existingChunkStyles.forEach(style => style.remove());
+        // Clear all CSS animations (simplified - no complex animations needed)
+        // const existingWordStyles = document.querySelectorAll('style[id^="word-animation-chunk-"]');
+        // existingWordStyles.forEach(style => style.remove());
+        // const existingChunkStyles = document.querySelectorAll('style[id^="chunk-animation-chunk-"]');
+        // existingChunkStyles.forEach(style => style.remove());
 
         updateState({
             audioChunks: {},
@@ -177,21 +132,21 @@ export const useAudioPlayback = (
         failedChunks.current.clear();
     }, [selectedVoice, currentChapterNumber]);
 
-    // Update CSS animation state when playing/paused
-    useEffect(() => {
-        const currentAudioData = state.audioChunks[state.currentChunkIndex];
-        if (currentAudioData) {
-            // Regenerate CSS for current chunk with updated play state
-            const wordCSS = generateWordAnimationCSS(
-                state.currentChunkIndex,
-                currentAudioData.timepoints,
-                highlightColor || '#ff9800',
-                wordSpeedOffset,
-                state.isPlaying
-            );
-            injectCSS(wordCSS, `word-animation-chunk-${state.currentChunkIndex}`);
-        }
-    }, [state.isPlaying, state.currentChunkIndex, state.audioChunks, highlightColor, wordSpeedOffset]);
+    // No complex CSS animation needed - simple class-based highlighting handles everything
+    // useEffect(() => {
+    //     const currentAudioData = state.audioChunks[state.currentChunkIndex];
+    //     if (currentAudioData) {
+    //         // Regenerate CSS for current chunk with updated play state
+    //         const wordCSS = generateWordAnimationCSS(
+    //             state.currentChunkIndex,
+    //             currentAudioData.timepoints,
+    //             highlightColor || '#ff9800',
+    //             wordSpeedOffset,
+    //             state.isPlaying
+    //         );
+    //         injectCSS(wordCSS, `word-animation-chunk-${state.currentChunkIndex}`);
+    //     }
+    // }, [state.isPlaying, state.currentChunkIndex, state.audioChunks, highlightColor, wordSpeedOffset]);
 
     // Audio generation effect - triggered by chunk index changes only
     useEffect(() => {
@@ -213,22 +168,21 @@ export const useAudioPlayback = (
                 if (result.data?.success && result.data.audioContent && result.data.timepoints) {
                     const audio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
 
-                    // Generate and inject CSS animations for this chunk
-                    const wordCSS = generateWordAnimationCSS(
-                        index,
-                        result.data.timepoints,
-                        highlightColor || '#ff9800',
-                        wordSpeedOffset,
-                        false
-                    );
-                    injectCSS(wordCSS, `word-animation-chunk-${index}`);
+                    // No complex CSS generation needed - simple class-based highlighting handles everything
+                    // const wordCSS = generateWordAnimationCSS(
+                    //     index,
+                    //     result.data.timepoints,
+                    //     highlightColor || '#ff9800',
+                    //     wordSpeedOffset,
+                    //     false
+                    // );
+                    // injectCSS(wordCSS, `word-animation-chunk-${index}`);
 
-                    // Generate and inject chunk highlighting CSS
-                    const chunkCSS = generateChunkAnimationCSS(
-                        index,
-                        sentenceHighlightColor || '#e3f2fd'
-                    );
-                    injectCSS(chunkCSS, `chunk-animation-chunk-${index}`);
+                    // const chunkCSS = generateChunkAnimationCSS(
+                    //     index,
+                    //     sentenceHighlightColor || '#e3f2fd'
+                    // );
+                    // injectCSS(chunkCSS, `chunk-animation-chunk-${index}`);
 
                     setState(prev => {
                         const newState = {
@@ -518,28 +472,71 @@ export const useAudioPlayback = (
         }
     }, [chapter, allChunks, selectedVoice, selectedProvider]);
 
-    const getWordStyle = useCallback((chunkIndex: number, wordIndex: number) => {
-        // CSS handles highlighting for current chunk with loaded audio
-        // Only provide fallback for chunks without loaded audio
-        if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
-            if (state.isPlaying && state.currentWordIndex === wordIndex) {
-                return {
-                    backgroundColor: highlightColor || '#fff3e0',
-                    color: 'inherit',
-                    transition: 'all 0.2s ease',
-                    borderRadius: '3px',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
-                };
-            }
+    // DOM-BASED HIGHLIGHTING SYSTEM - runs outside React rendering flow
+    const previousHighlightRef = useRef<{ chunkIndex: number; wordIndex: number } | null>(null);
+    const highlightIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+    // Set up interval-based word highlighting (100ms intervals) - only when playing
+    useEffect(() => {
+        // Set highlight color on mount and when it changes
+        if (highlightColor) {
+            WordHighlightingAPI.setHighlightColor(highlightColor);
         }
 
-        // Basic styling for all words
-        return {
-            backgroundColor: 'transparent',
-            cursor: 'pointer',
-            borderRadius: '3px'
+        // Clear any existing interval
+        if (highlightIntervalRef.current) {
+            clearInterval(highlightIntervalRef.current);
+            highlightIntervalRef.current = null;
+        }
+
+        // Only start highlighting interval when playing
+        if (state.isPlaying) {
+            highlightIntervalRef.current = setInterval(() => {
+                const currentChunk = state.currentChunkIndex;
+                const currentWord = state.currentWordIndex;
+
+                // Only update DOM if word position has changed
+                if (!previousHighlightRef.current || 
+                    previousHighlightRef.current.chunkIndex !== currentChunk || 
+                    previousHighlightRef.current.wordIndex !== currentWord) {
+                    
+                    // Clear previous highlight
+                    if (previousHighlightRef.current) {
+                        WordHighlightingAPI.unhighlightWord(
+                            previousHighlightRef.current.chunkIndex, 
+                            previousHighlightRef.current.wordIndex
+                        );
+                    }
+
+                    // Add new highlight if word exists in DOM
+                    if (WordHighlightingAPI.wordExists(currentChunk, currentWord)) {
+                        WordHighlightingAPI.highlightWord(currentChunk, currentWord);
+                        previousHighlightRef.current = { chunkIndex: currentChunk, wordIndex: currentWord };
+                    } else {
+                        previousHighlightRef.current = null;
+                    }
+                }
+            }, 100); // Update every 100ms
+        }
+
+        // Cleanup on unmount
+        return () => {
+            if (highlightIntervalRef.current) {
+                clearInterval(highlightIntervalRef.current);
+                highlightIntervalRef.current = null;
+            }
+            // Keep highlight visible when paused - only clear on unmount
         };
-    }, [state.currentChunkIndex, state.isPlaying, state.currentWordIndex, highlightColor, state.audioChunks]);
+    }, [state.currentChunkIndex, state.currentWordIndex, state.isPlaying, highlightColor]);
+
+    // Cleanup highlights on component unmount
+    useEffect(() => {
+        return () => {
+            WordHighlightingAPI.clearAllHighlights();
+        };
+    }, []);
+
+    // Word highlighting now handled entirely by DOM manipulation system - no legacy functions needed
 
     const getSentenceStyle = useCallback((chunkIndex: number) => {
         // CSS handles highlighting for current chunk with loaded audio
@@ -570,14 +567,7 @@ export const useAudioPlayback = (
         return '';
     }, [state.currentChunkIndex, state.audioChunks]);
 
-    // New function to get CSS class for words
-    const getWordClassName = useCallback((chunkIndex: number, wordIndex: number) => {
-        // For current chunk with loaded audio, use CSS animation
-        if (state.currentChunkIndex === chunkIndex && state.audioChunks[chunkIndex]) {
-            return `chunk-${chunkIndex}-word-${wordIndex} css-animated`;
-        }
-        return '';
-    }, [state.currentChunkIndex, state.audioChunks]);
+    // Word highlighting now handled entirely by DOM manipulation system
 
     // Check if current chunk is loading
     const isCurrentChunkLoading = pendingRequests.current.has(state.currentChunkIndex);
@@ -613,10 +603,8 @@ export const useAudioPlayback = (
         handleNextChunk,
         setCurrentChunkIndex,
         preloadChunk,
-        getWordStyle,
-        getSentenceStyle,
-        getWordClassName, // New function for CSS classes
-        getSentenceClassName, // New function for sentence CSS classes
+        getSentenceStyle, // Still needed for sentence-level highlighting
+        getSentenceClassName, // Still needed for sentence-level highlighting
         ttsError: state.ttsError,
         ttsServiceAvailable: state.ttsServiceAvailable,
         clearTtsError,

@@ -6,10 +6,9 @@ export const useScrollHandling = (
     chapter: ChapterClient | null,
     currentChunkIndex: number
 ) => {
-    // Enhanced scroll-to-sentence with paragraph context for Parser v2
+    // Enhanced scroll-to-sentence with paragraph context
     const scrollToSentenceChunk = useCallback((chunkIndex: number, paragraphIndex?: number) => {
-
-        // Try paragraph-aware targeting first (Parser v2)
+        // Try paragraph-aware targeting
         if (paragraphIndex !== undefined) {
             const selector = `[data-paragraph-index="${paragraphIndex}"][data-chunk-index="${chunkIndex}"]`;
             const sentenceElement = document.querySelector(selector);
@@ -23,23 +22,11 @@ export const useScrollHandling = (
             }
         }
 
-        // Fallback to chunk index targeting (Parser v1 & v2 compatibility)
+        // Fallback to chunk index targeting
         const fallbackSelector = `[data-chunk-index="${chunkIndex}"]`;
         const fallbackElement = document.querySelector(fallbackSelector);
         if (fallbackElement) {
             fallbackElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'nearest'
-            });
-            return true;
-        }
-
-        // Fallback to legacy text-chunk ID targeting
-        const legacySelector = `#text-chunk-${chunkIndex}`;
-        const legacyElement = document.querySelector(legacySelector);
-        if (legacyElement) {
-            legacyElement.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
                 inline: 'nearest'
@@ -65,11 +52,7 @@ export const useScrollHandling = (
         const scrolled = scrollToSentenceChunk(currentChunkIndex, paragraphIndex);
 
         if (!scrolled) {
-            // Ultimate fallback to legacy global scroll function
-            const scrollFunction = (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
-            if (scrollFunction) {
-                scrollFunction();
-            }
+            console.warn(`Could not scroll to current chunk ${currentChunkIndex}. Element not found.`);
         }
     }, [currentChunkIndex, getCurrentParagraphIndex, scrollToSentenceChunk]);
 

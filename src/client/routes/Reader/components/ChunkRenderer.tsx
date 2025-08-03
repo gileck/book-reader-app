@@ -12,13 +12,19 @@ interface ChunkRendererProps {
     book: BookClient;
     handleLinkClick: (link: ChunkLink) => void;
     getFlatChunkIndex: (groupIndex: number, chunkIndexInGroup: number) => number;
+    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
+    getSentenceClassName: (chunkIndex: number) => string;
+    currentChunkIndex: number;
+    // Note: Word highlighting now handled outside React via DOM manipulation
 }
 
 export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     paragraphGroups,
     book,
     handleLinkClick,
-    getFlatChunkIndex
+    getFlatChunkIndex,
+    getSentenceStyle,
+    getSentenceClassName,
 }) => {
     const renderChunk = (chunk: TextChunkClient, groupIndex: number, chunkIndexInGroup: number) => {
         const flatChunkIndex = getFlatChunkIndex(groupIndex, chunkIndexInGroup);
@@ -51,6 +57,8 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         chunk={chunk}
                         chunkIndex={flatChunkIndex}
                         handleLinkClick={handleLinkClick}
+                        getSentenceStyle={getSentenceStyle}
+                        getSentenceClassName={getSentenceClassName}
                     />
                 );
         }

@@ -2,8 +2,6 @@ import React, { useMemo } from 'react';
 import type { ChapterClient, TextChunkClient } from '../../../../apis/chapters/types';
 
 interface AudioActions {
-    getWordStyle: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
-    getWordClassName: (chunkIndex: number, wordIndex: number) => string;
     getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
     getSentenceClassName: (chunkIndex: number) => string;
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
@@ -45,21 +43,6 @@ export const useChunkMapping = (
         return { absoluteToText, textToAbsolute, textChunks };
     }, [chapter]);
 
-    // Optimized functions using cached mapping
-    const getOptimizedWordStyle = useMemo(() => {
-        return (chunkIndex: number, wordIndex: number) => {
-            // SIMPLIFIED: Direct indexing - no conversion needed!
-            return audio.getWordStyle(chunkIndex, wordIndex);
-        };
-    }, [audio.getWordStyle]);
-
-    const getOptimizedWordClassName = useMemo(() => {
-        return (chunkIndex: number, wordIndex: number) => {
-            // SIMPLIFIED: Direct indexing - no conversion needed!
-            return audio.getWordClassName(chunkIndex, wordIndex);
-        };
-    }, [audio.getWordClassName]);
-
     const getOptimizedSentenceStyle = useMemo(() => {
         return (chunkIndex: number) => {
             // SIMPLIFIED: Direct indexing - no conversion needed!
@@ -100,8 +83,6 @@ export const useChunkMapping = (
 
     return {
         chunkIndexMapping,
-        getOptimizedWordStyle,
-        getOptimizedWordClassName,
         getOptimizedSentenceStyle,
         getOptimizedSentenceClassName,
         handleOptimizedWordClick,

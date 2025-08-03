@@ -133,10 +133,9 @@ export const Reader = () => {
                         onNavigateToChapter={navigation.setCurrentChapterNumber}
                         onNavigateToChunk={navigation.setCurrentChunkIndex}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
-                        getWordStyle={audio.getWordStyle}
-                        getWordClassName={audio.getWordClassName}
                         getSentenceStyle={audio.getSentenceStyle}
                         getSentenceClassName={audio.getSentenceClassName}
+                        currentChunkIndex={audio.currentChunkIndex}
                     />
                 </Paper>
 

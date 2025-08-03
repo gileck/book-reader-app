@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
 import { useParagraphGrouping, useFlatChunkIndex } from '../hooks/useParagraphGrouping';
-import type { ChapterClient, TextChunkClient } from '../../../../apis/chapters/types';
+import type { ChapterClient } from '../../../../apis/chapters/types';
 import type { BookClient } from '../../../../apis/books/types';
 
 interface ReaderContentProps {
@@ -13,6 +13,9 @@ interface ReaderContentProps {
     onNavigateToChapter: (chapterNumber: number) => void;
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
+    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
+    getSentenceClassName: (chunkIndex: number) => string;
+    currentChunkIndex: number;
 }
 
 export const ReaderContent: React.FC<ReaderContentProps> = ({
@@ -21,7 +24,10 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     scrollContainerRef,
     onNavigateToChapter,
     onNavigateToChunk,
-    onNavigateToBookmark
+    onNavigateToBookmark,
+    getSentenceStyle,
+    getSentenceClassName,
+    currentChunkIndex
 }) => {
     // Navigate to chunk with parser v2 targeting
     const handleNavigateToChunk = useCallback((chunkIndex: number) => {
@@ -57,8 +63,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     const paragraphGroups = useParagraphGrouping(chapter.content.chunks);
     const { getFlatChunkIndex } = useFlatChunkIndex(paragraphGroups);
 
-
-
     // Error handling for corrupted data
     if (paragraphGroups.length === 0) {
         return (
@@ -78,7 +82,10 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 book={book}
                 handleLinkClick={handleLinkNavigation}
                 getFlatChunkIndex={getFlatChunkIndex}
+                getSentenceStyle={getSentenceStyle}
+                getSentenceClassName={getSentenceClassName}
+                currentChunkIndex={currentChunkIndex}
             />
         </Box>
     );
-}; 
+};

@@ -91,6 +91,15 @@ body {
   border: 0;
 }
 
+/* Word Highlighting */
+.highlight-word {
+  background-color: var(--highlight-color, #fff3e0);
+  color: inherit;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
 /* Global animations */
 @keyframes spin {
   0% {
