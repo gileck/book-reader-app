@@ -67,8 +67,9 @@ Central API for all highlighting operations:
 
 ```typescript
 const WordHighlightingAPI = {
-    // Color management
-    setHighlightColor: (color: string) => void,
+    // Color management - now supports both highlighting systems
+    setWordHighlightColor: (color: string) => void,
+    setSentenceHighlightColor: (color: string) => void,
     
     // Word highlighting
     highlightWord: (chunkIndex: number, wordIndex: number) => void,
@@ -121,13 +122,22 @@ useEffect(() => {
 
 ## WordHighlightingAPI
 
-### setHighlightColor(color: string)
+### setWordHighlightColor(color: string)
 
-Sets the global highlight color using CSS custom properties.
+Sets the global word highlight color using CSS custom properties.
 
 ```typescript
-WordHighlightingAPI.setHighlightColor('#ffeb3b');
-// Sets --highlight-color CSS variable globally
+WordHighlightingAPI.setWordHighlightColor('#ffeb3b');
+// Sets --word-highlight-color CSS variable globally
+```
+
+### setSentenceHighlightColor(color: string)
+
+Sets the global sentence highlight color using CSS custom properties.
+
+```typescript
+WordHighlightingAPI.setSentenceHighlightColor('#e3f2fd');
+// Sets --sentence-highlight-color CSS variable globally
 ```
 
 ### highlightWord(chunkIndex: number, wordIndex: number)
@@ -186,7 +196,7 @@ if (WordHighlightingAPI.wordExists(0, 5)) {
 }
 ```
 
-## CSS Implementation
+## Word CSS Implementation
 
 ### Highlight Class
 
@@ -194,11 +204,10 @@ Simple, performant CSS rule with smooth transitions:
 
 ```css
 .highlight-word {
-    background-color: var(--highlight-color, #fff3e0);
+    background-color: var(--word-highlight-color, transparent);
     color: inherit;
     border-radius: 3px;
-    padding: 1px 2px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
 }
 ```
@@ -209,11 +218,11 @@ Dynamic color management through CSS variables:
 
 ```css
 :root {
-    --highlight-color: #fff3e0; /* Default highlight color */
+    --word-highlight-color: transparent; /* Default - no highlighting */
 }
 
 /* Color can be changed dynamically */
-document.documentElement.style.setProperty('--highlight-color', '#ffeb3b');
+document.documentElement.style.setProperty('--word-highlight-color', '#ffeb3b');
 ```
 
 ### Performance Benefits
@@ -223,7 +232,7 @@ document.documentElement.style.setProperty('--highlight-color', '#ffeb3b');
 - **Smooth Animation**: 0.2s ease transition prevents jarring updates
 - **Low CPU Usage**: No JavaScript animation loops
 
-## Performance Optimizations
+## Word Performance Optimizations
 
 ### 1. Interval Control
 
@@ -273,6 +282,253 @@ useEffect(() => {
         WordHighlightingAPI.clearAllHighlights();
     };
 }, []);
+```
+
+# Sentence Highlighting System
+
+## Sentence Architecture Overview
+
+### Design Principles
+
+The sentence highlighting system follows these core principles:
+
+- **React-First**: Uses React's declarative rendering system
+- **Simple**: Direct CSS class application in JSX
+- **Readable**: Easy to understand and maintain
+- **User-Configurable**: Colors configurable through theme panel
+- **Performant**: Minimal overhead with React's built-in optimizations
+
+### System Flow
+
+```mermaid
+graph TB
+    A[Audio Playback] --> B[currentChunkIndex State]
+    B --> C[React Component Rendering]
+    C --> D{currentChunkIndex === chunkIndex?}
+    D -->|Yes| E[Apply 'current-sentence' class]
+    D -->|No| F[No highlighting class]
+    E --> G[CSS Background Styling]
+    F --> G
+    
+    H[Theme Panel] --> I[User Settings]
+    I --> J[CSS Custom Property]
+    J --> G
+```
+
+## Sentence React Implementation
+
+### JSX-Based Highlighting
+
+Sentence highlighting is achieved through simple conditional class application:
+
+```typescript
+<Box
+    sx={{
+        lineHeight: 1.6,
+        fontSize: '1rem'
+    }}
+    className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+    id={`text-chunk-${chunkIndex}`}
+    data-chunk-index={chunkIndex}
+    data-paragraph-index={chunk.paragraphIndex}
+>
+    <EnhancedText
+        chunk={chunk}
+        chunkIndex={chunkIndex}
+        onLinkClick={handleLinkClick}
+    />
+</Box>
+```
+
+### Component Implementation
+
+Example in `TextChunk.tsx`:
+
+```typescript
+interface TextChunkProps {
+    chunk: TextChunkClient;
+    chunkIndex: number;
+    currentChunkIndex: number; // Added for sentence highlighting
+    handleLinkClick: (link: ChunkLink) => void;
+}
+
+export const TextChunk: React.FC<TextChunkProps> = ({
+    chunk,
+    chunkIndex,
+    currentChunkIndex,
+    handleLinkClick
+}) => {
+    return (
+        <Box
+            className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+        >
+            {/* Content */}
+        </Box>
+    );
+};
+```
+
+## Sentence CSS Implementation
+
+### Highlight Class
+
+Simple CSS rule for sentence background highlighting:
+
+```css
+.current-sentence {
+    background-color: var(--sentence-highlight-color, transparent);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 2px 0;
+    border-left: 3px solid var(--sentence-highlight-border, #007AFF);
+    transition: all 0.3s ease;
+}
+```
+
+### CSS Custom Properties
+
+Dynamic color management:
+
+```css
+:root {
+    --sentence-highlight-color: transparent; /* Default - no highlighting */
+    --sentence-highlight-border: #007AFF; /* Default border color */
+}
+
+/* Color can be changed dynamically */
+document.documentElement.style.setProperty('--sentence-highlight-color', '#e3f2fd');
+```
+
+### Performance Benefits
+
+- **React Optimized**: Leverages React's built-in reconciliation
+- **Simple Logic**: Single boolean condition for class application
+- **CSS Transitions**: Smooth visual feedback with hardware acceleration
+- **Minimal Overhead**: No additional JavaScript processing required
+
+# Theme Panel Integration
+
+## User Configuration Flow
+
+Both highlighting systems are fully configurable through the theme panel interface:
+
+```mermaid
+graph TB
+    A[User Opens Theme Panel] --> B[ThemeModal.tsx]
+    B --> C[Color Picker for Word Highlighting]
+    B --> D[Color Picker for Sentence Highlighting]
+    C --> E[handleHighlightColorChange]
+    D --> F[handleSentenceHighlightColorChange]
+    E --> G[useUserSettings.ts]
+    F --> G
+    G --> H[updateUserSettings API]
+    H --> I[Database Storage]
+    G --> J[Local State Update]
+    J --> K[CSS Custom Properties]
+    K --> L[Visual Update]
+```
+
+## Color Management
+
+### Theme Panel UI
+
+The `ThemeModal.tsx` component provides user-friendly color configuration:
+
+```typescript
+// Word Highlight Color Section
+<Typography variant="h6" gutterBottom>
+    Word Highlight Color
+</Typography>
+<Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+    Color used to highlight the currently playing word
+</Typography>
+
+// Preset colors for quick selection
+<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+    {presetColors.map((color) => (
+        <Paper
+            key={color}
+            sx={{
+                width: 40,
+                height: 40,
+                backgroundColor: color,
+                cursor: 'pointer',
+                border: localHighlightColor === color ? '3px solid #000' : '1px solid #ccc'
+            }}
+            onClick={() => handleHighlightColorChange(color)}
+        />
+    ))}
+</Box>
+
+// Custom color picker
+<TextField
+    label="Custom Color"
+    type="color"
+    value={localHighlightColor}
+    onChange={(e) => handleHighlightColorChange(e.target.value)}
+/>
+```
+
+### Settings Persistence
+
+The `useUserSettings.ts` hook manages color persistence:
+
+```typescript
+const handleHighlightColorChange = useCallback(async (highlightColor: string) => {
+    updateState({ highlightColor });
+
+    try {
+        await updateUserSettings({
+            userId,
+            settings: { highlightColor }
+        });
+    } catch (error) {
+        console.error('Error updating highlight color:', error);
+    }
+}, [userId, updateState]);
+
+const handleSentenceHighlightColorChange = useCallback(async (sentenceHighlightColor: string) => {
+    updateState({ sentenceHighlightColor });
+
+    try {
+        await updateUserSettings({
+            userId,
+            settings: { sentenceHighlightColor }
+        });
+    } catch (error) {
+        console.error('Error updating sentence highlight color:', error);
+    }
+}, [userId, updateState]);
+```
+
+### Color Application
+
+Colors are applied to both systems through the WordHighlightingAPI:
+
+```typescript
+// In useAudioPlayback.ts
+useEffect(() => {
+    // Set colors on mount and when they change
+    if (highlightColor) {
+        WordHighlightingAPI.setWordHighlightColor(highlightColor);
+    }
+    if (sentenceHighlightColor) {
+        WordHighlightingAPI.setSentenceHighlightColor(sentenceHighlightColor);
+    }
+}, [/* dependencies include both color values */]);
+```
+
+### Default Values
+
+Both systems use transparent defaults to avoid interference:
+
+```typescript
+// In server/database/collections/userSettings/types.ts
+export const DEFAULT_USER_SETTINGS = {
+    highlightColor: '#ffeb3b',              // Word highlighting default
+    sentenceHighlightColor: '#e3f2fd',      // Sentence highlighting default
+    // ... other settings
+};
 ```
 
 ## Integration Points
@@ -369,11 +625,35 @@ isPlaying: state.isPlaying
 // Highlight a specific word
 WordHighlightingAPI.highlightWord(0, 5);
 
-// Change highlight color
-WordHighlightingAPI.setHighlightColor('#4caf50');
+// Change word highlight color
+WordHighlightingAPI.setWordHighlightColor('#4caf50');
+
+// Change sentence highlight color
+WordHighlightingAPI.setSentenceHighlightColor('#e8f5e8');
 
 // Remove highlighting
 WordHighlightingAPI.unhighlightWord(0, 5);
+```
+
+### Basic Sentence Highlighting
+
+```typescript
+// In React component
+const TextChunk = ({ chunkIndex, currentChunkIndex, chunk }) => {
+    return (
+        <Box
+            className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+        >
+            {chunk.text}
+        </Box>
+    );
+};
+
+// Setting sentence color via theme panel
+const handleSentenceColorChange = (color: string) => {
+    WordHighlightingAPI.setSentenceHighlightColor(color);
+    // Color is automatically saved to user settings
+};
 ```
 
 ### Integration in Components
@@ -381,8 +661,9 @@ WordHighlightingAPI.unhighlightWord(0, 5);
 ```typescript
 const MyComponent = () => {
     useEffect(() => {
-        // Set initial highlight color
-        WordHighlightingAPI.setHighlightColor('#fff3e0');
+        // Set initial colors for both highlighting systems
+        WordHighlightingAPI.setWordHighlightColor('#fff3e0');
+        WordHighlightingAPI.setSentenceHighlightColor('#e3f2fd');
         
         // Cleanup on unmount
         return () => {
@@ -391,13 +672,23 @@ const MyComponent = () => {
     }, []);
     
     return (
-        <span 
-            data-chunk-index={0}
-            data-word-index={5}
-            data-word-id="chunk-0-word-5"
-        >
-            word
-        </span>
+        <div>
+            {/* Word highlighting with data attributes */}
+            <span 
+                data-chunk-index={0}
+                data-word-index={5}
+                data-word-id="chunk-0-word-5"
+            >
+                word
+            </span>
+            
+            {/* Sentence highlighting with conditional class */}
+            <Box
+                className={isCurrentSentence ? 'current-sentence' : ''}
+            >
+                This is a complete sentence.
+            </Box>
+        </div>
     );
 };
 ```
@@ -430,14 +721,21 @@ const highlightSequence = async (words: Array<{chunk: number, word: number}>) =>
    - Check for memory leaks (intervals not cleared)
    - Verify efficient DOM queries
 
-3. **Styling Issues**
-   - Check CSS custom property `--highlight-color` is set
+3. **Word Styling Issues**
+   - Check CSS custom property `--word-highlight-color` is set
    - Verify `.highlight-word` class is not overridden
    - Ensure transitions are working correctly
+
+4. **Sentence Styling Issues**
+   - Check CSS custom property `--sentence-highlight-color` is set
+   - Verify `.current-sentence` class is not overridden
+   - Ensure `currentChunkIndex` prop is being passed correctly
+   - Check conditional className logic in React components
 
 ### Debug Tools
 
 ```typescript
+// Word Highlighting Debug
 // Check if word exists
 console.log(WordHighlightingAPI.wordExists(0, 5));
 
@@ -445,10 +743,27 @@ console.log(WordHighlightingAPI.wordExists(0, 5));
 const element = document.querySelector('[data-word-id="chunk-0-word-5"]');
 console.log(element);
 
-// Check current highlight color
-const color = getComputedStyle(document.documentElement)
-    .getPropertyValue('--highlight-color');
-console.log('Current highlight color:', color);
+// Check current word highlight color
+const wordColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--word-highlight-color');
+console.log('Current word highlight color:', wordColor);
+
+// Sentence Highlighting Debug
+// Check current sentence highlight color
+const sentenceColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--sentence-highlight-color');
+console.log('Current sentence highlight color:', sentenceColor);
+
+// Verify sentence elements
+const sentenceElements = document.querySelectorAll('.current-sentence');
+console.log('Currently highlighted sentences:', sentenceElements);
+
+// Check if sentence is properly highlighted
+const checkSentenceHighlight = (chunkIndex: number) => {
+    const element = document.querySelector(`[data-chunk-index="${chunkIndex}"]`);
+    const hasClass = element?.classList.contains('current-sentence');
+    console.log(`Chunk ${chunkIndex} highlighted:`, hasClass);
+};
 ```
 
 ### Performance Monitoring
@@ -466,22 +781,47 @@ WordHighlightingAPI.highlightWord = (chunk, word) => {
 
 ## Future Enhancements
 
-### Potential Improvements
+### Word Highlighting Improvements
 
 1. **Batch Operations**: Highlight multiple words in single DOM operation
 2. **Intersection Observer**: Only highlight visible words for better performance
 3. **Web Workers**: Move highlighting logic to background thread
 4. **CSS Animations**: Replace transitions with keyframe animations for complex effects
 
+### Sentence Highlighting Improvements
+
+1. **Smooth Scrolling**: Auto-scroll to current sentence
+2. **Context Preview**: Show surrounding sentences for better context
+3. **Progressive Enhancement**: Add word-level highlighting within sentences
+4. **Reading Analytics**: Track reading speed and comprehension metrics
+
+### Theme Panel Enhancements
+
+1. **Color Themes**: Pre-defined color schemes for different reading modes
+2. **Accessibility Options**: High contrast and colorblind-friendly palettes
+3. **Dynamic Theming**: Automatic color adjustment based on content
+4. **Export/Import**: Save and share custom theme configurations
+
 ### API Extensions
 
 ```typescript
-// Future API additions
+// Future WordHighlightingAPI additions
 WordHighlightingAPI.highlightWords(words: Array<{chunk: number, word: number}>);
 WordHighlightingAPI.setHighlightStyle(style: Partial<CSSStyleDeclaration>);
 WordHighlightingAPI.onHighlightChange(callback: (chunk: number, word: number) => void);
+
+// Future SentenceHighlightingAPI (if needed)
+SentenceHighlightingAPI.highlightSentenceRange(startChunk: number, endChunk: number);
+SentenceHighlightingAPI.setSentenceStyle(style: Partial<CSSStyleDeclaration>);
+SentenceHighlightingAPI.onSentenceChange(callback: (chunkIndex: number) => void);
 ```
 
 ---
 
-*This document reflects the current state of the word highlighting system as of the latest refactoring. For questions or improvements, refer to the implementation in `src/client/routes/Reader/hooks/useAudioPlayback.ts`.*
+*This document reflects the current state of both highlighting systems as of the latest refactoring. The systems are fully integrated with the theme panel for user customization.*
+
+**Implementation References:**
+- **Word Highlighting**: `src/client/routes/Reader/hooks/useAudioPlayback.ts`
+- **Sentence Highlighting**: `src/client/routes/Reader/components/chunks/TextChunk.tsx`
+- **Theme Panel**: `src/client/components/ThemeModal.tsx`
+- **Settings Management**: `src/client/routes/Reader/hooks/useUserSettings.ts`
