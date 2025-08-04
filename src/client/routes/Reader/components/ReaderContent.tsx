@@ -13,8 +13,6 @@ interface ReaderContentProps {
     onNavigateToChapter: (chapterNumber: number) => void;
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
-    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
-    getSentenceClassName: (chunkIndex: number) => string;
     currentChunkIndex: number;
 }
 
@@ -25,8 +23,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     onNavigateToChapter,
     onNavigateToChunk,
     onNavigateToBookmark,
-    getSentenceStyle,
-    getSentenceClassName,
     currentChunkIndex
 }) => {
     // Navigate to chunk with parser v2 targeting
@@ -82,8 +78,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 book={book}
                 handleLinkClick={handleLinkNavigation}
                 getFlatChunkIndex={getFlatChunkIndex}
-                getSentenceStyle={getSentenceStyle}
-                getSentenceClassName={getSentenceClassName}
                 currentChunkIndex={currentChunkIndex}
             />
         </Box>

@@ -91,13 +91,23 @@ body {
   border: 0;
 }
 
-/* Word Highlighting */
+/* Word Highlighting - Configurable from theme panel */
 .highlight-word {
-  background-color: var(--highlight-color, #fff3e0);
+  background-color: var(--word-highlight-color, transparent);
   color: inherit;
   border-radius: 3px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+}
+
+/* Sentence Highlighting - Configurable from theme panel */
+.current-sentence {
+  background-color: var(--sentence-highlight-color, transparent);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 2px 0;
+  border-left: 3px solid var(--sentence-highlight-border, #007AFF);
+  transition: all 0.3s ease;
 }
 
 /* Global animations */

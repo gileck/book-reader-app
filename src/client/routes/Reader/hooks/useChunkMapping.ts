@@ -1,12 +1,11 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { ChapterClient, TextChunkClient } from '../../../../apis/chapters/types';
 
 interface AudioActions {
-    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
-    getSentenceClassName: (chunkIndex: number) => string;
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
     currentChunkIndex: number;
     textChunks: TextChunkClient[];
+    // Note: Sentence highlighting now done directly in JSX - no function needed
 }
 
 interface NavigationActions {
@@ -43,19 +42,7 @@ export const useChunkMapping = (
         return { absoluteToText, textToAbsolute, textChunks };
     }, [chapter]);
 
-    const getOptimizedSentenceStyle = useMemo(() => {
-        return (chunkIndex: number) => {
-            // SIMPLIFIED: Direct indexing - no conversion needed!
-            return audio.getSentenceStyle(chunkIndex);
-        };
-    }, [audio.getSentenceStyle]);
-
-    const getOptimizedSentenceClassName = useMemo(() => {
-        return (chunkIndex: number) => {
-            // SIMPLIFIED: Direct indexing - no conversion needed!
-            return audio.getSentenceClassName(chunkIndex);
-        };
-    }, [audio.getSentenceClassName]);
+    // Sentence highlighting now done directly in JSX - no optimization functions needed
 
     const handleOptimizedWordClick = useMemo(() => {
         return (chunkIndex: number, wordIndex: number) => {
@@ -83,10 +70,9 @@ export const useChunkMapping = (
 
     return {
         chunkIndexMapping,
-        getOptimizedSentenceStyle,
-        getOptimizedSentenceClassName,
         handleOptimizedWordClick,
         handleOptimizedSentenceClick,
         currentChunkIndex
+        // Note: Sentence highlighting now done directly in JSX - no functions needed
     };
 };

@@ -6,27 +6,25 @@ import { EnhancedText } from '../EnhancedText';
 interface TextChunkProps {
     chunk: TextChunkClient;
     chunkIndex: number;
+    currentChunkIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
-    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
-    getSentenceClassName: (chunkIndex: number) => string;
     // Note: Word highlighting now handled outside React via DOM manipulation
+    // Note: Sentence highlighting done directly in JSX - much simpler!
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({
     chunk,
     chunkIndex,
-    handleLinkClick,
-    getSentenceStyle,
-    getSentenceClassName
+    currentChunkIndex,
+    handleLinkClick
 }) => {
     return (
         <Box
             sx={{
                 lineHeight: 1.6,
-                fontSize: '1rem',
-                ...getSentenceStyle(chunkIndex)
+                fontSize: '1rem'
             }}
-            className={getSentenceClassName(chunkIndex)}
+            className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
             id={`text-chunk-${chunkIndex}`}
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}

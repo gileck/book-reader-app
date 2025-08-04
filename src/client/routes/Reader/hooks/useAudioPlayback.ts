@@ -30,9 +30,14 @@ const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
  * DOM Highlighting API - manipulates word highlighting classes directly on DOM elements
  */
 const WordHighlightingAPI = {
-    // Set highlight color CSS custom property on document root
-    setHighlightColor: (color: string) => {
-        document.documentElement.style.setProperty('--highlight-color', color);
+    // Set word highlight color CSS custom property on document root  
+    setWordHighlightColor: (color: string) => {
+        document.documentElement.style.setProperty('--word-highlight-color', color);
+    },
+
+    // Set sentence highlight color CSS custom property on document root
+    setSentenceHighlightColor: (color: string) => {
+        document.documentElement.style.setProperty('--sentence-highlight-color', color);
     },
 
     // Add highlight class to a specific word
@@ -478,9 +483,12 @@ export const useAudioPlayback = (
 
     // Set up interval-based word highlighting (100ms intervals) - only when playing
     useEffect(() => {
-        // Set highlight color on mount and when it changes
+        // Set colors on mount and when they change
         if (highlightColor) {
-            WordHighlightingAPI.setHighlightColor(highlightColor);
+            WordHighlightingAPI.setWordHighlightColor(highlightColor);
+        }
+        if (sentenceHighlightColor) {
+            WordHighlightingAPI.setSentenceHighlightColor(sentenceHighlightColor);
         }
 
         // Clear any existing interval
@@ -527,7 +535,7 @@ export const useAudioPlayback = (
             }
             // Keep highlight visible when paused - only clear on unmount
         };
-    }, [state.currentChunkIndex, state.currentWordIndex, state.isPlaying, highlightColor]);
+    }, [state.currentChunkIndex, state.currentWordIndex, state.isPlaying, highlightColor, sentenceHighlightColor]);
 
     // Cleanup highlights on component unmount
     useEffect(() => {
@@ -538,34 +546,7 @@ export const useAudioPlayback = (
 
     // Word highlighting now handled entirely by DOM manipulation system - no legacy functions needed
 
-    const getSentenceStyle = useCallback((chunkIndex: number) => {
-        // CSS handles highlighting for current chunk with loaded audio
-        // Only provide fallback styling for chunks without loaded audio
-        if (state.currentChunkIndex === chunkIndex && !state.audioChunks[chunkIndex]) {
-            return {
-                backgroundColor: sentenceHighlightColor || '#f8f9fa',
-                borderRadius: '0 4px 4px 0',
-                padding: '4px 8px 4px 8px',
-                marginLeft: '-3px'
-            };
-        }
-
-        // Apply same padding to non-highlighted sentences to prevent layout shifts
-        return {
-            backgroundColor: 'transparent',
-            padding: '4px 8px 4px 8px',
-            marginLeft: '-3px'
-        };
-    }, [state.currentChunkIndex, sentenceHighlightColor, state.audioChunks]);
-
-    // New function to get CSS class for sentence highlighting
-    const getSentenceClassName = useCallback((chunkIndex: number) => {
-        // For current chunk with loaded audio, use CSS animation
-        if (state.currentChunkIndex === chunkIndex && state.audioChunks[chunkIndex]) {
-            return `chunk-${chunkIndex} current-chunk css-animated`;
-        }
-        return '';
-    }, [state.currentChunkIndex, state.audioChunks]);
+    // SENTENCE HIGHLIGHTING: No function needed - just use currentChunkIndex directly in JSX
 
     // Word highlighting now handled entirely by DOM manipulation system
 
@@ -603,8 +584,7 @@ export const useAudioPlayback = (
         handleNextChunk,
         setCurrentChunkIndex,
         preloadChunk,
-        getSentenceStyle, // Still needed for sentence-level highlighting
-        getSentenceClassName, // Still needed for sentence-level highlighting
+        // Note: Sentence highlighting now done directly in JSX - no function needed
         ttsError: state.ttsError,
         ttsServiceAvailable: state.ttsServiceAvailable,
         clearTtsError,

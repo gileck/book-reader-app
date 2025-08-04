@@ -287,11 +287,6 @@ export const useReader = () => {
         }
     }, [bookId, state.currentChapterNumber]);
 
-    // Function to update chunk index
-    const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
-        setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
-    }, []);
-
     // Initialize hooks only after we have the data
     const userSettings = useUserSettings(userId);
 
@@ -303,10 +298,23 @@ export const useReader = () => {
         userSettings.playbackSpeed,
         userSettings.wordSpeedOffset,
         state.currentChapterNumber || 1,
-        setCurrentChunkIndex,
+        undefined, // Don't pass onChunkChange - we'll handle sync differently
         userSettings.highlightColor,
         userSettings.sentenceHighlightColor
     );
+
+    // Unified function to update chunk index in both reader and audio states
+    const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
+        setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
+        audioPlayback.setCurrentChunkIndex(chunkIndex);
+    }, [audioPlayback]);
+
+    // Sync reader state when audio playback state changes (e.g., auto-advance)
+    useEffect(() => {
+        if (audioPlayback.currentChunkIndex !== state.currentChunkIndex) {
+            setState(prev => ({ ...prev, currentChunkIndex: audioPlayback.currentChunkIndex }));
+        }
+    }, [audioPlayback.currentChunkIndex, state.currentChunkIndex]);
 
     // Reading progress hook - now just for tracking changes and saving
     const readingProgress = useReadingProgress({
@@ -402,10 +410,8 @@ export const useReader = () => {
             handleWordClick: audioPlayback.handleWordClick,
             handlePreviousChunk: audioPlayback.handlePreviousChunk,
             handleNextChunk: audioPlayback.handleNextChunk,
-            setCurrentChunkIndex: audioPlayback.setCurrentChunkIndex,
+            setCurrentChunkIndex: setCurrentChunkIndex,
             preloadChunk: audioPlayback.preloadChunk,
-            getSentenceStyle: audioPlayback.getSentenceStyle,
-            getSentenceClassName: audioPlayback.getSentenceClassName,
             ttsError: audioPlayback.ttsError,
             ttsServiceAvailable: audioPlayback.ttsServiceAvailable,
             clearTtsError: audioPlayback.clearTtsError,

@@ -11,10 +11,8 @@ interface SimpleTextRendererProps {
     book: BookClient;
     scrollContainerRef: React.RefObject<HTMLDivElement | null>;
     currentChunkIndex: number;
-    getWordStyle: (chunkIndex: number, wordIndex: number) => React.CSSProperties;
-    getWordClassName: (chunkIndex: number, wordIndex: number) => string;
-    getSentenceStyle: (chunkIndex: number) => React.CSSProperties;
-    getSentenceClassName: (chunkIndex: number) => string;
+    // Note: Word highlighting now handled outside React via DOM manipulation
+    // Note: Sentence highlighting done directly in JSX - much simpler!
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
     handleSentenceClick: (chunkIndex: number) => void;
     isChunkBookmarked: (chunkIndex: number) => boolean;
@@ -27,10 +25,6 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     book,
     scrollContainerRef,
     currentChunkIndex,
-    getWordStyle,
-    getWordClassName,
-    getSentenceStyle,
-    getSentenceClassName,
     handleWordClick,
     handleSentenceClick,
     isChunkBookmarked,
@@ -344,7 +338,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                     )}
                                     <Typography
                                         variant="body1"
-                                        className={getSentenceClassName(index)}
+                                        className={currentChunkIndex === index ? 'current-sentence' : ''}
                                         onDoubleClick={() => handleSentenceClick(index)}
                                         sx={{
                                             lineHeight: lineHeight,
@@ -353,8 +347,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                             color: textColor,
                                             wordSpacing: 'normal',
                                             cursor: 'pointer',
-                                            userSelect: 'text',
-                                            ...getSentenceStyle(index)
+                                            userSelect: 'text'
                                         }}
                                     >
                                         {chunk.text.split(' ').filter(word => word.length > 0).map((word, wordIndex, words) => (
@@ -362,8 +355,8 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                                 <span
                                                     data-chunk-index={index}
                                                     data-word-index={wordIndex}
-                                                    className={getWordClassName(index, wordIndex)}
-                                                    style={getWordStyle(index, wordIndex)}
+                                                    data-word-id={`chunk-${index}-word-${wordIndex}`}
+                                                    style={{ cursor: 'pointer' }}
                                                     onDoubleClick={(e) => {
                                                         e.stopPropagation();
                                                         handleWordClick(index, wordIndex);
