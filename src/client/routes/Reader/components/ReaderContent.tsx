@@ -14,6 +14,8 @@ interface ReaderContentProps {
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
     currentChunkIndex: number;
+    // Note: Word highlighting now handled outside React via DOM manipulation
+    // Note: Sentence highlighting done directly in JSX - much simpler!
 }
 
 export const ReaderContent: React.FC<ReaderContentProps> = ({
