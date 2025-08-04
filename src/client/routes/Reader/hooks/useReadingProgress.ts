@@ -22,6 +22,16 @@ export const useReadingProgress = ({
     const sessionStartTime = useRef<number>(Date.now());
     const lastActiveTime = useRef<number>(Date.now());
     const accumulatedSessionTime = useRef<number>(0);
+    
+    // Use refs to always access current values without dependency cycles
+    const currentChapterRef = useRef(currentChapterNumber);
+    const currentChunkRef = useRef(currentChunkIndex);
+    
+    // Update refs when values change
+    useEffect(() => {
+        currentChapterRef.current = currentChapterNumber;
+        currentChunkRef.current = currentChunkIndex;
+    }, [currentChapterNumber, currentChunkIndex]);
 
     const [progressData, setProgressData] = useState<{
         chapterProgress: number;
@@ -88,14 +98,21 @@ export const useReadingProgress = ({
     const saveProgress = useCallback(async () => {
         if (!bookId) return;
 
+        // Get current values from refs (always fresh, no stale closure)
+        const chapterToSave = currentChapterRef.current;
+        const chunkToSave = currentChunkRef.current;
+        
+        // Don't save if we don't have valid values
+        if (chapterToSave === null || chunkToSave === null) return;
+
         try {
             const sessionTimeMinutes = getCurrentSessionTime();
 
             const result = await updateReadingPosition({
                 userId,
                 bookId,
-                currentChapter: currentChapterNumber!,
-                currentChunk: currentChunkIndex!,
+                currentChapter: chapterToSave,
+                currentChunk: chunkToSave,
                 sessionTimeMinutes: sessionTimeMinutes > 0 ? sessionTimeMinutes : undefined
             });
 
@@ -128,7 +145,7 @@ export const useReadingProgress = ({
             // Show generic error message for network/unexpected errors
             showAlert('Unable to save reading progress. Please check your connection and try again.', 'error');
         }
-    }, [userId, bookId, currentChapterNumber, currentChunkIndex, getCurrentSessionTime, showAlert]);
+    }, [userId, bookId, getCurrentSessionTime, showAlert]);
 
     // Debounced save when position changes - only after initial load is complete
     useEffect(() => {
@@ -157,12 +174,12 @@ export const useReadingProgress = ({
             if (saveTimeoutRef.current) {
                 clearTimeout(saveTimeoutRef.current);
             }
-            // Fire and forget immediate save - but only if we have valid values
-            if (bookId && currentChapterNumber !== null && currentChunkIndex !== null) {
+            // Fire and forget immediate save - saveProgress will check for valid values
+            if (bookId) {
                 saveProgress();
             }
         };
-    }, [saveProgress, bookId, currentChapterNumber, currentChunkIndex]);
+    }, [saveProgress, bookId]);
 
     return {
         isLoadingProgress: false, // No longer loading since main hook handles this

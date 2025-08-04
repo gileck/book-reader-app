@@ -6,7 +6,7 @@ interface EnhancedTextProps {
     chunk: TextChunkClient;
     chunkIndex: number;
     onLinkClick: (link: ChunkLink) => void;
-    // Note: Word highlighting now handled outside React via DOM manipulation
+
 }
 
 /**

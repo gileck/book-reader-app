@@ -6,7 +6,7 @@ interface UseReadingLogsProps {
     userId: string;
     bookId: string | undefined;
     chapter: ChapterClient | null;
-    currentChunkIndex: number;
+    currentChunkIndex: number | null;
     isPlaying: boolean;
 }
 
@@ -55,7 +55,9 @@ export const useReadingLogs = ({
         // 1. Audio is playing
         // 2. We haven't already logged this chunk
         // 3. We have valid data
+        // 4. currentChunkIndex is not null
         if (isPlaying &&
+            currentChunkIndex !== null &&
             currentChunkIndex !== lastLoggedChunk.current &&
             bookId &&
             chapter &&

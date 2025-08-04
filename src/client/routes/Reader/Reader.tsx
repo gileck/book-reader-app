@@ -4,7 +4,7 @@ import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
 import { useChapterDialog } from './hooks/useChapterDialog';
-import { useChunkMapping } from './hooks/useChunkMapping';
+
 import { useContentContext } from './hooks/useContentContext';
 import { useScrollHandling } from './hooks/useScrollHandling';
 import { AudioControls } from '../../components/AudioControls';
@@ -42,8 +42,7 @@ export const Reader = () => {
         }
     }, [loading, error, navigate]);
 
-    // Initialize chunk mapping hook
-    const chunkMapping = useChunkMapping(chapter, audio, navigation);
+
 
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -69,7 +68,7 @@ export const Reader = () => {
     const contentContext = useContentContext(chapter, audio, bookQA);
 
     // Initialize scroll handling hook
-    useScrollHandling(loading, chapter, chunkMapping.currentChunkIndex);
+    useScrollHandling(loading, chapter, audio.currentChunkIndex);
 
     if (loading) {
         return (
@@ -155,11 +154,11 @@ export const Reader = () => {
                     isPlaying={audio.isPlaying}
                     isCurrentChunkLoading={audio.isCurrentChunkLoading}
                     isBookmarked={bookmarks.isBookmarked}
-                    progress={(audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100}
+                    progress={audio.currentChunkIndex !== null ? (audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100 : 0}
                     playbackSpeed={settings.playbackSpeed}
                     bookmarks={bookmarks.bookmarks}
                     currentChapterNumber={chapter.chapterNumber}
-                    currentChunkIndex={chunkMapping.currentChunkIndex}
+                    currentChunkIndex={audio.currentChunkIndex}
                     totalChapters={book.totalChapters}
                     onNavigateToBookmark={navigation.handleNavigateToBookmark}
                     progressData={progress}

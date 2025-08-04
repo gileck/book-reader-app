@@ -8,8 +8,7 @@ interface TextChunkProps {
     chunkIndex: number;
     currentChunkIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
-    // Note: Word highlighting now handled outside React via DOM manipulation
-    // Note: Sentence highlighting done directly in JSX - much simpler!
+
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({

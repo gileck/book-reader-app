@@ -290,31 +290,24 @@ export const useReader = () => {
     // Initialize hooks only after we have the data
     const userSettings = useUserSettings(userId);
 
-    // Initialize audio playback (will handle null chapter gracefully)
+    // Unified function to update chunk index (single source of truth in reader)
+    const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
+        setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
+    }, []);
+
+    // Initialize audio playback with reader state as single source of truth
     const audioPlayback = useAudioPlayback(
         state.chapter,
+        state.currentChunkIndex,
         userSettings.selectedVoice,
         userSettings.selectedProvider,
         userSettings.playbackSpeed,
         userSettings.wordSpeedOffset,
         state.currentChapterNumber || 1,
-        undefined, // Don't pass onChunkChange - we'll handle sync differently
+        setCurrentChunkIndex, // Callback for audio to update reader state
         userSettings.highlightColor,
         userSettings.sentenceHighlightColor
     );
-
-    // Unified function to update chunk index in both reader and audio states
-    const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
-        setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
-        audioPlayback.setCurrentChunkIndex(chunkIndex);
-    }, [audioPlayback]);
-
-    // Sync reader state when audio playback state changes (e.g., auto-advance)
-    useEffect(() => {
-        if (audioPlayback.currentChunkIndex !== state.currentChunkIndex) {
-            setState(prev => ({ ...prev, currentChunkIndex: audioPlayback.currentChunkIndex }));
-        }
-    }, [audioPlayback.currentChunkIndex, state.currentChunkIndex]);
 
     // Reading progress hook - now just for tracking changes and saving
     const readingProgress = useReadingProgress({
@@ -331,14 +324,14 @@ export const useReader = () => {
         userId,
         bookId,
         chapter: state.chapter,
-        currentChunkIndex: audioPlayback.currentChunkIndex,
+        currentChunkIndex: state.currentChunkIndex,
         isPlaying: audioPlayback.isPlaying
     });
 
     const bookmarks = useBookmarks(
         bookId,
         state.chapter,
-        state.currentChunkIndex || 0
+        state.currentChunkIndex
     );
 
     // Chapter navigation functions

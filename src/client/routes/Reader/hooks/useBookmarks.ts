@@ -16,7 +16,7 @@ const getDefaultBookmarksState = (): BookmarksState => ({
 export const useBookmarks = (
     bookId: string | undefined,
     chapter: ChapterClient | null,
-    currentChunkIndex: number
+    currentChunkIndex: number | null
 ) => {
     const [state, setState] = useState(getDefaultBookmarksState());
 
@@ -44,7 +44,10 @@ export const useBookmarks = (
 
     // Check if current position is bookmarked
     useEffect(() => {
-        if (!chapter) return;
+        if (!chapter || currentChunkIndex === null) {
+            updateState({ isBookmarked: false });
+            return;
+        }
 
         const currentBookmark = state.bookmarks.find(bookmark =>
             bookmark.chapterNumber === chapter.chapterNumber &&
@@ -74,7 +77,7 @@ export const useBookmarks = (
     }, [chapter]);
 
     const handleBookmark = useCallback(async () => {
-        if (!chapter || !bookId) return;
+        if (!chapter || !bookId || currentChunkIndex === null) return;
 
         const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
         const currentChunk = textChunks[currentChunkIndex];
