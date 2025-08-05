@@ -37,6 +37,7 @@ const getDefaultUserSettingsState = (): UserSettingsState => ({
 
 export const useUserSettings = (userId: string) => {
     const [state, setState] = useState(getDefaultUserSettingsState());
+    const [settingsLoaded, setSettingsLoaded] = useState(false);
     const { updateSettings } = useSettings();
 
     const updateState = useCallback((partialState: Partial<UserSettingsState>) => {
@@ -69,6 +70,8 @@ export const useUserSettings = (userId: string) => {
                 }
             } catch (error) {
                 console.error('Error loading user settings:', error);
+            } finally {
+                setSettingsLoaded(true);
             }
         };
 
@@ -302,6 +305,7 @@ export const useUserSettings = (userId: string) => {
         lineHeight: state.lineHeight,
         fontFamily: state.fontFamily,
         textColor: state.textColor,
+        settingsLoaded,
         handleSpeedChange,
         handleVoiceChange,
         handleProviderChange,

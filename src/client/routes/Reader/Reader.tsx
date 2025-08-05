@@ -70,7 +70,7 @@ export const Reader = () => {
     // Initialize scroll handling hook
     useScrollHandling(loading, chapter, audio.currentChunkIndex);
 
-    if (loading) {
+    if (loading || !settings.settingsLoaded) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
                 <CircularProgress />

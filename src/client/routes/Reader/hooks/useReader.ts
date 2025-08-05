@@ -425,6 +425,7 @@ export const useReader = () => {
             lineHeight: userSettings.lineHeight,
             fontFamily: userSettings.fontFamily,
             textColor: userSettings.textColor,
+            settingsLoaded: userSettings.settingsLoaded,
             handleSpeedChange,
             handleVoiceChange: userSettings.handleVoiceChange,
             handleProviderChange: userSettings.handleProviderChange,

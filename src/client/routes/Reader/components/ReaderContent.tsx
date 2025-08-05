@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
@@ -41,17 +41,27 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     sentenceHighlightColor
 }) => {
     const readerContentRef = useRef<HTMLDivElement>(null);
+    const [cssVarsApplied, setCssVarsApplied] = useState(false);
 
     // Set CSS variables on the reader content container only
     useEffect(() => {
+        setCssVarsApplied(false); // Reset first
         const container = readerContentRef.current;
         if (container) {
+            // Apply CSS variables
             container.style.setProperty('--reader-font-size', `${fontSize}rem`);
             container.style.setProperty('--reader-line-height', lineHeight.toString());
             container.style.setProperty('--reader-font-family', fontFamily);
             container.style.setProperty('--reader-text-color', textColor);
             container.style.setProperty('--word-highlight-color', highlightColor);
             container.style.setProperty('--sentence-highlight-color', sentenceHighlightColor);
+            
+            // Use requestAnimationFrame to ensure CSS variables are applied before showing content
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    setCssVarsApplied(true);
+                }, 300);
+            });
         }
     }, [fontSize, lineHeight, fontFamily, textColor, highlightColor, sentenceHighlightColor]);
     // Navigate to chunk with parser v2 targeting
@@ -99,7 +109,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
         );
     }
 
-    // Render content using ChunkRenderer
+    // Render content using ChunkRenderer - wait for CSS vars to be applied
     return (
         <Box 
             ref={readerContentRef}
@@ -109,7 +119,10 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 fontSize: 'var(--reader-font-size, 1rem)',
                 lineHeight: 'var(--reader-line-height, 1.5)',
                 fontFamily: 'var(--reader-font-family, Inter, system-ui, sans-serif)',
-                color: 'var(--reader-text-color, inherit)'
+                color: 'var(--reader-text-color, inherit)',
+                // Hide content until CSS variables are applied to prevent flicker
+                opacity: cssVarsApplied ? 1 : 0,
+                transition: 'opacity 0.1s ease-in-out'
             }}
         >
             <ChunkRenderer
