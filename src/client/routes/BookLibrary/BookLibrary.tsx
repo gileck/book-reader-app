@@ -27,7 +27,7 @@ export const BookLibrary = () => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
     const [showOptionsMenu, setShowOptionsMenu] = useState<string | null>(null);
     const [showEditDialog, setShowEditDialog] = useState<string | null>(null);
-    const [editForm, setEditForm] = useState({ title: '', author: '', coverImage: '', chapterStartNumber: 1 });
+    const [editForm, setEditForm] = useState({ title: '', author: '', coverImage: '', imageBaseURL: '', chapterStartNumber: 1 });
     const [deletingBook, setDeletingBook] = useState<string | null>(null);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [savingBook, setSavingBook] = useState(false);
@@ -167,6 +167,7 @@ export const BookLibrary = () => {
                 title: book.title,
                 author: book.author || '',
                 coverImage: book.coverImage || '',
+                imageBaseURL: book.imageBaseURL || '',
                 chapterStartNumber: book.chapterStartNumber ?? 1
             });
             setShowEditDialog(bookId);
@@ -175,7 +176,7 @@ export const BookLibrary = () => {
 
     const closeEditDialog = () => {
         setShowEditDialog(null);
-        setEditForm({ title: '', author: '', coverImage: '', chapterStartNumber: 1 });
+        setEditForm({ title: '', author: '', coverImage: '', imageBaseURL: '', chapterStartNumber: 1 });
         setSaveSuccess(false);
         setSaveError(null);
     };
@@ -192,6 +193,7 @@ export const BookLibrary = () => {
                 title: editForm.title,
                 author: editForm.author,
                 coverImage: editForm.coverImage,
+                imageBaseURL: editForm.imageBaseURL,
                 chapterStartNumber: editForm.chapterStartNumber
             });
 
@@ -734,6 +736,38 @@ export const BookLibrary = () => {
                                 },
                                 '& .MuiOutlinedInput-input': {
                                     color: 'var(--color-text-primary)',
+                                }
+                            }}
+                        />
+
+                        <TextField
+                            label="Image Base URL"
+                            value={editForm.imageBaseURL}
+                            onChange={(e) => setEditForm({ ...editForm, imageBaseURL: e.target.value })}
+                            fullWidth
+                            variant="outlined"
+                            helperText="Base URL for book images (used for relative image paths)"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'var(--color-surface)',
+                                    '& fieldset': {
+                                        borderColor: 'var(--color-border)',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'var(--color-primary)',
+                                    },
+                                },
+                                '& .MuiInputLabel-root': {
+                                    color: 'var(--color-text-secondary)',
+                                },
+                                '& .MuiOutlinedInput-input': {
+                                    color: 'var(--color-text-primary)',
+                                },
+                                '& .MuiFormHelperText-root': {
+                                    color: 'var(--color-text-secondary)',
                                 }
                             }}
                         />

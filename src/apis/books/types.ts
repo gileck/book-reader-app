@@ -36,6 +36,7 @@ export interface UpdateBookPayload {
     author?: string;
     description?: string;
     coverImage?: string;
+    imageBaseURL?: string;
     totalChapters?: number;
     totalWords?: number;
     language?: string;

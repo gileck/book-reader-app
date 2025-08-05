@@ -63,10 +63,9 @@ export const ImageChunk: React.FC<ImageChunkProps> = ({
                     src={imageUrl}
                     alt={chunk.imageAlt || `Book image from page ${chunk.pageNumber || 'unknown'}`}
                     style={{
-                        maxWidth: '100%',
+                        width: '100%',
+                        padding: '30px',
                         height: 'auto',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                         display: imageLoading ? 'none' : 'block'
                     }}
                     onLoad={handleImageLoad}
