@@ -7,14 +7,15 @@ interface TextChunkProps {
     chunkIndex: number;
     currentChunkIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
-
+    onChunkDoubleClick?: (chunkIndex: number) => void;
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({
     chunk,
     chunkIndex,
     currentChunkIndex,
-    handleLinkClick
+    handleLinkClick,
+    onChunkDoubleClick
 }) => {
     return (
         <div
@@ -26,11 +27,13 @@ export const TextChunk: React.FC<TextChunkProps> = ({
             padding: '0px 5px 0px 5px',
             backgroundColor: currentChunkIndex === chunkIndex ? 'var(--sentence-highlight-color, transparent)' : 'transparent',
             borderRadius: '6px',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            cursor: onChunkDoubleClick ? 'pointer' : 'default'
         }}
             id={`text-chunk-${chunkIndex}`}
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}
+            onDoubleClick={() => onChunkDoubleClick?.(chunkIndex)}
         >
             <EnhancedText
                 chunk={chunk}

@@ -13,6 +13,7 @@ interface ChunkRendererProps {
     handleLinkClick: (link: ChunkLink) => void;
     getFlatChunkIndex: (groupIndex: number, chunkIndexInGroup: number) => number;
     currentChunkIndex: number;
+    onChunkDoubleClick?: (chunkIndex: number) => void;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -22,7 +23,8 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     book,
     handleLinkClick,
     getFlatChunkIndex,
-    currentChunkIndex
+    currentChunkIndex,
+    onChunkDoubleClick
 }) => {
     const renderChunk = (chunk: TextChunkClient, groupIndex: number, chunkIndexInGroup: number) => {
         const flatChunkIndex = getFlatChunkIndex(groupIndex, chunkIndexInGroup);
@@ -56,6 +58,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         chunkIndex={flatChunkIndex}
                         currentChunkIndex={currentChunkIndex}
                         handleLinkClick={handleLinkClick}
+                        onChunkDoubleClick={onChunkDoubleClick}
                     />
                 );
         }

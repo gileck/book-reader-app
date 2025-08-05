@@ -131,6 +131,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 handleLinkClick={handleLinkNavigation}
                 getFlatChunkIndex={getFlatChunkIndex}
                 currentChunkIndex={currentChunkIndex}
+                onChunkDoubleClick={onNavigateToChunk}
             />
         </Box>
     );
