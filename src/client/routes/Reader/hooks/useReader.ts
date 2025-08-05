@@ -19,6 +19,7 @@ interface ReaderState {
     currentChapterNumber: number | null;
     currentChunkIndex: number | null;
     loading: boolean;
+    chapterTransitionLoading: boolean;
     error: string | null;
 }
 
@@ -37,6 +38,7 @@ export const useReader = () => {
         currentChapterNumber: null,
         currentChunkIndex: null,
         loading: true,
+        chapterTransitionLoading: false,
         error: null
     });
 
@@ -206,6 +208,7 @@ export const useReader = () => {
                         currentChapterNumber: currentChapter,
                         currentChunkIndex: currentChunk,
                         loading: false,
+                        chapterTransitionLoading: false,
                         error: null
                     });
                 } else {
@@ -235,7 +238,7 @@ export const useReader = () => {
         if (!bookId || chapterNumber === state.currentChapterNumber) return;
 
         try {
-            setState(prev => ({ ...prev, loading: true }));
+            setState(prev => ({ ...prev, chapterTransitionLoading: true }));
 
             if (bookId && chapterNumber !== undefined) {
                 const chapterResult = await getChapterByNumber({
@@ -249,20 +252,20 @@ export const useReader = () => {
                         chapter: chapterResult.data!.chapter,
                         currentChapterNumber: chapterNumber,
                         currentChunkIndex: 0, // Reset to beginning of new chapter
-                        loading: false
+                        chapterTransitionLoading: false
                     }));
                 } else {
                     setState(prev => ({
                         ...prev,
                         error: 'Chapter not found',
-                        loading: false
+                        chapterTransitionLoading: false
                     }));
                 }
             } else {
                 setState(prev => ({
                     ...prev,
                     error: 'Book ID and chapter number are required',
-                    loading: false
+                    chapterTransitionLoading: false
                 }));
             }
         } catch (error) {
@@ -270,7 +273,7 @@ export const useReader = () => {
             setState(prev => ({
                 ...prev,
                 error: 'Failed to load chapter',
-                loading: false
+                chapterTransitionLoading: false
             }));
         }
     }, [bookId, state.currentChapterNumber]);
@@ -363,6 +366,7 @@ export const useReader = () => {
         book: state.book,
         chapter: state.chapter,
         loading: state.loading,
+        chapterTransitionLoading: state.chapterTransitionLoading,
         error: state.error,
         currentChapterNumber: state.currentChapterNumber || 1,
 

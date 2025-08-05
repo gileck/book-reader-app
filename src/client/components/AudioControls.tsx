@@ -53,6 +53,7 @@ interface AudioControlsProps {
     ttsServiceAvailable?: boolean;
     ttsError?: TtsErrorDetail | null;
     onDismissError?: () => void;
+    chapterTransitionLoading?: boolean;
     // Enhanced progress data
     progressData?: {
         chapterProgress: number;
@@ -91,7 +92,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onNavigateToBookmark,
     ttsServiceAvailable = true,
     ttsError,
-    onDismissError
+    onDismissError,
+    chapterTransitionLoading = false
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
     const displayProgress = progress;
@@ -111,6 +113,28 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             paddingBottom: 'max(30px, env(safe-area-inset-bottom))',
             zIndex: 1000
         }}>
+            {/* Chapter Transition Progress Bar - Overlay at top */}
+            {chapterTransitionLoading && (
+                <Box sx={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    left: 0, 
+                    right: 0,
+                    zIndex: 1001
+                }}>
+                    <LinearProgress
+                        sx={{
+                            height: 3,
+                            borderRadius: 0,
+                            backgroundColor: 'rgba(64, 64, 64, 0.3)',
+                            '& .MuiLinearProgress-bar': {
+                                backgroundColor: '#ff9800',
+                                borderRadius: 0
+                            }
+                        }}
+                    />
+                </Box>
+            )}
             {/* Error Alert - Show when there's a TTS error */}
             {hasError && (
                 <Box sx={{ mb: 2, mx: 'auto', maxWidth: 600 }}>

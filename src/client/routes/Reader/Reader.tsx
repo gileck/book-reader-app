@@ -24,6 +24,7 @@ export const Reader = () => {
         book,
         chapter,
         loading,
+        chapterTransitionLoading,
         error,
         audio,
         settings,
@@ -70,7 +71,7 @@ export const Reader = () => {
     // Initialize scroll handling hook
     useScrollHandling(loading, chapter, audio.currentChunkIndex);
 
-    if (loading || !settings.settingsLoaded) {
+    if ((loading && !chapterTransitionLoading) || !settings.settingsLoaded) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
                 <CircularProgress />
@@ -173,6 +174,7 @@ export const Reader = () => {
                     ttsServiceAvailable={audio.ttsServiceAvailable}
                     ttsError={audio.ttsError}
                     onDismissError={audio.clearTtsError}
+                    chapterTransitionLoading={chapterTransitionLoading}
                 />
 
                 {/* Speed Control Modal */}
