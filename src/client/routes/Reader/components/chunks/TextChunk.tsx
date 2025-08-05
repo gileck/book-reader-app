@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { TextChunkClient, ChunkLink } from '@/apis/chapters/types';
 import { EnhancedText } from '../EnhancedText';
 
@@ -18,12 +17,17 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     handleLinkClick
 }) => {
     return (
-        <Box
-            sx={{
-                lineHeight: 1.6,
-                fontSize: '1rem'
-            }}
-            className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+        <div
+        style={{
+            lineHeight: 'var(--reader-line-height, 1.6)',
+            fontSize: 'var(--reader-font-size, 1rem)',
+            fontFamily: 'var(--reader-font-family, inherit)',
+            color: 'var(--reader-text-color, inherit)',
+            padding: '0px 5px 0px 5px',
+            backgroundColor: currentChunkIndex === chunkIndex ? 'var(--sentence-highlight-color, transparent)' : 'transparent',
+            borderRadius: '6px',
+            transition: 'all 0.3s ease'
+        }}
             id={`text-chunk-${chunkIndex}`}
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}
@@ -33,6 +37,6 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                 chunkIndex={chunkIndex}
                 onLinkClick={handleLinkClick}
             />
-        </Box>
+        </div>
     );
 }; 

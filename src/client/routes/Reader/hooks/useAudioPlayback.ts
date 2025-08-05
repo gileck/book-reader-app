@@ -28,15 +28,7 @@ const getDefaultAudioPlaybackState = (): AudioPlaybackState => ({
  * DOM Highlighting API - manipulates word highlighting classes directly on DOM elements
  */
 const WordHighlightingAPI = {
-    // Set word highlight color CSS custom property on document root  
-    setWordHighlightColor: (color: string) => {
-        document.documentElement.style.setProperty('--word-highlight-color', color);
-    },
 
-    // Set sentence highlight color CSS custom property on document root
-    setSentenceHighlightColor: (color: string) => {
-        document.documentElement.style.setProperty('--sentence-highlight-color', color);
-    },
 
     // Add highlight class to a specific word
     highlightWord: (chunkIndex: number, wordIndex: number) => {
@@ -80,9 +72,7 @@ export const useAudioPlayback = (
     playbackSpeed: number,
     wordSpeedOffset: number,
     currentChapterNumber: number,
-    onCurrentChunkChange: (chunkIndex: number) => void,
-    highlightColor?: string,
-    sentenceHighlightColor?: string
+    onCurrentChunkChange: (chunkIndex: number) => void
 ) => {
     const [state, setState] = useState(getDefaultAudioPlaybackState());
     const pendingRequests = useRef<Set<number>>(new Set());
@@ -446,13 +436,7 @@ export const useAudioPlayback = (
 
     // Set up interval-based word highlighting (100ms intervals) - only when playing
     useEffect(() => {
-        // Set colors on mount and when they change
-        if (highlightColor) {
-            WordHighlightingAPI.setWordHighlightColor(highlightColor);
-        }
-        if (sentenceHighlightColor) {
-            WordHighlightingAPI.setSentenceHighlightColor(sentenceHighlightColor);
-        }
+
 
         // Clear any existing interval
         if (highlightIntervalRef.current) {
@@ -498,7 +482,7 @@ export const useAudioPlayback = (
             }
             // Keep highlight visible when paused - only clear on unmount
         };
-    }, [currentChunkIndex, state.currentWordIndex, state.isPlaying, highlightColor, sentenceHighlightColor]);
+    }, [currentChunkIndex, state.currentWordIndex, state.isPlaying]);
 
     // Cleanup highlights on component unmount
     useEffect(() => {

@@ -34,6 +34,7 @@ interface ThemeModalProps {
     onLineHeightChange: (lineHeight: number) => void;
     onFontFamilyChange: (fontFamily: string) => void;
     onTextColorChange: (textColor: string) => void;
+    onResetToDefaults: () => void;
 }
 
 export const ThemeModal: React.FC<ThemeModalProps> = ({
@@ -52,7 +53,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onFontSizeChange,
     onLineHeightChange,
     onFontFamilyChange,
-    onTextColorChange
+    onTextColorChange,
+    onResetToDefaults
 }) => {
     const [localTheme, setLocalTheme] = useState(currentTheme);
     const [localHighlightColor, setLocalHighlightColor] = useState(currentHighlightColor);
@@ -141,6 +143,11 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         const newHeight = Math.min(2.0, Math.round((localLineHeight + 0.1) * 10) / 10);
         setLocalLineHeight(newHeight);
         onLineHeightChange(newHeight);
+    };
+
+    const handleResetToDefaults = () => {
+        // Call the reset function passed from parent
+        onResetToDefaults();
     };
 
     const presetColors = [
@@ -431,6 +438,13 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                 </Box>
             </DialogContent>
             <DialogActions>
+                <Button 
+                    onClick={handleResetToDefaults}
+                    variant="outlined"
+                    color="secondary"
+                >
+                    Reset to Defaults
+                </Button>
                 <Button onClick={onClose}>Close</Button>
             </DialogActions>
         </Dialog>

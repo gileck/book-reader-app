@@ -133,6 +133,12 @@ export const Reader = () => {
                         onNavigateToChunk={navigation.setCurrentChunkIndex}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
                         currentChunkIndex={audio.currentChunkIndex}
+                        fontSize={settings.fontSize}
+                        lineHeight={settings.lineHeight}
+                        fontFamily={settings.fontFamily}
+                        textColor={settings.textColor}
+                        highlightColor={settings.highlightColor}
+                        sentenceHighlightColor={settings.sentenceHighlightColor}
                     />
                 </Paper>
 
@@ -202,6 +208,7 @@ export const Reader = () => {
                     onLineHeightChange={settings.handleLineHeightChange}
                     onFontFamilyChange={settings.handleFontFamilyChange}
                     onTextColorChange={settings.handleTextColorChange}
+                    onResetToDefaults={settings.handleResetToDefaults}
                 />
 
                 {/* Book Q&A Panel */}

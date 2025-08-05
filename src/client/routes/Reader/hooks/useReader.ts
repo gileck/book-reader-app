@@ -304,9 +304,7 @@ export const useReader = () => {
         userSettings.playbackSpeed,
         userSettings.wordSpeedOffset,
         state.currentChapterNumber || 1,
-        setCurrentChunkIndex, // Callback for audio to update reader state
-        userSettings.highlightColor,
-        userSettings.sentenceHighlightColor
+        setCurrentChunkIndex // Callback for audio to update reader state
     );
 
     // Reading progress hook - now just for tracking changes and saving
@@ -442,7 +440,8 @@ export const useReader = () => {
             handleFontSizeChange: userSettings.handleFontSizeChange,
             handleLineHeightChange: userSettings.handleLineHeightChange,
             handleFontFamilyChange: userSettings.handleFontFamilyChange,
-            handleTextColorChange: userSettings.handleTextColorChange
+            handleTextColorChange: userSettings.handleTextColorChange,
+            handleResetToDefaults: userSettings.handleResetToDefaults
         },
 
         // Bookmarks

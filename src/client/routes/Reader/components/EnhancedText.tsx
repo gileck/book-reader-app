@@ -103,9 +103,9 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         if (hasTargetLinks) {
             // For target links, format as footnote definitions: "1) Text..."
             return (
-                <div style={{ marginTop: '1em', lineHeight: 1.6 }}>
+                <span style={{ marginTop: '1em', lineHeight: 1.6 }}>
                     {links.map((link, i) => (
-                        <div key={`target-${i}`} style={{ marginBottom: '0.5em' }}>
+                        <span key={`target-${i}`} style={{ marginBottom: '0.5em' }}>
                             <span
                                 className="clickable-link target"
                                 onClick={(e) => {
@@ -122,9 +122,9 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
                             </span>
                             {' '}
                             {text.replace(link.text, '').trim()}
-                        </div>
+                        </span>
                     ))}
-                </div>
+                </span>
             );
         }
 
@@ -210,5 +210,5 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         return renderElementsWithHighlighting(elements);
     };
 
-    return <div>{renderTextWithLinks()}</div>;
+    return <span>{renderTextWithLinks()}</span>;
 }; 

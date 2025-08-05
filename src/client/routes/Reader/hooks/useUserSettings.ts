@@ -63,6 +63,9 @@ export const useUserSettings = (userId: string) => {
                         fontFamily: settings.fontFamily,
                         textColor: settings.textColor
                     });
+
+                    // CSS variables are now set locally in ReaderContent component
+                    // No global CSS variable setting needed
                 }
             } catch (error) {
                 console.error('Error loading user settings:', error);
@@ -251,6 +254,40 @@ export const useUserSettings = (userId: string) => {
         }
     }, [userId, updateState]);
 
+    const handleResetToDefaults = useCallback(async () => {
+        // Get default values
+        const defaults = getDefaultUserSettingsState();
+        
+        // Update state with all defaults
+        updateState({
+            theme: defaults.theme,
+            highlightColor: defaults.highlightColor,
+            sentenceHighlightColor: defaults.sentenceHighlightColor,
+            fontSize: defaults.fontSize,
+            lineHeight: defaults.lineHeight,
+            fontFamily: defaults.fontFamily,
+            textColor: defaults.textColor
+        });
+
+        try {
+            // Save all default theme settings to backend
+            await updateUserSettings({
+                userId,
+                settings: {
+                    theme: defaults.theme,
+                    highlightColor: defaults.highlightColor,
+                    sentenceHighlightColor: defaults.sentenceHighlightColor,
+                    fontSize: defaults.fontSize,
+                    lineHeight: defaults.lineHeight,
+                    fontFamily: defaults.fontFamily,
+                    textColor: defaults.textColor
+                }
+            });
+        } catch (error) {
+            console.error('Error resetting theme to defaults:', error);
+        }
+    }, [userId, updateState]);
+
     return {
         playbackSpeed: state.playbackSpeed,
         selectedVoice: state.selectedVoice,
@@ -280,6 +317,7 @@ export const useUserSettings = (userId: string) => {
         handleFontSizeChange,
         handleLineHeightChange,
         handleFontFamilyChange,
-        handleTextColorChange
+        handleTextColorChange,
+        handleResetToDefaults
     };
 }; 

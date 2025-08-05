@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
@@ -14,6 +14,13 @@ interface ReaderContentProps {
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
     currentChunkIndex: number;
+    // Theme settings - applied only to reader content
+    fontSize: number;
+    lineHeight: number;
+    fontFamily: string;
+    textColor: string;
+    highlightColor: string;
+    sentenceHighlightColor: string;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -25,8 +32,28 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     onNavigateToChapter,
     onNavigateToChunk,
     onNavigateToBookmark,
-    currentChunkIndex
+    currentChunkIndex,
+    fontSize,
+    lineHeight,
+    fontFamily,
+    textColor,
+    highlightColor,
+    sentenceHighlightColor
 }) => {
+    const readerContentRef = useRef<HTMLDivElement>(null);
+
+    // Set CSS variables on the reader content container only
+    useEffect(() => {
+        const container = readerContentRef.current;
+        if (container) {
+            container.style.setProperty('--reader-font-size', `${fontSize}rem`);
+            container.style.setProperty('--reader-line-height', lineHeight.toString());
+            container.style.setProperty('--reader-font-family', fontFamily);
+            container.style.setProperty('--reader-text-color', textColor);
+            container.style.setProperty('--word-highlight-color', highlightColor);
+            container.style.setProperty('--sentence-highlight-color', sentenceHighlightColor);
+        }
+    }, [fontSize, lineHeight, fontFamily, textColor, highlightColor, sentenceHighlightColor]);
     // Navigate to chunk with parser v2 targeting
     const handleNavigateToChunk = useCallback((chunkIndex: number) => {
         console.log('🚀 ReaderContent: Navigating to chunk', chunkIndex);
@@ -74,7 +101,17 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
 
     // Render content using ChunkRenderer
     return (
-        <Box sx={{ mt: 4 }} ref={scrollContainerRef}>
+        <Box 
+            ref={readerContentRef}
+            sx={{ 
+                mt: 4,
+                // Apply theme settings directly to the reader content container
+                fontSize: 'var(--reader-font-size, 1rem)',
+                lineHeight: 'var(--reader-line-height, 1.5)',
+                fontFamily: 'var(--reader-font-family, Inter, system-ui, sans-serif)',
+                color: 'var(--reader-text-color, inherit)'
+            }}
+        >
             <ChunkRenderer
                 paragraphGroups={paragraphGroups}
                 book={book}

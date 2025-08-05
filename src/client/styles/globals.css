@@ -100,16 +100,6 @@ body {
   transition: all 0.2s ease;
 }
 
-/* Sentence Highlighting - Configurable from theme panel */
-.current-sentence {
-  background-color: var(--sentence-highlight-color, transparent);
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin: 2px 0;
-  border-left: 3px solid var(--sentence-highlight-border, #007AFF);
-  transition: all 0.3s ease;
-}
-
 /* Global animations */
 @keyframes spin {
   0% {

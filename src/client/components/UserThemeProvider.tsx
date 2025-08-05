@@ -64,16 +64,7 @@ export const UserThemeProvider: React.FC<UserThemeProviderProps> = ({
                 },
             })
         },
-        typography: {
-            fontSize: 14 * fontSize,
-            fontFamily: fontFamily,
-            body1: {
-                lineHeight: lineHeight,
-            },
-            body2: {
-                lineHeight: lineHeight,
-            }
-        },
+        // Typography settings removed - now handled locally in Reader content only
         components: {
             MuiPaper: {
                 styleOverrides: {
