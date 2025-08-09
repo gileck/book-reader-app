@@ -324,6 +324,37 @@ export const BookLibrary = () => {
         }
     });
 
+    const formatDateDDMMYYYY = (dateInput: string | Date): string => {
+        const date = new Date(dateInput);
+        if (Number.isNaN(date.getTime())) return '';
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    const timeAgo = (dateInput: string | Date): string => {
+        const date = new Date(dateInput);
+        if (Number.isNaN(date.getTime())) return '';
+        const now = new Date();
+        const diffMs = now.getTime() - date.getTime();
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        if (diffHours < 24) {
+            const hours = Math.max(1, diffHours);
+            return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+        }
+        const diffDays = Math.floor(diffHours / 24);
+        if (diffDays < 30) {
+            return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
+        }
+        const diffMonths = Math.floor(diffDays / 30);
+        if (diffMonths < 12) {
+            return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'} ago`;
+        }
+        const diffYears = Math.floor(diffDays / 365);
+        return `${diffYears} ${diffYears === 1 ? 'year' : 'years'} ago`;
+    };
+
     if (loading) {
         return (
             <div className={styles.bookLibrary}>
@@ -388,7 +419,7 @@ export const BookLibrary = () => {
                                             <img
                                                 src={
                                                     book.coverImage && book.coverImage.startsWith('http') ?
-                                                        book.coverImage : `${IMAGES_BASE_PATH}${book.coverImage.startsWith('/') ? book.coverImage.slice(1) : book.coverImage}`.replace(/\s+/g, '')
+                                                        book.coverImage : `${IMAGES_BASE_PATH}/${book.coverImage.startsWith('/') ? book.coverImage.slice(1) : book.coverImage}`.replace(/\s+/g, '')
                                                 }
                                                 alt={`${book.title} cover`}
                                                 className={styles.bookCover}
@@ -423,7 +454,13 @@ export const BookLibrary = () => {
                                                 <h3 className={styles.bookTitle}>{book.title}</h3>
                                                 <p className={styles.bookAuthor}>{book.author || 'Unknown Author'}</p>
                                                 <p className={styles.bookDateAdded}>
-                                                    Added {new Date(book.createdAt).toLocaleDateString()}
+                                                    Added {formatDateDDMMYYYY(book.createdAt)}
+                                                    {book.progress?.lastReadAt && (
+                                                        <>
+                                                            <br />
+                                                            Last read {timeAgo(book.progress.lastReadAt)}
+                                                        </>
+                                                    )}
                                                 </p>
                                             </div>
                                             <div className={styles.bookActions}>

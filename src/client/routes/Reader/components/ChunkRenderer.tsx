@@ -36,6 +36,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         key={`${groupIndex}-${chunkIndexInGroup}`}
                         chunk={chunk}
                         chunkIndex={flatChunkIndex}
+                        currentChunkIndex={currentChunkIndex}
                     />
                 );
 
@@ -67,7 +68,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     return (
         <>
             {paragraphGroups.map((group, groupIndex) => (
-                <Box  key={groupIndex} sx={{ mb: 2 }}>
+                <Box key={groupIndex} sx={{ mb: 2 }}>
                     {group.chunks.map((chunk, chunkIndexInGroup) =>
                         renderChunk(chunk, groupIndex, chunkIndexInGroup)
                     )}

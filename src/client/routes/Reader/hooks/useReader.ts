@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
-import { getBook, getBooks } from '../../../../apis/books/client';
+import { getBook } from '../../../../apis/books/client';
 import { getChapterByNumber } from '../../../../apis/chapters/client';
 import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
@@ -10,8 +10,10 @@ import { useUserSettings } from './useUserSettings';
 import { useBookmarks } from './useBookmarks';
 import { useReadingProgress } from './useReadingProgress';
 import { useReadingLogs } from './useReadingLogs';
+import { useAuth } from '@/client/context/AuthContext';
+import { apiUpdateProfile } from '@/apis/auth/client';
 
-const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
+// Read user from auth context
 
 interface ReaderState {
     book: BookClient | null;
@@ -24,10 +26,11 @@ interface ReaderState {
 }
 
 export const useReader = () => {
-    const { queryParams } = useRouter();
+    const { queryParams, navigate } = useRouter();
+    const { user, isInitialLoading } = useAuth();
     const { bookId: queryBookId, chapter: queryChapter, chunk: queryChunk } = queryParams;
 
-    // Use bookId from query params, or fall back to active book from localStorage
+    // Use bookId from query params, or fall back to active book from user document
     const [bookId, setBookId] = useState<string | undefined>(queryBookId);
     const [bookIdResolved, setBookIdResolved] = useState<boolean>(false);
 
@@ -42,60 +45,11 @@ export const useReader = () => {
         error: null
     });
 
-    // Get current book ID from reading status if no book ID provided
+    // Get current book ID from user.activeBookId only
     const getCurrentBookId = async (): Promise<string | null> => {
         try {
-            // First try localStorage
-            const activeBookId = localStorage.getItem('activeBookId');
-            if (activeBookId) {
-                return activeBookId;
-            }
-
-            // If no activeBookId, get all books and find the most recently read one
-            const booksResult = await getBooks({});
-            if (!booksResult.data?.books) {
-                return null;
-            }
-
-            const books = booksResult.data.books;
-            let mostRecentBook: { bookId: string; lastReadAt: Date } | null = null;
-
-            // Check reading progress for each book to find the most recently read
-            for (const book of books) {
-                try {
-                    const progressResult = await getReadingProgress({
-                        userId,
-                        bookId: book._id
-                    });
-
-                    if (progressResult.data?.readingProgress) {
-                        const lastReadAt = new Date(progressResult.data.readingProgress.lastReadAt);
-                        if (!mostRecentBook || lastReadAt > mostRecentBook.lastReadAt) {
-                            mostRecentBook = {
-                                bookId: book._id,
-                                lastReadAt
-                            };
-                        }
-                    }
-                } catch (error) {
-                    // Continue if we can't get progress for this book
-                    console.warn(`Failed to get progress for book ${book._id}:`, error);
-                }
-            }
-
-            if (mostRecentBook) {
-                // Set this as the active book in localStorage for future use
-                localStorage.setItem('activeBookId', mostRecentBook.bookId);
-                return mostRecentBook.bookId;
-            }
-
-            // If no reading progress found, return the first book
-            if (books.length > 0) {
-                localStorage.setItem('activeBookId', books[0]._id);
-                return books[0]._id;
-            }
-
-            return null;
+            const activeBookIdFromUser = user?.activeBookId;
+            return activeBookIdFromUser || null;
         } catch (error) {
             console.error('Error getting current book ID:', error);
             return null;
@@ -105,18 +59,34 @@ export const useReader = () => {
     // Handle Active Book concept
     useEffect(() => {
         const resolveBookId = async () => {
+            // Wait for initial auth load
+            if (isInitialLoading) return;
+
             if (queryBookId) {
+                // Persist the provided bookId as the active book
+                if (user?.id && user?.activeBookId !== queryBookId) {
+                    try {
+                        await apiUpdateProfile({ activeBookId: queryBookId });
+                    } catch (err) {
+                        console.warn('Failed to persist activeBookId to user', err);
+                    }
+                }
+
                 setBookId(queryBookId);
                 setBookIdResolved(true);
             } else {
                 const currentBookId = await getCurrentBookId();
+                if (!currentBookId) {
+                    // No active book could be determined; redirect to library
+                    navigate('/book-library');
+                }
                 setBookId(currentBookId || undefined);
                 setBookIdResolved(true);
             }
         };
 
         resolveBookId();
-    }, [queryBookId]);
+    }, [queryBookId, isInitialLoading, user?.activeBookId, navigate]);
 
     // Sequential loading flow
     useEffect(() => {
@@ -167,7 +137,7 @@ export const useReader = () => {
                 } else {
                     // Wait for reading progress and use that data
                     try {
-                        const progressResult = await getReadingProgress({ userId, bookId });
+                        const progressResult = await getReadingProgress({ userId: user?.id || '', bookId });
                         if (progressResult.data?.success && progressResult.data.readingProgress) {
                             // Use saved progress
                             currentChapter = progressResult.data.readingProgress.currentChapter;
@@ -231,7 +201,7 @@ export const useReader = () => {
         };
 
         loadReaderData();
-    }, [bookId, bookIdResolved, userId, queryChapter, queryChunk]);
+    }, [bookId, bookIdResolved, queryChapter, queryChunk]);
 
     // Function to change chapter (for navigation)
     const setCurrentChapterNumber = useCallback(async (chapterNumber: number) => {
@@ -279,7 +249,7 @@ export const useReader = () => {
     }, [bookId, state.currentChapterNumber]);
 
     // Initialize hooks only after we have the data
-    const userSettings = useUserSettings(userId);
+    const userSettings = useUserSettings(user?.id || '');
 
     // Unified function to update chunk index (single source of truth in reader)
     const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
@@ -300,7 +270,7 @@ export const useReader = () => {
 
     // Reading progress hook - now just for tracking changes and saving
     const readingProgress = useReadingProgress({
-        userId,
+        userId: user?.id || '',
         bookId,
         currentChapterNumber: state.currentChapterNumber,
         currentChunkIndex: state.currentChunkIndex,
@@ -310,7 +280,7 @@ export const useReader = () => {
 
     // Reading logs hook - logs every chunk that is played
     useReadingLogs({
-        userId,
+        userId: user?.id || '',
         bookId,
         chapter: state.chapter,
         currentChunkIndex: state.currentChunkIndex,

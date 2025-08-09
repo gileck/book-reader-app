@@ -20,7 +20,8 @@ export const sanitizeUser = (user: User): UserResponse => {
         username: user.username,
         email: user.email,
         createdAt: user.createdAt.toISOString(),
-        profilePicture: user.profilePicture
+        profilePicture: user.profilePicture,
+        activeBookId: user.activeBookId
     };
 };
 

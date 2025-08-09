@@ -5,12 +5,14 @@ import { TextChunkClient } from '@/apis/chapters/types';
 interface HeaderChunkProps {
     chunk: TextChunkClient;
     chunkIndex: number;
+    currentChunkIndex: number;
     level?: number; // Determined by content analysis
 }
 
 export const HeaderChunk: React.FC<HeaderChunkProps> = ({
     chunk,
     chunkIndex,
+    currentChunkIndex,
     level = 2
 }) => {
     // Determine header level based on content length and formatting
@@ -64,7 +66,16 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                     md: headerLevel <= 2 ? 4 : 3
                 },
                 p: { xs: 2, sm: 3 },
+                backgroundColor:
+                    currentChunkIndex === chunkIndex
+                        ? 'var(--sentence-highlight-color, transparent)'
+                        : 'transparent',
+                borderRadius: '6px',
+                transition: 'all 0.3s ease'
             }}
+            id={`header-chunk-${chunkIndex}`}
+            data-chunk-index={chunkIndex}
+            data-paragraph-index={chunk.paragraphIndex}
         >
             <Typography
                 variant={variant}
@@ -78,8 +89,6 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                     letterSpacing: '0.5px',
                     m: 0
                 }}
-                id={`header-chunk-${chunkIndex}`}
-                data-chunk-index={chunkIndex}
             >
                 {chunk.text}
             </Typography>

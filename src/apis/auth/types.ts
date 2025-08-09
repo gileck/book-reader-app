@@ -25,6 +25,7 @@ export type LogoutResponse = {
 export interface UpdateProfileRequest {
     username?: string;
     profilePicture?: string;
+    activeBookId?: string;
 }
 
 export interface UpdateProfileResponse {
@@ -40,6 +41,7 @@ export interface UserResponse {
     email?: string;
     createdAt: string;
     profilePicture?: string;
+    activeBookId?: string;
 }
 
 export interface AuthTokenPayload {
