@@ -63,11 +63,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                     sm: headerLevel <= 2 ? 3 : 2,
                     md: headerLevel <= 2 ? 4 : 3
                 },
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: 2,
                 p: { xs: 2, sm: 3 },
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                border: '1px solid rgba(255,255,255,0.1)'
             }}
         >
             <Typography
@@ -78,10 +74,8 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                     fontWeight: 'bold',
                     lineHeight: { xs: 1.2, sm: 1.3 },
                     fontSize: getFontSize(headerLevel),
-                    textAlign: 'center',
                     textShadow: '0 2px 4px rgba(0,0,0,0.3)',
                     letterSpacing: '0.5px',
-                    textTransform: 'uppercase',
                     m: 0
                 }}
                 id={`header-chunk-${chunkIndex}`}

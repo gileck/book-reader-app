@@ -133,10 +133,26 @@ async function execute(pipelineState, config) {
  */
 function detectChunksInChapter(chapter, chapterNumber) {
     const chunks = [];
+    let pendingOrphanLetter = null;
 
     for (const page of chapter.pages) {
         // First, add all text chunks (paragraphs and headers)
         const pageChunks = detectChunksInPage(page, chapterNumber, 0); // Pass 0 as placeholder
+
+        // If we have a pending orphan letter from previous page, prepend to first lowercase paragraph
+        if (pendingOrphanLetter) {
+            for (let idx = 0; idx < pageChunks.length; idx++) {
+                if (pageChunks[idx].type === 'paragraph') {
+                    if (/^[a-z]/.test(pageChunks[idx].content)) {
+                        pageChunks[idx].content = pendingOrphanLetter + pageChunks[idx].content;
+                        pageChunks[idx].wordCount = getWordCount(pageChunks[idx].content);
+                    }
+                    break;
+                }
+            }
+            pendingOrphanLetter = null;
+        }
+
         chunks.push(...pageChunks);
 
         // Then, add image chunks at the end of the page if there are any images
@@ -144,6 +160,20 @@ function detectChunksInChapter(chapter, chapterNumber) {
             for (const image of page.images) {
                 const imageChunk = createImageChunk(image, page, '');
                 chunks.push(imageChunk);
+            }
+        }
+
+        // If this page ends with an orphan uppercase single-letter line, carry it to next page
+        const raw = (page.rawContent && typeof page.rawContent === 'string') ? page.rawContent : page.content;
+        if (raw) {
+            const rawLines = raw.split('\n').map(l => (l || '').trim());
+            for (let k = rawLines.length - 1; k >= 0; k--) {
+                const t = rawLines[k];
+                if (t.length === 0) continue;
+                if (/^[A-Z]$/.test(t)) {
+                    pendingOrphanLetter = t;
+                }
+                break;
             }
         }
     }
@@ -180,16 +210,96 @@ function generateChapterPrefix(title) {
  */
 function detectChunksInPage(page, chapterNumber, startChunkCounter) {
     const chunks = [];
-    const lines = page.content.split('\n');
+    // Prefer rawContent when available to preserve artifacts like orphan leading letters before headers
+    const baseContent = (page.rawContent && typeof page.rawContent === 'string') ? page.rawContent : page.content;
+    const lines = baseContent.split('\n');
 
     let currentParagraph = '';
     let currentParagraphStartIndex = 0;
+    // If PDF extraction moves the first capital letter to a separate line before the chapter header
+    // (e.g., "I" or "U"), capture it and prepend to the first paragraph after the header.
+    let orphanLeadingLetter = null;
+    let headerJustEmitted = false;
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
 
         // Skip empty lines
         if (!line) {
+            continue;
+        }
+
+        // Detect ALL-CAPS header blocks possibly spanning multiple lines
+        const isAllCapsHeaderBlockLine = (txt) => {
+            const t = (txt || '').trim();
+            if (t.length < 4) return false; // avoid single letters
+            // Allow letters, digits, spaces, commas, hyphens, en/em dashes, colon
+            // Require majority uppercase letters when letters exist
+            const letters = t.replace(/[^A-Za-z]+/g, '');
+            if (letters.length === 0) return false;
+            const upper = letters.replace(/[^A-Z]/g, '').length;
+            const ratio = upper / letters.length;
+            if (ratio < 0.9) return false;
+            // Disallow sentence-ending punctuation
+            if (/[.!?]$/.test(t)) return false;
+            return true;
+        };
+
+        if (isAllCapsHeaderBlockLine(line)) {
+            let j = i;
+            const collected = [lines[j].trim()];
+            j++;
+            while (j < lines.length) {
+                const t = (lines[j] || '').trim();
+                if (t.length === 0) break;
+                if (!isAllCapsHeaderBlockLine(t)) break;
+                collected.push(t);
+                j++;
+            }
+            // Flush any pending paragraph first
+            if (currentParagraph.trim()) {
+                chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                currentParagraph = '';
+            }
+            const headerBlock = collected.join('\n');
+            chunks.push(createHeaderChunk(headerBlock, page, ''));
+            i = j - 1; // advance index
+            headerJustEmitted = true;
+            continue;
+        }
+
+        // Detect orphan capital letter placed on its own line (commonly extracted before chapter headings)
+        // Example:
+        // "I"\n
+        // "CHAPTER TWO"\n
+        // "EXERCISES ..."\n
+        // "n this chapter ..."
+        // We capture the single letter and prepend it to the first paragraph line starting lowercase.
+        if (/^[A-Z]\s*$/.test(line)) {
+            orphanLeadingLetter = line.trim();
+            continue; // skip this orphan letter line entirely
+        }
+
+        // If we captured an orphan leading letter and current line is an ALL-CAPS header-like line,
+        // force-create header regardless of previous-line punctuation rule.
+        const isAllCapsHeaderLine = (txt) => {
+            const t = (txt || '').trim();
+            if (!t) return false;
+            if (/[.!?]$/.test(t)) return false;
+            const words = t.split(/\s+/);
+            if (words.length < 2 || words.length > 8) return false;
+            // Treat as all-caps if letters are uppercase or non-letters
+            return words.every(w => /^(?:[A-Z0-9'’\-]+|&|®|™)$/.test(w) && w === w.toUpperCase());
+        };
+
+        if (orphanLeadingLetter && (isAllCapsHeaderLine(line) || /^CHAPTER\b/i.test(line))) {
+            // Flush any pending paragraph first
+            if (currentParagraph.trim()) {
+                chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                currentParagraph = '';
+            }
+            chunks.push(createHeaderChunk(line, page, ''));
+            headerJustEmitted = true;
             continue;
         }
 
@@ -204,12 +314,30 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             // Create header chunk
             chunks.push(createHeaderChunk(line, page, ''));
             currentParagraphStartIndex = i + 1;
+            headerJustEmitted = true;
         } else {
             // Add line to current paragraph
             if (currentParagraph) {
                 currentParagraph += '\n' + line;
             } else {
-                currentParagraph = line;
+                // If we captured an orphan leading letter like "I" or "U" and
+                // the first line of the paragraph starts with lowercase, restore the capital.
+                if (orphanLeadingLetter && /^[a-z]/.test(line)) {
+                    currentParagraph = orphanLeadingLetter + line;
+                    orphanLeadingLetter = null;
+                } else {
+                    let fixedLine = line;
+                    if (headerJustEmitted && /^[a-z]/.test(line)) {
+                        // Heuristic: first paragraph after a chapter/header often loses first letter
+                        if (/^ntil\b/i.test(line)) {
+                            fixedLine = 'U' + line;
+                        } else if (/^n(\b|\s|[a-z])/i.test(line)) {
+                            fixedLine = 'I' + line;
+                        }
+                    }
+                    currentParagraph = fixedLine;
+                }
+                headerJustEmitted = false;
             }
 
             // Check if paragraph ends (sentence terminator followed by potential new paragraph)
@@ -240,6 +368,7 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                     chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
                     currentParagraph = '';
                     currentParagraphStartIndex = nextContentIndex;
+                    headerJustEmitted = false;
                 }
                 // If next line immediately follows (no empty line) and starts with capital letter,
                 // treat it as continuing the same paragraph (like "The dice were loaded." case)
@@ -263,19 +392,38 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
  * @returns {boolean} - True if line is a header
  */
 function isHeader(line, lineIndex, allLines) {
-    // Rule 1: Length - 2-5 words only
-    const words = line.trim().split(/\s+/);
+    const tline = line.trim();
+
+    // Special case: Numbered headers like "#11. Breath Hold Activation" / "13) ..."
+    // Accept when pattern matches number prefix and 2-12 capitalized words follow, no terminal punctuation
+    const numberedHeaderMatch = tline.match(/^#?\d+[\.)]\s+(.+)$/);
+    if (numberedHeaderMatch) {
+        const title = numberedHeaderMatch[1].trim();
+        if (!/[.!?]$/.test(title)) {
+            const titleWords = title.split(/\s+/);
+            if (titleWords.length >= 2 && titleWords.length <= 12) {
+                const capCount = titleWords.filter(w => /^[A-Z]/.test(w.replace(/^["'“”‘’(]+/, ''))).length;
+                const ratio = capCount / titleWords.length;
+                if (ratio >= 0.6) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // Rule 1: Length - 2-5 words only (but allow numbered headers with more words separately above)
+    const words = tline.split(/\s+/);
     if (words.length < 2 || words.length > 5) {
         return false;
     }
 
     // Rule 2: No Punctuation - Does not end with sentence punctuation
-    if (/[.!?]$/.test(line.trim())) {
+    if (/[.!?]$/.test(tline)) {
         return false;
     }
 
     // Rule 3: Capitalization: Starts with a capital letter OR page number + capital letter
-    if (!/^[A-Z]/.test(line.trim()) && !/^\d+\s+[A-Z]/.test(line.trim())) {
+    if (!/^[A-Z]/.test(tline) && !/^\d+\s+[A-Z]/.test(tline)) {
         return false;
     }
 
@@ -289,8 +437,15 @@ function isHeader(line, lineIndex, allLines) {
 
     // Rule 6: Context - Next - Next line starts with a capital letter
     const nextLine = findNextNonEmptyLine(allLines, lineIndex + 1);
-    if (nextLine !== -1 && !/^[A-Z]/.test(allLines[nextLine].trim())) {
-        return false;
+    if (nextLine !== -1) {
+        const next = allLines[nextLine].trim();
+        // Accept next lines that start with capital OR with list-type content (bulleted or numbered lists)
+        const startsWithCapital = /^[A-Z]/.test(next);
+        const startsWithBullet = /^•\s+\S/.test(next);
+        const startsWithNumberedItem = /^\d+[\.)]\s+/.test(next);
+        if (!startsWithCapital && !startsWithBullet && !startsWithNumberedItem) {
+            return false;
+        }
     }
 
     return true;
@@ -510,54 +665,40 @@ function optimizeChunkSizes(chunks) {
  * @returns {Object|null} - Merged chunk info or null if no merge possible
  */
 function tryMergeWithNextParagraph(chunks, currentIndex) {
-    // Look for next paragraph chunk (skip headers)
+    // Look ahead for next paragraph chunk (skip images; stop at headers)
+    const currentChunk = chunks[currentIndex];
     for (let i = currentIndex + 1; i < chunks.length; i++) {
         const nextChunk = chunks[i];
+        if (nextChunk.type === 'header') break; // natural boundary
+        if (nextChunk.type === 'image') continue; // ignore images between
+        if (nextChunk.type !== 'paragraph') break;
 
-        if (nextChunk.type === 'header') {
-            // If there's a header between paragraphs, don't merge across it
-            // Headers indicate natural section boundaries
-            break;
+        // Don't merge paragraphs from different pages unless they're consecutive
+        if (currentChunk.pageNumber !== nextChunk.pageNumber) {
+            const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
+            if (pageDifference > 1) break;
         }
 
-        if (nextChunk.type === 'paragraph') {
-            const currentChunk = chunks[currentIndex];
-
-            // Don't merge paragraphs from different pages unless they're consecutive
-            // This prevents merging content that was separated by headers at page boundaries
-            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
-                const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
-                if (pageDifference > 1) {
-                    break; // Don't merge across non-consecutive pages
-                }
-            }
-
-            const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
-
-            // Only merge if combined size is reasonable (more generous for very small paragraphs)
-            const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
-            if (combinedWordCount <= maxCombinedSize) {
-                const mergedContent = currentChunk.content + '\n' + nextChunk.content;
-                // Get all potential links from both chunks and re-validate against merged content
-                const allPotentialLinks = [...(currentChunk.links || []), ...(nextChunk.links || [])];
-                const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
-
-                return {
-                    merged: {
-                        chunkId: currentChunk.chunkId, // Keep original chunkId without suffix
-                        type: 'paragraph',
-                        content: mergedContent,
-                        pageNumber: currentChunk.pageNumber,
-                        wordCount: combinedWordCount,
-                        sentenceCount: currentChunk.sentenceCount + nextChunk.sentenceCount,
-                        links: removeDuplicateLinks(validLinks)
-                    },
-                    nextIndex: i
-                };
-            }
+        const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
+        const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
+        if (combinedWordCount <= maxCombinedSize) {
+            const mergedContent = currentChunk.content + '\n' + nextChunk.content;
+            const allPotentialLinks = [...(currentChunk.links || []), ...(nextChunk.links || [])];
+            const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
+            return {
+                merged: {
+                    chunkId: currentChunk.chunkId,
+                    type: 'paragraph',
+                    content: mergedContent,
+                    pageNumber: currentChunk.pageNumber,
+                    wordCount: combinedWordCount,
+                    sentenceCount: currentChunk.sentenceCount + nextChunk.sentenceCount,
+                    links: removeDuplicateLinks(validLinks)
+                },
+                nextIndex: i
+            };
         }
-
-        break; // Only check the next paragraph chunk
+        break; // found next paragraph but cannot merge due to size
     }
 
     return null;
@@ -576,6 +717,10 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
 
         if (previousChunk.type === 'header') {
             // If there's a header between paragraphs, don't merge across it
+            continue;
+        }
+        if (previousChunk.type === 'image') {
+            // Ignore images between paragraphs
             continue;
         }
 

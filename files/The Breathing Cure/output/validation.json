@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "totalDuration": 29556,
+    "timestamp": "2025-08-09T08:15:10.793Z",
+    "success": true,
+    "totalSteps": 11,
+    "validatedSteps": 0,
+    "failedSteps": 0
+  },
+  "steps": {
+    "step-1": null,
+    "step-2-1": null,
+    "step-2-2": null,
+    "step-2-3": null,
+    "step-3": null,
+    "step-3-1": null,
+    "step-3-2": null,
+    "step-4": null,
+    "step-5": null,
+    "step-5-1": null,
+    "step-6": null
+  }
+}

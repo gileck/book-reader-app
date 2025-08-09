@@ -69,6 +69,12 @@ export const readCache = async <T>(cacheKey: string, ttl?: number): Promise<{ da
     // Check if the cache has expired using provided TTL or default
     const cacheTtl = ttl || 3600000;
     if (new Date(metadata.createdAt).getTime() + cacheTtl < Date.now()) {
+      // Proactively delete expired cache file
+      try {
+        await deleteFile(filePath);
+      } catch {
+        // Ignore delete errors
+      }
       return null;
     }
 

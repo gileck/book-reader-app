@@ -231,7 +231,7 @@ function convertParserOutputToChapters(finalOutput, bookTitle) {
                 }
 
                 return {
-                    index: index,  // Use array position as index
+                    index: index,
                     text: chunk.content || chunk.text || (chunk.type === 'image' ? chunk.imageAlt || '' : ''),
                     wordCount: chunk.wordCount || 0,
                     type: dbType,
@@ -245,9 +245,9 @@ function convertParserOutputToChapters(finalOutput, bookTitle) {
                             targetText: link.targetText,
                             linkId: link.linkId,
                             role: link.role,
-                            // Step 5.1 chunk array indexes
-                            ...(link.targetChunkIndex !== undefined && { targetChunkIndex: link.targetChunkIndex }),
-                            ...(link.sourceChunkIndex !== undefined && { sourceChunkIndex: link.sourceChunkIndex }),
+                            // NEW: Step 5.1 chunk references
+                            ...(link.targetChunkId && { targetChunkId: link.targetChunkId }),
+                            ...(link.sourceChunkId && { sourceChunkId: link.sourceChunkId }),
                             // Legacy fields for compatibility
                             ...(link.targetChunk !== undefined && { targetChunk: link.targetChunk }),
                             ...(link.chapterNumber !== undefined && { chapterNumber: link.chapterNumber })
@@ -373,6 +373,10 @@ async function uploadParsedBookV2(outputFolderPath) {
     // Update book metadata with actual counts
     bookMetadata.totalChapters = chapters.length;
     bookMetadata.totalWords = chapters.reduce((sum, chapter) => sum + chapter.wordCount, 0);
+    // Determine the starting chapter number (0 or 1) based on first chapter present
+    const chapterNumbers = chapters.map(ch => ch.chapterNumber).filter(n => typeof n === 'number');
+    const firstChapterNumber = chapterNumbers.length > 0 ? Math.min(...chapterNumbers) : 1;
+    bookMetadata.chapterStartNumber = firstChapterNumber;
 
     const client = new MongoClient(uri);
 
@@ -412,6 +416,7 @@ async function uploadParsedBookV2(outputFolderPath) {
                 totalWords: bookMetadata.totalWords,
                 language: bookMetadata.language,
                 parserVersion: bookMetadata.parserVersion,
+                chapterStartNumber: bookMetadata.chapterStartNumber,
                 updatedAt: new Date()
             };
 
@@ -433,6 +438,7 @@ async function uploadParsedBookV2(outputFolderPath) {
                 totalWords: bookMetadata.totalWords,
                 language: bookMetadata.language,
                 parserVersion: bookMetadata.parserVersion,
+                chapterStartNumber: bookMetadata.chapterStartNumber,
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 isPublic: true,
@@ -491,51 +497,63 @@ async function uploadParsedBookV2(outputFolderPath) {
         const uploadImages = process.argv.includes('--upload-images');
         const skipImages = process.argv.includes('--skip-images');
 
-        if (skipImages) {
-            console.log('⏭️  Skipping image upload (--skip-images flag provided)');
-        } else if (!uploadImages) {
-            console.log('⏭️  Skipping image upload (use --upload-images flag to upload images)');
-        } else if (BLOB_READ_WRITE_TOKEN && imagesPath) {
-            await uploadImagesToBlob(finalBook, imagesPath, db);
-        } else if (!BLOB_READ_WRITE_TOKEN && imagesPath) {
-            console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
-            console.log('   Images remain in local folder and imageName references are preserved');
-        } else if (imagesPath && !uploadImages) {
-            // Set coverImage even when not uploading to blob
-            const imageFiles = [];
-            function findImageFiles(dir, relativePath = '') {
-                const files = fs.readdirSync(dir);
-                for (const file of files) {
-                    const fullPath = path.join(dir, file);
-                    const relativeFilePath = path.join(relativePath, file);
-
-                    if (fs.statSync(fullPath).isDirectory()) {
-                        findImageFiles(fullPath, relativeFilePath);
-                    } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file)) {
-                        imageFiles.push({
-                            localPath: fullPath,
-                            relativePath: relativeFilePath,
-                            filename: file
-                        });
-                    }
-                }
+        if (imagesPath) {
+            if (skipImages) {
+                console.log('⏭️  Skipping image upload (--skip-images flag provided)');
+            } else if (uploadImages && BLOB_READ_WRITE_TOKEN) {
+                await uploadImagesToBlob(finalBook, imagesPath, db);
+            } else if (uploadImages && !BLOB_READ_WRITE_TOKEN) {
+                console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
+                console.log('   Images remain in local folder and imageName references are preserved');
+            } else {
+                console.log('⏭️  Skipping image upload (use --upload-images flag to upload images)');
             }
-            findImageFiles(imagesPath);
 
-            if (imageFiles.length > 0) {
-                const bookFolderName = finalBook.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
-                const coverImage = `/${bookFolderName}/images/${imageFiles[0].filename}`;
+            // Always set imageBaseURL and coverImage from local images folder when images exist
+            try {
+                const imageFiles = [];
+                function findImageFiles(dir, relativePath = '') {
+                    const files = fs.readdirSync(dir);
+                    for (const file of files) {
+                        const fullPath = path.join(dir, file);
+                        const relativeFilePath = path.join(relativePath, file);
 
-                await booksCollection.updateOne(
-                    { _id: bookId },
-                    {
-                        $set: {
-                            coverImage: coverImage,
-                            updatedAt: new Date()
+                        if (fs.statSync(fullPath).isDirectory()) {
+                            findImageFiles(fullPath, relativeFilePath);
+                        } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file)) {
+                            imageFiles.push({
+                                localPath: fullPath,
+                                relativePath: relativeFilePath,
+                                filename: file
+                            });
                         }
                     }
-                );
-                console.log(`🖼️  Set cover image: ${coverImage}`);
+                }
+                findImageFiles(imagesPath);
+
+                if (imageFiles.length > 0) {
+                    // Pick first by filename (sorted) to ensure deterministic cover selection
+                    imageFiles.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' }));
+
+                    const bookFolderName = finalBook.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+                    const relativeImagePath = `/${bookFolderName}/images/`;
+                    const coverImage = `${relativeImagePath}${imageFiles[0].filename}`;
+
+                    await booksCollection.updateOne(
+                        { _id: bookId },
+                        {
+                            $set: {
+                                imageBaseURL: relativeImagePath,
+                                coverImage: coverImage,
+                                updatedAt: new Date()
+                            }
+                        }
+                    );
+                    console.log(`🖼️  Set cover image: ${coverImage}`);
+                    console.log(`📚 Updated book with relative imageBaseURL: ${relativeImagePath}`);
+                }
+            } catch (err) {
+                console.log('⚠️  Failed to set cover image from local images folder:', err.message);
             }
         }
 

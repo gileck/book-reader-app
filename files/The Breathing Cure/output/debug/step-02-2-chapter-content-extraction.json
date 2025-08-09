@@ -1,0 +1,138 @@
+{
+  "processingTime": 26,
+  "extractionStats": {
+    "totalChapters": 18,
+    "totalPages": 408,
+    "averagePagesPerChapter": 22.666666666666668,
+    "totalCharacters": 923123,
+    "averageCharactersPerChapter": 51284.61111111111
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Are You Breathing Comfortably?",
+      "chapterNumber": 0,
+      "pageNumberStart": 9,
+      "pageNumberEnd": 14,
+      "contentLength": 14301
+    },
+    {
+      "title": "A New Approach",
+      "chapterNumber": 1,
+      "pageNumberStart": 15,
+      "pageNumberEnd": 32,
+      "contentLength": 40959
+    },
+    {
+      "title": "Exercises for Adults and Children",
+      "chapterNumber": 2,
+      "pageNumberStart": 33,
+      "pageNumberEnd": 109,
+      "contentLength": 125026
+    },
+    {
+      "title": "How to Breathe",
+      "chapterNumber": 3,
+      "pageNumberStart": 110,
+      "pageNumberEnd": 126,
+      "contentLength": 40597
+    },
+    {
+      "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
+      "chapterNumber": 4,
+      "pageNumberStart": 127,
+      "pageNumberEnd": 156,
+      "contentLength": 76405
+    },
+    {
+      "title": "Functional Breathing, The Secret of Functional Movement",
+      "chapterNumber": 5,
+      "pageNumberStart": 157,
+      "pageNumberEnd": 176,
+      "contentLength": 48799
+    },
+    {
+      "title": "When Breathing Makes You Hurt",
+      "chapterNumber": 6,
+      "pageNumberStart": 177,
+      "pageNumberEnd": 191,
+      "contentLength": 38136
+    },
+    {
+      "title": "Sleep-Disordered Breathing",
+      "chapterNumber": 7,
+      "pageNumberStart": 192,
+      "pageNumberEnd": 215,
+      "contentLength": 57776
+    },
+    {
+      "title": "Developing Healthy Airways in Children",
+      "chapterNumber": 8,
+      "pageNumberStart": 216,
+      "pageNumberEnd": 241,
+      "contentLength": 64669
+    },
+    {
+      "title": "The Breathing Secret for Healthy Blood Pressure",
+      "chapterNumber": 9,
+      "pageNumberStart": 242,
+      "pageNumberEnd": 252,
+      "contentLength": 26695
+    },
+    {
+      "title": "Freedom From Respiratory Discomfort",
+      "chapterNumber": 10,
+      "pageNumberStart": 253,
+      "pageNumberEnd": 272,
+      "contentLength": 48111
+    },
+    {
+      "title": "Sex and Breath, an Intimate Connection",
+      "chapterNumber": 11,
+      "pageNumberStart": 273,
+      "pageNumberEnd": 305,
+      "contentLength": 84118
+    },
+    {
+      "title": "Yes, Breathing Is Different for Women",
+      "chapterNumber": 12,
+      "pageNumberStart": 306,
+      "pageNumberEnd": 327,
+      "contentLength": 53717
+    },
+    {
+      "title": "Female Sex Hormones and the Breath",
+      "chapterNumber": 13,
+      "pageNumberStart": 328,
+      "pageNumberEnd": 351,
+      "contentLength": 59464
+    },
+    {
+      "title": "Sugar, Sugar",
+      "chapterNumber": 14,
+      "pageNumberStart": 352,
+      "pageNumberEnd": 369,
+      "contentLength": 42233
+    },
+    {
+      "title": "Seizure Control and the Breath",
+      "chapterNumber": 15,
+      "pageNumberStart": 370,
+      "pageNumberEnd": 400,
+      "contentLength": 79713
+    },
+    {
+      "title": "Join The Breathing Revolution",
+      "chapterNumber": 16,
+      "pageNumberStart": 401,
+      "pageNumberEnd": 403,
+      "contentLength": 7100
+    },
+    {
+      "title": "Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
+      "chapterNumber": 17,
+      "pageNumberStart": 404,
+      "pageNumberEnd": 416,
+      "contentLength": 15304
+    }
+  ]
+}

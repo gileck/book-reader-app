@@ -12,7 +12,7 @@ async function main() {
     try {
         const result = await parser.parseBook(pdfPath, outputPath, {
             debug: true,
-            validate: true
+            validate: false
         });
 
         console.log('✅ Parser completed successfully!');

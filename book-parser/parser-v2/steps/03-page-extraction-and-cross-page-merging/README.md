@@ -2,7 +2,7 @@
 
 ## Overview
 
-This step transforms chapter content into a page-based structure and merges sentences that are split across page boundaries. It creates clean page content where sentences broken by page breaks are intelligently reconstructed.
+This step transforms chapter content into a page-based structure and merges sentences that are split across page boundaries. It creates clean page content where sentences broken by page breaks are intelligently reconstructed. The step handles real-world book formatting such as bullet lists near page boundaries (no cross-page list merging), image-only pages, numeric citations, and trailing quotes/attributions.
 
 ## Requirements
 
@@ -14,15 +14,17 @@ This step transforms chapter content into a page-based structure and merges sent
 ### Output Requirements
 - **Page Structure**: Each chapter divided into individual pages with metadata
 - **Complete Sentences**: Sentences split across pages must be merged
-- **Content Validation**: Pages must end with proper sentence terminators
+- **List Continuation Support**: Bullet list items that continue on the next page must be merged with the preceding list
+- **Content Validation**: Pages should end with proper sentence terminators, with documented exceptions
 - **Page Numbering**: Accurate page numbers for each page
 - **Word Counts**: Accurate word count for each page
+- **Figure-Only Pages**: Pages that contain no text (e.g., image-only) are included as placeholders to keep page numbering contiguous
 
 ### Quality Standards
-- Pages should end with sentence terminators (., !, ?)
+- Pages should end with sentence terminators (., !, ?) with exceptions for headers/titles, bullet list endings, and the last content page of the book
 - Minimum 10 pages extracted for substantial documents
 - Cross-page sentence merging preserves content structure
-- Page number sequences are valid and continuous
+- Page number sequences are valid and continuous, including placeholders for figure-only pages
 
 ## Implementation
 
@@ -36,14 +38,20 @@ The step uses intelligent page boundary detection and cross-page sentence mergin
 - Maintains accurate page numbering throughout
 
 #### 2. Cross-Page Sentence Merging
-- **Smart Continuation Detection**: Only merges lowercase-starting sentences (actual continuations)
+- **Smart Continuation Detection**: Merges when the previous page ends mid-sentence. Looks ahead up to 400 characters on the next page to find sentence completion.
+- **Terminator Without Paragraph Break**: If a page ends with a terminator but has no paragraph break, looks ahead up to 200 characters to confirm continuation.
 - **Capital Letter Preservation**: Skips capital letter sentences (likely new sentences)
 - **Header Protection**: Preserves standalone header structure at page boundaries
-- **Optimization Prevention**: Prevents merging across headers and different pages
+- **List Merging Between Pages: Disabled**: Cross-page list merging is currently disabled to avoid over-merging across section boundaries. Lists remain on their respective pages.
+- **Numeric Citations**: During sentence-completion detection and validation, numeric citations immediately following a period (e.g., `. 24 `) are skipped before deciding on sentence completion.
+- **Quote Handling**: Trailing closing quotes after sentence terminators are ignored for validation.
+- **Author Attributions**: Trailing author attributions (e.g., `—Name, Location`) are tolerated during validation.
 
 #### 3. Content Quality Assurance
 - Validates pages end with sentence terminators
 - Handles headers and section titles that don't end with punctuation
+- Accepts pages ending with a bullet list item as valid
+- Accepts the last content page of the book even if it lacks a sentence terminator
 - Ensures cross-page merging doesn't damage content structure
 
 ### Processing Steps
@@ -56,8 +64,10 @@ The step uses intelligent page boundary detection and cross-page sentence mergin
    
 2. Cross-page sentence merging:
    - Identify sentences split across page boundaries
-   - Apply smart merging for lowercase continuations only
+   - Apply smart merging using a two-pass lookahead (400 chars for incomplete sentences, 200 chars for terminator-without-break)
+   - Skip numeric citations and trailing quotes when deciding sentence completion
    - Preserve header structure and capital letter sentences
+   - List merging across pages is disabled; lists remain on their original pages
    - Maintain proper line breaks and formatting
    
 3. Content validation:
@@ -68,11 +78,13 @@ The step uses intelligent page boundary detection and cross-page sentence mergin
 
 ### Key Features
 
-- **Smart Cross-Page Merging**: Only merges lowercase-starting sentences (actual continuations)
+- **Smart Cross-Page Merging**: Robust sentence merging across page boundaries with numeric citation and quote awareness
+- **No Cross-Page List Merging**: Lists are not merged across pages to avoid over-merging; list endings remain page-local
+- **Figure-Only Page Placeholders**: Keeps page numbering contiguous by including pages that contain only figures/images, marked with `isFigureOnly`
 - **Header Preservation**: Detects and preserves potential headers at page boundaries
 - **Content Structure Integrity**: Prevents merging across headers and different contexts
-- **Exception Handling**: Special handling for appendix chapters and headers
-- **Sentence Terminator Validation**: Ensures proper sentence boundaries
+- **Exception Handling**: Special handling for appendix chapters, headers, list endings, and last content page
+- **Sentence Terminator Validation**: Ensures proper sentence boundaries with realistic exceptions
 
 ## Validation
 
@@ -85,12 +97,17 @@ The validation module (`03-page-extraction-and-cross-page-merging-validation.js`
 - **Purpose**: Ensure page extraction was successful
 
 #### 2. Page Content Validation
-- **Rule**: Each page must have non-empty content, valid page number, and word count
-- **Purpose**: Verify complete page extraction with proper metadata
+- **Rule**: Each page must have valid page number and word count. Text pages should have non-empty content.
+- **Figure-Only Pages**: Pages with no text content are accepted if they are image-only; they are emitted with `isFigureOnly: true` to preserve numbering.
+- **Purpose**: Verify complete page extraction with proper metadata while preserving contiguous page sequences
 
 #### 3. Sentence Terminator Validation
 - **Rule**: Pages should end with sentence terminators (., !, ?)
-- **Exception**: Headers and section titles that don't end with punctuation
+- **Exceptions**:
+  - Headers and section titles that don't end with punctuation
+  - Pages ending with bullet list items (treated as valid end)
+  - The last content page of the book may end without a terminator
+  - Trailing numeric citations and closing quotes are ignored when checking the last character
 - **Special Case**: Appendix chapters have relaxed validation
 - **Purpose**: Ensure proper sentence boundaries and content completeness
 
@@ -107,7 +124,7 @@ The validation module (`03-page-extraction-and-cross-page-merging-validation.js`
 #### `endsWithSentenceTerminator(content)`
 Validates that content ends with proper sentence punctuation:
 - Checks for sentence terminators: `.`, `!`, `?`
-- Handles edge cases and formatting variations
+- Ignores trailing closing quotes, numeric citations (e.g., `. 24`), and author attributions (e.g., `—Name, Location`)
 - Used for page content quality validation
 
 #### `isSentenceTerminator(char)`
@@ -119,7 +136,7 @@ Identifies valid sentence termination characters:
 
 - ✅ All chapters have proper page structure
 - ✅ Pages contain valid content with proper metadata
-- ✅ Page sequences are complete and accurate
+- ✅ Page sequences are complete and accurate (including figure-only placeholders)
 - ✅ Sentence boundaries are properly maintained
 - ✅ Cross-page merging preserves content integrity
 
@@ -188,6 +205,13 @@ const isValid = pageExtraction.validate(result);
 - **Capital Letter Preservation**: Preserves sentences starting with capitals (new sentences)
 - **Header Protection**: Maintains standalone structure for potential headers
 
+### Simplified Bullet List Merging Rules
+- **When previous page ends with a bullet**:
+  - If the first non-empty next line is not a bullet and the last bullet does not end with a terminator, treat contiguous non-bullet lines as wrapped continuation until reaching a terminator. Then, continue only if the next non-empty line is a bullet; otherwise stop.
+  - If the next page starts with bullets, merge contiguous bullet items from the top. For each bullet, include its wrapped lines until a terminator. Stop when the next non-empty line is not a bullet.
+- **Stops at explicit breaks**: A blank line ends list merging (EOLs preserved from Step 1).
+- **Valid page end**: The last bullet item is a valid page ending; no extra punctuation required.
+
 ### Content Structure Preservation
 - **Line Break Maintenance**: Preserves proper line structure during merging
 - **Header Detection**: Identifies and preserves headers at page boundaries
@@ -206,14 +230,15 @@ Examples of smart merging:
 
 The step generates comprehensive debug information:
 - Page extraction boundaries and statistics
-- Cross-page merging decisions and results
+- Cross-page merging decisions and results (including list continuation handling)
 - Sentence terminator validation results
+- Figure-only page detection
 - Processing timing and performance metrics
 
 ## Error Handling
 
 - **Page Boundary Detection**: Robust handling of various page break formats
-- **Content Validation**: Clear error messages for validation failures
+- **Content Validation**: Aggregates and reports all validation errors across all chapters/pages (does not stop at first error)
 - **Cross-Page Merging**: Safe merging that preserves content integrity
 - **Exception Cases**: Proper handling of appendices and special content
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This step extracts raw text from PDF files using a page-by-page extraction approach with improved text joining to resolve spacing issues that commonly occur in PDF text extraction.
+This step extracts raw text from PDF files using a page-by-page extraction approach with improved text joining to resolve spacing issues that commonly occur in PDF text extraction. It also preserves explicit paragraph breaks by honoring empty text items that include end-of-line markers from PDF.js.
 
 ## Requirements
 
@@ -40,6 +40,7 @@ The step uses **pdfjs-dist** library for PDF processing with a custom page-by-pa
 ### Key Features
 
 - **Simplified Spacing Logic**: Adds spaces after each text item unless it already ends with space/newline
+- **Paragraph Break Preservation**: Treats empty items with `hasEOL: true` as explicit blank lines, preserving paragraph boundaries and list breaks
 - **Word Boundary Preservation**: Prevents common PDF extraction issues like "forTransformer" → "for Transformer"
 - **Complete Content Coverage**: Ensures no sections or chapters are missing
 - **Robust Error Handling**: Graceful fallback mechanisms for different PDF structures
@@ -50,7 +51,9 @@ The step uses **pdfjs-dist** library for PDF processing with a custom page-by-pa
 1. Load PDF document from configured path
 2. For each page:
    - Extract text items array
-   - Apply smart text joining with spacing logic
+   - For each item:
+     - If `item.str` is empty (`""`) and `item.hasEOL === true`, append a newline to preserve a blank line (paragraph break)
+     - Otherwise, append the text and add either a newline (when `hasEOL` is true) or a space (for flow)
    - Accumulate page text with proper boundaries
 3. Generate extraction metadata
 4. Validate text quality using word length analysis

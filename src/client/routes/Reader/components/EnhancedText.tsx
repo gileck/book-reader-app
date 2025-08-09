@@ -91,7 +91,81 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         );
     };
 
-    // Render text with JSX, making links clickable
+    // Render inline text (no block containers) with clickable links and word highlighting
+    const renderInlineWithLinks = (text: string, links: ChunkLink[]) => {
+        if (!links || links.length === 0) {
+            return renderTextWithHighlighting(text);
+        }
+
+        const linkPositions: Array<{ start: number; end: number; link: ChunkLink }> = [];
+
+        links.forEach(link => {
+            if (link.role === 'source') {
+                const footnoteIndex = findFootnotePattern(text, link.text);
+                if (footnoteIndex !== -1) {
+                    linkPositions.push({
+                        start: footnoteIndex,
+                        end: footnoteIndex + link.text.length,
+                        link
+                    });
+                }
+            }
+        });
+
+        // Sort by start position
+        linkPositions.sort((a, b) => a.start - b.start);
+
+        const elements: React.ReactNode[] = [];
+        let currentIndex = 0;
+
+        linkPositions.forEach((linkPos, i) => {
+            if (currentIndex < linkPos.start) {
+                elements.push(text.slice(currentIndex, linkPos.start));
+            }
+
+            elements.push(
+                <sup
+                    key={`inline-source-${i}`}
+                    className="clickable-link footnote"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onLinkClick(linkPos.link);
+                    }}
+                    style={{
+                        cursor: 'pointer',
+                        color: '#1976d2',
+                        textDecoration: 'none',
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        padding: '0 2px',
+                        borderRadius: '2px',
+                        lineHeight: 1,
+                        transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#e3f2fd';
+                        e.currentTarget.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                >
+                    {linkPos.link.text}
+                </sup>
+            );
+
+            currentIndex = linkPos.end;
+        });
+
+        if (currentIndex < text.length) {
+            elements.push(text.slice(currentIndex));
+        }
+
+        return renderElementsWithHighlighting(elements);
+    };
+
+    // Render text with JSX, making links clickable and handling lists
     const renderTextWithLinks = () => {
         const text = chunk.text;
         const links = chunk.links || [];
@@ -128,86 +202,45 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
             );
         }
 
-        if (links.length === 0) {
-            // Split text into words for highlighting
-            return renderTextWithHighlighting(text);
-        }
+        // Handle simple bullet lists using "•" separator, preserving highlighting and links
+        if (text.includes('•')) {
+            const firstBulletIndex = text.indexOf('•');
+            const prefix = firstBulletIndex > 0 ? text.slice(0, firstBulletIndex).trim() : '';
+            const items = text
+                .slice(firstBulletIndex)
+                .split('•')
+                .map(t => t.trim())
+                .filter(t => t.length > 0);
 
-        // Handle source links (footnote references) as superscript
-        // Source links are the clickable numbers in the text that reference footnotes
-        const linkPositions: Array<{ start: number; end: number; link: ChunkLink }> = [];
-
-        links.forEach(link => {
-            if (link.role === 'source') {
-                // Only match footnotes with specific patterns:
-                // 1. ". {number} {Capital letter}" (e.g., ". 1 The", ". 2 If")
-                // 2. "{number} {Capital letter}" at start of chunk
-                const footnoteIndex = findFootnotePattern(text, link.text);
-                if (footnoteIndex !== -1) {
-                    linkPositions.push({
-                        start: footnoteIndex,
-                        end: footnoteIndex + link.text.length,
-                        link
-                    });
-                }
-            }
-        });
-
-        // Sort by start position
-        linkPositions.sort((a, b) => a.start - b.start);
-
-        // Build JSX elements
-        const elements: React.ReactNode[] = [];
-        let currentIndex = 0;
-
-        linkPositions.forEach((linkPos, i) => {
-            // Add text before the link
-            if (currentIndex < linkPos.start) {
-                elements.push(text.slice(currentIndex, linkPos.start));
+            // If no real items were found (edge case), fall back to normal rendering
+            if (items.length === 0) {
+                return renderInlineWithLinks(text, links);
             }
 
-            // Add the clickable footnote link as superscript
-            elements.push(
-                <sup
-                    key={`source-${i}`}
-                    className="clickable-link footnote"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        onLinkClick(linkPos.link);
-                    }}
-                    style={{
-                        cursor: 'pointer',
-                        color: '#1976d2',
-                        textDecoration: 'none',
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        padding: '0 2px',
-                        borderRadius: '2px',
-                        lineHeight: 1,
-                        transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#e3f2fd';
-                        e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                        e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                >
-                    {linkPos.link.text}
-                </sup>
+            return (
+                <span>
+                    {prefix && (
+                        <span style={{ marginRight: '0.5em' }}>
+                            {renderInlineWithLinks(prefix, links)}
+                        </span>
+                    )}
+                    <ul style={{
+                        margin: '0.25em 0',
+                        paddingLeft: '1.2em',
+                        listStyleType: 'disc'
+                    }}>
+                        {items.map((item, idx) => (
+                            <li key={`bullet-${idx}`} style={{ margin: '0.15em 0' }}>
+                                {renderInlineWithLinks(item, links)}
+                            </li>
+                        ))}
+                    </ul>
+                </span>
             );
-
-            currentIndex = linkPos.end;
-        });
-
-        // Add remaining text after the last link
-        if (currentIndex < text.length) {
-            elements.push(text.slice(currentIndex));
         }
 
-        return renderElementsWithHighlighting(elements);
+        // Fallback: inline rendering with links and word-level highlighting
+        return renderInlineWithLinks(text, links);
     };
 
     return <span>{renderTextWithLinks()}</span>;

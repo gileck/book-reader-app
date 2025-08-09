@@ -1,0 +1,156 @@
+{
+  "processingTime": 5,
+  "cleaningStats": {
+    "totalChapters": 18,
+    "totalCharactersRemoved": 522,
+    "averageCharactersRemovedPerChapter": 29,
+    "totalCharactersAfterCleaning": 922601,
+    "cleaningEfficiency": 0.056579171277724605
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Are You Breathing Comfortably?",
+      "chapterNumber": 0,
+      "pageNumberStart": 9,
+      "pageNumberEnd": 14,
+      "contentLength": 14284,
+      "cleanedPreview": "--- PAGE 9 ---\nARE YOU BREATHING COMFORTABLY? \nmagine a breathing technique that can increase uptake and delivery of\noxygen to cells, improve blood circulation, and even unblock the nose.\nPerhaps it c..."
+    },
+    {
+      "title": "A New Approach",
+      "chapterNumber": 1,
+      "pageNumberStart": 15,
+      "pageNumberEnd": 32,
+      "contentLength": 40927,
+      "cleanedPreview": "--- PAGE 15 ---\nPATRICK’S STORY \nn 1998, my life changed forever when I discovered how the poor breathing\nhabits I had developed in early childhood were affecting my body and my\nquality of life. I was..."
+    },
+    {
+      "title": "Exercises for Adults and Children",
+      "chapterNumber": 2,
+      "pageNumberStart": 33,
+      "pageNumberEnd": 109,
+      "contentLength": 124975,
+      "cleanedPreview": "--- PAGE 33 ---\nn this chapter, you will find all the breathing exercises you need to develop a\npersonalized program suitable for your own needs and level of fitness.\nBeginning with your BOLT score, t..."
+    },
+    {
+      "title": "How to Breathe",
+      "chapterNumber": 3,
+      "pageNumberStart": 110,
+      "pageNumberEnd": 126,
+      "contentLength": 40563,
+      "cleanedPreview": "--- PAGE 110 ---\nn texts about the anatomy and physiology of breathing, the respiratory tract\nis described as the path 14 for air to travel from the nose to the lungs. The\nmouth doesn’t get a mention ..."
+    },
+    {
+      "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
+      "chapterNumber": 4,
+      "pageNumberStart": 127,
+      "pageNumberEnd": 156,
+      "contentLength": 76388,
+      "cleanedPreview": "--- PAGE 127 ---\nTHE VAGUS NERVE AND THE HEART-BREATH-\nBRAIN CONNECTION \no really understand the powerful interconnections between the breath,\nheart, and brain, we must take a journey along the wander..."
+    },
+    {
+      "title": "Functional Breathing, The Secret of Functional Movement",
+      "chapterNumber": 5,
+      "pageNumberStart": 157,
+      "pageNumberEnd": 176,
+      "contentLength": 48782,
+      "cleanedPreview": "--- PAGE 157 ---\nFUNCTIONAL BREATHING, THE SECRET OF\nFUNCTIONAL MOVEMENT \nrom birth, breathing is our first and most basic motor pattern. 1 As toddlers,\nwe learn to stand up against gravity and contro..."
+    },
+    {
+      "title": "When Breathing Makes You Hurt",
+      "chapterNumber": 6,
+      "pageNumberStart": 177,
+      "pageNumberEnd": 191,
+      "contentLength": 38089,
+      "cleanedPreview": "--- PAGE 177 ---\nPAIN IS A SIGN OF DYSFUNCTION \ns we have been discussing, the diaphragm, the primary respiratory\nmuscle, is essential for stabilizing the core, spine, and posture.\nDysfunctional breat..."
+    },
+    {
+      "title": "Sleep-Disordered Breathing",
+      "chapterNumber": 7,
+      "pageNumberStart": 192,
+      "pageNumberEnd": 215,
+      "contentLength": 57758,
+      "cleanedPreview": "--- PAGE 192 ---\nSLEEP-DISORDERED BREATHING \nleep is a behavioral and neurological state in which homeostatic functions\nessential to health and well-being occur. 1 Modern science doesn’t yet fully\nund..."
+    },
+    {
+      "title": "Developing Healthy Airways in Children",
+      "chapterNumber": 8,
+      "pageNumberStart": 216,
+      "pageNumberEnd": 241,
+      "contentLength": 64651,
+      "cleanedPreview": "--- PAGE 216 ---\nDEVELOPING HEALTHY AIRWAYS IN CHILDREN \nWHAT CAUSES CHILDHOOD MOUTH BREATHING? \nack in 1909, an article, “Habitual Mouth-Breathing and Consequent\nMalocclusion of the Teeth,” was publi..."
+    },
+    {
+      "title": "The Breathing Secret for Healthy Blood Pressure",
+      "chapterNumber": 9,
+      "pageNumberStart": 242,
+      "pageNumberEnd": 252,
+      "contentLength": 26645,
+      "cleanedPreview": "--- PAGE 242 ---\nBLOOD PRESSURE \nlobally, 1.13 billion people are thought to suffer with hypertension, the\nmajority living in low- and middle-income countries. In America in\n2020, around 108 million p..."
+    },
+    {
+      "title": "Freedom From Respiratory Discomfort",
+      "chapterNumber": 10,
+      "pageNumberStart": 253,
+      "pageNumberEnd": 272,
+      "contentLength": 48095,
+      "cleanedPreview": "--- PAGE 253 ---\nFREEDOM FROM RESPIRATORY DISCOMFORT \nWHAT IS ASTHMA? \no book on breathing would be complete without a discussion about\nasthma. But just what is asthma? The word asthma is borrowed fro..."
+    },
+    {
+      "title": "Sex and Breath, an Intimate Connection",
+      "chapterNumber": 11,
+      "pageNumberStart": 273,
+      "pageNumberEnd": 305,
+      "contentLength": 84099,
+      "cleanedPreview": "--- PAGE 273 ---\nSEX AND BREATH, AN INTIMATE CONNECTION \nhe term peak performance used in the context of breathing techniques\ndoesn’t generally refer to your prowess between the sheets. Yet sex is one..."
+    },
+    {
+      "title": "Yes, Breathing Is Different for Women",
+      "chapterNumber": 12,
+      "pageNumberStart": 306,
+      "pageNumberEnd": 327,
+      "contentLength": 53698,
+      "cleanedPreview": "--- PAGE 306 ---\nYES, BREATHING IS DIFFERENT FOR WOMEN \nAN UNHELPFUL BIAS \nistorically, in most physiology literature and, indeed, across every field\nof science, research has predominantly focused on ..."
+    },
+    {
+      "title": "Female Sex Hormones and the Breath",
+      "chapterNumber": 13,
+      "pageNumberStart": 328,
+      "pageNumberEnd": 351,
+      "contentLength": 59443,
+      "cleanedPreview": "--- PAGE 328 ---\nFEMALE SEX HORMONES AND THE BREATH \nPMS AND CYCLIC HYPERVENTILATION \nremenstrual syndrome (PMS) manifests with similar or identical\nsymptoms to chronic hyperventilation syndrome. 1 A ..."
+    },
+    {
+      "title": "Sugar, Sugar",
+      "chapterNumber": 14,
+      "pageNumberStart": 352,
+      "pageNumberEnd": 369,
+      "contentLength": 42212,
+      "cleanedPreview": "--- PAGE 352 ---\nSUGAR, SUGAR \nWHAT IS DIABETES? \niabetes is a long-term disease that affects the way the body metabolizes\nblood sugar or glucose, an important source of energy. Glucose comes\nfrom the..."
+    },
+    {
+      "title": "Seizure Control and the Breath",
+      "chapterNumber": 15,
+      "pageNumberStart": 370,
+      "pageNumberEnd": 400,
+      "contentLength": 79661,
+      "cleanedPreview": "--- PAGE 370 ---\nWHAT IS EPILEPSY? \npilepsy is a chronic neurological disease involving the brain. 1 It affects\naround 50 million people of all ages worldwide, 2 making it one of the\nmost common neuro..."
+    },
+    {
+      "title": "Join The Breathing Revolution",
+      "chapterNumber": 16,
+      "pageNumberStart": 401,
+      "pageNumberEnd": 403,
+      "contentLength": 7049,
+      "cleanedPreview": "--- PAGE 401 ---\nntil recently, knowledge of the power and application of optimal\nbreathing has been limited to elite sports, advanced yoga practitioners,\nresearch scientists, and other high-level pro..."
+    },
+    {
+      "title": "Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
+      "chapterNumber": 17,
+      "pageNumberStart": 404,
+      "pageNumberEnd": 416,
+      "contentLength": 15282,
+      "cleanedPreview": "--- PAGE 404 ---\nIS NASAL BREATHING YOUR FIRST LINE OF\nDEFENSE AGAINST CORONAVIRUS? \nhroughout this book we have examined the importance of nasal breathing.\nIn the case of respiratory infections, rese..."
+    }
+  ]
+}

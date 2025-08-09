@@ -40,21 +40,38 @@ async function execute(pipelineState, config) {
     if (!pipelineState.rawText) {
         throw new Error('Step 1 (text extraction) must be completed first');
     }
-    
+
     try {
         const startTime = Date.now();
-        
+
         // Step 1: Try PDF bookmark extraction
         let tocAnalysis = null;
         let tocSource = 'none';
-        
+        let bookmarkAnalysis = null; // keep raw bookmark analysis for debug output
+
         if (pdfjsLib && config.INPUT_PDF && fs.existsSync(config.INPUT_PDF)) {
-            tocAnalysis = await extractTOCFromPdf(config.INPUT_PDF);
+            bookmarkAnalysis = await extractTOCFromPdf(config.INPUT_PDF);
+            tocAnalysis = bookmarkAnalysis;
             if (tocAnalysis && tocAnalysis.chapters.length > 0) {
                 tocSource = tocAnalysis.source;
             }
+            // Write dedicated bookmarks debug file for inspection regardless of fallback
+            try {
+                const bookmarksDebug = {
+                    pdfBookmarksAvailable: pdfjsLib !== null,
+                    inputPdf: config.INPUT_PDF,
+                    tocFound: !!(bookmarkAnalysis && bookmarkAnalysis.chapters && bookmarkAnalysis.chapters.length > 0),
+                    totalBookmarks: bookmarkAnalysis ? bookmarkAnalysis.totalBookmarks : 0,
+                    outlineTitles: bookmarkAnalysis ? (bookmarkAnalysis.outlineTitles || []) : [],
+                    extractedChapters: bookmarkAnalysis ? (bookmarkAnalysis.chapters || []) : []
+                };
+                const bookmarksDebugFile = path.join(config.DEBUG_DIR, 'step-02-1-bookmarks.json');
+                fs.writeFileSync(bookmarksDebugFile, JSON.stringify(bookmarksDebug, null, 2));
+            } catch (debugWriteError) {
+                // ignore debug write errors
+            }
         }
-        
+
         // Step 2: Fallback to text-based TOC analysis
         if (!tocAnalysis || tocAnalysis.chapters.length === 0) {
             tocAnalysis = {
@@ -63,30 +80,30 @@ async function execute(pipelineState, config) {
             };
             tocSource = 'text_parsing';
         }
-        
+
         // Step 3: Pattern-based detection for content boundaries
         const patternAnalysis = detectChaptersPattern(pipelineState.rawText);
-        
+
         // Step 4: Generate chapter metadata
         const { chapterMetadata, pageOffset } = await generateChapterMetadata(
-            pipelineState.rawText, 
-            tocAnalysis, 
+            pipelineState.rawText,
+            tocAnalysis,
             patternAnalysis
         );
-        
+
         // Generate statistics
         const detectionStats = {
             chaptersDetected: chapterMetadata.length,
             tocSource: tocSource,
             tocEntriesFound: tocAnalysis ? tocAnalysis.chapters.length : 0,
             patternMatches: patternAnalysis.validatedChapters.length,
-            averageDetectionConfidence: chapterMetadata.length > 0 ? 
+            averageDetectionConfidence: chapterMetadata.length > 0 ?
                 chapterMetadata.reduce((sum, ch) => sum + ch.confidence, 0) / chapterMetadata.length : 0,
             pageOffset: pageOffset
         };
-        
+
         const processingTime = Date.now() - startTime;
-        
+
         // Save debug output
         const debugOutput = {
             processingTime,
@@ -111,12 +128,12 @@ async function execute(pipelineState, config) {
                 confidence: ch.confidence
             }))
         };
-        
+
         const debugFile = path.join(config.DEBUG_DIR, 'step-02-1-chapter-detection.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
-        
+
         // Chapter detection completed
-        
+
         return {
             chapterMetadata: chapterMetadata,
             metadata: {
@@ -128,7 +145,7 @@ async function execute(pipelineState, config) {
                 }
             }
         };
-        
+
     } catch (error) {
         console.error('❌ Chapter detection failed:', error.message);
         throw error;
@@ -163,16 +180,16 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
 
     // Check if we have page markers in text
     const hasPageMarkers = rawText.includes('--- PAGE');
-    
+
     // First, find all chapter positions
     const chapterPositions = [];
-    
+
     for (let i = 0; i < authoritative.length; i++) {
         const tocEntry = authoritative[i];
-        
+
         // Handle different field names between formats
         let chapterTitle, chapterNumber, startingPage;
-        
+
         if (tocEntry.chapterTitle !== undefined) {
             chapterTitle = tocEntry.chapterTitle;
             chapterNumber = tocEntry.chapterNumber;
@@ -182,10 +199,10 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
             chapterNumber = tocEntry.chapterNumber;
             startingPage = tocEntry.startingPage;
         }
-        
+
         // Find text position for this chapter
         const position = findChapterContentPosition(rawText, chapterTitle, chapterNumber);
-        
+
         if (position) {
             chapterPositions.push({
                 index: i,
@@ -197,14 +214,14 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
             });
         }
     }
-    
+
     // Sort chapters by their starting page number
     chapterPositions.sort((a, b) => a.startingPage - b.startingPage);
-    
+
     // Now assign end pages based on the sorted order
     for (let i = 0; i < chapterPositions.length; i++) {
         const chapter = chapterPositions[i];
-        
+
         chapterMetadata.push({
             title: chapter.title,
             chapterNumber: chapter.chapterNumber,
@@ -214,10 +231,10 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
             detectionSource: chapter.detectionSource
         });
     }
-    
+
     // Detect page number offset
     const pageOffset = hasPageMarkers ? detectPageNumberOffset(lines, chapterMetadata) : 0;
-    
+
     return { chapterMetadata, pageOffset };
 }
 
@@ -229,27 +246,27 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
 function findTOCEndPosition(rawText) {
     const lines = rawText.split('\n');
     let tocEndPosition = 0;
-    
+
     // Look for patterns that indicate end of TOC:
     // 1. Look for "Introduction" or first chapter starting
     // 2. Look for page markers that seem to be in content area
     // 3. Look for bibliography/references section to avoid
-    
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
-        
+
         // Skip if we're still in the very beginning (first few thousand characters)
         const currentPosition = lines.slice(0, i).join('\n').length;
         if (currentPosition < 5000) {
             continue;
         }
-        
+
         // Look for Introduction chapter (often first real content)
         if (line.match(/^Introduction:\s*Life\s+itself/i)) {
             tocEndPosition = currentPosition;
             break;
         }
-        
+
         // Look for page markers that indicate content area (around page 8-15)
         const pageMatch = line.match(/^---\s*PAGE\s+(\d+)\s*---$/);
         if (pageMatch) {
@@ -260,7 +277,7 @@ function findTOCEndPosition(rawText) {
                 break;
             }
         }
-        
+
         // Look for patterns that suggest we're past TOC
         if (line.match(/^(Chapter\s+\d+|1\s+|Introduction|Preface)/i) && currentPosition > 10000) {
             // Check if this looks like actual chapter content, not just TOC entry
@@ -271,13 +288,13 @@ function findTOCEndPosition(rawText) {
             }
         }
     }
-    
+
     // If we couldn't find a clear TOC end, use a conservative estimate
     if (tocEndPosition === 0) {
         tocEndPosition = Math.min(25000, Math.floor(rawText.length * 0.1));
     }
-    
-            // TOC analysis complete
+
+    // TOC analysis complete
     return tocEndPosition;
 }
 
@@ -292,36 +309,36 @@ function findChapterContentPosition(rawText, chapterTitle, chapterNumber) {
     // Find where TOC ends and actual content begins
     const startSearchPosition = findTOCEndPosition(rawText);
     const searchText = rawText.substring(startSearchPosition);
-    
+
     // Look for page markers that might indicate chapter starts
     const lines = searchText.split('\n');
     const candidates = [];
-    
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
-        
+
         // Look for page markers first to establish context
         const pageMarkerMatch = line.match(/^---\s*PAGE\s+(\d+)\s*---$/);
         if (pageMarkerMatch) {
             const pageNum = parseInt(pageMarkerMatch[1]);
-            
+
             // Look in the next few lines after page marker for chapter title
             for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
                 const nextLine = lines[j].trim();
-                
+
                 // Skip empty lines and page end markers
                 if (!nextLine || nextLine.match(/^---\s*END\s+PAGE/)) {
                     continue;
                 }
-                
+
                 // Check if this line matches our chapter title
                 if (isChapterTitleMatch(nextLine, chapterTitle, chapterNumber)) {
                     const linePosition = lines.slice(0, j).join('\n').length;
                     const absolutePosition = startSearchPosition + linePosition;
-                    
+
                     // Additional validation: make sure this looks like a chapter header, not TOC
                     const isValidChapterStart = validateChapterStart(nextLine, lines, j, pageNum, chapterTitle);
-                    
+
                     if (isValidChapterStart) {
                         candidates.push({
                             position: absolutePosition,
@@ -334,7 +351,7 @@ function findChapterContentPosition(rawText, chapterTitle, chapterNumber) {
             }
         }
     }
-    
+
     // If we found candidates, return the best one
     if (candidates.length > 0) {
         // Sort by confidence, then by position (prefer earlier)
@@ -344,7 +361,7 @@ function findChapterContentPosition(rawText, chapterTitle, chapterNumber) {
             }
             return b.confidence - a.confidence; // Prefer higher confidence
         });
-        
+
         const best = candidates[0];
         return {
             startPosition: best.position,
@@ -354,7 +371,7 @@ function findChapterContentPosition(rawText, chapterTitle, chapterNumber) {
             pageNumber: best.pageNumber
         };
     }
-    
+
     return null;
 }
 
@@ -369,36 +386,36 @@ function isChapterTitleMatch(line, chapterTitle, chapterNumber) {
     // Normalize both strings for comparison
     const normalizedLine = line.toLowerCase().replace(/[^\w\s]/g, '').trim();
     const normalizedTitle = chapterTitle.toLowerCase().replace(/[^\w\s]/g, '').trim();
-    
+
     // Direct match
     if (normalizedLine === normalizedTitle) {
         return true;
     }
-    
+
     // Check for chapter number + title combinations
     const chapterPatterns = [
         `${chapterNumber} ${normalizedTitle}`,
         `chapter ${chapterNumber} ${normalizedTitle}`,
         normalizedTitle // Just the title
     ];
-    
+
     for (const pattern of chapterPatterns) {
         if (normalizedLine === pattern.replace(/[^\w\s]/g, '').trim()) {
             return true;
         }
     }
-    
+
     // Check if line contains most of the title words
     const titleWords = normalizedTitle.split(/\s+/).filter(w => w.length > 2);
     const lineWords = normalizedLine.split(/\s+/);
-    
+
     if (titleWords.length >= 2) {
         const matchedWords = titleWords.filter(word => lineWords.some(lw => lw.includes(word) || word.includes(lw)));
         if (matchedWords.length >= Math.min(3, titleWords.length)) {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -423,32 +440,32 @@ function isChapterTitleMatch(line, chapterTitle, chapterNumber) {
  */
 function calculateMatchConfidence(line, chapterTitle, chapterNumber, pageNumber) {
     let confidence = 0.5;
-    
+
     // Exact match gets high confidence
     if (line.toLowerCase().trim() === chapterTitle.toLowerCase().trim()) {
         confidence = 0.95;
     }
-    
+
     // Contains chapter number
     if (line.includes(chapterNumber.toString())) {
         confidence += 0.1;
     }
-    
+
     // Reasonable page number (not too early, not too late)
     if (pageNumber >= 8 && pageNumber <= 300) {
         confidence += 0.1;
     }
-    
+
     // Shorter lines are more likely to be chapter titles
     if (line.length < 100) {
         confidence += 0.1;
     }
-    
+
     // All caps or title case suggests header
     if (line === line.toUpperCase() || line.match(/^[A-Z][a-z]+(\s+[A-Z][a-z]+)*$/)) {
         confidence += 0.1;
     }
-    
+
     return Math.min(1.0, confidence);
 }
 
@@ -464,7 +481,7 @@ function detectPageNumberOffset(lines, chapterMetadata) {
         const pageMarkerMatch = lines[i].match(/^---\s*PAGE\s+(\d+)\s*---$/);
         if (pageMarkerMatch) {
             const markerPageNumber = parseInt(pageMarkerMatch[1]);
-            
+
             // Find a chapter that starts near this position
             for (const chapter of chapterMetadata) {
                 if (Math.abs(chapter.startPosition - i) < 50 && chapter.startingPage) {
@@ -473,7 +490,7 @@ function detectPageNumberOffset(lines, chapterMetadata) {
             }
         }
     }
-    
+
     return 0;
 }
 
@@ -491,18 +508,20 @@ async function extractTOCFromPdf(pdfPath) {
             data: pdfBuffer,
             verbosity: 0
         }).promise;
-        
+
         const outline = await pdf.getOutline();
         if (!outline || outline.length === 0) {
             return null;
         }
-        
+
         const chapters = await extractBookmarks(outline, pdf);
-        
+        const outlineTitles = Array.isArray(outline) ? outline.map(b => b && typeof b.title === 'string' ? b.title : '').filter(Boolean) : [];
+
         return {
             source: 'pdf_bookmarks',
             chapters: chapters,
-            totalBookmarks: outline.length
+            totalBookmarks: outline.length,
+            outlineTitles: outlineTitles
         };
     } catch (error) {
         // PDF bookmark extraction failed
@@ -519,7 +538,7 @@ async function extractTOCFromPdf(pdfPath) {
  */
 async function extractBookmarks(outline, doc, level = 0) {
     const chapters = [];
-    
+
     for (const bookmark of outline) {
         if (level === 0) { // Only process top-level bookmarks as chapters
             const chapterInfo = parseChapterFromBookmark(bookmark.title);
@@ -533,14 +552,14 @@ async function extractBookmarks(outline, doc, level = 0) {
                 });
             }
         }
-        
+
         // Process sub-bookmarks
         if (bookmark.items && bookmark.items.length > 0) {
             const subChapters = await extractBookmarks(bookmark.items, doc, level + 1);
             chapters.push(...subChapters);
         }
     }
-    
+
     return chapters;
 }
 
@@ -574,7 +593,7 @@ function parseChapterFromBookmark(title) {
         /^Chapter\s+(\d+)\s*:\s*(.+)$/i,
         /^(\d+)\.\s*(.+)$/
     ];
-    
+
     for (const pattern of patterns) {
         const match = title.match(pattern);
         if (match) {
@@ -584,7 +603,42 @@ function parseChapterFromBookmark(title) {
             };
         }
     }
-    
+
+    // Handle spelled-out chapter numbers (e.g., "Chapter One: Title")
+    const numberWordsMap = {
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        five: 5,
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9,
+        ten: 10,
+        eleven: 11,
+        twelve: 12,
+        thirteen: 13,
+        fourteen: 14,
+        fifteen: 15,
+        sixteen: 16,
+        seventeen: 17,
+        eighteen: 18,
+        nineteen: 19,
+        twenty: 20
+    };
+    const spelledMatch = title.match(/^Chapter\s+([A-Za-z-]+)\s*:?\s*(.+)$/i);
+    if (spelledMatch) {
+        const word = spelledMatch[1].toLowerCase();
+        const num = numberWordsMap[word];
+        if (num) {
+            return {
+                number: num,
+                title: spelledMatch[2].trim()
+            };
+        }
+    }
+
     // Handle special chapters
     if (title.match(/^(Introduction|Preface|Epilogue|Appendix)/i)) {
         return {
@@ -592,7 +646,7 @@ function parseChapterFromBookmark(title) {
             title: title.trim()
         };
     }
-    
+
     return null;
 }
 
@@ -606,7 +660,7 @@ function parseChapterFromBookmark(title) {
 function analyzeTableOfContents(text) {
     const lines = text.split('\n');
     const tocEntries = [];
-    
+
     // Look for TOC in first 150 lines
     for (let i = 0; i < Math.min(150, lines.length); i++) {
         const line = lines[i].trim();
@@ -617,7 +671,7 @@ function analyzeTableOfContents(text) {
             }
         }
     }
-    
+
     return {
         tocEntries: tocEntries,
         source: 'text_parsing'
@@ -635,7 +689,7 @@ function parseTOCLine(line) {
         /^(\d+)\.\s*(.+?)\s+(\d+)$/,
         /^Chapter\s+(\d+)\s*:\s*(.+?)\s+(\d+)$/i
     ];
-    
+
     for (const pattern of patterns) {
         const match = line.match(pattern);
         if (match) {
@@ -646,7 +700,7 @@ function parseTOCLine(line) {
             };
         }
     }
-    
+
     return null;
 }
 
@@ -660,23 +714,23 @@ function parseTOCLine(line) {
 function detectChaptersPattern(text) {
     const lines = text.split('\n');
     const potentialChapters = [];
-    
+
     const patterns = [
         /^(\d+)\s+(.+)$/,
         /^Chapter\s+(\d+)\s*:\s*(.+)$/i,
         /^(\d+)\.\s*(.+)$/
     ];
-    
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
-        
+
         for (const pattern of patterns) {
             const match = line.match(pattern);
             if (match) {
                 const chapterNumber = extractChapterNumber(match);
                 const title = extractChapterTitle(match, line);
                 const confidence = calculatePatternConfidence(line, pattern, lines, i);
-                
+
                 if (confidence > 0.5) {
                     potentialChapters.push({
                         chapterNumber: chapterNumber,
@@ -689,10 +743,10 @@ function detectChaptersPattern(text) {
             }
         }
     }
-    
+
     // Validate chapter sequence
     const validatedChapters = validateChapterSequence(potentialChapters);
-    
+
     return {
         potentialChapters: potentialChapters,
         validatedChapters: validatedChapters
@@ -728,22 +782,22 @@ function extractChapterTitle(match, line) {
  */
 function calculatePatternConfidence(line, pattern, lines, index) {
     let confidence = 0.6;
-    
+
     // Higher confidence for standalone lines
     if (index > 0 && index < lines.length - 1) {
         const prevLine = lines[index - 1].trim();
         const nextLine = lines[index + 1].trim();
-        
+
         if (prevLine.length === 0 && nextLine.length === 0) {
             confidence += 0.2;
         }
     }
-    
+
     // Higher confidence for shorter, cleaner titles
     if (line.length < 100 && !line.includes('.') && !line.includes(',')) {
         confidence += 0.1;
     }
-    
+
     return Math.min(1.0, confidence);
 }
 

@@ -21,8 +21,10 @@ import type {
     SetTtsProviderResponse,
     TtsErrorDetail
 } from './types';
+import type { TTSTimepoint } from './types';
 
 import { process as generateTtsProcess } from './handlers/generateTtsHandler';
+import { generateCacheKey, readCache, writeCache } from '@/server/cache/s3Cache';
 
 // Helper function to classify TTS errors
 function classifyTtsError(error: unknown, provider: string): { code: string; message: string; originalError: string } {
@@ -139,6 +141,25 @@ export async function generateTts(payload: GenerateTtsPayload): Promise<Generate
             };
         }
 
+        // 7 days TTL in milliseconds
+        const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
+        // Try cache first
+        const cacheKey = generateCacheKey({
+            key: 'tts-audio',
+            params: { text, voiceId, provider: provider || getCurrentTtsProvider() }
+        });
+
+        const cached = await readCache<{ audioContent: string; timepoints: TTSTimepoint[] }>(cacheKey, SEVEN_DAYS_MS);
+        if (cached?.data?.audioContent && cached?.data?.timepoints) {
+            return {
+                isFromCache: true,
+                success: true,
+                audioContent: cached.data.audioContent,
+                timepoints: cached.data.timepoints
+            };
+        }
+
         const result = await synthesizeSpeechWithTiming(text, voiceId, provider);
 
         if (!result) {
@@ -169,6 +190,13 @@ export async function generateTts(payload: GenerateTtsPayload): Promise<Generate
                 error: 'Failed to generate speech',
                 errorDetail
             };
+        }
+
+        // Write to cache (best-effort)
+        try {
+            await writeCache(cacheKey, { audioContent: result.audioContent, timepoints: result.timepoints });
+        } catch (err) {
+            console.warn('Failed to cache TTS audio to S3:', err);
         }
 
         return {

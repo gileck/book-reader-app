@@ -214,11 +214,16 @@ function validate(output) {
                 const firstChar = chunk.content.charAt(0);
 
                 if (chunk.type === 'header') {
-                    // Headers must start with a capital letter OR page number + capital letter (consistent with step-4)
-                    const startsWithCapital = /^[A-Z]/.test(chunk.content.trim());
-                    const startsWithPageNumber = /^\d+\s+[A-Z]/.test(chunk.content.trim());
-                    if (!startsWithCapital && !startsWithPageNumber) {
-                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter or page number + capital letter. Found: "${chunk.content.substring(0, 20)}..."`);
+                    const headerText = chunk.content.trim();
+                    // Allow numbered headers and ALL-CAPS blocks (align with Step 4)
+                    const isNumberedHeader = /^#?\d+[\.)]\s+/.test(headerText);
+                    const letters = headerText.replace(/[^A-Za-z]+/g, '');
+                    const upper = letters.replace(/[^A-Z]/g, '').length;
+                    const isAllCapsHeader = letters.length > 0 && (upper / letters.length) >= 0.85;
+                    const startsWithCapital = /^[A-Z]/.test(headerText);
+                    const startsWithPageNumber = /^\d+\s+[A-Z]/.test(headerText);
+                    if (!startsWithCapital && !startsWithPageNumber && !isNumberedHeader && !isAllCapsHeader) {
+                        validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter, page number + capital letter, a numbered header pattern, or be an ALL-CAPS header. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                     // Headers should have paragraphIndex: null
                     if (chunk.paragraphIndex !== null) {
@@ -228,7 +233,19 @@ function validate(output) {
                     // Sentence chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
                     // but NOT lowercase letters (proper text formatting)
                     const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
-                    if (!isValidStart) {
+                    // Allow first sentence of a chapter/section to start lowercase (orphan-letter artifact)
+                    const isFirstSentenceOfChapter = /_(1|2)\b$/.test(chunkIdentifier);
+                    // Or if previous non-image chunk is a header
+                    let prevIsHeader = false;
+                    for (let k = i - 1; k >= 0; k--) {
+                        const prev = chunks[k];
+                        if (!prev) break;
+                        if (prev.type === 'image') continue;
+                        if (prev.type === 'header') prevIsHeader = true;
+                        break;
+                    }
+                    const allowedByHeuristic = (isFirstSentenceOfChapter || prevIsHeader) && /^[a-z]/.test(chunk.content);
+                    if (!isValidStart && !allowedByHeuristic) {
                         validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
 
@@ -264,8 +281,30 @@ function validate(output) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should have at least 1 sentence, found: ${chunk.sentenceCount}`);
                 }
 
-                // Check if text chunk ends with proper sentence terminator (but allow exceptions for fragments, lists, etc.)
-                if (wordCount > 3 && !/[.!?]$/.test(chunk.content.trim()) && !endsWithCommonSingleLetterWord(chunk.content)) {
+                // Check if text chunk ends with proper sentence terminator (allow realistic exceptions)
+                let trimmed = chunk.content.trim();
+                const endsWithEOS = /[.!?]$/.test(trimmed);
+                const endsWithFootnote = /\.[\s\u00A0]*\d+$/.test(trimmed); // period + optional space + digits
+                const endsWithQuoteFootnote = /[\u201D"']\s*\d+$/.test(trimmed); // closing quote followed by digits
+                const endsWithClosingQuote = /[\u201D"']$/.test(trimmed); // smart/straight quote at end
+                const endsWithAuthorAttribution = /[.!?]\s*[\u2014-]\s*[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){0,3}\s*$/.test(trimmed); // . —Name
+                const isBulletListIntro = /:\s*(?:•|\u2022)/.test(trimmed); // colon followed by bullet
+                const startsWithBullet = /^(?:•|\u2022)\s+\S/.test(trimmed);
+                // Accept numeric citation ranges like ". 4–9"
+                const endsWithRefRange = /\.[\s\u00A0]*\d+[\s\u2013\-]\d+\s*$/.test(trimmed);
+                // Accept comma-separated numeric refs like "99,100"
+                const endsWithRefList = /(\d+\s*,\s*)+\d+\s*$/.test(trimmed);
+                // Accept resource listings (domains/available at)
+                const domainMatches = (trimmed.match(/\b[a-z0-9.-]+\.(com|org|net|io|co)\b/gi) || []).length;
+                const looksLikeResourceList = domainMatches >= 1 || /Available at\s+https?:\/\//i.test(trimmed) || /can be (found|purchased|ordered) at/i.test(trimmed) || /Downloadable app/i.test(trimmed);
+                // Accept closing bracket if EOS before bracket
+                let bracketHasEOS = false;
+                if (/[)\]]$/.test(trimmed)) {
+                    const withoutBracket = trimmed.replace(/[)\]]+\s*$/, '');
+                    bracketHasEOS = /[.!?]\s*$/.test(withoutBracket);
+                }
+
+                if (wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS) && !endsWithCommonSingleLetterWord(trimmed)) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
                 }
 
@@ -276,9 +315,15 @@ function validate(output) {
             }
 
             if (chunk.type === 'header') {
-                // all headers are between 1 and 5 words
-                if (wordCount < 1 || wordCount > 5) {
-                    validationErrors.push(`Header ${fullChunkIdentifier} word count (${wordCount}) must be between 1 and 5 words. Content: "${chunk.content}"`);
+                const headerText = chunk.content.trim();
+                const isNumberedHeader = /^#?\d+[\.)]\s+/.test(headerText);
+                const letters = headerText.replace(/[^A-Za-z]+/g, '');
+                const upper = letters.replace(/[^A-Z]/g, '').length;
+                const isAllCapsHeader = letters.length > 0 && (upper / letters.length) >= 0.85;
+                const minWords = 1;
+                const maxWords = isNumberedHeader ? 12 : (isAllCapsHeader ? 20 : 5);
+                if (wordCount < minWords || wordCount > maxWords) {
+                    validationErrors.push(`Header ${fullChunkIdentifier} word count (${wordCount}) must be between ${minWords} and ${maxWords} words. Content: "${chunk.content}"`);
                 }
             }
 

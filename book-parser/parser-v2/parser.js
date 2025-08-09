@@ -173,7 +173,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                     throw new Error(`Unknown step: ${stepName}`);
                 }
 
-                const stepResult = await stepFunction(pipelineState, config);
+                let stepResult = await stepFunction(pipelineState, config);
 
                 // Update pipeline state
                 Object.assign(pipelineState, stepResult);
@@ -181,11 +181,35 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                 const stepEndTime = Date.now();
                 const stepDuration = stepEndTime - stepStartTime;
 
+                // Always save individual step output to steps folder (even if validation fails afterward)
+                try {
+                    const stepOutputFile = path.join(stepsDir, `${stepName}.json`);
+                    fs.writeFileSync(stepOutputFile, JSON.stringify(stepResult, null, 2));
+                } catch (writeError) {
+                    if (opts.debug) {
+                        console.log(`⚠️  Failed to write ${stepName} output: ${writeError.message}`);
+                    }
+                }
+
                 // Run validation if enabled and available
                 let validationResult = null;
                 if (opts.validate) {
                     const stepModule = STEP_MODULES[stepName];
                     if (stepModule && typeof stepModule.validate === 'function') {
+                        // Capture validation console output (errors/warnings)
+                        const validationLogs = [];
+                        const originalConsoleError = console.error;
+                        const originalConsoleWarn = console.warn;
+                        const originalConsoleLog = console.log;
+                        console.error = (...args) => {
+                            try { validationLogs.push(args.join(' ')); } catch (_) { }
+                            return originalConsoleError.apply(console, args);
+                        };
+                        console.warn = (...args) => {
+                            try { validationLogs.push(args.join(' ')); } catch (_) { }
+                            return originalConsoleWarn.apply(console, args);
+                        };
+                        // Keep normal logs out of the file but still allow runtime logging
                         try {
                             const isValid = stepModule.validate(stepResult);
                             validationResult = {
@@ -194,8 +218,14 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 timestamp: new Date().toISOString(),
                                 duration: Date.now() - stepEndTime
                             };
-
                             if (!isValid) {
+                                // Write validation output to file for debugging
+                                try {
+                                    const validationOutputPath = path.join(outputDir, 'validation-output.txt');
+                                    const header = `\n==== ${stepName} validation output @ ${new Date().toISOString()} ====\n`;
+                                    const body = (validationLogs.length ? validationLogs.join('\n') : '(no validation logs captured)') + '\n';
+                                    fs.appendFileSync(validationOutputPath, header + body);
+                                } catch (_) { }
                                 throw new Error(`Step ${stepName} validation failed`);
                             }
                         } catch (validationError) {
@@ -205,17 +235,25 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 timestamp: new Date().toISOString(),
                                 duration: Date.now() - stepEndTime
                             };
+                            // On thrown validation error, persist captured logs too
+                            try {
+                                const validationOutputPath = path.join(outputDir, 'validation-output.txt');
+                                const header = `\n==== ${stepName} validation output @ ${new Date().toISOString()} ====\n`;
+                                const body = (validationLogs.length ? validationLogs.join('\n') : '(no validation logs captured)') + '\n';
+                                fs.appendFileSync(validationOutputPath, header + body);
+                            } catch (_) { }
                             throw validationError;
+                        } finally {
+                            // Restore console
+                            console.error = originalConsoleError;
+                            console.warn = originalConsoleWarn;
+                            console.log = originalConsoleLog;
                         }
                     }
                 }
 
                 // Store validation result
                 validationResults[stepName] = validationResult;
-
-                // Save individual step output to steps folder
-                const stepOutputFile = path.join(stepsDir, `${stepName}.json`);
-                fs.writeFileSync(stepOutputFile, JSON.stringify(stepResult, null, 2));
 
                 if (opts.debug) {
                     console.log(`✓ ${stepName} completed (${stepDuration}ms)${validationResult?.passed ? ' [validated]' : ''}`);
@@ -233,6 +271,16 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                         timestamp: new Date().toISOString(),
                         duration: stepDuration
                     };
+                }
+
+                // Best-effort: if we have a stepResult available in scope, write it for debugging
+                try {
+                    if (typeof stepResult !== 'undefined') {
+                        const stepOutputFile = path.join(stepsDir, `${stepName}.json`);
+                        fs.writeFileSync(stepOutputFile, JSON.stringify(stepResult, null, 2));
+                    }
+                } catch (_) {
+                    // ignore write failures in error path
                 }
 
                 if (opts.debug) {

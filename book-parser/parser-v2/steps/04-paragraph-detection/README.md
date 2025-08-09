@@ -14,7 +14,7 @@ This step detects both paragraph boundaries and headers in the page content, cre
 ### Output Requirements
 - **Unified Chunks**: Single output format with both paragraphs and headers
 - **Chunk Types**: Each chunk must be classified as "paragraph" or "header"
-- **Content Quality**: Paragraphs 80-300 words (target, flexible 20-500 absolute), headers 1-5 words
+- **Content Quality**: Paragraphs 80-300 words (target, flexible 20-500 absolute); headers 1-5 words (standard), 2–12 words (numbered headers), up to 20 words for ALL-CAPS blocks
 - **Link Integration**: Links properly assigned to chunks where they appear
 - **Content Standards**: All chunks start with capital letters or valid punctuation
 
@@ -22,7 +22,7 @@ This step detects both paragraph boundaries and headers in the page content, cre
 - Minimum 5 chunks total across all chapters
 - Both paragraph and header chunk types must be present
 - Paragraphs: 80-300 words target (flexible 20-500 absolute) with proper sentence structure
-- Headers: 1-5 words, standalone lines, proper capitalization
+- Headers: 1-5 words (standard), 2–12 words (numbered), up to 20 words (ALL-CAPS blocks); standalone lines, proper capitalization
 - Links accurately associated with chunk content
 
 ## Implementation
@@ -31,20 +31,30 @@ This step detects both paragraph boundaries and headers in the page content, cre
 
 The step uses **advanced paragraph optimization** with intelligent header detection:
 
-#### 1. 6-Rule Header Detection System
+#### 1. 6-Rule Header Detection System (with Numbered and ALL-CAPS support)
 All rules must be satisfied for header classification:
 
-1. **Length**: 2-5 words only
+1. **Length**: 2-5 words only (Numbered headers allow 2–12 words)
 2. **No Punctuation**: Does not end with sentence punctuation (., !, ?)
 3. **Capitalization**: Starts with a capital letter
 4. **Line Structure**: Appears as standalone line
 5. **Context - Previous**: Previous line ends with sentence-ending punctuation
-6. **Context - Next**: Next line starts with a capital letter
+6. **Context - Next**: Next line starts with a capital letter (or starts a list: bullet "•" or numbered "1. ")
+
+ALL-CAPS headers are supported:
+- Blocks such as:
+  - "BREATHE LIGHT, SLOW, AND DEEP—THE EXERCISES"
+  - "SECTION TWO: EXERCISES TO STOP SYMPTOMS OF\nASTHMA, ANXIETY, STRESS, RACING MIND, AND PANIC\nDISORDER"
+- Criteria: multi-line allowed, mostly-uppercase letters (≈90%+), allowed punctuation (, – — :), no terminal sentence punctuation.
+
+Numbered headers are supported:
+- Patterns like `#11. Breath Hold Activation`, `#13. Breathing Recovery, Walking`, `#16. Three Exercises to Help Stop a Panic Attack`
+- Optional `#`, number + `.` or `)`, followed by 2–12 mostly-capitalized words, no terminal punctuation
 
 #### 2. Advanced Paragraph Optimization
 - **Two-Pass Merging System**: Handles existing and newly created small paragraphs
 - **Intelligent Neighbor Selection**: Prefers merging with previous paragraph, falls back to next
-- **Boundary Respect**: Prevents merging across headers and page boundaries
+- **Boundary Respect**: Prevents merging across headers and page boundaries; images are ignored as boundaries so adjacent paragraphs can merge across images
 - **Link Re-validation**: Re-validates links during merging operations
 
 #### 3. Enhanced Link Integration

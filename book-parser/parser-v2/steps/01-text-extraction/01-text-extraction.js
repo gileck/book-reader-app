@@ -211,7 +211,19 @@ function extractCleanPageText(textContent, pageNum) {
         const item = items[i];
 
         const itemText = item.str;
-        if (!itemText || itemText.trim().length === 0) {
+        // Preserve explicit empty-line markers from PDF.js: empty string with hasEOL=true
+        if (itemText === undefined || itemText === null) {
+            if (item.hasEOL) {
+                pageText += '\n';
+            }
+            continue;
+        }
+        const itemTrimmed = typeof itemText === 'string' ? itemText.trim() : '';
+        if (itemTrimmed.length === 0) {
+            // Treat an empty item that signals end-of-line as a blank line (paragraph break)
+            if (item.hasEOL) {
+                pageText += '\n';
+            }
             continue;
         }
 

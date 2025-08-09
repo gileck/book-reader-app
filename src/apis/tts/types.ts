@@ -30,6 +30,7 @@ export interface TtsErrorDetail {
 }
 
 export interface GenerateTtsResponse {
+    isFromCache?: boolean;
     success: boolean;
     audioContent?: string; // base64 encoded audio
     timepoints?: TTSTimepoint[];

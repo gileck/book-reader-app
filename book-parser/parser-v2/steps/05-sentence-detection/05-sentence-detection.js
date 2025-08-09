@@ -195,11 +195,87 @@ function combineSmallSentences(chunks) {
 
         // For text chunks, aggressively combine if they're below target
         if (chunk.type === 'text' && chunk.wordCount < MIN_WORDS) {
-            // PHASE 1: Try same paragraph combinations
+            // PHASE 1: Try same-paragraph combinations
             const combinedChunk = tryMergeWithNextSentences(chunks, i, MIN_WORDS, MAX_WORDS);
             if (combinedChunk) {
-                optimized.push(combinedChunk.merged);
-                i = combinedChunk.nextIndex; // Skip to after the merged chunks
+                let merged = combinedChunk.merged;
+                let lastIndex = combinedChunk.nextIndex;
+
+                // If still below MIN_WORDS, extend forward across paragraphs conservatively
+                if (merged.wordCount < MIN_WORDS) {
+                    const forwardAggressive = (base, startIdx) => {
+                        let combinedContent = base.content;
+                        let combinedWordCount = base.wordCount;
+                        let combinedSentenceCount = base.sentenceCount;
+                        let combinedLinks = [...(base.links || [])];
+                        let cursor = startIdx + 1;
+
+                        for (let j = cursor; j < chunks.length; j++) {
+                            const nextChunk = chunks[j];
+                            if (nextChunk.type === 'header' || nextChunk.type === 'image') break;
+                            if (nextChunk.type !== 'text') break;
+                            const newWordCount = combinedWordCount + nextChunk.wordCount;
+                            if (newWordCount > MAX_WORDS) break;
+                            // Allow cross-page merge only for very short bases or small gaps
+                            const pageGap = Math.abs((base.pageNumber || 0) - (nextChunk.pageNumber || 0));
+                            const allowPageGap = base.wordCount < 25 ? pageGap <= 5 : pageGap <= 1;
+                            if (!allowPageGap) break;
+                            combinedContent += ' ' + nextChunk.content;
+                            combinedWordCount = newWordCount;
+                            combinedSentenceCount += nextChunk.sentenceCount || 1;
+                            combinedLinks.push(...(nextChunk.links || []));
+                            lastIndex = j;
+                            if (combinedWordCount >= MIN_WORDS) break;
+                        }
+
+                        const validLinks = removeDuplicateLinks(combinedLinks);
+                        return {
+                            merged: {
+                                type: 'text',
+                                content: combinedContent,
+                                pageNumber: base.pageNumber,
+                                paragraphIndex: base.paragraphIndex,
+                                wordCount: combinedWordCount,
+                                sentenceCount: combinedSentenceCount,
+                                links: validLinks
+                            },
+                            lastIndex
+                        };
+                    };
+
+                    const extended = forwardAggressive(merged, lastIndex);
+                    merged = extended.merged;
+                    lastIndex = extended.lastIndex;
+
+                    // If still short, try merging with previous optimized text chunk
+                    if (merged.wordCount < MIN_WORDS) {
+                        // Merge with previous optimized text chunk if possible
+                        if (optimized.length > 0) {
+                            const lastOptimized = optimized[optimized.length - 1];
+                            if (lastOptimized.type === 'text') {
+                                const combinedWordCount = lastOptimized.wordCount + merged.wordCount;
+                                if (combinedWordCount <= MAX_WORDS) {
+                                    const newContent = lastOptimized.content + ' ' + merged.content;
+                                    const newLinks = removeDuplicateLinks([...(lastOptimized.links || []), ...(merged.links || [])]);
+                                    optimized[optimized.length - 1] = {
+                                        type: 'text',
+                                        content: newContent,
+                                        pageNumber: lastOptimized.pageNumber,
+                                        paragraphIndex: lastOptimized.paragraphIndex,
+                                        wordCount: combinedWordCount,
+                                        sentenceCount: lastOptimized.sentenceCount + merged.sentenceCount,
+                                        links: newLinks
+                                    };
+                                    i = lastIndex;
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                optimized.push(merged);
+                i = lastIndex; // Skip to after the merged chunks
             } else {
                 const mergedWithPrevious = tryMergeWithPreviousSentence(optimized, chunk, MIN_WORDS, MAX_WORDS);
                 if (mergedWithPrevious) {
@@ -423,7 +499,8 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
             if (combinedWordCount <= maxWords) {
                 // FINAL ULTRA-AGGRESSIVE: No page gap limits for very short chunks
                 const currentIsVeryShort = currentChunk.wordCount < 25; // Extra aggressive for very short
-                if (currentIsVeryShort || Math.abs(currentChunk.pageNumber - lastOptimized.pageNumber) <= 5) {
+                const pageGap = Math.abs(currentChunk.pageNumber - lastOptimized.pageNumber);
+                if (currentIsVeryShort ? pageGap <= 5 : pageGap <= 1) {
                     return {
                         mergeWithPrevious: true,
                         merged: {
@@ -466,11 +543,11 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
                 break;
             }
 
-            // FINAL ULTRA-AGGRESSIVE: No page gap limits for very short chunks
+            // FINAL ULTRA-AGGRESSIVE: Relax page gap limit only for very short chunks
             if (currentChunk.pageNumber !== nextChunk.pageNumber) {
                 const currentIsVeryShort = currentChunk.wordCount < 25;
                 const pageDifference = Math.abs(nextChunk.pageNumber - currentChunk.pageNumber);
-                if (!currentIsVeryShort && pageDifference > 5) { // Only limit for longer chunks
+                if (!currentIsVeryShort && pageDifference > 1) { // Only allow small gaps for longer chunks
                     break;
                 }
             }

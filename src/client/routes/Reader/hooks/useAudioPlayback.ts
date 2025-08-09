@@ -91,8 +91,32 @@ export const useAudioPlayback = (
     // SIMPLIFIED: Use all chunks with absolute indexing, handle non-text gracefully
     const allChunks = chapter?.content.chunks.map(chunk => ({
         ...chunk,
-        text: chunk.type === 'text' ? (chunk.text.replaceAll('\n', ' ') || '') : ''
+        // Treat headers as playable text; only images are non-playable
+        text: chunk.type !== 'image' ? (chunk.text.replaceAll('\n', ' ') || '') : ''
     })) || [];
+
+    // Helpers to find next/previous playable (text) chunk indices, skipping images and other non-text chunks
+    const findNextTextChunkIndex = useCallback((fromIndexExclusive: number | null): number | null => {
+        if (fromIndexExclusive === null) return null;
+        for (let i = fromIndexExclusive + 1; i < allChunks.length; i++) {
+            const candidate = allChunks[i];
+            if (candidate && candidate.type !== 'image' && candidate.text.trim().length > 0) {
+                return i;
+            }
+        }
+        return null;
+    }, [allChunks]);
+
+    const findPreviousTextChunkIndex = useCallback((fromIndexExclusive: number | null): number | null => {
+        if (fromIndexExclusive === null) return null;
+        for (let i = fromIndexExclusive - 1; i >= 0; i--) {
+            const candidate = allChunks[i];
+            if (candidate && candidate.type !== 'image' && candidate.text.trim().length > 0) {
+                return i;
+            }
+        }
+        return null;
+    }, [allChunks]);
 
     // Clear audio cache when voice changes or chapter changes
     useEffect(() => {
@@ -128,7 +152,7 @@ export const useAudioPlayback = (
             }
 
             const chunk = allChunks[index];
-            if (!chunk || chunk.type !== 'text') return; // Skip non-text chunks
+            if (!chunk || chunk.type === 'image' || !chunk.text?.trim()) return; // Skip images and empty text
 
             pendingRequests.current.add(index);
 
@@ -208,7 +232,7 @@ export const useAudioPlayback = (
     // Word highlighting logic
     useEffect(() => {
         if (currentChunkIndex === null) return;
-        
+
         const audioData = state.audioChunks[currentChunkIndex];
         if (!audioData) return;
 
@@ -258,40 +282,52 @@ export const useAudioPlayback = (
     }, [state.audioChunks, currentChunkIndex, wordSpeedOffset, currentChapterNumber]);
 
     const onAudioFinished = useCallback(() => {
-        if (currentChunkIndex !== null && currentChunkIndex < allChunks.length - 1) {
-            const nextIndex = currentChunkIndex + 1;
-            onCurrentChunkChange(nextIndex);
+        if (currentChunkIndex === null) return;
+        const nextIndex = findNextTextChunkIndex(currentChunkIndex);
+        if (nextIndex === null) return; // No more playable chunks
 
-            setTimeout(() => {
-                const nextAudioData = state.audioChunks[nextIndex];
-                if (nextAudioData) {
-                    nextAudioData.audio.playbackRate = playbackSpeed;
-                    nextAudioData.audio.play();
-                    updateState({ isPlaying: true, intendedPlay: false });
-                } else {
-                    updateState({ intendedPlay: true });
-                }
-            }, 100);
-        }
-    }, [currentChunkIndex, state.audioChunks, allChunks.length, playbackSpeed, updateState, onCurrentChunkChange]);
+        onCurrentChunkChange(nextIndex);
+
+        setTimeout(() => {
+            const nextAudioData = state.audioChunks[nextIndex];
+            if (nextAudioData) {
+                nextAudioData.audio.playbackRate = playbackSpeed;
+                nextAudioData.audio.play();
+                updateState({ isPlaying: true, intendedPlay: false });
+            } else {
+                // Next playable chunk not yet ready; mark intent to auto-play when ready
+                updateState({ intendedPlay: true });
+            }
+        }, 100);
+    }, [currentChunkIndex, state.audioChunks, playbackSpeed, updateState, onCurrentChunkChange, findNextTextChunkIndex]);
 
     const handlePlay = useCallback(async () => {
         if (currentChunkIndex === null) return;
-        
-        const audioData = state.audioChunks[currentChunkIndex];
+
+        // If current chunk isn't playable text, jump to the next playable one
+        const currentChunk = allChunks[currentChunkIndex];
+        let targetIndex = currentChunkIndex;
+        if (!currentChunk || currentChunk.type === 'image' || currentChunk.text.trim().length === 0) {
+            const nextTextIndex = findNextTextChunkIndex(currentChunkIndex);
+            if (nextTextIndex === null) return; // Nothing to play
+            targetIndex = nextTextIndex;
+            onCurrentChunkChange(targetIndex);
+        }
+
+        const audioData = state.audioChunks[targetIndex];
         if (audioData) {
             audioData.audio.playbackRate = playbackSpeed;
             audioData.audio.play();
             updateState({ isPlaying: true, intendedPlay: false });
         } else {
-            // Current chunk isn't ready yet, set intendedPlay so it auto-plays when ready
+            // Target playable chunk isn't ready yet; auto-play when ready
             updateState({ intendedPlay: true });
         }
-    }, [state.audioChunks, currentChunkIndex, playbackSpeed, updateState]);
+    }, [state.audioChunks, currentChunkIndex, playbackSpeed, updateState, allChunks, findNextTextChunkIndex, onCurrentChunkChange]);
 
     const handlePause = useCallback(() => {
         if (currentChunkIndex === null) return;
-        
+
         const audioData = state.audioChunks[currentChunkIndex];
         if (audioData) {
             audioData.audio.pause();
@@ -311,63 +347,65 @@ export const useAudioPlayback = (
     }, [state.audioChunks, updateState]);
 
     const handlePreviousChunk = useCallback(() => {
-        if (currentChunkIndex !== null && currentChunkIndex > 0) {
-            const wasPlaying = state.isPlaying;
-            handlePause();
-            updateState({ currentWordIndex: 0 });
-            if (state.audioChunks[currentChunkIndex]?.audio) {
-                state.audioChunks[currentChunkIndex].audio.currentTime = 0;
-            }
+        if (currentChunkIndex === null) return;
+        const targetIndex = findPreviousTextChunkIndex(currentChunkIndex);
+        if (targetIndex === null) return;
 
-            const prevIndex = currentChunkIndex - 1;
-            onCurrentChunkChange(prevIndex);
-
-            if (wasPlaying) {
-                const waitForAudio = () => {
-                    const prevAudioData = state.audioChunks[prevIndex];
-                    if (prevAudioData) {
-                        prevAudioData.audio.currentTime = 0;
-                        prevAudioData.audio.playbackRate = playbackSpeed;
-                        prevAudioData.audio.play();
-                        updateState({ isPlaying: true, intendedPlay: false });
-                    } else {
-                        updateState({ intendedPlay: true });
-                        setTimeout(waitForAudio, 200);
-                    }
-                };
-                setTimeout(waitForAudio, 100);
-            }
+        const wasPlaying = state.isPlaying;
+        handlePause();
+        updateState({ currentWordIndex: 0 });
+        if (state.audioChunks[currentChunkIndex]?.audio) {
+            state.audioChunks[currentChunkIndex].audio.currentTime = 0;
         }
-    }, [currentChunkIndex, state.isPlaying, state.audioChunks, playbackSpeed, handlePause, updateState, onCurrentChunkChange]);
+
+        onCurrentChunkChange(targetIndex);
+
+        if (wasPlaying) {
+            const waitForAudio = () => {
+                const prevAudioData = state.audioChunks[targetIndex];
+                if (prevAudioData) {
+                    prevAudioData.audio.currentTime = 0;
+                    prevAudioData.audio.playbackRate = playbackSpeed;
+                    prevAudioData.audio.play();
+                    updateState({ isPlaying: true, intendedPlay: false });
+                } else {
+                    updateState({ intendedPlay: true });
+                    setTimeout(waitForAudio, 200);
+                }
+            };
+            setTimeout(waitForAudio, 100);
+        }
+    }, [currentChunkIndex, state.isPlaying, state.audioChunks, playbackSpeed, handlePause, updateState, onCurrentChunkChange, findPreviousTextChunkIndex]);
 
     const handleNextChunk = useCallback(() => {
-        if (currentChunkIndex !== null && currentChunkIndex < allChunks.length - 1) {
-            const wasPlaying = state.isPlaying;
-            handlePause();
-            updateState({ currentWordIndex: 0 });
-            if (state.audioChunks[currentChunkIndex]?.audio) {
-                state.audioChunks[currentChunkIndex].audio.currentTime = 0;
-            }
-            const nextIndex = currentChunkIndex + 1;
-            onCurrentChunkChange(nextIndex);
+        if (currentChunkIndex === null) return;
+        const targetIndex = findNextTextChunkIndex(currentChunkIndex);
+        if (targetIndex === null) return;
 
-            if (wasPlaying) {
-                const waitForAudio = () => {
-                    const nextAudioData = state.audioChunks[nextIndex];
-                    if (nextAudioData) {
-                        nextAudioData.audio.currentTime = 0;
-                        nextAudioData.audio.playbackRate = playbackSpeed;
-                        nextAudioData.audio.play();
-                        updateState({ isPlaying: true, intendedPlay: false });
-                    } else {
-                        updateState({ intendedPlay: true });
-                        setTimeout(waitForAudio, 200);
-                    }
-                };
-                setTimeout(waitForAudio, 100);
-            }
+        const wasPlaying = state.isPlaying;
+        handlePause();
+        updateState({ currentWordIndex: 0 });
+        if (state.audioChunks[currentChunkIndex]?.audio) {
+            state.audioChunks[currentChunkIndex].audio.currentTime = 0;
         }
-    }, [currentChunkIndex, state.isPlaying, state.audioChunks, allChunks.length, playbackSpeed, handlePause, updateState, onCurrentChunkChange]);
+        onCurrentChunkChange(targetIndex);
+
+        if (wasPlaying) {
+            const waitForAudio = () => {
+                const nextAudioData = state.audioChunks[targetIndex];
+                if (nextAudioData) {
+                    nextAudioData.audio.currentTime = 0;
+                    nextAudioData.audio.playbackRate = playbackSpeed;
+                    nextAudioData.audio.play();
+                    updateState({ isPlaying: true, intendedPlay: false });
+                } else {
+                    updateState({ intendedPlay: true });
+                    setTimeout(waitForAudio, 200);
+                }
+            };
+            setTimeout(waitForAudio, 100);
+        }
+    }, [currentChunkIndex, state.isPlaying, state.audioChunks, playbackSpeed, handlePause, updateState, onCurrentChunkChange, findNextTextChunkIndex]);
 
     const setCurrentChunkIndex = useCallback((index: number) => {
         onCurrentChunkChange(index);
@@ -379,7 +417,7 @@ export const useAudioPlayback = (
         if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) return;
 
         const chunk = allChunks[index];
-        if (!chunk || chunk.type !== 'text') return; // Skip non-text chunks
+        if (!chunk || chunk.type === 'image' || !chunk.text?.trim()) return; // Skip images and empty text
 
         pendingRequests.current.add(index);
 
@@ -451,14 +489,14 @@ export const useAudioPlayback = (
                 const currentWord = state.currentWordIndex;
 
                 // Only update DOM if word position has changed
-                if (!previousHighlightRef.current || 
-                    previousHighlightRef.current.chunkIndex !== currentChunk || 
+                if (!previousHighlightRef.current ||
+                    previousHighlightRef.current.chunkIndex !== currentChunk ||
                     previousHighlightRef.current.wordIndex !== currentWord) {
-                    
+
                     // Clear previous highlight
                     if (previousHighlightRef.current) {
                         WordHighlightingAPI.unhighlightWord(
-                            previousHighlightRef.current.chunkIndex, 
+                            previousHighlightRef.current.chunkIndex,
                             previousHighlightRef.current.wordIndex
                         );
                     }
