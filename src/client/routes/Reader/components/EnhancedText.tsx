@@ -123,6 +123,20 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
                     seenStarts.add(startIndex);
                 }
             }
+
+            // Pattern 3: Trailing footnote numbers at end of sentence, allow optional opening bracket before number
+            // Examples: "... text 12.", "... text 12,13)", "... text (12)"
+            // Limit to 1-3 digit groups to avoid matching years like 2020
+            const trailingPattern = /\s(?:[\(\[])?(\d{1,3}(?:,\d{1,3})*)(?=[\s\)\]\.,;:!?"'”’»]*$)/g;
+            while ((match = trailingPattern.exec(text)) !== null) {
+                const fullMatch = match[0];
+                const numberText = match[1];
+                const startIndex = match.index + (fullMatch.length - numberText.length);
+                if (!seenStarts.has(startIndex)) {
+                    detections.push({ start: startIndex, end: startIndex + numberText.length, text: numberText });
+                    seenStarts.add(startIndex);
+                }
+            }
             return detections;
         };
 
