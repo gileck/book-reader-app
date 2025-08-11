@@ -45,7 +45,7 @@ export const createCache = (provider: CacheProvider) => {
         const cacheKey = provider.generateCacheKey(params);
 
         // If disable cache is set, skip cache lookup
-        if (opts.disableCache) {
+        if (opts.disableCache && !opts.staleWhileRevalidate) {
             const result = await callback();
             return { data: result, isFromCache: false };
         }

@@ -19,7 +19,9 @@ export const updateReadingPosition = async (
 export const getReadingProgress = async (
     request: GetReadingProgressRequest
 ): Promise<CacheResult<GetReadingProgressResponse>> => {
-    return apiClient.call(GET_READING_PROGRESS_API_NAME, request);
+    return apiClient.call(GET_READING_PROGRESS_API_NAME, request, {
+        staleWhileRevalidate: true
+    });
 };
 
 export const getReadingStats = async (

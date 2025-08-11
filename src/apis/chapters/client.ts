@@ -35,7 +35,9 @@ export async function getChapterByNumber(payload: GetChapterByBookAndNumberPaylo
         throw new Error('Book ID and chapter number are required');
     }
 
-    return apiClient.call(API_GET_CHAPTER_BY_BOOK_NUMBER, payload);
+    return apiClient.call(API_GET_CHAPTER_BY_BOOK_NUMBER, payload, {
+        staleWhileRevalidate: true
+    });
 }
 
 export async function getChaptersByBook(payload: GetChaptersByBookPayload): Promise<CacheResult<GetChaptersByBookResponse>> {

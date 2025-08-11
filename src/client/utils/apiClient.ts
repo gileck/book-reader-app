@@ -68,8 +68,8 @@ export const apiClient = {
         },
         {
           bypassCache: options?.bypassCache ?? false,
-          disableCache: true,
-          staleWhileRevalidate: false,
+          disableCache: options?.disableCache ?? true,
+          staleWhileRevalidate: options?.staleWhileRevalidate ?? false,
           ttl: options?.ttl,
           maxStaleAge: options?.maxStaleAge,
           isDataValidForCache: options?.isDataValidForCache,
