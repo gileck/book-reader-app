@@ -93,10 +93,54 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
 
     // Render inline text (no block containers) with clickable links and word highlighting
     const renderInlineWithLinks = (text: string, links: ChunkLink[]) => {
-        if (!links || links.length === 0) {
-            return renderTextWithHighlighting(text);
-        }
+        type DetectedFootnote = { start: number; end: number; text: string };
 
+        // Detect patterns like ". 1 Text" or at start "1 Text", also supporting multi-refs like "1,2"
+        const detectFootnotes = (): DetectedFootnote[] => {
+            const detections: DetectedFootnote[] = [];
+            const seenStarts = new Set<number>();
+
+            // Pattern 1: ". {number or number list} {Capital letter}" e.g., ". 1 The" or ". 1,2 The"
+            const dotPattern = /\. (\d+(?:,\d+)*) [A-Z]/g;
+            let match: RegExpExecArray | null;
+            while ((match = dotPattern.exec(text)) !== null) {
+                const numberText = match[1];
+                const startIndex = match.index + 2; // skip ". "
+                if (!seenStarts.has(startIndex)) {
+                    detections.push({ start: startIndex, end: startIndex + numberText.length, text: numberText });
+                    seenStarts.add(startIndex);
+                }
+            }
+
+            // Pattern 2: "{number or number list} {Capital letter}" at start of chunk
+            const startPattern = /^(\d+(?:,\d+)*) [A-Z]/;
+            const startMatch = startPattern.exec(text);
+            if (startMatch) {
+                const numberText = startMatch[1];
+                const startIndex = 0;
+                if (!seenStarts.has(startIndex)) {
+                    detections.push({ start: startIndex, end: startIndex + numberText.length, text: numberText });
+                    seenStarts.add(startIndex);
+                }
+            }
+
+            // Pattern 3: Trailing footnote numbers at end of sentence, allow optional opening bracket before number
+            // Examples: "... text 12.", "... text 12,13)", "... text (12)"
+            // Limit to 1-3 digit groups to avoid matching years like 2020
+            const trailingPattern = /\s(?:[\(\[])?(\d{1,3}(?:,\d{1,3})*)(?=[\s\)\]\.,;:!?"'”’»]*$)/g;
+            while ((match = trailingPattern.exec(text)) !== null) {
+                const fullMatch = match[0];
+                const numberText = match[1];
+                const startIndex = match.index + (fullMatch.length - numberText.length);
+                if (!seenStarts.has(startIndex)) {
+                    detections.push({ start: startIndex, end: startIndex + numberText.length, text: numberText });
+                    seenStarts.add(startIndex);
+                }
+            }
+            return detections;
+        };
+
+        // Build clickable link positions from provided links
         const linkPositions: Array<{ start: number; end: number; link: ChunkLink }> = [];
 
         links.forEach(link => {
@@ -115,47 +159,90 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         // Sort by start position
         linkPositions.sort((a, b) => a.start - b.start);
 
+        // Detect all footnote-like numerals in text
+        const detections = detectFootnotes();
+
+        // Filter out detections that are already represented by clickable link positions
+        const nonLinkedDetections: DetectedFootnote[] = detections.filter(det =>
+            !linkPositions.some(lp => det.start >= lp.start && det.end <= lp.end)
+        );
+
+        // Merge positions into a single ordered list
+        type Position =
+            | { kind: 'link'; start: number; end: number; link: ChunkLink }
+            | { kind: 'detected'; start: number; end: number; text: string };
+
+        const merged: Position[] = [
+            ...linkPositions.map(lp => ({ kind: 'link', start: lp.start, end: lp.end, link: lp.link } as Position)),
+            ...nonLinkedDetections.map(det => ({ kind: 'detected', start: det.start, end: det.end, text: det.text } as Position))
+        ].sort((a, b) => a.start - b.start);
+
+        if (merged.length === 0) {
+            return renderTextWithHighlighting(text);
+        }
+
         const elements: React.ReactNode[] = [];
         let currentIndex = 0;
 
-        linkPositions.forEach((linkPos, i) => {
-            if (currentIndex < linkPos.start) {
-                elements.push(text.slice(currentIndex, linkPos.start));
+        merged.forEach((pos, i) => {
+            if (pos.start > currentIndex) {
+                elements.push(text.slice(currentIndex, pos.start));
             }
 
-            elements.push(
-                <sup
-                    key={`inline-source-${i}`}
-                    className="clickable-link footnote"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        onLinkClick(linkPos.link);
-                    }}
-                    style={{
-                        cursor: 'pointer',
-                        color: '#1976d2',
-                        textDecoration: 'none',
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        padding: '0 2px',
-                        borderRadius: '2px',
-                        lineHeight: 1,
-                        transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#e3f2fd';
-                        e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                        e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                >
-                    {linkPos.link.text}
-                </sup>
-            );
+            if (pos.kind === 'link') {
+                elements.push(
+                    <sup
+                        key={`inline-source-${i}`}
+                        className="clickable-link footnote"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onLinkClick(pos.link);
+                        }}
+                        style={{
+                            marginRight: '5px',
+                            cursor: 'pointer',
+                            color: '#1976d2',
+                            textDecoration: 'none',
+                            fontSize: '0.75em',
+                            fontWeight: 500,
+                            padding: '0 2px',
+                            borderRadius: '2px',
+                            lineHeight: 1,
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = '#e3f2fd';
+                            e.currentTarget.style.transform = 'scale(1.1)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                    >
+                        {pos.link.text}
+                    </sup>
+                );
+            } else {
+                elements.push(
+                    <sup
+                        key={`inline-detected-source-${i}`}
+                        style={{
+                            marginRight: '5px',
+                            cursor: 'default',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                            fontSize: '0.75em',
+                            fontWeight: 400,
+                            padding: '0 2px',
+                            lineHeight: 1
+                        }}
+                    >
+                        {pos.text}
+                    </sup>
+                );
+            }
 
-            currentIndex = linkPos.end;
+            currentIndex = pos.end;
         });
 
         if (currentIndex < text.length) {
