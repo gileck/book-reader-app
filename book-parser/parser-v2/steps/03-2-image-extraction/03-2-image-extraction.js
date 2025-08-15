@@ -6,8 +6,9 @@ const { execSync } = require('child_process');
 /**
  * Step 3-2: Image Extraction
  * 
- * Takes pages from Step 3-1 and extracts images from PDF, adding an images array to each page
- * containing the images found on that specific page.
+ * Takes chapters from Step 3-1 and extracts images from PDF, inserting inline image markers
+ * (e.g., [[IMG id=<string> index=<int> alt="<string>"]]) into chapter content to preserve
+ * original placement without relying on page numbers.
  * 
  * Process:
  * 1. Extract embedded images from PDF using pdfimages command
@@ -15,8 +16,8 @@ const { execSync } = require('child_process');
  * 3. Map extracted images to their corresponding pages
  * 4. Add images array to each page with image names and alt text
  * 
- * Input: chapters[] with pages[] from Step 3-1
- * Output: chapters[] with pages[] containing images[] array
+ * Input: chapters[] from Step 3-1
+ * Output: chapters[] with chapter-level content containing [[IMG ...]] markers
  */
 
 /**
@@ -47,24 +48,64 @@ async function execute(pipelineState, config) {
         let totalImagesAdded = 0;
 
         for (const chapter of pipelineState.chapters) {
-            // Add images to each page in the chapter
-            const pagesWithImages = addImagesToPages(chapter.pages, images);
-            const chapterImagesCount = pagesWithImages.reduce((sum, page) => sum + (page.images ? page.images.length : 0), 0);
-            totalImagesAdded += chapterImagesCount;
+            // Build chapter concatenated content (with single newlines between pages)
+            const pieces = [];
+            const pageOffsets = new Map();
+            let offset = 0;
+            for (const p of chapter.pages) {
+                pageOffsets.set(p.pageNumber, offset);
+                const t = typeof p.content === 'string' ? p.content : '';
+                pieces.push(t);
+                offset += t.length + 1; // add 1 for inserted newline
+            }
+            let chapterContent = pieces.join('\n');
+
+            // Insert markers near the top of each page that has images as a simple heuristic
+            let imageIndex = 0;
+            for (const info of images.filter(i => !i.placeholder)) {
+                const pageStart = pageOffsets.get(info.pageNumber);
+                if (pageStart === undefined) continue;
+                const id = info.imageName.replace(/\.[^.]+$/, '');
+                const alt = info.imageAlt || id;
+                const marker = `[[IMG id=${id} index=${imageIndex} alt="${alt}"]]`;
+                // Insert marker at page start + small offset to avoid breaking prefixes
+                const insertAt = Math.max(0, Math.min(chapterContent.length, pageStart + 1));
+                chapterContent = chapterContent.slice(0, insertAt) + '\n' + marker + '\n' + chapterContent.slice(insertAt);
+                // Also insert into the individual page content so downstream step 4 can detect it
+                const targetPage = chapter.pages.find(p => p.pageNumber === info.pageNumber);
+                if (targetPage && typeof targetPage.content === 'string') {
+                    targetPage.content = marker + '\n' + targetPage.content;
+                }
+                if (targetPage && typeof targetPage.rawContent === 'string') {
+                    targetPage.rawContent = marker + '\n' + targetPage.rawContent;
+                }
+                imageIndex += 1;
+                totalImagesAdded += 1;
+            }
 
             const processedChapter = {
                 ...chapter,
-                pages: pagesWithImages
+                content: chapterContent
             };
 
             processedChapters.push(processedChapter);
         }
 
+        // Recompute marker total from chapter content to ensure consistency
+        const markerRegex = /\[\[IMG\s+id=([^\s\]]+)\s+index=(\d+)\s+alt=\"([^\"]*)\"\]\]/g;
+        let markerTotal = 0;
+        for (const ch of processedChapters) {
+            if (typeof ch.content === 'string') {
+                const matches = ch.content.match(markerRegex);
+                if (matches) markerTotal += matches.length;
+            }
+        }
+
         // Generate debug output
         const debugOutput = {
             imageExtractionMetadata: {
-                totalImages: totalImagesAdded,
-                totalExtractedImages: images.length,
+                totalImages: markerTotal,
+                totalExtractedImages: images.filter(i => i.extracted).length,
                 imagesFolderPath: imagesFolderPath,
                 processingTime: Date.now() - startTime,
                 extractionTime: new Date().toISOString(),
@@ -82,8 +123,8 @@ async function execute(pipelineState, config) {
             metadata: {
                 ...pipelineState.metadata,
                 imageExtraction: {
-                    totalImages: totalImagesAdded,
-                    totalExtractedImages: images.length,
+                    totalImages: markerTotal,
+                    totalExtractedImages: images.filter(i => i.extracted).length,
                     imagesFolderPath: imagesFolderPath,
                     processingTime: Date.now() - startTime,
                     extractionTime: new Date().toISOString()
@@ -167,7 +208,7 @@ async function extractImages(pdfPath, config) {
                     if (imageFileIndex < extractedFiles.length) {
                         const file = extractedFiles[imageFileIndex];
                         const tempFilePath = path.join(tempDir, file);
-                        const finalFileName = `page-${String(pageInfo.pageNumber + 1).padStart(3, '0')}-image-${pageImageIndex + 1}.jpg`;
+                        const finalFileName = `image-${String(pageInfo.pageNumber + 1).padStart(3, '0')}-${pageImageIndex + 1}.jpg`;
                         const finalFilePath = path.join(imagesDir, finalFileName);
 
                         // Copy file to final location
@@ -176,7 +217,7 @@ async function extractImages(pdfPath, config) {
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: finalFileName,
-                            imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber + 1})`,
+                            imageAlt: `Figure ${globalImageCounter}`,
                             originalName: file,
                             extracted: true
                         });
@@ -196,7 +237,7 @@ async function extractImages(pdfPath, config) {
                     if (imageFileIndex < extractedFiles.length) {
                         const file = extractedFiles[imageFileIndex];
                         const tempFilePath = path.join(tempDir, file);
-                        const finalFileName = `page-${String(pageInfo.pageNumber + 1).padStart(3, '0')}-image-${pageImageIndex + 1}.jpg`;
+                        const finalFileName = `image-${String(pageInfo.pageNumber + 1).padStart(3, '0')}-${pageImageIndex + 1}.jpg`;
                         const finalFilePath = path.join(imagesDir, finalFileName);
 
                         // Copy file to final location
@@ -205,7 +246,7 @@ async function extractImages(pdfPath, config) {
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: finalFileName,
-                            imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber + 1})`,
+                            imageAlt: `Figure ${globalImageCounter}`,
                             originalName: file,
                             extracted: true
                         });
@@ -216,8 +257,8 @@ async function extractImages(pdfPath, config) {
                         // Create placeholder for remaining detected images
                         images.push({
                             pageNumber: pageInfo.pageNumber,
-                            imageName: `page-${pageInfo.pageNumber + 1}-image-${pageImageIndex + 1}.placeholder`,
-                            imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber + 1}) - Not extracted`,
+                            imageName: `image-${pageInfo.pageNumber + 1}-${pageImageIndex + 1}.placeholder`,
+                            imageAlt: `Figure ${globalImageCounter} - Not extracted`,
                             placeholder: true
                         });
                         globalImageCounter++;
@@ -236,8 +277,8 @@ async function extractImages(pdfPath, config) {
             for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
                 images.push({
                     pageNumber: pageInfo.pageNumber,
-                    imageName: `page-${pageInfo.pageNumber + 1}-image-${pageImageIndex + 1}.placeholder`,
-                    imageAlt: `Figure ${globalImageCounter} (Page ${pageInfo.pageNumber + 1}) - Detection only`,
+                    imageName: `image-${pageInfo.pageNumber + 1}-${pageImageIndex + 1}.placeholder`,
+                    imageAlt: `Figure ${globalImageCounter} - Detection only`,
                     placeholder: true
                 });
                 globalImageCounter++;

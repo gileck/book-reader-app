@@ -5,7 +5,7 @@
       "chapterNumber": 0,
       "startingPage": 8,
       "endPage": 26,
-      "confidence": 0.7,
+      "confidence": 0.7999999999999999,
       "detectionSource": "pdf_bookmarks"
     },
     {
@@ -13,7 +13,7 @@
       "chapterNumber": 1,
       "startingPage": 27,
       "endPage": 61,
-      "confidence": 0.7,
+      "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
@@ -21,15 +21,23 @@
       "chapterNumber": 2,
       "startingPage": 62,
       "endPage": 90,
-      "confidence": 0.7,
+      "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "From gases to life",
       "chapterNumber": 3,
       "startingPage": 91,
+      "endPage": 123,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "startingPage": 124,
       "endPage": 149,
-      "confidence": 0.7,
+      "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
@@ -37,7 +45,7 @@
       "chapterNumber": 5,
       "startingPage": 150,
       "endPage": 180,
-      "confidence": 0.7,
+      "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
@@ -45,7 +53,7 @@
       "chapterNumber": 6,
       "startingPage": 181,
       "endPage": 210,
-      "confidence": 0.7,
+      "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
@@ -61,7 +69,7 @@
       "chapterNumber": 99,
       "startingPage": 222,
       "endPage": 226,
-      "confidence": 0.7,
+      "confidence": 0.7999999999999999,
       "detectionSource": "pdf_bookmarks"
     },
     {
@@ -74,28 +82,28 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-02T14:18:01.108Z",
+    "processingStartTime": "2025-08-15T10:42:13.485Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
-      "characterCount": 733559,
+      "characterCount": 734219,
       "pageCount": 317,
-      "lineCount": 11460,
+      "lineCount": 12120,
       "wordCount": 121693,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-02T14:18:03.546Z",
+      "extractionTime": "2025-08-15T10:42:16.343Z",
       "averageWordsPerPage": 384,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 27143
     },
     "chapterDetection": {
-      "chaptersDetected": 9,
+      "chaptersDetected": 10,
       "tocSource": "pdf_bookmarks",
       "tocEntriesFound": 10,
-      "patternMatches": 345,
-      "averageDetectionConfidence": 0.7000000000000001,
+      "patternMatches": 419,
+      "averageDetectionConfidence": 0.9,
       "pageOffset": 0,
-      "processingTime": 1830,
+      "processingTime": 1849,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

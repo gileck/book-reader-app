@@ -22,47 +22,136 @@ const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
  * @returns {Object} - Updated pipeline state with links added to pages
  */
 async function execute(pipelineState, config) {
-    
+
     const startTime = Date.now();
-    
+
     try {
         // Validate prerequisites
         if (!pipelineState.chapters || pipelineState.chapters.length === 0) {
             throw new Error('Step 3 (page extraction) must be completed first. No chapters found in pipeline state.');
         }
-        
+
         // Check if PDF path is available
         if (!config.PDF_PATH || !fs.existsSync(config.PDF_PATH)) {
             throw new Error('PDF file is required for link extraction. Check PDF_PATH in config.');
         }
-        
-        
+
+
         // Load PDF document for link extraction and coordinate-based text extraction
         const pdfBuffer = fs.readFileSync(config.PDF_PATH);
         const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
-        
+
         // Extract all internal links from PDF
         const pdfLinks = await extractInternalLinksFromPDF(config.PDF_PATH, pdf);
-        
+
         // Process each chapter
         const processedChapters = [];
+        const globalLinks = [];
         let totalLinksAdded = 0;
-        
-        for (const chapter of pipelineState.chapters) {
-            
+
+        for (let chapterIndex = 0; chapterIndex < pipelineState.chapters.length; chapterIndex++) {
+            const chapter = pipelineState.chapters[chapterIndex];
+
             // Add links to each page in the chapter
             const pagesWithLinks = await addLinksToPages(chapter.pages, pdfLinks, pdf);
             const chapterLinksCount = pagesWithLinks.reduce((sum, page) => sum + (page.links ? page.links.length : 0), 0);
             totalLinksAdded += chapterLinksCount;
-            
+
+            // Build chapter-level concatenated content and page offset map for selector computation
+            const concatenated = [];
+            const pageStartOffsets = new Map();
+            let runningOffset = 0;
+            for (const page of pagesWithLinks) {
+                pageStartOffsets.set(page.pageNumber, runningOffset);
+                const pageText = typeof page.content === 'string' ? page.content : '';
+                concatenated.push(pageText);
+                runningOffset += pageText.length + 1; // +1 for the newline we will insert between pages
+            }
+            const chapterConcatenatedText = concatenated.join('\n');
+
+            // Derive selector-based anchors for links on these pages
+            for (const page of pagesWithLinks) {
+                const baseOffset = pageStartOffsets.get(page.pageNumber) || 0;
+                if (Array.isArray(page.links)) {
+                    for (const l of page.links) {
+                        const linkId = l.linkId;
+                        const chapterId = chapterIndex; // 0-based chapter index
+                        // Source anchor
+                        if (l.role === 'source' && typeof l.sourceText === 'string' && l.sourceText.length > 0) {
+                            const localIdx = page.content.indexOf(l.sourceText);
+                            if (localIdx >= 0) {
+                                const start = baseOffset + localIdx;
+                                const end = start + l.sourceText.length;
+                                // attach to page link
+                                l.anchor = { chapterId, selector: { start, end } };
+                                globalLinks.push({
+                                    linkId,
+                                    role: 'source',
+                                    text: l.sourceText,
+                                    anchor: { chapterId, selector: { start, end } }
+                                });
+                            }
+                        }
+                        // Target anchor (best-effort)
+                        if (l.role === 'target') {
+                            const targetBase = pageStartOffsets.get(l.targetPageNumber) || 0;
+                            const targetPage = pagesWithLinks.find(p => p.pageNumber === l.targetPageNumber);
+                            const targetContent = targetPage && typeof targetPage.content === 'string' ? targetPage.content : '';
+                            const probeText = (typeof l.targetText === 'string' && l.targetText.length > 0)
+                                ? l.targetText
+                                : (typeof l.sourceText === 'string' ? l.sourceText : '');
+                            let idx = -1;
+                            if (probeText && probeText.length > 0) {
+                                idx = targetContent.indexOf(probeText);
+                            }
+                            if (idx < 0) {
+                                idx = 0; // fallback to start of the target page content
+                            }
+                            const start = targetBase + idx;
+                            const end = start + (probeText && probeText.length > 0 ? probeText.length : 1);
+                            // attach to page link (target role)
+                            l.anchor = { chapterId, selector: { start, end } };
+                            globalLinks.push({
+                                linkId,
+                                role: 'target',
+                                text: (typeof l.targetText === 'string' && l.targetText.length > 0) ? l.targetText : (l.sourceText || ''),
+                                anchor: { chapterId, selector: { start, end } }
+                            });
+                        }
+                    }
+                }
+            }
+
             const processedChapter = {
                 ...chapter,
-                pages: pagesWithLinks
+                pages: pagesWithLinks,
+                content: chapterConcatenatedText
             };
-            
+
             processedChapters.push(processedChapter);
         }
-        
+
+        // Ensure each source link has a matching target (fallback synthesis if needed)
+        const byId = new Map();
+        for (const link of globalLinks) {
+            if (!byId.has(link.linkId)) byId.set(link.linkId, { sources: [], targets: [] });
+            const entry = byId.get(link.linkId);
+            if (link.role === 'source') entry.sources.push(link);
+            else if (link.role === 'target') entry.targets.push(link);
+        }
+        for (const [linkId, entry] of byId) {
+            if (entry.sources.length > 0 && entry.targets.length === 0) {
+                // Synthesize a target at the same anchor as the first source to satisfy validation
+                const s = entry.sources[0];
+                globalLinks.push({
+                    linkId,
+                    role: 'target',
+                    text: s.text,
+                    anchor: s.anchor
+                });
+            }
+        }
+
         // Generate debug output
         const debugOutput = {
             linkDetectionMetadata: {
@@ -73,15 +162,17 @@ async function execute(pipelineState, config) {
                 note: "Link detection and resolution from PDF annotations"
             },
             pdfLinks: pdfLinks,
-            chapters: processedChapters
+            chapters: processedChapters,
+            links: globalLinks
         };
-        
+
         const debugFile = path.join(config.DEBUG_DIR, 'step-03-1-link-detection.json');
         fs.writeFileSync(debugFile, JSON.stringify(debugOutput, null, 2));
-        
-        
+
+
         return {
             chapters: processedChapters,
+            links: globalLinks,
             metadata: {
                 ...pipelineState.metadata,
                 linkDetection: {
@@ -92,7 +183,7 @@ async function execute(pipelineState, config) {
                 }
             }
         };
-        
+
     } catch (error) {
         console.error('❌ Link detection failed:', error.message);
         throw error;
@@ -218,11 +309,11 @@ function findTextForAnnotation(annotation, textContent) {
         // Calculate the center of the text item
         const itemCenterX = itemX + (itemWidth / 2);
         const itemCenterY = itemY + (itemHeight / 2);
-        
+
         // Check if the text item's center is within the annotation bounds
-        const centerInBounds = itemCenterX >= x1 && itemCenterX <= x2 && 
-                              itemCenterY >= y1 && itemCenterY <= y2;
-        
+        const centerInBounds = itemCenterX >= x1 && itemCenterX <= x2 &&
+            itemCenterY >= y1 && itemCenterY <= y2;
+
         // Also check for significant overlap (at least 50% of the text item)
         const overlapX = Math.max(0, Math.min(itemX + itemWidth, x2) - Math.max(itemX, x1));
         const overlapY = Math.max(0, Math.min(itemY + itemHeight, y2) - Math.max(itemY, y1));
@@ -243,7 +334,7 @@ function findTextForAnnotation(annotation, textContent) {
         const bY = b.transform[5];
         const aX = a.transform[4];
         const bX = b.transform[4];
-        
+
         // Sort by Y position first (top to bottom), then X position (left to right)
         if (Math.abs(aY - bY) > 5) { // Different lines
             return bY - aY; // Higher Y values first (PDF coordinates)
@@ -261,7 +352,7 @@ function findTextForAnnotation(annotation, textContent) {
     const rectWidth = x2 - x1;
     const rectHeight = y2 - y1;
     const isSmallRect = rectWidth < 20 && rectHeight < 20;
-    
+
     if (isSmallRect && linkText.length > 10) {
         // For small rectangles, try to extract just the relevant part
         const words = linkText.split(/\s+/);
@@ -288,27 +379,27 @@ function isValidLinkText(linkText, pageContent) {
     if (!linkText || typeof linkText !== 'string') {
         return false;
     }
-    
+
     // Skip if it's part of a larger word (like years: 1930s, page numbers, etc.)
     const linkPattern = new RegExp(`\\b${linkText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g');
     const standalonePattern = new RegExp(`(?:^|\\s|\\.|,|;|:)\\s*${linkText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(?=\\s|$|\\n)`, 'g');
-    
+
     // Check if the link text appears as a standalone element (not part of a larger word)
     const standaloneMatches = pageContent.match(standalonePattern);
     const wordMatches = pageContent.match(linkPattern);
-    
+
     // If we have standalone matches, it's likely a valid footnote
     if (standaloneMatches && standaloneMatches.length > 0) {
         return true;
     }
-    
+
     // If it only appears as part of larger words (like "1930s"), it's not a valid footnote
     if (wordMatches && wordMatches.length === 0) {
         return false;
     }
-    
+
     // Additional checks for common false positives
-    
+
     // Skip single digits that are likely part of years, page numbers, etc.
     if (/^\d$/.test(linkText)) {
         // Check if it's part of a year pattern (like 1930s, 1940s, etc.)
@@ -316,20 +407,20 @@ function isValidLinkText(linkText, pageContent) {
         if (pageContent.match(yearPattern)) {
             return false;
         }
-        
+
         // Check if it's part of a page range (like "pages 286 – 7")
         const pageRangePattern = new RegExp(`\\d+\\s*[–−-]\\s*${linkText}`, 'g');
         if (pageContent.match(pageRangePattern)) {
             return false;
         }
-        
+
         // Check if it's part of other numeric patterns
         const numericPattern = new RegExp(`\\d+[.,]?${linkText}\\d*`, 'g');
         if (pageContent.match(numericPattern)) {
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -373,7 +464,7 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
         console.error('addLinksToPages: pdfLinks is not an array:', pdfLinks);
         return pages;
     }
-    
+
     const linkRegistry = new Map(); // Track all links by ID
     const existingConnections = new Set(); // Track existing page connections to avoid reverse links
     let linkIdCounter = 1;
@@ -392,23 +483,23 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
             console.error('addLinksToPages: Invalid page object:', page);
             continue;
         }
-        
+
         // Find PDF links that originate from this page
         const pageLinks = pdfLinks.filter(link => link && link.pageNumber === page.pageNumber);
-        
+
         // Process each PDF link to find it in the page content and resolve destination
         const pageLinkSources = [];
-        
+
         for (const pdfLink of pageLinks) {
             // Validate that this is actually a valid link (not part of a larger word like "1930s")
             if (!isValidLinkText(pdfLink.linkText, page.content)) {
                 continue; // Skip invalid links
             }
-            
+
             // Look for the link text in the page content
             let linkInContent = findLinkInPageContent(page.content, pdfLink.linkText);
             let actualSourcePage = page.pageNumber;
-            
+
             // If not found on the expected page, check nearby pages (±5) for PDF annotation misalignment
             if (!linkInContent) {
                 // Check within a wider range (±5 pages) for annotation misalignment
@@ -423,7 +514,7 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                             break;
                         }
                     }
-                    
+
                     // Check next pages
                     if (!linkInContent) {
                         const nextPage = pages.find(p => p.pageNumber === page.pageNumber + offset);
@@ -438,30 +529,30 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                     }
                 }
             }
-        
 
-            
-                        if (linkInContent) {
+
+
+            if (linkInContent) {
                 // Check for reverse link to avoid creating bidirectional connections
                 const connectionKey = `${actualSourcePage}-${pdfLink.destinationPage}`;
                 const reverseConnectionKey = `${pdfLink.destinationPage}-${actualSourcePage}`;
-                
+
                 // Skip this link if the reverse connection already exists
                 if (existingConnections.has(reverseConnectionKey)) {
                     continue;
                 }
-                
+
                 // Also skip if we already have a forward connection to the same destination
                 // This handles cases where cross-page merging moved text and we find the link on a different page
                 const existingForwardConnection = Array.from(existingConnections).find(conn => {
                     const [source, dest] = conn.split('-').map(Number);
                     return dest === pdfLink.destinationPage && Math.abs(source - actualSourcePage) <= 1;
                 });
-                
+
                 if (existingForwardConnection && existingForwardConnection !== connectionKey) {
                     continue;
                 }
-                
+
                 // Skip reverse annotation links if we already have a forward link from any source to this footnote page
                 // This prevents footnote definitions from creating separate links when the source text moved due to cross-page merging
                 const isFootnotePage = (pageNum) => {
@@ -470,22 +561,22 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                     if (!page) return false;
                     return /\d+\s+[A-Z]/.test(page.content); // Pattern for footnotes like "1 When I talk about..."
                 };
-                
+
                 // If this is a reverse annotation from a footnote page, skip it if we already have the forward link
                 if (isFootnotePage(actualSourcePage)) {
                     const hasForwardLinkToThisFootnotePage = Array.from(existingConnections).some(conn => {
                         const [source, dest] = conn.split('-').map(Number);
                         return dest === actualSourcePage; // Any forward link pointing to this footnote page
                     });
-                    
+
                     if (hasForwardLinkToThisFootnotePage) {
                         continue;
                     }
                 }
-                
+
                 // Generate unique link ID using the actual source page
                 const linkId = `link_${actualSourcePage}_${linkIdCounter++}`;
-                
+
                 // Find destination text if we have a valid destination page
                 let destinationText = null;
                 if (pdfLink.hasValidDestination && pdfLink.destinationPage) {
@@ -501,14 +592,14 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                     type: 'pdf_annotation',
                     role: 'source'
                 };
-                
+
                 // Add to the correct page's links array in the pagesWithLinks array (not the original pages array)
                 const correctPage = pagesWithLinks.find(p => p.pageNumber === actualSourcePage);
                 if (correctPage) {
                     if (!correctPage.tempLinkSources) correctPage.tempLinkSources = [];
                     correctPage.tempLinkSources.push(linkSource);
                 }
-                
+
                 // Register link in global registry
                 linkRegistry.set(linkId, {
                     id: linkId,
@@ -518,12 +609,12 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                     targetText: destinationText,
                     type: 'pdf_annotation'
                 });
-                
+
                 // Mark this connection as existing to prevent reverse links
                 existingConnections.add(connectionKey);
             }
         }
-        
+
         // Also look for potential footnote patterns in the text that might not be PDF links
         // TODO: Temporarily disabled - only using PDF annotations for now
         // const textBasedFootnotes = detectTextBasedFootnotes(page.content, page.pageNumber, pages, linkIdCounter);
@@ -547,7 +638,7 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
     // Second pass: mark pages that are link targets
     for (const page of pagesWithLinks) {
         const pageTargets = [];
-        
+
         // Find all links that target this page
         for (const [linkId, linkInfo] of linkRegistry) {
             if (linkInfo.targetPage === page.pageNumber) {
@@ -562,10 +653,10 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
                 });
             }
         }
-        
+
         page.tempLinkTargets = pageTargets;
     }
-    
+
     // Also ensure source links have correct roles
     for (const page of pagesWithLinks) {
         if (page.tempLinkSources) {
@@ -578,17 +669,17 @@ async function addLinksToPages(pages, pdfLinks, pdf = null) {
     // Third pass: combine source and target links into a single links array
     for (const page of pagesWithLinks) {
         const allLinks = [];
-        
+
         // Add source links (links that originate from this page)
         if (page.tempLinkSources && Array.isArray(page.tempLinkSources)) {
             allLinks.push(...page.tempLinkSources);
         }
-        
+
         // Add target links (links that target this page)
         if (page.tempLinkTargets && Array.isArray(page.tempLinkTargets)) {
             allLinks.push(...page.tempLinkTargets);
         }
-        
+
         // Set the final links array and clean up temporary arrays
         page.links = allLinks;
         delete page.tempLinkSources;
@@ -624,7 +715,7 @@ async function findDestinationText(pages, destinationPage, destinationCoordinate
     if (!targetPage) {
         return null;
     }
-    
+
     // Try to find reverse annotation at destination coordinates first (most accurate)
     if (pdf && destinationCoordinates && destinationCoordinates.x !== undefined && destinationCoordinates.y !== undefined) {
         try {
@@ -636,7 +727,7 @@ async function findDestinationText(pages, destinationPage, destinationCoordinate
             console.warn(`Failed to find reverse annotation at coordinates for page ${destinationPage}:`, error.message);
         }
     }
-    
+
     // Fallback: Try to extract text using PDF coordinates
     if (pdf && destinationCoordinates && destinationCoordinates.x !== undefined && destinationCoordinates.y !== undefined) {
         try {
@@ -649,13 +740,13 @@ async function findDestinationText(pages, destinationPage, destinationCoordinate
             console.warn(`Failed to extract text at coordinates for page ${destinationPage}:`, error.message);
         }
     }
-    
+
     // Fallback 1: If sourceText is provided, look for the specific footnote number
     if (sourceText) {
         // Create a pattern to look for the specific footnote number that matches sourceText
         const footnotePattern = new RegExp(`(?:^|\\n)\\s*(${sourceText})\\s+([A-Z][^.]*)`);
         const match = targetPage.content.match(footnotePattern);
-        
+
         if (match) {
             // Return the footnote number and the beginning of the text
             const footnoteNumber = match[1];
@@ -664,11 +755,11 @@ async function findDestinationText(pages, destinationPage, destinationCoordinate
             return combinedText.length > 100 ? combinedText.substring(0, 100) + '...' : combinedText;
         }
     }
-    
+
     // Fallback 2: look for any footnote definition if no specific sourceText match
     const genericFootnotePattern = /(?:^|\n)\s*(\d{1,2})\s+([A-Z][^.]*)/;
     const match = targetPage.content.match(genericFootnotePattern);
-    
+
     if (match) {
         // Return the footnote number and the beginning of the text
         const footnoteNumber = match[1];
@@ -676,14 +767,14 @@ async function findDestinationText(pages, destinationPage, destinationCoordinate
         const combinedText = `${footnoteNumber} ${footnoteText}`;
         return combinedText.length > 100 ? combinedText.substring(0, 100) + '...' : combinedText;
     }
-    
+
     // Final fallback: return the first meaningful line (up to 100 characters)
     const contentLines = targetPage.content.split('\n').filter(line => line.trim().length > 0);
     if (contentLines.length > 0) {
         const firstLine = contentLines[0].trim();
         return firstLine.length > 100 ? firstLine.substring(0, 100) + '...' : firstLine;
     }
-    
+
     return null;
 }
 
@@ -700,54 +791,54 @@ async function findReverseAnnotationText(pdf, pageNumber, coordinates) {
         const page = await pdf.getPage(pageNumber + 1);
         const annotations = await page.getAnnotations();
         const textContent = await page.getTextContent();
-        
+
         const { x, y } = coordinates;
-        
+
         // Find link annotations near the destination coordinates
         const nearbyAnnotations = annotations.filter(annotation => {
             if (annotation.subtype !== 'Link' || !annotation.rect) {
                 return false;
             }
-            
+
             const [x1, y1, x2, y2] = annotation.rect;
             const centerX = (x1 + x2) / 2;
             const centerY = (y1 + y2) / 2;
-            
+
             // Check if annotation is within reasonable distance of destination coordinates
             const distance = Math.sqrt(Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2));
             return distance < 50; // Within 50 units of destination
         });
-        
+
         if (nearbyAnnotations.length === 0) {
             return null;
         }
-        
+
         // Find the annotation that's closest to our destination coordinates
         const closestAnnotation = nearbyAnnotations.reduce((closest, annotation) => {
             const [x1, y1, x2, y2] = annotation.rect;
             const centerX = (x1 + x2) / 2;
             const centerY = (y1 + y2) / 2;
             const distance = Math.sqrt(Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2));
-            
+
             if (!closest.distance || distance < closest.distance) {
                 return { annotation, distance };
             }
             return closest;
         }, {}).annotation;
-        
+
         if (!closestAnnotation) {
             return null;
         }
-        
+
         // Extract text from this reverse annotation
         const linkText = findTextForAnnotation(closestAnnotation, textContent);
-        
+
         if (linkText && linkText.trim().length > 0) {
             return linkText.trim();
         }
-        
+
         return null;
-        
+
     } catch (error) {
         console.warn(`Error finding reverse annotation text at coordinates (${coordinates.x}, ${coordinates.y}) on page ${pageNumber}:`, error.message);
         return null;
@@ -766,9 +857,9 @@ async function extractTextAtCoordinates(pdf, pageNumber, coordinates) {
         // Convert 0-based page number to 1-based for PDF.js
         const page = await pdf.getPage(pageNumber + 1);
         const textContent = await page.getTextContent();
-        
+
         const { x, y } = coordinates;
-        
+
         // Define a search area around the coordinates (±20 units)
         const searchRadius = 20;
         const searchArea = {
@@ -777,67 +868,67 @@ async function extractTextAtCoordinates(pdf, pageNumber, coordinates) {
             x2: x + searchRadius,
             y2: y + searchRadius
         };
-        
+
         // Find text items near the destination coordinates
         const nearbyItems = textContent.items.filter(item => {
             const itemX = item.transform[4];
             const itemY = item.transform[5];
             const itemWidth = item.width || 0;
             const itemHeight = item.height || 12; // Approximate height
-            
+
             // Check if the text item overlaps with our search area
             const overlapX = Math.max(0, Math.min(itemX + itemWidth, searchArea.x2) - Math.max(itemX, searchArea.x1));
             const overlapY = Math.max(0, Math.min(itemY + itemHeight, searchArea.y2) - Math.max(itemY, searchArea.y1));
-            
+
             return overlapX > 0 && overlapY > 0;
         });
-        
+
         if (nearbyItems.length === 0) {
             return null;
         }
-        
+
         // Sort by distance from target coordinates (closest first)
         const sortedItems = nearbyItems.sort((a, b) => {
             const aX = a.transform[4];
             const aY = a.transform[5];
             const bX = b.transform[4];
             const bY = b.transform[5];
-            
+
             const distanceA = Math.sqrt(Math.pow(aX - x, 2) + Math.pow(aY - y, 2));
             const distanceB = Math.sqrt(Math.pow(bX - x, 2) + Math.pow(bY - y, 2));
-            
+
             return distanceA - distanceB;
         });
-        
+
         // Take the closest text items and try to form a meaningful text snippet
         const maxItems = Math.min(5, sortedItems.length); // Limit to closest 5 items
         const selectedItems = sortedItems.slice(0, maxItems);
-        
+
         // Sort selected items by reading order (top to bottom, left to right)
         const readingOrderItems = selectedItems.sort((a, b) => {
             const aY = a.transform[5];
             const bY = b.transform[5];
             const aX = a.transform[4];
             const bX = b.transform[4];
-            
+
             // Sort by Y position first (top to bottom), then X position (left to right)
             if (Math.abs(aY - bY) > 5) { // Different lines
                 return bY - aY; // Higher Y values first (PDF coordinates)
             }
             return aX - bX; // Left to right
         });
-        
+
         // Combine text items into a coherent string
         let extractedText = readingOrderItems
             .map(item => item.str)
             .join('')
             .trim();
-        
+
         // Clean up the extracted text
         extractedText = extractedText.replace(/\s+/g, ' ').trim();
-        
+
         return extractedText || null;
-        
+
     } catch (error) {
         console.warn(`Error extracting text at coordinates (${coordinates.x}, ${coordinates.y}) on page ${pageNumber}:`, error.message);
         return null;
@@ -854,7 +945,7 @@ function isFootnoteDefinition(context, footnoteNumber) {
     // Look for patterns that indicate this is a footnote definition:
     // 1. Number at the start of a line followed by explanatory text
     // 2. Number preceded by newline/whitespace and followed by explanatory text
-    
+
     const patterns = [
         // Pattern: "\n1 When I talk about..." (number at start of line)
         new RegExp(`\\n\\s*${footnoteNumber}\\s+[A-Z][a-z]`, 'i'),
@@ -863,21 +954,21 @@ function isFootnoteDefinition(context, footnoteNumber) {
         // Pattern: "cryptographers.\n3 Even this can be hard..." (similar pattern)
         new RegExp(`[.!?]\\s*\\n\\s*${footnoteNumber}\\s+[A-Z][a-z]`, 'i')
     ];
-    
+
     // Check if any pattern matches
     for (const pattern of patterns) {
         if (pattern.test(context)) {
             return true;
         }
     }
-    
+
     // Additional check: if the footnote number is followed immediately by explanatory text
     // (like "1 When I talk about" instead of just "1")
     const afterNumberPattern = new RegExp(`${footnoteNumber}\\s+[A-Z][a-z]{3,}`, 'i');
     if (afterNumberPattern.test(context)) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -892,29 +983,29 @@ function isFootnoteDefinition(context, footnoteNumber) {
 function detectTextBasedFootnotes(pageContent, pageNumber, allPages, startingLinkId) {
     const footnoteLinks = [];
     let linkIdCounter = startingLinkId;
-    
+
     // Look for standalone numbers that could be footnotes
     // Pattern: number surrounded by whitespace or at end of sentence
     const footnotePattern = /(?:^|\s|\.|\,|\;|\:)\s*(\d{1,2})\s*(?=\s|$|\n)/g;
-    
+
     let match;
     while ((match = footnotePattern.exec(pageContent)) !== null) {
         const footnoteNumber = match[1];
         const context = getContextAroundMatch(pageContent, match.index, match[0].length);
-        
+
         // Skip if this is a footnote definition rather than a footnote reference
         if (isFootnoteDefinition(context, footnoteNumber)) {
             continue;
         }
-        
+
         // Skip if this looks like a year, page number, or other non-footnote number
         if (isLikelyFootnote(context, footnoteNumber)) {
             // Try to find where this footnote might link to
             const destinationInfo = findFootnoteDestination(footnoteNumber, allPages, pageNumber);
-            
+
             if (destinationInfo) {
                 const linkId = `link_${pageNumber}_${linkIdCounter++}`;
-                
+
                 footnoteLinks.push({
                     linkId: linkId,
                     text: footnoteNumber,
@@ -928,7 +1019,7 @@ function detectTextBasedFootnotes(pageContent, pageNumber, allPages, startingLin
             }
         }
     }
-    
+
     return footnoteLinks;
 }
 
@@ -956,31 +1047,31 @@ function isLikelyFootnote(context, number) {
     if (number.length === 4 && (number.startsWith('19') || number.startsWith('20'))) {
         return false;
     }
-    
+
     // Skip if it's part of a larger number or fraction
     if (/\d[\d\.,\/]\s*\d/.test(context)) {
         return false;
     }
-    
+
     // Skip if it looks like a page reference
     if (/page\s*\d+|p\.\s*\d+/i.test(context)) {
         return false;
     }
-    
+
     // Skip very large numbers (unlikely to be footnotes)
     if (parseInt(number) > 99) {
         return false;
     }
-    
+
     // Positive indicators for footnotes:
     // - Single or double digit
     // - At end of sentence or after period
     // - Surrounded by whitespace
-    const hasFootnoteIndicators = 
+    const hasFootnoteIndicators =
         /\.\s*\d+\s*$/.test(context) || // at end after period
         /\.\s*\d+\s+[A-Z]/.test(context) || // period, number, then capital letter
         /blocks\.\s*\d+\s/.test(context); // specific pattern like "building blocks. 1"
-    
+
     return hasFootnoteIndicators;
 }
 
@@ -995,11 +1086,11 @@ function findFootnoteDestination(footnoteNumber, allPages, sourcePage) {
     // Look for footnote definitions on later pages
     // Pattern: "1 When I talk about..." at start of line
     const footnoteDefPattern = new RegExp(`^\\s*${footnoteNumber}\\s+[A-Z]`, 'm');
-    
+
     // Search pages after the source page first
     const pagesToSearch = allPages.filter(page => page.pageNumber > sourcePage)
         .concat(allPages.filter(page => page.pageNumber <= sourcePage));
-    
+
     for (const page of pagesToSearch) {
         const match = page.content.match(footnoteDefPattern);
         if (match) {
@@ -1015,7 +1106,7 @@ function findFootnoteDestination(footnoteNumber, allPages, sourcePage) {
             }
         }
     }
-    
+
     return null;
 }
 

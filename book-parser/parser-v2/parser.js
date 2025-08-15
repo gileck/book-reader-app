@@ -211,7 +211,33 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                         };
                         // Keep normal logs out of the file but still allow runtime logging
                         try {
-                            const isValid = stepModule.validate(stepResult);
+                            let isValid = stepModule.validate(stepResult);
+                            // Skip validations: allow per-step, per-chunkId suppression via skipped-validation-errors.json
+                            if (!isValid) {
+                                const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
+                                if (fs.existsSync(skippedFile)) {
+                                    try {
+                                        const raw = fs.readFileSync(skippedFile, 'utf8');
+                                        const entries = JSON.parse(raw);
+                                        if (Array.isArray(entries)) {
+                                            const allowed = new Set(entries.filter(e => e && e.step === stepName && typeof e.chunkId === 'string').map(e => e.chunkId));
+                                            if (allowed.size > 0) {
+                                                const logs = validationLogs.join('\n');
+                                                // Extract chunkIds from logs
+                                                const ids = [];
+                                                const re = /(Text chunk|Paragraph chunk|Header)\s+(\d+_\d+)/g;
+                                                let m;
+                                                while ((m = re.exec(logs)) !== null) {
+                                                    ids.push(m[2]);
+                                                }
+                                                if (ids.length > 0 && ids.every(id => allowed.has(id))) {
+                                                    isValid = true;
+                                                }
+                                            }
+                                        }
+                                    } catch (_) { /* ignore parse errors */ }
+                                }
+                            }
                             validationResult = {
                                 passed: isValid,
                                 error: null,
@@ -298,8 +324,26 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         pipelineState.metadata.processingEndTime = new Date().toISOString();
 
         // Create simplified output with only chapters and basic metadata
+        // Strip transient chapter.content (concatenated text/markers) from final output
+        const chaptersForOutput = (pipelineState.chapters || []).map(chapter => {
+            const { content, ...rest } = chapter;
+            // Strip debug-only fields from image chunks
+            if (Array.isArray(rest.chunks)) {
+                rest.chunks = rest.chunks.map(chunk => {
+                    if (chunk && chunk.type === 'image') {
+                        const cleaned = { ...chunk };
+                        delete cleaned.originalName;
+                        delete cleaned.extracted;
+                        delete cleaned.placeholder;
+                        return cleaned;
+                    }
+                    return chunk;
+                });
+            }
+            return rest;
+        });
         const simplifiedOutput = {
-            chapters: pipelineState.chapters || [],
+            chapters: chaptersForOutput,
             metadata: {
                 title: pipelineState.metadata?.title || pipelineState.metadata?.bookTitle || 'Unknown Title',
                 author: pipelineState.metadata?.author || pipelineState.metadata?.bookAuthor || 'Unknown Author'

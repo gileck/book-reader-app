@@ -1,9 +1,9 @@
 /**
  * Step 5.1: Link Chunk References
  * 
- * Add targetChunkIndex and sourceChunkIndex to links based on their roles:
- * - For "source" role links: add targetChunkIndex (array index of chunk containing the target text)
- * - For "target" role links: add sourceChunkIndex (array index of chunk containing the source text)
+ * Add targetChunkIndex and sourceChunkIndex to links based on their roles using selector-based anchors:
+ * - For "source" role links: add targetChunkIndex (chunk containing the target text)
+ * - For "target" role links: add sourceChunkIndex (chunk containing the source text)
  * 
  * Requirements:
  * - Process chapters from step 5 with sentence chunks
@@ -32,7 +32,7 @@ function execute(pipelineState) {
         throw new Error('Step 5.1 requires chapters array from previous steps');
     }
 
-    // Create a mapping of all chunks for quick lookup
+    // Create a mapping of all chunks for quick lookup (by chapter and by range)
     const chunkMap = createChunkMap(pipelineState.chapters);
 
     const processedChapters = [];
@@ -93,31 +93,37 @@ function execute(pipelineState) {
 }
 
 /**
- * Create a mapping of all chunks for quick lookup by page and content
+ * Create a mapping of all chunks for quick lookup by chapter and content ranges
  * @param {Array} chapters - All chapters with chunks
  * @returns {Object} - Chunk mapping for lookup
  */
 function createChunkMap(chapters) {
     const chunkMap = {
-        byPage: new Map(), // pageNumber -> {chapterNumber, chunkIndex, chunk}[]
-        byContent: new Map(), // content hash -> {chapterNumber, chunkIndex}
+        byChapter: new Map(), // chapterNumber -> [{chunkIndex, startOffset, endOffset, chunk}]
         allChunks: [] // Flat array of all chunks with their indexes
     };
 
     for (let chapterIndex = 0; chapterIndex < chapters.length; chapterIndex++) {
         const chapter = chapters[chapterIndex];
+        // Build chapter-level concatenated text to compute chunk ranges
+        const chapterText = typeof chapter.content === 'string' ? chapter.content : '';
+        let cursor = 0;
+        const ranges = [];
+
         for (let chunkIndex = 0; chunkIndex < chapter.chunks.length; chunkIndex++) {
             const chunk = chapter.chunks[chunkIndex];
-
-            // Store by page number
-            if (!chunkMap.byPage.has(chunk.pageNumber)) {
-                chunkMap.byPage.set(chunk.pageNumber, []);
+            // Compute approximate range by searching for chunk.content starting from cursor
+            let startOffset = -1;
+            if (chunk.content && chapterText) {
+                const idx = chapterText.indexOf(chunk.content, cursor);
+                if (idx >= 0) {
+                    startOffset = idx;
+                    cursor = idx + chunk.content.length;
+                }
             }
-            chunkMap.byPage.get(chunk.pageNumber).push({
-                chapterNumber: chapter.chapterNumber,
-                chunkIndex,
-                chunk
-            });
+            const endOffset = startOffset >= 0 ? startOffset + (chunk.content ? chunk.content.length : 0) : -1;
+
+            ranges.push({ chunkIndex, startOffset, endOffset, chunk });
 
             // Store in flat array for easy access
             chunkMap.allChunks.push({
@@ -125,16 +131,9 @@ function createChunkMap(chapters) {
                 chunkIndex,
                 chunk
             });
-
-            // Store by content for text matching
-            if (chunk.content && chunk.type === 'text') {
-                const contentKey = chunk.content.toLowerCase().trim();
-                chunkMap.byContent.set(contentKey, {
-                    chapterNumber: chapter.chapterNumber,
-                    chunkIndex
-                });
-            }
         }
+
+        chunkMap.byChapter.set(chapter.chapterNumber, { ranges, text: chapterText });
     }
 
     return chunkMap;
@@ -155,12 +154,9 @@ function enhanceLinkWithChunkReferences(link, chunkMap, currentChunkIndex, curre
         // For source links, find the target chunk (where this link points to)
         const targetLocation = findTargetChunk(link, chunkMap);
         if (targetLocation) {
-            // For same-chapter links, use just the chunk index
-            // For cross-chapter links, could include chapter reference
-            if (targetLocation.chapterNumber === currentChapterNumber) {
-                enhancedLink.targetChunkIndex = targetLocation.chunkIndex;
-            } else {
-                enhancedLink.targetChunkIndex = targetLocation.chunkIndex;
+            enhancedLink.targetChunkId = targetLocation.chunkId;
+            enhancedLink.targetChunkIndex = targetLocation.chunkIndex;
+            if (targetLocation.chapterNumber !== currentChapterNumber) {
                 enhancedLink.chapterNumber = targetLocation.chapterNumber;
             }
         }
@@ -168,12 +164,9 @@ function enhanceLinkWithChunkReferences(link, chunkMap, currentChunkIndex, curre
         // For target links, find the source chunk (chunk that references this target)
         const sourceLocation = findSourceChunk(link, chunkMap, currentChunkIndex, currentChapterNumber);
         if (sourceLocation) {
-            // For same-chapter links, use just the chunk index
-            // For cross-chapter links, could include chapter reference  
-            if (sourceLocation.chapterNumber === currentChapterNumber) {
-                enhancedLink.sourceChunkIndex = sourceLocation.chunkIndex;
-            } else {
-                enhancedLink.sourceChunkIndex = sourceLocation.chunkIndex;
+            enhancedLink.sourceChunkId = sourceLocation.chunkId;
+            enhancedLink.sourceChunkIndex = sourceLocation.chunkIndex;
+            if (sourceLocation.chapterNumber !== currentChapterNumber) {
                 enhancedLink.chapterNumber = sourceLocation.chapterNumber;
             }
         }
@@ -189,35 +182,21 @@ function enhanceLinkWithChunkReferences(link, chunkMap, currentChunkIndex, curre
  * @returns {string|null} - Target chunk ID or null if not found
  */
 function findTargetChunk(link, chunkMap) {
-    // Look for chunks on the target page
-    if (!link.targetPageNumber || !chunkMap.byPage.has(link.targetPageNumber)) {
-        return null;
-    }
-
-    const targetPageChunks = chunkMap.byPage.get(link.targetPageNumber);
-
-    // First, try to find exact target text match
-    if (link.targetText) {
-        for (const chunkInfo of targetPageChunks) {
-            if (chunkInfo.chunk.content && isSourceTextInContent(link.targetText, chunkInfo.chunk.content)) {
-                return {
-                    chapterNumber: chunkInfo.chapterNumber,
-                    chunkIndex: chunkInfo.chunkIndex
-                };
-            }
+    // Expect `link.anchor` for targets to be set from Step 03-1 (or matched by linkId pairing)
+    // Here, we use the target link's own anchor if present; otherwise skip
+    const anchor = link.anchor;
+    if (!anchor || typeof anchor.chapterId !== 'number' || !anchor.selector) return null;
+    const chapterNumber = (anchor.chapterId + 1); // our chapters are 1-based in data
+    const chapterEntry = chunkMap.byChapter.get(chapterNumber);
+    if (!chapterEntry) return null;
+    const { ranges } = chapterEntry;
+    const start = anchor.selector.start;
+    const end = anchor.selector.end;
+    for (const r of ranges) {
+        if (r.startOffset >= 0 && r.endOffset >= 0 && start >= r.startOffset && end <= r.endOffset) {
+            return { chapterNumber, chunkIndex: r.chunkIndex, chunkId: r.chunk && r.chunk.chunkId };
         }
     }
-
-    // If no exact match, try finding chunk that contains the link text
-    for (const chunkInfo of targetPageChunks) {
-        if (chunkInfo.chunk.content && isSourceTextInContent(link.text, chunkInfo.chunk.content)) {
-            return {
-                chapterNumber: chunkInfo.chapterNumber,
-                chunkIndex: chunkInfo.chunkIndex
-            };
-        }
-    }
-
     return null;
 }
 
@@ -230,29 +209,22 @@ function findTargetChunk(link, chunkMap) {
  * @returns {Object|null} - {chapterNumber, chunkIndex} or null if not found
  */
 function findSourceChunk(link, chunkMap, currentChunkIndex, currentChapterNumber) {
-    // Look through all chunks to find one that contains this link as a source
-    for (const chunkInfo of chunkMap.allChunks) {
-        // Skip the current chunk (target)
-        if (chunkInfo.chapterNumber === currentChapterNumber &&
-            chunkInfo.chunkIndex === currentChunkIndex) {
-            continue;
-        }
-
-        // Check if this chunk has a link that points to our target
-        if (chunkInfo.chunk.links) {
-            for (const chunkLink of chunkInfo.chunk.links) {
-                if (chunkLink.role === 'source' &&
-                    chunkLink.linkId === link.linkId &&
-                    chunkLink.text === link.text) {
-                    return {
-                        chapterNumber: chunkInfo.chapterNumber,
-                        chunkIndex: chunkInfo.chunkIndex
-                    };
-                }
-            }
+    // Prefer the source link's own anchor if present on the global `links`
+    const anchor = link.anchor;
+    if (!anchor || typeof anchor.chapterId !== 'number' || !anchor.selector) return null;
+    const chapterNumber = (anchor.chapterId + 1);
+    const chapterEntry = chunkMap.byChapter.get(chapterNumber);
+    if (!chapterEntry) return null;
+    const { ranges } = chapterEntry;
+    const start = anchor.selector.start;
+    const end = anchor.selector.end;
+    for (const r of ranges) {
+        if (r.startOffset >= 0 && r.endOffset >= 0 && start >= r.startOffset && end <= r.endOffset) {
+            // Avoid pointing to the same chunk if we're enhancing inside the target chunk
+            if (chapterNumber === currentChapterNumber && r.chunkIndex === currentChunkIndex) continue;
+            return { chapterNumber, chunkIndex: r.chunkIndex, chunkId: r.chunk && r.chunk.chunkId };
         }
     }
-
     return null;
 }
 

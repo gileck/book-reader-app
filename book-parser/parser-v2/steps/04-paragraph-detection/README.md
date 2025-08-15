@@ -7,20 +7,21 @@ This step detects both paragraph boundaries and headers in the page content, cre
 ## Requirements
 
 ### Input Requirements
-- **Pipeline State**: Must include `chapters` with pages from Step 3 and `links` from Step 3.1
-- **Page Content**: Clean page content with proper sentence boundaries
-- **Link Information**: Links to associate with paragraph content
+- **Pipeline State**: Must include `chapters` with content from Step 3 and `links` from Step 3.1
+- **Content**: Clean chapter content with proper sentence boundaries; may contain `[[IMG ...]]` markers
+- **Link Information**: Links with chapter-local selectors to associate with paragraph content
 
 ### Output Requirements
-- **Unified Chunks**: Single output format with both paragraphs and headers
-- **Chunk Types**: Each chunk must be classified as "paragraph" or "header"
+- **Unified Chunks**: Single output format with paragraphs, headers, and images
+- **Chunk Types**: Each chunk must be classified as "paragraph", "header", or "image"
+- **Image Handling**: Convert each `[[IMG ...]]` marker into an `image` chunk at that position; image chunks are excluded from word/sentence validations; downstream set `paragraphIndex: null`
 - **Content Quality**: Paragraphs 80-300 words (target, flexible 20-500 absolute); headers 1-5 words (standard), 2–12 words (numbered headers), up to 20 words for ALL-CAPS blocks
-- **Link Integration**: Links properly assigned to chunks where they appear
-- **Content Standards**: All chunks start with capital letters or valid punctuation
+- **Link Integration**: Links mapped using chapter-local selectors to enclosing text chunk(s)
+- **Content Standards**: All text chunks start with capital letters or valid punctuation
 
 ### Quality Standards
 - Minimum 5 chunks total across all chapters
-- Both paragraph and header chunk types must be present
+- Paragraph and header chunk types must be present; image chunks present when markers exist
 - Paragraphs: 80-300 words target (flexible 20-500 absolute) with proper sentence structure
 - Headers: 1-5 words (standard), 2–12 words (numbered), up to 20 words (ALL-CAPS blocks); standalone lines, proper capitalization
 - Links accurately associated with chunk content
@@ -66,9 +67,10 @@ Numbered headers are supported:
 
 ```javascript
 1. Initial chunk detection:
-   - Split page content into potential chunks
+   - Split content into potential chunks
    - Apply 6-rule header detection
-   - Create initial paragraph and header chunks
+   - Detect `[[IMG ...]]` markers and create image chunks at those positions
+   - Create initial paragraph, header, and image chunks
 
 2. First-pass optimization:
    - Identify small paragraphs (< 20 words)
@@ -86,7 +88,7 @@ Numbered headers are supported:
    - Ensure all paragraphs meet size requirements
 
 5. Link integration:
-   - Associate links with chunks containing link text
+   - Associate links with text chunks overlapping the selector ranges
    - Use strict footnote pattern matching
    - Re-validate links after paragraph merging
 ```
@@ -183,62 +185,61 @@ const isValid = paragraphDetection.validate(result);
 ### Expected Input Structure
 ```javascript
 {
-    chapters: [
-        {
-            title: "Introduction",
-            pages: [
-                {
-                    pageNumber: 15,
-                    content: "Page content with paragraphs\n\nHeader Text\n\nMore paragraph content...",
-                    wordCount: 245
-                }
-            ]
-        }
-    ],
-    links: [
-        {
-            linkId: "link_001",
-            role: "source", 
-            text: "1",
-            pageNumber: 15
-        }
-    ]
+  chapters: [
+    {
+      title: "Introduction",
+      content: "Paragraphs...\n\n[[IMG id=image-001 index=12 alt=\"Figure 1\"]]\n\nMore content..."
+    }
+  ],
+  links: [
+    {
+      linkId: "link_001",
+      role: "source",
+      text: "1",
+      anchor: { chapterId: 0, selector: { start: 1205, end: 1206 } }
+    }
+  ]
 }
 ```
 
 ### Expected Output Structure
 ```javascript
 {
-    chapters: [
+  chapters: [
+    {
+      title: "Introduction",
+      chapterNumber: 1,
+      chunks: [
         {
-            title: "Introduction",
-            chapterNumber: 1,
-            chunks: [
-                {
-                    chunkId: "chunk_001",
-                    type: "paragraph",
-                    content: "This is a paragraph with substantial content that meets the word count requirements...",
-                    pageNumber: 15,
-                    wordCount: 45,
-                    links: [
-                        {
-                            linkId: "link_001",
-                            text: "1",
-                            targetPageNumber: 156
-                        }
-                    ]
-                },
-                {
-                    chunkId: "chunk_002", 
-                    type: "header",
-                    content: "Section Header",
-                    pageNumber: 15,
-                    wordCount: 2,
-                    links: []
-                }
-            ]
+          chunkId: "chunk_001",
+          type: "paragraph",
+          content: "This is a paragraph with substantial content that meets the word count requirements...",
+          wordCount: 45,
+          links: [
+            {
+              linkId: "link_001",
+              text: "1",
+              anchor: { chapterId: 0, selector: { start: 1205, end: 1206 } }
+            }
+          ]
+        },
+        {
+          chunkId: "chunk_002", 
+          type: "header",
+          content: "Section Header",
+          wordCount: 2,
+          links: []
+        },
+        {
+          chunkId: "chunk_003",
+          type: "image",
+          content: "Figure 1",
+          imageId: "image-001",
+          imageAlt: "Figure 1"
         }
-    ]
+      ]
+    }
+  ]
 }
 ```
 

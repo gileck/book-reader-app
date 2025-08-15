@@ -1,10 +1,10 @@
 {
-  "processingTime": 1,
+  "processingTime": 2,
   "cleaningStats": {
-    "totalChapters": 9,
+    "totalChapters": 10,
     "totalCharactersRemoved": 0,
     "averageCharactersRemovedPerChapter": 0,
-    "totalCharactersAfterCleaning": 728520,
+    "totalCharactersAfterCleaning": 729159,
     "cleaningEfficiency": 0
   },
   "chapters": [
@@ -13,72 +13,80 @@
       "chapterNumber": 0,
       "pageNumberStart": 8,
       "pageNumberEnd": 26,
-      "contentLength": 48926,
-      "cleanedPreview": "--- PAGE 8 ---\n8 I NTRODUCTION LIFE ITSELF From space it looks grey and crystalline, obliterating the blue-green\ncolours of the living Earth. It is criss-crossed by irregular patterns and\nconvergent s..."
+      "contentLength": 48945,
+      "cleanedPreview": "--- PAGE 8 ---\n8 I NTRODUCTION \nLIFE ITSELF \nFrom space it looks grey and crystalline, obliterating the blue-green\ncolours of the living Earth. It is criss-crossed by irregular patterns and\nconvergent..."
     },
     {
       "title": "Discovering the nanocosm",
       "chapterNumber": 1,
       "pageNumberStart": 27,
       "pageNumberEnd": 61,
-      "contentLength": 87336,
-      "cleanedPreview": "--- PAGE 27 ---\n27 1 DISCOVERING THE NANOCOSM Burlington House, Piccadilly, 1932. Its stately Victorian façades are\nglittering with light at the fag-end of a particularly dismal November. A\nspry, silv..."
+      "contentLength": 87389,
+      "cleanedPreview": "--- PAGE 27 ---\n27 1 \nDISCOVERING THE NANOCOSM \nBurlington House, Piccadilly, 1932. Its stately Victorian façades are\nglittering with light at the fag-end of a particularly dismal November. A\nspry, si..."
     },
     {
       "title": "The path of carbon",
       "chapterNumber": 2,
       "pageNumberStart": 62,
       "pageNumberEnd": 90,
-      "contentLength": 71198,
-      "cleanedPreview": "--- PAGE 62 ---\n62 2 THE PATH OF CARBON Picture a tree in new leaf, its greens fresh and luminous. Or a giant\nredwood, towering through the mist, its needles dark and bristling. Dewy\ngrass underfoot, ..."
+      "contentLength": 71234,
+      "cleanedPreview": "--- PAGE 62 ---\n62 2 \nTHE PATH OF CARBON \nPicture a tree in new leaf, its greens fresh and luminous. Or a giant\nredwood, towering through the mist, its needles dark and bristling. Dewy\ngrass underfoot..."
     },
     {
       "title": "From gases to life",
       "chapterNumber": 3,
       "pageNumberStart": 91,
+      "pageNumberEnd": 123,
+      "contentLength": 77930,
+      "cleanedPreview": "--- PAGE 91 ---\n91 3 \nFROM GASES TO LIFE \n‘Isn’t the deep ocean supposed to be like a desert?’ Jack Corliss’s voice\ncrackled from the depths to the acoustic telephone aboard the Lulu .\nDescribed as a ..."
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "pageNumberStart": 124,
       "pageNumberEnd": 149,
-      "contentLength": 146860,
-      "cleanedPreview": "--- PAGE 91 ---\n91 3 FROM GASES TO LIFE ‘Isn’t the deep ocean supposed to be like a desert?’ Jack Corliss’s voice\ncrackled from the depths to the acoustic telephone aboard the Lulu .\nDescribed as a fl..."
+      "contentLength": 69020,
+      "cleanedPreview": "--- PAGE 124 ---\n124 4 \nREVOLUTIONS \nYou are not completely spineless. You have a notochord: a flexible rod\nmade of cartilage, which in your descendants, millions of generations\nhence, will develop in..."
     },
     {
       "title": "To the dark side",
       "chapterNumber": 5,
       "pageNumberStart": 150,
       "pageNumberEnd": 180,
-      "contentLength": 76342,
-      "cleanedPreview": "--- PAGE 150 ---\n150 5 TO THE DARK SIDE ‘The dream of every cell is to become two cells’ said François Jacob, the\nmost lyrical revolutionary of molecular biology. No cell lives the dream\nso wholly or ..."
+      "contentLength": 76385,
+      "cleanedPreview": "--- PAGE 150 ---\n150 5 \nTO THE DARK SIDE \n‘The dream of every cell is to become two cells’ said François Jacob, the\nmost lyrical revolutionary of molecular biology. No cell lives the dream\nso wholly o..."
     },
     {
       "title": "The flux capacitor",
       "chapterNumber": 6,
       "pageNumberStart": 181,
       "pageNumberEnd": 210,
-      "contentLength": 81408,
-      "cleanedPreview": "--- PAGE 181 ---\n181 6 THE FLUX CAPACITOR ‘So how do you explain me, then?’ The question is lobbed like a hand\ngrenade from the audience, intended to devastate the ‘expert’ standing on\nthe stage. It’s..."
+      "contentLength": 81446,
+      "cleanedPreview": "--- PAGE 181 ---\n181 6 \nTHE FLUX CAPACITOR \n‘So how do you explain me, then?’ The question is lobbed like a hand\ngrenade from the audience, intended to devastate the ‘expert’ standing on\nthe stage. It..."
     },
     {
       "title": "Epilogue: Self",
       "chapterNumber": 99,
       "pageNumberStart": 211,
       "pageNumberEnd": 221,
-      "contentLength": 21197,
-      "cleanedPreview": "--- PAGE 211 ---\n211 E PILOGUE SELF ‘I think therefore I am’ said Descartes, in one of the most celebrated\nlines ever written. But what am I, exactly? An artificial intelligence can\nthink too, by defi..."
+      "contentLength": 21202,
+      "cleanedPreview": "--- PAGE 211 ---\n211 E PILOGUE \nSELF \n‘I think therefore I am’ said Descartes, in one of the most celebrated\nlines ever written. But what am I, exactly? An artificial intelligence can\nthink too, by de..."
     },
     {
       "title": "Appendix 1: Red protein mechanics",
       "chapterNumber": 99,
       "pageNumberStart": 222,
       "pageNumberEnd": 226,
-      "contentLength": 6772,
-      "cleanedPreview": "--- PAGE 222 ---\n222 A PPENDIX 1 RED PROTEIN MECHANICS The red protein is ferredoxin, one of the most ancient and fundamental\nproteins across all of life. It seems to have many jobs, but the common\nde..."
+      "contentLength": 6780,
+      "cleanedPreview": "--- PAGE 222 ---\n222 A PPENDIX 1 \nRED PROTEIN MECHANICS \nThe red protein is ferredoxin, one of the most ancient and fundamental\nproteins across all of life. It seems to have many jobs, but the common\n..."
     },
     {
       "title": "Appendix 2: The Krebs line",
       "chapterNumber": 99,
       "pageNumberStart": 227,
       "pageNumberEnd": 316,
-      "contentLength": 188481,
-      "cleanedPreview": "--- PAGE 227 ---\n227 A PPENDIX 2 THE KREBS LINE In Chapter 3, we followed the fate of CO 2 bound to the surface of a\nmineral, through to a C2 acetyl group bound to the surface. This acetyl\ngroup is eq..."
+      "contentLength": 188828,
+      "cleanedPreview": "--- PAGE 227 ---\n227 A PPENDIX 2 \nTHE KREBS LINE \nIn Chapter 3, we followed the fate of CO 2 bound to the surface of a\nmineral, through to a C2 acetyl group bound to the surface. This acetyl\ngroup is ..."
     }
   ]
 }

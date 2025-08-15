@@ -295,10 +295,10 @@ function validate(output) {
                         const nextParagraph = findNextParagraph(chunks, i);
 
                         const prevInfo = prevParagraph ?
-                            `previous: ${prevParagraph.chunkId} (${countWords(prevParagraph.content)} words, page ${prevParagraph.pageNumber})` :
+                            `previous: ${prevParagraph.chunkId} (${countWords(prevParagraph.content)} words)` :
                             'previous: none';
                         const nextInfo = nextParagraph ?
-                            `next: ${nextParagraph.chunkId} (${countWords(nextParagraph.content)} words, page ${nextParagraph.pageNumber})` :
+                            `next: ${nextParagraph.chunkId} (${countWords(nextParagraph.content)} words)` :
                             'next: none';
 
                         neighborInfo = ` - Neighbors: ${prevInfo}, ${nextInfo}`;

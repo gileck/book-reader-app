@@ -2,7 +2,7 @@
 
 ## Overview
 
-Step 5.1 enhances links by adding chunk references based on their roles:
+Step 5.1 enhances links by adding chunk references based on their roles using selector-based anchoring (no pages):
 - For "source" role links: adds `targetChunkId` (the chunk containing the target text)
 - For "target" role links: adds `sourceChunkId` (the chunk containing the source text)
 
@@ -13,7 +13,7 @@ This enables bidirectional navigation between linked content in the rendered boo
 ### Input
 - Takes processed chapters from Step 5 with sentence chunks
 - Links already have `role` field ("source" or "target")
-- Links have `linkId`, `text`, `targetPageNumber`, and `targetText` fields
+- Links have `linkId`, `text`, `anchor` with `{ chapterId, selector: { start, end } }`, and `targetText` when applicable
 
 ### Output
 - Same structure as input with enhanced links
@@ -25,13 +25,13 @@ This enables bidirectional navigation between linked content in the rendered boo
 
 ### 1. Chunk Mapping
 - Create lookup maps for efficient chunk finding:
-  - By page number (for target resolution)
-  - By content (for text matching)
-  - By chunk ID (for validation)
+  - By chapter and chunkId
+  - By text content (for fallback matching)
+  - By selector range → chunk coverage
 
 ### 2. Link Enhancement
-- **Source Links**: Find chunk on `targetPageNumber` containing `targetText`
-- **Target Links**: Find chunk with source link that references this target
+- **Source Links**: Find chunk covering `anchor.selector` range; for targets, find chunk containing `targetText` (using selector where available)
+- **Target Links**: Find chunk with source link that references this target (by `linkId`)
 - Use link ID matching to connect source and target pairs
 
 ### 3. Reference Resolution

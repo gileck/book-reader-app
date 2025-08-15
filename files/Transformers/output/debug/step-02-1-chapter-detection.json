@@ -1,11 +1,11 @@
 {
-  "processingTime": 1830,
+  "processingTime": 1849,
   "detectionStats": {
-    "chaptersDetected": 9,
+    "chaptersDetected": 10,
     "tocSource": "pdf_bookmarks",
     "tocEntriesFound": 10,
-    "patternMatches": 345,
-    "averageDetectionConfidence": 0.7000000000000001,
+    "patternMatches": 419,
+    "averageDetectionConfidence": 0.9,
     "pageOffset": 0
   },
   "tocAnalysis": {
@@ -76,8 +76,8 @@
     "pdfBookmarksAvailable": true
   },
   "patternAnalysis": {
-    "potentialChapters": 362,
-    "validatedChapters": 345,
+    "potentialChapters": 437,
+    "validatedChapters": 419,
     "highConfidenceMatches": 0
   },
   "chapterMetadata": [
@@ -87,7 +87,7 @@
       "startingPage": 8,
       "endPage": 26,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 0.7999999999999999
     },
     {
       "title": "Discovering the nanocosm",
@@ -95,7 +95,7 @@
       "startingPage": 27,
       "endPage": 61,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 1
     },
     {
       "title": "The path of carbon",
@@ -103,15 +103,23 @@
       "startingPage": 62,
       "endPage": 90,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 1
     },
     {
       "title": "From gases to life",
       "chapterNumber": 3,
       "startingPage": 91,
+      "endPage": 123,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "startingPage": 124,
       "endPage": 149,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 1
     },
     {
       "title": "To the dark side",
@@ -119,7 +127,7 @@
       "startingPage": 150,
       "endPage": 180,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 1
     },
     {
       "title": "The flux capacitor",
@@ -127,7 +135,7 @@
       "startingPage": 181,
       "endPage": 210,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 1
     },
     {
       "title": "Epilogue: Self",
@@ -143,7 +151,7 @@
       "startingPage": 222,
       "endPage": 226,
       "detectionSource": "pdf_bookmarks",
-      "confidence": 0.7
+      "confidence": 0.7999999999999999
     },
     {
       "title": "Appendix 2: The Krebs line",

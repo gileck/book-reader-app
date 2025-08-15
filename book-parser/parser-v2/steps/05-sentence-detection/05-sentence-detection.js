@@ -119,7 +119,7 @@ function convertParagraphsToSentences(chapter) {
             paragraphIndex++;
 
             // Split paragraph into sentences and add paragraphIndex
-            const sentences = createSentenceChunks(chunk.content, chunk.pageNumber, chunk.links || [], paragraphIndex);
+            const sentences = createSentenceChunks(chunk.content, chunk.links || [], paragraphIndex);
             sentenceChunks.push(...sentences);
 
         } else if (chunk.type === 'header' || chunk.type === 'image') {
@@ -137,15 +137,14 @@ function convertParagraphsToSentences(chapter) {
 /**
  * Create sentence chunks from paragraph content
  * @param {string} paragraphContent - Full paragraph content
- * @param {number} pageNumber - Page number
- * @param {Array} pageLinks - Links from the page
+ * @param {Array} paragraphLinks - Links belonging to the paragraph
  * @param {number} paragraphIndex - Index of the paragraph
  * @returns {Array} - Array of sentence chunks
  */
-function createSentenceChunks(paragraphContent, pageNumber, pageLinks, paragraphIndex) {
+function createSentenceChunks(paragraphContent, paragraphLinks, paragraphIndex) {
     const sentences = splitIntoSentences(paragraphContent);
     const chunks = [];
-    const paragraphLinks = extractLinksFromContent(paragraphContent, pageLinks);
+    const paragraphScopedLinks = extractLinksFromContent(paragraphContent, paragraphLinks);
 
     for (let i = 0; i < sentences.length; i++) {
         const sentence = sentences[i].trim();
@@ -155,7 +154,7 @@ function createSentenceChunks(paragraphContent, pageNumber, pageLinks, paragraph
         const cleanSentence = sentence.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
 
         // Find links that belong to this specific sentence
-        const sentenceLinks = paragraphLinks.filter(link =>
+        const sentenceLinks = paragraphScopedLinks.filter(link =>
             isSourceTextInContent(link.text, cleanSentence)
         );
 
@@ -163,7 +162,6 @@ function createSentenceChunks(paragraphContent, pageNumber, pageLinks, paragraph
             // Using array index only - no chunkId needed
             type: 'text',
             content: cleanSentence,
-            pageNumber: pageNumber,
             paragraphIndex: paragraphIndex,
             wordCount: getWordCount(cleanSentence),
             sentenceCount: 1, // Each chunk starts as exactly one sentence
@@ -216,10 +214,7 @@ function combineSmallSentences(chunks) {
                             if (nextChunk.type !== 'text') break;
                             const newWordCount = combinedWordCount + nextChunk.wordCount;
                             if (newWordCount > MAX_WORDS) break;
-                            // Allow cross-page merge only for very short bases or small gaps
-                            const pageGap = Math.abs((base.pageNumber || 0) - (nextChunk.pageNumber || 0));
-                            const allowPageGap = base.wordCount < 25 ? pageGap <= 5 : pageGap <= 1;
-                            if (!allowPageGap) break;
+                            // Page semantics removed: no page-gap constraint
                             combinedContent += ' ' + nextChunk.content;
                             combinedWordCount = newWordCount;
                             combinedSentenceCount += nextChunk.sentenceCount || 1;
@@ -233,7 +228,7 @@ function combineSmallSentences(chunks) {
                             merged: {
                                 type: 'text',
                                 content: combinedContent,
-                                pageNumber: base.pageNumber,
+
                                 paragraphIndex: base.paragraphIndex,
                                 wordCount: combinedWordCount,
                                 sentenceCount: combinedSentenceCount,
@@ -260,7 +255,7 @@ function combineSmallSentences(chunks) {
                                     optimized[optimized.length - 1] = {
                                         type: 'text',
                                         content: newContent,
-                                        pageNumber: lastOptimized.pageNumber,
+
                                         paragraphIndex: lastOptimized.paragraphIndex,
                                         wordCount: combinedWordCount,
                                         sentenceCount: lastOptimized.sentenceCount + merged.sentenceCount,
@@ -339,13 +334,7 @@ function tryMergeWithNextSentences(chunks, currentIndex, minWords, maxWords) {
                 break;
             }
 
-            // Don't merge chunks from different pages unless they're consecutive
-            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
-                const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
-                if (pageDifference > 1) {
-                    break;
-                }
-            }
+            // Page semantics removed: no page-gap constraint
 
             // Merge this chunk
             combinedContent += ' ' + nextChunk.content;
@@ -377,7 +366,7 @@ function tryMergeWithNextSentences(chunks, currentIndex, minWords, maxWords) {
                 // Using array index only - no chunkId needed
                 type: 'text',
                 content: combinedContent,
-                pageNumber: currentChunk.pageNumber,
+
                 paragraphIndex: currentChunk.paragraphIndex,
                 wordCount: combinedWordCount,
                 sentenceCount: combinedSentenceCount,
@@ -416,13 +405,7 @@ function tryMergeWithPreviousSentence(optimizedChunks, currentChunk, minWords, m
                 break;
             }
 
-            // Don't merge chunks from different pages unless they're consecutive
-            if (previousChunk.pageNumber !== currentChunk.pageNumber) {
-                const pageDifference = currentChunk.pageNumber - previousChunk.pageNumber;
-                if (pageDifference > 1) {
-                    break;
-                }
-            }
+            // Page semantics removed: no page-gap constraint
 
             const mergedContent = previousChunk.content + ' ' + currentChunk.content;
             const allPotentialLinks = [...(previousChunk.links || []), ...(currentChunk.links || [])];
@@ -434,7 +417,7 @@ function tryMergeWithPreviousSentence(optimizedChunks, currentChunk, minWords, m
                 // Using array index only - no chunkId needed
                 type: 'text',
                 content: mergedContent,
-                pageNumber: previousChunk.pageNumber,
+
                 paragraphIndex: previousChunk.paragraphIndex,
                 wordCount: combinedWordCount,
                 sentenceCount: previousChunk.sentenceCount + currentChunk.sentenceCount,
@@ -499,21 +482,19 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
             if (combinedWordCount <= maxWords) {
                 // FINAL ULTRA-AGGRESSIVE: No page gap limits for very short chunks
                 const currentIsVeryShort = currentChunk.wordCount < 25; // Extra aggressive for very short
-                const pageGap = Math.abs(currentChunk.pageNumber - lastOptimized.pageNumber);
-                if (currentIsVeryShort ? pageGap <= 5 : pageGap <= 1) {
-                    return {
-                        mergeWithPrevious: true,
-                        merged: {
-                            type: 'text',
-                            content: lastOptimized.content + ' ' + currentChunk.content,
-                            pageNumber: lastOptimized.pageNumber,
-                            paragraphIndex: lastOptimized.paragraphIndex, // Keep the first paragraph's index
-                            wordCount: combinedWordCount,
-                            sentenceCount: lastOptimized.sentenceCount + currentChunk.sentenceCount,
-                            links: removeDuplicateLinks([...(lastOptimized.links || []), ...(currentChunk.links || [])])
-                        }
-                    };
-                }
+                // Page semantics removed: always allow if within max words
+                return {
+                    mergeWithPrevious: true,
+                    merged: {
+                        type: 'text',
+                        content: lastOptimized.content + ' ' + currentChunk.content,
+
+                        paragraphIndex: lastOptimized.paragraphIndex, // Keep the first paragraph's index
+                        wordCount: combinedWordCount,
+                        sentenceCount: lastOptimized.sentenceCount + currentChunk.sentenceCount,
+                        links: removeDuplicateLinks([...(lastOptimized.links || []), ...(currentChunk.links || [])])
+                    }
+                };
             }
         }
     }
@@ -544,13 +525,7 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
             }
 
             // FINAL ULTRA-AGGRESSIVE: Relax page gap limit only for very short chunks
-            if (currentChunk.pageNumber !== nextChunk.pageNumber) {
-                const currentIsVeryShort = currentChunk.wordCount < 25;
-                const pageDifference = Math.abs(nextChunk.pageNumber - currentChunk.pageNumber);
-                if (!currentIsVeryShort && pageDifference > 1) { // Only allow small gaps for longer chunks
-                    break;
-                }
-            }
+            // Page semantics removed: no page-gap constraint
 
             // Merge this chunk
             combinedContent += ' ' + nextChunk.content;
@@ -580,7 +555,7 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
             merged: {
                 type: 'text',
                 content: combinedContent,
-                pageNumber: currentChunk.pageNumber,
+
                 paragraphIndex: currentChunk.paragraphIndex, // Keep the first paragraph's index
                 wordCount: combinedWordCount,
                 sentenceCount: combinedSentenceCount,

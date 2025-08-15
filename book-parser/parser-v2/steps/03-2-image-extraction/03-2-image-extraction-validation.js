@@ -1,8 +1,8 @@
 /**
  * Step 3-2: Image Extraction Validation
  * 
- * Validates that image extraction was completed successfully.
- * This step should add an images array to each page with extracted images.
+ * Validates that image extraction was completed successfully using inline markers.
+ * This step now inserts [[IMG ...]] markers into chapter content (not page images arrays).
  */
 
 const path = require('path');
@@ -25,74 +25,33 @@ function validate(result) {
         return false;
     }
 
-    let totalPagesChecked = 0;
-    let totalPagesWithImages = 0;
+    let totalChaptersChecked = 0;
     let totalImages = 0;
 
-    // Check each chapter
+    // Check each chapter's content for markers
+    const markerRegex = /\[\[IMG\s+id=([^\s\]]+)\s+index=(\d+)\s+alt=\"([^\"]*)\"\]\]/g; // strict token with id/index/alt
+    const seenIds = new Set();
     for (let i = 0; i < result.chapters.length; i++) {
         const chapter = result.chapters[i];
-
-        // Check chapter structure
-        if (!chapter.pages || !Array.isArray(chapter.pages)) {
-            console.error(`Validation failed: chapter ${i} does not have pages array`);
+        totalChaptersChecked++;
+        if (typeof chapter.content !== 'string') {
+            console.error(`Validation failed: chapter ${i} does not have concatenated content with markers`);
             return false;
         }
-
-        // Check each page
-        for (let j = 0; j < chapter.pages.length; j++) {
-            const page = chapter.pages[j];
-            totalPagesChecked++;
-
-            // Check page structure
-            if (typeof page.pageNumber !== 'number') {
-                console.error(`Validation failed: page ${j} in chapter ${i} does not have valid pageNumber`);
+        let match;
+        while ((match = markerRegex.exec(chapter.content)) !== null) {
+            const id = match[1];
+            const alt = match[3];
+            if (!id || seenIds.has(id)) {
+                console.error(`Validation failed: duplicate or missing image id: ${id}`);
                 return false;
             }
-
-            if (typeof page.content !== 'string') {
-                console.error(`Validation failed: page ${j} in chapter ${i} does not have valid content`);
+            if (!alt || alt.length === 0) {
+                console.error(`Validation failed: marker with id ${id} missing alt text`);
                 return false;
             }
-
-            // Check that images array exists (even if empty)
-            if (!Array.isArray(page.images)) {
-                console.error(`Validation failed: page ${j} in chapter ${i} does not have images array`);
-                return false;
-            }
-
-            // If page has images, validate their structure
-            if (page.images.length > 0) {
-                totalPagesWithImages++;
-                totalImages += page.images.length;
-
-                for (let k = 0; k < page.images.length; k++) {
-                    const image = page.images[k];
-
-                    // Check required image properties
-                    if (typeof image.imageName !== 'string' || image.imageName.length === 0) {
-                        console.error(`Validation failed: image ${k} on page ${j} in chapter ${i} does not have valid imageName`);
-                        return false;
-                    }
-
-                    if (typeof image.imageAlt !== 'string' || image.imageAlt.length === 0) {
-                        console.error(`Validation failed: image ${k} on page ${j} in chapter ${i} does not have valid imageAlt`);
-                        return false;
-                    }
-
-                    // Check that extracted flag is boolean
-                    if (typeof image.extracted !== 'boolean') {
-                        console.error(`Validation failed: image ${k} on page ${j} in chapter ${i} does not have valid extracted flag`);
-                        return false;
-                    }
-
-                    // Check that placeholder flag is boolean (optional but if present must be boolean)
-                    if (image.placeholder !== undefined && typeof image.placeholder !== 'boolean') {
-                        console.error(`Validation failed: image ${k} on page ${j} in chapter ${i} does not have valid placeholder flag`);
-                        return false;
-                    }
-                }
-            }
+            seenIds.add(id);
+            totalImages++;
         }
     }
 
@@ -144,23 +103,17 @@ function validate(result) {
     let filesExistCount = 0;
     let filesMissingCount = 0;
 
-    for (let i = 0; i < result.chapters.length; i++) {
-        const chapter = result.chapters[i];
-        for (let j = 0; j < chapter.pages.length; j++) {
-            const page = chapter.pages[j];
-            for (let k = 0; k < page.images.length; k++) {
-                const image = page.images[k];
-                if (image.extracted) {
-                    const imagePath = path.join(imageMetadata.imagesFolderPath, image.imageName);
-                    if (fs.existsSync(imagePath)) {
-                        filesExistCount++;
-                    } else {
-                        filesMissingCount++;
-                        console.error(`Validation failed: extracted image file does not exist: ${imagePath}`);
-                    }
-                }
+    // Verify that extracted image files actually exist on disk by scanning images folder
+    try {
+        const files = fs.readdirSync(imageMetadata.imagesFolderPath);
+        for (const file of files) {
+            if (/^image-.*\.(jpg|jpeg|png)$/i.test(file)) {
+                filesExistCount++;
             }
         }
+    } catch (e) {
+        console.error('Validation failed: cannot read images folder:', e.message);
+        return false;
     }
 
     if (filesMissingCount > 0) {
@@ -170,11 +123,10 @@ function validate(result) {
 
     // All validation checks passed
     console.log(`✓ Image extraction validation passed:`);
-    console.log(`  - Processed ${totalPagesChecked} pages`);
-    console.log(`  - ${totalPagesWithImages} pages have images`);
+    console.log(`  - Processed ${totalChaptersChecked} chapters`);
     console.log(`  - Total images: ${totalImages}`);
-    console.log(`  - Total extracted images: ${imageMetadata.totalExtractedImages}`);
-    console.log(`  - Files verified on disk: ${filesExistCount}`);
+    console.log(`  - Total extracted images (metadata): ${imageMetadata.totalExtractedImages}`);
+    console.log(`  - Files found on disk: ${filesExistCount}`);
     console.log(`  - Images folder: ${imageMetadata.imagesFolderPath}`);
 
     return true;

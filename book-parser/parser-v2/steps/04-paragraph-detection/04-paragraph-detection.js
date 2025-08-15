@@ -9,8 +9,8 @@
  * - Paragraphs cannot include headers - they end before headers and start after
  * - Process clean page content from step 3
  * - Extract links that exist within paragraph content
- * - Output: array of chapters, each chapter has array of chunks (paragraph or header)
- * - Each chunk has type, pageNumber, content, and links (if any)
+ * - Output: array of chapters, each chapter has array of chunks (paragraph, header, image)
+ * - Each chunk has type, content, and links (if any)
  * 
  * Header Detection Rules (ALL must be satisfied):
  * 1. Length: 2-5 words only
@@ -67,6 +67,21 @@ async function execute(pipelineState, config) {
                 optimizedChunks[i].chunkId = `${chapter.chapterNumber}_${i + 1}`;
             }
 
+            // Heuristic: promote very first small paragraph to header when it looks like a header
+            if (optimizedChunks.length > 0) {
+                const first = optimizedChunks[0];
+                if (first.type === 'paragraph') {
+                    const text = (first.content || '').trim();
+                    const wordCount = getWordCount(text);
+                    const endsWithPunct = /[.!?]$/.test(text);
+                    if (wordCount > 0 && wordCount <= 5 && !endsWithPunct) {
+                        first.type = 'header';
+                        first.sentenceCount = 1;
+                        first.links = [];
+                    }
+                }
+            }
+
             // Count chunk types
             const paragraphCount = optimizedChunks.filter(c => c.type === 'paragraph').length;
             const headerCount = optimizedChunks.filter(c => c.type === 'header').length;
@@ -86,6 +101,7 @@ async function execute(pipelineState, config) {
                 chapterNumber: chapter.chapterNumber,
                 pageNumberStart: chapter.pageNumberStart,
                 pageNumberEnd: chapter.pageNumberEnd,
+                content: chapter.content, // preserve chapter-level concatenated content if present
                 chunks: optimizedChunks
             });
         }
@@ -129,7 +145,7 @@ async function execute(pipelineState, config) {
 /**
  * Detect chunks (paragraphs and headers) in a chapter
  * @param {Object} chapter - Chapter with pages
- * @returns {Array} - Array of chunks with type, content, pageNumber, links
+ * @returns {Array} - Array of chunks with type, content, links
  */
 function detectChunksInChapter(chapter, chapterNumber) {
     const chunks = [];
@@ -154,14 +170,6 @@ function detectChunksInChapter(chapter, chapterNumber) {
         }
 
         chunks.push(...pageChunks);
-
-        // Then, add image chunks at the end of the page if there are any images
-        if (page.images && page.images.length > 0) {
-            for (const image of page.images) {
-                const imageChunk = createImageChunk(image, page, '');
-                chunks.push(imageChunk);
-            }
-        }
 
         // If this page ends with an orphan uppercase single-letter line, carry it to next page
         const raw = (page.rawContent && typeof page.rawContent === 'string') ? page.rawContent : page.content;
@@ -226,6 +234,33 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
 
         // Skip empty lines
         if (!line) {
+            continue;
+        }
+
+        // Skip page-number-only lines (e.g., "27", "181" or short numeric sequences)
+        const numericOnly = line.replace(/\s+/g, '');
+        if (/^\d{1,4}$/.test(numericOnly)) {
+            continue;
+        }
+
+        // Detect inline image marker: [[IMG id=... index=... alt="..."]]
+        const marker = parseImageMarker(line);
+        if (marker) {
+            // Flush any pending paragraph before placing the image
+            if (currentParagraph.trim()) {
+                chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                currentParagraph = '';
+            }
+            const imageObj = {
+                imageName: `${marker.id}.jpg`,
+                imageAlt: marker.alt || marker.id,
+                extracted: true,
+                placeholder: false,
+                originalName: `${marker.id}.jpg`
+            };
+            const imageChunk = createImageChunk(imageObj, page, '');
+            chunks.push(imageChunk);
+            headerJustEmitted = false;
             continue;
         }
 
@@ -496,7 +531,6 @@ function createParagraphChunk(content, page, chunkId) {
         chunkId: chunkId,
         type: 'paragraph',
         content: content,
-        pageNumber: page.pageNumber,
         wordCount: getWordCount(content),
         sentenceCount: getSentenceCount(content),
         links: links
@@ -513,7 +547,6 @@ function createHeaderChunk(content, page) {
     return {
         type: 'header',
         content: content,
-        pageNumber: page.pageNumber,
         wordCount: getWordCount(content),
         sentenceCount: 1, // Headers are always one "sentence"
         links: [] // Headers typically don't contain links
@@ -532,7 +565,6 @@ function createImageChunk(image, page, chunkId) {
         chunkId: chunkId,
         type: 'image',
         content: image.imageAlt || `Image: ${image.imageName}`,
-        pageNumber: page.pageNumber,
         wordCount: 0, // Images don't have words
         sentenceCount: 0, // Images don't have sentences
         links: [],
@@ -673,11 +705,7 @@ function tryMergeWithNextParagraph(chunks, currentIndex) {
         if (nextChunk.type === 'image') continue; // ignore images between
         if (nextChunk.type !== 'paragraph') break;
 
-        // Don't merge paragraphs from different pages unless they're consecutive
-        if (currentChunk.pageNumber !== nextChunk.pageNumber) {
-            const pageDifference = nextChunk.pageNumber - currentChunk.pageNumber;
-            if (pageDifference > 1) break;
-        }
+        // Page semantics removed: no page-based merge restriction
 
         const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
         const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
@@ -725,13 +753,7 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
         }
 
         if (previousChunk.type === 'paragraph') {
-            // Don't merge paragraphs from different pages unless they're consecutive
-            if (previousChunk.pageNumber !== currentChunk.pageNumber) {
-                const pageDifference = currentChunk.pageNumber - previousChunk.pageNumber;
-                if (pageDifference > 1) {
-                    break; // Don't merge across non-consecutive pages
-                }
-            }
+            // Page semantics removed: no page-based merge restriction
 
             const combinedWordCount = previousChunk.wordCount + currentChunk.wordCount;
 
@@ -895,13 +917,13 @@ function extractLinksFromContent(content, pageLinks) {
     const foundLinks = [];
 
     for (const link of pageLinks) {
-        if (isSourceTextInContent(link.sourceText, content)) {
+        const sourceText = link.sourceText || link.text;
+        if (sourceText && isSourceTextInContent(sourceText, content)) {
             foundLinks.push({
-                text: link.sourceText,
-                targetPageNumber: link.targetPageNumber,
-                targetText: link.targetText,
+                text: sourceText,
                 linkId: link.linkId,
-                role: link.role
+                role: link.role,
+                anchor: link.anchor
             });
         }
     }
@@ -921,7 +943,7 @@ function extractLinksFromContent(content, pageLinks) {
 function removeDuplicateLinks(links) {
     const seen = new Set();
     return links.filter(link => {
-        const key = `${link.text}-${link.targetPageNumber}`;
+        const key = `${link.text}-${link.linkId}-${link.role}`;
         if (seen.has(key)) {
             return false;
         }
@@ -1013,7 +1035,6 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
             chunks: chapter.chunks.map(chunk => ({
                 type: chunk.type,
                 content: chunk.content.substring(0, 200) + (chunk.content.length > 200 ? '...' : ''),
-                pageNumber: chunk.pageNumber,
                 wordCount: chunk.wordCount,
                 sentenceCount: chunk.sentenceCount,
                 linkCount: chunk.links ? chunk.links.length : 0
@@ -1036,5 +1057,26 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
 // findNextParagraph function is now imported from validation module
 
 const { validate, countWords, endsWithInitials, endsWithCommonSingleLetterWord, findPreviousParagraph, findNextParagraph, isSourceTextInContent } = require('./04-paragraph-detection-validation');
+
+/**
+ * Parse inline image marker line
+ * Expected format: [[IMG id=<string> index=<int> alt="<string>"]]
+ */
+function parseImageMarker(line) {
+    const trimmed = (line || '').trim();
+    if (!trimmed.startsWith('[[IMG') || !trimmed.endsWith(']]')) return null;
+    // Extract attributes inside
+    const inner = trimmed.slice(5, -2).trim(); // remove '[[IMG' prefix and ']]' suffix
+    // Simple attribute parsing: id=..., index=..., alt="..."
+    const idMatch = inner.match(/id=([^\s]+)/);
+    const indexMatch = inner.match(/index=(\d+)/);
+    const altMatch = inner.match(/alt=\"([^\"]*)\"/);
+    if (!idMatch) return null;
+    return {
+        id: idMatch[1],
+        index: indexMatch ? parseInt(indexMatch[1], 10) : 0,
+        alt: altMatch ? altMatch[1] : undefined
+    };
+}
 
 module.exports = { execute, validate }; 

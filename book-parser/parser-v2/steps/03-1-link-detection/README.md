@@ -7,22 +7,25 @@ This step extracts and resolves PDF internal links using coordinate-based target
 ## Requirements
 
 ### Input Requirements
-- **Pipeline State**: Must include `chapters` with pages from Step 3
+- **Pipeline State**: Must include `chapters` with accessible text content (no page dependency)
 - **PDF File**: Original PDF for coordinate-based link extraction
-- **Page Structure**: Pages with content for link text matching
+- **Chapter Text**: Text to match and anchor link text within
 
 ### Output Requirements
 - **Link Extraction**: Identify all internal PDF links with source and target information
 - **Role Classification**: Classify links as "source" or "target" based on their function
+- **Anchoring (no pages)**: For each link, provide a chapter-local selector
+  - `anchor.chapterId`: chapter index/id
+  - `anchor.selector`: `{ start: number, end: number }` (TextPositionSelector, 0-based, end exclusive)
+  - Optional (if chunk mapping is available): `anchor.chunkId` and `anchor.intraChunk` `{ start, end }`
 - **Source-Target Matching**: Match source links with their corresponding targets
-- **Link Validation**: Ensure extracted links have valid page numbers and required fields
-- **Text Association**: Associate link text with page content where it appears
+- **Text Association**: Associate link text using the selector range within chapter content
 
 ### Quality Standards
 - Links must have valid roles ("source" or "target")
-- All links must have required fields (linkId, pageNumber, etc.)
+- All links must have required fields (`linkId`, `role`, `anchor.selector`)
 - Source links should have matching target links
-- Link text must be accurately extracted and associated with content
+- Selector ranges must be valid and accurately map to the link text
 
 ## Implementation
 
@@ -93,16 +96,16 @@ The validation module (`03-1-link-detection-validation.js`) implements:
 - **Purpose**: Ensure proper link classification for processing
 
 #### 2. Required Fields Validation
-- **Rule**: All links must have linkId and valid page numbers
+- **Rule**: All links must have `linkId`, `role`, and `anchor.selector` with `start < end`
 - **Purpose**: Ensure complete link metadata for downstream processing
 
 #### 3. Source-Target Matching Validation
 - **Rule**: Each source link should have a corresponding target link
 - **Purpose**: Verify link relationships are complete and valid
 
-#### 4. Page Number Validation
-- **Rule**: Link page numbers must be valid positive numbers
-- **Purpose**: Ensure links reference valid document locations
+#### 4. Selector Validation
+- **Rule**: `0 ≤ start < end ≤ chapterTextLength`; substring(chapterText, start, end) must match detected link text where applicable
+- **Purpose**: Ensure link anchors reference valid positions in chapter content
 
 #### 5. Orphaned Link Detection
 - **Rule**: Warn about target links without matching sources
@@ -112,7 +115,7 @@ The validation module (`03-1-link-detection-validation.js`) implements:
 ### Validation Success Criteria
 
 - ✅ All links have valid roles and required fields
-- ✅ Page numbers are valid and within document range
+- ✅ Selector ranges are valid within chapter text
 - ✅ Source-target relationships are properly established
 - ✅ Link extraction is complete and accurate
 
@@ -129,42 +132,41 @@ const isValid = linkDetection.validate(result);
 ### Expected Input Structure
 ```javascript
 {
-    chapters: [
-        {
-            title: "Introduction",
-            pages: [
-                {
-                    pageNumber: 15,
-                    content: "Text with footnote reference 1 and citation.",
-                    wordCount: 245
-                }
-            ]
-        }
-    ]
+  chapters: [
+    {
+      title: "Introduction",
+      content: "Text with footnote reference 1 and citation..." // chapter-level text available for anchoring
+    }
+  ]
 }
 ```
 
 ### Expected Output Structure
 ```javascript
 {
-    links: [
-        {
-            linkId: "link_001",
-            role: "source",
-            pageNumber: 15,
-            text: "1",
-            coordinates: { x: 234, y: 567 },
-            targetPageNumber: 156
-        },
-        {
-            linkId: "link_001", 
-            role: "target",
-            pageNumber: 156,
-            text: "Reference material for footnote 1",
-            coordinates: { x: 123, y: 456 }
-        }
-        // ... more links
-    ]
+  links: [
+    {
+      linkId: "link_001",
+      role: "source",
+      text: "1",
+      anchor: {
+        chapterId: 0,
+        selector: { start: 1205, end: 1206 },
+        // optional when chunk mapping exists:
+        // chunkId: "0_145",
+        // intraChunk: { start: 84, end: 85 }
+      }
+    },
+    {
+      linkId: "link_001",
+      role: "target",
+      text: "Reference material for footnote 1",
+      anchor: {
+        chapterId: 0,
+        selector: { start: 10452, end: 10480 }
+      }
+    }
+  ]
 }
 ```
 
@@ -183,14 +185,14 @@ const isValid = linkDetection.validate(result);
 - **Hyperlinks**: Internal document links
 
 ### Target Link Detection
-- **Footnote Destinations**: Bottom-of-page or end-of-document footnotes
+- **Footnote Destinations**: Footnotes/endnotes sections within chapter content
 - **Bibliography Entries**: Reference list items
 - **Figure/Table Captions**: Referenced visual elements
 - **Chapter/Section Headers**: Navigation targets
 
-### Coordinate Processing
-- **PDF Coordinate Systems**: Handles various PDF coordinate transformations
-- **Text Boundary Detection**: Extracts text at precise link coordinates
+### Coordinate and Selector Processing
+- **PDF Annotation Coordinates**: Used internally for extraction; not emitted in output
+- **Text Boundary Detection**: Produces chapter-local start/end offsets
 - **Multi-Element Spans**: Handles links spanning multiple text elements
 
 ## Debug Output
@@ -228,9 +230,9 @@ The step generates detailed debug information:
 
 ## Advanced Features
 
-### Cross-Page Link Support
-- Handles links that reference content on different pages
-- Maintains accurate page number associations
+### Cross-Chapter/Section Link Support
+- Handles links that reference content in other chapters/sections
+- Maintains accurate selector-based associations without page numbers
 - Supports complex document navigation structures
 
 ### Multiple Link Types

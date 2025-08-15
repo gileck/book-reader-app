@@ -7,15 +7,15 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 ## Requirements
 
 ### Input
-- Takes processed chapters from Step 4 with paragraph chunks (type: 'paragraph')
+- Takes processed chapters from Step 4 with chunks (types: 'paragraph', 'header', 'image')
 - Each paragraph chunk contains multiple sentences
 - Headers and image chunks are preserved as-is
 
 ### Output
-- Array of chapters with sentence chunks (type: 'text') 
-- Each sentence chunk has `paragraphIndex` field indicating which paragraph it belongs to
+- Array of chapters with sentence chunks (type: 'text') and preserved headers/images
+- Each text chunk has `paragraphIndex` field indicating which paragraph it belongs to
 - Headers and images have `paragraphIndex: null`
-- Combined sentences meet 50-200 word target while respecting paragraph boundaries
+- Combined sentences meet 50-200 word target while respecting paragraph boundaries and image positions
 
 ## Technical Approach
 
@@ -138,7 +138,6 @@ console.log(sentenceChunks[0].paragraphIndex); // 1, 2, 3, etc.
   "chunkId": "0_1",
   "type": "text", 
   "content": "From space it looks grey and crystalline, obliterating the blue-green colours of the living Earth. It is criss-crossed by irregular patterns and convergent striations.",
-  "pageNumber": 8,
   "paragraphIndex": 1,
   "wordCount": 57,
   "sentenceCount": 2,

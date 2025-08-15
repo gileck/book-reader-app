@@ -2,23 +2,22 @@
 
 ## Overview
 
-This step transforms chapter content into a page-based structure and merges sentences that are split across page boundaries. It creates clean page content where sentences broken by page breaks are intelligently reconstructed. The step handles real-world book formatting such as bullet lists near page boundaries (no cross-page list merging), image-only pages, numeric citations, and trailing quotes/attributions.
+This step transforms chapter content into a page-based structure and merges sentences that are split across page boundaries. It creates clean page content where sentences broken by page breaks are intelligently reconstructed. If your pipeline removes page semantics downstream, treat this step conceptually as ensuring sentence continuity at former page boundaries. The step handles real-world book formatting such as bullet lists near page boundaries (no cross-page list merging), image-only pages, numeric citations, and trailing quotes/attributions.
 
 ## Requirements
 
 ### Input Requirements
 - **Pipeline State**: Must include `chapters` array from Step 2.3 with cleaned content
 - **Chapter Content**: Clean chapter content from previous steps
-- **Page Information**: Page boundaries and numbering from original text
+- **Page Information**: Page boundaries and numbering from original text (if still materialized)
 
 ### Output Requirements
-- **Page Structure**: Each chapter divided into individual pages with metadata
-- **Complete Sentences**: Sentences split across pages must be merged
-- **List Continuation Support**: Bullet list items that continue on the next page must be merged with the preceding list
-- **Content Validation**: Pages should end with proper sentence terminators, with documented exceptions
-- **Page Numbering**: Accurate page numbers for each page
-- **Word Counts**: Accurate word count for each page
-- **Figure-Only Pages**: Pages that contain no text (e.g., image-only) are included as placeholders to keep page numbering contiguous
+- **Page Structure**: Each chapter divided into individual pages with metadata (if pages are retained); otherwise, sentence continuity across former page breaks is ensured
+- **Complete Sentences**: Sentences split across page boundaries must be merged
+- **List Continuation Support**: Bullet list items that continue on the next page should be handled as described
+- **Content Validation**: Segments should end with proper sentence terminators, with documented exceptions
+- **Word Counts**: Accurate word count for each page/segment
+- **Figure-Only Pages**: If pages are retained, include placeholders to keep numbering contiguous
 
 ### Quality Standards
 - Pages should end with sentence terminators (., !, ?) with exceptions for headers/titles, bullet list endings, and the last content page of the book
@@ -92,32 +91,28 @@ The step uses intelligent page boundary detection and cross-page sentence mergin
 
 The validation module (`03-page-extraction-and-cross-page-merging-validation.js`) implements:
 
-#### 1. Chapter Page Structure Validation
-- **Rule**: Each chapter must have pages array with page objects
-- **Purpose**: Ensure page extraction was successful
+#### 1. Page/Segment Structure Validation
+- **Rule**: If pages are retained, each chapter must have a `pages[]` array with page objects; if not, ensure continuity markers across former page breaks are honored
+- **Purpose**: Ensure extraction is complete
 
-#### 2. Page Content Validation
-- **Rule**: Each page must have valid page number and word count. Text pages should have non-empty content.
-- **Figure-Only Pages**: Pages with no text content are accepted if they are image-only; they are emitted with `isFigureOnly: true` to preserve numbering.
-- **Purpose**: Verify complete page extraction with proper metadata while preserving contiguous page sequences
+#### 2. Content Validation
+- **Rule**: Each page/segment must have valid word count; text segments should have non-empty content
+- **Figure-Only Pages**: If pages exist, image-only pages are accepted with `isFigureOnly: true`
+- **Purpose**: Verify complete extraction with proper metadata
 
 #### 3. Sentence Terminator Validation
-- **Rule**: Pages should end with sentence terminators (., !, ?)
-- **Exceptions**:
-  - Headers and section titles that don't end with punctuation
-  - Pages ending with bullet list items (treated as valid end)
-  - The last content page of the book may end without a terminator
-  - Trailing numeric citations and closing quotes are ignored when checking the last character
+- **Rule**: Segments should end with sentence terminators (., !, ?)
+- **Exceptions**: headers/titles, bullet list endings, last content segment; ignore trailing numeric citations/closing quotes
 - **Special Case**: Appendix chapters have relaxed validation
-- **Purpose**: Ensure proper sentence boundaries and content completeness
+- **Purpose**: Ensure proper sentence boundaries and completeness
 
-#### 4. Page Sequence Validation
+#### 4. Sequence Validation (if pages retained)
 - **Rule**: Page numbers must be sequential and within expected ranges
-- **Purpose**: Verify page extraction accuracy and completeness
+- **Purpose**: Verify extraction accuracy and completeness
 
 #### 5. Content Volume Validation
-- **Rule**: Must extract minimum 10 pages total
-- **Purpose**: Ensure substantial document processing
+- **Rule**: Ensure substantial document processing (e.g., ≥ 10 pages when pages are present)
+- **Purpose**: Guard against trivial outputs
 
 ### Helper Functions
 

@@ -2,40 +2,37 @@
 
 ## Overview
 
-This step extracts embedded images from the PDF file and maps them to their corresponding pages. It takes the output from Step 3-1 (link detection) and adds an `images` array to each page containing the images found on that specific page.
+This step extracts embedded images from the PDF file and emits inline image markers into chapter content to preserve original placement without relying on pages. It takes the output from Step 3-1 (link detection) and augments chapters with `[[IMG ...]]` markers that are later converted to image chunks.
 
 ## Input
 
-- **chapters[]** with **pages[]** from Step 3-1
-- Each page should have:
-  - `pageNumber`: Number (0-based)
-  - `content`: String
-  - `links`: Array (from step 3-1)
+- **chapters[]** with accessible text (chapter-level content or chunk content) from Step 3-1
+- Original PDF for image detection/extraction
 
 ## Process
 
-1. **Image Detection**: Uses PDF.js to analyze the PDF and detect which pages contain images
+1. **Image Detection**: Uses PDF.js to detect which regions contain images
 2. **Image Extraction**: Uses the `pdfimages` command-line tool to extract actual image files from the PDF
-3. **Image Mapping**: Correlates extracted images with their source pages
-4. **Page Assignment**: Adds an `images` array to each page with the images found on that page
+3. **Flow Positioning**: Determines nearest text position in chapter flow for each detected image
+4. **Marker Insertion**: Inserts inline markers into chapter content to mark image positions
 
 ## Output
 
-- **chapters[]** with **pages[]** containing an additional **images[]** array
-- Each page will have an `images` array (empty if no images on that page)
-- Each image object contains:
-  - `imageName`: String - filename of the extracted image
-  - `imageAlt`: String - alt text for the image (e.g., "Figure 1 (Page 5)")
-  - `extracted`: Boolean - whether the image was successfully extracted
-  - `placeholder`: Boolean - whether this is a placeholder (detection only, not extracted)
-  - `originalName`: String - original filename from pdfimages extraction
+- **chapters[]** with chapter content containing inline image markers
+- Marker format (grammar):
+  - `[[IMG id=<string> index=<int> alt="<string>"]]`
+  - `id`: stable image identifier (e.g., filename or UUID)
+  - `index`: flow order index within the chapter (stable ordering fallback)
+  - `alt`: optional alt/caption text when available
+- Marker insertion rules:
+  - Placed immediately before or after the nearest text line according to PDF layout
+  - If no nearby text, insert by flow order between adjacent textual regions
+- Extracted images are saved to disk as before
 
 ## Image Storage
 
 - Images are saved to `{OUTPUT_DIR}/images/` directory
-- Image filenames follow the pattern: `page-XXX-image-Y.jpg`
-  - `XXX`: Zero-padded page number (1-based)
-  - `Y`: Image index on that page (1-based)
+- Image filenames follow the pattern: `image-<id>.jpg` or a deterministic mapping from extraction
 
 ## Dependencies
 
@@ -53,10 +50,10 @@ This step extracts embedded images from the PDF file and maps them to their corr
 ## Validation
 
 The validation checks:
-- All pages have an `images` array (even if empty)
-- Image objects have required properties with correct types
-- Metadata matches actual image counts
-- Processing metadata is properly recorded
+- All inserted `[[IMG ...]]` markers conform to the grammar and have unique `id`
+- Every marker corresponds to an extracted (or placeholder) image on disk
+- No markers remain unresolved after Step 4 conversion to `image` chunks
+- Processing metadata is properly recorded (counts, timings)
 
 ## Example Output Structure
 
@@ -65,22 +62,7 @@ The validation checks:
   chapters: [
     {
       title: "Chapter 1",
-      pages: [
-        {
-          pageNumber: 0,
-          content: "Page content...",
-          links: [...], // from step 3-1
-          images: [
-            {
-              imageName: "page-001-image-1.jpg",
-              imageAlt: "Figure 1 (Page 1)",
-              extracted: true,
-              placeholder: false,
-              originalName: "image-000.jpg"
-            }
-          ]
-        }
-      ]
+      content: "... paragraph text ...\n[[IMG id=image-001 index=12 alt=\"Figure 1\"]]\nNext paragraph ..."
     }
   ],
   metadata: {
@@ -93,4 +75,4 @@ The validation checks:
     }
   }
 }
-``` 
+```

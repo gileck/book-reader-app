@@ -1,0 +1,92 @@
+{
+  "pdfBookmarksAvailable": true,
+  "inputPdf": "/Users/gil/Projects/book-reader-app/files/Transformers/book.pdf",
+  "tocFound": true,
+  "totalBookmarks": 22,
+  "outlineTitles": [
+    "Praise for Transformer",
+    "Title Page",
+    "Copyright",
+    "Dedication",
+    "Contents",
+    "Introduction: Life itself",
+    "1. Discovering the nanocosm",
+    "2. The path of carbon",
+    "3. From gases to life",
+    "4. Revolutions",
+    "5. To the dark side",
+    "6. The flux capacitor",
+    "Epilogue: Self",
+    "Envoi: ‘Like Most Revelations’",
+    "The forward Krebs cycle",
+    "The reverse Krebs cycle",
+    "Appendix 1: Red protein mechanics",
+    "Appendix 2: The Krebs line",
+    "List of abbreviations",
+    "Further reading",
+    "Acknowledgements",
+    "Index"
+  ],
+  "extractedChapters": [
+    {
+      "chapterTitle": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "startingPage": 8,
+      "bookmarkTitle": "Introduction: Life itself"
+    },
+    {
+      "chapterTitle": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "startingPage": 27,
+      "bookmarkTitle": "1. Discovering the nanocosm"
+    },
+    {
+      "chapterTitle": "The path of carbon",
+      "chapterNumber": 2,
+      "startingPage": 62,
+      "bookmarkTitle": "2. The path of carbon"
+    },
+    {
+      "chapterTitle": "From gases to life",
+      "chapterNumber": 3,
+      "startingPage": 91,
+      "bookmarkTitle": "3. From gases to life"
+    },
+    {
+      "chapterTitle": "Revolutions",
+      "chapterNumber": 4,
+      "startingPage": 124,
+      "bookmarkTitle": "4. Revolutions"
+    },
+    {
+      "chapterTitle": "To the dark side",
+      "chapterNumber": 5,
+      "startingPage": 150,
+      "bookmarkTitle": "5. To the dark side"
+    },
+    {
+      "chapterTitle": "The flux capacitor",
+      "chapterNumber": 6,
+      "startingPage": 181,
+      "bookmarkTitle": "6. The flux capacitor"
+    },
+    {
+      "chapterTitle": "Epilogue: Self",
+      "chapterNumber": 99,
+      "startingPage": 211,
+      "bookmarkTitle": "Epilogue: Self"
+    },
+    {
+      "chapterTitle": "Appendix 1: Red protein mechanics",
+      "chapterNumber": 99,
+      "startingPage": 222,
+      "bookmarkTitle": "Appendix 1: Red protein mechanics"
+    },
+    {
+      "chapterTitle": "Appendix 2: The Krebs line",
+      "chapterNumber": 99,
+      "startingPage": 227,
+      "bookmarkTitle": "Appendix 2: The Krebs line"
+    }
+  ]
+}
