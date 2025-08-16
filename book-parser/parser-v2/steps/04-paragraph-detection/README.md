@@ -12,19 +12,22 @@ This step detects both paragraph boundaries and headers in the page content, cre
 - **Link Information**: Links with chapter-local selectors to associate with paragraph content
 
 ### Output Requirements
-- **Unified Chunks**: Single output format with paragraphs, headers, and images
-- **Chunk Types**: Each chunk must be classified as "paragraph", "header", or "image"
-- **Image Handling**: Convert each `[[IMG ...]]` marker into an `image` chunk at that position; image chunks are excluded from word/sentence validations; downstream set `paragraphIndex: null`
+- **Unified Chunks**: Single output format with paragraphs and headers
+- **Chunk Types**: Each chunk must be classified as "paragraph" or "header"
+- **Image Marker Preservation**: `[[IMG ...]]` markers are preserved in paragraph content for processing in Step 5-1
 - **Content Quality**: Paragraphs 80-300 words (target, flexible 20-500 absolute); headers 1-5 words (standard), 2–12 words (numbered headers), up to 20 words for ALL-CAPS blocks
 - **Link Integration**: Links mapped using chapter-local selectors to enclosing text chunk(s)
 - **Content Standards**: All text chunks start with capital letters or valid punctuation
+- **Chapter Cleanup**: Chapter `content` field removed after processing (no longer needed)
 
 ### Quality Standards
 - Minimum 5 chunks total across all chapters
-- Paragraph and header chunk types must be present; image chunks present when markers exist
+- Paragraph and header chunk types must be present
+- Image markers preserved in content for Step 5-1 processing
 - Paragraphs: 80-300 words target (flexible 20-500 absolute) with proper sentence structure
 - Headers: 1-5 words (standard), 2–12 words (numbered), up to 20 words (ALL-CAPS blocks); standalone lines, proper capitalization
 - Links accurately associated with chunk content
+- Chapter objects no longer contain `content` field after processing
 
 ## Implementation
 

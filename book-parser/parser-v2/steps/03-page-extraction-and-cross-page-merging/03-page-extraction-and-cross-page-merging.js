@@ -94,11 +94,42 @@ async function execute(pipelineState, config) {
             // Save pages with rawContent for debug
             debugPages.push(...pagesWithRaw);
 
-            // Perform cross-page sentence merging
-            const mergeResult = fixIncompleteSentencesWithinChapter(pages);
-            const mergedPages = mergeResult.pages;
-            const sentencesMerged = mergeResult.sentencesMerged;
-            totalSentencesMerged += sentencesMerged;
+            // Cross-page sentence merging disabled (no page semantics post step 3)
+            const mergedPages = pages;
+            const sentencesMerged = 0;
+            totalSentencesMerged += 0;
+
+            // Build chapter-level concatenated content without leaking page numbers
+            const sortedPages = [...mergedPages].sort((a, b) => a.pageNumber - b.pageNumber);
+            let concatenated = '';
+            for (let pi = 0; pi < sortedPages.length; pi++) {
+                const page = sortedPages[pi];
+                if (!page || typeof page.content !== 'string') continue;
+                // Remove possible leading page number artifacts on this page segment
+                let segment = removePageNumberFromStart(page.content, page.pageNumber);
+                segment = segment.trimStart();
+
+                if (!segment) continue;
+
+                if (concatenated.length === 0) {
+                    concatenated = segment.trim();
+                } else {
+                    // Decide how to join: continue sentence vs new paragraph
+                    const prevEndsWithTerminator = endsWithSentenceTerminator(concatenated);
+                    const nextFirstChar = getFirstNonEmptyChar(segment);
+                    const continueSentence = !prevEndsWithTerminator && /[a-z]/.test(nextFirstChar || '');
+
+                    if (continueSentence) {
+                        concatenated += ' ' + segment.trimStart();
+                    } else {
+                        // For paragraph breaks, avoid double newlines with standalone page numbers
+                        concatenated += '\n\n' + segment.trim();
+                    }
+                }
+            }
+
+            // Final cleanup: remove any remaining standalone page numbers that appear as separators
+            concatenated = removeStandalonePageNumbers(concatenated);
 
             // Create processed chapter
             const processedChapter = {
@@ -107,6 +138,8 @@ async function execute(pipelineState, config) {
                 pageNumberStart: chapter.pageNumberStart,
                 pageNumberEnd: chapter.pageNumberEnd,
                 pages: mergedPages,
+                // Provide a chapter-level concatenated content (for downstream steps that avoid page notions)
+                content: concatenated,
                 sentencesMerged: sentencesMerged
             };
 
@@ -377,7 +410,13 @@ function cleanPageContentWithoutPageNumbers(content, pageNumber) {
     cleaned = cleaned.replace(/\n\s*\n\s*\n/g, '\n\n'); // Reduce multiple newlines
     cleaned = cleaned.trim();
 
-    // DON'T remove page numbers from the beginning - that's done separately now
+    // Remove page numbers from the beginning of content
+    cleaned = removePageNumberFromStart(cleaned, pageNumber);
+
+    // Capitalize first letter if it was lowercased after page number removal
+    if (cleaned.length > 0 && /^[a-z]/.test(cleaned)) {
+        cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+    }
 
     return cleaned;
 }
@@ -457,6 +496,30 @@ function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
 }
 
 /**
+ * Remove standalone page numbers that appear as separators in concatenated text
+ * @param {string} content - Concatenated content
+ * @returns {string} - Content with standalone page numbers removed
+ */
+function removeStandalonePageNumbers(content) {
+    if (!content) return content;
+
+    let cleaned = content;
+
+    // Remove patterns like "\n\n9 down" where a standalone number appears at the start of a line
+    // followed by lowercase text (indicating it's a page number in the middle of a sentence)
+    cleaned = cleaned.replace(/\n\n(\d+)\s+([a-z])/g, '\n\n$2');
+
+    // Also remove patterns like "\n9 down" (single newline)
+    cleaned = cleaned.replace(/\n(\d+)\s+([a-z])/g, '\n$2');
+
+    // Remove page numbers at the very beginning of content (e.g., "9 down to the size")
+    // Look for 1-3 digit number followed by space and lowercase letter at start
+    cleaned = cleaned.replace(/^(\d{1,3})\s+([a-z])/g, '$2');
+
+    return cleaned;
+}
+
+/**
  * Remove page number from the start of content
  * @param {string} content - Content to clean
  * @param {number} pageNumber - Expected page number
@@ -465,25 +528,31 @@ function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
 function removePageNumberFromStart(content, pageNumber) {
     if (!content || content.length === 0) return content;
 
-    // The book's page number is pageNumber - 1
+    const trimmedContent = content.trim();
+
+    // Try pipeline page number first (actual page number from marker)
+    const pipelinePageNumberStr = pageNumber.toString();
+    if (trimmedContent.startsWith(pipelinePageNumberStr)) {
+        // Remove the pipeline page number from the start
+        let cleaned = trimmedContent.substring(pipelinePageNumberStr.length);
+        // Remove any leading whitespace and newlines
+        cleaned = cleaned.replace(/^\s+/, '');
+        return cleaned;
+    }
+
+    // Also try book page number (pageNumber - 1) as fallback
     const bookPageNumber = pageNumber - 1;
     const bookPageNumberStr = bookPageNumber.toString();
-
-    // Check if content starts with the book's page number
-    const trimmedContent = content.trim();
     if (trimmedContent.startsWith(bookPageNumberStr)) {
         // Remove the book's page number from the start
         let cleaned = trimmedContent.substring(bookPageNumberStr.length);
-
         // Remove any leading whitespace and newlines
         cleaned = cleaned.replace(/^\s+/, '');
-
         return cleaned;
     }
 
     // Check for spaced-out page numbers like "1 1" instead of "11"
-    // Check both book page number and pipeline page number
-    const pipelinePageNumberStr = pageNumber.toString();
+    // Check both book page number and pipeline page number (already declared above)
 
     if (bookPageNumberStr.length === 2) {
         const spacedBookPageNumber = `${bookPageNumberStr[0]} ${bookPageNumberStr[1]}`;

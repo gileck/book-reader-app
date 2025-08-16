@@ -114,12 +114,7 @@ function validate(output) {
     }
 
     // Success message with statistics
-    console.log(`✅ Link chunk references validation passed:`);
-    console.log(`   🔗 Total links: ${totalLinks}`);
-    console.log(`   📍 Source links with targetChunkIndex: ${sourceLinksWithTargetChunkIndex}`);
-    console.log(`   🎯 Target links with sourceChunkIndex: ${targetLinksWithSourceChunkIndex}`);
-    console.log(`   ❓ Source links without targetChunkIndex: ${sourceLinksWithoutTargetChunkIndex}`);
-    console.log(`   ❓ Target links without sourceChunkIndex: ${targetLinksWithoutSourceChunkIndex}`);
+
 
     return true;
 }

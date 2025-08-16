@@ -122,12 +122,7 @@ function validate(result) {
     }
 
     // All validation checks passed
-    console.log(`✓ Image extraction validation passed:`);
-    console.log(`  - Processed ${totalChaptersChecked} chapters`);
-    console.log(`  - Total images: ${totalImages}`);
-    console.log(`  - Total extracted images (metadata): ${imageMetadata.totalExtractedImages}`);
-    console.log(`  - Files found on disk: ${filesExistCount}`);
-    console.log(`  - Images folder: ${imageMetadata.imagesFolderPath}`);
+
 
     return true;
 }

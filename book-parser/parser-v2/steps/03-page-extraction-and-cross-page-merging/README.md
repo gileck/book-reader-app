@@ -2,7 +2,15 @@
 
 ## Overview
 
-This step transforms chapter content into a page-based structure and merges sentences that are split across page boundaries. It creates clean page content where sentences broken by page breaks are intelligently reconstructed. If your pipeline removes page semantics downstream, treat this step conceptually as ensuring sentence continuity at former page boundaries. The step handles real-world book formatting such as bullet lists near page boundaries (no cross-page list merging), image-only pages, numeric citations, and trailing quotes/attributions.
+This step transforms chapter content into a page-based structure, merges sentences that are split across page boundaries, and performs enhanced page number removal. It creates clean page content where sentences broken by page breaks are intelligently reconstructed and page number artifacts are completely removed. The step handles real-world book formatting such as bullet lists near page boundaries (no cross-page list merging), image-only pages, numeric citations, and trailing quotes/attributions.
+
+## Key Features
+
+### Enhanced Page Number Removal
+- **Comprehensive Cleaning**: Removes page numbers from the beginning of content (e.g., "9 down to..." → "Down to...")
+- **Multiple Patterns**: Handles page numbers after newlines ("\n10 regulatory" → "\nRegulatory")
+- **Automatic Capitalization**: Capitalizes first letter after page number removal when needed
+- **Clean Text Flow**: Eliminates page number artifacts that disrupt text readability
 
 ## Requirements
 
@@ -12,17 +20,19 @@ This step transforms chapter content into a page-based structure and merges sent
 - **Page Information**: Page boundaries and numbering from original text (if still materialized)
 
 ### Output Requirements
-- **Page Structure**: Each chapter divided into individual pages with metadata (if pages are retained); otherwise, sentence continuity across former page breaks is ensured
+- **Clean Page Content**: Individual pages with page numbers removed and proper capitalization
+- **Chapter Content**: Concatenated chapter content without page number artifacts
 - **Complete Sentences**: Sentences split across page boundaries must be merged
 - **List Continuation Support**: Bullet list items that continue on the next page should be handled as described
 - **Content Validation**: Segments should end with proper sentence terminators, with documented exceptions
 - **Word Counts**: Accurate word count for each page/segment
-- **Figure-Only Pages**: If pages are retained, include placeholders to keep numbering contiguous
+- **Figure-Only Pages**: Include placeholders to keep numbering contiguous
 
 ### Quality Standards
-- Pages should end with sentence terminators (., !, ?) with exceptions for headers/titles, bullet list endings, and the last content page of the book
-- Minimum 10 pages extracted for substantial documents
-- Cross-page sentence merging preserves content structure
+- Page content is clean without page number artifacts
+- Chapter content flows naturally without page-related disruptions
+- Cross-page sentence merging preserves content structure  
+- Proper capitalization after page number removal
 - Page number sequences are valid and continuous, including placeholders for figure-only pages
 
 ## Implementation

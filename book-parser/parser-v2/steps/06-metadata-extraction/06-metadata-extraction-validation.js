@@ -133,11 +133,7 @@ function validate(result) {
         }
 
         // Success validation message
-        console.log('✅ Metadata extraction validation passed');
-        console.log(`   📖 Title: "${metadata.title}"`);
-        console.log(`   👤 Author: ${metadata.author}`);
-        console.log(`   🌐 Language: ${metadata.language}`);
-        console.log(`   📊 Statistics: ${metadata.totalChapters} chapters, ${metadata.totalWords.toLocaleString()} words`);
+
 
         if (metadata.publisher) {
             console.log(`   🏢 Publisher: ${metadata.publisher}`);
@@ -147,13 +143,7 @@ function validate(result) {
             console.log(`   📅 Year: ${metadata.publicationYear}`);
         }
 
-        if (metadata.totalImages > 0) {
-            console.log(`   🖼️  Images: ${metadata.totalImages}`);
-        }
 
-        if (metadata.totalLinks > 0) {
-            console.log(`   🔗 Links: ${metadata.totalLinks}`);
-        }
 
         return true;
 

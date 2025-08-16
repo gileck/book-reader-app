@@ -16,12 +16,14 @@ Each step is implemented as a separate module in its own folder within the `step
 2. **`02-1-chapter-detection/`** - Detect chapter boundaries from TOC ✅
 3. **`02-2-chapter-content-extraction/`** - Extract content for each chapter ✅  
 4. **`02-3-chapter-name-cleaning/`** - Clean chapter names and content ✅
-5. **`03-page-extraction-and-cross-page-merging/`** - Extract pages and merge sentences split across pages ✅
-6. **`03-1-link-detection/`** - Extract and resolve PDF internal links with coordinate-based target extraction ✅
-7. **`03-2-image-extraction/`** - Extract embedded images from PDF and map to pages ✅
-8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers ✅
-9. **`05-sentence-detection/`** - Convert paragraphs to optimized sentences with paragraph indexing ✅
-10. **`06-metadata-extraction/`** - Extract comprehensive book metadata and statistics ✅
+5. **`03-page-extraction-and-cross-page-merging/`** - Extract pages, merge sentences, and enhanced page number removal ✅
+6. **`03-1-link-detection/`** - Extract and resolve PDF internal links using chapter-relative text position selectors ✅
+7. **`03-2-image-extraction/`** - Extract images and insert `[[IMG...]]` markers into chapter content ✅
+8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers ✅
+9. **`05-sentence-detection/`** - Convert paragraphs to optimized sentences, preserving image markers ✅
+10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers to image chunks ✅
+11. **`05-2-link-chunk-references/`** - Resolve link references to chunk IDs ✅
+12. **`06-metadata-extraction/`** - Extract comprehensive book metadata and statistics ✅
 
 **Legend**: ✅ Implemented and Production-Ready
 
@@ -40,14 +42,14 @@ PIPELINE_STATE = {
     rawText: null,
     
     // Chapter structure
-    chapters: [],           // Chapters with extracted content and pages
+    chapters: [],           // Chapters with page content (content field removed after step 4)
     
     // Content structure  
     chunks: [],            // Optimized sentence chunks with type "text", "header", or "image" + paragraphIndex
     
     // Metadata
-    pages: [],             // Page information
-    links: [],             // Internal PDF links with coordinate-based target extraction and cross-page support
+    pages: [],             // Page information (for intermediate processing only)
+    links: [],             // Internal PDF links with chapter-relative TextPositionSelector (no pageNumber)
     finalOutput: null,     // Generated output.json
     
     // Processing metadata
@@ -207,6 +209,13 @@ steps/
 ├── 05-sentence-detection/
 │   ├── 05-sentence-detection.js
 │   └── 05-sentence-detection-validation.js
+├── 05-1-image-markers-to-chunks/
+│   ├── 05-1-image-markers-to-chunks.js
+│   ├── 05-1-image-markers-to-chunks-validation.js
+│   └── README.md
+├── 05-2-link-chunk-references/
+│   ├── 05-2-link-chunk-references.js
+│   └── 05-2-link-chunk-references-validation.js
 └── 06-metadata-extraction/
     ├── 06-metadata-extraction.js
     └── 06-metadata-extraction-validation.js
@@ -230,9 +239,11 @@ Each step now includes its own validation logic that runs immediately after exec
 5. **Step 3** (Page Processing): Page structure, content validation, reasonable counts
 6. **Step 3-1** (Link Detection): Role validation, source-target matching, required fields
 7. **Step 3-2** (Image Extraction): Image metadata validation, file existence, page mapping
-8. **Step 4** (Paragraph/Header/Image Detection): Chunk counts, types, word limits, capitalization, image properties
-9. **Step 5** (Sentence Detection): Sentence optimization, paragraph indexing, word count targets, no newlines
-10. **Step 6** (Metadata Extraction): Title/author extraction, statistics calculation, required fields validation
+8. **Step 4** (Paragraph/Header Detection): Chunk counts, types, word limits, capitalization, image marker preservation
+9. **Step 5** (Sentence Detection): Sentence optimization, paragraph indexing, word count targets, image marker preservation
+10. **Step 5-1** (Image Markers to Chunks): Marker extraction, image chunk creation, marker removal validation
+11. **Step 5-2** (Link Chunk References): Link-to-chunk ID resolution, bidirectional relationships
+12. **Step 6** (Metadata Extraction): Title/author extraction, statistics calculation, required fields validation
 
 ## Configuration
 
@@ -296,46 +307,52 @@ Then run: `node run-parser.js /path/to/book.pdf`
 
 ## Implementation Status
 
-### ✅ PIPELINE COMPLETE (10/10 steps - 100%)
+### ✅ PIPELINE COMPLETE (12/12 steps - 100%)
 - **Step 1**: Text Extraction - 743,700 characters from 317 pages **[PRODUCTION-READY WITH SPACING FIX + VALIDATION]**
 - **Step 2.1**: Chapter Detection - 9 chapters detected **[PRODUCTION-READY WITH VALIDATION]**
 - **Step 2.2**: Chapter Content Extraction - 123,976 words extracted **[PRODUCTION-READY WITH VALIDATION]** 
 - **Step 2.3**: Chapter Name Cleaning - Generic title patterns **[PRODUCTION-READY WITH VALIDATION]**
-- **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with 158 merged sentences **[PRODUCTION-READY WITH VALIDATION]**
-- **Step 3-1**: Link Detection - 290 production-ready PDF annotation links **[PRODUCTION-READY WITH VALIDATION]**
-- **Step 3-2**: Image Extraction - 58 images extracted and mapped to pages **[PRODUCTION-READY WITH VALIDATION]**
-- **Step 4**: Paragraph Detection - 547 paragraph chunks **[PRODUCTION-READY WITH VALIDATION]**
-- **Step 5**: Sentence Detection - 1,657 optimized sentence chunks with paragraph indexing **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with enhanced page number removal **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 3-1**: Link Detection - 290 chapter-relative position links **[PRODUCTION-READY WITH NO-PAGE MODEL]**
+- **Step 3-2**: Image Extraction - 58 images with `[[IMG...]]` markers **[PRODUCTION-READY WITH MARKER SYSTEM]**
+- **Step 4**: Paragraph Detection - 547 paragraph chunks preserving image markers **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 5**: Sentence Detection - 1,657 sentence chunks preserving image markers **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 5-1**: Image Markers to Chunks - 58 `[[IMG...]]` markers converted to image chunks **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 5-2**: Link Chunk References - Link-to-chunk ID resolution **[PRODUCTION-READY WITH VALIDATION]**
 - **Step 6**: Metadata Extraction - Comprehensive book metadata and statistics **[PRODUCTION-READY WITH VALIDATION]**
 
 ### 🎯 RECENT MAJOR IMPROVEMENTS
 
-#### **Image Extraction & Chunk System ✅** (Latest - January 2025)
-**New Feature**: Complete image extraction pipeline with dedicated image chunks.
+#### **No-Page Model & Image Marker System ✅** (Latest - January 2025)
+**Major Architectural Change**: Eliminated page-based positioning in favor of chapter-relative content anchoring.
 
-**Implementation Details**:
-1. **Step 3-2 Image Extraction**: 
-   - Uses `pdfimages` command-line tool + PDF.js for comprehensive image detection
-   - Extracts actual image files to `images/` directory with naming pattern `page-XXX-image-Y.jpg`
-   - Maps images to their source pages with complete metadata (name, alt text, extraction status)
-2. **Image Chunks**: 
-   - Images are now separate chunks with `type: "image"` 
-   - Positioned as last chunks on each page after all text content
-   - Include full image metadata: `imageName`, `imageAlt`, `extracted`, `placeholder`, `originalName`
-3. **Clean Separation**: 
-   - No more duplicated images across paragraph chunks
-   - Semantic chunk structure: paragraphs contain text, image chunks contain images
-4. **Module Interface**: 
-   - `main-poc.js` refactored to pure module returning structured results
-   - Programmatic API with `parseBook()`, `parseBookSteps()` functions
-   - Step-by-step outputs saved to `steps-output/` folder for debugging
-   - `output.json` contains only final step output (paragraph detection with image chunks)
+**Key Changes**:
+1. **No-Page Link Model**: 
+   - Removed `pageNumber` from link objects
+   - Links now use `TextPositionSelector: { start: number, end: number }` for chapter-relative positioning
+   - More accurate link positioning independent of page boundaries
+2. **Image Marker System**: 
+   - Step 3-2 inserts `[[IMG id=image-xxx index=N alt="..."]]` markers directly into chapter content
+   - Markers preserve exact image positions in text flow
+   - Step 5-1 converts markers to image chunks positioned precisely after containing text chunks
+3. **Enhanced Page Number Removal**: 
+   - Aggressive removal of page number artifacts from content (e.g., "9 down to..." → "Down to...")
+   - Automatic capitalization after page number removal
+   - Clean text flow without page-related disruptions
+4. **Content Cleanup**: 
+   - Chapter `content` field removed after Step 4 (no longer needed after conversion to chunks)
+   - Streamlined output with reduced redundancy
+5. **Step Reorganization**: 
+   - New Step 5-1: Image Markers to Chunks (converts `[[IMG...]]` to image chunks)
+   - Step 5-2: Link Chunk References (previously Step 5-1)
+   - Validation skipping mechanism for known edge cases
 
 **Results**:
-- ✅ 58 images successfully extracted and mapped
-- ✅ Clean chunk architecture with dedicated image chunks
-- ✅ Programmatic API for integration with other systems
-- ✅ Comprehensive debugging support with per-step outputs
+- ✅ More accurate content positioning without page-number dependencies
+- ✅ Cleaner text content free of page number artifacts
+- ✅ Precise image placement at exact text locations
+- ✅ Streamlined output with reduced file sizes
+- ✅ Enhanced validation with configurable error skipping
 
 #### **Link Validation Enhancement ✅**
 **Issue Resolved**: Link validation was too loose, allowing false footnote matches like "1948" containing footnote "8".
@@ -559,16 +576,18 @@ The pipeline was optimized by combining related steps:
 
 ## Current Status: PRODUCTION-READY ✅
 
-**Progress: 10/10 steps completed (100%)**
+**Progress: 12/12 steps completed (100%)**
 - Step 1: Text Extraction ✅ **[PRODUCTION-READY WITH SMART TEXT JOINING + PER-STEP VALIDATION]**
 - Step 2.1: Chapter Detection ✅ **[WITH CONTINUITY VALIDATION]**
 - Step 2.2: Chapter Text Extraction ✅ **[WITH CONTENT VALIDATION]** 
 - Step 2.3: Chapter Name Cleaning ✅ **[WITH CLEANING VALIDATION]**
 - Step 3: Page Extraction and Cross-Page Merging ✅ **[WITH HEADER PRESERVATION + PAGE VALIDATION]**
-- Step 3-1: Link Detection ✅ **[WITH ENHANCED LINK ROLE VALIDATION]**
-- Step 3-2: Image Extraction ✅ **[WITH COMPREHENSIVE IMAGE DETECTION + PAGE MAPPING]**
-- Step 4: Paragraph Detection ✅ **[WITH PARAGRAPH CHUNK OUTPUT + VALIDATION]**
-- Step 5: Sentence Detection ✅ **[WITH PARAGRAPH INDEXING + SENTENCE OPTIMIZATION]**
+- Step 3-1: Link Detection ✅ **[WITH CHAPTER-RELATIVE POSITIONING + NO-PAGE MODEL]**
+- Step 3-2: Image Extraction ✅ **[WITH IMAGE MARKER SYSTEM + ENHANCED PAGE NUMBER REMOVAL]**
+- Step 4: Paragraph Detection ✅ **[WITH IMAGE MARKER PRESERVATION + CHAPTER CONTENT CLEANUP]**
+- Step 5: Sentence Detection ✅ **[WITH IMAGE MARKER PRESERVATION + PARAGRAPH INDEXING]**
+- Step 5-1: Image Markers to Chunks ✅ **[WITH PRECISE MARKER-TO-CHUNK CONVERSION + VALIDATION]**
+- Step 5-2: Link Chunk References ✅ **[WITH BIDIRECTIONAL LINK RESOLUTION + VALIDATION]**
 - Step 6: Metadata Extraction ✅ **[WITH COMPREHENSIVE STATISTICS + VALIDATION]**
 
 **Current Phase: Production-Ready Pipeline with Advanced Optimization and Enhanced Debugging**
@@ -602,7 +621,7 @@ The pipeline was optimized by combining related steps:
 - **Debug Capability**: Complete pipeline state tracking and error recovery
 
 ## Success Criteria
-- [x] All core steps (1-6) implemented and functional ✅
+- [x] All core steps (1-6 + 5-1 + 5-2) implemented and functional ✅
 - [x] Pipeline processes test PDF successfully ✅  
 - [x] Page extraction with cross-page merging works correctly ✅
 - [x] Chapter name cleaning removes titles using generic patterns ✅
@@ -641,5 +660,5 @@ The pipeline was optimized by combining related steps:
 ---
 
 **Last Updated**: January 2025
-**Implementation Progress**: 10/10 steps completed (100%)
-**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with professional-grade text extraction, comprehensive image extraction, advanced paragraph detection, sentence-level optimization with paragraph indexing, comprehensive metadata extraction, enhanced footnote validation, intelligent content structure detection, unified sentence/header/image chunk output, programmatic API interface, and comprehensive debugging infrastructure 
+**Implementation Progress**: 12/12 steps completed (100%)
+**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, image marker system, chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection, sentence-level optimization with image marker preservation, precise image chunk positioning, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 

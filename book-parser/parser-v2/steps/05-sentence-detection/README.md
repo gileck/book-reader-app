@@ -7,15 +7,16 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 ## Requirements
 
 ### Input
-- Takes processed chapters from Step 4 with chunks (types: 'paragraph', 'header', 'image')
-- Each paragraph chunk contains multiple sentences
-- Headers and image chunks are preserved as-is
+- Takes processed chapters from Step 4 with chunks (types: 'paragraph', 'header')
+- Each paragraph chunk contains multiple sentences and may contain `[[IMG ...]]` markers
+- Headers are preserved as-is
 
 ### Output
-- Array of chapters with sentence chunks (type: 'text') and preserved headers/images
+- Array of chapters with sentence chunks (type: 'text') and preserved headers
 - Each text chunk has `paragraphIndex` field indicating which paragraph it belongs to
-- Headers and images have `paragraphIndex: null`
-- Combined sentences meet 50-200 word target while respecting paragraph boundaries and image positions
+- Headers have `paragraphIndex: null`
+- Image markers preserved in text content for Step 5-1 processing
+- Combined sentences meet 50-200 word target while respecting paragraph boundaries
 
 ## Technical Approach
 
@@ -33,7 +34,8 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 
 ### 3. Paragraph Boundary Preservation
 - `paragraphIndex` ensures sentences can be grouped back into paragraphs
-- Headers and images have `paragraphIndex: null` (don't belong to paragraphs)
+- Headers have `paragraphIndex: null` (don't belong to paragraphs)
+- Image markers are preserved in text content for Step 5-1 processing
 - Combination logic respects paragraph boundaries
 
 ## Processing Steps
@@ -45,7 +47,7 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
    - Create sentence chunks with `paragraphIndex`
    - Clean and validate sentence content
    - Extract relevant links for each sentence
-3. **For headers and images:** Preserve as-is with `paragraphIndex: null`
+3. **For headers:** Preserve as-is with `paragraphIndex: null`
 4. **Optimize sentence sizes:**
    - Combine small sentences (< 50 words) within same paragraph
    - Ensure combined chunks don't exceed 200 words

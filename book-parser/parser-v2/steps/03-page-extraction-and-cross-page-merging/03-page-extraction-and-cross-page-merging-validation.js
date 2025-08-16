@@ -156,38 +156,7 @@ function validate(output) {
                 continue;
             }
 
-            // Skip sentence terminator validation for Appendix or Resource-like content
-            if (!(chapter.title && chapter.title.toLowerCase().includes('appendix')) && !isResourceChapter && !isResourceLikePage(page.content)) {
-                // Allow the very last page of the book to end without sentence terminator
-                if (isLastContentPageInBook) {
-                    totalPages += 1;
-                    continue;
-                }
-                // Check that page content ends with a sentence terminator
-                // Exception: allow headers/section titles that don't end with punctuation
-                const lastLine = page.content.trim().split('\n').pop().trim();
-                const looksLikeHeader = lastLine.length <= 50 && lastLine.split(' ').length <= 8 &&
-                    (/^[A-Z]/.test(lastLine) || /^\d+\s+[A-Z]/.test(lastLine)) &&
-                    !lastLine.includes('.');
-                const looksLikeBulletEnd = /^•\s+\S/.test(lastLine);
-                // Numbered header (e.g., "#11. Breath Hold Activation") with 2-5 capitalized words
-                const looksLikeNumberedHeader = (() => {
-                    const t = lastLine.trim();
-                    if (!/^#?\d+[\.\)]\s+/.test(t)) return false;
-                    if (/[.!?]$/.test(t)) return false;
-                    const words = t.replace(/^#?\d+[\.\)]\s+/, '').trim().split(/\s+/);
-                    if (words.length < 2 || words.length > 12) return false;
-                    const capCount = words.filter(w => /^[A-Z]/.test(w.replace(/^["'“”‘’(]+/, ''))).length;
-                    return capCount >= 2;
-                })();
-                const endsWithColonCitation = /:\s*\d+$/.test(page.content.trim().split('\n').pop().trim());
-
-                if (!endsWithSentenceTerminator(page.content) && !looksLikeHeader && !looksLikeBulletEnd && !looksLikeNumberedHeader && !endsWithColonCitation) {
-                    const msg = `Chapter ${i + 1} "${chapter.title}" page ${page.pageNumber} content does not end with a sentence terminator. Content ends with: "${page.content.trim().slice(-50)}"`;
-                    console.error(`❌ Page extraction validation failed: ${msg}`);
-                    errors.push(msg);
-                }
-            }
+            // Skip page-end sentence terminator validation since cross-page merging is disabled
         }
 
         // Skip detailed page validation for Appendix or Resource chapters

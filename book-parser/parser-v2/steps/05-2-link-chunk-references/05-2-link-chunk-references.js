@@ -26,7 +26,7 @@ const {
  * @returns {Object} - Updated pipeline state with enhanced links
  */
 function execute(pipelineState) {
-    console.log('🔗 Adding chunk references to links...');
+
 
     if (!pipelineState.chapters || !Array.isArray(pipelineState.chapters)) {
         throw new Error('Step 5.1 requires chapters array from previous steps');
@@ -74,11 +74,7 @@ function execute(pipelineState) {
         });
     }
 
-    console.log(`✅ Link chunk references completed:`);
-    console.log(`   🔗 Total links processed: ${totalLinksProcessed}`);
-    console.log(`   🎯 Target chunk indexes added: ${totalTargetChunkIndexes}`);
-    console.log(`   📍 Source chunk indexes added: ${totalSourceChunkIndexes}`);
-    console.log(`   ❓ Unresolved references: ${unresolved}`);
+
 
     return {
         ...pipelineState,
@@ -229,7 +225,7 @@ function findSourceChunk(link, chunkMap, currentChunkIndex, currentChapterNumber
 }
 
 // Import validation function
-const { validate } = require('./05-1-link-chunk-references-validation');
+const { validate } = require('./05-2-link-chunk-references-validation');
 
 module.exports = {
     execute,

@@ -101,8 +101,7 @@ async function execute(pipelineState, config) {
             fs.writeFileSync(debugFile, JSON.stringify(debugInfo, null, 2));
         }
 
-        console.log(`📊 Metadata extracted: "${metadata.title}" by ${metadata.author}`);
-        console.log(`📈 Statistics: ${metadata.totalChapters} chapters, ${metadata.totalWords.toLocaleString()} words`);
+
 
         return {
             ...pipelineState,
@@ -553,10 +552,7 @@ function validate(result) {
             return false;
         }
 
-        console.log('✅ Metadata extraction validation passed');
-        console.log(`   📖 Title: "${metadata.title}"`);
-        console.log(`   👤 Author: ${metadata.author}`);
-        console.log(`   📊 Stats: ${metadata.totalChapters} chapters, ${metadata.totalWords.toLocaleString()} words`);
+
 
         return true;
 

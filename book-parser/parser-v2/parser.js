@@ -22,7 +22,8 @@ const linkDetection = require('./steps/03-1-link-detection/03-1-link-detection')
 const imageExtraction = require('./steps/03-2-image-extraction/03-2-image-extraction');
 const paragraphDetection = require('./steps/04-paragraph-detection/04-paragraph-detection');
 const sentenceDetection = require('./steps/05-sentence-detection/05-sentence-detection');
-const linkChunkReferences = require('./steps/05-1-link-chunk-references/05-1-link-chunk-references');
+const imageMarkersToChunks = require('./steps/05-1-image-markers-to-chunks/05-1-image-markers-to-chunks');
+const linkChunkReferences = require('./steps/05-2-link-chunk-references/05-2-link-chunk-references');
 const metadataExtraction = require('./steps/06-metadata-extraction/06-metadata-extraction');
 
 // Step execution mapping
@@ -36,7 +37,8 @@ const STEPS = {
     'step-3-2': imageExtraction.execute,
     'step-4': paragraphDetection.execute,
     'step-5': sentenceDetection.execute,
-    'step-5-1': linkChunkReferences.execute,
+    'step-5-1': imageMarkersToChunks.execute,
+    'step-5-2': linkChunkReferences.execute,
     'step-6': metadataExtraction.execute,
 };
 
@@ -51,6 +53,7 @@ const STEP_NAMES = [
     'step-4',
     'step-5',
     'step-5-1',
+    'step-5-2',
     'step-6'
 ];
 
@@ -65,7 +68,8 @@ const STEP_MODULES = {
     'step-3-2': imageExtraction,
     'step-4': paragraphDetection,
     'step-5': sentenceDetection,
-    'step-5-1': linkChunkReferences,
+    'step-5-1': imageMarkersToChunks,
+    'step-5-2': linkChunkReferences,
     'step-6': metadataExtraction,
 };
 
@@ -201,8 +205,70 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                         const originalConsoleError = console.error;
                         const originalConsoleWarn = console.warn;
                         const originalConsoleLog = console.log;
+
+                        // First, check if we have skipped validation errors for this step
+                        let skippedChunkIds = new Set();
+                        const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
+                        if (fs.existsSync(skippedFile)) {
+                            try {
+                                const raw = fs.readFileSync(skippedFile, 'utf8');
+                                const entries = JSON.parse(raw);
+                                if (Array.isArray(entries)) {
+                                    skippedChunkIds = new Set(entries.filter(e => e && e.step === stepName && typeof e.chunkId === 'string').map(e => e.chunkId));
+                                }
+                            } catch (_) { /* ignore parse errors */ }
+                        }
+
+                        let bufferedErrors = [];
+                        let validationHeaderSuppressed = false;
+
                         console.error = (...args) => {
-                            try { validationLogs.push(args.join(' ')); } catch (_) { }
+                            const message = args.join(' ');
+                            try { validationLogs.push(message); } catch (_) { }
+
+                            // Check if this error should be suppressed
+                            if (skippedChunkIds.size > 0) {
+                                // If this is a validation header, buffer it to decide later
+                                if (message.includes('validation failed with') && message.includes('error(s):')) {
+                                    bufferedErrors.push({ type: 'header', args: args });
+                                    return;
+                                }
+
+                                // If this is an individual chunk error
+                                const chunkIdMatch = message.match(/(\d+)\.\s+(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/);
+                                if (chunkIdMatch) {
+                                    const chunkId = chunkIdMatch[3];
+                                    if (skippedChunkIds.has(chunkId)) {
+                                        // This error is skipped, buffer it
+                                        bufferedErrors.push({ type: 'individual', args: args, skipped: true });
+                                        return;
+                                    } else {
+                                        // This error is not skipped, flush all buffered errors and print this one
+                                        bufferedErrors.forEach(buffered => {
+                                            originalConsoleError.apply(console, buffered.args);
+                                        });
+                                        bufferedErrors = [];
+                                        return originalConsoleError.apply(console, args);
+                                    }
+                                }
+
+                                // Any other error - check if we have buffered errors to flush
+                                if (bufferedErrors.length > 0) {
+                                    // Check if all buffered individual errors are skipped
+                                    const individualErrors = bufferedErrors.filter(e => e.type === 'individual');
+                                    const allSkipped = individualErrors.length > 0 && individualErrors.every(e => e.skipped);
+
+                                    if (!allSkipped) {
+                                        // Some errors are not skipped, flush everything
+                                        bufferedErrors.forEach(buffered => {
+                                            originalConsoleError.apply(console, buffered.args);
+                                        });
+                                    }
+                                    // Clear buffer
+                                    bufferedErrors = [];
+                                }
+                            }
+
                             return originalConsoleError.apply(console, args);
                         };
                         console.warn = (...args) => {
@@ -212,30 +278,33 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                         // Keep normal logs out of the file but still allow runtime logging
                         try {
                             let isValid = stepModule.validate(stepResult);
+
+                            // Handle any remaining buffered errors after validation completes
+                            if (bufferedErrors.length > 0) {
+                                const individualErrors = bufferedErrors.filter(e => e.type === 'individual');
+                                const allSkipped = individualErrors.length > 0 && individualErrors.every(e => e.skipped);
+
+                                if (!allSkipped) {
+                                    // Some errors are not skipped, flush everything
+                                    bufferedErrors.forEach(buffered => {
+                                        originalConsoleError.apply(console, buffered.args);
+                                    });
+                                }
+                                bufferedErrors = [];
+                            }
+
                             // Skip validations: allow per-step, per-chunkId suppression via skipped-validation-errors.json
-                            if (!isValid) {
-                                const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
-                                if (fs.existsSync(skippedFile)) {
-                                    try {
-                                        const raw = fs.readFileSync(skippedFile, 'utf8');
-                                        const entries = JSON.parse(raw);
-                                        if (Array.isArray(entries)) {
-                                            const allowed = new Set(entries.filter(e => e && e.step === stepName && typeof e.chunkId === 'string').map(e => e.chunkId));
-                                            if (allowed.size > 0) {
-                                                const logs = validationLogs.join('\n');
-                                                // Extract chunkIds from logs
-                                                const ids = [];
-                                                const re = /(Text chunk|Paragraph chunk|Header)\s+(\d+_\d+)/g;
-                                                let m;
-                                                while ((m = re.exec(logs)) !== null) {
-                                                    ids.push(m[2]);
-                                                }
-                                                if (ids.length > 0 && ids.every(id => allowed.has(id))) {
-                                                    isValid = true;
-                                                }
-                                            }
-                                        }
-                                    } catch (_) { /* ignore parse errors */ }
+                            if (!isValid && skippedChunkIds.size > 0) {
+                                const logs = validationLogs.join('\n');
+                                // Extract chunkIds from logs
+                                const ids = [];
+                                const re = /(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/g;
+                                let m;
+                                while ((m = re.exec(logs)) !== null) {
+                                    ids.push(m[2]);
+                                }
+                                if (ids.length > 0 && ids.every(id => skippedChunkIds.has(id))) {
+                                    isValid = true;
                                 }
                             }
                             validationResult = {

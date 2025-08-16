@@ -23,11 +23,10 @@
   - **Validation success**: Chapters still exist; each content is a valid string and ≥ 50 characters; warnings allowed for suspected uncleaned titles.
 
 - **Step 3: Page Extraction and Cross-Page Merging**
-  - NOTE: If the pipeline removes page semantics, retain sentence continuity logic conceptually, but page-number-based validations are no longer applicable.
   - **Inputs**: Cleaned `chapters[]` from Step 2.3.
-  - **Outputs**: If pages are still materialized, each page has `content` and `wordCount`; otherwise, ensure sentence continuity across former page boundaries.
-  - **Quality**: Sentences end with terminators (., !, ?) with documented exceptions (headers/titles, bullet list endings, last content segment).
-  - **Validation success**: Content sequences are continuous; sentence boundaries are respected with exceptions.
+  - **Outputs**: Pages with cleaned content (page numbers removed and first letters capitalized); concatenated chapter content without page number artifacts; sentence continuity across page boundaries.
+  - **Quality**: Page number removal comprehensive (e.g., "9 down to..." → "Down to..."); proper capitalization after removal; clean text flow without page-related disruptions.
+  - **Validation success**: Content sequences are continuous; no page number artifacts in chapter content; sentence boundaries respected with documented exceptions.
 
 - **Step 3.1: Link Detection**
   - **Inputs**: Chapters with accessible chapter text; original PDF for internal link data.
@@ -43,18 +42,24 @@
 
 - **Step 4: Paragraph Detection**
   - **Inputs**: Chapters with content from Step 3 and `links[]` from Step 3.1; content may include `[[IMG ...]]` markers.
-  - **Outputs**: Unified `chunks[]` per chapter with `type` in {"paragraph", "header", "image"}; image markers converted to `image` chunks; links integrated into relevant text chunks.
-  - **Quality**: ≥ 5 chunks overall; paragraph and header types present; image chunks present when markers exist; paragraphs target 80–300 words (absolute 20–500); headers: standard 1–5 words, numbered 2–12, ALL-CAPS blocks up to ~20 words; accurate link–content association.
-  - **Validation success**: Chunk count > 5 and required types present; content format rules met; word count ranges respected per type; link text present in associated text chunk; no stray image markers remain in text.
+  - **Outputs**: Unified `chunks[]` per chapter with `type` in {"paragraph", "header"}; image markers are preserved in content; links integrated into relevant text chunks; chapter `content` field removed after processing.
+  - **Quality**: ≥ 5 chunks overall; paragraph and header types present; paragraphs target 80–300 words (absolute 20–500); headers: standard 1–5 words, numbered 2–12, ALL-CAPS blocks up to ~20 words; accurate link–content association.
+  - **Validation success**: Chunk count > 5 and required types present; content format rules met; word count ranges respected per type; link text present in associated text chunk; chapter objects no longer contain `content` field.
 
 - **Step 5: Sentence Detection and Combination**
-  - **Inputs**: Chapters with `chunks[]` (types: paragraph/header/image) from Step 4.
-  - **Outputs**: Sentence-level `chunks` of type `text` with `paragraphIndex`; headers/images preserved with `paragraphIndex: null`; combined text chunks meet 50–200 word target without crossing paragraph boundaries or moving images.
+  - **Inputs**: Chapters with `chunks[]` (types: paragraph/header) from Step 4; content may contain `[[IMG ...]]` markers.
+  - **Outputs**: Sentence-level `chunks` of type `text` with `paragraphIndex`; headers preserved with `paragraphIndex: null`; combined text chunks meet 50–200 word target without crossing paragraph boundaries; image markers preserved in text content.
   - **Quality**: Clean text (no newlines, normalized whitespace); sentence boundaries preserved; links preserved and valid after combination; paragraph indexes sequential per chapter.
-  - **Validation success**: Text chunks: type `text`, start with capital or valid symbol, 50–200 words, sentenceCount ≥ 1, valid links; headers/images: correct word counts and `paragraphIndex: null`; paragraph indexes start at 1, sequential, no gaps, at least one paragraph exists.
+  - **Validation success**: Text chunks: type `text`, start with capital or valid symbol, 50–200 words, sentenceCount ≥ 1, valid links; headers: correct word counts and `paragraphIndex: null`; paragraph indexes start at 1, sequential, no gaps, at least one paragraph exists.
 
-- **Step 5.1: Link Chunk References**
-  - **Inputs**: Chapters from Step 5 with sentence chunks; links include `linkId`, `role`, `text`, `targetPageNumber`, and `targetText`.
+- **Step 5.1: Image Markers to Chunks**
+  - **Inputs**: Chapters with `text` chunks from Step 5 that may contain `[[IMG ...]]` markers.
+  - **Outputs**: Image markers converted to `image` chunks positioned after the text chunks that contained them; markers removed from text content; all chunk IDs reassigned sequentially.
+  - **Quality**: All image markers converted to proper image chunks; text content cleaned of markers; image chunks have required properties (`imageName`, `imageAlt`, `paragraphIndex: null`).
+  - **Validation success**: No `[[IMG ...]]` markers remain in any text content; at least 1 image chunk created; all image chunks have required properties; unique chunk IDs within chapters.
+
+- **Step 5.2: Link Chunk References**
+  - **Inputs**: Chapters from Step 5.1 with sentence chunks and image chunks; links include `linkId`, `role`, `text`, and `anchor.selector` (no `targetPageNumber`).
   - **Outputs**: Source links gain `targetChunkId`; target links gain `sourceChunkId`; all original link fields preserved; references point to existing chunks.
   - **Quality**: Chunk references valid and consistent with link IDs; bidirectional relationships when both sides exist.
   - **Validation success**: All added chunk IDs reference existing chunks; ≥ 50% links resolved to chunk references; link ID consistency between source–target pairs; unresolved references reported in stats.

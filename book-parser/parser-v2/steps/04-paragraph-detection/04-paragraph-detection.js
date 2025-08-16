@@ -57,7 +57,10 @@ async function execute(pipelineState, config) {
         for (const chapter of pipelineState.chapters) {
 
             // Process each page to detect chunks (paragraphs and headers)
-            const chapterChunks = detectChunksInChapter(chapter, chapter.chapterNumber);
+            let chapterChunks = detectChunksInChapter(chapter, chapter.chapterNumber);
+
+            // Merge paragraphs that were split across page boundaries (no page semantics now)
+            chapterChunks = mergeSplitParagraphsAcrossPageBoundaries(chapterChunks);
 
             // Apply size optimization for paragraphs only
             const optimizedChunks = optimizeChunkSizes(chapterChunks);
@@ -101,7 +104,7 @@ async function execute(pipelineState, config) {
                 chapterNumber: chapter.chapterNumber,
                 pageNumberStart: chapter.pageNumberStart,
                 pageNumberEnd: chapter.pageNumberEnd,
-                content: chapter.content, // preserve chapter-level concatenated content if present
+                // content removed - no longer needed after conversion to chunks
                 chunks: optimizedChunks
             });
         }
@@ -148,14 +151,24 @@ async function execute(pipelineState, config) {
  * @returns {Array} - Array of chunks with type, content, links
  */
 function detectChunksInChapter(chapter, chapterNumber) {
+    // If chapter-level concatenated content exists, prefer that to avoid page boundary artifacts
+    if (chapter.content && typeof chapter.content === 'string' && chapter.content.trim().length > 0) {
+        const aggregatedLinks = aggregateChapterLinks(chapter);
+        const pseudoPage = {
+            pageNumber: chapter.pageNumberStart,
+            content: chapter.content,
+            rawContent: chapter.content,
+            links: aggregatedLinks
+        };
+        return detectChunksInPage(pseudoPage, chapterNumber, 0);
+    }
+
+    // Fallback to per-page processing
     const chunks = [];
     let pendingOrphanLetter = null;
 
     for (const page of chapter.pages) {
-        // First, add all text chunks (paragraphs and headers)
-        const pageChunks = detectChunksInPage(page, chapterNumber, 0); // Pass 0 as placeholder
-
-        // If we have a pending orphan letter from previous page, prepend to first lowercase paragraph
+        const pageChunks = detectChunksInPage(page, chapterNumber, 0);
         if (pendingOrphanLetter) {
             for (let idx = 0; idx < pageChunks.length; idx++) {
                 if (pageChunks[idx].type === 'paragraph') {
@@ -168,10 +181,7 @@ function detectChunksInChapter(chapter, chapterNumber) {
             }
             pendingOrphanLetter = null;
         }
-
         chunks.push(...pageChunks);
-
-        // If this page ends with an orphan uppercase single-letter line, carry it to next page
         const raw = (page.rawContent && typeof page.rawContent === 'string') ? page.rawContent : page.content;
         if (raw) {
             const rawLines = raw.split('\n').map(l => (l || '').trim());
@@ -187,6 +197,61 @@ function detectChunksInChapter(chapter, chapterNumber) {
     }
 
     return chunks;
+}
+
+/**
+ * Merge adjacent paragraph chunks that look like mid-sentence splits caused by former page boundaries
+ * Heuristic: If previous paragraph does not end with sentence terminator and next paragraph starts lowercase,
+ * merge them. Headers/images are boundaries.
+ */
+function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
+    if (!Array.isArray(chunks) || chunks.length === 0) return chunks;
+    const merged = [];
+    for (let i = 0; i < chunks.length; i++) {
+        const curr = chunks[i];
+        if (curr.type !== 'paragraph') {
+            merged.push(curr);
+            continue;
+        }
+        // Try to merge with subsequent paragraph if mid-sentence
+        let current = { ...curr };
+        let j = i + 1;
+        while (j < chunks.length) {
+            const next = chunks[j];
+            if (!next) break;
+            if (next.type === 'header') break;
+            if (next.type === 'image') {
+                // Preserve image chunk ordering while scanning forward
+                merged.push(next);
+                j++;
+                continue;
+            }
+            if (next.type !== 'paragraph') break;
+
+            const currEndsWithTerminator = /[.!?]["'”’)]?$/.test((current.content || '').trim());
+            const nextText = (next.content || '').trim();
+            const nextStartsLower = /^[a-z]/.test(nextText);
+            const nextLooksLikeHeader = isHeader(nextText, 0, [nextText]);
+            const nextStartsList = /^•\s+\S/.test(nextText) || /^\d+[\.)]\s+/.test(nextText);
+            if (!currEndsWithTerminator && !nextLooksLikeHeader && !nextStartsList) {
+                // Merge next into current
+                const newContent = (current.content || '').replace(/\s+$/, '') + ' ' + (next.content || '').replace(/^\s+/, '');
+                current = {
+                    ...current,
+                    content: newContent,
+                    wordCount: getWordCount(newContent),
+                    sentenceCount: getSentenceCount(newContent),
+                    links: removeDuplicateLinks([...(current.links || []), ...(next.links || [])])
+                };
+                j++;
+                continue;
+            }
+            break;
+        }
+        merged.push(current);
+        i = j - 1 >= i ? j - 1 : i;
+    }
+    return merged;
 }
 
 /**
@@ -243,26 +308,8 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             continue;
         }
 
-        // Detect inline image marker: [[IMG id=... index=... alt="..."]]
-        const marker = parseImageMarker(line);
-        if (marker) {
-            // Flush any pending paragraph before placing the image
-            if (currentParagraph.trim()) {
-                chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
-                currentParagraph = '';
-            }
-            const imageObj = {
-                imageName: `${marker.id}.jpg`,
-                imageAlt: marker.alt || marker.id,
-                extracted: true,
-                placeholder: false,
-                originalName: `${marker.id}.jpg`
-            };
-            const imageChunk = createImageChunk(imageObj, page, '');
-            chunks.push(imageChunk);
-            headerJustEmitted = false;
-            continue;
-        }
+        // Preserve image markers in paragraph content - they will be processed in Step 5-1
+        // Don't skip them, let them be included in the paragraph content
 
         // Detect ALL-CAPS header blocks possibly spanning multiple lines
         const isAllCapsHeaderBlockLine = (txt) => {
@@ -418,6 +465,8 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
 
     return chunks;
 }
+
+
 
 /**
  * Check if a line is a header using the 6-rule system
@@ -1048,6 +1097,18 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
 
 // countWords function is now imported from validation module
 
+/**
+ * Aggregate links from all pages into a single array for chapter-level processing
+ */
+function aggregateChapterLinks(chapter) {
+    if (!chapter || !Array.isArray(chapter.pages)) return [];
+    const links = [];
+    for (const p of chapter.pages) {
+        if (p && Array.isArray(p.links)) links.push(...p.links);
+    }
+    return links;
+}
+
 // endsWithInitials function is now imported from validation module
 
 // endsWithCommonSingleLetterWord function is now imported from validation module
@@ -1058,25 +1119,6 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
 
 const { validate, countWords, endsWithInitials, endsWithCommonSingleLetterWord, findPreviousParagraph, findNextParagraph, isSourceTextInContent } = require('./04-paragraph-detection-validation');
 
-/**
- * Parse inline image marker line
- * Expected format: [[IMG id=<string> index=<int> alt="<string>"]]
- */
-function parseImageMarker(line) {
-    const trimmed = (line || '').trim();
-    if (!trimmed.startsWith('[[IMG') || !trimmed.endsWith(']]')) return null;
-    // Extract attributes inside
-    const inner = trimmed.slice(5, -2).trim(); // remove '[[IMG' prefix and ']]' suffix
-    // Simple attribute parsing: id=..., index=..., alt="..."
-    const idMatch = inner.match(/id=([^\s]+)/);
-    const indexMatch = inner.match(/index=(\d+)/);
-    const altMatch = inner.match(/alt=\"([^\"]*)\"/);
-    if (!idMatch) return null;
-    return {
-        id: idMatch[1],
-        index: indexMatch ? parseInt(indexMatch[1], 10) : 0,
-        alt: altMatch ? altMatch[1] : undefined
-    };
-}
+
 
 module.exports = { execute, validate }; 

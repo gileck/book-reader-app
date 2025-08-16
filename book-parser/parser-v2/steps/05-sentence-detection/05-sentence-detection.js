@@ -31,7 +31,7 @@ const {
  * @returns {Object} - Updated pipeline state with sentence chunks
  */
 function execute(pipelineState) {
-    console.log('🔤 Converting paragraphs to sentences with paragraph indexing...');
+
 
     if (!pipelineState.chapters || !Array.isArray(pipelineState.chapters)) {
         throw new Error('Step 5 requires chapters array from previous steps');
@@ -79,12 +79,7 @@ function execute(pipelineState) {
     // Generate detailed statistics
     const stats = generateChunkStats(processedChapters);
 
-    console.log(`✅ Sentence detection completed:`);
-    console.log(`   📊 Total chunks: ${totalChunks}`);
-    console.log(`   🔤 Total sentences: ${totalSentences}`);
-    console.log(`   📝 Total headers: ${totalHeaders}`);
-    console.log(`   🖼️  Total images: ${totalImages}`);
-    console.log(`   🔗 Total links: ${totalLinksExtracted}`);
+
 
     return {
         ...pipelineState,

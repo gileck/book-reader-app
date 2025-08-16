@@ -1,8 +1,8 @@
-# Step 5.1: Link Chunk References
+# Step 5.2: Link Chunk References
 
 ## Overview
 
-Step 5.1 enhances links by adding chunk references based on their roles using selector-based anchoring (no pages):
+Step 5.2 enhances links by adding chunk references based on their roles using selector-based anchoring (no pages):
 - For "source" role links: adds `targetChunkId` (the chunk containing the target text)
 - For "target" role links: adds `sourceChunkId` (the chunk containing the source text)
 
@@ -11,9 +11,9 @@ This enables bidirectional navigation between linked content in the rendered boo
 ## Requirements
 
 ### Input
-- Takes processed chapters from Step 5 with sentence chunks
+- Takes processed chapters from Step 5.1 with sentence chunks and image chunks
 - Links already have `role` field ("source" or "target")
-- Links have `linkId`, `text`, `anchor` with `{ chapterId, selector: { start, end } }`, and `targetText` when applicable
+- Links have `linkId`, `text`, and `anchor` with `{ chapterId, selector: { start, end } }` (no `targetPageNumber`)
 
 ### Output
 - Same structure as input with enhanced links
@@ -88,10 +88,10 @@ This enables bidirectional navigation between linked content in the rendered boo
 ## Usage
 
 ```javascript
-const step51 = require('./05-1-link-chunk-references');
+const step52 = require('./05-2-link-chunk-references');
 
-// Input: chapters with sentence chunks from step 5
-const result = step51.execute(pipelineState);
+// Input: chapters with sentence chunks and image chunks from step 5.1
+const result = step52.execute(pipelineState);
 
 // Output: enhanced links with chunk references
 const enhancedLink = result.chapters[0].chunks[0].links[0];
@@ -105,10 +105,12 @@ console.log(enhancedLink.sourceChunkId); // For target links
 ```json
 {
   "text": "1",
-  "targetPageNumber": 25,
-  "targetText": "1", 
   "linkId": "link_10_1",
   "role": "source",
+  "anchor": {
+    "chapterId": 0,
+    "selector": { "start": 1205, "end": 1206 }
+  },
   "targetChunkId": "0_120"
 }
 ```
@@ -117,10 +119,12 @@ console.log(enhancedLink.sourceChunkId); // For target links
 ```json
 {
   "text": "1",
-  "targetPageNumber": 25,
-  "targetText": "1",
   "linkId": "link_10_1", 
   "role": "target",
+  "anchor": {
+    "chapterId": 0,
+    "selector": { "start": 10452, "end": 10480 }
+  },
   "sourceChunkId": "0_14"
 }
 ```
@@ -144,7 +148,7 @@ console.log(enhancedLink.sourceChunkId); // For target links
 
 ## Error Handling
 
-- **Missing Target Pages**: Skips links with invalid target page numbers
+- **Missing Target Text**: Skips links with invalid target selector ranges
 - **Text Not Found**: Reports unresolved references but continues processing
 - **Invalid Link IDs**: Validates link ID format and existence
 - **Circular References**: Prevents self-referencing chunks
@@ -163,7 +167,7 @@ console.log(enhancedLink.sourceChunkId); // For target links
 
 ## Integration Notes
 
-- Runs after Step 5 (sentence detection)
+- Runs after Step 5.1 (image markers to chunks)
 - Prepares links for Step 6 (metadata extraction)
 - Compatible with existing link validation in Step 5
 - Enhances reader navigation capabilities

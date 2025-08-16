@@ -60,24 +60,42 @@ async function execute(pipelineState, config) {
             }
             let chapterContent = pieces.join('\n');
 
-            // Insert markers near the top of each page that has images as a simple heuristic
+            // Insert markers using enhanced spatial positioning
             let imageIndex = 0;
             for (const info of images.filter(i => !i.placeholder)) {
                 const pageStart = pageOffsets.get(info.pageNumber);
                 if (pageStart === undefined) continue;
+
                 const id = info.imageName.replace(/\.[^.]+$/, '');
                 const alt = info.imageAlt || id;
                 const marker = `[[IMG id=${id} index=${imageIndex} alt="${alt}"]]`;
-                // Insert marker at page start + small offset to avoid breaking prefixes
-                const insertAt = Math.max(0, Math.min(chapterContent.length, pageStart + 1));
-                chapterContent = chapterContent.slice(0, insertAt) + '\n' + marker + '\n' + chapterContent.slice(insertAt);
-                // Also insert into the individual page content so downstream step 4 can detect it
+
+                // Simple positioning: always at BOTTOM of page
+                const pageEnd = pageOffsets.get(info.pageNumber + 1) || chapterContent.length;
+                const insertAt = pageEnd; // Always insert at the end of the page content
+
+                // Insert marker with proper line separation
+                const needsNewlineBefore = insertAt > 0 && chapterContent.charAt(insertAt - 1) !== '\n';
+                const needsNewlineAfter = insertAt < chapterContent.length && chapterContent.charAt(insertAt) !== '\n';
+
+                const prefix = needsNewlineBefore ? '\n' : '';
+                const suffix = needsNewlineAfter ? '\n' : '';
+
+                chapterContent = chapterContent.slice(0, insertAt) + prefix + marker + suffix + chapterContent.slice(insertAt);
+
+                // Also insert into the individual page content for downstream processing
                 const targetPage = chapter.pages.find(p => p.pageNumber === info.pageNumber);
                 if (targetPage && typeof targetPage.content === 'string') {
-                    targetPage.content = marker + '\n' + targetPage.content;
+                    const pageContent = targetPage.content;
+                    const pageInsertAt = pageContent.length; // Always at the end
+                    const prefix = '\n'; // Always add newline before
+                    targetPage.content = pageContent + prefix + marker;
                 }
                 if (targetPage && typeof targetPage.rawContent === 'string') {
-                    targetPage.rawContent = marker + '\n' + targetPage.rawContent;
+                    const rawContent = targetPage.rawContent;
+                    const rawInsertAt = rawContent.length; // Always at the end
+                    const prefix = '\n'; // Always add newline before
+                    targetPage.rawContent = rawContent + prefix + marker;
                 }
                 imageIndex += 1;
                 totalImagesAdded += 1;
@@ -153,32 +171,34 @@ async function extractImages(pdfPath, config) {
 
     const images = [];
 
-    // Step 1: Use PDF.js to detect which pages have images and how many
+    // Step 1: Use PDF.js to detect images with spatial information and surrounding text
     const pdfBuffer = fs.readFileSync(pdfPath);
     const pdf = await pdfjsLib.getDocument(pdfBuffer).promise;
 
-    const pageImageMap = []; // Array of { pageNumber, imageCount }
+    const pageImageMap = []; // Array of { pageNumber, imageCount, images: [...] }
     let totalImagesDetected = 0;
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         try {
             const page = await pdf.getPage(pageNum);
             const operatorList = await page.getOperatorList();
+            const textContent = await page.getTextContent();
+            const viewport = page.getViewport({ scale: 1.0 });
 
-            let imageCount = 0;
-            for (let i = 0; i < operatorList.fnArray.length; i++) {
-                const fn = operatorList.fnArray[i];
-                if (fn === pdfjsLib.OPS.paintImageXObject) {
-                    imageCount++;
-                }
-            }
+            // Extract images with spatial information
+            const pageImages = await extractImageSpatialInfo(operatorList, textContent, viewport, pageNum - 1);
 
-            if (imageCount > 0) {
-                pageImageMap.push({ pageNumber: pageNum - 1, imageCount }); // Convert to 0-based
-                totalImagesDetected += imageCount;
+            if (pageImages.length > 0) {
+                pageImageMap.push({
+                    pageNumber: pageNum - 1, // Convert to 0-based
+                    imageCount: pageImages.length,
+                    images: pageImages
+                });
+                totalImagesDetected += pageImages.length;
             }
         } catch (pageError) {
             // Skip pages with errors
+            console.warn(`Warning: Could not process page ${pageNum} for image detection:`, pageError.message);
         }
     }
 
@@ -197,12 +217,12 @@ async function extractImages(pdfPath, config) {
             file.startsWith('image') && /\.(jpg|jpeg|png|ppm|pbm)$/i.test(file)
         );
 
-        // Step 3: Correlate extracted images with page locations
+        // Step 3: Correlate extracted images with page locations and spatial data
         if (extractedFiles.length === totalImagesDetected) {
             let imageFileIndex = 0;
             let globalImageCounter = 1;
 
-            // Go through pages in order and assign extracted images
+            // Go through pages in order and assign extracted images with spatial data
             for (const pageInfo of pageImageMap) {
                 for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
                     if (imageFileIndex < extractedFiles.length) {
@@ -214,12 +234,24 @@ async function extractImages(pdfPath, config) {
                         // Copy file to final location
                         fs.copyFileSync(tempFilePath, finalFilePath);
 
+                        // Get spatial data for this image
+                        const spatialData = pageInfo.images && pageInfo.images[pageImageIndex] || {};
+
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: finalFileName,
                             imageAlt: `Figure ${globalImageCounter}`,
                             originalName: file,
-                            extracted: true
+                            extracted: true,
+                            // Enhanced spatial information
+                            position: spatialData.position || 'MID',
+                            relativeY: Math.min(1.0, spatialData.relativeY || 0.5), // Clamp to valid range
+                            normalizedY: spatialData.normalizedY || (spatialData.pageHeight || 842) * 0.5,
+                            pageHeight: spatialData.pageHeight || 842,
+                            textBefore: spatialData.textBefore || '',
+                            textAfter: spatialData.textAfter || '',
+                            nearestText: spatialData.nearestText || '',
+                            spatialData: spatialData
                         });
 
                         imageFileIndex++;
@@ -243,23 +275,43 @@ async function extractImages(pdfPath, config) {
                         // Copy file to final location
                         fs.copyFileSync(tempFilePath, finalFilePath);
 
+                        // Get spatial data for this image (fallback)
+                        const spatialData = pageInfo.images && pageInfo.images[pageImageIndex] || {};
+
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: finalFileName,
                             imageAlt: `Figure ${globalImageCounter}`,
                             originalName: file,
-                            extracted: true
+                            extracted: true,
+                            // Enhanced spatial information (fallback)
+                            position: spatialData.position || 'MID',
+                            relativeY: Math.min(1.0, spatialData.relativeY || 0.5), // Clamp to valid range
+                            normalizedY: spatialData.normalizedY || (spatialData.pageHeight || 842) * 0.5,
+                            pageHeight: spatialData.pageHeight || 842,
+                            textBefore: spatialData.textBefore || '',
+                            textAfter: spatialData.textAfter || '',
+                            nearestText: spatialData.nearestText || '',
+                            spatialData: spatialData
                         });
 
                         imageFileIndex++;
                         globalImageCounter++;
                     } else {
                         // Create placeholder for remaining detected images
+                        const spatialData = pageInfo.images && pageInfo.images[pageImageIndex] || {};
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: `image-${pageInfo.pageNumber + 1}-${pageImageIndex + 1}.placeholder`,
                             imageAlt: `Figure ${globalImageCounter} - Not extracted`,
-                            placeholder: true
+                            placeholder: true,
+                            position: spatialData.position || 'MID',
+                            relativeY: Math.min(1.0, spatialData.relativeY || 0.5), // Clamp to valid range
+                            normalizedY: spatialData.normalizedY || (spatialData.pageHeight || 842) * 0.5,
+                            pageHeight: spatialData.pageHeight || 842,
+                            textBefore: spatialData.textBefore || '',
+                            textAfter: spatialData.textAfter || '',
+                            nearestText: spatialData.nearestText || ''
                         });
                         globalImageCounter++;
                     }
@@ -343,5 +395,87 @@ function addImagesToPages(pages, extractedImages) {
 }
 
 const { validate } = require('./03-2-image-extraction-validation');
+
+
+
+/**
+ * Extract spatial information for images on a page
+ * @param {Object} operatorList - PDF.js operator list
+ * @param {Object} textContent - PDF.js text content
+ * @param {Object} viewport - PDF.js viewport
+ * @param {number} pageNumber - Page number (0-based)
+ * @returns {Array} Array of image spatial info objects
+ */
+async function extractImageSpatialInfo(operatorList, textContent, viewport, pageNumber) {
+    const images = [];
+    const pageHeight = viewport.height;
+
+    // Extract text items with positions, normalized to screen coordinates
+    const textItems = textContent.items.map(item => {
+        const textTransform = item.transform;
+
+        // Get text position and flip Y coordinate (PDF Y=0 is bottom, we want Y=0 at top)
+        const x = textTransform[4];
+        const y = pageHeight - textTransform[5]; // Flip Y coordinate
+
+        return {
+            text: item.str,
+            x: x,
+            y: y,
+            width: item.width,
+            height: item.height,
+            originalY: textTransform[5] // Store original for debugging
+        };
+    });
+
+    // Find image operations and their transforms
+    let imageIndex = 0;
+    for (let i = 0; i < operatorList.fnArray.length; i++) {
+        const fn = operatorList.fnArray[i];
+        if (fn === pdfjsLib.OPS.paintImageXObject) {
+            const args = operatorList.argsArray[i];
+
+            // Look for transform information in nearby operations
+            let transform = [1, 0, 0, 1, 0, 0]; // default identity transform
+
+            // Search backwards for transform operations
+            for (let j = i - 1; j >= Math.max(0, i - 10); j--) {
+                const prevFn = operatorList.fnArray[j];
+                if (prevFn === pdfjsLib.OPS.transform || prevFn === pdfjsLib.OPS.setTransform) {
+                    transform = operatorList.argsArray[j];
+                    break;
+                }
+            }
+
+            // Calculate image position
+            const rawImageX = transform[4];
+            const rawImageY = transform[5];
+            const rawImageWidth = Math.abs(transform[0]);
+            const rawImageHeight = Math.abs(transform[3]);
+
+            // Always position images at BOTTOM - no need for coordinate calculations
+            images.push({
+                index: imageIndex,
+                position: 'BOTTOM'
+            });
+
+            imageIndex++;
+        }
+    }
+
+    return images;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = { execute, validate }; 

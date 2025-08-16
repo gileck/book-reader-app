@@ -572816,5 +572816,11 @@
         "averageWords": 4.462406015037594
       }
     }
+  },
+  "step-5-1": {
+    "totalLinksProcessed": 11,
+    "totalTargetChunkIndexes": 0,
+    "totalSourceChunkIndexes": 0,
+    "unresolved": 11
   }
 }
