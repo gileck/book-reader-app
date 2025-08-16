@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from '../../router';
 import { getBooks, deleteBook, updateBook, uploadCoverImage } from '../../../apis/books/client';
 import { getReadingProgress } from '../../../apis/readingProgress/client';
@@ -9,17 +9,18 @@ import { IMAGES_BASE_PATH } from '@/common/constants';
 import { Dialog, DialogTitle, DialogContent, Button, IconButton, Box, TextField } from '@mui/material';
 import { Close as CloseIcon, PlayArrow, Delete, Edit, Upload, Image } from '@mui/icons-material';
 import { useSettings } from '../../settings/SettingsContext';
+import { useAuth } from '../../context/AuthContext';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
     isActive?: boolean;
 }
 
-const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
 
 export const BookLibrary = () => {
     const { navigate } = useRouter();
     const { settings, updateSettings } = useSettings();
+    const { user, isAuthenticated, isInitialLoading } = useAuth();
     const [books, setBooks] = useState<BookWithProgress[]>([]);
     const [loading, setLoading] = useState(true);
     const [progressLoading, setProgressLoading] = useState<Set<string>>(new Set());
@@ -35,11 +36,7 @@ export const BookLibrary = () => {
     const [saveError, setSaveError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        loadBooksWithProgress();
-    }, []);
-
-    const loadBooksWithProgress = async () => {
+    const loadBooksWithProgress = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
@@ -68,8 +65,13 @@ export const BookLibrary = () => {
             // Load progress for all books in parallel
             const progressPromises = booksResult.data.books.map(async (book) => {
                 try {
+                    if (!user?.id) {
+                        console.warn('User not available for progress loading');
+                        return;
+                    }
+
                     const progressResult = await getReadingProgress({
-                        userId,
+                        userId: user.id,
                         bookId: book._id
                     });
 
@@ -109,7 +111,13 @@ export const BookLibrary = () => {
             setError(error instanceof Error ? error.message : 'Failed to load books');
             setLoading(false);
         }
-    };
+    }, [user]);
+
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            loadBooksWithProgress();
+        }
+    }, [isAuthenticated, user, loadBooksWithProgress]);
 
     const handleOpenBook = (bookId: string) => {
         navigate(`/?bookId=${bookId}`);
@@ -354,6 +362,32 @@ export const BookLibrary = () => {
         const diffYears = Math.floor(diffDays / 365);
         return `${diffYears} ${diffYears === 1 ? 'year' : 'years'} ago`;
     };
+
+    // Handle authentication states
+    if (isInitialLoading) {
+        return (
+            <div className={styles.bookLibrary}>
+                <div className={styles.loadingContainer}>
+                    <div className={styles.spinner}></div>
+                    <p>Checking authentication...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!isAuthenticated || !user) {
+        return (
+            <div className={styles.bookLibrary}>
+                <div className={styles.errorContainer}>
+                    <h2>Authentication Required</h2>
+                    <p>Please log in to view your book library.</p>
+                    <button className={styles.btnPrimary} onClick={() => navigate('/login')}>
+                        Go to Login
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     if (loading) {
         return (

@@ -390,8 +390,10 @@ async function uploadParsedBookV2(outputFolderPath) {
 
         console.log('✅ Connected successfully!');
 
-        // Check if book already exists by title
-        const existingBook = await booksCollection.findOne({ title: bookMetadata.title });
+        // Check if book already exists by title (case-insensitive)
+        const existingBook = await booksCollection.findOne({
+            title: { $regex: new RegExp(`^${bookMetadata.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+        });
         let bookId;
         let isUpdate = false;
 

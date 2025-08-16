@@ -3,8 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 
-// Import the parser v2 upload functionality
-const { uploadParsedBookV2 } = require('../../book-parser/parser-v2/upload-book-v2.js');
+// Import the parser upload functionality
+const { uploadParsedBookV2 } = require('../../book-parser/parser/upload-book.js');
 
 /**
  * Upload the processed The Breathing Cure book to the database
@@ -13,7 +13,6 @@ const { uploadParsedBookV2 } = require('../../book-parser/parser-v2/upload-book-
  */
 
 async function uploadBreathingCureBook() {
-    const bookTitle = "THE BREATHING CURE";
     const bookFolderPath = __dirname; // Current directory (files/The Breathing Cure/)
     const outputPath = path.join(bookFolderPath, 'output');
 
