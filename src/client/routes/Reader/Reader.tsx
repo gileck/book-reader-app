@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { Box, Typography, CircularProgress, Paper, Alert, Snackbar } from '@mui/material';
+import React, { useRef, useEffect, useState } from 'react';
+import { Box, Typography, CircularProgress, Paper, Alert, Snackbar, Fab } from '@mui/material';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
 import { useBookQA } from './hooks/useBookQA';
@@ -47,6 +48,7 @@ export const Reader = () => {
 
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
 
     // Initialize bookQA hook first with temporary context functions
     const bookQA = useBookQA({
@@ -69,7 +71,38 @@ export const Reader = () => {
     const contentContext = useContentContext(chapter, audio, bookQA);
 
     // Initialize scroll handling hook
-    useScrollHandling(loading, chapter, audio.currentChunkIndex);
+    const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
+
+    // Show a floating button when current chunk is outside of the scroll container's viewport
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container || loading || !chapter || audio.currentChunkIndex === null) {
+            setShowScrollToCurrent(false);
+            return;
+        }
+
+        // Prefer paragraph-aware targeting first
+        const selectorPrimary = `[data-paragraph-index][data-chunk-index="${audio.currentChunkIndex}"]`;
+        const selectorFallback = `[data-chunk-index="${audio.currentChunkIndex}"]`;
+        const targetElement = (document.querySelector(selectorPrimary) || document.querySelector(selectorFallback)) as Element | null;
+
+        if (!targetElement) {
+            setShowScrollToCurrent(false);
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                // Visible if any intersection with the container
+                setShowScrollToCurrent(!entry.isIntersecting);
+            },
+            { root: container, threshold: 0 }
+        );
+
+        observer.observe(targetElement);
+        return () => observer.disconnect();
+    }, [loading, chapter, audio.currentChunkIndex]);
 
     if ((loading && !chapterTransitionLoading) || !settings.settingsLoaded) {
         return (
@@ -142,6 +175,18 @@ export const Reader = () => {
                         sentenceHighlightColor={settings.sentenceHighlightColor}
                     />
                 </Paper>
+
+                {showScrollToCurrent && (
+                    <Fab
+                        color="primary"
+                        size="medium"
+                        aria-label="Scroll to current chunk"
+                        onClick={handleScrollToCurrentChunk}
+                        sx={{ position: 'fixed', right: 16, bottom: { xs: 96, sm: 104 }, zIndex: 1200 }}
+                    >
+                        <MyLocationIcon />
+                    </Fab>
+                )}
 
                 {/* Audio Controls - Fixed at bottom */}
                 <AudioControls
