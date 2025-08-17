@@ -8,4 +8,5 @@ export * as bookmarks from './bookmarks';
 export * as userSettings from './userSettings';
 export * as ttsUsage from './ttsUsage';
 export * as ttsErrors from './ttsErrors';
+export * as promptPresets from './promptPresets';
 

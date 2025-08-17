@@ -16,10 +16,15 @@ import {
     alpha,
     FormControlLabel,
     Checkbox,
-    TextField
+    TextField,
+    IconButton,
+    Paper
 } from '@mui/material';
 import { getAllModels } from '../../../../../server/ai/models';
 import { AnswerLength, AnswerLevel, AnswerStyle } from '../../hooks/useBookQA';
+import { getPromptPresets, createPromptPreset, updatePromptPreset, deletePromptPreset } from '../../../../../apis/promptPresets/client';
+import type { PromptPresetClient } from '../../../../../apis/promptPresets/types';
+import { Add, Edit, Delete, Save, Close } from '@mui/icons-material';
 
 interface BookQAChatSettingsProps {
     open: boolean;
@@ -63,6 +68,18 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
     const availableModels = getAllModels();
     const theme = useTheme();
 
+    // Quick Prompts (Prompt Presets) state
+    const [presets, setPresets] = useState<PromptPresetClient[]>([]);
+    const [presetsLoading, setPresetsLoading] = useState<boolean>(false);
+    const [creating, setCreating] = useState<boolean>(false);
+    const [createTitle, setCreateTitle] = useState<string>('');
+    const [createContent, setCreateContent] = useState<string>('');
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editTitle, setEditTitle] = useState<string>('');
+    const [editContent, setEditContent] = useState<string>('');
+    const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+    const [deletingPresetId, setDeletingPresetId] = useState<string | null>(null);
+
     useEffect(() => {
         setLocalModelId(selectedModelId);
         setLocalEstimateBeforeSend(estimateBeforeSend);
@@ -71,6 +88,23 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
         setLocalAnswerLevel(answerLevel);
         setLocalAnswerStyle(answerStyle);
     }, [selectedModelId, estimateBeforeSend, costApprovalThreshold, answerLength, answerLevel, answerStyle]);
+
+    // Load presets when dialog opens
+    useEffect(() => {
+        const loadPresets = async () => {
+            if (!open) return;
+            try {
+                setPresetsLoading(true);
+                const res = await getPromptPresets({});
+                setPresets(res.data?.presets || []);
+            } catch (e) {
+                console.warn('Failed to load prompt presets', e);
+            } finally {
+                setPresetsLoading(false);
+            }
+        };
+        loadPresets();
+    }, [open]);
 
     const handleModelChange = (modelId: string) => {
         setLocalModelId(modelId);
@@ -104,6 +138,83 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
 
     const handleClose = () => {
         onClose();
+    };
+
+    const handleStartCreate = () => {
+        setCreating(true);
+        setCreateTitle('');
+        setCreateContent('');
+    };
+
+    const handleCancelCreate = () => {
+        setCreating(false);
+        setCreateTitle('');
+        setCreateContent('');
+    };
+
+    const handleSaveCreate = async () => {
+        if (!createTitle.trim() || !createContent.trim()) return;
+        try {
+            const res = await createPromptPreset({ title: createTitle.trim(), content: createContent.trim() });
+            if (res.data?.preset) {
+                setPresets(prev => [res.data.preset, ...prev]);
+                handleCancelCreate();
+            }
+        } catch (e) {
+            console.warn('Failed to create prompt preset', e);
+        }
+    };
+
+    const handleStartEdit = (preset: PromptPresetClient) => {
+        setEditingId(preset._id);
+        setEditTitle(preset.title);
+        setEditContent(preset.content);
+    };
+
+    const handleCancelEdit = () => {
+        setEditingId(null);
+        setEditTitle('');
+        setEditContent('');
+    };
+
+    const handleSaveEdit = async () => {
+        if (!editingId) return;
+        if (!editTitle.trim() || !editContent.trim()) return;
+        try {
+            const res = await updatePromptPreset({ presetId: editingId, title: editTitle.trim(), content: editContent.trim() });
+            if (res.data?.preset) {
+                const updated = res.data.preset;
+                setPresets(prev => prev.map(p => (p._id === editingId ? updated : p)));
+                handleCancelEdit();
+            }
+        } catch (e) {
+            console.warn('Failed to update prompt preset', e);
+        }
+    };
+
+    const requestDeletePreset = (presetId: string) => {
+        setConfirmDeleteId(presetId);
+    };
+
+    const handleCancelDelete = () => {
+        setConfirmDeleteId(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!confirmDeleteId) return;
+        try {
+            setDeletingPresetId(confirmDeleteId);
+            const res = await deletePromptPreset({ presetId: confirmDeleteId });
+            if (res.data?.success) {
+                setPresets(prev => prev.filter(p => p._id !== confirmDeleteId));
+                if (editingId === confirmDeleteId) handleCancelEdit();
+            }
+        } catch (e) {
+            console.warn('Failed to delete prompt preset', e);
+        } finally {
+            setDeletingPresetId(null);
+            setConfirmDeleteId(null);
+        }
     };
 
     return (
@@ -144,6 +255,111 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
             </DialogTitle>
             <DialogContent sx={{ px: 3, py: 3 }}>
                 <Box>
+                    {/* Quick Prompts management */}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontSize: '1.125rem',
+                            fontWeight: 600,
+                            mb: 1
+                        }}
+                    >
+                        Quick Prompts
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ mb: 2, lineHeight: 1.5 }}
+                    >
+                        Create and manage your saved prompts for fast Q&A.
+                    </Typography>
+
+                    {/* Create form */}
+                    {!creating ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                            <Button variant="outlined" size="small" startIcon={<Add />} onClick={handleStartCreate}>
+                                Add Preset
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Paper elevation={0} sx={{ p: 2, mb: 2, border: `1px solid ${alpha(theme.palette.divider, 0.12)}`, borderRadius: '12px' }}>
+                            <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+                                <TextField
+                                    label="Title"
+                                    value={createTitle}
+                                    onChange={(e) => setCreateTitle(e.target.value)}
+                                    size="small"
+                                />
+                                <TextField
+                                    label="Content"
+                                    value={createContent}
+                                    onChange={(e) => setCreateContent(e.target.value)}
+                                    size="small"
+                                    multiline
+                                    minRows={2}
+                                />
+                                <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                                    <Button onClick={handleCancelCreate} startIcon={<Close />}>Cancel</Button>
+                                    <Button onClick={handleSaveCreate} variant="contained" startIcon={<Save />} disabled={!createTitle.trim() || !createContent.trim()}>
+                                        Save
+                                    </Button>
+                                </Box>
+                            </Box>
+                        </Paper>
+                    )}
+
+                    {/* Presets list */}
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 3 }}>
+                        {presetsLoading ? (
+                            <Typography variant="body2" color="text.secondary">Loading…</Typography>
+                        ) : presets.length === 0 ? (
+                            <Typography variant="body2" color="text.secondary">No presets yet.</Typography>
+                        ) : (
+                            presets.map((p) => (
+                                <Paper key={p._id} elevation={0} sx={{ p: 1.5, border: `1px solid ${alpha(theme.palette.divider, 0.12)}`, borderRadius: '12px' }}>
+                                    {editingId === p._id ? (
+                                        <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column' }}>
+                                            <TextField
+                                                label="Title"
+                                                value={editTitle}
+                                                onChange={(e) => setEditTitle(e.target.value)}
+                                                size="small"
+                                            />
+                                            <TextField
+                                                label="Content"
+                                                value={editContent}
+                                                onChange={(e) => setEditContent(e.target.value)}
+                                                size="small"
+                                                multiline
+                                                minRows={2}
+                                            />
+                                            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                                                <Button onClick={handleCancelEdit} startIcon={<Close />}>Cancel</Button>
+                                                <Button onClick={handleSaveEdit} variant="contained" startIcon={<Save />} disabled={!editTitle.trim() || !editContent.trim()}>
+                                                    Save
+                                                </Button>
+                                            </Box>
+                                        </Box>
+                                    ) : (
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <Box sx={{ flex: 1, overflow: 'hidden' }}>
+                                                <Typography variant="subtitle2" noWrap>{p.title}</Typography>
+                                                <Typography variant="body2" color="text.secondary" noWrap>{p.content}</Typography>
+                                            </Box>
+                                            <IconButton size="small" onClick={() => handleStartEdit(p)} aria-label="Edit preset">
+                                                <Edit fontSize="small" />
+                                            </IconButton>
+                                            <IconButton size="small" onClick={() => requestDeletePreset(p._id)} aria-label="Delete preset" color="error">
+                                                <Delete fontSize="small" />
+                                            </IconButton>
+                                        </Box>
+                                    )}
+                                </Paper>
+                            ))
+                        )}
+                    </Box>
+
+                    <Divider sx={{ my: 3, opacity: 0.6 }} />
                     <Typography
                         variant="h6"
                         sx={{
@@ -467,6 +683,19 @@ export const BookQAChatSettings: React.FC<BookQAChatSettingsProps> = ({
                     Done
                 </Button>
             </DialogActions>
+            {/* Delete Preset Confirmation Dialog */}
+            <Dialog open={!!confirmDeleteId} onClose={handleCancelDelete}>
+                <DialogTitle>Delete Quick Prompt</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body2">Are you sure you want to delete this preset? This action cannot be undone.</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancelDelete} disabled={!!deletingPresetId}>Cancel</Button>
+                    <Button onClick={handleConfirmDelete} color="error" variant="contained" disabled={!!deletingPresetId}>
+                        {deletingPresetId ? 'Deleting…' : 'Delete'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Dialog>
     );
 }; 

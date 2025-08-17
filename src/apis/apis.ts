@@ -13,6 +13,7 @@ import { API_GET_USER_SETTINGS, API_UPDATE_USER_SETTINGS } from "./userSettings/
 import * as bookContentChat from "./bookContentChat/server";
 import { API_BOOK_CONTENT_CHAT, API_BOOK_CONTENT_CHAT_ESTIMATE_COST } from "./bookContentChat/index";
 import { ttsUsageApiHandlers } from './ttsUsage/server';
+import { promptPresetsApiHandlers } from './promptPresets/server';
 
 // Convert API handlers to typed format
 const typedBooksApiHandlers = Object.entries(booksApiHandlers).reduce(
@@ -104,6 +105,12 @@ export const apiHandlers: ApiHandlers = {
   ...typedReadingProgressApiHandlers,
   ...typedReadingLogsApiHandlers,
   ...typedTtsUsageApiHandlers,
+  ...Object.entries(promptPresetsApiHandlers).reduce((acc, [key, handler]) => {
+    acc[key] = {
+      process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
+    };
+    return acc;
+  }, {} as ApiHandlers),
 };
 
 

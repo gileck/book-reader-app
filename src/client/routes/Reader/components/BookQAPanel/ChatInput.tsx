@@ -7,17 +7,22 @@ import {
     FormControl,
     Select,
     MenuItem,
-    Chip,
-    Stack,
     Typography,
     InputAdornment,
     alpha,
-    useTheme
+    useTheme,
+    Popover,
+    List,
+    ListItemButton,
+    ListItemText,
+    Tooltip
 } from '@mui/material';
 import { Send, Clear, OpenInNew } from '@mui/icons-material';
 import { ChatInputProps } from './types';
 import { getAllModels } from '../../../../../server/ai/models';
 import { buildContextPrompt } from '../../../../../apis/bookContentChat/utils';
+import { getPromptPresets, createPromptPreset } from '../../../../../apis/promptPresets/client';
+import type { PromptPresetClient } from '../../../../../apis/promptPresets/types';
 
 export const ChatInput: React.FC<ChatInputProps> = ({
     question,
@@ -41,21 +46,56 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     answerStyle
 }) => {
     const theme = useTheme();
+    const [presets, setPresets] = React.useState<PromptPresetClient[]>([]);
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+    const [saving, setSaving] = React.useState(false);
 
-    const quickQuestions = [
-        'Explain Simply',
-        'Summarize the last few sentences',
-    ];
+    React.useEffect(() => {
+        // Load presets on mount
+        getPromptPresets({}).then(res => {
+            if (res.data?.presets) setPresets(res.data.presets);
+        }).catch(err => {
+            console.warn('Failed to load prompt presets', err);
+        });
+    }, []);
 
-    const handleQuickQuestion = (quickQuestion: string) => {
-        const fullQuestion = question.trim()
-            ? `${quickQuestion}: ${question.trim()}`
-            : quickQuestion;
-        onQuestionChange(fullQuestion);
-    };
-    
     const handleClearInput = () => {
         onQuestionChange('');
+    };
+
+    const handleOpenPresets = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+        // Refresh presets on each open so newly added ones appear immediately
+        getPromptPresets({}).then(res => {
+            if (res.data?.presets) setPresets(res.data.presets);
+        }).catch(() => {
+            // noop
+        });
+    };
+
+    const handleClosePresets = () => {
+        setAnchorEl(null);
+    };
+
+    const handleSelectPreset = (preset: PromptPresetClient) => {
+        onQuestionChange(preset.content);
+        handleClosePresets();
+    };
+
+    const handleSaveAsPreset = async () => {
+        if (!question.trim()) return;
+        try {
+            setSaving(true);
+            const title = question.trim().slice(0, 40);
+            const res = await createPromptPreset({ title, content: question.trim() });
+            if (res.data?.preset) {
+                setPresets(prev => [res.data.preset, ...prev]);
+            }
+        } catch (e) {
+            console.warn('Failed to save preset', e);
+        } finally {
+            setSaving(false);
+        }
     };
 
     const handleOpenInChatGPT = () => {
@@ -102,34 +142,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 WebkitBackdropFilter: 'blur(20px)'
             }}
         >
-            {/* Quick Questions */}
-            <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-                {quickQuestions.map((quickQ) => (
-                    <Chip
-                        key={quickQ}
-                        label={quickQ}
-                        size="small"
-                        onClick={() => handleQuickQuestion(quickQ)}
-                        disabled={loading}
-                        sx={{
-                            fontSize: fullScreen ? '0.75rem' : '0.6875rem',
-                            height: 24,
-                            borderRadius: '12px',
-                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                            color: theme.palette.primary.main,
-                            border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                            '&:hover': {
-                                backgroundColor: alpha(theme.palette.primary.main, 0.15),
-                                transform: 'scale(1.02)'
-                            },
-                            '&:active': {
-                                transform: 'scale(0.98)'
-                            }
-                        }}
-                    />
-                ))}
-            </Stack>
-
             {/* Main Input Row */}
             <Box
                 component="form"
@@ -200,6 +212,24 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                         }
                     }}
                 />
+
+                <Tooltip title="Quick Prompts">
+                    <IconButton
+                        onClick={handleOpenPresets}
+                        disabled={loading}
+                        sx={{
+                            width: 36,
+                            height: 36,
+                            borderRadius: '8px',
+                            backgroundColor: alpha(theme.palette.text.secondary, 0.08),
+                            color: theme.palette.text.secondary,
+                            '&:hover': { backgroundColor: alpha(theme.palette.text.secondary, 0.15) },
+                            '&:disabled': { backgroundColor: alpha(theme.palette.action.disabled, 0.12), color: theme.palette.action.disabled }
+                        }}
+                    >
+                        <Typography variant="caption" sx={{ fontWeight: 600 }}>QP</Typography>
+                    </IconButton>
+                </Tooltip>
 
                 <IconButton
                     onClick={handleOpenInChatGPT}
@@ -276,6 +306,48 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                     )}
                 </IconButton>
             </Box>
+
+            <Popover
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={handleClosePresets}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                PaperProps={{ sx: { borderRadius: '12px', minWidth: 280 } }}
+            >
+                <Box sx={{ p: 1 }}>
+                    <Typography variant="subtitle2" sx={{ px: 1, py: 0.5, color: 'text.secondary' }}>
+                        Quick Prompts
+                    </Typography>
+                    <List dense disablePadding>
+                        {presets.length === 0 ? (
+                            <Typography variant="body2" sx={{ px: 2, py: 1.5, color: 'text.secondary' }}>
+                                No presets yet
+                            </Typography>
+                        ) : (
+                            presets.map(p => (
+                                <ListItemButton key={p._id} onClick={() => handleSelectPreset(p)}>
+                                    <ListItemText
+                                        primary={p.title}
+                                        secondary={p.content}
+                                        primaryTypographyProps={{ noWrap: true }}
+                                        secondaryTypographyProps={{ noWrap: true }}
+                                    />
+                                </ListItemButton>
+                            ))
+                        )}
+                    </List>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+                        <Tooltip title={question.trim() ? 'Save current input as preset' : 'Type something to save'}>
+                            <span>
+                                <IconButton onClick={handleSaveAsPreset} disabled={!question.trim() || saving}>
+                                    <Typography variant="caption" sx={{ fontWeight: 600 }}>Save</Typography>
+                                </IconButton>
+                            </span>
+                        </Tooltip>
+                    </Box>
+                </Box>
+            </Popover>
 
             {/* Current Settings Indication */}
             <Box sx={{ mb: 1.5, display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
