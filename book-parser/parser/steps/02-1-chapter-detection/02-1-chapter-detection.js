@@ -50,7 +50,7 @@ async function execute(pipelineState, config) {
         let bookmarkAnalysis = null; // keep raw bookmark analysis for debug output
 
         if (pdfjsLib && config.INPUT_PDF && fs.existsSync(config.INPUT_PDF)) {
-            bookmarkAnalysis = await extractTOCFromPdf(config.INPUT_PDF);
+            bookmarkAnalysis = await extractTOCFromPdf(config.INPUT_PDF, config.DEBUG_DIR);
             tocAnalysis = bookmarkAnalysis;
             if (tocAnalysis && tocAnalysis.chapters.length > 0) {
                 tocSource = tocAnalysis.source;
@@ -72,8 +72,9 @@ async function execute(pipelineState, config) {
             }
         }
 
-        // Step 2: Fallback to text-based TOC analysis
-        if (!tocAnalysis || tocAnalysis.chapters.length === 0) {
+        // Step 2: Fallback to text-based TOC analysis when bookmarks missing or insufficient
+        // Some PDFs only expose Parts or a single Intro as bookmarks. In that case, prefer text parsing.
+        if (!tocAnalysis || (tocAnalysis.chapters && tocAnalysis.chapters.length < 2)) {
             tocAnalysis = {
                 source: 'text_parsing',
                 chapters: analyzeTableOfContents(pipelineState.rawText).tocEntries
@@ -261,11 +262,7 @@ function findTOCEndPosition(rawText) {
             continue;
         }
 
-        // Look for Introduction chapter (often first real content)
-        if (line.match(/^Introduction:\s*Life\s+itself/i)) {
-            tocEndPosition = currentPosition;
-            break;
-        }
+        // Avoid book-specific title checks; rely on generic signals below
 
         // Look for page markers that indicate content area (around page 8-15)
         const pageMatch = line.match(/^---\s*PAGE\s+(\d+)\s*---$/);
@@ -501,7 +498,7 @@ function detectPageNumberOffset(lines, chapterMetadata) {
  * @param {string} pdfPath - Path to PDF file
  * @returns {Object|null} - TOC analysis or null
  */
-async function extractTOCFromPdf(pdfPath) {
+async function extractTOCFromPdf(pdfPath, debugDir) {
     try {
         const pdfBuffer = fs.readFileSync(pdfPath);
         const pdf = await pdfjsLib.getDocument({
@@ -512,6 +509,17 @@ async function extractTOCFromPdf(pdfPath) {
         const outline = await pdf.getOutline();
         if (!outline || outline.length === 0) {
             return null;
+        }
+
+        // Write raw (sanitized) outline for debugging
+        try {
+            if (debugDir) {
+                const rawOutline = sanitizePdfOutline(outline);
+                const rawOutlineFile = path.join(debugDir, 'step-02-1-pdf-raw-outline.json');
+                fs.writeFileSync(rawOutlineFile, JSON.stringify(rawOutline, null, 2));
+            }
+        } catch (outlineWriteError) {
+            // ignore debug write errors
         }
 
         const chapters = await extractBookmarks(outline, pdf);
@@ -530,6 +538,59 @@ async function extractTOCFromPdf(pdfPath) {
 }
 
 /**
+ * Create a JSON-safe representation of the PDF outline
+ * @param {Array} outline
+ * @returns {Array}
+ */
+function sanitizePdfOutline(outline) {
+    function describeRef(ref) {
+        if (ref && typeof ref === 'object') {
+            const description = { type: ref.constructor && ref.constructor.name ? ref.constructor.name : 'object' };
+            if (typeof ref.num === 'number') {
+                description.ref = { num: ref.num, gen: typeof ref.gen === 'number' ? ref.gen : undefined };
+            }
+            if (typeof ref.name === 'string') {
+                description.name = ref.name;
+            }
+            return description;
+        }
+        return ref;
+    }
+
+    function sanitizeDest(dest) {
+        if (Array.isArray(dest)) {
+            return {
+                type: 'array',
+                length: dest.length,
+                first: describeRef(dest[0])
+            };
+        }
+        if (dest && typeof dest === 'object') {
+            return describeRef(dest);
+        }
+        return dest ?? null;
+    }
+
+    function sanitizeNode(node) {
+        const out = {
+            title: typeof node.title === 'string' ? node.title : null
+        };
+        if ('dest' in node) {
+            out.dest = sanitizeDest(node.dest);
+        }
+        if (node.url) {
+            out.url = node.url;
+        }
+        if (Array.isArray(node.items) && node.items.length > 0) {
+            out.items = node.items.map(sanitizeNode);
+        }
+        return out;
+    }
+
+    return Array.isArray(outline) ? outline.map(sanitizeNode) : [];
+}
+
+/**
  * Extract bookmarks from PDF outline
  * @param {Array} outline - PDF outline
  * @param {Object} doc - PDF document
@@ -540,23 +601,41 @@ async function extractBookmarks(outline, doc, level = 0) {
     const chapters = [];
 
     for (const bookmark of outline) {
-        if (level === 0) { // Only process top-level bookmarks as chapters
-            const chapterInfo = parseChapterFromBookmark(bookmark.title);
-            if (chapterInfo) {
-                const pageNumber = await getPageNumberFromDest(bookmark.dest, doc);
-                chapters.push({
-                    chapterTitle: chapterInfo.title,
-                    chapterNumber: chapterInfo.number,
-                    startingPage: pageNumber,
-                    bookmarkTitle: bookmark.title
-                });
-            }
-        }
+        const title = typeof bookmark.title === 'string' ? bookmark.title.trim() : '';
 
-        // Process sub-bookmarks
-        if (bookmark.items && bookmark.items.length > 0) {
+        // Skip clearly non-chapter structural bookmarks, but still traverse children
+        const isNonChapterStructural = title.match(/^(contents|title page|copyright|photo insert|dedication|acknowledgments|about the authors)$/i);
+
+        const hasChildren = Array.isArray(bookmark.items) && bookmark.items.length > 0;
+
+        if (hasChildren) {
+            // Treat as container (e.g., Part). Do not add as chapter; traverse children only.
             const subChapters = await extractBookmarks(bookmark.items, doc, level + 1);
             chapters.push(...subChapters);
+        } else {
+            // Leaf node: consider as a chapter/section if not structural
+            if (!isNonChapterStructural && title) {
+                const pageNumber = await getPageNumberFromDest(bookmark.dest, doc);
+                if (pageNumber !== null && pageNumber !== undefined) {
+                    const chapterInfo = parseChapterFromBookmark(title);
+                    if (chapterInfo) {
+                        chapters.push({
+                            chapterTitle: chapterInfo.title,
+                            chapterNumber: chapterInfo.number,
+                            startingPage: pageNumber,
+                            bookmarkTitle: title
+                        });
+                    } else {
+                        // Fallback: include non-numbered leaf sections (end-matter, intro, etc.)
+                        chapters.push({
+                            chapterTitle: title,
+                            chapterNumber: 99, // generic section marker for non-numbered sections
+                            startingPage: pageNumber,
+                            bookmarkTitle: title
+                        });
+                    }
+                }
+            }
         }
     }
 
@@ -639,13 +718,7 @@ function parseChapterFromBookmark(title) {
         }
     }
 
-    // Handle special chapters
-    if (title.match(/^(Introduction|Preface|Epilogue|Appendix)/i)) {
-        return {
-            number: title.match(/^Introduction/i) ? 0 : 99,
-            title: title.trim()
-        };
-    }
+    // Do not special-case title strings here; generic handling occurs in extractBookmarks
 
     return null;
 }

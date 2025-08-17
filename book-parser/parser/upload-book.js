@@ -5,8 +5,8 @@ const { put } = require('@vercel/blob');
 
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
-// Vercel Blob Configuration
 const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+// Vercel Blob Configuration
 
 /**
  * Upload a file to Vercel Blob
@@ -310,8 +310,10 @@ function extractBookMetadata(finalOutput) {
  * Upload parsed book data from Parser v2 to MongoDB database and upload images to Vercel Blob
  * If a book with the same title exists, it will be updated with new content (keeping same ID)
  * @param {string} outputFolderPath - Path to the parser output folder containing output.json and images/
+ * @param {Object} [options]
+ * @param {boolean} [options.uploadImages=false] - When true, uploads images to Vercel Blob (requires BLOB_READ_WRITE_TOKEN)
  */
-async function uploadParsedBookV2(outputFolderPath) {
+async function uploadParsedBookV2(outputFolderPath, options = {}) {
     const uri = 'mongodb+srv://gileck:jfxccnxeruiowqrioqsdjkla@cluster0.frtddwb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
     const dbName = 'book_reader_db'
 
@@ -495,20 +497,17 @@ async function uploadParsedBookV2(outputFolderPath) {
         // Get the updated book document for image upload
         const finalBook = await booksCollection.findOne({ _id: bookId });
 
-        // Upload images to Vercel Blob if flag is provided and not skipped
-        const uploadImages = process.argv.includes('--upload-images');
-        const skipImages = process.argv.includes('--skip-images');
+        // Upload images to Vercel Blob if requested via options
+        const uploadImages = Boolean(options.uploadImages);
 
         if (imagesPath) {
-            if (skipImages) {
-                console.log('⏭️  Skipping image upload (--skip-images flag provided)');
-            } else if (uploadImages && BLOB_READ_WRITE_TOKEN) {
+            if (uploadImages && BLOB_READ_WRITE_TOKEN) {
                 await uploadImagesToBlob(finalBook, imagesPath, db);
             } else if (uploadImages && !BLOB_READ_WRITE_TOKEN) {
                 console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
                 console.log('   Images remain in local folder and imageName references are preserved');
             } else {
-                console.log('⏭️  Skipping image upload (use --upload-images flag to upload images)');
+                console.log('⏭️  Skipping image upload (enable with options.uploadImages or --upload-images)');
             }
 
             // Always set imageBaseURL and coverImage from local images folder when images exist
@@ -590,19 +589,18 @@ async function uploadParsedBookV2(outputFolderPath) {
 // CLI usage help
 function showHelp() {
     console.log(`
-Usage: node upload-book-v2.js OUTPUT_FOLDER [OPTIONS]
+Usage: node upload-book.js OUTPUT_FOLDER [OPTIONS]
 
 Arguments:
   OUTPUT_FOLDER      Path to parser output folder containing output.json and images/ (required)
 
 Options:
   --upload-images    Upload images to Vercel Blob (requires BLOB_READ_WRITE_TOKEN)
-  --skip-images      Skip uploading images to Vercel Blob (only upload book content)
 
 Examples:
   # Upload from parser output folder
-  node upload-book-v2.js ./output/
-  node upload-book-v2.js ../files/MyBook/output/ --upload-images
+  node upload-book.js ./output/
+  node upload-book.js ../files/MyBook/output/ --upload-images
 
 Required folder structure (created by parser.js):
   output/
@@ -664,6 +662,7 @@ async function main() {
         }
 
         const outputFolderPath = args[0];
+        const uploadImages = args.includes('--upload-images');
 
         if (!outputFolderPath) {
             console.error('❌ Output folder path is required');
@@ -672,7 +671,7 @@ async function main() {
         }
 
         console.log('🚀 Starting parser v2 book upload...');
-        await uploadParsedBookV2(outputFolderPath);
+        await uploadParsedBookV2(outputFolderPath, { uploadImages });
 
     } catch (error) {
         console.error('❌ Error:', error);

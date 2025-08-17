@@ -875,7 +875,7 @@ function fixIncompleteSentencesWithinChapter(pages) {
                                 const lastWord = beforePeriod.split(/\s+/).pop();
 
                                 // Common abbreviations that shouldn't end sentences
-                                const abbreviations = ['Dr', 'Mr', 'Mrs', 'Ms', 'Prof', 'vs', 'etc', 'i.e', 'e.g', 'U.S', 'U.K', 'E.coli', 'H.pylori'];
+                                const abbreviations = ['Dr', 'Mr', 'Mrs', 'Ms', 'Prof', 'Sr', 'Jr', 'St', 'vs', 'etc', 'i.e', 'e.g', 'U.S', 'U.K', 'E.coli', 'H.pylori'];
                                 if (abbreviations.includes(lastWord)) {
                                     // This is likely an abbreviation, continue looking
                                     continue;

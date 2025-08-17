@@ -1,0 +1,140 @@
+{
+  "processingTime": 1,
+  "cleaningStats": {
+    "totalChapters": 16,
+    "totalCharactersRemoved": 47,
+    "averageCharactersRemovedPerChapter": 2.9375,
+    "totalCharactersAfterCleaning": 641401,
+    "cleaningEfficiency": 0.007327709186608689
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Lost and Found",
+      "chapterNumber": 99,
+      "pageNumberStart": 5,
+      "pageNumberEnd": 10,
+      "contentLength": 15824,
+      "cleanedPreview": "--- PAGE 5 ---\nINTRODUCTION: LOST AND FOUND \nE very morning, as I walk into Pixar Animation Studios—past the twenty-foot-high\nsculpture of Luxo Jr., our friendly desk lamp mascot, through the double d..."
+    },
+    {
+      "title": "Animated",
+      "chapterNumber": 1,
+      "pageNumberStart": 11,
+      "pageNumberEnd": 21,
+      "contentLength": 34563,
+      "cleanedPreview": "--- PAGE 11 ---\nCHAPTER 1 \nANIMATED \nF or thirteen years we had a table in the large conference room at Pixar that we call\nWest One. Though it was beautiful, I grew to hate this table. It was long and..."
+    },
+    {
+      "title": "Pixar is Born",
+      "chapterNumber": 2,
+      "pageNumberStart": 22,
+      "pageNumberEnd": 35,
+      "contentLength": 47600,
+      "cleanedPreview": "--- PAGE 22 ---\nCHAPTER 2 \nPIXAR IS BORN \nW hat does it mean to manage well?\nAs a young man, I certainly had no idea, but I was about to begin figuring it out\nby taking a series of jobs—working for th..."
+    },
+    {
+      "title": "A Defining Goal",
+      "chapterNumber": 3,
+      "pageNumberStart": 36,
+      "pageNumberEnd": 47,
+      "contentLength": 42557,
+      "cleanedPreview": "--- PAGE 36 ---\nCHAPTER 3 \nA DEFINING GOAL \nT here is nothing quite like ignorance combined with a driving need to succeed to\nforce rapid learning. I know this from firsthand experience. In 1986, I be..."
+    },
+    {
+      "title": "Establishing Pixar’s Identity",
+      "chapterNumber": 4,
+      "pageNumberStart": 48,
+      "pageNumberEnd": 58,
+      "contentLength": 34789,
+      "cleanedPreview": "--- PAGE 48 ---\nCHAPTER 4 \nESTABLISHING PIXAR’S IDENTITY \nT wo defining creative principles emerged in the wake of Toy Story . They became\nmantras, of a sort, phrases we clung to and repeated endlessl..."
+    },
+    {
+      "title": "Honesty and Candor",
+      "chapterNumber": 5,
+      "pageNumberStart": 59,
+      "pageNumberEnd": 70,
+      "contentLength": 43050,
+      "cleanedPreview": "--- PAGE 59 ---\nCHAPTER 5 \nHONESTY AND CANDOR \nA sk anyone, “Should people be honest?” and of course their answer will be yes. It\nhas to be! Saying no is to endorse dishonesty, which is like coming ou..."
+    },
+    {
+      "title": "Fear and Failure",
+      "chapterNumber": 6,
+      "pageNumberStart": 71,
+      "pageNumberEnd": 84,
+      "contentLength": 47171,
+      "cleanedPreview": "--- PAGE 71 ---\nCHAPTER 6 \nFEAR AND FAILURE \nT he production of Toy Story 3 could be a master class in how to make a film. At the\nbeginning of the process, in 2007, the team that had made the original..."
+    },
+    {
+      "title": "The Hungry Beast and the Ugly Baby",
+      "chapterNumber": 7,
+      "pageNumberStart": 85,
+      "pageNumberEnd": 93,
+      "contentLength": 32404,
+      "cleanedPreview": "--- PAGE 85 ---\nCHAPTER 7 \nTHE HUNGRY BEAST AND THE UGLY BABY \nD uring the late 1980s and early 1990s, as an ascendant Disney Animation was\nenjoying a remarkable string of hit films— The Little Mermai..."
+    },
+    {
+      "title": "Change and Randomness",
+      "chapterNumber": 8,
+      "pageNumberStart": 94,
+      "pageNumberEnd": 106,
+      "contentLength": 44706,
+      "cleanedPreview": "--- PAGE 94 ---\nCHAPTER 8 \nCHANGE AND RANDOMNESS \nT here’s nothing quite like the feeling you get, deep in your gut, when you’re about\nto stand up in front of your entire company and say something you..."
+    },
+    {
+      "title": "The Hidden",
+      "chapterNumber": 9,
+      "pageNumberStart": 107,
+      "pageNumberEnd": 118,
+      "contentLength": 37740,
+      "cleanedPreview": "--- PAGE 107 ---\nCHAPTER 9 \nTHE HIDDEN \nI n ancient Greek mythology, Apollo, god of poetry and prophecy, falls in love with\nthe beautiful Cassandra, daughter of the king and queen of Troy, whose tangl..."
+    },
+    {
+      "title": "Broadening Our View",
+      "chapterNumber": 10,
+      "pageNumberStart": 119,
+      "pageNumberEnd": 140,
+      "contentLength": 65592,
+      "cleanedPreview": "--- PAGE 119 ---\nCHAPTER 10 \nBROADENING OUR VIEW \nI n the late 1970s, I took a road trip from New York City to Washington, D.C., with\nmy wife and another couple. We rented one of those giant campers w..."
+    },
+    {
+      "title": "The Unmade Future",
+      "chapterNumber": 11,
+      "pageNumberStart": 141,
+      "pageNumberEnd": 151,
+      "contentLength": 33442,
+      "cleanedPreview": "--- PAGE 141 ---\nCHAPTER 11 \nTHE UNMADE FUTURE \nM any of us have a romantic idea about how creativity happens: A lone visionary\nconceives of a film or a product in a flash of insight. Then that vision..."
+    },
+    {
+      "title": "A New Challenge",
+      "chapterNumber": 12,
+      "pageNumberStart": 152,
+      "pageNumberEnd": 170,
+      "contentLength": 64508,
+      "cleanedPreview": "--- PAGE 152 ---\nCHAPTER 12 \nA NEW CHALLENGE \n“ I ’m thinking about selling Pixar to Disney,” Steve said. To say that John and I were\nsurprised doesn’t really begin to capture it.\n“You’re what?” we re..."
+    },
+    {
+      "title": "Notes Day",
+      "chapterNumber": 13,
+      "pageNumberStart": 171,
+      "pageNumberEnd": 182,
+      "contentLength": 42014,
+      "cleanedPreview": "--- PAGE 171 ---\nCHAPTER 13 \nNOTES DAY \nW hen I began this book, I hoped to capture some of the thinking that underlies the\nway we work at Pixar and Disney Animation. I also hoped that by talking with..."
+    },
+    {
+      "title": "Afterword: The Steve We Knew",
+      "chapterNumber": 99,
+      "pageNumberStart": 183,
+      "pageNumberEnd": 193,
+      "contentLength": 37140,
+      "cleanedPreview": "--- PAGE 183 ---\nI t was the end of 1985, and the computer division I ran at Lucasfilm was short on\nsuitors and, it seemed, out of options. Our tires had been kicked by anyone with\neven the slightest ..."
+    },
+    {
+      "title": "Starting Points: Thoughts for Managing a Creative Culture",
+      "chapterNumber": 99,
+      "pageNumberStart": 194,
+      "pageNumberEnd": 211,
+      "contentLength": 18301,
+      "cleanedPreview": "--- PAGE 194 ---\nTHOUGHTS FOR MANAGING A CREATIVE CULTURE \nH ere are some of the principles we’ve developed over the years to enable and\nprotect a healthy creative culture. I know that when you distil..."
+    }
+  ]
+}

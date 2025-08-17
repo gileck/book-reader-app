@@ -31,6 +31,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Debug: capture detailed paragraph boundary decisions
+let debugBoundaryEvents = [];
+
 /**
  * Execute paragraph and header detection step
  * @param {Object} pipelineState - Current pipeline state
@@ -216,24 +219,32 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
         // Try to merge with subsequent paragraph if mid-sentence
         let current = { ...curr };
         let j = i + 1;
+        const skippedImages = []; // Collect images between paragraphs
         while (j < chunks.length) {
             const next = chunks[j];
             if (!next) break;
             if (next.type === 'header') break;
             if (next.type === 'image') {
-                // Preserve image chunk ordering while scanning forward
-                merged.push(next);
+                // Collect image chunks between paragraphs for later insertion
+                skippedImages.push(next);
                 j++;
                 continue;
             }
             if (next.type !== 'paragraph') break;
 
-            const currEndsWithTerminator = /[.!?]["'”’)]?$/.test((current.content || '').trim());
+            const currentText = (current.content || '').trim();
+            const endsWithHardTerminator = /[.!?]["'”’)]?$/.test(currentText);
+            // Treat common abbreviations/initials at the end as NOT a hard sentence terminator
+            const endsWithSingleInitial = /\b[A-Z]\.$/.test(currentText);
+            const endsWithMultiInitials = /(?:\b(?:[A-Z]\.)){2,}$/.test(currentText);
+            const endsWithAbbreviation = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g|U\.S|U\.K|E\.coli|H\.pylori)\.$/.test(currentText);
+            const currEndsWithTerminator = endsWithHardTerminator && !(endsWithSingleInitial || endsWithMultiInitials || endsWithAbbreviation);
             const nextText = (next.content || '').trim();
             const nextStartsLower = /^[a-z]/.test(nextText);
             const nextLooksLikeHeader = isHeader(nextText, 0, [nextText]);
             const nextStartsList = /^•\s+\S/.test(nextText) || /^\d+[\.)]\s+/.test(nextText);
             if (!currEndsWithTerminator && !nextLooksLikeHeader && !nextStartsList) {
+
                 // Merge next into current
                 const newContent = (current.content || '').replace(/\s+$/, '') + ' ' + (next.content || '').replace(/^\s+/, '');
                 current = {
@@ -248,6 +259,8 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
             }
             break;
         }
+        // Add any skipped images before the merged paragraph
+        merged.push(...skippedImages);
         merged.push(current);
         i = j - 1 >= i ? j - 1 : i;
     }
@@ -434,6 +447,18 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                     continue; // Don't split, continue building the paragraph
                 }
 
+                // If line ends with an abbreviation/initials and the next line starts lowercase,
+                // keep it in the same paragraph (common book layout wrap)
+                const lineTrim = line.trim();
+                const endIsSingleInitial = /\b[A-Z]\.$/.test(lineTrim);
+                const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(lineTrim);
+                const endIsAbbreviation = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.$/.test(lineTrim);
+                const nextStartsLower = nextContentIndex !== -1 && /^[a-z]/.test((lines[nextContentIndex] || '').trim());
+                if ((endIsSingleInitial || endIsMultiInitials || endIsAbbreviation) && nextStartsLower) {
+                    // Continue building the paragraph instead of splitting
+                    continue;
+                }
+
                 // NEW REQUIREMENT: Paragraphs MUST end with a newline after the sentence terminator
                 // Check if there's actually a line break structure that indicates a paragraph boundary
                 // Only end paragraph if:
@@ -441,6 +466,32 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                 // 2. There's an empty line between current line and next content, OR  
                 // 3. Next line is a header
                 const hasEmptyLineBetween = nextContentIndex > i + 1; // Gap indicates empty line(s)
+
+                // Debug: record decision inputs for this potential boundary
+                try {
+                    const lineTrim = line.trim();
+                    const endIsSingleInitial = /\b[A-Z]\.$/.test(lineTrim);
+                    const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(lineTrim);
+                    const endIsAbbreviation = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.$/.test(lineTrim);
+                    const nextLineTrim = nextContentIndex !== -1 ? (lines[nextContentIndex] || '').trim() : '';
+                    const isHeaderNext = nextContentIndex !== -1 ? isHeader(lines[nextContentIndex], nextContentIndex, lines) : false;
+                    const nextStartsLowerDbg = nextLineTrim ? /^[a-z]/.test(nextLineTrim) : false;
+                    debugBoundaryEvents.push({
+                        pageNumber: page.pageNumber,
+                        lineIndex: i,
+                        lineTail: line.slice(Math.max(0, line.length - 60)),
+                        endsWithTerminator: true,
+                        nextContentIndex,
+                        hasEmptyLineBetween,
+                        nextLineHead: nextLineTrim.slice(0, 80),
+                        endIsSingleInitial,
+                        endIsMultiInitials,
+                        endIsAbbreviation,
+                        nextStartsLower: nextStartsLowerDbg,
+                        isHeaderNext,
+                        treatedAsBoundary: (nextContentIndex === -1) || hasEmptyLineBetween || isHeaderNext
+                    });
+                } catch (e) {}
 
                 if (nextContentIndex === -1 || // End of page
                     hasEmptyLineBetween || // Empty line(s) between current and next content
@@ -894,7 +945,8 @@ function splitLargeParagraph(chunk) {
  */
 function splitIntoSentences(text) {
     // Split on sentence terminators, keeping the punctuation
-    const sentences = text.split(/(?<=[.!?])\s+/);
+    // But avoid splitting after common abbreviations and multi-initials
+    const sentences = text.split(/(?<=[.!?])(?<!\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.)(?<!(?:\b(?:[A-Z]\.)){2,})\s+/);
     return sentences.filter(s => s.trim().length > 0);
 }
 
@@ -936,6 +988,20 @@ function endsWithSentenceTerminator(line) {
         if (/\b[A-Z]\.$/.test(trimmed)) {
             return false;
         }
+
+        // Ignore common abbreviations that shouldn't end a sentence
+        const abbreviationAtEnd = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.$/;
+        if (abbreviationAtEnd.test(trimmed)) {
+            return false;
+        }
+
+        // Ignore multi-initial sequences like "P.U.", "U.S.", "A.B.", "U.S.A." at the end (optionally closed by quotes or ) )
+        const multiInitialTest = /(?:\b(?:[A-Z]\.)){2,}(?:["'"')]{1})?$/.test(trimmed);
+        if (multiInitialTest) {
+            return false;
+        }
+        
+
     }
 
     return true;
@@ -1075,6 +1141,7 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
             totalLinks: stats.totalLinks
         },
         statistics: stats,
+        boundaryEvents: debugBoundaryEvents.slice(-200),
         chapters: chapters.map(chapter => ({
             chapterNumber: chapter.chapterNumber,
             title: chapter.title,
@@ -1093,6 +1160,8 @@ async function saveDebugOutput(debugDir, chapters, stats, processingTime) {
 
     const debugPath = path.join(debugDir, 'step-04-paragraph-and-header-detection.json');
     await fs.promises.writeFile(debugPath, JSON.stringify(debugOutput, null, 2));
+    // Reset after writing to avoid unbounded growth across runs
+    debugBoundaryEvents = [];
 }
 
 // countWords function is now imported from validation module

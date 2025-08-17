@@ -572,6 +572,17 @@ function splitIntoSentences(text) {
     // Simple but reliable sentence splitting that preserves sentence integrity
     const sentences = [];
 
+    // Temporarily protect common abbreviations that end with a period
+    const ABBR_MAP = new Map([
+        ['Mr.', 'Mr<ABBR>'], ['Mrs.', 'Mrs<ABBR>'], ['Ms.', 'Ms<ABBR>'], ['Dr.', 'Dr<ABBR>'], ['Prof.', 'Prof<ABBR>'],
+        ['Sr.', 'Sr<ABBR>'], ['Jr.', 'Jr<ABBR>'], ['St.', 'St<ABBR>'], ['vs.', 'vs<ABBR>'], ['etc.', 'etc<ABBR>'],
+        ['i.e.', 'i<ABBR>e<ABBR>'], ['e.g.', 'e<ABBR>g<ABBR>']
+    ]);
+    let protectedText = text;
+    for (const [abbr, token] of ABBR_MAP.entries()) {
+        protectedText = protectedText.replace(new RegExp(abbr.replace('.', '\\.'), 'g'), token);
+    }
+
     // Split on sentence terminators followed by whitespace and capital letter or end of text
     // This preserves the terminator with the sentence and avoids creating fragments
     const sentenceRegex = /([.!?]+)\s+(?=[A-Z]|$)/g;
@@ -579,9 +590,9 @@ function splitIntoSentences(text) {
     let lastIndex = 0;
     let match;
 
-    while ((match = sentenceRegex.exec(text)) !== null) {
+    while ((match = sentenceRegex.exec(protectedText)) !== null) {
         // Extract sentence from lastIndex to end of current match
-        const sentence = text.substring(lastIndex, match.index + match[1].length).trim();
+        const sentence = protectedText.substring(lastIndex, match.index + match[1].length).trim();
         if (sentence) {
             sentences.push(sentence);
         }
@@ -589,12 +600,21 @@ function splitIntoSentences(text) {
     }
 
     // Add any remaining content as the last sentence
-    const remaining = text.substring(lastIndex).trim();
+    const remaining = protectedText.substring(lastIndex).trim();
     if (remaining) {
         sentences.push(remaining);
     }
 
-    return sentences.filter(s => s.length > 0);
+    // Restore abbreviations
+    const restored = sentences.map(s => {
+        let out = s;
+        for (const [abbr, token] of ABBR_MAP.entries()) {
+            out = out.replace(new RegExp(token, 'g'), abbr);
+        }
+        return out;
+    });
+
+    return restored.filter(s => s.length > 0);
 }
 
 /**

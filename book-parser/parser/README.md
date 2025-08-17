@@ -305,6 +305,32 @@ main();
 
 Then run: `node run-parser.js /path/to/book.pdf`
 
+## Uploader (upload-book.js)
+
+Programmatic and CLI tool to upload parsed books to the database and optionally upload images to Vercel Blob.
+
+### Programmatic API
+
+```javascript
+const { uploadParsedBookV2 } = require('./upload-book.js');
+
+// Upload book content only
+await uploadParsedBookV2('/path/to/parser/output');
+
+// Upload book content and images (requires BLOB_READ_WRITE_TOKEN)
+await uploadParsedBookV2('/path/to/parser/output', { uploadImages: true });
+```
+
+### CLI Usage
+
+```bash
+node upload-book.js /path/to/parser/output [--upload-images]
+```
+
+Notes:
+- Images are uploaded only when `--upload-images` is provided (or `options.uploadImages: true` programmatically).
+- The `--skip-images` flag has been removed.
+
 ## Implementation Status
 
 ### ✅ PIPELINE COMPLETE (12/12 steps - 100%)

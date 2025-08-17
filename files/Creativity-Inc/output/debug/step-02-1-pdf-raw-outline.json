@@ -1,0 +1,388 @@
+[
+  {
+    "title": "Title Page",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 14,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Copyright",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 16,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Contents",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 25,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Introduction: Lost and Found",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 29,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Part I: Getting Started",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 41,
+          "gen": 0
+        }
+      }
+    },
+    "items": [
+      {
+        "title": "Chapter 1: Animated",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 43,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 2: Pixar is Born",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 67,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 3: A Defining Goal",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 95,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 4: Establishing Pixar’s Identity",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 119,
+              "gen": 0
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Part II: Protecting the New",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 139,
+          "gen": 0
+        }
+      }
+    },
+    "items": [
+      {
+        "title": "Chapter 5: Honesty and Candor",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 141,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 6: Fear and Failure",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 165,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 7: The Hungry Beast and the Ugly Baby",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 193,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 8: Change and Randomness",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 211,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 9: The Hidden",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 237,
+              "gen": 0
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Part III: Building and Sustaining",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 259,
+          "gen": 0
+        }
+      }
+    },
+    "items": [
+      {
+        "title": "Chapter 10: Broadening Our View",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 261,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 11: The Unmade Future",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 308,
+              "gen": 0
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Part IV: Testing What We Know",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 328,
+          "gen": 0
+        }
+      }
+    },
+    "items": [
+      {
+        "title": "Chapter 12: A New Challenge",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 330,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Chapter 13: Notes Day",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 369,
+              "gen": 0
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Afterword: The Steve We Knew",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 393,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Starting Points: Thoughts for Managing a Creative Culture",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 416,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Photo Insert",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 424,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Dedication",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 463,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Acknowledgments",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 466,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "About the Authors",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 470,
+          "gen": 0
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,249 @@
+{
+  "processingTime": 795,
+  "detectionStats": {
+    "chaptersDetected": 16,
+    "tocSource": "pdf_bookmarks",
+    "tocEntriesFound": 16,
+    "patternMatches": 47,
+    "averageDetectionConfidence": 0.9437499999999999,
+    "pageOffset": 0
+  },
+  "tocAnalysis": {
+    "source": "pdf_bookmarks",
+    "tocFound": true,
+    "tocEntries": [
+      {
+        "chapterTitle": "Introduction: Lost and Found",
+        "chapterNumber": 99,
+        "startingPage": 5,
+        "bookmarkTitle": "Introduction: Lost and Found"
+      },
+      {
+        "chapterTitle": "Animated",
+        "chapterNumber": 1,
+        "startingPage": 11,
+        "bookmarkTitle": "Chapter 1: Animated"
+      },
+      {
+        "chapterTitle": "Pixar is Born",
+        "chapterNumber": 2,
+        "startingPage": 22,
+        "bookmarkTitle": "Chapter 2: Pixar is Born"
+      },
+      {
+        "chapterTitle": "A Defining Goal",
+        "chapterNumber": 3,
+        "startingPage": 36,
+        "bookmarkTitle": "Chapter 3: A Defining Goal"
+      },
+      {
+        "chapterTitle": "Establishing Pixar’s Identity",
+        "chapterNumber": 4,
+        "startingPage": 48,
+        "bookmarkTitle": "Chapter 4: Establishing Pixar’s Identity"
+      },
+      {
+        "chapterTitle": "Honesty and Candor",
+        "chapterNumber": 5,
+        "startingPage": 59,
+        "bookmarkTitle": "Chapter 5: Honesty and Candor"
+      },
+      {
+        "chapterTitle": "Fear and Failure",
+        "chapterNumber": 6,
+        "startingPage": 71,
+        "bookmarkTitle": "Chapter 6: Fear and Failure"
+      },
+      {
+        "chapterTitle": "The Hungry Beast and the Ugly Baby",
+        "chapterNumber": 7,
+        "startingPage": 85,
+        "bookmarkTitle": "Chapter 7: The Hungry Beast and the Ugly Baby"
+      },
+      {
+        "chapterTitle": "Change and Randomness",
+        "chapterNumber": 8,
+        "startingPage": 94,
+        "bookmarkTitle": "Chapter 8: Change and Randomness"
+      },
+      {
+        "chapterTitle": "The Hidden",
+        "chapterNumber": 9,
+        "startingPage": 107,
+        "bookmarkTitle": "Chapter 9: The Hidden"
+      },
+      {
+        "chapterTitle": "Broadening Our View",
+        "chapterNumber": 10,
+        "startingPage": 119,
+        "bookmarkTitle": "Chapter 10: Broadening Our View"
+      },
+      {
+        "chapterTitle": "The Unmade Future",
+        "chapterNumber": 11,
+        "startingPage": 141,
+        "bookmarkTitle": "Chapter 11: The Unmade Future"
+      },
+      {
+        "chapterTitle": "A New Challenge",
+        "chapterNumber": 12,
+        "startingPage": 152,
+        "bookmarkTitle": "Chapter 12: A New Challenge"
+      },
+      {
+        "chapterTitle": "Notes Day",
+        "chapterNumber": 13,
+        "startingPage": 171,
+        "bookmarkTitle": "Chapter 13: Notes Day"
+      },
+      {
+        "chapterTitle": "Afterword: The Steve We Knew",
+        "chapterNumber": 99,
+        "startingPage": 183,
+        "bookmarkTitle": "Afterword: The Steve We Knew"
+      },
+      {
+        "chapterTitle": "Starting Points: Thoughts for Managing a Creative Culture",
+        "chapterNumber": 99,
+        "startingPage": 194,
+        "bookmarkTitle": "Starting Points: Thoughts for Managing a Creative Culture"
+      }
+    ],
+    "pdfBookmarksAvailable": true
+  },
+  "patternAnalysis": {
+    "potentialChapters": 51,
+    "validatedChapters": 47,
+    "highConfidenceMatches": 0
+  },
+  "chapterMetadata": [
+    {
+      "title": "Introduction: Lost and Found",
+      "chapterNumber": 99,
+      "startingPage": 5,
+      "endPage": 10,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "Animated",
+      "chapterNumber": 1,
+      "startingPage": 11,
+      "endPage": 21,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Pixar is Born",
+      "chapterNumber": 2,
+      "startingPage": 22,
+      "endPage": 35,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "A Defining Goal",
+      "chapterNumber": 3,
+      "startingPage": 36,
+      "endPage": 47,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Establishing Pixar’s Identity",
+      "chapterNumber": 4,
+      "startingPage": 48,
+      "endPage": 58,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Honesty and Candor",
+      "chapterNumber": 5,
+      "startingPage": 59,
+      "endPage": 70,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Fear and Failure",
+      "chapterNumber": 6,
+      "startingPage": 71,
+      "endPage": 84,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The Hungry Beast and the Ugly Baby",
+      "chapterNumber": 7,
+      "startingPage": 85,
+      "endPage": 93,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Change and Randomness",
+      "chapterNumber": 8,
+      "startingPage": 94,
+      "endPage": 106,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The Hidden",
+      "chapterNumber": 9,
+      "startingPage": 107,
+      "endPage": 118,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Broadening Our View",
+      "chapterNumber": 10,
+      "startingPage": 119,
+      "endPage": 140,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The Unmade Future",
+      "chapterNumber": 11,
+      "startingPage": 141,
+      "endPage": 151,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "A New Challenge",
+      "chapterNumber": 12,
+      "startingPage": 152,
+      "endPage": 170,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Notes Day",
+      "chapterNumber": 13,
+      "startingPage": 171,
+      "endPage": 182,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Afterword: The Steve We Knew",
+      "chapterNumber": 99,
+      "startingPage": 183,
+      "endPage": 193,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "Starting Points: Thoughts for Managing a Creative Culture",
+      "chapterNumber": 99,
+      "startingPage": 194,
+      "endPage": null,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    }
+  ]
+}

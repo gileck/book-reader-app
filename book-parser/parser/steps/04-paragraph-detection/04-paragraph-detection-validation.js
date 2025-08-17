@@ -326,7 +326,20 @@ function validate(output) {
                         (isFirstParaAlt && /^[a-z]/.test(chunk.content));
 
                     if (!isValidStart && !allowedByHeuristic) {
-                        validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
+                        const prevParaCtx = findPreviousParagraph(chunks, i);
+                        const prevLastWords = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim().split(/\s+/).slice(-8).join(' ') : 'none';
+                        const prevLastWord = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim().split(/\s+/).slice(-1)[0] : '';
+
+                        validationErrors.push(
+                            `
+                            Paragraph chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol.
+                            Prev paragraph: 
+                            "...${prevLastWords}"
+                            Current paragraph: 
+                            "${chunk.content.substring(0, 50)}..."
+                            ${prevLastWord ? `  Hint: This might mean that we treated "${prevLastWord}" as end of sentence when it shouldn't.` : ''}
+                            `
+                        );
                     }
                 }
             }

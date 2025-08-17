@@ -1,0 +1,124 @@
+{
+  "processingTime": 7,
+  "extractionStats": {
+    "totalChapters": 16,
+    "totalPages": 207,
+    "averagePagesPerChapter": 12.9375,
+    "totalCharacters": 641448,
+    "averageCharactersPerChapter": 40090.5
+  },
+  "chapters": [
+    {
+      "title": "Introduction: Lost and Found",
+      "chapterNumber": 99,
+      "pageNumberStart": 5,
+      "pageNumberEnd": 10,
+      "contentLength": 15824
+    },
+    {
+      "title": "Animated",
+      "chapterNumber": 1,
+      "pageNumberStart": 11,
+      "pageNumberEnd": 21,
+      "contentLength": 34563
+    },
+    {
+      "title": "Pixar is Born",
+      "chapterNumber": 2,
+      "pageNumberStart": 22,
+      "pageNumberEnd": 35,
+      "contentLength": 47600
+    },
+    {
+      "title": "A Defining Goal",
+      "chapterNumber": 3,
+      "pageNumberStart": 36,
+      "pageNumberEnd": 47,
+      "contentLength": 42557
+    },
+    {
+      "title": "Establishing Pixar’s Identity",
+      "chapterNumber": 4,
+      "pageNumberStart": 48,
+      "pageNumberEnd": 58,
+      "contentLength": 34789
+    },
+    {
+      "title": "Honesty and Candor",
+      "chapterNumber": 5,
+      "pageNumberStart": 59,
+      "pageNumberEnd": 70,
+      "contentLength": 43050
+    },
+    {
+      "title": "Fear and Failure",
+      "chapterNumber": 6,
+      "pageNumberStart": 71,
+      "pageNumberEnd": 84,
+      "contentLength": 47171
+    },
+    {
+      "title": "The Hungry Beast and the Ugly Baby",
+      "chapterNumber": 7,
+      "pageNumberStart": 85,
+      "pageNumberEnd": 93,
+      "contentLength": 32404
+    },
+    {
+      "title": "Change and Randomness",
+      "chapterNumber": 8,
+      "pageNumberStart": 94,
+      "pageNumberEnd": 106,
+      "contentLength": 44706
+    },
+    {
+      "title": "The Hidden",
+      "chapterNumber": 9,
+      "pageNumberStart": 107,
+      "pageNumberEnd": 118,
+      "contentLength": 37740
+    },
+    {
+      "title": "Broadening Our View",
+      "chapterNumber": 10,
+      "pageNumberStart": 119,
+      "pageNumberEnd": 140,
+      "contentLength": 65592
+    },
+    {
+      "title": "The Unmade Future",
+      "chapterNumber": 11,
+      "pageNumberStart": 141,
+      "pageNumberEnd": 151,
+      "contentLength": 33442
+    },
+    {
+      "title": "A New Challenge",
+      "chapterNumber": 12,
+      "pageNumberStart": 152,
+      "pageNumberEnd": 170,
+      "contentLength": 64508
+    },
+    {
+      "title": "Notes Day",
+      "chapterNumber": 13,
+      "pageNumberStart": 171,
+      "pageNumberEnd": 182,
+      "contentLength": 42014
+    },
+    {
+      "title": "Afterword: The Steve We Knew",
+      "chapterNumber": 99,
+      "pageNumberStart": 183,
+      "pageNumberEnd": 193,
+      "contentLength": 37170
+    },
+    {
+      "title": "Starting Points: Thoughts for Managing a Creative Culture",
+      "chapterNumber": 99,
+      "pageNumberStart": 194,
+      "pageNumberEnd": 211,
+      "contentLength": 18318
+    }
+  ]
+}
