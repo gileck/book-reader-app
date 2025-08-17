@@ -81,28 +81,50 @@ export const Reader = () => {
             return;
         }
 
-        // Prefer paragraph-aware targeting first
-        const selectorPrimary = `[data-paragraph-index][data-chunk-index="${audio.currentChunkIndex}"]`;
-        const selectorFallback = `[data-chunk-index="${audio.currentChunkIndex}"]`;
-        const targetElement = (document.querySelector(selectorPrimary) || document.querySelector(selectorFallback)) as Element | null;
+        let observer: IntersectionObserver | null = null;
+        let retryTimeout: number | undefined;
 
-        if (!targetElement) {
-            setShowScrollToCurrent(false);
-            return;
-        }
+        const attachObserver = () => {
+            // Prefer paragraph-aware targeting first
+            const selectorPrimary = `[data-paragraph-index][data-chunk-index="${audio.currentChunkIndex}"]`;
+            const selectorFallback = `[data-chunk-index="${audio.currentChunkIndex}"]`;
+            const targetElement = (document.querySelector(selectorPrimary) || document.querySelector(selectorFallback)) as Element | null;
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const entry = entries[0];
-                // Visible if any intersection with the container
-                setShowScrollToCurrent(!entry.isIntersecting);
-            },
-            { root: container, threshold: 0 }
-        );
+            if (!targetElement) {
+                // DOM may not be ready yet; retry shortly
+                retryTimeout = window.setTimeout(attachObserver, 250);
+                return;
+            }
 
-        observer.observe(targetElement);
-        return () => observer.disconnect();
-    }, [loading, chapter, audio.currentChunkIndex]);
+            // Account for bottom audio bar so items hidden under it are treated as not visible
+            const bottomObstruction = 120; // px
+            observer = new IntersectionObserver(
+                (entries) => {
+                    const entry = entries[0];
+                    setShowScrollToCurrent(!entry.isIntersecting);
+                },
+                { root: container, threshold: 0, rootMargin: `0px 0px -${bottomObstruction}px 0px` }
+            );
+
+            observer.observe(targetElement);
+
+            // Also run an initial visibility check
+            const containerRect = container.getBoundingClientRect();
+            const targetRect = (targetElement as HTMLElement).getBoundingClientRect();
+            const adjustedBottom = containerRect.bottom - bottomObstruction;
+            const isInView = targetRect.top < adjustedBottom && targetRect.bottom > containerRect.top;
+            setShowScrollToCurrent(!isInView);
+        };
+
+        // Defer to next frame to ensure DOM is painted
+        const raf = requestAnimationFrame(attachObserver);
+
+        return () => {
+            if (observer) observer.disconnect();
+            if (retryTimeout) clearTimeout(retryTimeout);
+            cancelAnimationFrame(raf);
+        };
+    }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length]);
 
     if ((loading && !chapterTransitionLoading) || !settings.settingsLoaded) {
         return (

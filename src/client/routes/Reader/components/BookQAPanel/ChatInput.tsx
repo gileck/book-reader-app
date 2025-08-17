@@ -17,7 +17,7 @@ import {
     ListItemText,
     Tooltip
 } from '@mui/material';
-import { Send, Clear, OpenInNew } from '@mui/icons-material';
+import { Send, Clear, OpenInNew, Bolt } from '@mui/icons-material';
 import { ChatInputProps } from './types';
 import { getAllModels } from '../../../../../server/ai/models';
 import { buildContextPrompt } from '../../../../../apis/bookContentChat/utils';
@@ -132,10 +132,18 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         window.open(chatGPTUrl, '_blank');
     };
 
+    const compactGap = fullScreen ? 2 : 1;
+    const qpButtonSize = fullScreen ? 36 : 28;
+    const auxButtonSize = fullScreen ? 36 : 28;
+    const openIconSize = fullScreen ? 16 : 14;
+    const sendButtonSize = fullScreen ? 44 : 36;
+    const sendIconSize = fullScreen ? 20 : 18;
+
+    const hasText = Boolean(question.trim());
     return (
         <Box
             sx={{
-                p: 3,
+                p: fullScreen ? 3 : 1,
                 borderTop: fullScreen ? `1px solid ${alpha(theme.palette.divider, 0.08)}` : 'none',
                 backgroundColor: alpha(theme.palette.background.paper, 0.8),
                 backdropFilter: 'blur(20px)',
@@ -148,7 +156,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 onSubmit={onSubmit}
                 sx={{
                     display: 'flex',
-                    gap: 2,
+                    gap: compactGap,
                     alignItems: 'center',
                     mb: 2
                 }}
@@ -184,8 +192,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                     }}
                     sx={{
                         '& .MuiInputBase-root': {
-                            fontSize: fullScreen ? '1rem' : '0.875rem',
-                            borderRadius: '20px',
+                            fontSize: fullScreen ? '1rem' : '0.8125rem',
+                            borderRadius: fullScreen ? '20px' : '12px',
                             backgroundColor: alpha(theme.palette.background.default, 0.6),
                             border: `1px solid ${alpha(theme.palette.divider, 0.12)}`,
                             transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
@@ -200,7 +208,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                             }
                         },
                         '& .MuiInputBase-input': {
-                            padding: '12px 16px',
+                            padding: fullScreen ? '12px 16px' : '6px 10px',
                             lineHeight: 1.5
                         },
                         '& .MuiOutlinedInput-notchedOutline': {
@@ -213,43 +221,26 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                     }}
                 />
 
-                <Tooltip title="Quick Prompts">
-                    <IconButton
-                        onClick={handleOpenPresets}
-                        disabled={loading}
-                        sx={{
-                            width: 36,
-                            height: 36,
-                            borderRadius: '8px',
-                            backgroundColor: alpha(theme.palette.text.secondary, 0.08),
-                            color: theme.palette.text.secondary,
-                            '&:hover': { backgroundColor: alpha(theme.palette.text.secondary, 0.15) },
-                            '&:disabled': { backgroundColor: alpha(theme.palette.action.disabled, 0.12), color: theme.palette.action.disabled }
-                        }}
-                    >
-                        <Typography variant="caption" sx={{ fontWeight: 600 }}>QP</Typography>
-                    </IconButton>
-                </Tooltip>
-
+                {hasText ? (
                 <IconButton
                     onClick={handleOpenInChatGPT}
-                    disabled={!question.trim() || loading}
+                    disabled={!hasText || loading}
                     title="Open in ChatGPT"
                     sx={{
-                        width: 36,
-                        height: 36,
+                        width: auxButtonSize,
+                        height: auxButtonSize,
                         borderRadius: '8px',
                         backgroundColor: alpha(theme.palette.text.secondary, 0.08),
-                        color: question.trim() && !loading
+                        color: hasText && !loading
                             ? theme.palette.text.secondary
                             : theme.palette.action.disabled,
                         transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
                         '&:hover': {
                             backgroundColor: alpha(theme.palette.text.secondary, 0.15),
-                            transform: question.trim() && !loading ? 'scale(1.05)' : 'none'
+                            transform: hasText && !loading ? 'scale(1.05)' : 'none'
                         },
                         '&:active': {
-                            transform: question.trim() && !loading ? 'scale(0.95)' : 'none'
+                            transform: hasText && !loading ? 'scale(0.95)' : 'none'
                         },
                         '&:disabled': {
                             backgroundColor: alpha(theme.palette.action.disabled, 0.12),
@@ -257,36 +248,56 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                         }
                     }}
                 >
-                    <OpenInNew sx={{ fontSize: 16 }} />
+                    <OpenInNew sx={{ fontSize: openIconSize }} />
                 </IconButton>
+                ) : (
+                <Tooltip title="Quick Prompts">
+                    <IconButton
+                        onClick={handleOpenPresets}
+                        disabled={loading}
+                        sx={{
+                            width: qpButtonSize,
+                            height: qpButtonSize,
+                            borderRadius: '8px',
+                            backgroundColor: alpha(theme.palette.text.secondary, 0.08),
+                            color: theme.palette.text.secondary,
+                            '&:hover': { backgroundColor: alpha(theme.palette.text.secondary, 0.15) },
+                            '&:disabled': { backgroundColor: alpha(theme.palette.action.disabled, 0.12), color: theme.palette.action.disabled }
+                        }}
+                    >
+                        <Bolt sx={{ fontSize: openIconSize }} />
+                    </IconButton>
+                </Tooltip>
+                )}
 
+                {hasText && (
                 <IconButton
                     type="submit"
-                    disabled={!question.trim() || loading}
+                    disabled={!hasText || loading}
                     sx={{
-                        width: 44,
-                        height: 44,
+                        width: sendButtonSize,
+                        height: sendButtonSize,
                         borderRadius: '50%',
-                        backgroundColor: question.trim() && !loading
+                        backgroundColor: hasText && !loading
                             ? theme.palette.primary.main
                             : alpha(theme.palette.action.disabled, 0.12),
-                        color: question.trim() && !loading
+                        color: hasText && !loading
                             ? theme.palette.primary.contrastText
                             : theme.palette.action.disabled,
                         transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.1)',
-                        boxShadow: question.trim() && !loading
+                        boxShadow: hasText && !loading
                             ? theme.palette.mode === 'light'
                                 ? '0 2px 8px rgba(0,0,0,0.15)'
                                 : '0 2px 8px rgba(0,0,0,0.3)'
                             : 'none',
                         '&:hover': {
-                            backgroundColor: question.trim() && !loading
+                            backgroundColor: hasText && !loading
                                 ? theme.palette.primary.dark
                                 : alpha(theme.palette.action.disabled, 0.12),
-                            transform: question.trim() && !loading ? 'scale(1.05)' : 'none'
+                            transform: hasText && !loading ? 'scale(1.05)' : 'none'
                         },
                         '&:active': {
-                            transform: question.trim() && !loading ? 'scale(0.95)' : 'none'
+                            transform: hasText && !loading ? 'scale(0.95)' : 'none'
                         },
                         '&:disabled': {
                             backgroundColor: alpha(theme.palette.action.disabled, 0.12),
@@ -296,15 +307,16 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 >
                     {loading ? (
                         <CircularProgress
-                            size={20}
+                            size={fullScreen ? 20 : 18}
                             sx={{
                                 color: theme.palette.action.disabled
                             }}
                         />
                     ) : (
-                        <Send sx={{ fontSize: 20 }} />
+                        <Send sx={{ fontSize: sendIconSize }} />
                     )}
                 </IconButton>
+                )}
             </Box>
 
             <Popover
