@@ -23,7 +23,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         >
             <Box
                 sx={{
-                    maxWidth: '85%',
+                    maxWidth: message.role === 'assistant'
+                        ? (fullScreen ? '98%' : '92%')
+                        : '85%',
                     minWidth: 80,
                     backgroundColor: message.role === 'user'
                         ? theme.palette.primary.main
@@ -34,7 +36,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                     borderRadius: message.role === 'user'
                         ? '20px 20px 6px 20px'
                         : '20px 20px 20px 6px',
-                    px: 3,
+                    px: message.role === 'assistant' ? 1 : 3,
                     py: 2,
                     border: message.role === 'assistant'
                         ? `1px solid ${alpha(theme.palette.divider, 0.08)}`

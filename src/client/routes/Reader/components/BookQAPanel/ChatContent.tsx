@@ -22,7 +22,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    p: 4,
+                    p: 0,
                     textAlign: 'center'
                 }}
             >
@@ -30,7 +30,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({
                     sx={{
                         backgroundColor: alpha(theme.palette.primary.main, 0.04),
                         borderRadius: '16px',
-                        p: 3,
+                        p: 0,
                         maxWidth: 280,
                         border: `1px solid ${alpha(theme.palette.primary.main, 0.08)}`
                     }}
@@ -56,7 +56,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({
             sx={{
                 flex: 1,
                 overflow: 'auto',
-                px: 3,
+                px: 0.5,
                 py: 2,
                 display: 'flex',
                 flexDirection: 'column',

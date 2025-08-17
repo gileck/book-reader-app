@@ -199,8 +199,8 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
             sx={{
                 position: 'fixed',
                 bottom: isMobile ? 80 : 100,
-                right: isMobile ? 8 : 16,
-                left: isMobile ? 8 : 'auto',
+                right: isMobile ? 4 : 16,
+                left: isMobile ? 4 : 'auto',
                 width: isMobile ? 'auto' : 400,
                 height: 'auto',
                 display: 'flex',
