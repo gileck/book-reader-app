@@ -626,12 +626,14 @@ async function extractBookmarks(outline, doc, level = 0) {
                             bookmarkTitle: title
                         });
                     } else {
-                        // Fallback: include non-numbered leaf sections (end-matter, intro, etc.)
+                        // Fallback: include non-numbered leaf sections, but don't assign chapter number yet
+                        // We'll assign proper sequential numbers after all chapters are collected
                         chapters.push({
                             chapterTitle: title,
-                            chapterNumber: 99, // generic section marker for non-numbered sections
+                            chapterNumber: null, // Will be assigned later
                             startingPage: pageNumber,
-                            bookmarkTitle: title
+                            bookmarkTitle: title,
+                            isUnnumbered: true
                         });
                     }
                 }
@@ -639,6 +641,48 @@ async function extractBookmarks(outline, doc, level = 0) {
         }
     }
 
+    // Assign proper sequential chapter numbers
+    return assignSequentialChapterNumbers(chapters);
+}
+
+/**
+ * Assign sequential chapter numbers to chapters
+ * @param {Array} chapters - Array of chapter objects
+ * @returns {Array} - Chapters with proper sequential numbers
+ */
+function assignSequentialChapterNumbers(chapters) {
+    // Sort chapters by starting page to ensure proper order
+    chapters.sort((a, b) => a.startingPage - b.startingPage);
+    
+    // First pass: assign Introduction/Preface to chapter 0
+    for (const chapter of chapters) {
+        if (chapter.chapterNumber === null) {
+            const title = chapter.chapterTitle.toLowerCase();
+            if (title.includes('introduction') || title.includes('preface') || title.includes('prologue')) {
+                chapter.chapterNumber = 0;
+            }
+        }
+    }
+    
+    // Second pass: assign sequential numbers to remaining unnumbered chapters
+    // Find the highest numbered chapter so far
+    const maxNumberedChapter = Math.max(...chapters.map(c => 
+        c.chapterNumber !== null && typeof c.chapterNumber === 'number' 
+            ? c.chapterNumber : -1
+    ));
+    
+    let nextNumber = maxNumberedChapter + 1;
+    
+    for (const chapter of chapters) {
+        if (chapter.chapterNumber === null) {
+            chapter.chapterNumber = nextNumber;
+            nextNumber++;
+        }
+        
+        // Remove the temporary marker
+        delete chapter.isUnnumbered;
+    }
+    
     return chapters;
 }
 

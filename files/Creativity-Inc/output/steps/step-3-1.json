@@ -2,7 +2,7 @@
   "chapters": [
     {
       "title": "Introduction: Lost and Found",
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "pageNumberStart": 5,
       "pageNumberEnd": 10,
       "pages": [
@@ -1583,7 +1583,7 @@
     },
     {
       "title": "Afterword: The Steve We Knew",
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "pageNumberStart": 183,
       "pageNumberEnd": 193,
       "pages": [
@@ -1681,7 +1681,7 @@
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "pageNumberStart": 194,
       "pageNumberEnd": 211,
       "pages": [
@@ -1861,7 +1861,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-19T15:25:26.219Z",
+    "processingStartTime": "2025-08-19T15:32:34.540Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -1870,7 +1870,7 @@
       "lineCount": 9186,
       "wordCount": 112801,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-19T15:25:27.115Z",
+      "extractionTime": "2025-08-19T15:32:35.455Z",
       "averageWordsPerPage": 532,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 19959
@@ -1882,7 +1882,7 @@
       "patternMatches": 47,
       "averageDetectionConfidence": 0.9437499999999999,
       "pageOffset": 0,
-      "processingTime": 966,
+      "processingTime": 968,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -1891,7 +1891,7 @@
       "averagePagesPerChapter": 12.9375,
       "totalCharacters": 641448,
       "averageCharactersPerChapter": 40090.5,
-      "processingTime": 8,
+      "processingTime": 7,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -1908,14 +1908,14 @@
       "totalChapters": 16,
       "averageWordsPerPage": 534.5410628019324,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-19T15:25:28.217Z",
-      "processingTime": 33
+      "extractionTime": "2025-08-19T15:32:36.565Z",
+      "processingTime": 34
     },
     "linkDetection": {
       "totalLinks": 1,
       "totalPdfLinks": 33,
-      "processingTime": 763,
-      "detectionTime": "2025-08-19T15:25:28.991Z"
+      "processingTime": 761,
+      "detectionTime": "2025-08-19T15:32:37.334Z"
     }
   }
 }

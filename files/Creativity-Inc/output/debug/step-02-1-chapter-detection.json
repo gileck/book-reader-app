@@ -1,5 +1,5 @@
 {
-  "processingTime": 966,
+  "processingTime": 968,
   "detectionStats": {
     "chaptersDetected": 16,
     "tocSource": "pdf_bookmarks",
@@ -14,7 +14,7 @@
     "tocEntries": [
       {
         "chapterTitle": "Introduction: Lost and Found",
-        "chapterNumber": 99,
+        "chapterNumber": 0,
         "startingPage": 5,
         "bookmarkTitle": "Introduction: Lost and Found"
       },
@@ -98,13 +98,13 @@
       },
       {
         "chapterTitle": "Afterword: The Steve We Knew",
-        "chapterNumber": 99,
+        "chapterNumber": 14,
         "startingPage": 183,
         "bookmarkTitle": "Afterword: The Steve We Knew"
       },
       {
         "chapterTitle": "Starting Points: Thoughts for Managing a Creative Culture",
-        "chapterNumber": 99,
+        "chapterNumber": 15,
         "startingPage": 194,
         "bookmarkTitle": "Starting Points: Thoughts for Managing a Creative Culture"
       }
@@ -119,7 +119,7 @@
   "chapterMetadata": [
     {
       "title": "Introduction: Lost and Found",
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "startingPage": 5,
       "endPage": 10,
       "detectionSource": "pdf_bookmarks",
@@ -231,7 +231,7 @@
     },
     {
       "title": "Afterword: The Steve We Knew",
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "startingPage": 183,
       "endPage": 193,
       "detectionSource": "pdf_bookmarks",
@@ -239,7 +239,7 @@
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "startingPage": 194,
       "endPage": null,
       "detectionSource": "pdf_bookmarks",

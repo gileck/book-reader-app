@@ -2,7 +2,7 @@
   "chapters": [
     {
       "title": "Introduction: Lost and Found",
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "pageNumberStart": 5,
       "pageNumberEnd": 10,
       "chunks": [
@@ -12,10 +12,10 @@
           "wordCount": 4,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_1"
+          "chunkId": "0_1"
         },
         {
-          "chunkId": "99_2",
+          "chunkId": "0_2",
           "type": "paragraph",
           "content": "E very morning, as I walk into Pixar Animation Studios—past the twenty-foot-high\nsculpture of Luxo Jr., our friendly desk lamp mascot, through the double doors and\ninto a spectacular glass-ceilinged atrium where a man-sized Buzz Lightyear and\nWoody, made entirely of Lego bricks, stand at attention, up the stairs past sketches\nand paintings of the characters that have populated our fourteen films—I am struck\nby the unique culture that defines this place. Although I’ve made this walk\nthousands of times, it never gets old. Built on the site of a former cannery, Pixar’s fifteen-acre campus, just over the Bay\nBridge from San Francisco, was designed, inside and out, by Steve Jobs. (Its name,\nin fact, is The Steve Jobs Building.) It has well-thought-out patterns of entry and\negress that encourage people to mingle, meet, and communicate. Outside, there is a\nsoccer field, a volleyball court, a swimming pool, and a six-hundred-seat\namphitheater. Sometimes visitors misunderstand the place, thinking it’s fancy for\nfancy’s sake. What they miss is that the unifying idea for this building isn’t luxury\nbut community. Steve wanted the building to support our work by enhancing our\nability to collaborate.",
           "wordCount": 192,
@@ -23,7 +23,7 @@
           "links": []
         },
         {
-          "chunkId": "99_3",
+          "chunkId": "0_3",
           "type": "paragraph",
           "content": "The animators who work here are free to—no, encouraged to—decorate their\nwork spaces in whatever style they wish. They spend their days inside pink\ndollhouses whose ceilings are hung with miniature chandeliers, tiki huts made of\nreal bamboo, and castles whose meticulously painted, fifteen-foot-high styrofoam\nturrets appear to be carved from stone. Annual company traditions include\n“Pixarpalooza,” where our in-house rock bands battle for dominance, shredding\ntheir hearts out on stages we erect on our front lawn. The point is, we value self-expression here. This tends to make a big impression\non visitors, who often tell me that the experience of walking into Pixar leaves them\nfeeling a little wistful, like something is missing in their work lives—a palpable\nenergy, a feeling of collaboration and unfettered creativity, a sense, not to be corny,\nof possibility. I respond by telling them that the feeling they are picking up on—call\nit exuberance or irreverence, even whimsy—is integral to our success. But it’s not what makes Pixar special.",
           "wordCount": 165,
@@ -31,7 +31,7 @@
           "links": []
         },
         {
-          "chunkId": "99_4",
+          "chunkId": "0_4",
           "type": "paragraph",
           "content": "What makes Pixar special is that we acknowledge we will always have problems,\nmany of them hidden from our view; that we work hard to uncover these problems,\neven if doing so means making ourselves uncomfortable; and that, when we come\nacross a problem, we marshal all of our energies to solve it. This, more than any\nelaborate party or turreted workstation, is why I love coming to work in the\nmorning. It is what motivates me and gives me a definite sense of mission. There was a time, however, when my purpose here felt a lot less clear to me. And\nit might surprise you when I tell you when. O n November 22, 1995, Toy Story debuted in America’s theaters and became the\n[[IMG id=image-006-1 index=0 alt=\"Figure 4\"]]\nLargest Thanksgiving opening in history. Critics heralded it as “inventive” ( Time ),\n“brilliant” and “exultantly witty” ( The New York Times ), and “visionary” ( Chicago\nSun-Times ). To find a movie worthy of comparison, wrote The Washington Post , one\nhad to go back to 1939, to The Wizard of Oz .",
           "wordCount": 184,
@@ -39,7 +39,7 @@
           "links": []
         },
         {
-          "chunkId": "99_5",
+          "chunkId": "0_5",
           "type": "paragraph",
           "content": "The making of Toy Story —the first feature film to be animated entirely on a\ncomputer—had required every ounce of our tenacity, artistry, technical wizardry,\nand endurance. The hundred or so men and women who produced it had weathered\ncountless ups and downs as well as the ever-present, hair-raising knowledge that our\nsurvival depended on this 80-minute experiment. For five straight years, we’d\nfought to do Toy Story our way. We’d resisted the advice of Disney executives who\nbelieved that since they’d had such success with musicals, we too should fill our\nmovie with songs. We’d rebooted the story completely, more than once, to make\nsure it rang true. We’d worked nights, weekends, and holidays—mostly without\ncomplaint. Despite being novice filmmakers at a fledgling studio in dire financial\nstraits, we had put our faith in a simple idea: If we made something that we wanted\nto see, others would want to see it, too. For so long, it felt like we had been pushing\nthat rock up the hill, trying to do the impossible. There were plenty of moments\nwhen the future of Pixar was in doubt.",
           "wordCount": 187,
@@ -47,7 +47,7 @@
           "links": []
         },
         {
-          "chunkId": "99_6",
+          "chunkId": "0_6",
           "type": "paragraph",
           "content": "Now, we were suddenly being held up as an\nexample of what could happen when artists trusted their guts. Toy Story went on to become the top-grossing film of the year and would earn\n$358 million worldwide. But it wasn’t just the numbers that made us proud; money,\nafter all, is just one measure of a thriving company and usually not the most\nmeaningful one. No, what I found gratifying was what we’d created. Review after\nreview focused on the film’s moving plotline and its rich, three-dimensional\ncharacters—only briefly mentioning, almost as an aside, that it had been made on a\ncomputer. While there was much innovation that enabled our work, we had not let\nthe technology overwhelm our real purpose: making a great film. On a personal level, Toy Story represented the fulfillment of a goal I had pursued\nfor more than two decades and had dreamed about since I was a boy. Growing up in\nthe 1950s, I had yearned to be a Disney animator but had no idea how to go about\nit. Instinctively, I realize now, I embraced computer graphics—then a new field—as\na means of pursuing that dream.",
           "wordCount": 193,
@@ -55,7 +55,7 @@
           "links": []
         },
         {
-          "chunkId": "99_7",
+          "chunkId": "0_7",
           "type": "paragraph",
           "content": "If I couldn’t animate by hand, there had to be\nanother way. In graduate school, I’d quietly set a goal of making the first computer-\nanimated feature film, and I’d worked tirelessly for twenty years to accomplish it. Now, the goal that had been a driving force in my life had been reached, and\nthere was an enormous sense of relief and exhilaration—at least at first. In the wake\nof Toy Story ’s release, we took the company public, raising the kind of money that\nwould ensure our future as an independent production house, and began work on\ntwo new feature-length projects, A Bug’s Life and Toy Story 2 . Everything was going\nour way, and yet I felt adrift. In fulfilling a goal, I had lost some essential\nframework. Is this really what I want to do? I began asking myself. The doubts\nsurprised and confused me, and I kept them to myself. I had served as Pixar’s\npresident for most of the company’s existence. I loved the place and everything that\nit stood for. Still, I couldn’t deny that achieving the goal that had defined my\nprofessional life had left me without one. Is this all there is?",
           "wordCount": 200,
@@ -63,7 +63,7 @@
           "links": []
         },
         {
-          "chunkId": "99_8",
+          "chunkId": "0_8",
           "type": "paragraph",
           "content": "I wondered. Is it time for\na new challenge? It wasn’t that I thought Pixar had “arrived” or that my work was done. I knew\nthere were major obstacles in front of us. The company was growing quickly, with\nLots of shareholders to please, and we were racing to put two new films into\nproduction. There was, in short, plenty to occupy my working hours. But my\ninternal sense of purpose—the thing that had led me to sleep on the floor of the\ncomputer lab in graduate school just to get more hours on the mainframe, that kept\nme awake at night, as a kid, solving puzzles in my head, that fueled my every\nworkday—had gone missing. I’d spent two decades building a train and laying its\ntrack. Now, the thought of merely driving it struck me as a far less interesting task. Was making one film after another enough to engage me? I wondered. What would be\nmy organizing principle now? It would take a full year for the answer to emerge. F rom the start, my professional life seemed destined to have one foot in Silicon\nValley and the other in Hollywood.",
           "wordCount": 194,
@@ -71,7 +71,7 @@
           "links": []
         },
         {
-          "chunkId": "99_9",
+          "chunkId": "0_9",
           "type": "paragraph",
           "content": "I first got into the film business in 1979 when,\nflush from the success of Star Wars , George Lucas hired me to help him bring high\ntechnology into the film industry. But he wasn’t based in Los Angeles. Instead, he’d\nfounded his company, Lucasfilm, at the north end of the San Francisco Bay. Our\noffices were located in San Rafael, about an hour’s drive from Palo Alto, the heart of\nSilicon Valley—a moniker that was just gaining traction then, as the semiconductor\nand computer industries took off. That proximity gave me a front-row seat from\nwhich to observe the many emerging hardware and software companies—not to\nmention the growing venture capital industry—that, in the course of a few years,\nwould come to dominate Silicon Valley from its perch on Sand Hill Road. I couldn’t have arrived at a more dynamic and volatile time. I watched as many\nstartups burned bright with success—and then flamed out. My mandate at Lucasfilm\n—to merge moviemaking with technology—meant that I rubbed shoulders with the\nleaders of places like Sun Microsystems and Silicon Graphics and Cray Computer,\nseveral of whom I came to know well.",
           "wordCount": 191,
@@ -79,7 +79,7 @@
           "links": []
         },
         {
-          "chunkId": "99_10",
+          "chunkId": "0_10",
           "type": "paragraph",
           "content": "I was first and foremost a scientist then, not a\nmanager, so I watched these guys closely, hoping to learn from the trajectories their\ncompanies followed. Gradually, a pattern began to emerge: Someone had a creative\nidea, obtained funding, brought on a lot of smart people, and developed and sold a\nproduct that got a boatload of attention. That initial success begat more success,\nluring the best engineers and attracting customers who had interesting and high-\nprofile problems to solve. As these companies grew, much was written about their\nparadigm-shifting approaches, and when their CEOs inevitably landed on the cover\nof Fortune magazine, they were heralded as “Titans of the New.” I especially\nremember the confidence. The leaders of these companies radiated supreme\nconfidence. Surely, they could only have reached this apex by being very, very\ngood. But then those companies did something stupid—not just stupid-in-retrospect, but\nobvious-at-the-time stupid. I wanted to understand why. What was causing smart\npeople to make decisions that sent their companies off the rails? I didn’t doubt that they\nbelieved they were doing the right thing, but something was blinding them—and\nkeeping them from seeing the problems that threatened to upend them.",
           "wordCount": 197,
@@ -87,7 +87,7 @@
           "links": []
         },
         {
-          "chunkId": "99_11",
+          "chunkId": "0_11",
           "type": "paragraph",
           "content": "As a result,\ntheir companies expanded like bubbles, then burst. What interested me was not that\ncompanies rose and fell or that the landscape continually shifted as technology\nchanged but that the leaders of these companies seemed so focused on the\ncompetition that they never d\n[[IMG id=image-008-1 index=1 alt=\"Figure 5\"]]\neveloped any deep introspection about other\nDestructive forces that were at work. Over the years, as Pixar struggled to find its way—first selling hardware, then\nsoftware, then making animated short films and advertisements—I asked myself: If\nPixar is ever successful, will we do something stupid, too? Can paying careful\nattention to the missteps of others help us be more alert to our own? Or is there\nsomething about becoming a leader that makes you blind to the things that threaten\nthe well-being of your enterprise? Clearly, something was causing a dangerous\ndisconnect at many smart, creative companies. What, exactly, was a mystery—and\none I was determined to figure out. In the difficult year after Toy Story ’s debut, I came to realize that trying to solve\nthis mystery would be my next challenge.",
           "wordCount": 184,
@@ -95,7 +95,7 @@
           "links": []
         },
         {
-          "chunkId": "99_12",
+          "chunkId": "0_12",
           "type": "paragraph",
           "content": "My desire to protect Pixar from the forces\nthat ruin so many businesses gave me renewed focus. I began to see my role as a\nleader more clearly. I would devote myself to learning how to build not just a\nsuccessful company but a sustainable creative culture. As I turned my attention from\nsolving technical problems to engaging with the philosophy of sound management, I\nwas excited once again—and sure that our second act could be as exhilarating as\nour first. I t has always been my goal to create a culture at Pixar that will outlast its founding\nleaders—Steve, John Lasseter, and me. But it is also my goal to share our underlying\nphilosophies with other leaders and, frankly, with anyone who wrestles with the\ncompeting—but necessarily complementary—forces of art and commerce. What\nyou’re holding in your hands, then, is an attempt to put down on paper my best\nideas about how we built the culture that is the bedrock of this place. This book isn’t just for Pixar people, entertainment executives, or animators. It is\nfor anyone who wants to work in an environment that fosters creativity and\nproblem solving.",
           "wordCount": 192,
@@ -103,7 +103,7 @@
           "links": []
         },
         {
-          "chunkId": "99_13",
+          "chunkId": "0_13",
           "type": "paragraph",
           "content": "My belief is that good leadership can help creative people stay on\nthe path to excellence no matter what business they’re in. My aim at Pixar—and at\nDisney Animation, which my longtime partner John Lasseter and I have also led\nsince the Walt Disney Company acquired Pixar in 2006—has been to enable our\npeople to do their best work. We start from the presumption that our people are\ntalented and want to contribute. We accept that, without meaning to, our company\nis stifling that talent in myriad unseen ways. Finally, we try to identify those\nimpediments and fix them. I’ve spent nearly forty years thinking about how to help smart, ambitious people\nwork effectively with one another. The way I see it, my job as a manager is to create\na fertile environment, keep it healthy, and watch for the things that undermine it. I\nbelieve, to my core, that everybody has the potential to be creative—whatever form\nthat creativity takes—and that to encourage such development is a noble thing. More interesting to me, though, are the blocks that get in the way, often without us\nnoticing, and hinder the creativity that resides within any thriving company.",
           "wordCount": 197,
@@ -111,7 +111,7 @@
           "links": []
         },
         {
-          "chunkId": "99_14",
+          "chunkId": "0_14",
           "type": "paragraph",
           "content": "The thesis of this book is that there are many blocks to creativity, but there are\nactive steps we can take to protect the creative process. In the coming pages, I will\ndiscuss many of the steps we follow at Pixar, but the most compelling mechanisms\nto me are those that deal with uncertainty, instability, lack of candor, and the things\nwe cannot see. I believe the best managers acknowledge and make\n[[IMG id=image-009-1 index=2 alt=\"Figure 6\"]]\nroom for what\nthey do not know—not just because humility is a virtue but because until one\nAdopts that mindset, the most striking breakthroughs cannot occur. I believe that\nmanagers must loosen the controls, not tighten them. They must accept risk; they\nmust trust the people they work with and strive to clear the path for them; and\nalways, they must pay attention to and engage with anything that creates fear. Moreover, successful leaders embrace the reality that their models may be wrong or\nincomplete. Only when we admit what we don’t know can we ever hope to learn it. This book is organized into four sections—Getting Started, Protecting the New,\nBuilding and Sustaining, and Testing What We Know.",
           "wordCount": 196,
@@ -119,7 +119,7 @@
           "links": []
         },
         {
-          "chunkId": "99_15",
+          "chunkId": "0_15",
           "type": "paragraph",
           "content": "It is no memoir, but in order\nto understand the mistakes we made, the lessons we learned, and the ways we\nlearned from them, it necessarily delves at times into my own history and that of\nPixar. I have much to say about enabling groups to create something meaningful\ntogether and then protecting them from the destructive forces that loom even in the\nstrongest companies. My hope is that by relating my search for the sources of\nconfusion and delusion within Pixar and Disney Animation, I can help others avoid\nthe pitfalls that impede and sometimes ruin businesses of all kinds. The key for me\n—what has kept me motivated in the nineteen years since Toy Story debuted—has\nbeen the realization that identifying these destructive forces isn’t merely a\nphilosophical exercise. It is a crucial, central mission. In the wake of our earliest\nsuccess, Pixar needed its leaders to sit up and pay attention. And that need for\nvigilance never goes away. This book, then, is about the ongoing work of paying\nattention—of leading by being self-aware, as managers and as companies. It is an\nexpression of the ideas that I believe make the best in us possible.",
           "wordCount": 198,
@@ -127,7 +127,7 @@
           "links": []
         },
         {
-          "chunkId": "99_16",
+          "chunkId": "0_16",
           "type": "paragraph",
           "content": "It is no memoir, but in order\nto understand the mistakes we made, the lessons we learned, and the ways we\nlearned from them, it necessarily delves at times into my own history and that of\nPixar. I have much to say about enabling groups to create something meaningful\ntogether and then protecting them from the destructive forces that loom even in the\nstrongest companies. My hope is that by relating my search for the sources of\nconfusion and delusion within Pixar and Disney Animation, I can help others avoid\nthe pitfalls that impede and sometimes ruin businesses of all kinds. The key for me\n—what has kept me motivated in the nineteen years since Toy Story debuted—has\nbeen the realization that identifying these destructive forces isn’t merely a\nphilosophical exercise. It is a crucial, central mission. In the wake of our earliest\nsuccess, Pixar needed its leaders to sit up and pay attention. And that need for\nvigilance never goes away. This book, then, is about the ongoing work of paying\nattention—of leading by being self-aware, as managers and as companies. It is an\nexpression of the ideas that I believe make the best in us possible.\n[[IMG id=image-011-1 index=3 alt=\"Figure 7\"]]",
           "wordCount": 203,
@@ -4783,12 +4783,12 @@
     },
     {
       "title": "Afterword: The Steve We Knew",
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "pageNumberStart": 183,
       "pageNumberEnd": 193,
       "chunks": [
         {
-          "chunkId": "99_1",
+          "chunkId": "14_1",
           "type": "paragraph",
           "content": "I t was the end of 1985, and the computer division I ran at Lucasfilm was short on\nsuitors and, it seemed, out of options. Our tires had been kicked by anyone with\neven the slightest interest in computer-generated imaging. We’d made a promising\nmatch with General Motors, only to be left at the altar. Then Steve Jobs swooped in. As I related earlier, it was around this time that one of his attorneys pulled us aside\nduring a meeting and jokingly—I think—said that we were about to climb aboard\nthe Steve Jobs roller coaster. Get on, we did, and what a ride it would prove to be—\nwith all of the attendant ups and downs. I worked closely with Steve Jobs for twenty-six years. To this day, for all that has\nbeen written about him, I don’t believe that any of it comes close to capturing the\nman I knew. I’ve been frustrated that the stories about him tend to focus so\nnarrowly on his extreme traits and the negative, difficult aspects of his personality.",
           "wordCount": 176,
@@ -4796,7 +4796,7 @@
           "links": []
         },
         {
-          "chunkId": "99_2",
+          "chunkId": "14_2",
           "type": "paragraph",
           "content": "Inevitably, profiles of Steve describe him as stubborn and imperious, a man who\nheld steadfastly and unwaveringly to his own ideals, refusing to budge or change,\nand who often tried to browbeat others into doing things his way. While many of\nthe anecdotes people repeat about his behavior as a young executive are probably\naccurate, the overall portrait is way off the mark. The reality is, Steve changed\nprofoundly in the years that I knew him. The word genius is used a lot these days—too much, I think—but with Steve, I\nactually think it was warranted. Still, when I first came to know him, he was\nfrequently dismissive and brusque. This is the part of Steve that people love to write\nabout. I realize that it is difficult to understand people who deviate so radically from\nthe norm, like Steve did, and I suspect that those who focus on his more extreme\ntraits do so because those traits are entertaining and revealing in some way. To let\nthem drive Steve’s narrative, however, is to miss the more important story.",
           "wordCount": 179,
@@ -4804,7 +4804,7 @@
           "links": []
         },
         {
-          "chunkId": "99_3",
+          "chunkId": "14_3",
           "type": "paragraph",
           "content": "In the\ntime I worked with Steve, he didn’t just gain the kind of practical experience you\nwould expect to acquire while running two dynamic, successful businesses; he also\ngot smarter about when to stop pushing people and how to keep pushing them, if\nnecessary, without breaking them. He became fairer and wiser, and his\nunderstanding of partnership deepened—in large part because of his marriage to\nLaurene and his relationships with the children he loved so much. This shift didn’t\nlead him to abandon his famous commitment to innovation; it solidified it. At the\nsame time, he developed into a kinder, more self-aware leader. And I think Pixar\nplayed a role in that development. Remember, in the late 1980s, when Pixar was founded, Steve was spending most\nof his time building NeXT, the computer company he’d started after being forced out\nof Apple. At Pixar, none of us, including Steve, knew what we were doing. Steve\nwould overreach in early negotiations with customers, which sometimes worked but\n[[IMG id=image-184-1 index=0 alt=\"Figure 45\"]]\nSometimes backfired. At NeXT, for instance, he struck a $100 million deal that\nallowed IBM to use the NeXT software.",
           "wordCount": 192,
@@ -4812,7 +4812,7 @@
           "links": []
         },
         {
-          "chunkId": "99_4",
+          "chunkId": "14_4",
           "type": "paragraph",
           "content": "The huge dollar amount, combined with the\nfact that Steve didn’t give IBM rights to subsequent versions of the software, seemed\nlike a home run deal for NeXT. In fact, Steve had overreached—his behavior created\nill will, and he later told me he learned from that. In those early days, Steve sensed that there was something quite special going on\nat Pixar, but it frustrated him that he couldn’t figure it out—and kept losing money\nin the meantime. He had an expensive group that was ahead of its time. Could he\nhang on long enough for that potential to flower, especially if he didn’t know if it\never would flower? What kind of person signs on for that? Would you? We tend to think of emotion and logic as two distinct, mutually exclusive\ndomains. Not Steve. From the beginning, when making decisions, passion was a key\npart of his calculus. At first, he often elicited it in a ham-handed way, by making\nextreme or outrageous statements and challenging people to respond.",
           "wordCount": 171,
@@ -4820,7 +4820,7 @@
           "links": []
         },
         {
-          "chunkId": "99_5",
+          "chunkId": "14_5",
           "type": "paragraph",
           "content": "But at Pixar,\neven when we were a long way from being in the black, that aggressiveness was\ntempered by his acknowledgment that we knew things about graphics and\nstorytelling that he did not. He respected our determination to be the first to make a\ncomputer-animated feature film. He didn’t tell us how to do our work or come in\nand impose his will. Even when we were unsure how to reach our goal, our passion\nwas something Steve recognized and valued. That’s what Steve, John, and I\nultimately bonded over: passion for excellence—a passion so ardent we were willing\nto argue and struggle and stay together, even when things got extremely\nuncomfortable. I remember being struck by Steve’s response to passion when we were working on\nour second film, A Bug’s Life . There was an internal disagreement about the aspect\nratio of the film—the proportional relationship between its width and its height.",
           "wordCount": 154,
@@ -4828,7 +4828,7 @@
           "links": []
         },
         {
-          "chunkId": "99_6",
+          "chunkId": "14_6",
           "type": "paragraph",
           "content": "In\na movie theater, films are displayed in widescreen format, where the width of the\npicture is more than twice the height; on the TVs of that time, by contrast, the width\nof the picture was only one and one-third times the height, more of a boxy shape. When you make a video version of a widescreen film that will be viewed on a TV\nmonitor, then, you either end up with black bars at the top and bottom of the\nscreen, or you clip off the sides of the picture completely, neither of which is a good\nrepresentation of the original film. On A Bug’s Life , the marketing people were in conflict with the filmmakers. The\nfilmmakers wanted the widescreen format because it led to a better panoramic\nexperience in the theater, which they believed to be more important than the home\nviewing experience. The marketers, believing that consumers were less likely to buy\na video with black bars on the top and bottom, argued that the widescreen format\nwould mean a reduction in our DVD sales. Steve—no film buff—agreed with the\nmarketing people that we would be hurting ourselves financially if we released the\nmovie in widescreen.",
           "wordCount": 200,
@@ -4836,7 +4836,7 @@
           "links": []
         },
         {
-          "chunkId": "99_7",
+          "chunkId": "14_7",
           "type": "paragraph",
           "content": "The debate about this was still unresolved when, one\nafternoon, I took Steve around the offices so he could see some of Pixar’s\ndepartments in action, and we ended up in a room full of people who were working\non lighting a scene from A Bug’s Life . The production designer on the film, Bill Cone,\nwas showing some images on monitors that happened to be in widescreen format. Seeing this, Steve interjected, in his way, that it was “nuts” for us to be making a\nwidescreen movie. Bill, to his credit, came right back at him, explaining why the\nwidescreen format was absolutely crucial from an artistic standpoint. An intense\nBack-and-forth followed. I wouldn’t call it an argument, but it was definitely heated. The discussion seemed to end inconclusively, and Steve and I continued on our\nrounds. Later, Bill came to see me, looking rattled. “Oh, my God,” he said. “I was just\narguing with Steve Jobs. Did I blow it?”\n“On the contrary,” I told him. “You won.”\nI could see something that Bill couldn’t: Steve had responded to Bill’s passion\nabout the issue.",
           "wordCount": 186,
@@ -4844,7 +4844,7 @@
           "links": []
         },
         {
-          "chunkId": "99_8",
+          "chunkId": "14_8",
           "type": "paragraph",
           "content": "The fact that Bill was willing to stand up so forcefully and\narticulately for what he believed showed Steve that Bill’s ideas were worthy of\nrespect. Steve never raised the format issue with us again. It wasn’t that passion trumped logic in Steve’s mind. He was well aware that\ndecisions must never be based on emotions alone. But he also saw that creativity\nwasn’t linear, that art was not commerce, and that to insist upon applying dollars-\nand-cents logic was to risk disrupting the thing that set us apart. Steve put a\npremium on both sides of this equation, logic and emotion, and the way he\nmaintained that balance was key to understanding him. I n the mid-1990s, it became clear that Pixar, long housed in a few cramped, tilt-up\nbuildings in Point Richmond, California, was going to need a new home. The time\nhad come to establish a proper headquarters—a place of our own, suited to our\nneeds. Steve threw himself into designing it, and the magnificent main building that\nwe occupy today is the outgrowth of all that work. But it didn’t come easily.",
           "wordCount": 186,
@@ -4852,7 +4852,7 @@
           "links": []
         },
         {
-          "chunkId": "99_9",
+          "chunkId": "14_9",
           "type": "paragraph",
           "content": "Steve’s first pass at a design was based on some peculiar ideas he had about how\nto force interaction among people. At an off-site staff meeting to discuss these plans\nin 1998, several people rose to complain about his intent to build a single women’s\nand a single men’s restroom. Steve relented, but he was clearly frustrated that\npeople didn’t understand what he was trying to do: Bring people together out of\nnecessity. At first, Steve struggled to find the best way to enable that mutual\nexperience. Next, he envisioned a separate building for each movie under production—the\nidea being that each crew would benefit from having its own contained space, free\nof distraction. I wasn’t so sure about that, so I asked him to go on a road trip. Showing, not telling, worked best with Steve, which is why I coaxed him south to\nBurbank for a tour of the four-story glazed-glass-and-aluminum building on\nThornton Avenue known as Northside. Disney Animation had taken it over in 1997,\nusing it to house the crew for its first 3D animated movie, Dinosaur , among other\nprojects.",
           "wordCount": 185,
@@ -4860,7 +4860,7 @@
           "links": []
         },
         {
-          "chunkId": "99_10",
+          "chunkId": "14_10",
           "type": "paragraph",
           "content": "But the building was more famous for what it had housed in the 1940s:\nLockheed’s top-secret Skunk Works division, which designed jet fighters, spy planes,\nand at least one stealth fighter. I loved that bit of history—and the fact that the\nname Skunk Works itself had been borrowed from Al Capp’s newspaper comic strip\nLi’l Abner . In that strip, there was a running joke about a mysterious and malodorous\nplace deep in the forest called the “Skonk Works” where a strong beverage was\nbrewed from skunks, old shoes, and other strange ingredients. Steve knew that my purpose that day wasn’t to discuss comic strips or aviation\nhistory but to show him the building—a welcoming space where several hundred\nanimators worked on multiple projects simultaneously, under a single roof. I liked\nThe feel of the wide-open hallways. I recall Steve being critical of numerous facets of\nthe building’s layout, but after an hour or so wandering around the place, I could\ntell he was getting the message: Creating separate buildings for each film would be\nisolating. He saw firsthand the way that the Disney people took advantage of the\nopen floor plan, sharing information and brainstorming.",
           "wordCount": 196,
@@ -4868,7 +4868,7 @@
           "links": []
         },
         {
-          "chunkId": "99_11",
+          "chunkId": "14_11",
           "type": "paragraph",
           "content": "Steve was a big believer in\nthe power of accidental mingling; he knew that creativity was not a solitary\nendeavor. But our trip to Northside helped clarify that thinking. In a creative\ncompany, separating your people into distinct silos—Project A over here, Project B\nover there—can be counterproductive. After that trip, he met again with his architects and laid out the principles for a\nsingle building. He took the creation of a new Pixar headquarters as a personal\nresponsibility. You’ve heard the saying “Your employees are your most important asset.” For\nmost executives, these are just words you trot out to make people feel good—while\nthey may be accepted as true, few leaders alter their behavior or make decisions\nbased upon them. But Steve did, taking that principle and building our headquarters\naround it. Everything about the place was designed to encourage people to mingle,\nmeet, and communicate, to support our filmmaking by enhancing our ability to\nwork together. In the end, Steve presided over every detail of our new building’s construction,\nfrom the arched steel bridges that straddle the central atrium to the type of chairs in\nour screening rooms.",
           "wordCount": 191,
@@ -4876,7 +4876,7 @@
           "links": []
         },
         {
-          "chunkId": "99_12",
+          "chunkId": "14_12",
           "type": "paragraph",
           "content": "He didn’t want perceived barriers, so the stairs were open and\ninviting. He wanted a single entrance to the building so that we saw each other as\nwe entered. We had meeting rooms, restrooms, a mailroom, three theaters, a game\narea, and an eating area all at the center in our atrium (where to this day, everyone\ngathers to eat, play ping pong, or be briefed by Pixar’s leaders on the company’s\ngoings on). This all resulted in cross-traffic—people encountered each other all day\nlong, inadvertently, which meant a better flow of communication and increased the\npossibility of chance encounters. You felt the energy in the building. Steve had\nthought all this through with the metalogic of a philosopher and the meticulousness\nof a craftsman. He believed in simple materials, masterfully constructed. He wanted\nall the steel exposed, not painted. He wanted glass doors to be flush with the walls.",
           "wordCount": 150,
@@ -4884,7 +4884,7 @@
           "links": []
         },
         {
-          "chunkId": "99_13",
+          "chunkId": "14_13",
           "type": "paragraph",
           "content": "No wonder that when it opened in the fall of 2000, after four years of planning and\nconstruction, Pixar’s people—who typically worked for four years on each film—\ntook to calling the building “Steve’s movie.”\nI admit that there were moments when I worried that Pixar would fall prey to the\n“edifice complex,” wherein companies build shiny headquarters that are mere\nextensions of executive ego. But that worry proved unfounded. From the day we\nmoved in, on Thanksgiving weekend of 2000, the building became an extraordinary\nand fertile home. Moreover, in our employees’ minds, it transformed Steve—always\nour external defender—into an integral part of our internal culture. The\nenvironment was so exemplary and so clearly attributed to Steve that everyone\ncould appreciate his singular contribution to—and understanding of—the way we\nworked. That appreciation was a positive development because, as I’ve said before, upon\nmeeting Steve, people typically had to become accustomed to his style. Brad Bird\nremembers a meeting during the making of The Incredibles , soon after he joined the\nstudio, when Steve hurt his feelings by saying that some of the Incredibles artwork\nLooked “kind of Saturday morning”—a reference to the low-budget cartoons that\nHanna-Barbera and others produced.",
           "wordCount": 200,
@@ -4892,7 +4892,7 @@
           "links": []
         },
         {
-          "chunkId": "99_14",
+          "chunkId": "14_14",
           "type": "paragraph",
           "content": "“In my world, that’s kind of like saying, ‘Your\nmama sleeps around,’ ” Brad recalls. “I was seething. When the meeting ended, I\nwent over to Andrew and said, ‘Man, Steve just said something that really pissed me\noff.’ And Andrew, without even asking what it was, said, ‘Only one thing?’ ” Brad\ncame to understand that Steve was speaking not as a critic but as the ultimate\nadvocate. Too often, animated superheroes had been made on the cheap and looked\nthat way, too—on that Steve and Brad could agree. The Incredibles , he was implying,\nhad to reach higher. “He was just saying that we have to show this is something\nbigger,” Brad says. “And that epitomized Steve.”\nThough no one outside Pixar knew it, Steve developed a lasting bond with our\ndirectors. At first I thought this was just because he appreciated their creative and\nleadership abilities and they, in turn, appreciated the support and insight he gave\nthem. But as I paid closer attention, I recognized there was something very\nimportant that they shared.",
           "wordCount": 177,
@@ -4900,7 +4900,7 @@
           "links": []
         },
         {
-          "chunkId": "99_15",
+          "chunkId": "14_15",
           "type": "paragraph",
           "content": "When directors pitch an idea, for example, they invest\ntotally, even though a part of them knows that in the end, it may not work at all. Pitching is a way of testing material, taking its measure—and, importantly,\nstrengthening it—by observing how it plays to an audience. But if the idea doesn’t\nfly, they are extremely adept at dropping it and moving on. This is a rare skill, one\nthat Steve had too. Steve had a remarkable knack for letting go of things that didn’t work. If you\nwere in an argument with him, and you convinced him that you were right, he\nwould instantly change his mind. He didn’t hold on to an idea because he had once\nbelieved it to be brilliant. His ego didn’t attach to the suggestions he made, even as\nhe threw his full weight behind them. When Steve saw Pixar’s directors do the same,\nhe recognized them as kindred spirits. One of the dangers of this approach can be that if you are pitching intently, your\nvery exuberance can make others reluctant to respond candidly. When someone has\na strong personality, others can wilt in the face of their intensity.",
           "wordCount": 196,
@@ -4908,7 +4908,7 @@
           "links": []
         },
         {
-          "chunkId": "99_16",
+          "chunkId": "14_16",
           "type": "paragraph",
           "content": "How do you\nprevent this from happening? The trick is to shift the emphasis in any meeting away\nfrom the source of an idea and onto the idea itself. People often place too much\nsignificance on the source of an idea, accepting it (or not criticizing it) because it\ncomes from Steve or a respected director. But Steve had no interest in that kind of\naffirmation. Countless times, I remember watching him toss ideas—pretty far-out\nideas—into the air, just to see how they played. And if they didn’t play well, he\nwould move on. This is, in effect, a form of storytelling—searching for the best way\nto frame and communicate an idea. If people didn’t understand Steve, they would\nmisinterpret his floating of ideas as advocacy. And they would wrongly perceive his\nenthusiasm or insistence as intransigence or bullheadedness. Instead, he was\ngauging reactions to his ideas to see whether or not he should become their\nadvocate. Steve is not commonly described as a storyteller, and he was always careful to say\nhe didn’t know the first thing about filmmaking.",
           "wordCount": 180,
@@ -4916,7 +4916,7 @@
           "links": []
         },
         {
-          "chunkId": "99_17",
+          "chunkId": "14_17",
           "type": "paragraph",
           "content": "Yet part of his bond with our\ndirectors stemmed from the fact that he knew how important it was to construct a\nstory that connected with people. This was a skill he used in his presentations at\nApple. When he got up in front of an audience to introduce a new product, he\nunderstood that he would communicate more effectively if he put forward a\nnarrative, and anyone who ever saw him do it could tell you that he gave\nExtraordinary and carefully crafted performances. At Pixar, Steve was able to participate in other people’s crafting of their stories,\nand I believe this process helped him understand more about human dynamics. There was something about applying his intellect to the emotion of a film—Was it\nlanding? Did it ring true?—that freed him up, and he came to see that Pixar’s\nsuccess was reliant on its movies connecting deeply with an audience. Given the\nway his behavior has been described in the past, you might think that giving\nconstructive feedback to a vulnerable director on a not-baked-yet film would not be\nsomething that Steve could do gracefully, if at all. But in fact, over time, he became\nquite skilled at it.",
           "wordCount": 200,
@@ -4924,7 +4924,7 @@
           "links": []
         },
         {
-          "chunkId": "99_18",
+          "chunkId": "14_18",
           "type": "paragraph",
           "content": "Pete Docter remembers Steve telling him once that he hoped in\nhis next life he would come back as a Pixar director. I have no doubt that if he did,\nhe’d be one of the best. A s summer gave way to fall in 2003, Steve became increasingly hard to get ahold\nof. He was known for responding to emails, at all times of day and night, within\nminutes. But now, I would call or email and not hear back. In October, he dropped\nby Pixar, which was unusual—unless there was a board meeting, we usually briefed\neach other by phone. When John and I sat down with him, Steve closed the door\nand told us that he’d been having this aching in his back that wouldn’t go away. His\ndoctor had recently sent him for a CAT scan, which revealed pancreatic cancer. Ninety-five percent of people with this diagnosis are not alive five years later, he\ntold us. Steve was determined to fight, but he knew he might not win. Over the next eight years, Steve underwent a seemingly endless variety of\ntreatments, both traditional and experimental.",
           "wordCount": 188,
@@ -4932,7 +4932,7 @@
           "links": []
         },
         {
-          "chunkId": "99_19",
+          "chunkId": "14_19",
           "type": "paragraph",
           "content": "As his energy waned, our interactions\nbecame less frequent, though he still called weekly to check in, offer advice, and\nvoice concerns. At one point during this period, John and I drove down to Apple to\nhave lunch with him. Afterward, Steve took us into a secure room where Apple kept\nthe supersecret products and showed us an early prototype of something he called\nthe iPhone. It had a touch screen that engaged the user, making navigation not just\neasy but fun. We could instantly see that it made the phones we were carrying in\nour pockets look like ancient artifacts. He was particularly jazzed about it, he said,\nbecause it was his goal not just to create a phone people used but to design a phone\npeople loved —one that made their lives better, both functionally and aesthetically. He thought Apple had succeeded in creating such a device.",
           "wordCount": 149,
@@ -4940,7 +4940,7 @@
           "links": []
         },
         {
-          "chunkId": "99_20",
+          "chunkId": "14_20",
           "type": "paragraph",
           "content": "As we walked out of the vault, Steve stopped in the hallway and said he had been\nworking on a list of three things he wanted to do—and I remember the words\nprecisely—“before I sail away.” One goal that mattered enormously to him was to\nroll out the product he’d just shown us, along with a few others that he believed\nwould ensure Apple’s future. The second was to safeguard Pixar’s continued success. And the third and most important was to set his three youngest children on a good\npath. I remember him saying that he hoped he would be around to watch his son\nReed, then in 8th grade, graduate from high school. To hear this once-unstoppable\nman scaling back his hopes and ambitions to a handful of last wishes was\nheartbreaking, of course, but I remember thinking that when Steve said it, it\nsounded natural. It felt like he had come to terms with the inevitability of not being\nhere. In the end, he would achieve all three of his goals. O n a Sunday afternoon in February 2007, my daughter Jeannie and I stepped out of\na town car, onto a long, red carpet ...",
           "wordCount": 198,
@@ -4948,7 +4948,7 @@
           "links": []
         },
         {
-          "chunkId": "99_21",
+          "chunkId": "14_21",
           "type": "paragraph",
           "content": "and ran smack into Steve Jobs. It was a few\nhours before the 79th Annual Academy Awards, and to get to our seats, the three of\nus had to plow through the crush of people outside the Kodak Theatre in the heart\nof Hollywood. Cars was nominated for Best Animated Feature Film, and, like all\naward hopefuls, we had a few preshow jitters. But as the three of us jostled along,\nSteve looked around at the circus—the elegantly turned-out men and women, the\nscrum of television interviewers, the throngs of paparazzi and screaming onlookers,\nthe line of limousines pulling up at the curb—and said, “What this scene really\nneeds is a Buddhist monk lighting himself on fire.”\nPerspective is so hard to capture. I worked with Steve for more than a quarter-\ncentury—longer, I believe, than anyone else—and I saw an arc to his life that does\nnot accord with the one-note portraits of relentless perfectionism I’ve read in\nmagazines, newspapers, and even his own authorized biography. Relentless Steve—\nthe boorish, brilliant, but emotionally tone-deaf guy that we first came to know—\nchanged into a different man during the last two decades of his life.",
           "wordCount": 195,
@@ -4956,7 +4956,7 @@
           "links": []
         },
         {
-          "chunkId": "99_22",
+          "chunkId": "14_22",
           "type": "paragraph",
           "content": "All of us who\nknew Steve well noticed the transformation. He became more sensitive not only to\nother people’s feelings but also to their value as contributors to the creative process. His experience with Pixar was part of this change. Steve aspired to create\nutilitarian things that also brought joy; it was his way of making the world a better\nplace. That was part of why Pixar made him so proud—because he felt the world\nwas better for the films we made. He used to say regularly that as brilliant as Apple\nproducts were, eventually they all ended up in landfills. Pixar movies, on the other\nhand, would live forever. He believed, as I do, that because they dig for deeper\ntruths, our movies will endure, and he found beauty in that idea. John talks about\n“the nobility of entertaining people.” Steve understood this mission to his core,\nparticularly toward the end of his life, and—knowing that entertaining wasn’t his\nprimary skill set—he felt lucky to have been involved in it. Pixar occupied a special place in Steve’s world, and his role evolved during our\ntime together.",
           "wordCount": 187,
@@ -4964,7 +4964,7 @@
           "links": []
         },
         {
-          "chunkId": "99_23",
+          "chunkId": "14_23",
           "type": "paragraph",
           "content": "In the early years, he was our benefactor, the one who paid the bills\nto keep the lights on. Later, he became our protector—a constructive critic\ninternally but our fiercest defender to the outside. We had some trying times\ntogether, to be sure, but through those difficulties, we forged a rare bond. I’ve\nalways thought that Pixar was like a well-loved stepchild for Steve—conceived\nbefore he entered our lives, maybe, but still nurtured by him in our formative years. In the decade before his death, I watched Steve change Pixar even as Pixar changed\nhim. I say this while acknowledging that no segment of one’s life can be divorced\nfrom the rest; Steve was, of course, always learning from his family and from his\ncolleagues at Apple. But there was something special about the time he spent with\nus—enhanced, counterintuitively, by the fact that Pixar was his sideline. His wife\nand children, of course, were paramount, and Apple was his first and most heralded\nprofessional achievement; Pixar was a place he could relax a little and play. While\nhe never lost his intensity, we watched him develop the ability to listen.",
           "wordCount": 191,
@@ -4972,7 +4972,7 @@
           "links": []
         },
         {
-          "chunkId": "99_24",
+          "chunkId": "14_24",
           "type": "paragraph",
           "content": "More and\nmore, he could express empathy and caring and patience. He became truly wise. The\nchange in him was real, and it was deep. In chapter 5, I mentioned that, at my insistence, Steve didn’t attend Braintrust\nmeetings. But he would often give notes after movies were screened for Pixar’s\nboard of directors. Once or twice per movie, when a crisis loomed, he would\nInevitably come in and say something that helped alter our perceptions and improve\nthe film. Whenever offering a note, he always began the same way: “I’m not really a\nfilmmaker, so you can ignore everything I say.... ” Then he would proceed, with\nstartling efficiency, to diagnose the problem precisely. Steve focused on the problem\nitself, not the filmmakers, which made his critiques all the more powerful. If you\nsense a criticism is being leveled for personal reasons, it is easy to dismiss. You\ncouldn’t dismiss Steve. Every film he commented on benefited from his insight. But while in the early days his opinions would swing wildly and his delivery\ncould be abrupt, he became more articulate and observant of people’s feelings as\ntime went on.",
           "wordCount": 191,
@@ -4980,7 +4980,7 @@
           "links": []
         },
         {
-          "chunkId": "99_25",
+          "chunkId": "14_25",
           "type": "paragraph",
           "content": "He learned to read the room, demonstrating skills that, years earlier, I\ndidn’t think he had. Some people have said that he got mellower with age, but I\ndon’t think that’s an adequate description of what happened; it sounds too passive,\nas if he just was letting more go. Steve’s transformation was an active one. He\ncontinued to engage; he just changed the way he went about it. There is a phrase that many have used to describe Steve’s knack for accomplishing\nthe impossible. Steve, they say, employed a “reality distortion field.” In his\nbiography of Steve, Walter Isaacson devoted an entire chapter to it, quoting Andy\nHertzfeld, a member of the original Mac team at Apple, saying, “The reality\ndistortion field was a confounding mélange of a charismatic rhetorical style,\nindomitable will, and eagerness to bend any fact to fit the purpose at hand.” I heard\nthe phrase used fairly often around Pixar, too.",
           "wordCount": 155,
@@ -4988,7 +4988,7 @@
           "links": []
         },
         {
-          "chunkId": "99_26",
+          "chunkId": "14_26",
           "type": "paragraph",
           "content": "Some people, after listening to Steve,\nwould feel that they had reached a new level of insight, only to find afterward that\nthey could not reconstruct the steps in his reasoning; then the insight would\nevaporate, leaving them scratching their heads, feeling they had been led down the\ngarden path. Thus, reality distortion. I disliked the phrase because it carried a whiff of negativity—implying that Steve\nwould try to will a fantasy world into being on a whim, without regard to how his\nrefusal to face facts meant that everybody around him had to pull all-nighters and\nupend their lives in the hopes of meeting his unmeetable expectations. Much has\nbeen made of Steve’s refusal to follow rules—realities—that applied to others;\nfamously, for example, he did not put a license plate on his car. But to focus too\nmuch on this is to miss something important. He recognized that many rules were in\nfact arbitrary. Yes, he tested boundaries and crossed the line at times.",
           "wordCount": 165,
@@ -4996,7 +4996,7 @@
           "links": []
         },
         {
-          "chunkId": "99_27",
+          "chunkId": "14_27",
           "type": "paragraph",
           "content": "As a\nbehavioral trait, that can be seen as antisocial—or if it happens to change the world,\nit can earn you the label “visionary.” We frequently support the idea of pushing\nboundaries in theory, ignoring the trouble it can cause in practice. Before Pixar was called Pixar, it was devoted to accomplishing something that had\nnever been done before. For me, this had been a lifelong goal, and my colleagues at\nPixar—Steve among them—were willing to make that leap, too, before computers\nhad enough speed or memory to make it a reality. A characteristic of creative people\nis that they imagine making the impossible possible. That imagining—dreaming,\nnoodling, audaciously rejecting what is (for the moment) true—is the way we\ndiscover what is new or important. Steve understood the value of science and law,\nbut he also understood that complex systems respond in nonlinear, unpredictable\nways. And that creativity, at its best, surprises us all. There is another, different meaning of reality distortion for me. It stems from my\nbelief that our decisions and actions have consequences and that those consequences\nshape our future. Our actions change our reality. Our intentions matter.",
           "wordCount": 191,
@@ -5004,7 +5004,7 @@
           "links": []
         },
         {
-          "chunkId": "99_28",
+          "chunkId": "14_28",
           "type": "paragraph",
           "content": "Most people\nBelieve that their actions have consequences but don’t think through the\nimplications of that belief. But Steve did. He believed, as I do, that it is precisely by\nacting on our intentions and staying true to our values that we change the world. O n August 24, 2011, Steve resigned as Apple’s CEO, as he was no longer able to\nkeep pace with the rigors of the job he loved. Shortly thereafter, I was exercising at\nhome early in the morning when the phone rang. It was Steve. To be honest, I can’t\nremember exactly what was said, because I knew he was nearing the end, and that\nwas an incredibly difficult reality to deal with. But I recall that his voice was strong\n—stronger than it should have been, given what he’d been through—as he talked\nabout how many years we’d worked together and how grateful he was to have had\nthat experience. I remember him saying that he felt honored to have been a part of\nPixar’s success. I told him I felt honored, too, and was thankful for his friendship,\nhis example, and his loyalty.",
           "wordCount": 190,
@@ -5012,7 +5012,7 @@
           "links": []
         },
         {
-          "chunkId": "99_29",
+          "chunkId": "14_29",
           "type": "paragraph",
           "content": "When we hung up, I said to myself, “That was the\ngoodbye call.” I was right: He would live six more weeks, but I would never hear his\nvoice again. On a Monday morning five days after his death, the entire Pixar workforce\ngathered in the atrium of the building Steve had built to mourn and remember. By\n11 A.M. , the atrium was full of people, and it was time to begin. I stood off to the side,\nthinking about the man who’d been Pixar’s fiercest champion and a close friend. It\nfell on me to speak first. There were so many things I could say about Steve—how he bought the division\nthat would become Pixar from George Lucas in 1986, saving us from extinction;\nhow he encouraged us to embark on our first feature film, Toy Story , three years\nlater, when the idea of a computer-animated film still seemed beyond our reach;\nhow he’d solidified our future by selling us to Disney and then ensured our\nautonomy by orchestrating a merger that created a true partnership; how he helped\ntake us from forty-three employees to the 1,100 men and women who stood in front\nof me now.",
           "wordCount": 200,
@@ -5020,7 +5020,7 @@
           "links": []
         },
         {
-          "chunkId": "99_30",
+          "chunkId": "14_30",
           "type": "paragraph",
           "content": "Looking back, I could recall the earliest moments of our relationship—\nhim probing and poking, me honing and fortifying my ideas. He had made me more\nfocused, more resilient, smarter, better. Over time, I had come to rely on his\ndemanding specificity, which never failed to help me clarify my own thinking. I\ncould already feel the weight of his absence. “I remember twenty-five years ago in February, the day that Pixar was formed,” I\nbegan, recalling how we gathered in a conference room at Lucasfilm to sign the\npapers transferring majority ownership to Steve. We were exhausted, having spent\nmonths looking for potential suitors before Steve stepped forward. For those who\nweren’t at Pixar in the beginning, I recalled how Steve had pulled Alvy Ray Smith\nand me aside, put his arms around us, and said, “As we’re going through this, there’s\none thing I dearly ask. And that is that we be loyal to each other.” I told my\ncolleagues that Steve had always made good on that promise. “Over the years, Pixar\nand Steve went through a lot of changes and a lot of hardships,” I said. “These were\nvery hard times. Pixar came close to collapsing.",
           "wordCount": 200,
@@ -5028,7 +5028,7 @@
           "links": []
         },
         {
-          "chunkId": "99_31",
+          "chunkId": "14_31",
           "type": "paragraph",
           "content": "Any other investor or venture\ncapitalist would have given up.” But not Steve. He demanded of himself what he’d\nasked of us: loyalty. “I don’t know what happens in the future,” I concluded as the sun streamed\nthrough the skylights above us. “But I do believe that Steve’s focus on passion and\nQuality will take us places that we cannot yet perceive. And for that I am truly\ngrateful.” At that moment, I was more aware than ever of how important it was to\nunderstand and protect what had made Steve so proud. It had always been my goal\nto create a culture at Pixar that would outlast its leaders—Steve, John, and me. Now\none of us had taken his leave too soon, and the job of fortifying that culture—\nensuring that it would be self-sustaining—was left to John and me. When I was done, I offered the microphone to others who’d had a close\nrelationship with Steve and, one by one, they stepped onto the podium. Andrew\nStanton described Steve as “the creative firewall.” With Steve around, the people of\nPixar “were like free-range chickens,” he said, getting a laugh.",
           "wordCount": 191,
@@ -5036,7 +5036,7 @@
           "links": []
         },
         {
-          "chunkId": "99_32",
+          "chunkId": "14_32",
           "type": "paragraph",
           "content": "“Steve would do\nanything to keep us creatively safe.”\nThe ever-observant Pete Docter got up next and recalled one of the most\nendearing images he had of Steve. During a meeting one day years ago, Pete noticed\nthat Steve had two small, identical holes in one of the legs of his Levis 501s. Steve\nshifted in his seat, and Pete noticed the same two holes on the other leg, too, in the\nsame spot, right above the ankle. As Pete was trying—and failing—to imagine a\nreason for these symmetrical holes, Steve reached down to pull up his socks by\ngrabbing them through his pants—putting his fingers right where the holes were! “Here Steve was worth millions, but apparently getting a new pair of pants was not\nimportant to him,” Pete said. “Or maybe he needed new socks with better elastic. Either way, it was a humanizing aspect to this larger-than-life guy.”\nBrad Bird recalled that when he first started talking to Pixar about doing The\nIncredibles , he wasn’t sure if he would take the offer: He was still considering staying\nwith Warner Bros., which had released his earlier movie, The Iron Giant .",
           "wordCount": 194,
@@ -5044,7 +5044,7 @@
           "links": []
         },
         {
-          "chunkId": "99_33",
+          "chunkId": "14_33",
           "type": "paragraph",
           "content": "“But it took\nme a month to get a meeting with the administration of the studio I’d just made a\nmovie for,” Brad said. “And in the meantime, Steve knew the name of my wife,\nasked how my kids were by name—he did his homework. I thought, ‘What the hell\nam I doing talking to Warner Bros.?’ It cinched the deal.”\n“Steve held the bar for quality,” Brad continued. “He was always about the long\nrun. He was into Buddhism, but I see him more as just a spiritual guy. I have to\nbelieve that he believed in something beyond this”—he hesitated, overcome for a\nmoment—“and that’s where we’ll see him again. Where cream rises to the top. So\nhere’s to you, Steve, and to the long run.”\nIt was John’s turn now. The room fell silent, but you could feel the current of\nemotion around us all. Stepping to the podium, he described what an honor it had\nbeen to be Steve’s friend as he changed—like we all aspire to do—for the better. “When Steve first bought us,” John said, “there was a confidence he had. Some\npeople call it arrogance; I call it confidence.",
           "wordCount": 196,
@@ -5052,7 +5052,7 @@
           "links": []
         },
         {
-          "chunkId": "99_34",
+          "chunkId": "14_34",
           "type": "paragraph",
           "content": "But it was basically a belief that he\ncould do anybody’s job better than they could. That’s why people hated getting into\nan elevator at Apple with Steve because they felt by the time they got to the top\nfloor, they’d probably be fired.” Again, the room broke out in laughter. “But as Pixar\nevolved into an animation studio, he started to look at all the work that we were\ndoing, and he was amazed. He realized he couldn’t even come close to doing what\nwe could do. I like to think that when he was building Pixar, when he and Laurene\ngot married and he had his kids, that that realization of how brilliant the people\nhere at Pixar were—that all this helped make him the amazing leader he was.”\nThree weeks before, John had visited Steve for the last time. “We sat for about an\nhour talking about coming projects he was so interested in,” John said, his voice\nCatching. “I looked at him and I realized this man had given me—given us—\neverything that we could ever want. I gave him a big hug.",
           "wordCount": 187,
@@ -5060,7 +5060,7 @@
           "links": []
         },
         {
-          "chunkId": "99_35",
+          "chunkId": "14_35",
           "type": "paragraph",
           "content": "I kissed him on the cheek\nand for all of you”—John was crying now—“I said, ‘Thank you. I love you, Steve.’ ”\nThe room erupted in applause, which only ebbed when one of the Pixar Singers\ntook the stage. In a quiet voice, he announced that just as our resident a capella\ngroup had sung at every Pixar wrap party in our company’s history, it would now\nsing for Steve, too. Standing in the building that we all called “Steve’s movie,” I\ncouldn’t help but think that he would have loved this—a fitting wrap to the\nproduction that was Steve Jobs. The roller coaster came to a stop and a good friend got off, but what a ride we’d\ntaken together. It had been one hell of a trip.",
           "wordCount": 129,
@@ -5071,7 +5071,7 @@
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "pageNumberStart": 194,
       "pageNumberEnd": 211,
       "chunks": [
@@ -5081,10 +5081,10 @@
           "wordCount": 6,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_1"
+          "chunkId": "15_1"
         },
         {
-          "chunkId": "99_2",
+          "chunkId": "15_2",
           "type": "paragraph",
           "content": "H ere are some of the principles we’ve developed over the years to enable and\nprotect a healthy creative culture. I know that when you distill a complex idea into\na T-shirt slogan, you risk giving the illusion of understanding—and, in the process,\nof sapping the idea of its power. An adage worth repeating is also halfway to being\nirrelevant. You end up with something that is easy to say but not connected to\nbehavior. But while I have been dismissive of reductive truths throughout this book,\nI do have a point of view, and I thought it might be helpful to share some of the\nprinciples that I hold most dear here with you. The trick is to think of each\nstatement as a starting point, as a prompt toward deeper inquiry, and not as a\nconclusion. • Give a good idea to a mediocre team, and they will screw it up. Give a mediocre\nidea to a great team, and they will either fix it or come up with something better. If you get the team right, chances are that they’ll get the ideas right.",
           "wordCount": 187,
@@ -5092,7 +5092,7 @@
           "links": []
         },
         {
-          "chunkId": "99_3",
+          "chunkId": "15_3",
           "type": "paragraph",
           "content": "• When looking to hire people, give their potential to grow more weight than their\ncurrent skill level. What they will be capable of tomorrow is more important than\nwhat they can do today. • Always try to hire people who are smarter than you. Always take a chance on\nbetter, even if it seems like a potential threat. • If there are people in your organization who feel they are not free to suggest ideas,\nyou lose. Do not discount ideas from unexpected sources. Inspiration can, and\ndoes, come from anywhere. • It isn’t enough merely to be open to ideas from others. Engaging the collective\nbrainpower of the people you work with is an active, ongoing process. As a\nmanager, you must coax ideas out of your staff and constantly push them to\ncontribute. • There are many valid reasons why people aren’t candid with one another in a\nwork environment. Your job is to search for those reasons and then address them. • Likewise, if someone disagrees with you, there is a reason. Our first job is to\nunderstand the reasoning behind their conclusions.",
           "wordCount": 187,
@@ -5100,7 +5100,7 @@
           "links": []
         },
         {
-          "chunkId": "99_4",
+          "chunkId": "15_4",
           "type": "paragraph",
           "content": "• Further, if there is fear in an organization, there is a reason for it—our job is (a) to\nfind what’s causing it, (b) to understand it, and (c) to try to root it out. [[IMG id=image-195-2 index=1 alt=\"Figure 47\"]]\n[[IMG id=image-195-1 index=0 alt=\"Figure 46\"]]\n• There is nothing quite as effective, when it comes to shutting down alternative\nviewpoints, as being convinced you are right. • In general, people are hesitant to say things that might rock the boat. Braintrust\nmeetings, dailies, postmortems, and Notes Day are all efforts to reinforce the idea\nthat it is okay to express yourself. All are mechanisms of self-assessment that seek\nto uncover what’s real. • If there is more truth in the hallways than in meetings, you have a problem. • Many managers feel that if they are not notified about problems before others are\nor if they are surprised in a meeting, then that is a sign of disrespect. Get over it. • Careful “messaging” to downplay problems makes you appear to be lying,\ndeluded, ignorant, or uncaring. Sharing problems is an act of inclusion that makes\nemployees feel invested in the larger enterprise.",
           "wordCount": 193,
@@ -5108,7 +5108,7 @@
           "links": []
         },
         {
-          "chunkId": "99_5",
+          "chunkId": "15_5",
           "type": "paragraph",
           "content": "• The first conclusions we draw from our successes and failures are typically wrong. Measuring the outcome without evaluating the process is deceiving. • Do not fall for the illusion that by preventing errors, you won’t have errors to fix. The truth is, the cost of preventing errors is often far greater than the cost of\nfixing them. • Change and uncertainty are part of life. Our job is not to resist them but to build\nthe capability to recover when unexpected events occur. If you don’t always try to\nuncover what is unseen and understand its nature, you will be ill prepared to\nlead. • Similarly, it is not the manager’s job to prevent risks. It is the manager’s job to\nmake it safe to take them. • Failure isn’t a necessary evil. In fact, it isn’t evil at all. It is a necessary\nconsequence of doing something new. • Trust doesn’t mean that you trust that someone won’t screw up—it means you\ntrust them even when they do screw up. • The people ultimately responsible for implementing a plan must be empowered to\nmake decisions when things go wrong, even before getting approval.",
           "wordCount": 195,
@@ -5116,7 +5116,7 @@
           "links": []
         },
         {
-          "chunkId": "99_6",
+          "chunkId": "15_6",
           "type": "paragraph",
           "content": "Finding and\nfixing problems is everybody’s job. Anyone should be able to stop the production\nline. • The desire for everything to run smoothly is a false goal—it leads to measuring\npeople by the mistakes they make rather than by their ability to solve problems. • Don’t wait for things to be perfect before you share them with others. Show early\nand show often. It’ll be pretty when we get there, but it won’t be pretty along the\nway. And that’s as it should be. • A company’s communication structure should not mirror its organizational\nstructure. Everybody should be able to talk to anybody. • Be wary of making too many rules. Rules can simplify life for managers, but they\ncan be demeaning to the 95 percent who behave well. Don’t create rules to rein in\nthe other 5 percent—address abuses of common sense individually. This is more\nwork but ultimately healthier. • Imposing limits can encourage a creative response. Excellent work can emerge\nfrom uncomfortable or seemingly untenable circumstances. • Engaging with exceptionally hard problems forces us to think differently. • An organization, as a whole, is more conservative and resistant to change than the\nindividuals who comprise it.",
           "wordCount": 200,
@@ -5124,7 +5124,7 @@
           "links": []
         },
         {
-          "chunkId": "99_7",
+          "chunkId": "15_7",
           "type": "paragraph",
           "content": "Do not assume that general agreement will lead to\nchange—it takes substantial energy to move a group, even when all are on board. • The healthiest organizations are made up of departments whose agendas differ but\nwhose goals are interdependent. If one agenda wins, we all lose. • Our job as managers in creative environments is to protect new ideas from those\nwho don’t understand that in order for greatness to emerge, there must be phases\nof not-so-greatness. Protect the future, not the past. • New crises are not always lamentable—they test and demonstrate a company’s\nvalues. The process of problem-solving often bonds people together and keeps the\nculture in the present. • Excellence, quality , and good should be earned words, attributed by others to us,\nnot proclaimed by us about ourselves. • Do not accidentally make stability a goal. Balance is more important than stability. • Don’t confuse the process with the goal. Working on our processes to make them\nbetter, easier, and more efficient is an indispensable activity and something we\nshould continually work on—but it is not the goal. Making the product great is\nthe goal.",
           "wordCount": 190,
@@ -5132,7 +5132,7 @@
           "links": []
         },
         {
-          "chunkId": "99_8",
+          "chunkId": "15_8",
           "type": "paragraph",
           "content": "The Luxo Jr. sculpture—Pixar’s logo come to life—outside the main building in Emeryville, California. Copyright\n© 2008 Pixar. Photo: Deborah Coleman\nInside the entryway of Pixar’s headquarters in the spring of 2012,\n[[IMG id=image-198-2 index=3 alt=\"Figure 49\"]]\n[[IMG id=image-198-1 index=2 alt=\"Figure 48\"]]\nfeaturing a painting from the movie Brave. Copyright © 2012 Pixar. Photo: Deborah Coleman\nEd C\n[[IMG id=image-199-2 index=5 alt=\"Figure 51\"]]\n[[IMG id=image-199-1 index=4 alt=\"Figure 50\"]]\natmull as a toddler with his mother, Jean, and as an infant with his father, Earl. Ed Catmull Collection\nEd at work in the original Lucasfilm offices, circa 1979. Ed Catmull Collection\nMembers of the Lucasfilm Computer Graphics Group, circa 1985. Front: Alvy Ray Smith. Back, left to right:\nLoren Carpenter, Bill Reeves, Ed Catmull, Rob Cook, John Lasseter, Eben Ostby, David Salesin, Craig Good, and\n[[IMG id=image-200-3 index=8 alt=\"Figure 54\"]]\n[[IMG id=image-200-2 index=7 alt=\"Figure 53\"]]\n[[IMG id=image-200-1 index=6 alt=\"Figure 52\"]]\nSam Leffler. Copyright © 1985 Pixar\nJohn Lasseter’s design sketch of the character Wally B., from the short film The Adventures of André & Wally B. Copyright © 1984 Pixar\nThe “wireframe,” or the underlying architecture of the computer model, of the character Wally B.",
           "wordCount": 194,
@@ -5140,7 +5140,7 @@
           "links": []
         },
         {
-          "chunkId": "99_9",
+          "chunkId": "15_9",
           "type": "paragraph",
           "content": "Copyright ©\nPixar\nTo consult regularly with Disney executives, Joe Ranft, Pete Docter, John Lasseter, and Andrew Stanton logge\n[[IMG id=image-201-2 index=10 alt=\"Figure 56\"]]\n[[IMG id=image-201-1 index=9 alt=\"Figure 55\"]]\nd a\nlot of Southwest Airlines miles flying between Oakland and Burbank during the making of Toy Story , circa 1994.",
           "wordCount": 50,
@@ -5153,10 +5153,10 @@
           "wordCount": 3,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_10"
+          "chunkId": "15_10"
         },
         {
-          "chunkId": "99_11",
+          "chunkId": "15_11",
           "type": "paragraph",
           "content": "A group of producers in the Presto Theatre on Pixar’s campus, 2011. Front row: Jonas Rivera, Jim Morris, Darla\nK. Anderson. Middle: Lindsey Collins, Denise Ream, Galyn Susman. Back: Kevin Reher, Katherine Sarafian, John\nWalker, Tom Porter. Copyright © 2011 Pixar. Photo: Deborah Coleman\n[[IMG id=image-202-3 index=13 alt=\"Figure 59\"]]\n[[IMG id=image-202-2 index=12 alt=\"Figure 58\"]]\n[[IMG id=image-202-1 index=11 alt=\"Figure 57\"]]\nMembers of Pixar’s development department and the Braintrust—including Andrew Stanton, Lee Unkrich, and\nPete Docter—gather for the first script reading of Toy Story 3. Copyright © 2006 Pixar. Photo: Deborah Coleman\nLeft to right: Darla K. Anderson, Jason Katz, Dan Scanlon, John Lasseter, Lee Unkrich, and Sus\n[[IMG id=image-203-2 index=15 alt=\"Figure 61\"]]\n[[IMG id=image-203-1 index=14 alt=\"Figure 60\"]]\nan Levin during a\nToy Story 3 story review. Copyright © 2007 Pixar. Photo: Deborah Coleman\nRatatouille director Brad Bird working on storyboards for the movie. Copyright © 2011 Pixar. Photo: Deborah\nColeman\nFrom left: Pixar Executive Vice President of Creative John\n[[IMG id=image-204-2 index=17 alt=\"Figure 63\"]]\n[[IMG id=image-204-1 index=16 alt=\"Figure 62\"]]\nLasseter, Pixar CEO Steve Jobs, Disney CEO Bob Iger,\nand Pixar President Ed Catmull in the Pixar atrium, announcing Disney’s decision to buy Pixar, on January 24,",
           "wordCount": 195,
@@ -5169,10 +5169,10 @@
           "wordCount": 8,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_12"
+          "chunkId": "15_12"
         },
         {
-          "chunkId": "99_13",
+          "chunkId": "15_13",
           "type": "paragraph",
           "content": "Ed, John Lasseter, and Bob Iger rededicate Pixar’s main building as The Steve Jobs Buil\n[[IMG id=image-205-2 index=19 alt=\"Figure 65\"]]\n[[IMG id=image-205-1 index=18 alt=\"Figure 64\"]]\nding on November 5,\n2012, a little over a year after Jobs’s death. Photo: Andrew Tupman\nProducers Kori Rae, Denise Ream, Katherine Sarafian, and Darla K. Anderson in the Brooklyn building at Pixar\n[[IMG id=image-206-2 index=21 alt=\"Figure 67\"]]\n[[IMG id=image-206-1 index=20 alt=\"Figure 66\"]]\nAnimation Studios, 2013. Photo: Ed Catmull\nUp co-director Bob Peterson, prod\n[[IMG id=image-207-1 index=22 alt=\"Figure 68\"]]\nuction designer Ricky Nierva, and director Pete Docter observe ostriches to\nhelp them better animate Kevin, the giant bird in Up. Copyright © 2007 Pixar. Photo: Deborah Coleman\nMore research: Three-star Michelin-rated chef Thomas Keller (left) shows Ratatouille producer Brad Lewis the art\nof making ratatouille in the kitchen of his restaurant The French Laundry. Copyright © 2007 Pixar. Photo:\nDeborah Coleman\nPixar Animation Studio crew members for the film Brave take an archery class in Golden Gate Park in San\nFrancisco. Copyright © 2006 Pixar. Photo: Deborah Coleman\nSteve Jobs, John Lasseter, and Ed chat after Pixar University’s graduation ceremony in September 1997. Copyright © 1997 Pixar .",
           "wordCount": 193,
@@ -5180,7 +5180,7 @@
           "links": []
         },
         {
-          "chunkId": "99_14",
+          "chunkId": "15_14",
           "type": "paragraph",
           "content": "John Lasseter shares his thoughts about the value of honest feedback at the kickoff to Notes Day in the Pixar\natrium. Copyright © 2013 Pixar. Photo: Deborah Coleman\nThe rainbow that appeared over Pixar headquarters shortly after the announcement of Steve Jobs’s death on\nOctober 5, 2011. Photo: Angelique Reisch, taken with an iPhone\nFor Steve",
           "wordCount": 56,
@@ -5193,10 +5193,10 @@
           "wordCount": 3,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_15"
+          "chunkId": "15_15"
         },
         {
-          "chunkId": "99_16",
+          "chunkId": "15_16",
           "type": "paragraph",
           "content": "W riting a book like this one, which draws on so many years of learning and\nexperience, would not be possible without the input of countless people. I’m going\nto call out several of them by name, but in truth this book benefited from the work\nof all of my colleagues and friends at Pixar and Disney. I am grateful to each and\nevery one of them. First, I must thank John Lasseter, chief creative officer of Pixar and Disney\nAnimation and my longtime friend. John is open and generous to his core. He\ncontributed many memories and insights. Bob Iger, the chairman and chief\nexecutive of the Walt Disney Company, supported this project from the beginning\nand his feedback made it immeasurably better. Alan Horn and Alan Bergman, the\nchairman and president, respectively, of Walt Disney Studios, have been wise\nleaders who have worked with me as we have gone through many changes.",
           "wordCount": 154,
@@ -5204,7 +5204,7 @@
           "links": []
         },
         {
-          "chunkId": "99_17",
+          "chunkId": "15_17",
           "type": "paragraph",
           "content": "I am lucky to have an incredible team of managers whom I work with every day:\nat Pixar, general manager Jim Morris and Lori McAdams, vice president of human\nresources; at Disney Animation, general manager Andrew Millstein and Ann Le Cam,\nthe vice president of both production and human resources. All four are excellent\npartners who make me smarter. This book never would have happened without my agent, Christy Fletcher, and\nmy editor at Random House, Andy Ward. Andy has truly shepherded this project\nfrom its inception to its completion. He’s a great editor who made every page more\nreadable, more compelling, and simply better. I must also thank Wendy Tanzillo, my\nassistant of thirteen years, without whose care and attention my life would veer\ntoward chaos. I’ve had many, many discussions over the years that have\n[[IMG id=image-209-2 index=24 alt=\"Figure 70\"]]\n[[IMG id=image-209-1 index=23 alt=\"Figure 69\"]]\nhelped me wrestle with\nsome of the more difficult concepts in this book. Among those whose willingness to\nengage aided me immeasurably are Michael Arndt, Brad Bird, and Bob Peterson. I\nalso benefitted from particularly deep conversations with Phillip Moffitt, president\nof the Life Balance Institute.",
           "wordCount": 193,
@@ -5212,7 +5212,7 @@
           "links": []
         },
         {
-          "chunkId": "99_18",
+          "chunkId": "15_18",
           "type": "paragraph",
           "content": "I asked many people to read this book as it took shape. I approached that process\nmuch as we do screenings of our films, figuring that the more notes I got, from the\nmost varied group of people, the better and clearer the book would become. Given\nthe length of this book, I know this was no small favor I was asking, and yet each of\nthese people gave me their time without hesitation. For that, I thank: Jennifer\nAaker, Darla Anderson, Brad Bird, Jeannie Catmull, Lindsey Collins, Pete Docter,\nBob Friese, Marc Greenberg, Casey Hawkins, Byron Howard, Michael Jennings,\nMichael Johnson, Jim Kennedy, John Lasseter, Ann Le Cam, Jason Levy, Lawrence\nLevy, Emily Loose, Lenny Mendonca, Andrew Millstein, Jim Morris, Donna\nNewbold, Karen Paik, Tom Porter, Kori Rae, Jonas Rivera, Ali Rowghani, Peter\nSims, Andy Smith, Andrew Stanton, Galyn Susman, Bob Sutton, Karen Tenkoff, Lee\nUnkrich, and Jamie Woolf. Robert Baird, Dan Gerson, and Nathan Greno arrived in\nmy office one day with an enormous white board; they were particularly helpful in\nstructuring the book.",
           "wordCount": 176,
@@ -5220,7 +5220,7 @@
           "links": []
         },
         {
-          "chunkId": "99_19",
+          "chunkId": "15_19",
           "type": "paragraph",
           "content": "Moreover, Christine Freeman, Pixar’s archivist, provided\nenormous research help, Elyse Klaidman and Cory Knox kept many of the pieces\nmoving when I’d lost track of them, and Oren Jacob helped fill in important gaps. I should also note that the ideas in this book were developed over a period of\nforty-five years, and innumerable characters participated in this journey. This is not\na history book. While I do provide some chronological narrative to support the\nconcepts I present, I am aware that some people—especially those who do technical\nwork—are underrepresented, largely because describing what they do is complex\nand less accessible. For the record, then, Bill Reeves, Eben Ostby, and Alvy Ray\nSmith were essential to what I deem Pixar’s greatest triumph—the integration of art\nand technology—and this book owes them a debt of gratitude. Finally, to my wife, Susan, and the seven children circling our lives—Ben, David,\nJeannie, Matt, Michael, Miles, and Sean—I thank you for your patience, support,\nand love. Thanks also go to my ninety-two-year-old father, Earl Catmull, whose\nmemory of my childhood remains clearer than mine, and whose descriptions of my\nearliest years were invaluable.",
           "wordCount": 189,
@@ -5233,10 +5233,10 @@
           "wordCount": 2,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_20"
+          "chunkId": "15_20"
         },
         {
-          "chunkId": "99_21",
+          "chunkId": "15_21",
           "type": "paragraph",
           "content": "T hanks go to my agent, Elyse Cheney, for bringing me this project. To Andy Ward,\nat Random House, for his all-around brilliance. To my son, Jack Newton, for being\nhis insightful, funny, and inspiring self. To Mary Melton\n[[IMG id=image-210-1 index=25 alt=\"Figure 71\"]]\nand Jim Nelson, my\nenormously supportive editors at Los Angeles magazine and GQ , for making it\npossible for me to take this book on. To everyone at Pixar and Disney Animation\nwho helped nail down key moments, but particularly to Brad Bird, Pete Docter,\nChristine Freeman, Elyse Klaidman, John Lasseter, Jim Morris, Tom Porter, Andrew\nStanton, and Wendy Tanzillo. To the historians and biographers whose books helped\nme ask better questions: Walter Isaacson ( Steve Jobs ), Karen Paik ( To Infinity and\nBeyond! The Story of Pixar Animation Studios ), David A. Price ( The Pixar Touch: The\nMaking of a Company ), Michael Rubin ( Droidmaker: George Lucas and the Digital\nRevolution ), a\n[[IMG id=image-211-1 index=26 alt=\"Figure 72\"]]\nnd James B. Stewart ( Disney War ).",
           "wordCount": 174,
@@ -5244,7 +5244,7 @@
           "links": []
         },
         {
-          "chunkId": "99_22",
+          "chunkId": "15_22",
           "type": "paragraph",
           "content": "To my parents, for teaching me that\n“If you want to write, read,” and to my dear friends who never stop giving good\ncounsel: Julie Buckner, Karla Clement, Sacha Feinman, Ben Goldhirsh, Carla Hall,\nGary Harris, Nancy Hass, Jon Herbst, Claire Hoffman, Beth Hubbard, Justin McLeod,\nJ. R. Moehringer, Bob Roe, Julia St. Pierre, Minna Towbin Pinger, Valerie Van\nGalder, Brendan Vaughan, and Sherri Wolf. Finally, to Ed Catmull, for giving me a\nchance and for inviting me inside.",
           "wordCount": 79,
@@ -5257,10 +5257,10 @@
           "wordCount": 3,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "99_23"
+          "chunkId": "15_23"
         },
         {
-          "chunkId": "99_24",
+          "chunkId": "15_24",
           "type": "paragraph",
           "content": "E D C ATMULL is co-founder of Pixar Animation Studios and president of Pixar Animation\nand Disney Animation. He has been honored with five Academy Awards, including\nthe Gordon E. Sawyer Award for lifetime achievement in the field of computer\ngraphics. He received his Ph.D. in computer science from the University of Utah. He\nlives in San Francisco with his wife and children. A MY W ALLACE is a journalist whose work has appeared in GQ , Wired , The New Yorker ,\nand The New York Times Magazine . She currently serves as editor-at-large at Los\nAngeles magazine. Previously, she worked as a reporter and editor at the Los Angeles\nTimes and wrote a monthly column for The New York Times Sunday Business section.",
           "wordCount": 125,
@@ -5268,7 +5268,7 @@
           "links": []
         },
         {
-          "chunkId": "99_25",
+          "chunkId": "15_25",
           "type": "paragraph",
           "content": "Índice\nTitle Page 2\nCopyright 3\nContents 4\nIntroduction: Lost and Found 6\nPart I: Getting Started 11\nChapter 1: Animated 12\nChapter 2: Pixar is Born 23\nChapter 3: A Defining Goal 37\nChapter 4: Establishing Pixar’s Identity 49\nPart II: Protecting the New 59\nChapter 5: Honesty and Candor 60\nChapter 6: Fear and Failure 72\nChapter 7: The Hungry Beast and the Ugly Baby 86\nChapter 8: Change and Randomness 95\nChapter 9: The Hidden 108\nPart III: Building and Sustaining 119\nChapter 10: Broadening Our View 120\nChapter 11: The Unmade Future 142\nPart IV: Testing What We Know 152\nChapter 12: A New Challenge 153\nChapter 13: Notes Day 172\nAfterword: The Steve We Knew 184\nStarting Points: Thoughts for Managing a Creative\nCulture 195\nPhoto Insert 198\nDedication 208\nAcknowledgments 209\nAbout the Authors 211",
           "wordCount": 141,
@@ -5279,7 +5279,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-19T15:25:26.219Z",
+    "processingStartTime": "2025-08-19T15:32:34.540Z",
     "processingEndTime": null,
     "stepResults": {
       "step-4": {
@@ -5287,7 +5287,7 @@
         "totalParagraphs": 610,
         "totalHeaders": 32,
         "totalLinksExtracted": 1,
-        "processingTime": 86,
+        "processingTime": 81,
         "stats": {
           "totalChunks": 642,
           "totalParagraphs": 610,
@@ -5961,7 +5961,7 @@
       "lineCount": 9186,
       "wordCount": 112801,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-19T15:25:27.115Z",
+      "extractionTime": "2025-08-19T15:32:35.455Z",
       "averageWordsPerPage": 532,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 19959
@@ -5973,7 +5973,7 @@
       "patternMatches": 47,
       "averageDetectionConfidence": 0.9437499999999999,
       "pageOffset": 0,
-      "processingTime": 966,
+      "processingTime": 968,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -5982,7 +5982,7 @@
       "averagePagesPerChapter": 12.9375,
       "totalCharacters": 641448,
       "averageCharactersPerChapter": 40090.5,
-      "processingTime": 8,
+      "processingTime": 7,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -5999,21 +5999,21 @@
       "totalChapters": 16,
       "averageWordsPerPage": 534.5410628019324,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-19T15:25:28.217Z",
-      "processingTime": 33
+      "extractionTime": "2025-08-19T15:32:36.565Z",
+      "processingTime": 34
     },
     "linkDetection": {
       "totalLinks": 1,
       "totalPdfLinks": 33,
-      "processingTime": 763,
-      "detectionTime": "2025-08-19T15:25:28.991Z"
+      "processingTime": 761,
+      "detectionTime": "2025-08-19T15:32:37.334Z"
     },
     "imageExtraction": {
       "totalImages": 69,
       "totalExtractedImages": 72,
       "imagesFolderPath": "/Users/gileck/projects/temp1/files/Creativity-Inc/output/images",
-      "processingTime": 2521,
-      "extractionTime": "2025-08-19T15:25:31.520Z"
+      "processingTime": 2504,
+      "extractionTime": "2025-08-19T15:32:39.846Z"
     }
   }
 }

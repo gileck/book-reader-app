@@ -3,8 +3,8 @@
     "totalImages": 69,
     "totalExtractedImages": 72,
     "imagesFolderPath": "/Users/gileck/projects/temp1/files/Creativity-Inc/output/images",
-    "processingTime": 2514,
-    "extractionTime": "2025-08-19T15:25:31.513Z",
+    "processingTime": 2497,
+    "extractionTime": "2025-08-19T15:32:39.839Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [
@@ -1308,7 +1308,7 @@
   "chapters": [
     {
       "title": "Introduction: Lost and Found",
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "pageNumberStart": 5,
       "pageNumberEnd": 10,
       "pages": [
@@ -2889,7 +2889,7 @@
     },
     {
       "title": "Afterword: The Steve We Knew",
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "pageNumberStart": 183,
       "pageNumberEnd": 193,
       "pages": [
@@ -2987,7 +2987,7 @@
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "pageNumberStart": 194,
       "pageNumberEnd": 211,
       "pages": [

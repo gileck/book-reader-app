@@ -2,7 +2,7 @@
   "chapterMetadata": [
     {
       "title": "Introduction: Lost and Found",
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "startingPage": 5,
       "endPage": 10,
       "confidence": 0.7,
@@ -114,7 +114,7 @@
     },
     {
       "title": "Afterword: The Steve We Knew",
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "startingPage": 183,
       "endPage": 193,
       "confidence": 0.7,
@@ -122,7 +122,7 @@
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "startingPage": 194,
       "endPage": null,
       "confidence": 0.7,
@@ -130,7 +130,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-19T15:25:26.219Z",
+    "processingStartTime": "2025-08-19T15:32:34.540Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -139,7 +139,7 @@
       "lineCount": 9186,
       "wordCount": 112801,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-19T15:25:27.115Z",
+      "extractionTime": "2025-08-19T15:32:35.455Z",
       "averageWordsPerPage": 532,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 19959
@@ -151,7 +151,7 @@
       "patternMatches": 47,
       "averageDetectionConfidence": 0.9437499999999999,
       "pageOffset": 0,
-      "processingTime": 966,
+      "processingTime": 968,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

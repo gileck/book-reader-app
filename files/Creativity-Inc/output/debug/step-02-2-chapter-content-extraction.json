@@ -1,5 +1,5 @@
 {
-  "processingTime": 8,
+  "processingTime": 7,
   "extractionStats": {
     "totalChapters": 16,
     "totalPages": 207,
@@ -10,7 +10,7 @@
   "chapters": [
     {
       "title": "Introduction: Lost and Found",
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "pageNumberStart": 5,
       "pageNumberEnd": 10,
       "contentLength": 15824
@@ -108,14 +108,14 @@
     },
     {
       "title": "Afterword: The Steve We Knew",
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "pageNumberStart": 183,
       "pageNumberEnd": 193,
       "contentLength": 37170
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "pageNumberStart": 194,
       "pageNumberEnd": 211,
       "contentLength": 18318

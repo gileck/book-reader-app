@@ -110,6 +110,45 @@ function validate(output) {
         }
     }
     
+    // 2. Check for duplicate chapter numbers
+    const chapterNumbers = chapters.map(c => c.chapterNumber);
+    const duplicates = chapterNumbers.filter((num, index) => chapterNumbers.indexOf(num) !== index);
+    if (duplicates.length > 0) {
+        const duplicateNumbers = [...new Set(duplicates)];
+        const duplicateChapters = duplicateNumbers.map(num => {
+            const chaptersWithNum = chapters.filter(c => c.chapterNumber === num);
+            return `Chapter ${num}: ${chaptersWithNum.map(c => `"${c.title}"`).join(', ')}`;
+        });
+        console.error(`❌ Chapter validation failed: Duplicate chapter numbers found:\n${duplicateChapters.map(msg => `  - ${msg}`).join('\n')}`);
+        return false;
+    }
+    
+    // 3. Check for gaps in chapter numbering (should be 0,1,2,3,... with no gaps)
+    const sortedNumbers = [...chapterNumbers].sort((a, b) => a - b);
+    const expectedSequence = Array.from({length: sortedNumbers.length}, (_, i) => i);
+    
+    // Check if the sequence matches 0,1,2,3,...
+    for (let i = 0; i < expectedSequence.length; i++) {
+        if (sortedNumbers[i] !== expectedSequence[i]) {
+            const missing = expectedSequence.filter(num => !sortedNumbers.includes(num));
+            const unexpected = sortedNumbers.filter(num => !expectedSequence.includes(num));
+            
+            let errorMsg = `❌ Chapter validation failed: Chapter numbering sequence is incorrect.\n`;
+            errorMsg += `  Expected: ${expectedSequence.join(', ')}\n`;
+            errorMsg += `  Found: ${sortedNumbers.join(', ')}`;
+            
+            if (missing.length > 0) {
+                errorMsg += `\n  Missing chapter numbers: ${missing.join(', ')}`;
+            }
+            if (unexpected.length > 0) {
+                errorMsg += `\n  Unexpected chapter numbers: ${unexpected.join(', ')}`;
+            }
+            
+            console.error(errorMsg);
+            return false;
+        }
+    }
+    
     return true;
 }
 

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-08-19T15:25:31.613Z",
-  "processingTime": "86ms",
+  "timestamp": "2025-08-19T15:32:39.936Z",
+  "processingTime": "81ms",
   "summary": {
     "totalChapters": 16,
     "totalChunks": 642,
@@ -3678,7 +3678,7 @@
   ],
   "chapters": [
     {
-      "chapterNumber": 99,
+      "chapterNumber": 0,
       "title": "Introduction: Lost and Found",
       "chunkCount": 16,
       "paragraphCount": 15,
@@ -7878,7 +7878,7 @@
       ]
     },
     {
-      "chapterNumber": 99,
+      "chapterNumber": 14,
       "title": "Afterword: The Steve We Knew",
       "chunkCount": 35,
       "paragraphCount": 35,
@@ -8132,7 +8132,7 @@
       ]
     },
     {
-      "chapterNumber": 99,
+      "chapterNumber": 15,
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
       "chunkCount": 25,
       "paragraphCount": 19,
