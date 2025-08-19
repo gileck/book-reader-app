@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-08-17T15:16:20.566Z",
-  "processingTime": "72ms",
+  "timestamp": "2025-08-19T15:25:31.613Z",
+  "processingTime": "86ms",
   "summary": {
     "totalChapters": 16,
-    "totalChunks": 649,
-    "totalParagraphs": 611,
-    "totalHeaders": 38,
-    "totalWords": 111473,
+    "totalChunks": 642,
+    "totalParagraphs": 610,
+    "totalHeaders": 32,
+    "totalWords": 111455,
     "totalLinks": 1
   },
   "statistics": {
-    "totalChunks": 649,
-    "totalParagraphs": 611,
-    "totalHeaders": 38,
-    "totalWords": 111473,
+    "totalChunks": 642,
+    "totalParagraphs": 610,
+    "totalHeaders": 32,
+    "totalWords": 111455,
     "totalLinks": 1,
     "paragraphStats": {
-      "count": 611,
+      "count": 610,
       "wordCounts": [
         192,
         165,
@@ -383,8 +383,7 @@
         191,
         170,
         187,
-        22,
-        24,
+        54,
         196,
         199,
         196,
@@ -630,12 +629,12 @@
         125,
         141
       ],
-      "averageWords": 182.1685761047463,
-      "minWords": 22,
+      "averageWords": 182.48032786885247,
+      "minWords": 26,
       "maxWords": 218
     },
     "headerStats": {
-      "count": 38,
+      "count": 32,
       "wordCounts": [
         4,
         3,
@@ -648,12 +647,6 @@
         5,
         4,
         5,
-        6,
-        3,
-        5,
-        5,
-        3,
-        4,
         6,
         3,
         5,
@@ -676,7 +669,7 @@
         2,
         3
       ],
-      "averageWords": 4.421052631578948,
+      "averageWords": 4.4375,
       "minWords": 2,
       "maxWords": 9
     }
@@ -6367,9 +6360,9 @@
     {
       "chapterNumber": 10,
       "title": "Broadening Our View",
-      "chunkCount": 85,
-      "paragraphCount": 66,
-      "headerCount": 19,
+      "chunkCount": 78,
+      "paragraphCount": 65,
+      "headerCount": 13,
       "chunks": [
         {
           "type": "header",
@@ -6415,58 +6408,9 @@
         },
         {
           "type": "paragraph",
-          "content": "In this chapter I discuss several of the mechanisms we\nuse to put our collective heads into a different frame of mind.",
-          "wordCount": 22,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "1. Dailies, or Solving Problems Together",
-          "wordCount": 6,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "2. Research Trips",
-          "wordCount": 3,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "3. The Power of Limits",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "4. Integrating Technology and Art",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "5. Short Experiments",
-          "wordCount": 3,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "In this chapter I discuss several of the mechanisms we\nuse to put our collective heads into a different frame of mind.\n7. Postmortems",
-          "wordCount": 24,
-          "sentenceCount": 2,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "8. Continuing to Learn",
-          "wordCount": 4,
-          "sentenceCount": 1,
+          "content": "In this chapter I discuss several of the mechanisms we\nuse to put our collective heads into a different frame of mind. 1. Dailies, or Solving Problems Together\n2. Research Trips\n3. The Power of Limits...",
+          "wordCount": 54,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {

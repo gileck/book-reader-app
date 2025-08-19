@@ -1,0 +1,1199 @@
+{
+    "file": "../files/Creativity-Inc/book.pdf",
+    "pages": [
+        {
+            "blocks": [
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 86,
+                        "y": 77,
+                        "w": 119,
+                        "h": 11
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 86,
+                                "y": 77,
+                                "w": 119,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 86,
+                            "y": 86,
+                            "text": "8. Continuing to Learn"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 159,
+                        "y": 116,
+                        "w": 275,
+                        "h": 10
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 159,
+                                "y": 116,
+                                "w": 275,
+                                "h": 10
+                            },
+                            "font": {
+                                "name": "AAAAAB+CharisSIL-Bold",
+                                "family": "serif",
+                                "weight": "bold",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 159,
+                            "y": 124,
+                            "text": "1. DAILIES, OR SOLVING PROBLEMS TOGETHER"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 72,
+                        "y": 154,
+                        "w": 451,
+                        "h": 98
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 154,
+                                "w": 287,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 163,
+                            "text": "In the fall of 2011, eight months before the release of "
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 359,
+                                "y": 155,
+                                "w": 28,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAC+CharisSIL-Italic",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "italic",
+                                "size": 11
+                            },
+                            "x": 359,
+                            "y": 163,
+                            "text": "Brave"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 388,
+                                "y": 154,
+                                "w": 134,
+                                "h": 10
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 388,
+                            "y": 163,
+                            "text": ", a dozen or so animators"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 168,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 177,
+                            "text": "ambled into the dailies meeting in the screening room at the far end of Pixar’s"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 183,
+                                "w": 407,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 191,
+                            "text": "atrium and plopped down heavily on oversized couches. It was just after 9 "
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 479,
+                                "y": 187,
+                                "w": 12,
+                                "h": 4
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 6
+                            },
+                            "x": 479,
+                            "y": 191,
+                            "text": "A.M"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 492,
+                                "y": 183,
+                                "w": 30,
+                                "h": 10
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 492,
+                            "y": 191,
+                            "text": "., and"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 198,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 207,
+                            "text": "more than a few attendees were sipping cups of coffee in an attempt to look alive."
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 213,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 221,
+                            "text": "The director Mark Andrews, meanwhile, is not the groggy type. By the time he"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 227,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 236,
+                            "text": "bounded into the room, he’d already spent an hour outside on the lawn, thrusting"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 241,
+                                "w": 378,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 250,
+                            "text": "and parrying—he’s an avid fencer—with a thirty-eight-inch longsword."
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 72,
+                        "y": 255,
+                        "w": 451,
+                        "h": 111
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 83,
+                                "y": 255,
+                                "w": 162,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 83,
+                            "y": 264,
+                            "text": "Mark had stepped in to direct "
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 247,
+                                "y": 256,
+                                "w": 28,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAC+CharisSIL-Italic",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "italic",
+                                "size": 11
+                            },
+                            "x": 247,
+                            "y": 264,
+                            "text": "Brave"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 275,
+                                "y": 255,
+                                "w": 247,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 275,
+                            "y": 264,
+                            "text": " midway through production at the request of"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 270,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 278,
+                            "text": "John and myself, and he was widely seen as an inspiring leader. A proud descendant"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 284,
+                                "w": 103,
+                                "h": 10
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 293,
+                            "text": "of Scotland, where "
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 175,
+                                "y": 285,
+                                "w": 28,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAC+CharisSIL-Italic",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "italic",
+                                "size": 11
+                            },
+                            "x": 175,
+                            "y": 293,
+                            "text": "Brave"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 204,
+                                "y": 284,
+                                "w": 318,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 204,
+                            "y": 293,
+                            "text": " is set, Mark urged his crew to join him in wearing a kilt to"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 298,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 307,
+                            "text": "work every Friday (he likes to say that men in skirts boost morale). Many viewed"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 312,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 321,
+                            "text": "him as nothing short of a force of nature. “Mark talks to you as if he’s trying to"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 327,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 335,
+                            "text": "drown out an F5 class tornado behind him—and winning,” is how one animator"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 341,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 350,
+                            "text": "described him. “I suspect he consumes plutonium pills.” This dailies meeting would"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 355,
+                                "w": 201,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 364,
+                            "text": "do nothing to disprove that suspicion."
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 72,
+                        "y": 369,
+                        "w": 451,
+                        "h": 97
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 83,
+                                "y": 369,
+                                "w": 439,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 83,
+                            "y": 378,
+                            "text": "“Good morning, everybody! Wake up!” Mark yelled, kicking off an hour-long"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 383,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 392,
+                            "text": "session during which the assembled animators shared glimpses of the scenes they"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 398,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 407,
+                            "text": "were bringing to life. Mark watched carefully and gave detailed notes on how to"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 412,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 421,
+                            "text": "improve each scene and encouraged everyone else in the room—a rigging"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 426,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 435,
+                            "text": "supervisor, the movie’s producer, its head of story, and the other animators—to do"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 440,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 449,
+                            "text": "so as well. The goal of this meeting, as with all dailies meetings, was to see the"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 455,
+                                "w": 188,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 464,
+                            "text": "shots, together, as they really were."
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 72,
+                        "y": 469,
+                        "w": 451,
+                        "h": 182
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 83,
+                                "y": 469,
+                                "w": 438,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 83,
+                            "y": 478,
+                            "text": "Dailies are a key part of Pixar culture, not just because of what they accomplish—"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 483,
+                                "w": 296,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 492,
+                            "text": "constructive midstream feedback—but because of "
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 375,
+                                "y": 483,
+                                "w": 20,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAC+CharisSIL-Italic",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "italic",
+                                "size": 11
+                            },
+                            "x": 375,
+                            "y": 492,
+                            "text": "how"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 396,
+                                "y": 483,
+                                "w": 126,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 396,
+                            "y": 492,
+                            "text": " they accomplish it."
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 497,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 506,
+                            "text": "Participants have learned to check their egos at the door—they are about to show"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 512,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 521,
+                            "text": "incomplete work to their director and colleagues. This requires engagement at all"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 526,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 535,
+                            "text": "levels, and it’s our directors’ job to foster and create a safe place for that. Mark"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 540,
+                                "w": 135,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 549,
+                            "text": "Andrews did this at the "
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 209,
+                                "y": 541,
+                                "w": 28,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAC+CharisSIL-Italic",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "italic",
+                                "size": 11
+                            },
+                            "x": 209,
+                            "y": 549,
+                            "text": "Brave"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 237,
+                                "y": 540,
+                                "w": 285,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 237,
+                            "y": 549,
+                            "text": " meeting by being irrepressible: singing ’80s songs,"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 554,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 563,
+                            "text": "reveling in people’s nicknames (Wu-dog! Dr. K!), and mocking his own drawing"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 569,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 578,
+                            "text": "ability as he hurriedly sketched out suggested tweaks. “Is that all the energy you got"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 583,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 592,
+                            "text": "for me today?” he teased one sleepy colleague. To another, whose work he deemed"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 597,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 606,
+                            "text": "flawless, he shouted the words all animators yearn to hear: “Final that! Bang!”"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 611,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 620,
+                            "text": "Whether or not all the animators would get that same go-ahead, everyone could"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 626,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 634,
+                            "text": "count on this: When each finished his or her presentation, the room would burst"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 640,
+                                "w": 74,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 649,
+                            "text": "into applause."
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 72,
+                        "y": 654,
+                        "w": 451,
+                        "h": 111
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 83,
+                                "y": 654,
+                                "w": 438,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 83,
+                            "y": 663,
+                            "text": "This wasn’t a pep rally, though. The critiques that were offered were specific and"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 668,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 677,
+                            "text": "meticulous. Every scene was prosecuted relentlessly, and each animator seemed to"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 683,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 691,
+                            "text": "welcome the feedback. “Is that stick big enough for everybody?” Mark asked at one"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 697,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 706,
+                            "text": "point, referring to a flimsy-looking branch that was supposed to keep a heavy door"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 711,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 720,
+                            "text": "propped open in one scene. Several people didn’t think so, and as Mark scribbled"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 725,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 734,
+                            "text": "with a stylus on a tablet in front of him, a sturdier log appeared on the screen on the"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 740,
+                                "w": 451,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 748,
+                            "text": "front of the room. “Better?” he asked. One by one, each scene that the group"
+                        },
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 72,
+                                "y": 754,
+                                "w": 450,
+                                "h": 11
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 72,
+                            "y": 763,
+                            "text": "reviewed raised new issues. That old man who just ran up a flight of stairs? He"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "bbox": {
+                        "x": 287,
+                        "y": 784,
+                        "w": 20,
+                        "h": 8
+                    },
+                    "lines": [
+                        {
+                            "wmode": 0,
+                            "bbox": {
+                                "x": 287,
+                                "y": 784,
+                                "w": 20,
+                                "h": 8
+                            },
+                            "font": {
+                                "name": "AAAAAA+CharisSIL",
+                                "family": "serif",
+                                "weight": "normal",
+                                "style": "normal",
+                                "size": 11
+                            },
+                            "x": 287,
+                            "y": 793,
+                            "text": "122"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

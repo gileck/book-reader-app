@@ -365,13 +365,17 @@ function validate(output) {
                 }
                 // Accept image markers as valid endings (will be processed in step 5-1)
                 const endsWithImageMarker = /\[\[IMG\s+id=[^\s]+\s+index=\d+\s+alt="[^"]*"\]\]\s*$/.test(trimmed);
+                // Accept numbered lists as valid content that doesn't need sentence terminators
+                const endsWithNumberedList = /\d+\.\s+[^\n]*$/.test(trimmed) && /\d+\.\s+[^\n]*\n\d+\.\s+/.test(trimmed);
 
-                if (wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker) && !endsWithCommonSingleLetterWord(trimmed)) {
+                if (wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList) && !endsWithCommonSingleLetterWord(trimmed)) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
                 }
 
                 // Check that text content contains no newline characters
-                if (chunk.content.includes('\n')) {
+                // EXCEPT for numbered lists which preserve formatting newlines
+                const hasNumberedList = /\d+\.\s+[^\n]*\n\d+\.\s+/.test(chunk.content);
+                if (chunk.content.includes('\n') && !hasNumberedList) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should not contain newline characters. Content: "${chunk.content}"`);
                 }
             }

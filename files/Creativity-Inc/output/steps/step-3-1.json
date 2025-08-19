@@ -1861,7 +1861,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-17T15:16:15.612Z",
+    "processingStartTime": "2025-08-19T15:25:26.219Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -1870,7 +1870,7 @@
       "lineCount": 9186,
       "wordCount": 112801,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-17T15:16:16.471Z",
+      "extractionTime": "2025-08-19T15:25:27.115Z",
       "averageWordsPerPage": 532,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 19959
@@ -1882,7 +1882,7 @@
       "patternMatches": 47,
       "averageDetectionConfidence": 0.9437499999999999,
       "pageOffset": 0,
-      "processingTime": 795,
+      "processingTime": 966,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -1891,7 +1891,7 @@
       "averagePagesPerChapter": 12.9375,
       "totalCharacters": 641448,
       "averageCharactersPerChapter": 40090.5,
-      "processingTime": 7,
+      "processingTime": 8,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -1908,14 +1908,14 @@
       "totalChapters": 16,
       "averageWordsPerPage": 534.5410628019324,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-17T15:16:17.400Z",
+      "extractionTime": "2025-08-19T15:25:28.217Z",
       "processingTime": 33
     },
     "linkDetection": {
       "totalLinks": 1,
       "totalPdfLinks": 33,
-      "processingTime": 731,
-      "detectionTime": "2025-08-17T15:16:18.139Z"
+      "processingTime": 763,
+      "detectionTime": "2025-08-19T15:25:28.991Z"
     }
   }
 }

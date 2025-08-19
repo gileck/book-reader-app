@@ -200,127 +200,63 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                 if (opts.validate) {
                     const stepModule = STEP_MODULES[stepName];
                     if (stepModule && typeof stepModule.validate === 'function') {
-                        // Capture validation console output (errors/warnings)
-                        const validationLogs = [];
-                        const originalConsoleError = console.error;
-                        const originalConsoleWarn = console.warn;
-                        const originalConsoleLog = console.log;
-
-                        // First, check if we have skipped validation errors for this step
-                        let skippedChunkIds = new Set();
-                        const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
-                        if (fs.existsSync(skippedFile)) {
-                            try {
-                                const raw = fs.readFileSync(skippedFile, 'utf8');
-                                const entries = JSON.parse(raw);
-                                if (Array.isArray(entries)) {
-                                    skippedChunkIds = new Set(entries.filter(e => e && e.step === stepName && typeof e.chunkId === 'string').map(e => e.chunkId));
-                                }
-                            } catch (_) { /* ignore parse errors */ }
-                        }
-
-                        let bufferedErrors = [];
-                        let validationHeaderSuppressed = false;
-
-                        console.error = (...args) => {
-                            const message = args.join(' ');
-                            try { validationLogs.push(message); } catch (_) { }
-
-                            // Check if this error should be suppressed
-                            if (skippedChunkIds.size > 0) {
-                                // If this is a validation header, buffer it to decide later
-                                if (message.includes('validation failed with') && message.includes('error(s):')) {
-                                    bufferedErrors.push({ type: 'header', args: args });
-                                    return;
-                                }
-
-                                // If this is an individual chunk error
-                                const chunkIdMatch = message.match(/(\d+)\.\s+(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/);
-                                if (chunkIdMatch) {
-                                    const chunkId = chunkIdMatch[3];
-                                    if (skippedChunkIds.has(chunkId)) {
-                                        // This error is skipped, buffer it
-                                        bufferedErrors.push({ type: 'individual', args: args, skipped: true });
-                                        return;
-                                    } else {
-                                        // This error is not skipped, flush all buffered errors and print this one
-                                        bufferedErrors.forEach(buffered => {
-                                            originalConsoleError.apply(console, buffered.args);
-                                        });
-                                        bufferedErrors = [];
-                                        return originalConsoleError.apply(console, args);
-                                    }
-                                }
-
-                                // Any other error - check if we have buffered errors to flush
-                                if (bufferedErrors.length > 0) {
-                                    // Check if all buffered individual errors are skipped
-                                    const individualErrors = bufferedErrors.filter(e => e.type === 'individual');
-                                    const allSkipped = individualErrors.length > 0 && individualErrors.every(e => e.skipped);
-
-                                    if (!allSkipped) {
-                                        // Some errors are not skipped, flush everything
-                                        bufferedErrors.forEach(buffered => {
-                                            originalConsoleError.apply(console, buffered.args);
-                                        });
-                                    }
-                                    // Clear buffer
-                                    bufferedErrors = [];
-                                }
-                            }
-
-                            return originalConsoleError.apply(console, args);
-                        };
-                        console.warn = (...args) => {
-                            try { validationLogs.push(args.join(' ')); } catch (_) { }
-                            return originalConsoleWarn.apply(console, args);
-                        };
-                        // Keep normal logs out of the file but still allow runtime logging
                         try {
+                            // Capture validation output for file logging
+                            let validationOutput = '';
+                            const originalConsoleError = console.error;
+                            
+                            console.error = (...args) => {
+                                const message = args.join(' ');
+                                validationOutput += message + '\n';
+                                return originalConsoleError.apply(console, args);
+                            };
+
+                            // Run validation
                             let isValid = stepModule.validate(stepResult);
+                            
+                            // Restore console immediately
+                            console.error = originalConsoleError;
 
-                            // Handle any remaining buffered errors after validation completes
-                            if (bufferedErrors.length > 0) {
-                                const individualErrors = bufferedErrors.filter(e => e.type === 'individual');
-                                const allSkipped = individualErrors.length > 0 && individualErrors.every(e => e.skipped);
-
-                                if (!allSkipped) {
-                                    // Some errors are not skipped, flush everything
-                                    bufferedErrors.forEach(buffered => {
-                                        originalConsoleError.apply(console, buffered.args);
-                                    });
+                            // Handle skipped validation errors (if any)
+                            if (!isValid) {
+                                const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
+                                if (fs.existsSync(skippedFile)) {
+                                    try {
+                                        const entries = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
+                                        const skippedChunkIds = new Set(
+                                            entries.filter(e => e?.step === stepName && typeof e?.chunkId === 'string')
+                                                   .map(e => e.chunkId)
+                                        );
+                                        
+                                        if (skippedChunkIds.size > 0) {
+                                            // Extract chunk IDs from validation output
+                                            const chunkIds = [...validationOutput.matchAll(/(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/g)]
+                                                            .map(match => match[2]);
+                                            
+                                            // If all validation errors are for skipped chunks, mark as valid
+                                            if (chunkIds.length > 0 && chunkIds.every(id => skippedChunkIds.has(id))) {
+                                                isValid = true;
+                                            }
+                                        }
+                                    } catch (_) { /* ignore errors reading skipped file */ }
                                 }
-                                bufferedErrors = [];
                             }
 
-                            // Skip validations: allow per-step, per-chunkId suppression via skipped-validation-errors.json
-                            if (!isValid && skippedChunkIds.size > 0) {
-                                const logs = validationLogs.join('\n');
-                                // Extract chunkIds from logs
-                                const ids = [];
-                                const re = /(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/g;
-                                let m;
-                                while ((m = re.exec(logs)) !== null) {
-                                    ids.push(m[2]);
-                                }
-                                if (ids.length > 0 && ids.every(id => skippedChunkIds.has(id))) {
-                                    isValid = true;
-                                }
+                            // Write validation output to file if validation failed
+                            if (!isValid && validationOutput.trim()) {
+                                const validationOutputPath = path.join(outputDir, 'validation-output.txt');
+                                const header = `\n==== ${stepName} validation output @ ${new Date().toISOString()} ====\n`;
+                                fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
                             }
+
                             validationResult = {
                                 passed: isValid,
-                                error: null,
+                                error: isValid ? null : 'Validation failed',
                                 timestamp: new Date().toISOString(),
                                 duration: Date.now() - stepEndTime
                             };
+
                             if (!isValid) {
-                                // Write validation output to file for debugging
-                                try {
-                                    const validationOutputPath = path.join(outputDir, 'validation-output.txt');
-                                    const header = `\n==== ${stepName} validation output @ ${new Date().toISOString()} ====\n`;
-                                    const body = (validationLogs.length ? validationLogs.join('\n') : '(no validation logs captured)') + '\n';
-                                    fs.appendFileSync(validationOutputPath, header + body);
-                                } catch (_) { }
                                 throw new Error(`Step ${stepName} validation failed`);
                             }
                         } catch (validationError) {
@@ -330,19 +266,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 timestamp: new Date().toISOString(),
                                 duration: Date.now() - stepEndTime
                             };
-                            // On thrown validation error, persist captured logs too
-                            try {
-                                const validationOutputPath = path.join(outputDir, 'validation-output.txt');
-                                const header = `\n==== ${stepName} validation output @ ${new Date().toISOString()} ====\n`;
-                                const body = (validationLogs.length ? validationLogs.join('\n') : '(no validation logs captured)') + '\n';
-                                fs.appendFileSync(validationOutputPath, header + body);
-                            } catch (_) { }
                             throw validationError;
-                        } finally {
-                            // Restore console
-                            console.error = originalConsoleError;
-                            console.warn = originalConsoleWarn;
-                            console.log = originalConsoleLog;
                         }
                     }
                 }

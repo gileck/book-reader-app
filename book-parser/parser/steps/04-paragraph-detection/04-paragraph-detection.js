@@ -520,6 +520,65 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
 
 
 /**
+ * Check if a numbered line is part of a numbered list (vs a standalone header)
+ * @param {number} lineIndex - Index of the current line
+ * @param {Array} allLines - All lines in the page
+ * @returns {boolean} - True if this appears to be part of a numbered list
+ */
+function isPartOfNumberedList(lineIndex, allLines) {
+    const currentLine = allLines[lineIndex].trim();
+    const currentMatch = currentLine.match(/^(\d+)[\.)]\s+/);
+    if (!currentMatch) return false;
+    
+    const currentNumber = parseInt(currentMatch[1]);
+    
+    // Look for previous and next numbered items to confirm it's a list
+    let foundPrevious = false;
+    let foundNext = false;
+    
+    // Check previous lines for (currentNumber - 1)
+    for (let i = lineIndex - 1; i >= 0 && i >= lineIndex - 10; i--) {
+        const line = allLines[i].trim();
+        if (!line) continue;
+        
+        const match = line.match(/^(\d+)[\.)]\s+/);
+        if (match) {
+            const num = parseInt(match[1]);
+            if (num === currentNumber - 1) {
+                foundPrevious = true;
+                break;
+            }
+            if (num < currentNumber - 1) break; // Found an older number, stop looking
+        }
+    }
+    
+    // Check next lines for (currentNumber + 1)
+    for (let i = lineIndex + 1; i < allLines.length && i <= lineIndex + 10; i++) {
+        const line = allLines[i].trim();
+        if (!line) continue;
+        
+        const match = line.match(/^(\d+)[\.)]\s+/);
+        if (match) {
+            const num = parseInt(match[1]);
+            if (num === currentNumber + 1) {
+                foundNext = true;
+                break;
+            }
+            if (num > currentNumber + 1) break; // Found a future number, stop looking
+        }
+    }
+    
+    // Also check for the common pattern where we have item 1 without a previous item
+    // (like at the start of a list) - if we find the next number, it's likely a list
+    if (currentNumber === 1 && foundNext) {
+        return true;
+    }
+    
+    // If we found either previous or next sequential number, it's likely a list
+    return foundPrevious || foundNext;
+}
+
+/**
  * Check if a line is a header using the 6-rule system
  * @param {string} line - Line to check
  * @param {number} lineIndex - Index of the line
@@ -531,15 +590,20 @@ function isHeader(line, lineIndex, allLines) {
 
     // Special case: Numbered headers like "#11. Breath Hold Activation" / "13) ..."
     // Accept when pattern matches number prefix and 2-12 capitalized words follow, no terminal punctuation
+    // BUT exclude list items (consecutive numbered sequences like 1., 2., 3.)
     const numberedHeaderMatch = tline.match(/^#?\d+[\.)]\s+(.+)$/);
     if (numberedHeaderMatch) {
         const title = numberedHeaderMatch[1].trim();
         if (!/[.!?]$/.test(title)) {
             const titleWords = title.split(/\s+/);
             if (titleWords.length >= 2 && titleWords.length <= 12) {
-                const capCount = titleWords.filter(w => /^[A-Z]/.test(w.replace(/^["'“”‘’(]+/, ''))).length;
+                const capCount = titleWords.filter(w => /^[A-Z]/.test(w.replace(/^["'""''(]+/, ''))).length;
                 const ratio = capCount / titleWords.length;
                 if (ratio >= 0.6) {
+                    // Check if this appears to be part of a numbered list
+                    if (isPartOfNumberedList(lineIndex, allLines)) {
+                        return false; // Don't treat list items as headers
+                    }
                     return true;
                 }
             }

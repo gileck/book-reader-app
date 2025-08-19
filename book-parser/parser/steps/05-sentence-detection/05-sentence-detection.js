@@ -82,16 +82,7 @@ function execute(pipelineState) {
 
 
     return {
-        ...pipelineState,
-        chapters: processedChapters,
-        'step-5': {
-            totalChunks,
-            totalSentences,
-            totalHeaders,
-            totalImages,
-            totalLinksExtracted,
-            statistics: stats
-        }
+        chapters: processedChapters
     };
 }
 
@@ -146,7 +137,8 @@ function createSentenceChunks(paragraphContent, paragraphLinks, paragraphIndex) 
         if (!sentence) continue;
 
         // Clean sentence content by removing newlines and normalizing whitespace
-        const cleanSentence = sentence.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+        // BUT preserve newlines that are part of numbered list formatting
+        const cleanSentence = cleanSentenceContent(sentence);
 
         // Find links that belong to this specific sentence
         const sentenceLinks = paragraphScopedLinks.filter(link =>
@@ -564,6 +556,31 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
 }
 
 /**
+ * Clean sentence content while preserving important formatting
+ * @param {string} sentence - Raw sentence content
+ * @returns {string} - Cleaned sentence content
+ */
+function cleanSentenceContent(sentence) {
+    // Detect if this contains a numbered list by looking for multiple numbered items
+    const numberedItemPattern = /\d+\.\s+[^.\n]+/g;
+    const numberedItems = sentence.match(numberedItemPattern);
+    
+    if (numberedItems && numberedItems.length > 1) {
+        // This appears to be a numbered list - preserve newlines between items
+        // Replace only runs of multiple newlines and clean up spacing
+        return sentence
+            .replace(/\n{3,}/g, '\n\n')  // Collapse multiple newlines to max 2
+            .replace(/[ \t]+/g, ' ')     // Normalize spaces and tabs
+            .replace(/\n[ \t]+/g, '\n')  // Remove spaces after newlines
+            .replace(/[ \t]+\n/g, '\n')  // Remove spaces before newlines
+            .trim();
+    } else {
+        // Regular sentence - remove newlines and normalize whitespace
+        return sentence.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+}
+
+/**
  * Split text into sentences, handling footnotes properly
  * @param {string} text - Text to split
  * @returns {Array} - Array of sentences
@@ -582,6 +599,10 @@ function splitIntoSentences(text) {
     for (const [abbr, token] of ABBR_MAP.entries()) {
         protectedText = protectedText.replace(new RegExp(abbr.replace('.', '\\.'), 'g'), token);
     }
+
+    // Protect numbered list items to prevent splitting within lists
+    // Pattern: number + period + space + text (e.g., "1. Item text 2. Next item")
+    protectedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
 
     // Split on sentence terminators followed by whitespace and capital letter or end of text
     // This preserves the terminator with the sentence and avoids creating fragments
@@ -605,12 +626,14 @@ function splitIntoSentences(text) {
         sentences.push(remaining);
     }
 
-    // Restore abbreviations
+    // Restore abbreviations and list numbers
     const restored = sentences.map(s => {
         let out = s;
         for (const [abbr, token] of ABBR_MAP.entries()) {
             out = out.replace(new RegExp(token, 'g'), abbr);
         }
+        // Restore numbered list items
+        out = out.replace(/(\d+)<LISTNUM>/g, '$1.');
         return out;
     });
 

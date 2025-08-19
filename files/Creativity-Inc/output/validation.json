@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "totalDuration": 5066,
-    "timestamp": "2025-08-17T15:16:20.679Z",
+    "totalDuration": 5469,
+    "timestamp": "2025-08-19T15:25:31.694Z",
     "success": false,
     "error": "Step step-5 validation failed",
     "totalSteps": 12,
@@ -12,56 +12,56 @@
     "step-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:16.556Z",
-      "duration": 36
+      "timestamp": "2025-08-19T15:25:27.203Z",
+      "duration": 38
     },
     "step-2-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:17.351Z",
+      "timestamp": "2025-08-19T15:25:28.170Z",
       "duration": 0
     },
     "step-2-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:17.362Z",
+      "timestamp": "2025-08-19T15:25:28.180Z",
       "duration": 2
     },
     "step-2-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:17.367Z",
+      "timestamp": "2025-08-19T15:25:28.184Z",
       "duration": 3
     },
     "step-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:17.408Z",
-      "duration": 8
+      "timestamp": "2025-08-19T15:25:28.224Z",
+      "duration": 7
     },
     "step-3-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:18.145Z",
-      "duration": 6
+      "timestamp": "2025-08-19T15:25:28.999Z",
+      "duration": 8
     },
     "step-3-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:20.493Z",
-      "duration": 9
+      "timestamp": "2025-08-19T15:25:31.527Z",
+      "duration": 7
     },
     "step-4": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-17T15:16:20.582Z",
+      "timestamp": "2025-08-19T15:25:31.630Z",
       "duration": 13
     },
     "step-5": {
       "passed": false,
       "error": "Step step-5 validation failed",
-      "timestamp": "2025-08-17T15:16:20.679Z",
-      "duration": 97
+      "timestamp": "2025-08-19T15:25:31.694Z",
+      "duration": 64
     }
   }
 }

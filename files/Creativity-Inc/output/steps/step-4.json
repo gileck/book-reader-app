@@ -3110,66 +3110,10 @@
         {
           "chunkId": "10_7",
           "type": "paragraph",
-          "content": "In this chapter I discuss several of the mechanisms we\nuse to put our collective heads into a different frame of mind.",
-          "wordCount": 22,
-          "sentenceCount": 1,
+          "content": "In this chapter I discuss several of the mechanisms we\nuse to put our collective heads into a different frame of mind. 1. Dailies, or Solving Problems Together\n2. Research Trips\n3. The Power of Limits\n4. Integrating Technology and Art\n5. Short Experiments\n6. Learning to See\n7. Postmortems\n8. Continuing to Learn",
+          "wordCount": 54,
+          "sentenceCount": 10,
           "links": []
-        },
-        {
-          "type": "header",
-          "content": "1. Dailies, or Solving Problems Together",
-          "wordCount": 6,
-          "sentenceCount": 1,
-          "links": [],
-          "chunkId": "10_8"
-        },
-        {
-          "type": "header",
-          "content": "2. Research Trips",
-          "wordCount": 3,
-          "sentenceCount": 1,
-          "links": [],
-          "chunkId": "10_9"
-        },
-        {
-          "type": "header",
-          "content": "3. The Power of Limits",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "links": [],
-          "chunkId": "10_10"
-        },
-        {
-          "type": "header",
-          "content": "4. Integrating Technology and Art",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "links": [],
-          "chunkId": "10_11"
-        },
-        {
-          "type": "header",
-          "content": "5. Short Experiments",
-          "wordCount": 3,
-          "sentenceCount": 1,
-          "links": [],
-          "chunkId": "10_12"
-        },
-        {
-          "chunkId": "10_13",
-          "type": "paragraph",
-          "content": "In this chapter I discuss several of the mechanisms we\nuse to put our collective heads into a different frame of mind.\n7. Postmortems",
-          "wordCount": 24,
-          "sentenceCount": 2,
-          "links": []
-        },
-        {
-          "type": "header",
-          "content": "8. Continuing to Learn",
-          "wordCount": 4,
-          "sentenceCount": 1,
-          "links": [],
-          "chunkId": "10_14"
         },
         {
           "type": "header",
@@ -3177,10 +3121,10 @@
           "wordCount": 6,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_15"
+          "chunkId": "10_8"
         },
         {
-          "chunkId": "10_16",
+          "chunkId": "10_9",
           "type": "paragraph",
           "content": "In the fall of 2011, eight months before the release of Brave , a dozen or so animators\nambled into the dailies meeting in the screening room at the far end of Pixar’s\natrium and plopped down heavily on oversized couches. It was just after 9 A.M ., and\nmore than a few attendees were sipping cups of coffee in an attempt to look alive. The director Mark Andrews, meanwhile, is not the groggy type. By the time he\nbounded into the room, he’d already spent an hour outside on the lawn, thrusting\nand parrying—he’s an avid fencer—with a thirty-eight-inch longsword. Mark had stepped in to direct Brave midway through production at the request of\nJohn and myself, and he was widely seen as an inspiring leader. A proud descendant\nof Scotland, where Brave is set, Mark urged his crew to join him in wearing a kilt to\nwork every Friday (he likes to say that men in skirts boost morale). Many viewed\nhim as nothing short of a force of nature. “Mark talks to you as if he’s trying to\ndrown out an F5 class tornado behind him—and winning,” is how one animator\ndescribed him.",
           "wordCount": 196,
@@ -3188,7 +3132,7 @@
           "links": []
         },
         {
-          "chunkId": "10_17",
+          "chunkId": "10_10",
           "type": "paragraph",
           "content": "“I suspect he consumes plutonium pills.” This dailies meeting would\ndo nothing to disprove that suspicion. “Good morning, everybody! Wake up!” Mark yelled, kicking off an hour-long\nsession during which the assembled animators shared glimpses of the scenes they\nwere bringing to life. Mark watched carefully and gave detailed notes on how to\nimprove each scene and encouraged everyone else in the room—a rigging\nsupervisor, the movie’s producer, its head of story, and the other animators—to do\nso as well. The goal of this meeting, as with all dailies meetings, was to see the\nshots, together, as they really were. Dailies are a key part of Pixar culture, not just because of what they accomplish—\nconstructive midstream feedback—but because of how they accomplish it. Participants have learned to check their egos at the door—they are about to show\nincomplete work to their director and colleagues. This requires engagement at all\nlevels, and it’s our directors’ job to foster and create a safe place for that. Mark\nAndrews did this at the Brave meeting by being irrepressible: singing ’80s songs,\nreveling in people’s nicknames (Wu-dog! Dr. K!), and mocking his own drawing\nability as he hurriedly sketched out suggested tweaks.",
           "wordCount": 199,
@@ -3196,7 +3140,7 @@
           "links": []
         },
         {
-          "chunkId": "10_18",
+          "chunkId": "10_11",
           "type": "paragraph",
           "content": "“Is that all the energy you got\nfor me today?” he teased one sleepy colleague. To another, whose work he deemed\nflawless, he shouted the words all animators yearn to hear: “Final that! Bang!”\nWhether or not all the animators would get that same go-ahead, everyone could\ncount on this: When each finished his or her presentation, the room would burst\ninto applause. This wasn’t a pep rally, though. The critiques that were offered were specific and\nmeticulous. Every scene was prosecuted relentlessly, and each animator seemed to\nwelcome the feedback. “Is that stick big enough for everybody?” Mark asked at one\npoint, referring to a flimsy-looking branch that was supposed to keep a heavy door\npropped open in one scene. Several people didn’t think so, and as Mark scribbled\nwith a stylus on a tablet in front of him, a sturdier log appeared on the screen on the\nfront of the room. “Better?” he asked. One by one, each scene that the group\nreviewed raised new issues. That old\n[[IMG id=image-122-1 index=1 alt=\"Figure 26\"]]\nman who just ran up a flight of stairs? He\nShould look more winded. The facial expression of a young spy?",
           "wordCount": 196,
@@ -3204,7 +3148,7 @@
           "links": []
         },
         {
-          "chunkId": "10_19",
+          "chunkId": "10_12",
           "type": "paragraph",
           "content": "It could be more\ndevilish. “Chime in!” Mark urged. “Sound off!”\nFor all the barking and levity, you could feel the focused concentration in the\nroom. What these people were engaged in was the kind of detailed analysis—and\nopenness to constructive criticism—that would determine whether merely good\nanimation would become great. Mark bore down on ten frames in which Queen\nElinor, the mom character who has turned into a bear, walks on stones while\ntraversing a creek. “She looks like she’s stepping more catlike than heavy-bear-like,”\nhe said. “I like the overall speed, but I’m not feeling the weight . She’s walking like a\nninja.” Everybody nodded and—note taken—they moved on. Dailies are master classes in how to see and think more expansively, and their\nimpact can be felt throughout the building. “Some people show their scenes to get\ncritique from others, others come to watch and see what kind of notes are being\ngiven—to learn from their peers and from me—my style, what I like and dislike,”\nMark told me. “The dailies keep everyone in top form. It’s an intimidating room to\nbe in because the goal is to create the best animation possible.",
           "wordCount": 195,
@@ -3212,7 +3156,7 @@
           "links": []
         },
         {
-          "chunkId": "10_20",
+          "chunkId": "10_13",
           "type": "paragraph",
           "content": "We go through every\nsingle frame with a fine-toothed comb, over and over and over again. Sometimes\nthere are full-on debates because, truly, I don’t have all the answers. We work it out\ntogether.”\nI give this glimpse into a dailies session because sharing and analyzing a team’s\nongoing work every morning is, by definition, a group effort—but it does not come\nnaturally. People join us with a set of expectations about what they think is\nimportant. They want to please, impress, and show their worth. They really don’t\nwant to embarrass themselves by showing incomplete work or ill-conceived ideas,\nand they don’t want to say something dumb in front of the director. The first step is\nto teach them that everyone at Pixar shows incomplete work, and everyone is free\nto make suggestions. When they realize this, the embarrassment goes away—and\nwhen the embarrassment goes away, people become more creative. By making the\nstruggles to solve the problems safe to discuss, then everyone learns from—and\ninspires—one another. The whole activity becomes socially rewarding and\nproductive. To participate fully each morning requires empathy, clarity, generosity,\nand the ability to listen.",
           "wordCount": 190,
@@ -3220,7 +3164,7 @@
           "links": []
         },
         {
-          "chunkId": "10_21",
+          "chunkId": "10_14",
           "type": "paragraph",
           "content": "Dailies are designed to promote everyone’s ability to be\nopen to others, in the recognition that individual creativity is magnified by the\npeople around you. The result: We see more clearly.",
           "wordCount": 31,
@@ -3233,10 +3177,10 @@
           "wordCount": 3,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_22"
+          "chunkId": "10_15"
         },
         {
-          "chunkId": "10_23",
+          "chunkId": "10_16",
           "type": "paragraph",
           "content": "I was once in a conference room at Disney in which two directors were pitching the\nlatest version of a film they were developing. The walls of the room were covered\nwith large corkboards, which were filled with illustrations of what happens in each\nact, as well as drawings of characters and collages of inspirational artwork. To give\na sense of the overall flavor of the film, the directors had posted dozens of images\nfrom well-known movies that they felt were in a similar visual and contextual vein:\npanoramic shots they hoped to mimic, landscapes they found inspiring, character\nstudies that showed costumes like the ones they planned to use. While they had\nhoped to convey the sense of their movie idea by displaying examples from\n[[IMG id=image-123-1 index=2 alt=\"Figure 27\"]]\nother\nfilms, every single board was based on these iconic references, with the unintended\nResult that everything presented felt terribly derivative. In one way, this made sense\n—every director gets into this business because they love movies; it is inevitable\nthat references to other movies often pop up when talking about filmmaking.",
           "wordCount": 183,
@@ -3244,7 +3188,7 @@
           "links": []
         },
         {
-          "chunkId": "10_24",
+          "chunkId": "10_17",
           "type": "paragraph",
           "content": "(At\nPixar, we joke that only one mention of Star Wars is allowed per meeting.)\nReferences to movies, both good and bad, are part of the vocabulary of talking\nabout filmmaking. And yet if you rely too much on the references to what came\nbefore, you doom your film to being derivative. Brad Bird noticed a similar phenomenon when he was studying at the California\nInstitute of the Arts. He remembers a group of students that simply aped the\nanimation of the masters, an approach he dubbed “Frankensteining.” “They’d have a\ncharacter do the kind of walk that animator Milt Kahl did for Medusa in The\nRescuers ,” he says. “And then they’d have her wave her hands like Frank Thomas\nhad Fauna do in Sleeping Beauty . And so on.... ”\nWhen filmmakers, industrial designers, software designers, or people in any other\ncreative profession merely cut up and reassemble what has come before, it gives the\nillusion of creativity, but it is craft without art. Craft is what we are expected to\nknow; art is the unexpected use of our craft.",
           "wordCount": 182,
@@ -3252,7 +3196,7 @@
           "links": []
         },
         {
-          "chunkId": "10_25",
+          "chunkId": "10_18",
           "type": "paragraph",
           "content": "Even though copying what’s come before is a guaranteed path to mediocrity, it\nappears to be a safe choice, and the desire to be safe—to succeed with minimal risk\n—can infect not just individuals but also entire companies. If we sense that our\nstructures are rigid, inflexible, or bureaucratic, we must bust them open—without\ndestroying ourselves in the process. The question of how to do this must continually\nbe addressed—there is no single answer—because conditions and people are\nconstantly in flux. Whenever filmmakers make a derivative presentation to John, he will often stop\nthem, urging them to slow down, and look beyond what they think they already\nknow. “You must,” he tells them, “go out and do research.”\nIt is impossible to overstate how strongly John believes in the power of research. At his urging, when Pixar was prepping a movie about a Parisian rat who aspires to\nbe a gourmet chef, for example, several members of Ratatouille ’s team went to\nFrance and spent two weeks dining in extraordinary, Michelin-starred restaurants,\nvisiting their kitchens, and interviewing their chefs.",
           "wordCount": 179,
@@ -3260,7 +3204,7 @@
           "links": []
         },
         {
-          "chunkId": "10_26",
+          "chunkId": "10_19",
           "type": "paragraph",
           "content": "(They also trudged through the\nParis sewers, where many a rat makes his home.) When it was decided that Carl\nFredrickson’s balloon-propelled house would sail to the mountains of South America\nin Up , John sent a group of artists to see the tepuis in Venezuela up close; not only\nthat, but an ostrich was brought into Pixar’s headquarters to inspire the animators\nwho were modeling the giant bird character. And when a plotline emerged in\nFinding Nemo that required Nemo, who believed that all drains lead to the ocean, to\nescape from a dentist’s office by jumping into a sink, a trip was arranged to the San\nFrancisco sewage treatment plant. (And yes, the filmmakers learned, it is possible\nfor a fish to get from the drain to the sea without being killed.) Many of the crew on\nFinding Nemo also became scuba-certified. These experiences are more than field trips or diversions. Because they take place\nearly in the filmmaking process, they fuel the film’s development. Take Monsters\nUniversity as an example.",
           "wordCount": 173,
@@ -3268,7 +3212,7 @@
           "links": []
         },
         {
-          "chunkId": "10_27",
+          "chunkId": "10_20",
           "type": "paragraph",
           "content": "In December 2009, more than three years before the movie\npremiered in theaters, a dozen people from Pixar—the director, producer, and\nwriters, as well as several people from the art and story departments—flew east to\nvisit MIT, Harvard, and Princeton. “Monsters University was to be one of the most\nPrestigious campuses for scaring, so we wanted to visit big-name, old-world,\nprestigious schools,” recalls Nick Berry, the film’s art department manager, who\nhelped arrange that excursion as well as day trips to UC Berkeley and Stanford. They visited dorm rooms, lecture halls, research labs, and frat houses; they hung out\non the campus lawns, ate pizza at dives that students frequented, and took a lot of\npictures and notes—“documenting everything, right down to the details of how\npathways integrated into the quads,” Nick says, “and what the graffiti scratches\nlooked like on the wooden desks.” The finished film was loaded with these kinds of\ndetails—what letter jackets look like up close or those “Roommate Wanted” fliers\n(complete with rip-off tags) that students post on campus bulletin boards—all of\nwhich gave audiences a feeling of reality. Ultimately, what we’re after is authenticity.",
           "wordCount": 190,
@@ -3276,7 +3220,7 @@
           "links": []
         },
         {
-          "chunkId": "10_28",
+          "chunkId": "10_21",
           "type": "paragraph",
           "content": "What feels daunting to the\nfilmmakers when John sends them out on such trips is that they don’t yet know\nwhat they are looking for, so they’re not sure what they will gain. But think about\nit: You’ll never stumble upon the unexpected if you stick only to the familiar. In my\nexperience, when people go out on research trips, they always come back changed. In any business, it’s important to do your homework, but the point I’m making\ngoes beyond merely getting the facts straight. Research trips challenge our\npreconceived notions and keep clichés at bay. They fuel inspiration. They are, I\nbelieve, what keeps us creating rather than copying. Here’s a curious thing about research: The authenticity it fosters in the film\nalways comes through, even if moviegoers know nothing about the reality the film\nis depicting. Very few moviegoers have actually been inside the kitchen of a high-\nend French restaurant, for example, so you might think the obsessive specificity of\nRatatouille ’s kitchen scenes—the chefs’ clogs clacking on the black-and-white tile\nfloors, the way they hold their arms when they cut up vegetables, or how they\norganize their work spaces—would be lost on the audience.",
           "wordCount": 199,
@@ -3284,7 +3228,7 @@
           "links": []
         },
         {
-          "chunkId": "10_29",
+          "chunkId": "10_22",
           "type": "paragraph",
           "content": "But what we’ve found is\nthat when we are accurate, the audiences can tell. It just feels right. Does this kind of microdetail matter? I believe it does. There’s something about\nknowing your subject and your setting inside and out—a confidence—that seeps\ninto every frame of your film. It’s a hidden engine, an unspoken contract with the\nviewer that says: We are striving to tell you something impactful and true. When\nattempting to make good on that promise, no detail is too small.",
           "wordCount": 83,
@@ -3297,10 +3241,10 @@
           "wordCount": 5,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_30"
+          "chunkId": "10_23"
         },
         {
-          "chunkId": "10_31",
+          "chunkId": "10_24",
           "type": "paragraph",
           "content": "There is a phenomenon that producers at Pixar call “the beautifully shaded penny.”\nIt refers to the fact that artists who work on our films care so much about every\ndetail that they will sometimes spend days or weeks crafting what Katherine\nSarafian, a Pixar producer, calls “the equivalent of a penny on a nightstand that\nyou’ll never see.” Katherine, who was the production manager on Monsters, Inc. ,\nremembers one scene that perfectly illustrates the beautifully shaded penny idea. It\noccurs when a bewildered Boo first arrives in Mike and Sulley’s apartment and\nbegins, as toddlers do, to explore. As the monsters try to contain her, she wanders\nup to two towering piles of compact discs—more than ninety in all. “Don’t touch\nthose!” Mike screams as s\n[[IMG id=image-125-1 index=3 alt=\"Figure 28\"]]\nhe grabs a CD case from the bottom, sending the piles\ncrashing to the floor. “Aw, those were alphabetized ,” Mike complains as she waddles\nAway. The moment is over in three seconds, and during it, only a few of the CD\ncases are at all visible.",
           "wordCount": 180,
@@ -3308,7 +3252,7 @@
           "links": []
         },
         {
-          "chunkId": "10_32",
+          "chunkId": "10_25",
           "type": "paragraph",
           "content": "But for every one of those CDs, Pixar artists created not just a\nCD cover but a shader—a program that calculates how an object’s rendering\nchanges as it moves. “Can you see all the CD cases?” Sarafian says. “No. Was it fun to design them all? Yes. Maybe it was an in-joke, but there was someone on the crew who believed that\neach one of those was going to be seen close-up, and so they were lovingly crafted.”\nI don’t want to think about how many person-weeks this consumed. Clearly, something in our process had broken—the desire for quality had gone\nwell beyond rationality. But because of the way production unfolded, our people\nhad to work on scenes without knowing the context for them—so they overbuilt\nthem just to be safe. To make things worse, our standards of excellence are\nextremely high, leading them to conclude that more is always more. How, then, do\nyou fix the “beautifully shaded penny” problem without telling people, in effect, to\ncare less or to be less excellent? I knew that none of these people on Monster’s, Inc . thought that detail was so important that they should waste time to achieve it.",
           "wordCount": 199,
@@ -3316,7 +3260,7 @@
           "links": []
         },
         {
-          "chunkId": "10_33",
+          "chunkId": "10_26",
           "type": "paragraph",
           "content": "And\nof course they knew that there were limits—they just couldn’t see them. This was a\nfailure on management’s part; the truth is, we have consistently struggled with how\nwe set useful limits and also how we make them visible. Many of our limits are imposed not by our internal processes but by external\nrealities—finite resources, deadlines, a shifting economy or business climate. Those\nthings, we can’t control. But the limits we impose internally, if deployed correctly,\ncan be a tool to force people to amend the way they are working and, sometimes, to\ninvent another way. The very concept of a limit implies that you can’t do everything\nyou want—so we must think of smarter ways to work. Let’s be honest: Many of us\ndon’t make this kind of adjustment until we are required to. Limits force us to\nrethink how we are working and push us to new heights of creativity. Another area where limits are invaluable is what we call “appetite control.” In\nPixar’s case, when we are making a movie the demand for resources is literally\nbottomless.",
           "wordCount": 181,
@@ -3324,7 +3268,7 @@
           "links": []
         },
         {
-          "chunkId": "10_34",
+          "chunkId": "10_27",
           "type": "paragraph",
           "content": "Unless you impose limits, people will always justify spending more time\nand more money by saying, “We’re just trying to make a better movie.” This occurs\nnot because people are greedy or wasteful but because they care about their\nparticular part of the film and don’t necessarily have a clear view of how it fits into\nthe whole. They believe that investing more is the only way to succeed. In any creative endeavor, there is a long list of features and effects that you want\nto include to nudge it toward greatness—a very long list. At some point, though, you\nrealize it is impossible to do everything on the list. So you set a deadline, which\nthen forces a priority-based reordering of the list, followed by the difficult\ndiscussion of what, on this list, is absolutely necessary—or if the project is even\nfeasible at all. You don’t want to have this discussion too soon, because at the\noutset, you don’t know what you are doing. If you wait too long, however, you run\nout of time or resources.",
           "wordCount": 178,
@@ -3332,7 +3276,7 @@
           "links": []
         },
         {
-          "chunkId": "10_35",
+          "chunkId": "10_28",
           "type": "paragraph",
           "content": "Complicating matters is that frequently, neither the film’s leaders nor its team\nmembers know the true cost of the items on the list. The director may have only the\nfuzziest sense, for example, of how much extra work a particular tweak to the story\nwill require. Likewise, an artist or technical director may think that the thing they\nare working on is essential and may pour his or her heart into it while having no\nsense of its actual value to the film. In my story of the camper and the blown tire,\nDick found it difficult to separate the reality of events from what he wanted to be\ntrue. In a complex process such as making a film, that difficulty of separating out\nwhat you want from what you can achieve is exponentially larger. It is all the more\nimportant to have tools that enable us to see more clearly. Brad Bird likes to tell a story about exactly this conundrum. During the making of\nThe Incredibles , he became distracted by what he calls “mirages”—scenes or ideas he\nfell in love with but that, ultimately, didn’t serve the film.",
           "wordCount": 191,
@@ -3340,7 +3284,7 @@
           "links": []
         },
         {
-          "chunkId": "10_36",
+          "chunkId": "10_29",
           "type": "paragraph",
           "content": "As an example, for a long\ntime he was obsessed with a vision of some fish in an aquarium that would appear\nin the background of a scene. He wanted them to move and flicker in a way that\nevoked flames in a fireplace—he was fixated, in fact, on realizing the vision in his\nhead. But the film’s animators were really struggling to make it look right, and after\nfive months—and thousands of hours of work—Brad suddenly realized it didn’t\nimprove the movie in any real way. A mirage had led him astray. Luckily, Brad had a producer, John Walker, who came up with a system (in\ncollaboration with a department manager, Laura Reynolds) that would help the\ncrew see what was possible given the available resources. John’s system consisted of\npopsicle sticks stuck to a wall with Velcro. Each stick represented a person-week,\nwhich, as I’ve said, is the amount of work a single animator could accomplish in a\nweek’s time. A bunch of sticks would be lined up next to a particular character for\neasy reference.",
           "wordCount": 178,
@@ -3348,7 +3292,7 @@
           "links": []
         },
         {
-          "chunkId": "10_37",
+          "chunkId": "10_30",
           "type": "paragraph",
           "content": "A glance at the wall would tell you: If you use that many popsicle\nsticks on Elastigirl, you’ll have less to spend on Jack-Jack. And so on. “Brad would\ncome to me and say: ‘We’ve got to have this done today,’ ” John recalls. “And I\ncould point to the wall and say, ‘Well, you need another stick, then. Where are you\ngoing to take the stick from? Because we only have so many.’ ” I see this as a great\nexample of the positive creative impact of limits. However, some efforts to impose limits can backfire. When John and I arrived at\nDisney Animation in 2006, we encountered an interesting conflict. Production of\nanimation is complex and costly, so the previous management thought that the best\nway to keep everybody operating within agreed-upon limits was to put in an\n“oversight group” that would, in essence, be the eyes and ears of management. Its\nsole mandate was to ensure that budget and scheduling goals were met. This group\npored over all of the production reports on all of the films to make sure things were\ngoing as expected and then communicated what they found to the studio leadership.",
           "wordCount": 198,
@@ -3356,7 +3300,7 @@
           "links": []
         },
         {
-          "chunkId": "10_38",
+          "chunkId": "10_31",
           "type": "paragraph",
           "content": "As a result, those studio bosses felt comfortable they were doing everything they\ncould to avoid costly missteps. However, from the point of view of those who worked in production on any given\nfilm, the oversight group was a hindrance, not a help. They felt they no longer had\nthe flexibility they needed to respond quickly to problems because the oversight\ngroup nitpicked every decision—even the tiniest decision—to death. They felt\npowerless. In this case, the way limits were imposed impeded progress. Not only\nthat, it created political problems: Increasingly, the oversight group was at war with\nthe production group. And, as a result, morale plummeted. To John and me, the solution was clear: We simply eliminated the oversight\ngroup. We believed that the production people were conscientious managers who\nwere trying to bring a complex project in on time and on budget. In our view, the\noversight group added nothing to the process but tension. The micromanagement\nthey imposed was of no value, since the production people already had a set of\nlimits that determined their every move—the overall budget and the deadline. Within that, they needed all the flexibility they could get.",
           "wordCount": 194,
@@ -3364,7 +3308,7 @@
           "links": []
         },
         {
-          "chunkId": "10_39",
+          "chunkId": "10_32",
           "type": "paragraph",
           "content": "As soon as we made the\nchange, the war ended and production began running much more smoothly. The solution we implemented may have been obvious, but here’s something that\nwasn’t: It could never have come from the people in the oversight group, because\nthat would have required them to recognize and admit that their group’s existence\nwas unnecessary. They were not in a position to challenge the preconception that\ntheir group was based on. In addition, the solution could never have been suggested\nby the leadership we replaced, either, because they believed that the oversight\ngroup was performing an important function by creating more transparency and\nimposing discipline on the process. But here was the irony: Creating this layer to\nenforce the limits actually made the limits less clear, diminishing their effectiveness. The oversight group had been put in place without anyone asking a fundamental\nquestion: How do we enable our people to solve problems? Instead, they asked: How\ndo we prevent our people from screwing up? That approach never encourages a\ncreative response. My rule of thumb is that any time we impose limits or\nprocedures, we should ask how they will aid in enabling people to respond\ncreatively.\nIf the answer is that they won’t, then the proposals are ill suited to the\ntask at hand.",
           "wordCount": 218,
@@ -3377,10 +3321,10 @@
           "wordCount": 5,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_40"
+          "chunkId": "10_33"
         },
         {
-          "chunkId": "10_41",
+          "chunkId": "10_34",
           "type": "paragraph",
           "content": "One of the best-loved instructors at CalArts in the 1980s was the legendary animator\nBob McCrea, who took up teaching after forty years at Disney, where he worked\nclosely with Walt himself. McCrea was as beloved as he was cantankerous—Andrew\nStanton would later immortalize him in the character of Captain B. McCrea in\nWALL-E —and he helped shape the creative sensibilities of many of the people who\nwould go on to define Pixar. Andrew remembers that he and his fellow CalArts\nstudents saw themselves as “animation purists,” determined to emulate masters like\nBob from the early days of Disney. They were conflicted, therefore, about using\ncertain newer technologies—VHS videotape, for example—that had not existed in\nthe studio’s heyday. If Walt’s Nine Old Men didn’t use videotape, Andrew\nremembers telling Bob McCrea one day, maybe he shouldn’t either. “Don’t be an idiot,” Bob said. “If we’d had those tools then, we would have used\nthem.”\nAs I noted in chapter 2, Walt Disney was unrelenting in his determination to\nincorporate the cutting edge and to understand all available technologies. He\nbrought sound and color into animation. He developed matting for filmmaking, the\nmultiplane camera, the Xerox room for animation cels.",
           "wordCount": 199,
@@ -3388,7 +3332,7 @@
           "links": []
         },
         {
-          "chunkId": "10_42",
+          "chunkId": "10_35",
           "type": "paragraph",
           "content": "One of the advantages we\nhad at Pixar, from the beginning, was that technology, art, and business were\nintegrated into the leadership, with each of the company’s leaders—me, John, and\nSteve—paying a fair amount of attention to the areas where we weren’t considered\nexpert. We have worked assiduously, ever since, to maintain a balance among all\nthree legs of this stool. Our business model, our way of making films, and our\ntechnology continually changed, but by integrating them we let them dri\n[[IMG id=image-128-1 index=4 alt=\"Figure 29\"]]\nve each\nother. The impetus for innovation, in other words, came from the inside rather than\nthe outside. As John often says, “Art challenges technology, technology inspires art.” This is\nNot meant to be some clever catchphrase—it articulates our philosophy of\nintegration. When everything is functioning as it should be, art and technology play\noff each other and spur each other to new heights. Given how different the two\nmindsets can be, it can be tough to keep them aligned and engaged with each other. But in my view, the effort is always worth it. Our specialized skills and mental\nmodels are challenged when we integrate with people who are different.",
           "wordCount": 198,
@@ -3396,7 +3340,7 @@
           "links": []
         },
         {
-          "chunkId": "10_43",
+          "chunkId": "10_36",
           "type": "paragraph",
           "content": "If we can\nconstantly change and improve our models by using technology in the pursuit of art,\nwe keep ourselves fresh. The whole history of Pixar is a testament to this dynamic\ninterplay. I have a couple of examples that demonstrate this point. While making The\nIncredibles , Brad Bird was frustrated by the imprecision—and thus the inefficiency—\nof giving feedback to animators verbally. If you were talking about how to draw a\nbetter scene, for example, didn’t it make sense to sketch out your thoughts? Wouldn’t that be more efficient? Brad asked if there was a way that he could draw\non top of a projected image—a scene that was in the process of being animated—to\ncommunicate to animators the changes he wanted and to do so more effectively. Our software department went to work. The result: the Review Sketch tool, which\ngives directors a digital stylus to draw directly on top of an image, then saves those\nsketches and makes them accessible online to anyone who needs to reference them. In the years since its invention, it has become an essential tool, used by all of our\ndirectors.",
           "wordCount": 190,
@@ -3404,7 +3348,7 @@
           "links": []
         },
         {
-          "chunkId": "10_44",
+          "chunkId": "10_37",
           "type": "paragraph",
           "content": "(This is what Mark Andrews used in the dailies session I described.)\nAnother key innovation occurred after a frustrated Pete Docter stopped by my\noffice one day in 2002. What he really needed, he said, was the ability to splice\ntogether rough storyboards of a scene, time them out precisely, and then narrate\nover them in a Braintrust meeting, enabling him to convey the same enthusiasm and\npassion as he did in his initial live pitch and better approximating the desired end\nresult: a film. I went to one of our software leaders, Michael Johnson, to see if he\ncould put something together for Pete. Two weeks later, Michael came back with a\nprototype that would later become known as “Pitch Docter,” in homage to Pete. The basic problem Pitch Docter sought to solve is one I’ve mentioned before—that\nwhen a director first pitches a movie, he or she is basically acting it out like a piece\nof performance art. A pitch is dynamic. The director is able to look the audience in\nthe eye, see how the various elements are playing, and adjust on the fly.",
           "wordCount": 187,
@@ -3412,7 +3356,7 @@
           "links": []
         },
         {
-          "chunkId": "10_45",
+          "chunkId": "10_38",
           "type": "paragraph",
           "content": "This\nperformance,\n[[IMG id=image-130-1 index=5 alt=\"Figure 30\"]]\nthough, is not the film, and when the story is put up on reels and\nforced to stand on its own, it frequently falls flat. Conventional pitching was good\ntheater, in other words, but it didn’t begin to simulate a movie. Pitch Docter did\nThat. Pitch Docter let artists seek criticism earlier, which is always better. It allowed\nthose giving feedback to evaluate the material by simulating its presentation in film. Initially we didn’t know if the artists would accept this way of working—they had\nspent their careers working on paper, and if they were going to adopt this\ntechnology, they needed to discover and embrace it on their own. Soon, though,\nthey saw its advantages. Since storyboards are frequently modified, having them on\nthe computer simplified the process; the delivery of new versions to the team was as\neasy as a push of a button. As more artists adopted the tool, meanwhile, their\nrequests for more features improved the tool itself.",
           "wordCount": 169,
@@ -3420,7 +3364,7 @@
           "links": []
         },
         {
-          "chunkId": "10_46",
+          "chunkId": "10_39",
           "type": "paragraph",
           "content": "The software developers and the\nartists worked together to move the tools forward, and the model of how the artists\ndid their work changed as the software evolved to meet their needs. This process was driven both by requests from artists and suggestions from\nprogrammers—a back and forth that came about because of the integration of\ntechnology and art. Michael’s team, known as the Moving Pictures Group,\nmeanwhile, has become an example of the mindset we value—a mindset that\ndoesn’t fear change. We apply this concept throughout the studio—software people\nrotate in and out of production. This way of doing things is responsive; it is nimble\n—and it makes us better.",
           "wordCount": 111,
@@ -3433,10 +3377,10 @@
           "wordCount": 3,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_47"
+          "chunkId": "10_40"
         },
         {
-          "chunkId": "10_48",
+          "chunkId": "10_41",
           "type": "paragraph",
           "content": "In most companies, you have to justify so much of what you do—to prepare for\nquarterly earnings statements if the company is publicly traded or, if it is not, to\nbuild support for your decisions. I believe, however, that you should not be required\nto justify everything. We must always leave the door open for the unexpected. Scientific research operates in this way—when you embark on an experiment, you\ndon’t know if you will achieve a breakthrough. Chances are, you won’t. But\nnevertheless, you may stumble on a piece of the puzzle along the way—a glimpse, if\nyou will, into the unknown. Our short films are Pixar’s way of experimenting, and we produce them in the\nhopes of getting exactly these kinds of glimpses. Over the years, Pixar has become\nknown for including short films at the beginning of our feature films. These three- to\nsix-minute films, each of which might cost as much as two million dollars to make,\ncertainly don’t yield any profits for the company; in the immediate term, then,\nthey’re hard to justify. What sustains them is a kind of gut feeling that making\nshorts is a good thing to do.",
           "wordCount": 195,
@@ -3444,7 +3388,7 @@
           "links": []
         },
         {
-          "chunkId": "10_49",
+          "chunkId": "10_42",
           "type": "paragraph",
           "content": "Our shorts tradition began in the early 1980s, when John Lasseter joined us at\nLucasfilm to work on The Adventures of André and Wally B . Our first wave of Pixar\nshorts—including Luxo Jr., Red’s Dream , and the Oscar-winning Tin Toy —were a\nway of sharing technological innovations with our colleagues in the scientific\ncommunity. Then, in 1989, we stopped producing them. For the next seven years,\nwe focused instead on revenue-generating ads and on our first feature film. But in\n1996, a year after the release of T\n[[IMG id=image-131-1 index=6 alt=\"Figure 31\"]]\noy Story , John and I decided it was important to\nreinvigorate our short film program. Our hope was that making shorts would\nencourage experimentation and, more important, become a proving ground for\nfledgling filmmakers we hoped would go on to direct features someday. We justified\nThe expense as R&D. If technical innovations could be honed on our short films, we\nfigured, that alone would make the program worth the money. In the end, the\npayoffs would be many—but not necessarily the ones we expected.",
           "wordCount": 180,
@@ -3452,7 +3396,7 @@
           "links": []
         },
         {
-          "chunkId": "10_50",
+          "chunkId": "10_43",
           "type": "paragraph",
           "content": "Geri’s Game , which was screened in front of A Bug’s Life in 1998, was the first of\nwhat we came to call our second-generation shorts. It featured an old man sitting\noutside in the park in autumn and playing a cutthroat game of chess against himself. During the nearly five-minute film—which was written and directed by Jan Pinkava\nand would go on to win an Oscar—not a word is spoken other than the occasional\n“Ha!” that the old man utters when slamming down a chess piece with glee. The\nhumor is located in the way the octogenarian’s personality changes as he switches\nfrom one side of the board to the other. When his meeker persona beats his gloating\nalter ego by (literally) turning the tables, you can’t help but laugh. But here was what mattered: In addition to being a delightful film, Geri’s Game\nhelped us improve technically. Our only directive to Jan before he made it was that\nit had to include a human character. Why? Because we needed to get better at them. We needed to work on rendering not only the smoothly irregular surfaces of faces\nand hands but also the clothes that people wear.",
           "wordCount": 199,
@@ -3460,7 +3404,7 @@
           "links": []
         },
         {
-          "chunkId": "10_51",
+          "chunkId": "10_44",
           "type": "paragraph",
           "content": "At this point, remember, because of\nour inability to render skin and hair and certain curved surfaces to our satisfaction,\nhumans had only been ancillary characters in our movies. That needed to change,\nand Geri’s Game was an opportunity to start working that out. While we’d used R&D to justify the program initially, we soon realized that our\nfeature films were the major drivers of technological innovation—not our shorts. In\nfact, in the years since Geri’s Game , not a single short until Blue Umbrella\n[[IMG id=image-132-1 index=7 alt=\"Figure 32\"]]\nin 2013\nhad been instrumental in our technological innovation. And while we thought at\nfirst that directing a short would be superb preparation for directing a feature—a\nway to grow talent—we have come to believe we were wrong on this front, too. Directing a short is a terrific education, and some of what you learn will come in\nHandy if you ever direct a feature. But the differences between directing a five-\nminute short and directing an 85-minute feature are many. Doing the former is\nmerely a baby step on the road to the latter, not the intermediate step we thought it\nwas.",
           "wordCount": 193,
@@ -3468,7 +3412,7 @@
           "links": []
         },
         {
-          "chunkId": "10_52",
+          "chunkId": "10_45",
           "type": "paragraph",
           "content": "And yet, for all our faulty assumptions, the shorts accomplished other things for\nPixar. People who work on them, for example, get a broader range of experience\nthan they would on a feature, where the sheer scale and complexity of the project\ndemands more specialization among the crew. Because shorts are staffed with fewer\npeople, each employee has to do more things, developing a variety of skills that\ncome in handy down the line. Moreover, working in small groups forges deeper\nrelationships that can carry forward and, in the long term, benefit the company’s\nfuture projects. Our shorts also create a deeper value in two key areas. Externally, they help us\nforge a bond with moviegoers, who have come to regard them as a kind of bonus—\nsomething added solely for their enjoyment. Internally, because everyone knows the\nshorts have no commercial value, the fact that we continue to make them sends a\nmessage that we care about artistry at Pixar; it reinforces and affirms our values. And that creates a feeling of goodwill that we draw on, consciously and\nunconsciously, all the time. Finally, we have learned that shorts are a relatively inexpensive way to screw up.",
           "wordCount": 198,
@@ -3476,7 +3420,7 @@
           "links": []
         },
         {
-          "chunkId": "10_53",
+          "chunkId": "10_46",
           "type": "paragraph",
           "content": "(And since I believe that mistakes are not just unavoidable but valuable, this is\nsomething to be welcomed.) Many years ago, for example, we met with a children’s\nbook author who wanted to direct a feature film for us. We liked his work and\nsensibility but sensed it would be wise to try him out on a short first to determine\nnot only whether he had filmmaking chops but also if he could work well with\nothers. The first sign of trouble? The film he delivered clocked in at twelve minutes\n—more of a “medium” than a “short.” But length is flexible; the real problem was\nthat although the director was extraordinarily creative, he was unable to settle on a\nspine for a story. The piece meandered, lacked focus, and thus packed no emotional\npunch. It wouldn’t be the first time we would find someone who was able to invent\nwildly creative elements but was unable to solve the problems of story—the central\nand most important creative challenge. So we pulled the plug. Some might have lost sleep over the two million dollars we expended on this\nexperiment. But we consider it money well spent.\nAs Joe Ranft said at the time,\n“Better to have train wrecks with miniature trains than with real ones.”",
           "wordCount": 214,
@@ -3489,10 +3433,10 @@
           "wordCount": 4,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_54"
+          "chunkId": "10_47"
         },
         {
-          "chunkId": "10_55",
+          "chunkId": "10_48",
           "type": "paragraph",
           "content": "In the year after Toy Story ’s release, we introduced a ten-week program to teach\nevery new hire how to use our proprietary software. We called this program Pixar\nUniversity, and I hired a first-rate technical trainer to run it. At that point, the\nmoniker university was a little misleading, though, as this\n[[IMG id=image-133-1 index=8 alt=\"Figure 33\"]]\nwas more of a training\nseminar than anything resembling an institution of higher learning. It is easy to\njustify a training program, but I had another agenda, and in trying to accomplish it,\nwe would find surprising bonuses. While some people at Pixar already knew how to draw—and beautifully—the\nmajority of our employees were not artists. But there was an important principle\nThat underlies the process of learning to draw and we wanted everyone to\nunderstand it. So I hired Elyse Klaidman, who had taught drawing workshops\ninspired by the 1979 book Drawing on the Right Side of the Brain by Betty Edwards, to\ncome in and teach us how to heighten our powers of observation. In those days,\nyou’d often hear about the concepts of left- and right-brained thinking, later called\nL-mode and R-mode. The L-mode was verbal/analytic, R-mode was\nvisual/perceptual.",
           "wordCount": 200,
@@ -3500,7 +3444,7 @@
           "links": []
         },
         {
-          "chunkId": "10_56",
+          "chunkId": "10_49",
           "type": "paragraph",
           "content": "Elyse taught us that while many activities used both L-mode and\nR-mode, drawing required shutting the L-mode off. This amounted to learning to\nsuppress that part of your brain that jumps to conclusions, seeing an image as only\nan image and not as an object. Think about what happens when we try to draw a face. Most of us sketch out the\nnose, eyes, forehead, ears, and mouth but—unless we’ve learned to draw formally—\nthey’re terribly out of proportion. They don’t resemble anybody in particular. That’s\nbecause, to the brain, all parts of the face are not created equal. For example, since\nthe eyes and mouth—the loci of communication—are more important to us than\nforeheads, more emphasis is put on recognizing them, and when we draw them, we\ntend to draw them too large, while the forehead is drawn too small. We don’t draw\na face as it is; rather, we draw it as our models say it is. The models of three-dimensional objects that we carry in our heads have to be\ngeneral; they must represent all variations of the given objects.",
           "wordCount": 183,
@@ -3508,7 +3452,7 @@
           "links": []
         },
         {
-          "chunkId": "10_57",
+          "chunkId": "10_50",
           "type": "paragraph",
           "content": "Our mental model of\na shoe, for example, must encompass everything from a stiletto heel to a steel-toed\nboot; it can’t be so specific that it excludes those extremes. Our brain’s ability to\ngeneralize is an essential tool, but some people are able to move from the general to\nthe specific to see more clearly. To stay with our drawing example, some people\ndraw better than others. What are they doing that most of us aren’t? And if the\nanswer is that they are setting aside their preconceptions, can we all learn to do\nthat? In most cases, the answer is yes. Art teachers use a few different tricks to train new artists. They place an object\nupside down, for example, so that each student can look at it as a pure shape and\nnot as a familiar, recognizable thing (a shoe, say). The brain does not distort this\nupside-down object because it doesn’t automatically impose its model of a shoe\nupon it. Another trick is to ask students to focus on negative spaces—the areas of\nspace around an object that are not the object itself.",
           "wordCount": 186,
@@ -3516,7 +3460,7 @@
           "links": []
         },
         {
-          "chunkId": "10_58",
+          "chunkId": "10_51",
           "type": "paragraph",
           "content": "For instance, in drawing a\nchair, the new artist might draw it poorly, because she knows what a chair is\nsupposed to look like (and that chair in her head—her mental model—keeps her\nfrom reproducing precisely what she sees in front of her). However, if she is asked\nto draw what is not the chair—the spaces between the chair legs, for example—then\nthe proportions are easier to get right, and the chair itself will look more realistic. The reason is that while the brain recognizes a chair as a chair, it assigns no\nmeaning to the shape of the spaces between the chair’s legs (and, thus, doesn’t try to\n“correct” it to make it match the artist’s mental model). The lesson is intended to help students to see shapes as they are—to ignore that\npart of the brain that wants to turn what is seen into a general notion: a model of\nthe chair. A trained artist who sees a chair, then, is able to capture what the eye\nperceives (shape, color) before their “recognizer” function tells them what it is\nsupposed to be. The same thing is true with color.",
           "wordCount": 191,
@@ -3524,7 +3468,7 @@
           "links": []
         },
         {
-          "chunkId": "10_59",
+          "chunkId": "10_52",
           "type": "paragraph",
           "content": "When we look at a body of water, our brains\nthink—and thus see —blue. If we’re asked to paint a picture of a lake, we pick the\nColor blue, and then we’re surprised that it doesn’t look right on the canvas. But if\nwe look at different points in that same lake through a pinhole (thus divorcing it\nfrom the overall idea of “lake”), we see what is actually there: green and yellow and\nblack and flashes of white. We don’t let the brain fill in. Instead, we see the color as\nit really is. I want to add an important side note: that artists have learned to employ these\nways of seeing does not mean they don’t also see what we see. They do. They just\nsee more because they’ve learned how to turn off their minds’ tendency to jump to\nconclusions. They’ve added some observational skills to their toolboxes. (This is why\nit is so frustrating that funding for arts programs in schools has been decimated. And\nthose cuts stem from a fundamental misconception that art classes are about\nlearning to draw.",
           "wordCount": 184,
@@ -3532,7 +3476,7 @@
           "links": []
         },
         {
-          "chunkId": "10_60",
+          "chunkId": "10_53",
           "type": "paragraph",
           "content": "In fact, they are about learning to see.)\nWhether or not you ever pick up a sketchpad or dream of being an animator, I\nhope you understand how it is possible, with practice, to teach your brain to\nobserve something clearly without letting your preconceptions kick in. It is a fact of\nlife, though a confounding one, that focusing on something can make it more\ndifficult to see. The goal is to learn to suspend, if only temporarily, the habits and\nimpulses that obscure you\n[[IMG id=image-135-1 index=9 alt=\"Figure 34\"]]\nr vision. I did not introduce this topic to convince you that anyone can learn to draw. The\nreal point is that you can learn to set aside preconceptions. It isn’t that you don’t\nhave biases, more that there are ways of learning to ignore them while considering a\nproblem. Drawing the “un-chair” can be a sort of metaphor for increasing\nperceptivity. Just as looking at what is not the chair helps bring it into relief, pulling\nFocus away from a particular problem (and, instead, looking at the environment\naround it) can lead to better solutions.",
           "wordCount": 186,
@@ -3540,7 +3484,7 @@
           "links": []
         },
         {
-          "chunkId": "10_61",
+          "chunkId": "10_54",
           "type": "paragraph",
           "content": "When we give notes on Pixar movies and\nisolate a scene, say, that isn’t working, we have learned that fixing that scene\nusually requires making changes somewhere else in the film, and that is where our\nattention should go. Our filmmakers have become skilled at not getting caught up in\na problem but instead looking elsewhere in the story for solutions. Likewise at\nDisney, the conflict between production and the oversight group could have been\naddressed by insisting that everyone behave better, when in fact, the real solution\ncame from questioning the premise on which the oversight group was formed. It\nwas the setup—the preconceptions that preceded the problem—that needed to be\nfaced.",
           "wordCount": 113,
@@ -3553,10 +3497,10 @@
           "wordCount": 2,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_62"
+          "chunkId": "10_55"
         },
         {
-          "chunkId": "10_63",
+          "chunkId": "10_56",
           "type": "paragraph",
           "content": "T he phases we go through while making a movie—conception, protection,\ndevelopmental planning, and production—unfold over a period of years. When the\nrelease date finally rolls around, everyone is ready to move on to something new. But we are not done yet. At Pixar, there is one more essential phase of the process:\nthe postmortem. A postmortem is a meeting held shortly after the completion of\nevery movie in which we explore what did and didn’t work and attempt to\nconsolidate lessons learned. Companies, like individuals, do not become exceptional\nby believing they are exceptional but by understanding the ways in which they\naren’t exceptional. Postmortems are one route into that understanding. Our first postmortem was held in Tiburon, California, in 1998, a few weeks after\nwe’d finished A Bug’s Life . We had made all of two films at that point and were\nhyperaware of how much we still had to learn. To keep anyone from going on too\nlong (we had a fifteen-minute limit), someone brought in a kitchen timer in the\nshape of a rooster.",
           "wordCount": 178,
@@ -3564,7 +3508,7 @@
           "links": []
         },
         {
-          "chunkId": "10_64",
+          "chunkId": "10_57",
           "type": "paragraph",
           "content": "Here we were, talking about some of the most high-tech\nanimation ever done, and we were managing the process with an old kitchen\nutensil. This postmortem, which took an entire day, delved into all aspects of the\nproduction. There was no “Aha!” moment, no epiphany that would turn our\nprocesses inside out. Instead, it’s the spirit of the meeting that I remember most. Everyone was so engaged in rethinking the way we did things, so open to\nchallenging longheld ideas and learning from the errors we’d made. No one was\ndefensive. Everyone was proud, not only of the film but of how committed we were\nto the culture from which the film had sprung. Afterward, we decided we should do\nthis kind of deep analysis after every movie. Achieving that same level of insight in subsequent postmortems, however, proved\nelusive. Over the years, some were profound, and others were a complete waste of\ntime. Sometimes people showed up but pulled their punches. I unders\n[[IMG id=image-136-1 index=10 alt=\"Figure 35\"]]\ntood that this\nwas human nature—why poke a sleeping bear when you can just as easily move on\nto another campsite?",
           "wordCount": 190,
@@ -3572,7 +3516,7 @@
           "links": []
         },
         {
-          "chunkId": "10_65",
+          "chunkId": "10_58",
           "type": "paragraph",
           "content": "In truth, to most people postmortems seem a bit like having to\nswallow some kind of bad-tasting medicine. They know it’s necessary, but they don’t\nlike it one bit. This was another puzzle for us: What was it that made some\npostmortems so bad, while others had a great outcome? Given that we all agree, in principle, that postmortems are good for us, I’m always\nStruck by how much people dread them. Most feel that they’ve learned what they\ncould during the execution of the project, so they’d just as soon move on. Problems\nthat arose are frequently personal, so most are eager to avoid revisiting them. Who\nlooks forward to a forum for being second-guessed? People, in general, would rather\ntalk about what went right than what went wrong, using the occasion to give\nadditional kudos to their most deserving team members. Left to our own devices, we\navoid unpleasantness. It isn’t just postmortems, though: In general, people are resistant to self-\nassessment. Companies are bad at it, too.",
           "wordCount": 170,
@@ -3580,7 +3524,7 @@
           "links": []
         },
         {
-          "chunkId": "10_66",
+          "chunkId": "10_59",
           "type": "paragraph",
           "content": "Looking inward, to them, often boils down\nto this: “We are successful, so what we are doing must be correct.” Or the converse:\n“We failed, so what we did was wrong.” This is shallow. Do not be cowed into\nmissing this opportunity. There are five reasons, I believe, to do postmortems. The\nfirst two are fairly obvious, the next three less so.",
           "wordCount": 62,
@@ -3593,10 +3537,10 @@
           "wordCount": 4,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_67"
+          "chunkId": "10_60"
         },
         {
-          "chunkId": "10_68",
+          "chunkId": "10_61",
           "type": "paragraph",
           "content": "While it is true that you learn the most in the midst of a project, the lessons are not\ngenerally coherent. Any individual can have a great insight but may not have the\ntime to pass it on. A process might be flawed, but you don’t have time to fix it under\nthe current schedule. Sitting down afterward is a way of consolidating all that\nyou’ve learned—before you forget it. Postmortems are a rare opportunity to do\nanalysis that simply wasn’t possible in the heat of the project.",
           "wordCount": 88,
@@ -3609,10 +3553,10 @@
           "wordCount": 5,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_69"
+          "chunkId": "10_62"
         },
         {
-          "chunkId": "10_70",
+          "chunkId": "10_63",
           "type": "paragraph",
           "content": "Even if everyone involved in a production understands what it taught them, the\npostmortem is a great way of passing on the positive and negative lessons to other\npeople who were not on the project. So much of what we do is not obvious—the\nresult of hard-won experience. Then again, some of what we do doesn’t really make\nsense. The postmortem provides a forum for others to learn or challenge the logic\nbehind certain decisions.",
           "wordCount": 75,
@@ -3625,10 +3569,10 @@
           "wordCount": 4,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_71"
+          "chunkId": "10_64"
         },
         {
-          "chunkId": "10_72",
+          "chunkId": "10_65",
           "type": "paragraph",
           "content": "Many things that go wrong are caused by misunderstandings or screw-ups. These\nlead to resentments that, if left unaddressed, can fester for years. But if people are\ngiven a forum in which to express their frustrations about the screw-ups in a\nrespectful manner, then they are better able to let them go and move on. I have seen\nmany cases where hurt feelings lingered far after the project, feelings that would\nhave been worked through much more easily if they had been expressed in a\npostmortem.\nUse the Schedule to Force Reflection\nI favor principles that lead you to think. Postmortems—but also other activities such\nas Braintrust meetings and dailies—are all about getting people to think and\nevaluate. The time we spend getting ready for a postmortem meeting is as valuable\nas the meeting itself. In other words, the scheduling of a postmortem forces self-\nreflection. If a postmortem is a chance to struggle openly with our problems, the\n“pre-postmortem” sets the stage for a successful struggle. I would even say that 90\npercent of the value is derived from the preparation leading up to the postmortem.",
           "wordCount": 187,
@@ -3641,10 +3585,10 @@
           "wordCount": 3,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_73"
+          "chunkId": "10_66"
         },
         {
-          "chunkId": "10_74",
+          "chunkId": "10_67",
           "type": "paragraph",
           "content": "In a postmortem, you can raise questions that should be asked on the next project. A\ngood postmortem arms people with the right questions to ask going forward. We\nshouldn’t expect to find the right answers, but if we can get people to frame the\nright questions, then we’ll be ahead of the game. W hile I think the reasons for postmortems are compelling, I know that most people\nstill resist them. So I want to share some techniques that can help managers get the\nmost out of them. First of all, vary the way you conduct them. By definition,\npostmortems are supposed to be about lessons learned, so if you repeat the same\nformat, you tend to uncover the same lessons, which isn’t much help to anyone. Even if you come up with a format that works well in one instance, people will\nknow what to expect the next time, and they will game the process. I’ve noticed\nwhat might be called a “law of subverting successful approaches,” by which I mean\nonce you’ve hit on something that works, don’t expect it to work again, because\nattendees will know how to manipulate it the second time around.",
           "wordCount": 198,
@@ -3652,7 +3596,7 @@
           "links": []
         },
         {
-          "chunkId": "10_75",
+          "chunkId": "10_68",
           "type": "paragraph",
           "content": "So try “mid-\nmortems” or narrow the focus of your postmortem to special topics. At Pixar, we\nhave had groups give courses to others on their approaches. We have occasionally\nformed task forces to address problems that span several films. Our first task force\ndramatically altered the way we thought about scheduling. The second one was an\nutter fiasco. The third one led to a profound change at Pixar, which I’ll discuss in\nthe final chapter. Next, remain aware that, no matter how much you urge them otherwise, your\npeople will be afraid to be critical in such an overt manner. One technique I’ve used\nto soften the process is to ask everyone in the room to make two lists: the top five\nthings that they would do again and the top five things that they wouldn’t do again. People find it easier to be candid if they balance the negative with the positive, and\na good facilitator can make it easier for that balance to be struck. Finally, make use of data. Because we’re a creative organization, people tend to\nassume that much of what we do can’t be measured or analyzed. That’s wrong.",
           "wordCount": 195,
@@ -3660,7 +3604,7 @@
           "links": []
         },
         {
-          "chunkId": "10_76",
+          "chunkId": "10_69",
           "type": "paragraph",
           "content": "Many of our processes involve activities and deliverables that can be quantified. We\nkeep track of the rates at which things happen, how often something has to be\nreworked, how long something actually took versus how long we estimated it would\ntake, whether a piece of work was completely finished or not when it was sent to\nanother department, and so on. I like data because it is neutral—there are no value\njudgments, only facts. That allows people to discuss the issues raised by data less\nemotionally than they might an anecdotal experience. Lindsey Collins, one of our producers at Pixar, says that data can be nothing less\nthan soothing. “It was such a relief for me, when I began in this job, to be able to\nlook at historical data and see the patterns,” she says. “It took what felt like a very\nnebulous process and allowed me to break it down and start to put a loose structure\non it.”\nHaving introduced the subject of data, however, I want to be clear about both its\npower and its limits.",
           "wordCount": 181,
@@ -3668,7 +3612,7 @@
           "links": []
         },
         {
-          "chunkId": "10_77",
+          "chunkId": "10_70",
           "type": "paragraph",
           "content": "The power lies in the analysis of what we know about the\nProduction process—we have data, for example, on the time spent building models\nand sets, animating and lighting them. This data, of course, only gives a narrow\nglimpse into what happened while the models and sets were being built and lit. But\nit gives us something to work with to reveal potential patterns, which can be used to\nfeed discussions that help us improve. There are limits to data, however, and some people rely on it too heavily. Analyzing it correctly is difficult, and it is dangerous to assume that you always\nknow what it means. It is very easy to find false patterns in data. Instead, I prefer to\nthink of data as one way of seeing, one of many tools we can use to look for what’s\nhidden. If we think data alone provides answers, then we have misapplied the tool. It is important to get this right. Some people swing to the extremes of either having\nno interest in the data or believing that the facts of measurement alone should drive\nour management. Either extreme can lead to false conclusions.",
           "wordCount": 194,
@@ -3676,7 +3620,7 @@
           "links": []
         },
         {
-          "chunkId": "10_78",
+          "chunkId": "10_71",
           "type": "paragraph",
           "content": "“You can’t manage what you can’t measure” is a maxim that is taught and\nbelieved by many in both the business and education sectors. But in fact, the phrase\nis ridiculous—something said by people who are unaware of how much is hidden. A\nlarge portion of what we manage can’t be measured, and not realizing this has\nunintended consequences. The problem comes when people think that data paints a\nfull picture, leading them to ignore what they can’t see. Here’s my approach:\nMeasure what you can, evaluate what you measure, and appreciate that you cannot\nmeasure the vast majority of what you do. And at least every once in a while, make\ntime to take a step back and think about what you are doing.",
           "wordCount": 125,
@@ -3689,10 +3633,10 @@
           "wordCount": 4,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "10_79"
+          "chunkId": "10_72"
         },
         {
-          "chunkId": "10_80",
+          "chunkId": "10_73",
           "type": "paragraph",
           "content": "I want to end this list by talking a little more about the founding of Pixar University\nand Elyse Klaidman’s mind-expanding drawing classes in particular. Those first\nclasses were such a success—of the 120 people who worked at Pixar then, 100\nenrolled—that we gradually began expanding P.U.’s curriculum. Sculpting, painting,\nacting, meditation, belly dancing, live-action filmmaking, computer programming,\ndesign and color theory, ballet—over the years, we have offered free classes in all of\nthem. This meant spending not only the time to find the best outside teachers but\nalso the real cost of freeing people up during their workday to take the classes. So what exactly was Pixar getting out of all of this? It wasn’t that the class material directly enhanced our employees’ job\nperformance. Instead, there was something about an apprentice lighting technician\nsitting alongside an experienced animator, who in turn was sitting next to someone\nwho worked in legal or accounting or security—that proved immensely valuable. In\nthe classroom setting, people interacted in a way they didn’t in the workplace. They\nfelt free to be goofy, relaxed, open, vulnerable. Hierarchy did not apply, and as a\nresult, communication thrived.",
           "wordCount": 192,
@@ -3700,7 +3644,7 @@
           "links": []
         },
         {
-          "chunkId": "10_81",
+          "chunkId": "10_74",
           "type": "paragraph",
           "content": "Simply by providin\n[[IMG id=image-139-1 index=11 alt=\"Figure 36\"]]\ng an excuse for us all to toil side\nby side, humbled by the challenge of sketching a self-portrait or writing computer\ncode or taming a lump of clay, P.U. changed the culture for the better. It taught\neveryone at Pixar, no matter their title, to respect the work that their colleagues did. And it made us all beginners again. Creativity involves missteps and imperfections. I\nwanted our people to get comfortable with that idea—that both the organization\nand its members should be willing, at times, to operate on the edge. I can understand that the leaders of many companies might wonder whether or\nnot such classes would truly be useful, worth the expense. And I’ll admit that these\nsocial interactions I describe were an unexpected benefit. But the purpose of P.U.\nwas never to turn programmers into artists or artists into belly dancers. Instead, it\nwas to send a signal about how important it is for every one of us to keep learning\nnew things. That, too, is a key part of remaining flexible: keeping our brains nimble\nby pushing ourselves to try things we haven’t tried before.",
           "wordCount": 197,
@@ -3708,7 +3652,7 @@
           "links": []
         },
         {
-          "chunkId": "10_82",
+          "chunkId": "10_75",
           "type": "paragraph",
           "content": "That’s what P.U. lets our\npeople do, and I believe it makes us stronger. We begin life, as children, being open to the ideas of others because we need to be\nopen to learn. Most of what children encounter, after all, are things they’ve never\nseen before. The child has no choice but to embrace the new. If this openness is so\nwonderful, however, why do we lose it as we grow up? Where, along the way, do\nwe turn from the wide-eyed child into the adult who fears surprises and has all the\nanswers and seeks to control all outcomes? It puts me in mind of a night, many years ago, when I found myself at an art\nexhibit at my daughter’s elementary school in Marin. As I walked up and down the\nhallways, looking at the paintings and sketches made by kids in grades K through 5,\nI noticed that the first- and second-graders’ drawings looked better and fresher than\nthose of the fifth-graders. Somewhere along the line, the fifth-graders had realized\nthat their drawings did not look realistic, and they had become self-conscious and\ntentative. The result?",
           "wordCount": 190,
@@ -3716,7 +3660,7 @@
           "links": []
         },
         {
-          "chunkId": "10_83",
+          "chunkId": "10_76",
           "type": "paragraph",
           "content": "Their drawings became more stilted and staid, less inventive,\nbecause they probably thought that others would recognize this “fault.” The fear of\njudgment was hindering creativity. If fear hinders us even in grade school, no wonder it takes such discipline—some\npeople even call it a practice—to turn off that inner critic in adulthood and return to\na place of openness. In Korean Zen, the belief that it is good to branch out beyond\nwhat we already know is expressed in a phrase that means, literally, “not know\nmind.” To have a “not know mind” is a goal of creative people. It means you are\nopen to the new, just as children are. Similarly, in Japanese Zen, that idea of not\nbeing constrained by what we already know is called “beginner’s mind.” And people\npractice for years to recapture and keep ahold of it. When a new company is formed, its founders must have a startup mentality—a\nbeginner’s mind, open to everything because, well, what do they have to lose?",
           "wordCount": 169,
@@ -3724,7 +3668,7 @@
           "links": []
         },
         {
-          "chunkId": "10_84",
+          "chunkId": "10_77",
           "type": "paragraph",
           "content": "(This\nis often something they later look back upon wistfully.) But when that company\nbecomes successful, its leaders often cast off that startup mentality because, they tell\nthemselves, they have figured out what to do. They don’t want to be beginners\nanymore. That may be human nature, but I believe it is a part of our nature that\nshould be resisted. By resisting the beginner’s mind, you make yourself more prone\nto repeat yourself than to create something new. The attempt to avoid failure, in\nother words, makes failure more likely. Paying attention to the present moment without letting your thoughts and ideas\nabout the past and the future get in the way is essential. Why? Because it makes\nroom for the views of others. It allows us to begin to trust them—and, more\nimportant, to hear them. It makes us willing to experiment, and it makes it safe to\ntry something that may fail. It encourages us to work on our awareness, trying to set\nup our own feedback loop in which paying attention improves our ability to pay\nattention. It requires us to understand that to advance creatively, we must let go of\nsomething.",
           "wordCount": 196,
@@ -3732,7 +3676,7 @@
           "links": []
         },
         {
-          "chunkId": "10_85",
+          "chunkId": "10_78",
           "type": "paragraph",
           "content": "As the composer Philip Glass once said, “The real issue is not how do\nYou find your voice, but ... getting rid of the damn thing.”",
           "wordCount": 26,
@@ -5335,23 +5279,23 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-17T15:16:15.612Z",
+    "processingStartTime": "2025-08-19T15:25:26.219Z",
     "processingEndTime": null,
     "stepResults": {
       "step-4": {
-        "totalChunks": 649,
-        "totalParagraphs": 611,
-        "totalHeaders": 38,
+        "totalChunks": 642,
+        "totalParagraphs": 610,
+        "totalHeaders": 32,
         "totalLinksExtracted": 1,
-        "processingTime": 72,
+        "processingTime": 86,
         "stats": {
-          "totalChunks": 649,
-          "totalParagraphs": 611,
-          "totalHeaders": 38,
-          "totalWords": 111473,
+          "totalChunks": 642,
+          "totalParagraphs": 610,
+          "totalHeaders": 32,
+          "totalWords": 111455,
           "totalLinks": 1,
           "paragraphStats": {
-            "count": 611,
+            "count": 610,
             "wordCounts": [
               192,
               165,
@@ -5718,8 +5662,7 @@
               191,
               170,
               187,
-              22,
-              24,
+              54,
               196,
               199,
               196,
@@ -5965,12 +5908,12 @@
               125,
               141
             ],
-            "averageWords": 182.1685761047463,
-            "minWords": 22,
+            "averageWords": 182.48032786885247,
+            "minWords": 26,
             "maxWords": 218
           },
           "headerStats": {
-            "count": 38,
+            "count": 32,
             "wordCounts": [
               4,
               3,
@@ -5983,12 +5926,6 @@
               5,
               4,
               5,
-              6,
-              3,
-              5,
-              5,
-              3,
-              4,
               6,
               3,
               5,
@@ -6011,7 +5948,7 @@
               2,
               3
             ],
-            "averageWords": 4.421052631578948,
+            "averageWords": 4.4375,
             "minWords": 2,
             "maxWords": 9
           }
@@ -6024,7 +5961,7 @@
       "lineCount": 9186,
       "wordCount": 112801,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-17T15:16:16.471Z",
+      "extractionTime": "2025-08-19T15:25:27.115Z",
       "averageWordsPerPage": 532,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 19959
@@ -6036,7 +5973,7 @@
       "patternMatches": 47,
       "averageDetectionConfidence": 0.9437499999999999,
       "pageOffset": 0,
-      "processingTime": 795,
+      "processingTime": 966,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -6045,7 +5982,7 @@
       "averagePagesPerChapter": 12.9375,
       "totalCharacters": 641448,
       "averageCharactersPerChapter": 40090.5,
-      "processingTime": 7,
+      "processingTime": 8,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -6062,21 +5999,21 @@
       "totalChapters": 16,
       "averageWordsPerPage": 534.5410628019324,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-17T15:16:17.400Z",
+      "extractionTime": "2025-08-19T15:25:28.217Z",
       "processingTime": 33
     },
     "linkDetection": {
       "totalLinks": 1,
       "totalPdfLinks": 33,
-      "processingTime": 731,
-      "detectionTime": "2025-08-17T15:16:18.139Z"
+      "processingTime": 763,
+      "detectionTime": "2025-08-19T15:25:28.991Z"
     },
     "imageExtraction": {
       "totalImages": 69,
       "totalExtractedImages": 72,
       "imagesFolderPath": "/Users/gileck/projects/temp1/files/Creativity-Inc/output/images",
-      "processingTime": 2339,
-      "extractionTime": "2025-08-17T15:16:20.484Z"
+      "processingTime": 2521,
+      "extractionTime": "2025-08-19T15:25:31.520Z"
     }
   }
 }

@@ -1,0 +1,15 @@
+../files/Creativity-Inc/book.pdf:
+
+PDF-1.4
+Info object (522 0 R):
+<</Author(Ed Catmull & Amy Wallace)/CreationDate(D:20181126164824+00'00')/Creator(calibre 3.34.0 [https://calibre-ebook.com])/Producer(calibre 3.34.0 [https://calibre-ebook.com])/Title(Creativity, Inc.: Overcoming the Unseen Forces That Stand in the Way of True Inspiration)>>
+Pages: 212
+
+Retrieving info from pages 1-212...
+Fonts (5):
+	2	(14 0 R):	Type0 'AAAAAA+CharisSIL' Identity-H (12 0 R)
+	4	(25 0 R):	Type0 'AAAAAB+CharisSIL-Bold' Identity-H (19 0 R)
+	4	(25 0 R):	Type0 'AAAAAC+CharisSIL-Italic' Identity-H (23 0 R)
+	212	(478 0 R):	Type0 'AAAAAD+LiberationSerif-Bold' Identity-H (473 0 R)
+	212	(478 0 R):	Type0 'AAAAAE+LiberationSerif' Identity-H (476 0 R)
+
