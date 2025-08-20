@@ -1,17 +1,23 @@
 {
-  "processingTime": 1896,
+  "processingTime": 1015,
   "detectionStats": {
-    "chaptersDetected": 10,
+    "chaptersDetected": 16,
     "tocSource": "pdf_bookmarks",
-    "tocEntriesFound": 10,
+    "tocEntriesFound": 18,
     "patternMatches": 419,
-    "averageDetectionConfidence": 0.9,
+    "averageDetectionConfidence": 0.85625,
     "pageOffset": 0
   },
   "tocAnalysis": {
     "source": "pdf_bookmarks",
     "tocFound": true,
     "tocEntries": [
+      {
+        "chapterTitle": "Praise for Transformer",
+        "chapterNumber": 7,
+        "startingPage": 1,
+        "bookmarkTitle": "Praise for Transformer"
+      },
       {
         "chapterTitle": "Introduction: Life itself",
         "chapterNumber": 0,
@@ -56,21 +62,63 @@
       },
       {
         "chapterTitle": "Epilogue: Self",
-        "chapterNumber": 99,
+        "chapterNumber": 8,
         "startingPage": 211,
         "bookmarkTitle": "Epilogue: Self"
       },
       {
+        "chapterTitle": "Envoi: ‘Like Most Revelations’",
+        "chapterNumber": 9,
+        "startingPage": 219,
+        "bookmarkTitle": "Envoi: ‘Like Most Revelations’"
+      },
+      {
+        "chapterTitle": "The forward Krebs cycle",
+        "chapterNumber": 10,
+        "startingPage": 220,
+        "bookmarkTitle": "The forward Krebs cycle"
+      },
+      {
+        "chapterTitle": "The reverse Krebs cycle",
+        "chapterNumber": 11,
+        "startingPage": 221,
+        "bookmarkTitle": "The reverse Krebs cycle"
+      },
+      {
         "chapterTitle": "Appendix 1: Red protein mechanics",
-        "chapterNumber": 99,
+        "chapterNumber": 12,
         "startingPage": 222,
         "bookmarkTitle": "Appendix 1: Red protein mechanics"
       },
       {
         "chapterTitle": "Appendix 2: The Krebs line",
-        "chapterNumber": 99,
+        "chapterNumber": 13,
         "startingPage": 227,
         "bookmarkTitle": "Appendix 2: The Krebs line"
+      },
+      {
+        "chapterTitle": "List of abbreviations",
+        "chapterNumber": 14,
+        "startingPage": 233,
+        "bookmarkTitle": "List of abbreviations"
+      },
+      {
+        "chapterTitle": "Further reading",
+        "chapterNumber": 15,
+        "startingPage": 236,
+        "bookmarkTitle": "Further reading"
+      },
+      {
+        "chapterTitle": "Acknowledgements",
+        "chapterNumber": 16,
+        "startingPage": 282,
+        "bookmarkTitle": "Acknowledgements"
+      },
+      {
+        "chapterTitle": "Index",
+        "chapterNumber": 17,
+        "startingPage": 288,
+        "bookmarkTitle": "Index"
       }
     ],
     "pdfBookmarksAvailable": true
@@ -81,6 +129,14 @@
     "highConfidenceMatches": 0
   },
   "chapterMetadata": [
+    {
+      "title": "Praise for Transformer",
+      "chapterNumber": 7,
+      "startingPage": 1,
+      "endPage": 7,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
     {
       "title": "Introduction: Life itself",
       "chapterNumber": 0,
@@ -139,15 +195,39 @@
     },
     {
       "title": "Epilogue: Self",
-      "chapterNumber": 99,
+      "chapterNumber": 8,
       "startingPage": 211,
-      "endPage": 221,
+      "endPage": 218,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7
     },
     {
+      "title": "Envoi: ‘Like Most Revelations’",
+      "chapterNumber": 9,
+      "startingPage": 219,
+      "endPage": 219,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "The forward Krebs cycle",
+      "chapterNumber": 10,
+      "startingPage": 220,
+      "endPage": 220,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "The reverse Krebs cycle",
+      "chapterNumber": 11,
+      "startingPage": 221,
+      "endPage": 221,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
       "title": "Appendix 1: Red protein mechanics",
-      "chapterNumber": 99,
+      "chapterNumber": 12,
       "startingPage": 222,
       "endPage": 226,
       "detectionSource": "pdf_bookmarks",
@@ -155,8 +235,24 @@
     },
     {
       "title": "Appendix 2: The Krebs line",
-      "chapterNumber": 99,
+      "chapterNumber": 13,
       "startingPage": 227,
+      "endPage": 232,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "List of abbreviations",
+      "chapterNumber": 14,
+      "startingPage": 233,
+      "endPage": 235,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Further reading",
+      "chapterNumber": 15,
+      "startingPage": 236,
       "endPage": null,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7

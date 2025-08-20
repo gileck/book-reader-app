@@ -1,67 +1,79 @@
 {
   "metadata": {
-    "totalDuration": 5472,
-    "timestamp": "2025-08-19T15:32:40.017Z",
-    "success": false,
-    "error": "Step step-5 validation failed",
+    "totalDuration": 5278,
+    "timestamp": "2025-08-20T07:31:59.095Z",
+    "success": true,
     "totalSteps": 12,
-    "validatedSteps": 8,
-    "failedSteps": 1
+    "validatedSteps": 11,
+    "failedSteps": 0
   },
   "steps": {
     "step-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:35.548Z",
-      "duration": 42
+      "timestamp": "2025-08-20T07:31:54.733Z",
+      "duration": 36
     },
     "step-2-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:36.517Z",
+      "timestamp": "2025-08-20T07:31:55.702Z",
       "duration": 0
     },
     "step-2-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:36.528Z",
-      "duration": 3
+      "timestamp": "2025-08-20T07:31:55.712Z",
+      "duration": 2
     },
     "step-2-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:36.532Z",
-      "duration": 3
+      "timestamp": "2025-08-20T07:31:55.716Z",
+      "duration": 2
     },
     "step-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:36.573Z",
-      "duration": 7
+      "timestamp": "2025-08-20T07:31:55.756Z",
+      "duration": 9
     },
     "step-3-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:37.342Z",
+      "timestamp": "2025-08-20T07:31:56.483Z",
       "duration": 8
     },
     "step-3-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:39.855Z",
-      "duration": 9
+      "timestamp": "2025-08-20T07:31:58.796Z",
+      "duration": 7
     },
     "step-4": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-19T15:32:39.954Z",
+      "timestamp": "2025-08-20T07:31:58.892Z",
       "duration": 12
     },
     "step-5": {
-      "passed": false,
-      "error": "Step step-5 validation failed",
-      "timestamp": "2025-08-19T15:32:40.017Z",
-      "duration": 63
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-08-20T07:31:58.952Z",
+      "duration": 26
+    },
+    "step-5-1": null,
+    "step-5-2": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-08-20T07:31:59.044Z",
+      "duration": 41
+    },
+    "step-6": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-08-20T07:31:59.090Z",
+      "duration": 42
     }
   }
 }

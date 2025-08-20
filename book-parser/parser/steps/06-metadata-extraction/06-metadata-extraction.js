@@ -37,8 +37,8 @@ async function execute(pipelineState, config) {
             throw new Error('Raw text is required for metadata extraction. Ensure step 1 (text extraction) was completed.');
         }
 
-        // Extract title
-        const title = extractTitle(pipelineState.rawText, pipelineState.chapters);
+        // Extract title - Library of Congress only, no fallbacks
+        const title = extractTitle(pipelineState.rawText);
 
         // Extract author
         const author = extractAuthor(pipelineState.rawText);
@@ -89,8 +89,8 @@ async function execute(pipelineState, config) {
 
         // Save debug information
         const debugInfo = {
-            titleCandidates: extractTitleCandidates(pipelineState.rawText),
-            authorCandidates: extractAuthorCandidates(pipelineState.rawText),
+            title: title,
+            author: author,
             publicationMatches: publicationInfo.matches || [],
             languageConfidence: detectLanguageConfidence(pipelineState.rawText),
             processingTime: Date.now() - startTime
@@ -119,97 +119,51 @@ async function execute(pipelineState, config) {
 }
 
 /**
- * Extract book title from text and chapters
+ * Extract book title from Library of Congress cataloging data only
  */
-function extractTitle(rawText, chapters) {
-    // Look for title patterns in order of preference
-    const titleCandidates = extractTitleCandidates(rawText);
-
-    if (titleCandidates.length > 0) {
-        return titleCandidates[0].text;
+function extractTitle(rawText) {
+    // Only use Library of Congress cataloging data - no fallbacks
+    const lcTitle = extractTitleFromLibraryOfCongress(rawText);
+    
+    if (!lcTitle) {
+        throw new Error('Book title not found in Library of Congress cataloging data');
     }
-
-    // Fallback to first chapter title if it looks like a book title
-    if (chapters.length > 0 && chapters[0].title) {
-        const firstTitle = chapters[0].title;
-        if (!firstTitle.toLowerCase().includes('chapter') &&
-            !firstTitle.toLowerCase().includes('introduction') &&
-            firstTitle.length > 5) {
-            return firstTitle;
-        }
-    }
-
-    return 'Unknown Title';
+    
+    return lcTitle;
 }
 
 /**
- * Extract title candidates with confidence scores
+ * Extract title from Library of Congress cataloging data only
  */
-function extractTitleCandidates(rawText) {
-    const candidates = [];
-
+function extractTitleFromLibraryOfCongress(rawText) {
     // Split into pages for analysis
     const pages = rawText.split(/--- PAGE \d+ ---/);
     const firstPages = pages.slice(0, 10).join('\n'); // First 10 pages
 
-    // Pattern 1: Title page patterns (high confidence)
-    const titlePagePatterns = [
-        /^([A-Z][A-Z\s:]{10,80})\s*$/gm, // All caps titles
-        /(?:^|\n)([A-Z][^.\n]{15,80})\s*\n\s*(?:by\s+|author|written)/im, // Title followed by author
-        /(?:^|\n)([A-Z][^.\n]{10,60})\s*\n\s*(?:The|A)\s+(?:complete|definitive|essential)/im // Title with subtitle
-    ];
-
-    titlePagePatterns.forEach((pattern, index) => {
-        let match;
-        while ((match = pattern.exec(firstPages)) !== null) {
-            const title = match[1].trim();
-            if (isValidTitle(title)) {
-                candidates.push({
-                    text: title,
-                    confidence: 0.9 - (index * 0.1),
-                    source: 'title_page_pattern',
-                    pattern: index
-                });
-            }
-        }
-    });
-
-    // Pattern 2: Copyright page patterns (medium confidence)
-    const copyrightPatterns = [
-        /©[^,\n]*?(\d{4})[^,\n]*?([A-Z][^.\n]{10,60})/g,
-        /Copyright[^,\n]*?(\d{4})[^,\n]*?([A-Z][^.\n]{10,60})/g
-    ];
-
-    copyrightPatterns.forEach(pattern => {
-        let match;
-        while ((match = pattern.exec(firstPages)) !== null) {
-            const title = match[2].trim();
-            if (isValidTitle(title)) {
-                candidates.push({
-                    text: title,
-                    confidence: 0.7,
-                    source: 'copyright_page',
-                    year: match[1]
-                });
-            }
-        }
-    });
-
-    // Sort by confidence and remove duplicates
-    const uniqueCandidates = [];
-    const seen = new Set();
-
-    candidates.sort((a, b) => b.confidence - a.confidence);
-
-    for (const candidate of candidates) {
-        const normalized = candidate.text.toLowerCase().replace(/\s+/g, ' ').trim();
-        if (!seen.has(normalized) && normalized.length > 5) {
-            seen.add(normalized);
-            uniqueCandidates.push(candidate);
-        }
+    // Library of Congress pattern: "Title : subtitle / Author"
+    const lcPattern = /(?:^|\n)([A-Z][a-z][^\/\n]{5,80})\s*(?:\s*:\s*[^\/\n]+)?\s*\/\s*[A-Z][a-z]/gm;
+    
+    const match = lcPattern.exec(firstPages);
+    if (!match) {
+        return null;
     }
 
-    return uniqueCandidates.slice(0, 5); // Top 5 candidates
+    let title = match[1].trim();
+    
+    // Clean up the title - keep main title and short subtitle, remove very long subtitles
+    if (title.includes(':')) {
+        const parts = title.split(':');
+        const mainTitle = parts[0].trim();
+        const subtitle = parts[1] ? parts[1].trim() : '';
+        
+        if (subtitle.length <= 30) {
+            title = `${mainTitle}: ${subtitle}`;
+        } else {
+            title = mainTitle;
+        }
+    }
+    
+    return title;
 }
 
 /**
@@ -230,101 +184,64 @@ function isValidTitle(title) {
         /^appendix/i,
         /^www\./i,
         /^http/i,
-        /^\s*$/ // Empty or whitespace
+        /^\s*$/, // Empty or whitespace
+        /^part\s+(i{1,3}|iv|v|vi{0,3}|1|2|3|4|5|6|7|8|9|10):/i, // Section headers like "Part I:", "Part II:", etc.
+        /^introduction\s*:/i, // Introduction headers
+        /^afterword\s*:/i, // Afterword headers
+        /^epilogue\s*:/i, // Epilogue headers
+        /^prologue\s*:/i // Prologue headers
     ];
 
     return !excludePatterns.some(pattern => pattern.test(title));
 }
 
 /**
- * Extract author information
+ * Extract author from Library of Congress cataloging data only
  */
 function extractAuthor(rawText) {
-    const authorCandidates = extractAuthorCandidates(rawText);
-
-    if (authorCandidates.length > 0) {
-        return authorCandidates[0].text;
+    // Only use Library of Congress cataloging data - no fallbacks
+    const lcAuthor = extractAuthorFromLibraryOfCongress(rawText);
+    
+    if (!lcAuthor) {
+        throw new Error('Author not found in Library of Congress cataloging data');
     }
-
-    return 'Unknown Author';
+    
+    return lcAuthor;
 }
 
 /**
- * Extract author candidates
+ * Extract author from Library of Congress cataloging data only
  */
-function extractAuthorCandidates(rawText) {
-    const candidates = [];
-    const firstPages = rawText.split(/--- PAGE \d+ ---/).slice(0, 10).join('\n');
+function extractAuthorFromLibraryOfCongress(rawText) {
+    // Split into pages for analysis
+    const pages = rawText.split(/--- PAGE \d+ ---/);
+    const firstPages = pages.slice(0, 10).join('\n'); // First 10 pages
 
-    // Pattern 1: Copyright page author (HIGHEST PRIORITY)
-    const copyrightPatterns = [
-        /copyright[^,\n]*?©[^,\n]*?([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/gi,
-        /©[^,\n]*?(\d{4})[^,\n]*?([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/gi,
-        /the\s+right\s+of\s+([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+to\s+be\s+identified\s+as\s+the\s+author/gi
-    ];
-
-    copyrightPatterns.forEach((pattern, index) => {
-        let match;
-        while ((match = pattern.exec(firstPages)) !== null) {
-            const author = match[match.length - 1].trim(); // Get the last capture group
-            if (isValidAuthor(author)) {
-                candidates.push({
-                    text: author,
-                    confidence: 0.95 - (index * 0.05), // Very high confidence for copyright
-                    source: 'copyright'
-                });
-            }
-        }
-    });
-
-    // Pattern 2: Author name in all caps (MEDIUM-HIGH PRIORITY)
-    const allCapsPattern = /(?:^|\n)\s*([A-Z]{2,}\s+[A-Z]{2,}(?:\s+[A-Z]{2,})?)\s*(?:\n|$)/gm;
-    let match;
-    while ((match = allCapsPattern.exec(firstPages)) !== null) {
-        const author = match[1].trim();
-        if (isValidAuthor(author) && !isInPraiseContext(firstPages, match.index)) {
-            candidates.push({
-                text: toTitleCase(author),
-                confidence: 0.8,
-                source: 'all_caps'
-            });
-        }
+    // Look for Library of Congress cataloging section
+    const lcSectionMatch = firstPages.match(/LIBRARY OF CONGRESS CATALOGING-IN-PUBLICATION DATA[\s\S]*?ISBN/);
+    if (!lcSectionMatch) {
+        return null;
     }
 
-    // Pattern 3: "by Author Name" patterns (MEDIUM PRIORITY)
-    const byPatterns = [
-        /(?:^|\n)\s*(?:by|author|written\s+by)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]*)*(?:\s+[A-Z][a-z]+)*)/gim
-    ];
-
-    byPatterns.forEach((pattern, index) => {
-        let match;
-        while ((match = pattern.exec(firstPages)) !== null) {
-            const author = match[1].trim();
-            if (isValidAuthor(author) && !isInPraiseContext(firstPages, match.index)) {
-                candidates.push({
-                    text: author,
-                    confidence: 0.7 - (index * 0.1),
-                    source: 'by_pattern'
-                });
-            }
-        }
-    });
-
-    // Remove duplicates and sort by confidence
-    const uniqueCandidates = [];
-    const seen = new Set();
-
-    candidates.sort((a, b) => b.confidence - a.confidence);
-
-    for (const candidate of candidates) {
-        const normalized = candidate.text.toLowerCase();
-        if (!seen.has(normalized)) {
-            seen.add(normalized);
-            uniqueCandidates.push(candidate);
-        }
+    const lcSection = lcSectionMatch[0];
+    
+    // Extract author from the first line after "LIBRARY OF CONGRESS..."
+    // Format: "Last, First [Middle]."
+    const authorMatch = lcSection.match(/LIBRARY OF CONGRESS CATALOGING-IN-PUBLICATION DATA\s*\n([A-Z][a-z]+,\s+[A-Z][a-z]+(?:\s+[A-Z]\.?)?)/);
+    
+    if (!authorMatch) {
+        return null;
     }
 
-    return uniqueCandidates.slice(0, 3);
+    const author = authorMatch[1].trim();
+    
+    // Convert "Last, First" format to "First Last" format
+    const parts = author.split(',').map(p => p.trim());
+    if (parts.length >= 2) {
+        return `${parts[1]} ${parts[0]}`;
+    }
+    
+    return author;
 }
 
 /**

@@ -5279,7 +5279,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-19T15:32:34.540Z",
+    "processingStartTime": "2025-08-20T07:31:53.812Z",
     "processingEndTime": null,
     "stepResults": {
       "step-4": {
@@ -5961,7 +5961,7 @@
       "lineCount": 9186,
       "wordCount": 112801,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-19T15:32:35.455Z",
+      "extractionTime": "2025-08-20T07:31:54.650Z",
       "averageWordsPerPage": 532,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 19959
@@ -5982,7 +5982,7 @@
       "averagePagesPerChapter": 12.9375,
       "totalCharacters": 641448,
       "averageCharactersPerChapter": 40090.5,
-      "processingTime": 7,
+      "processingTime": 8,
       "extractionMethod": "page_based_content_extraction"
     },
     "chapterNameCleaning": {
@@ -5991,7 +5991,7 @@
       "averageCharactersRemovedPerChapter": 2.9375,
       "totalCharactersAfterCleaning": 641401,
       "cleaningEfficiency": 0.007327709186608689,
-      "processingTime": 1,
+      "processingTime": 0,
       "cleaningMethod": "pattern_based_title_removal"
     },
     "pageExtractionAndCrossPageMerging": {
@@ -5999,21 +5999,21 @@
       "totalChapters": 16,
       "averageWordsPerPage": 534.5410628019324,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-19T15:32:36.565Z",
-      "processingTime": 34
+      "extractionTime": "2025-08-20T07:31:55.748Z",
+      "processingTime": 32
     },
     "linkDetection": {
       "totalLinks": 1,
       "totalPdfLinks": 33,
-      "processingTime": 761,
-      "detectionTime": "2025-08-19T15:32:37.334Z"
+      "processingTime": 718,
+      "detectionTime": "2025-08-20T07:31:56.475Z"
     },
     "imageExtraction": {
       "totalImages": 69,
       "totalExtractedImages": 72,
       "imagesFolderPath": "/Users/gileck/projects/temp1/files/Creativity-Inc/output/images",
-      "processingTime": 2504,
-      "extractionTime": "2025-08-19T15:32:39.846Z"
+      "processingTime": 2306,
+      "extractionTime": "2025-08-20T07:31:58.789Z"
     }
   }
 }

@@ -76,15 +76,27 @@ async function execute(pipelineState, config) {
             // Chapter processed
         }
         
+        // Filter out chapters with content under 10,000 characters (likely not real chapters)
+        const originalChapterCount = chapters.length;
+        const filteredChapters = chapters.filter(ch => {
+            const isRealChapter = ch.content.length >= 10000;
+            if (!isRealChapter) {
+                console.log(`📝 Filtering out short chapter: "${ch.title}" (${ch.content.length} characters)`);
+            }
+            return isRealChapter;
+        });
+
         // Generate extraction statistics
         const extractionStats = {
-            totalChapters: chapters.length,
-            totalPages: chapters.reduce((sum, ch) => sum + (ch.pageNumberEnd - ch.pageNumberStart + 1), 0),
-            averagePagesPerChapter: chapters.length > 0 ? 
-                chapters.reduce((sum, ch) => sum + (ch.pageNumberEnd - ch.pageNumberStart + 1), 0) / chapters.length : 0,
-            totalCharacters: chapters.reduce((sum, ch) => sum + ch.content.length, 0),
-            averageCharactersPerChapter: chapters.length > 0 ? 
-                chapters.reduce((sum, ch) => sum + ch.content.length, 0) / chapters.length : 0
+            totalChapters: filteredChapters.length,
+            originalChapterCount: originalChapterCount,
+            filteredChapterCount: originalChapterCount - filteredChapters.length,
+            totalPages: filteredChapters.reduce((sum, ch) => sum + (ch.pageNumberEnd - ch.pageNumberStart + 1), 0),
+            averagePagesPerChapter: filteredChapters.length > 0 ? 
+                filteredChapters.reduce((sum, ch) => sum + (ch.pageNumberEnd - ch.pageNumberStart + 1), 0) / filteredChapters.length : 0,
+            totalCharacters: filteredChapters.reduce((sum, ch) => sum + ch.content.length, 0),
+            averageCharactersPerChapter: filteredChapters.length > 0 ? 
+                filteredChapters.reduce((sum, ch) => sum + ch.content.length, 0) / filteredChapters.length : 0
         };
         
         const processingTime = Date.now() - startTime;
@@ -93,12 +105,20 @@ async function execute(pipelineState, config) {
         const debugOutput = {
             processingTime,
             extractionStats,
-            chapters: chapters.map(ch => ({
+            filteredChapters: filteredChapters.map(ch => ({
                 title: ch.title,
                 chapterNumber: ch.chapterNumber,
                 pageNumberStart: ch.pageNumberStart,
                 pageNumberEnd: ch.pageNumberEnd,
                 contentLength: ch.content.length
+            })),
+            originalChapters: chapters.map(ch => ({
+                title: ch.title,
+                chapterNumber: ch.chapterNumber,
+                pageNumberStart: ch.pageNumberStart,
+                pageNumberEnd: ch.pageNumberEnd,
+                contentLength: ch.content.length,
+                filtered: ch.content.length < 10000
             }))
         };
         
@@ -108,13 +128,13 @@ async function execute(pipelineState, config) {
         // Chapter content extraction completed
         
         return {
-            chapters: chapters,
+            chapters: filteredChapters,
             metadata: {
                 ...pipelineState.metadata,
                 chapterContentExtraction: {
                     ...extractionStats,
                     processingTime,
-                    extractionMethod: 'page_based_content_extraction'
+                    extractionMethod: 'page_based_content_extraction_with_filtering'
                 }
             }
         };

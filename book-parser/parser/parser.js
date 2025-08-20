@@ -223,21 +223,56 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 if (fs.existsSync(skippedFile)) {
                                     try {
                                         const entries = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
+                                        
+                                        // Handle chunk-level skipping
                                         const skippedChunkIds = new Set(
                                             entries.filter(e => e?.step === stepName && typeof e?.chunkId === 'string')
                                                    .map(e => e.chunkId)
                                         );
                                         
+                                        // Handle chapter-level skipping
+                                        const skippedChapters = entries.filter(e => 
+                                            e?.step === stepName && 
+                                            (typeof e?.chapterNumber === 'number' || typeof e?.chapterTitle === 'string')
+                                        );
+                                        
+                                        let shouldSkip = false;
+                                        
+                                        // Check chunk-level skipping
                                         if (skippedChunkIds.size > 0) {
-                                            // Extract chunk IDs from validation output
                                             const chunkIds = [...validationOutput.matchAll(/(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/g)]
                                                             .map(match => match[2]);
                                             
-                                            // If all validation errors are for skipped chunks, mark as valid
                                             if (chunkIds.length > 0 && chunkIds.every(id => skippedChunkIds.has(id))) {
-                                                isValid = true;
+                                                shouldSkip = true;
                                             }
                                         }
+                                        
+                                        // Check chapter-level skipping
+                                        if (!shouldSkip && skippedChapters.length > 0) {
+                                            for (const skip of skippedChapters) {
+                                                if (skip.chapterNumber !== undefined) {
+                                                    // Check if validation output mentions this chapter number
+                                                    const chapterNumRegex = new RegExp(`Chapter\\s+${skip.chapterNumber}\\b`, 'i');
+                                                    if (chapterNumRegex.test(validationOutput)) {
+                                                        shouldSkip = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if (skip.chapterTitle && !shouldSkip) {
+                                                    // Check if validation output mentions this chapter title
+                                                    if (validationOutput.includes(`"${skip.chapterTitle}"`)) {
+                                                        shouldSkip = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        if (shouldSkip) {
+                                            isValid = true;
+                                        }
+                                        
                                     } catch (_) { /* ignore errors reading skipped file */ }
                                 }
                             }

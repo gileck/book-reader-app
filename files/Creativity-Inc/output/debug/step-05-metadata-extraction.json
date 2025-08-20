@@ -1,0 +1,21 @@
+{
+  "title": "Creativity, Inc.",
+  "author": "Edwin E. Catmull",
+  "publicationMatches": [
+    {
+      "type": "year",
+      "text": "© 2014"
+    },
+    {
+      "type": "isbn",
+      "text": "ISBN 978-0-8129-9301-1"
+    }
+  ],
+  "languageConfidence": {
+    "language": "en",
+    "confidence": 1,
+    "matches": 84,
+    "totalWords": 833
+  },
+  "processingTime": 4
+}

@@ -1,10 +1,10 @@
 {
-  "processingTime": 0,
+  "processingTime": 1,
   "cleaningStats": {
-    "totalChapters": 10,
+    "totalChapters": 9,
     "totalCharactersRemoved": 0,
     "averageCharactersRemovedPerChapter": 0,
-    "totalCharactersAfterCleaning": 729159,
+    "totalCharactersAfterCleaning": 707496,
     "cleaningEfficiency": 0
   },
   "chapters": [
@@ -66,27 +66,19 @@
     },
     {
       "title": "Epilogue: Self",
-      "chapterNumber": 99,
+      "chapterNumber": 8,
       "pageNumberStart": 211,
-      "pageNumberEnd": 221,
-      "contentLength": 21202,
+      "pageNumberEnd": 218,
+      "contentLength": 20324,
       "cleanedPreview": "--- PAGE 211 ---\n211 E PILOGUE \nSELF \n‘I think therefore I am’ said Descartes, in one of the most celebrated\nlines ever written. But what am I, exactly? An artificial intelligence can\nthink too, by de..."
     },
     {
-      "title": "Appendix 1: Red protein mechanics",
-      "chapterNumber": 99,
-      "pageNumberStart": 222,
-      "pageNumberEnd": 226,
-      "contentLength": 6780,
-      "cleanedPreview": "--- PAGE 222 ---\n222 A PPENDIX 1 \nRED PROTEIN MECHANICS \nThe red protein is ferredoxin, one of the most ancient and fundamental\nproteins across all of life. It seems to have many jobs, but the common\n..."
-    },
-    {
-      "title": "Appendix 2: The Krebs line",
-      "chapterNumber": 99,
-      "pageNumberStart": 227,
+      "title": "Further reading",
+      "chapterNumber": 15,
+      "pageNumberStart": 236,
       "pageNumberEnd": 316,
-      "contentLength": 188828,
-      "cleanedPreview": "--- PAGE 227 ---\n227 A PPENDIX 2 \nTHE KREBS LINE \nIn Chapter 3, we followed the fate of CO 2 bound to the surface of a\nmineral, through to a C2 acetyl group bound to the surface. This acetyl\ngroup is ..."
+      "contentLength": 174823,
+      "cleanedPreview": "--- PAGE 236 ---\n236 FURTHER READING \nThis is not a textbook or research paper, so is not referenced in a comprehensive\nway. But if you’ve read this far, you will have become deeply embroiled in the\nw..."
     }
   ]
 }

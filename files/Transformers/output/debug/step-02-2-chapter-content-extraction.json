@@ -1,13 +1,15 @@
 {
-  "processingTime": 21,
+  "processingTime": 8,
   "extractionStats": {
-    "totalChapters": 10,
-    "totalPages": 309,
-    "averagePagesPerChapter": 30.9,
-    "totalCharacters": 729159,
-    "averageCharactersPerChapter": 72915.9
+    "totalChapters": 9,
+    "originalChapterCount": 16,
+    "filteredChapterCount": 7,
+    "totalPages": 292,
+    "averagePagesPerChapter": 32.44444444444444,
+    "totalCharacters": 707496,
+    "averageCharactersPerChapter": 78610.66666666667
   },
-  "chapters": [
+  "filteredChapters": [
     {
       "title": "Introduction: Life itself",
       "chapterNumber": 0,
@@ -59,24 +61,147 @@
     },
     {
       "title": "Epilogue: Self",
-      "chapterNumber": 99,
+      "chapterNumber": 8,
       "pageNumberStart": 211,
+      "pageNumberEnd": 218,
+      "contentLength": 20324
+    },
+    {
+      "title": "Further reading",
+      "chapterNumber": 15,
+      "pageNumberStart": 236,
+      "pageNumberEnd": 316,
+      "contentLength": 174823
+    }
+  ],
+  "originalChapters": [
+    {
+      "title": "Praise for Transformer",
+      "chapterNumber": 7,
+      "pageNumberStart": 1,
+      "pageNumberEnd": 7,
+      "contentLength": 5002,
+      "filtered": true
+    },
+    {
+      "title": "Introduction: Life itself",
+      "chapterNumber": 0,
+      "pageNumberStart": 8,
+      "pageNumberEnd": 26,
+      "contentLength": 48945,
+      "filtered": false
+    },
+    {
+      "title": "Discovering the nanocosm",
+      "chapterNumber": 1,
+      "pageNumberStart": 27,
+      "pageNumberEnd": 61,
+      "contentLength": 87389,
+      "filtered": false
+    },
+    {
+      "title": "The path of carbon",
+      "chapterNumber": 2,
+      "pageNumberStart": 62,
+      "pageNumberEnd": 90,
+      "contentLength": 71234,
+      "filtered": false
+    },
+    {
+      "title": "From gases to life",
+      "chapterNumber": 3,
+      "pageNumberStart": 91,
+      "pageNumberEnd": 123,
+      "contentLength": 77930,
+      "filtered": false
+    },
+    {
+      "title": "Revolutions",
+      "chapterNumber": 4,
+      "pageNumberStart": 124,
+      "pageNumberEnd": 149,
+      "contentLength": 69020,
+      "filtered": false
+    },
+    {
+      "title": "To the dark side",
+      "chapterNumber": 5,
+      "pageNumberStart": 150,
+      "pageNumberEnd": 180,
+      "contentLength": 76385,
+      "filtered": false
+    },
+    {
+      "title": "The flux capacitor",
+      "chapterNumber": 6,
+      "pageNumberStart": 181,
+      "pageNumberEnd": 210,
+      "contentLength": 81446,
+      "filtered": false
+    },
+    {
+      "title": "Epilogue: Self",
+      "chapterNumber": 8,
+      "pageNumberStart": 211,
+      "pageNumberEnd": 218,
+      "contentLength": 20324,
+      "filtered": false
+    },
+    {
+      "title": "Envoi: ‘Like Most Revelations’",
+      "chapterNumber": 9,
+      "pageNumberStart": 219,
+      "pageNumberEnd": 219,
+      "contentLength": 742,
+      "filtered": true
+    },
+    {
+      "title": "The forward Krebs cycle",
+      "chapterNumber": 10,
+      "pageNumberStart": 220,
+      "pageNumberEnd": 220,
+      "contentLength": 65,
+      "filtered": true
+    },
+    {
+      "title": "The reverse Krebs cycle",
+      "chapterNumber": 11,
+      "pageNumberStart": 221,
       "pageNumberEnd": 221,
-      "contentLength": 21202
+      "contentLength": 65,
+      "filtered": true
     },
     {
       "title": "Appendix 1: Red protein mechanics",
-      "chapterNumber": 99,
+      "chapterNumber": 12,
       "pageNumberStart": 222,
       "pageNumberEnd": 226,
-      "contentLength": 6780
+      "contentLength": 6780,
+      "filtered": true
     },
     {
       "title": "Appendix 2: The Krebs line",
-      "chapterNumber": 99,
+      "chapterNumber": 13,
       "pageNumberStart": 227,
+      "pageNumberEnd": 232,
+      "contentLength": 8919,
+      "filtered": true
+    },
+    {
+      "title": "List of abbreviations",
+      "chapterNumber": 14,
+      "pageNumberStart": 233,
+      "pageNumberEnd": 235,
+      "contentLength": 5082,
+      "filtered": true
+    },
+    {
+      "title": "Further reading",
+      "chapterNumber": 15,
+      "pageNumberStart": 236,
       "pageNumberEnd": 316,
-      "contentLength": 188828
+      "contentLength": 174823,
+      "filtered": false
     }
   ]
 }

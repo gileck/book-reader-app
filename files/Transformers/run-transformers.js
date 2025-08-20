@@ -1,4 +1,4 @@
-const parser = require('../../book-parser/parser-v2/parser.js');
+const parser = require('../../book-parser/parser/parser.js');
 const path = require('path');
 
 async function main() {

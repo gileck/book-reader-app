@@ -1,0 +1,310 @@
+[
+  {
+    "title": "Praise for Transformer",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 2,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Title Page",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 93,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Copyright",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 122,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Dedication",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 174,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Contents",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 195,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Introduction: Life itself",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 286,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "1. Discovering the nanocosm",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 860,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "2. The path of carbon",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 2092,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "3. From gases to life",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 3260,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "4. Revolutions",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 4539,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "5. To the dark side",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 5553,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "6. The flux capacitor",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 6646,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Epilogue: Self",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 7645,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Envoi: ‘Like Most Revelations’",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 7896,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "The forward Krebs cycle",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 7901,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "The reverse Krebs cycle",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 7904,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Appendix 1: Red protein mechanics",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 7956,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Appendix 2: The Krebs line",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 8108,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "List of abbreviations",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 8292,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Further reading",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 8466,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Acknowledgements",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 11799,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Index",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 11995,
+          "gen": 0
+        }
+      }
+    }
+  }
+]
