@@ -137,7 +137,7 @@ function createSentenceChunks(paragraphContent, paragraphLinks, paragraphIndex) 
         if (!sentence) continue;
 
         // Clean sentence content by removing newlines and normalizing whitespace
-        // BUT preserve newlines that are part of numbered list formatting
+        // BUT preserve newlines that come after sentence ending characters
         const cleanSentence = cleanSentenceContent(sentence);
 
         // Find links that belong to this specific sentence
@@ -556,37 +556,76 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
 }
 
 /**
- * Clean sentence content while preserving important formatting
+ * Check if a line ends with a common abbreviation
+ * @param {string} line - Line to check
+ * @returns {boolean} - True if line ends with an abbreviation
+ */
+function endsWithAbbreviation(line) {
+    const abbreviations = [
+        'Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Sr.', 'Jr.', 'St.', 'vs.', 'etc.',
+        'i.e.', 'e.g.', 'Ph.D.', 'M.D.', 'B.A.', 'M.A.', 'B.S.', 'M.S.',
+        'Inc.', 'Corp.', 'Ltd.', 'Co.', 'Ave.', 'Blvd.', 'Rd.', 'St.',
+        'Jan.', 'Feb.', 'Mar.', 'Apr.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Sept.', 'Oct.', 'Nov.', 'Dec.',
+        'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.',
+        'U.S.', 'U.K.', 'U.S.A.', 'U.K.'
+    ];
+    
+    return abbreviations.some(abbr => line.endsWith(abbr));
+}
+
+/**
+ * Clean sentence content while preserving newlines after sentence ending characters
  * @param {string} sentence - Raw sentence content
  * @returns {string} - Cleaned sentence content
  */
 function cleanSentenceContent(sentence) {
-    // Detect if this contains a numbered list by looking for multiple numbered items
-    const numberedItemPattern = /\d+\.\s+[^.\n]+/g;
-    const numberedItems = sentence.match(numberedItemPattern);
+    // Define sentence ending characters
+    const sentenceEnders = /[.!?]/;
     
-    if (numberedItems && numberedItems.length > 1) {
-        // This appears to be a numbered list - preserve newlines between items
-        // Replace only runs of multiple newlines and clean up spacing
-        return sentence
-            .replace(/\n{3,}/g, '\n\n')  // Collapse multiple newlines to max 2
-            .replace(/[ \t]+/g, ' ')     // Normalize spaces and tabs
-            .replace(/\n[ \t]+/g, '\n')  // Remove spaces after newlines
-            .replace(/[ \t]+\n/g, '\n')  // Remove spaces before newlines
-            .trim();
-    } else {
-        // Regular sentence - remove newlines and normalize whitespace
-        return sentence.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    // Split the text by newlines to process each line
+    const lines = sentence.split('\n');
+    const processedLines = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+        const currentLine = lines[i].trim();
+        
+        // Always add the current line (trimmed)
+        if (currentLine) {
+            processedLines.push(currentLine);
+        }
+        
+        // Check if we should preserve the newline after this line
+        // Preserve newline if the line ends with a sentence ending character
+        // BUT NOT if it ends with an abbreviation
+        if (i < lines.length - 1 && currentLine && sentenceEnders.test(currentLine.slice(-1)) && !endsWithAbbreviation(currentLine)) {
+            // Keep the newline by adding an empty string marker that we'll convert back to newline
+            processedLines.push('__PRESERVE_NEWLINE__');
+        }
     }
+    
+    // Join lines with spaces, but preserve marked newlines
+    let result = processedLines.join(' ');
+    
+    // Convert preserved newline markers back to actual newlines
+    result = result.replace(/ __PRESERVE_NEWLINE__ /g, '\n');
+    result = result.replace(/__PRESERVE_NEWLINE__/g, '\n');
+    
+    // Normalize whitespace (but preserve the newlines we want to keep)
+    result = result.replace(/[ \t]+/g, ' ');  // Normalize spaces and tabs
+    result = result.replace(/\n[ \t]+/g, '\n');  // Remove spaces after newlines
+    result = result.replace(/[ \t]+\n/g, '\n');  // Remove spaces before newlines
+    result = result.replace(/\n{3,}/g, '\n\n');  // Collapse multiple newlines to max 2
+    
+    return result.trim();
 }
 
 /**
- * Split text into sentences, handling footnotes properly
+ * Split text into sentences, only splitting at sentence endings followed by newlines
  * @param {string} text - Text to split
  * @returns {Array} - Array of sentences
  */
 function splitIntoSentences(text) {
-    // Simple but reliable sentence splitting that preserves sentence integrity
+    // Only split at sentence boundaries that are followed by newlines
     const sentences = [];
 
     // Temporarily protect common abbreviations that end with a period
@@ -604,15 +643,15 @@ function splitIntoSentences(text) {
     // Pattern: number + period + space + text (e.g., "1. Item text 2. Next item")
     protectedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
 
-    // Split on sentence terminators followed by whitespace and capital letter or end of text
-    // This preserves the terminator with the sentence and avoids creating fragments
-    const sentenceRegex = /([.!?]+)\s+(?=[A-Z]|$)/g;
+    // Split ONLY on sentence terminators that are followed by newlines
+    // This ensures we only create separate chunks when sentences actually end with newlines
+    const sentenceRegex = /([.!?]+)\s*\n/g;
 
     let lastIndex = 0;
     let match;
 
     while ((match = sentenceRegex.exec(protectedText)) !== null) {
-        // Extract sentence from lastIndex to end of current match
+        // Extract sentence from lastIndex to end of current match (including the terminator)
         const sentence = protectedText.substring(lastIndex, match.index + match[1].length).trim();
         if (sentence) {
             sentences.push(sentence);

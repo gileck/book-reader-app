@@ -123,6 +123,8 @@ function endsWithCommonSingleLetterWord(text) {
     return commonPatterns.some(pattern => pattern.test(trimmed));
 }
 
+
+
 /**
  * Validate sentence detection results
  * @param {Object} output - Output from execute function
@@ -367,8 +369,11 @@ function validate(output) {
                 const endsWithImageMarker = /\[\[IMG\s+id=[^\s]+\s+index=\d+\s+alt="[^"]*"\]\]\s*$/.test(trimmed);
                 // Accept numbered lists as valid content that doesn't need sentence terminators
                 const endsWithNumberedList = /\d+\.\s+[^\n]*$/.test(trimmed) && /\d+\.\s+[^\n]*\n\d+\.\s+/.test(trimmed);
+                // Check for ellipsis inside incomplete quotes (e.g., "he wrote, 'there is only one prime cause ...")
+                // This detects opening quote + content + ellipsis without proper closing quote
+                const hasIncompleteQuoteWithEllipsis = /[\u2018\u2019\u201C\u201D"'`'][^'\u2019\u201D"]*\.{3}\s*$/.test(trimmed);
 
-                if (wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList) && !endsWithCommonSingleLetterWord(trimmed)) {
+                if (wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || hasIncompleteQuoteWithEllipsis) && !endsWithCommonSingleLetterWord(trimmed)) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
                 }
 

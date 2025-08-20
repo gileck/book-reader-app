@@ -208,7 +208,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                             console.error = (...args) => {
                                 const message = args.join(' ');
                                 validationOutput += message + '\n';
-                                return originalConsoleError.apply(console, args);
+                                // Don't print to console yet - we'll decide later based on skip logic
                             };
 
                             // Run validation
@@ -224,27 +224,66 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                     try {
                                         const entries = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
                                         
-                                        // Handle chunk-level skipping
-                                        const skippedChunkIds = new Set(
-                                            entries.filter(e => e?.step === stepName && typeof e?.chunkId === 'string')
-                                                   .map(e => e.chunkId)
-                                        );
+                                        // Helper function to check if a string matches a wildcard pattern
+                                        const matchesWildcard = (text, pattern) => {
+                                            if (!pattern.includes('*')) {
+                                                return text === pattern;
+                                            }
+                                            // Convert wildcard pattern to regex
+                                            const regexPattern = pattern
+                                                .replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // Escape special regex chars
+                                                .replace(/\\\*/g, '.*'); // Convert * to .*
+                                            const regex = new RegExp(`^${regexPattern}$`);
+                                            return regex.test(text);
+                                        };
+                                        
+                                        // Handle chunk-level skipping with wildcard support
+                                        const skippedChunkPatterns = entries.filter(e => 
+                                            e?.step === stepName && typeof e?.chunkId === 'string'
+                                        ).map(e => e.chunkId);
+                                        
+                                        // Helper function to check if step matches (also supports wildcards)
+                                        const stepMatches = (entryStep) => matchesWildcard(stepName, entryStep);
+                                        
+                                        // Get all skipped patterns (including step wildcards)
+                                        const allSkippedPatterns = entries.filter(e => 
+                                            stepMatches(e?.step) && typeof e?.chunkId === 'string'
+                                        ).map(e => e.chunkId);
                                         
                                         // Handle chapter-level skipping
                                         const skippedChapters = entries.filter(e => 
-                                            e?.step === stepName && 
+                                            stepMatches(e?.step) && 
                                             (typeof e?.chapterNumber === 'number' || typeof e?.chapterTitle === 'string')
                                         );
                                         
                                         let shouldSkip = false;
                                         
-                                        // Check chunk-level skipping
-                                        if (skippedChunkIds.size > 0) {
+                                        // Check chunk-level skipping with wildcard support
+                                        if (allSkippedPatterns.length > 0) {
                                             const chunkIds = [...validationOutput.matchAll(/(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/g)]
                                                             .map(match => match[2]);
                                             
-                                            if (chunkIds.length > 0 && chunkIds.every(id => skippedChunkIds.has(id))) {
-                                                shouldSkip = true;
+                                            // Check if any chunk ID matches any skip pattern
+                                            const shouldSkipChunk = (chunkId) => {
+                                                return allSkippedPatterns.some(pattern => matchesWildcard(chunkId, pattern));
+                                            };
+                                            
+                                            // Check if any chunks should be skipped
+                                            const chunksToSkip = chunkIds.filter(shouldSkipChunk);
+                                            
+                                            if (chunksToSkip.length > 0) {
+                                                // If all error chunks should be skipped, skip the entire validation
+                                                if (chunkIds.every(shouldSkipChunk)) {
+                                                    shouldSkip = true;
+                                                } else {
+                                                    // If most chunks should be skipped (80% or more), also skip
+                                                    const skipRatio = chunksToSkip.length / chunkIds.length;
+                                                    if (skipRatio >= 0.8) {
+                                                        shouldSkip = true;
+                                                    } else {
+                                                        console.log(`⏭️  Partial skip: ${chunksToSkip.length}/${chunkIds.length} chunks match skip patterns in step ${stepName}: ${chunksToSkip.join(', ')}`);
+                                                    }
+                                                }
                                             }
                                         }
                                         
@@ -271,11 +310,32 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                         
                                         if (shouldSkip) {
                                             isValid = true;
+                                            // Don't print detailed errors, just print summary
+                                            const errorCount = (validationOutput.match(/^\s*\d+\./gm) || []).length;
+                                            if (errorCount > 0) {
+                                                console.log(`⏭️  Validation skipped: ${errorCount} error(s) were suppressed due to skip configuration`);
+                                            }
+                                        } else {
+                                            // Print the captured validation errors since they're not being skipped
+                                            if (validationOutput.trim()) {
+                                                originalConsoleError(validationOutput.trim());
+                                            }
                                         }
                                         
                                     } catch (_) { /* ignore errors reading skipped file */ }
+                                } else {
+                                    // No skip file exists, print validation errors normally
+                                    if (validationOutput.trim()) {
+                                        originalConsoleError(validationOutput.trim());
+                                    }
+                                }
+                            } else if (!isValid) {
+                                // No skip file but validation failed, print errors
+                                if (validationOutput.trim()) {
+                                    originalConsoleError(validationOutput.trim());
                                 }
                             }
+                            // If isValid is true initially, no need to print anything
 
                             // Write validation output to file if validation failed
                             if (!isValid && validationOutput.trim()) {

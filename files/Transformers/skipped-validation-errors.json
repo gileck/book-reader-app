@@ -4,19 +4,7 @@
         "chunkId": "5_21"
     },
     {
-        "step": "step-4",
-        "chunkId": "15_204"
-    },
-    {
-        "step": "step-4",
-        "chunkId": "15_205"
-    },
-    {
-        "step": "step-4",
-        "chunkId": "15_207"
-    },
-    {
-        "step": "step-4",
-        "chunkId": "15_208"
+        "step": "step-*",
+        "chunkId": "15_*"
     }
 ]

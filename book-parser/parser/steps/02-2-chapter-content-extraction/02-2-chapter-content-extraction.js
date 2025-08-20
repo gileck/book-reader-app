@@ -81,7 +81,7 @@ async function execute(pipelineState, config) {
         const filteredChapters = chapters.filter(ch => {
             const isRealChapter = ch.content.length >= 10000;
             if (!isRealChapter) {
-                console.log(`📝 Filtering out short chapter: "${ch.title}" (${ch.content.length} characters)`);
+                // console.log(`📝 Filtering out short chapter: "${ch.title}" (${ch.content.length} characters)`);
             }
             return isRealChapter;
         });

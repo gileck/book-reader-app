@@ -1,67 +1,80 @@
 {
   "metadata": {
-    "totalDuration": 5360,
-    "timestamp": "2025-08-20T08:36:34.432Z",
+    "totalDuration": 5330,
+    "timestamp": "2025-08-20T14:40:38.810Z",
     "success": false,
-    "error": "Step step-5 validation failed",
+    "error": "Book title not found in Library of Congress cataloging data",
     "totalSteps": 12,
-    "validatedSteps": 8,
+    "validatedSteps": 10,
     "failedSteps": 1
   },
   "steps": {
     "step-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:30.050Z",
-      "duration": 53
+      "timestamp": "2025-08-20T14:40:34.475Z",
+      "duration": 52
     },
     "step-2-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:31.066Z",
+      "timestamp": "2025-08-20T14:40:35.314Z",
       "duration": 0
     },
     "step-2-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:31.078Z",
+      "timestamp": "2025-08-20T14:40:35.326Z",
       "duration": 3
     },
     "step-2-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:31.082Z",
-      "duration": 3
+      "timestamp": "2025-08-20T14:40:35.331Z",
+      "duration": 4
     },
     "step-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:31.153Z",
-      "duration": 8
+      "timestamp": "2025-08-20T14:40:35.398Z",
+      "duration": 7
     },
     "step-3-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:32.087Z",
+      "timestamp": "2025-08-20T14:40:36.370Z",
       "duration": 9
     },
     "step-3-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:34.197Z",
-      "duration": 11
+      "timestamp": "2025-08-20T14:40:38.476Z",
+      "duration": 12
     },
     "step-4": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T08:36:34.351Z",
-      "duration": 16
+      "timestamp": "2025-08-20T14:40:38.622Z",
+      "duration": 15
     },
     "step-5": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-08-20T14:40:38.678Z",
+      "duration": 25
+    },
+    "step-5-1": null,
+    "step-5-2": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-08-20T14:40:38.809Z",
+      "duration": 62
+    },
+    "step-6": {
       "passed": false,
-      "error": "Step step-5 validation failed",
-      "timestamp": "2025-08-20T08:36:34.432Z",
-      "duration": 81
+      "error": "Book title not found in Library of Congress cataloging data",
+      "timestamp": "2025-08-20T14:40:38.810Z",
+      "duration": 1
     }
   }
 }
