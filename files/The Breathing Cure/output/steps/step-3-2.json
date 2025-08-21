@@ -3493,7 +3493,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-21T09:36:00.735Z",
+    "processingStartTime": "2025-08-21T12:11:58.424Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -3502,7 +3502,7 @@
       "lineCount": 14226,
       "wordCount": 150725,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-21T09:36:01.944Z",
+      "extractionTime": "2025-08-21T12:11:59.664Z",
       "averageWordsPerPage": 361,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 33228
@@ -3514,7 +3514,7 @@
       "patternMatches": 81,
       "averageDetectionConfidence": 0.9159999999999999,
       "pageOffset": 0,
-      "processingTime": 5232,
+      "processingTime": 4702,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -3525,7 +3525,7 @@
       "averagePagesPerChapter": 19.4,
       "totalCharacters": 895043,
       "averageCharactersPerChapter": 44752.15,
-      "processingTime": 11,
+      "processingTime": 12,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     },
     "chapterNameCleaning": {
@@ -3542,21 +3542,21 @@
       "totalChapters": 20,
       "averageWordsPerPage": 364.8943298969072,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-21T09:36:07.407Z",
-      "processingTime": 51
+      "extractionTime": "2025-08-21T12:12:04.614Z",
+      "processingTime": 60
     },
     "linkDetection": {
       "totalLinks": 11,
       "totalPdfLinks": 85,
-      "processingTime": 1086,
-      "detectionTime": "2025-08-21T09:36:08.504Z"
+      "processingTime": 1183,
+      "detectionTime": "2025-08-21T12:12:05.810Z"
     },
     "imageExtraction": {
       "totalImages": 53,
       "totalExtractedImages": 71,
       "imagesFolderPath": "/Users/gileck/projects/temp1/files/The Breathing Cure/output/images",
-      "processingTime": 3871,
-      "extractionTime": "2025-08-21T09:36:12.386Z"
+      "processingTime": 6818,
+      "extractionTime": "2025-08-21T12:12:12.638Z"
     }
   }
 }

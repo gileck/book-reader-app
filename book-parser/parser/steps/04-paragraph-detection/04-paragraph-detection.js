@@ -33,9 +33,10 @@ const path = require('path');
 
 // Import shared text processing utilities
 const { 
-    endsWithSentenceTerminator, 
-    getWordCount, 
-    getSentenceCount,
+    endsWithSentenceTerminator: sharedEndsWithSentenceTerminator, 
+    endsWithAbbreviation,
+    getWordCount: sharedGetWordCount, 
+    getSentenceCount: sharedGetSentenceCount,
     splitIntoSentencesBasic 
 } = require('../../utils/text-processing-utils');
 
@@ -86,7 +87,7 @@ async function execute(pipelineState, config) {
                 const first = optimizedChunks[0];
                 if (first.type === 'paragraph') {
                     const text = (first.content || '').trim();
-                    const wordCount = getWordCount(text);
+                    const wordCount = sharedGetWordCount(text);
                     const endsWithPunct = /[.!?]$/.test(text);
                     if (wordCount > 0 && wordCount <= 5 && !endsWithPunct) {
                         first.type = 'header';
@@ -185,7 +186,7 @@ function detectChunksInChapter(chapter, chapterNumber) {
                 if (pageChunks[idx].type === 'paragraph') {
                     if (/^[a-z]/.test(pageChunks[idx].content)) {
                         pageChunks[idx].content = pendingOrphanLetter + pageChunks[idx].content;
-                        pageChunks[idx].wordCount = getWordCount(pageChunks[idx].content);
+                        pageChunks[idx].wordCount = sharedGetWordCount(pageChunks[idx].content);
                     }
                     break;
                 }
@@ -245,8 +246,8 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
             // Treat common abbreviations/initials at the end as NOT a hard sentence terminator
             const endsWithSingleInitial = /\b[A-Z]\.$/.test(currentText);
             const endsWithMultiInitials = /(?:\b(?:[A-Z]\.)){2,}$/.test(currentText);
-            const endsWithAbbreviation = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g|U\.S|U\.K|E\.coli|H\.pylori)\.$/.test(currentText);
-            const currEndsWithTerminator = endsWithHardTerminator && !(endsWithSingleInitial || endsWithMultiInitials || endsWithAbbreviation);
+            const endsWithAbbreviationCheck = endsWithAbbreviation(currentText);
+            const currEndsWithTerminator = endsWithHardTerminator && !(endsWithSingleInitial || endsWithMultiInitials || endsWithAbbreviationCheck);
             const nextText = (next.content || '').trim();
             const nextStartsLower = /^[a-z]/.test(nextText);
             const nextLooksLikeHeader = isHeader(nextText, 0, [nextText]);
@@ -258,8 +259,8 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
                 current = {
                     ...current,
                     content: newContent,
-                    wordCount: getWordCount(newContent),
-                    sentenceCount: getSentenceCount(newContent),
+                    wordCount: sharedGetWordCount(newContent),
+                    sentenceCount: sharedGetSentenceCount(newContent),
                     links: removeDuplicateLinks([...(current.links || []), ...(next.links || [])])
                 };
                 j++;
@@ -444,7 +445,7 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             }
 
             // Check if paragraph ends (sentence terminator followed by potential new paragraph)
-            if (endsWithSentenceTerminator(line)) {
+            if (sharedEndsWithSentenceTerminator(line)) {
                 // Look ahead to see if next non-empty line starts a new paragraph or is a header
                 const nextContentIndex = findNextNonEmptyLine(lines, i + 1);
 
@@ -460,7 +461,7 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                 const lineTrim = line.trim();
                 const endIsSingleInitial = /\b[A-Z]\.$/.test(lineTrim);
                 const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(lineTrim);
-                const endIsAbbreviation = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.$/.test(lineTrim);
+                const endIsAbbreviation = endsWithAbbreviation(lineTrim);
                 const nextStartsLower = nextContentIndex !== -1 && /^[a-z]/.test((lines[nextContentIndex] || '').trim());
                 if ((endIsSingleInitial || endIsMultiInitials || endIsAbbreviation) && nextStartsLower) {
                     // Continue building the paragraph instead of splitting
@@ -480,7 +481,7 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                     const lineTrim = line.trim();
                     const endIsSingleInitial = /\b[A-Z]\.$/.test(lineTrim);
                     const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(lineTrim);
-                    const endIsAbbreviation = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.$/.test(lineTrim);
+                    const endIsAbbreviation = endsWithAbbreviation(lineTrim);
                     const nextLineTrim = nextContentIndex !== -1 ? (lines[nextContentIndex] || '').trim() : '';
                     const isHeaderNext = nextContentIndex !== -1 ? isHeader(lines[nextContentIndex], nextContentIndex, lines) : false;
                     const nextStartsLowerDbg = nextLineTrim ? /^[a-z]/.test(nextLineTrim) : false;
@@ -638,7 +639,7 @@ function isHeader(line, lineIndex, allLines) {
 
     // Rule 5: Context - Previous - Previous line ends with sentence-ending punctuation
     const prevLine = findPreviousNonEmptyLine(allLines, lineIndex - 1);
-    if (prevLine !== null && !endsWithSentenceTerminator(prevLine)) {
+    if (prevLine !== null && !sharedEndsWithSentenceTerminator(prevLine)) {
         return false;
     }
 
@@ -703,8 +704,8 @@ function createParagraphChunk(content, page, chunkId) {
         chunkId: chunkId,
         type: 'paragraph',
         content: content,
-        wordCount: getWordCount(content),
-        sentenceCount: getSentenceCount(content),
+        wordCount: sharedGetWordCount(content),
+        sentenceCount: sharedGetSentenceCount(content),
         links: links
     };
 }
@@ -719,7 +720,7 @@ function createHeaderChunk(content, page) {
     return {
         type: 'header',
         content: content,
-        wordCount: getWordCount(content),
+        wordCount: sharedGetWordCount(content),
         sentenceCount: 1, // Headers are always one "sentence"
         links: [] // Headers typically don't contain links
     };
@@ -961,15 +962,15 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
  * @returns {Array} - Array of smaller chunks
  */
 function splitLargeParagraph(chunk) {
-    const sentences = splitIntoSentencesBasic(chunk.content);
+    const sentences = splitIntoSentences(chunk.content);
     const chunks = [];
     let currentContent = '';
     let currentSentenceCount = 0;
     let splitIndex = 1;
 
     for (const sentence of sentences) {
-        const sentenceWordCount = getWordCount(sentence);
-        const currentWordCount = getWordCount(currentContent);
+        const sentenceWordCount = sharedGetWordCount(sentence);
+        const currentWordCount = sharedGetWordCount(currentContent);
 
         if (currentWordCount + sentenceWordCount > 200 && currentContent.trim()) {
             // Create chunk with current content
@@ -1001,7 +1002,7 @@ function splitLargeParagraph(chunk) {
             type: 'paragraph',
             content: trimmedContent,
             pageNumber: chunk.pageNumber,
-            wordCount: getWordCount(currentContent),
+            wordCount: sharedGetWordCount(currentContent),
             sentenceCount: currentSentenceCount,
             links: (chunk.links || []).filter(link => isSourceTextInContent(link.text, trimmedContent))
         });
@@ -1010,9 +1011,19 @@ function splitLargeParagraph(chunk) {
     return chunks;
 }
 
-// Note: splitIntoSentences, getWordCount, and getSentenceCount now imported from shared utilities
+/**
+ * Split text into sentences
+ * @param {string} text - Text to split
+ * @returns {Array} - Array of sentences
+ */
+function splitIntoSentences(text) {
+    // Use the shared sentence splitting utility which properly handles all abbreviations
+    return splitIntoSentencesBasic(text);
+}
 
-// Note: endsWithSentenceTerminator function now imported from shared utilities
+
+
+
 
 // endsWithInitials function is now imported from validation module
 

@@ -1,8 +1,8 @@
-const parser = require('../../book-parser/parser-v2/parser.js');
+const parser = require('../../book-parser/parser/parser.js');
 const path = require('path');
 
 async function main() {
-    const pdfPath = path.join(__dirname, 'the-breathing-cure.pdf');
+    const pdfPath = path.join(__dirname, 'book.pdf');
     const outputPath = path.join(__dirname, 'output');
 
     console.log('🚀 Running new parser on The Breathing Cure book...');
@@ -12,7 +12,7 @@ async function main() {
     try {
         const result = await parser.parseBook(pdfPath, outputPath, {
             debug: true,
-            validate: false
+            validate: true
         });
 
         console.log('✅ Parser completed successfully!');

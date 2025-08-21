@@ -1,5 +1,5 @@
 
-==== step-4 validation output @ 2025-08-21T09:36:12.523Z ====
+==== step-4 validation output @ 2025-08-21T12:12:13.179Z ====
 ❌ Chunk validation failed with 1 error(s):
   1. 
                             Paragraph chunk 9_16 (How to Breathe) must start with a capital letter or valid punctuation/symbol.
