@@ -219,6 +219,11 @@ async function generateChapterMetadata(rawText, tocAnalysis, patternAnalysis) {
     // Sort chapters by their starting page number
     chapterPositions.sort((a, b) => a.startingPage - b.startingPage);
 
+    // Assign sequential chapter numbers to ensure no duplicates
+    for (let i = 0; i < chapterPositions.length; i++) {
+        chapterPositions[i].chapterNumber = i;
+    }
+
     // Now assign end pages based on the sorted order
     for (let i = 0; i < chapterPositions.length; i++) {
         const chapter = chapterPositions[i];
@@ -654,33 +659,12 @@ function assignSequentialChapterNumbers(chapters) {
     // Sort chapters by starting page to ensure proper order
     chapters.sort((a, b) => a.startingPage - b.startingPage);
     
-    // First pass: assign Introduction/Preface to chapter 0
-    for (const chapter of chapters) {
-        if (chapter.chapterNumber === null) {
-            const title = chapter.chapterTitle.toLowerCase();
-            if (title.includes('introduction') || title.includes('preface') || title.includes('prologue')) {
-                chapter.chapterNumber = 0;
-            }
-        }
-    }
-    
-    // Second pass: assign sequential numbers to remaining unnumbered chapters
-    // Find the highest numbered chapter so far
-    const maxNumberedChapter = Math.max(...chapters.map(c => 
-        c.chapterNumber !== null && typeof c.chapterNumber === 'number' 
-            ? c.chapterNumber : -1
-    ));
-    
-    let nextNumber = maxNumberedChapter + 1;
-    
-    for (const chapter of chapters) {
-        if (chapter.chapterNumber === null) {
-            chapter.chapterNumber = nextNumber;
-            nextNumber++;
-        }
-        
-        // Remove the temporary marker
-        delete chapter.isUnnumbered;
+    // Assign sequential chapter numbers starting from 0
+    // This ensures no duplicates and proper sequence: 0, 1, 2, 3, ...
+    for (let i = 0; i < chapters.length; i++) {
+        chapters[i].chapterNumber = i;
+        // Remove the temporary marker if it exists
+        delete chapters[i].isUnnumbered;
     }
     
     return chapters;

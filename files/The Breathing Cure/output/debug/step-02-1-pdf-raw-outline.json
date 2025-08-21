@@ -1,0 +1,452 @@
+[
+  {
+    "title": "Half Title",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 13,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Title page",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 16,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Copyright",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 24,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Epigraph",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 26,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Contents",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 31,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Foreword",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 39,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Introduction: Are You Breathing Comfortably?",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 43,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter One: A New Approach",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 55,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Two: Exercises for Adults and Children",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 91,
+          "gen": 0
+        }
+      }
+    },
+    "items": [
+      {
+        "title": "Section One: Functional Breathing",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 93,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 160,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Section Three: Tailored Breathing Programs for Specific Conditions",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 188,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Section Four: Exercises to Improve Focus and Concentration",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 219,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Section Five: Stress and Relax Body and Mind",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 231,
+              "gen": 0
+            }
+          }
+        }
+      },
+      {
+        "title": "Section Six: Exercises for Children",
+        "dest": {
+          "type": "array",
+          "length": 5,
+          "first": {
+            "type": "Object",
+            "ref": {
+              "num": 275,
+              "gen": 0
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Chapter Three: How to Breathe",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 288,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Four: The Vagus Nerve and the Heart-Breath-Brain Connection",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 323,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Five: Functional Breathing, The Secret of Functional Movement",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 383,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Six: When Breathing Makes You Hurt",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 425,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Seven: Sleep-Disordered Breathing",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 455,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Eight: Developing Healthy Airways in Children",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 503,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Nine: The Breathing Secret for Healthy Blood Pressure",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 555,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Ten: Freedom From Respiratory Discomfort",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 578,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Eleven: Sex and Breath, an Intimate Connection",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 620,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Twelve: Yes, Breathing Is Different for Women",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 689,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Thirteen: Female Sex Hormones and the Breath",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 733,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Fourteen: Sugar, Sugar",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 781,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Fifteen: Seizure Control and the Breath",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 817,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Sixteen: Join The Breathing Revolution",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 879,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Chapter Seventeen: Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 885,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Resources",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 895,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Acknowledgments",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 899,
+          "gen": 0
+        }
+      }
+    }
+  }
+]

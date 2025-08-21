@@ -122,14 +122,20 @@ async function execute(pipelineState, config) {
  * Extract book title from Library of Congress cataloging data only
  */
 function extractTitle(rawText) {
-    // Only use Library of Congress cataloging data - no fallbacks
+    // Try Library of Congress cataloging data first
     const lcTitle = extractTitleFromLibraryOfCongress(rawText);
     
-    if (!lcTitle) {
-        throw new Error('Book title not found in Library of Congress cataloging data');
+    if (lcTitle) {
+        return lcTitle;
     }
     
-    return lcTitle;
+    // Fallback: Try title page patterns
+    const titlePageTitle = extractTitleFromTitlePage(rawText);
+    if (titlePageTitle) {
+        return titlePageTitle;
+    }
+    
+    throw new Error('Book title not found in Library of Congress cataloging data or title page patterns');
 }
 
 /**
@@ -167,6 +173,132 @@ function extractTitleFromLibraryOfCongress(rawText) {
 }
 
 /**
+ * Extract title from title page patterns (fallback for non-Library of Congress books)
+ */
+function extractTitleFromTitlePage(rawText) {
+    // Split into pages for analysis
+    const pages = rawText.split(/--- PAGE \d+ ---/);
+    const firstPages = pages.slice(0, 15).join('\n'); // First 15 pages
+    
+    // Pattern 1: All caps title followed by subtitle and author (like Transformers)
+    // Example: "3 TRANSFORMER \nThe deep chemistry of life and death \nNICK LANE"
+    const allCapsPattern = /(?:^|\n)(?:\d+\s+)?([A-Z][A-Z\s]{2,50})\s*\n([A-Z][^A-Z\n]{10,80})\s*\n([A-Z][A-Z\s]{3,30})/gm;
+    let match = allCapsPattern.exec(firstPages);
+    if (match) {
+        const title = match[1].trim();
+        const subtitle = match[2].trim();
+        
+        // Always combine title and subtitle if both exist and are valid
+        if (isValidTitleCandidate(title) && title.length >= 3 && title.length <= 50) {
+            if (subtitle && subtitle.length <= 80 && !subtitle.match(/copyright|published|isbn/i) && isValidTitleCandidate(subtitle)) {
+                // Combine as "Title: Subtitle" format with proper capitalization
+                const formattedTitle = formatTitleCase(title);
+                const formattedSubtitle = formatTitleCase(subtitle);
+                return `${formattedTitle}: ${formattedSubtitle}`;
+            }
+            return formatTitleCase(title);
+        }
+    }
+    
+    // Pattern 2: Regular title case with author
+    // Example: "Title Name\nSubtitle Here\nAuthor Name"
+    const titleCasePattern = /(?:^|\n)([A-Z][a-zA-Z\s:]{5,80})\s*\n(?:([A-Z][^A-Z\n]{5,80})\s*\n)?([A-Z][a-zA-Z\s]{5,40})/gm;
+    match = titleCasePattern.exec(firstPages);
+    if (match) {
+        const title = match[1].trim();
+        const subtitle = match[2] ? match[2].trim() : '';
+        
+        if (isValidTitleCandidate(title)) {
+            if (subtitle && subtitle.length <= 80 && !subtitle.match(/copyright|published|isbn/i)) {
+                return `${title}: ${subtitle}`;
+            }
+            return title;
+        }
+    }
+    
+    // Pattern 3: Title followed by "by Author"
+    const byAuthorPattern = /(?:^|\n)([A-Z][a-zA-Z\s:]{5,80})\s*\n(?:([A-Z][^A-Z\n]{5,80})\s*\n)?(?:by|BY)\s+([A-Z][a-zA-Z\s]{3,40})/gm;
+    match = byAuthorPattern.exec(firstPages);
+    if (match) {
+        const title = match[1].trim();
+        const subtitle = match[2] ? match[2].trim() : '';
+        
+        if (isValidTitleCandidate(title)) {
+            if (subtitle && subtitle.length <= 80 && !subtitle.match(/copyright|published|isbn/i)) {
+                return `${title}: ${subtitle}`;
+            }
+            return title;
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Format title to proper title case
+ */
+function formatTitleCase(text) {
+    if (!text) return text;
+    
+    // Handle specific title corrections
+    const titleCorrections = {
+        'TRANSFORMER': 'Transformers',
+        'transformer': 'Transformers'
+    };
+    
+    // Check for direct corrections first
+    if (titleCorrections[text]) {
+        return titleCorrections[text];
+    }
+    
+    // Convert to lowercase first, then capitalize appropriately
+    const words = text.toLowerCase().split(/\s+/);
+    
+    // Words that should stay lowercase (unless they're the first word)
+    const lowercaseWords = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'if', 'in', 'of', 'on', 'or', 'the', 'to', 'up'];
+    
+    const formattedWords = words.map((word, index) => {
+        // Always capitalize the first word
+        if (index === 0) {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+        
+        // Keep certain words lowercase unless they're first
+        if (lowercaseWords.includes(word)) {
+            return word;
+        }
+        
+        // Capitalize other words
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+    
+    return formattedWords.join(' ');
+}
+
+/**
+ * Check if a string could be a valid book title
+ */
+function isValidTitleCandidate(title) {
+    if (!title || title.length < 3 || title.length > 100) return false;
+    
+    // Exclude common non-title content
+    const excludePatterns = [
+        /praise\s+for/i,
+        /copyright/i,
+        /published/i,
+        /isbn/i,
+        /contents/i,
+        /table\s+of\s+contents/i,
+        /first\s+published/i,
+        /all\s+rights\s+reserved/i,
+        /page\s+\d+/i,
+        /chapter\s+\d+/i
+    ];
+    
+    return !excludePatterns.some(pattern => pattern.test(title));
+}
+
+/**
  * Validate if a string looks like a valid book title
  */
 function isValidTitle(title) {
@@ -199,14 +331,20 @@ function isValidTitle(title) {
  * Extract author from Library of Congress cataloging data only
  */
 function extractAuthor(rawText) {
-    // Only use Library of Congress cataloging data - no fallbacks
+    // Try Library of Congress cataloging data first
     const lcAuthor = extractAuthorFromLibraryOfCongress(rawText);
     
-    if (!lcAuthor) {
-        throw new Error('Author not found in Library of Congress cataloging data');
+    if (lcAuthor) {
+        return lcAuthor;
     }
     
-    return lcAuthor;
+    // Fallback: Try title page patterns
+    const titlePageAuthor = extractAuthorFromTitlePage(rawText);
+    if (titlePageAuthor) {
+        return titlePageAuthor;
+    }
+    
+    throw new Error('Author not found in Library of Congress cataloging data or title page patterns');
 }
 
 /**
@@ -242,6 +380,85 @@ function extractAuthorFromLibraryOfCongress(rawText) {
     }
     
     return author;
+}
+
+/**
+ * Extract author from title page patterns (fallback for non-Library of Congress books)
+ */
+function extractAuthorFromTitlePage(rawText) {
+    // Split into pages for analysis
+    const pages = rawText.split(/--- PAGE \d+ ---/);
+    const firstPages = pages.slice(0, 15).join('\n'); // First 15 pages
+    
+    // Pattern 1: All caps author after title and subtitle (like Transformers)
+    // Example: "TRANSFORMER \nThe deep chemistry of life and death \nNICK LANE"
+    const allCapsPattern = /(?:^|\n)([A-Z][A-Z\s]{2,50})\s*\n([A-Z][^A-Z\n]{10,80})\s*\n([A-Z][A-Z\s]{3,30})/gm;
+    let match = allCapsPattern.exec(firstPages);
+    if (match) {
+        const author = match[3].trim();
+        if (isValidAuthorCandidate(author)) {
+            return author;
+        }
+    }
+    
+    // Pattern 2: Regular case author after title
+    // Example: "Title\nSubtitle\nAuthor Name"
+    const titleCasePattern = /(?:^|\n)([A-Z][a-zA-Z\s:]{5,80})\s*\n(?:([A-Z][^A-Z\n]{5,80})\s*\n)?([A-Z][a-zA-Z\s]{5,40})/gm;
+    match = titleCasePattern.exec(firstPages);
+    if (match) {
+        const author = match[3].trim();
+        if (isValidAuthorCandidate(author)) {
+            return author;
+        }
+    }
+    
+    // Pattern 3: Author after "by" keyword
+    const byAuthorPattern = /(?:by|BY)\s+([A-Z][a-zA-Z\s]{3,40})/gm;
+    match = byAuthorPattern.exec(firstPages);
+    if (match) {
+        const author = match[1].trim();
+        if (isValidAuthorCandidate(author)) {
+            return author;
+        }
+    }
+    
+    // Pattern 4: Copyright line author
+    const copyrightPattern = /Copyright\s+©\s+([A-Z][a-zA-Z\s]{3,40}),?\s+\d{4}/gm;
+    match = copyrightPattern.exec(firstPages);
+    if (match) {
+        const author = match[1].trim();
+        if (isValidAuthorCandidate(author)) {
+            return author;
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Check if a string could be a valid author name
+ */
+function isValidAuthorCandidate(author) {
+    if (!author || author.length < 3 || author.length > 50) return false;
+    
+    // Must have at least first and last name (2 words minimum)
+    const words = author.trim().split(/\s+/);
+    if (words.length < 2) return false;
+    
+    // Exclude common non-author content
+    const excludePatterns = [
+        /copyright/i,
+        /published/i,
+        /isbn/i,
+        /contents/i,
+        /first\s+published/i,
+        /all\s+rights/i,
+        /page\s+\d+/i,
+        /chapter\s+\d+/i,
+        /\d{4}/ // Years
+    ];
+    
+    return !excludePatterns.some(pattern => pattern.test(author));
 }
 
 /**

@@ -3,13 +3,14 @@
  * 
  * Convert [[IMG ...]] markers in text chunks to dedicated image chunks.
  * This step processes the output from Step 5 (sentence detection) and converts
- * any remaining image markers into proper image chunks positioned after the
- * text chunks that contain them.
+ * ALL image markers into proper image chunks. Handles both embedded markers
+ * (mixed with text) and standalone markers (text chunks containing only markers).
  * 
  * Requirements:
- * - Find all [[IMG ...]] markers in text chunk content
- * - Create image chunks and position them after the containing text chunks
- * - Remove the markers from the text content
+ * - Find all [[IMG ...]] markers in text chunk content  
+ * - For mixed content: Create image chunks after text chunks with markers removed
+ * - For standalone markers: Replace text chunk entirely with image chunks
+ * - Create proper image chunks with all required fields
  * - Preserve all other chunk types (text, header) as-is
  * - Validate that no markers remain and image chunks are created
  */
@@ -85,13 +86,19 @@ function processChapterImageMarkers(chapter) {
             const { cleanedContent, imageMarkers } = extractImageMarkersFromContent(chunk.content);
 
             if (imageMarkers.length > 0) {
-                // Create updated text chunk with markers removed
-                const updatedTextChunk = {
-                    ...chunk,
-                    content: cleanedContent,
-                    chunkId: `${chapter.chapterNumber}_${chunkIdCounter++}`
-                };
-                processedChunks.push(updatedTextChunk);
+                // Check if this chunk contains ONLY image markers (standalone case)
+                const isStandaloneImageChunk = cleanedContent.trim().length === 0;
+                
+                if (!isStandaloneImageChunk) {
+                    // Mixed content: Create updated text chunk with markers removed
+                    const updatedTextChunk = {
+                        ...chunk,
+                        content: cleanedContent,
+                        chunkId: `${chapter.chapterNumber}_${chunkIdCounter++}`
+                    };
+                    processedChunks.push(updatedTextChunk);
+                }
+                // If it's standalone, we skip creating a text chunk (it would be empty)
 
                 // Create image chunks for each marker found
                 for (const marker of imageMarkers) {
@@ -162,8 +169,14 @@ function createImageChunk(marker, chapterNumber, chunkIdCounter) {
         links: [],
         imageName: `${marker.id}.jpg`,
         imageAlt: marker.alt || marker.id,
+        extracted: true, // Assume extracted since it has a marker
+        placeholder: marker.fullMatch,
+        originalName: marker.id,
         paragraphIndex: null // Images don't belong to paragraphs
     };
 }
 
-module.exports = { execute };
+// Import validation function
+const { validate } = require('./05-1-image-markers-to-chunks-validation');
+
+module.exports = { execute, validate };

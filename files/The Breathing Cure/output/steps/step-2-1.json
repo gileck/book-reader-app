@@ -1,8 +1,16 @@
 {
   "chapterMetadata": [
     {
-      "title": "Introduction: Are You Breathing Comfortably?",
+      "title": "Half Title",
       "chapterNumber": 0,
+      "startingPage": 1,
+      "endPage": 8,
+      "confidence": 0.7,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Introduction: Are You Breathing Comfortably?",
+      "chapterNumber": 1,
       "startingPage": 9,
       "endPage": 14,
       "confidence": 0.7999999999999999,
@@ -10,23 +18,63 @@
     },
     {
       "title": "A New Approach",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "startingPage": 15,
-      "endPage": 32,
+      "endPage": 33,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
-      "title": "Exercises for Adults and Children",
-      "chapterNumber": 2,
-      "startingPage": 33,
+      "title": "Section One: Functional Breathing",
+      "chapterNumber": 3,
+      "startingPage": 34,
+      "endPage": 57,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
+      "chapterNumber": 4,
+      "startingPage": 58,
+      "endPage": 67,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Section Three: Tailored Breathing Programs for Specific Conditions",
+      "chapterNumber": 5,
+      "startingPage": 68,
+      "endPage": 82,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Section Four: Exercises to Improve Focus and Concentration",
+      "chapterNumber": 6,
+      "startingPage": 83,
+      "endPage": 86,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Section Five: Stress and Relax Body and Mind",
+      "chapterNumber": 7,
+      "startingPage": 87,
+      "endPage": 103,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Section Six: Exercises for Children",
+      "chapterNumber": 8,
+      "startingPage": 104,
       "endPage": 109,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "How to Breathe",
-      "chapterNumber": 3,
+      "chapterNumber": 9,
       "startingPage": 110,
       "endPage": 126,
       "confidence": 1,
@@ -34,7 +82,7 @@
     },
     {
       "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
-      "chapterNumber": 4,
+      "chapterNumber": 10,
       "startingPage": 127,
       "endPage": 156,
       "confidence": 0.7,
@@ -42,7 +90,7 @@
     },
     {
       "title": "Functional Breathing, The Secret of Functional Movement",
-      "chapterNumber": 5,
+      "chapterNumber": 11,
       "startingPage": 157,
       "endPage": 176,
       "confidence": 0.7999999999999999,
@@ -50,7 +98,7 @@
     },
     {
       "title": "When Breathing Makes You Hurt",
-      "chapterNumber": 6,
+      "chapterNumber": 12,
       "startingPage": 177,
       "endPage": 191,
       "confidence": 1,
@@ -58,7 +106,7 @@
     },
     {
       "title": "Sleep-Disordered Breathing",
-      "chapterNumber": 7,
+      "chapterNumber": 13,
       "startingPage": 192,
       "endPage": 215,
       "confidence": 1,
@@ -66,7 +114,7 @@
     },
     {
       "title": "Developing Healthy Airways in Children",
-      "chapterNumber": 8,
+      "chapterNumber": 14,
       "startingPage": 216,
       "endPage": 241,
       "confidence": 1,
@@ -74,7 +122,7 @@
     },
     {
       "title": "The Breathing Secret for Healthy Blood Pressure",
-      "chapterNumber": 9,
+      "chapterNumber": 15,
       "startingPage": 242,
       "endPage": 252,
       "confidence": 0.7,
@@ -82,7 +130,7 @@
     },
     {
       "title": "Freedom From Respiratory Discomfort",
-      "chapterNumber": 10,
+      "chapterNumber": 16,
       "startingPage": 253,
       "endPage": 272,
       "confidence": 1,
@@ -90,7 +138,7 @@
     },
     {
       "title": "Sex and Breath, an Intimate Connection",
-      "chapterNumber": 11,
+      "chapterNumber": 17,
       "startingPage": 273,
       "endPage": 305,
       "confidence": 1,
@@ -98,7 +146,7 @@
     },
     {
       "title": "Yes, Breathing Is Different for Women",
-      "chapterNumber": 12,
+      "chapterNumber": 18,
       "startingPage": 306,
       "endPage": 327,
       "confidence": 1,
@@ -106,7 +154,7 @@
     },
     {
       "title": "Female Sex Hormones and the Breath",
-      "chapterNumber": 13,
+      "chapterNumber": 19,
       "startingPage": 328,
       "endPage": 351,
       "confidence": 1,
@@ -114,7 +162,7 @@
     },
     {
       "title": "Sugar, Sugar",
-      "chapterNumber": 14,
+      "chapterNumber": 20,
       "startingPage": 352,
       "endPage": 369,
       "confidence": 1,
@@ -122,7 +170,7 @@
     },
     {
       "title": "Seizure Control and the Breath",
-      "chapterNumber": 15,
+      "chapterNumber": 21,
       "startingPage": 370,
       "endPage": 400,
       "confidence": 1,
@@ -130,7 +178,7 @@
     },
     {
       "title": "Join The Breathing Revolution",
-      "chapterNumber": 16,
+      "chapterNumber": 22,
       "startingPage": 401,
       "endPage": 403,
       "confidence": 1,
@@ -138,15 +186,23 @@
     },
     {
       "title": "Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
-      "chapterNumber": 17,
+      "chapterNumber": 23,
       "startingPage": 404,
-      "endPage": null,
+      "endPage": 408,
       "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Resources",
+      "chapterNumber": 24,
+      "startingPage": 409,
+      "endPage": null,
+      "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-16T10:26:24.311Z",
+    "processingStartTime": "2025-08-21T09:36:00.735Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -155,19 +211,19 @@
       "lineCount": 14226,
       "wordCount": 150725,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-16T10:26:28.102Z",
+      "extractionTime": "2025-08-21T09:36:01.944Z",
       "averageWordsPerPage": 361,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 33228
     },
     "chapterDetection": {
-      "chaptersDetected": 18,
+      "chaptersDetected": 25,
       "tocSource": "pdf_bookmarks",
-      "tocEntriesFound": 18,
+      "tocEntriesFound": 27,
       "patternMatches": 81,
-      "averageDetectionConfidence": 0.9333333333333333,
+      "averageDetectionConfidence": 0.9159999999999999,
       "pageOffset": 0,
-      "processingTime": 12955,
+      "processingTime": 5232,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

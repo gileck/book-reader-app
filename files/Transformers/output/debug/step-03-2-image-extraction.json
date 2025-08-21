@@ -3,8 +3,8 @@
     "totalImages": 40,
     "totalExtractedImages": 60,
     "imagesFolderPath": "/Users/gileck/projects/temp1/files/Transformers/output/images",
-    "processingTime": 2086,
-    "extractionTime": "2025-08-20T14:40:38.456Z",
+    "processingTime": 2260,
+    "extractionTime": "2025-08-21T09:28:24.776Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [

@@ -49,14 +49,6 @@ function validate(pipelineState, config) {
         errors.push(`Found ${totalRemainingMarkers} remaining image markers in text content - all should be converted to chunks`);
     }
 
-    // Log validation summary
-    if (errors.length === 0) {
-        console.log(`✅ Step 5-1 validation passed:`);
-        console.log(`   🖼️  ${totalImageChunks} image chunks created`);
-        console.log(`   📝 ${totalTextChunks} text chunks processed`);
-        console.log(`   🧹 ${totalRemainingMarkers} remaining markers (should be 0)`);
-    }
-
     return {
         valid: errors.length === 0,
         errors,

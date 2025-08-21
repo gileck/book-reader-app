@@ -2,14 +2,11 @@
  * Validation functions for Step 3: Page Extraction and Cross-Page Merging
  */
 
-/**
- * Check if a character is a sentence terminator
- * @param {string} char - Character to check
- * @returns {boolean} - True if character is a sentence terminator
- */
-function isSentenceTerminator(char) {
-    return ['.', '!', '?'].includes(char);
-}
+// Import shared text processing utilities
+const { isSentenceTerminator: isSentenceTerminatorShared } = require('../../utils/text-processing-utils');
+
+// Use shared sentence terminator function
+const isSentenceTerminator = isSentenceTerminatorShared;
 
 /**
  * Check if content ends with a sentence terminator

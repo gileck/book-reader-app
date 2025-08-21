@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Import the parser v2 upload functionality
-const { uploadParsedBookV2 } = require('../../book-parser/parser-v2/upload-book-v2.js');
+const { uploadParsedBookV2 } = require('../../book-parser/parser/upload-book.js');
 
 /**
  * Upload the processed Transformers book to the database
@@ -13,7 +13,7 @@ const { uploadParsedBookV2 } = require('../../book-parser/parser-v2/upload-book-
  */
 
 async function uploadTransformersBook() {
-    const bookTitle = "TRANSFORMER";
+    const bookTitle = "Transformers: The Deep Chemistry of Life and Death";
     const bookFolderPath = __dirname; // Current directory (files/Transformers/)
     const outputPath = path.join(bookFolderPath, 'output');
 

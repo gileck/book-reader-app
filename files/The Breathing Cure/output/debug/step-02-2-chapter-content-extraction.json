@@ -1,138 +1,356 @@
 {
-  "processingTime": 24,
+  "processingTime": 11,
   "extractionStats": {
-    "totalChapters": 18,
-    "totalPages": 408,
-    "averagePagesPerChapter": 22.666666666666668,
-    "totalCharacters": 923123,
-    "averageCharactersPerChapter": 51284.61111111111
+    "totalChapters": 20,
+    "originalChapterCount": 25,
+    "filteredChapterCount": 5,
+    "totalPages": 388,
+    "averagePagesPerChapter": 19.4,
+    "totalCharacters": 895043,
+    "averageCharactersPerChapter": 44752.15
   },
-  "chapters": [
+  "filteredChapters": [
     {
       "title": "Introduction: Are You Breathing Comfortably?",
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "pageNumberStart": 9,
       "pageNumberEnd": 14,
       "contentLength": 14301
     },
     {
       "title": "A New Approach",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "pageNumberStart": 15,
-      "pageNumberEnd": 32,
-      "contentLength": 40959
+      "pageNumberEnd": 33,
+      "contentLength": 42709
     },
     {
-      "title": "Exercises for Adults and Children",
-      "chapterNumber": 2,
-      "pageNumberStart": 33,
+      "title": "Section One: Functional Breathing",
+      "chapterNumber": 3,
+      "pageNumberStart": 34,
+      "pageNumberEnd": 57,
+      "contentLength": 33642
+    },
+    {
+      "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
+      "chapterNumber": 4,
+      "pageNumberStart": 58,
+      "pageNumberEnd": 67,
+      "contentLength": 12618
+    },
+    {
+      "title": "Section Three: Tailored Breathing Programs for Specific Conditions",
+      "chapterNumber": 5,
+      "pageNumberStart": 68,
+      "pageNumberEnd": 82,
+      "contentLength": 31567
+    },
+    {
+      "title": "Section Five: Stress and Relax Body and Mind",
+      "chapterNumber": 7,
+      "pageNumberStart": 87,
+      "pageNumberEnd": 103,
+      "contentLength": 26150
+    },
+    {
+      "title": "Section Six: Exercises for Children",
+      "chapterNumber": 8,
+      "pageNumberStart": 104,
       "pageNumberEnd": 109,
-      "contentLength": 125026
+      "contentLength": 13623
     },
     {
       "title": "How to Breathe",
-      "chapterNumber": 3,
+      "chapterNumber": 9,
       "pageNumberStart": 110,
       "pageNumberEnd": 126,
       "contentLength": 40597
     },
     {
       "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
-      "chapterNumber": 4,
+      "chapterNumber": 10,
       "pageNumberStart": 127,
       "pageNumberEnd": 156,
       "contentLength": 76405
     },
     {
       "title": "Functional Breathing, The Secret of Functional Movement",
-      "chapterNumber": 5,
+      "chapterNumber": 11,
       "pageNumberStart": 157,
       "pageNumberEnd": 176,
       "contentLength": 48799
     },
     {
       "title": "When Breathing Makes You Hurt",
-      "chapterNumber": 6,
+      "chapterNumber": 12,
       "pageNumberStart": 177,
       "pageNumberEnd": 191,
       "contentLength": 38136
     },
     {
       "title": "Sleep-Disordered Breathing",
-      "chapterNumber": 7,
+      "chapterNumber": 13,
       "pageNumberStart": 192,
       "pageNumberEnd": 215,
       "contentLength": 57776
     },
     {
       "title": "Developing Healthy Airways in Children",
-      "chapterNumber": 8,
+      "chapterNumber": 14,
       "pageNumberStart": 216,
       "pageNumberEnd": 241,
       "contentLength": 64669
     },
     {
       "title": "The Breathing Secret for Healthy Blood Pressure",
-      "chapterNumber": 9,
+      "chapterNumber": 15,
       "pageNumberStart": 242,
       "pageNumberEnd": 252,
       "contentLength": 26695
     },
     {
       "title": "Freedom From Respiratory Discomfort",
-      "chapterNumber": 10,
+      "chapterNumber": 16,
       "pageNumberStart": 253,
       "pageNumberEnd": 272,
       "contentLength": 48111
     },
     {
       "title": "Sex and Breath, an Intimate Connection",
-      "chapterNumber": 11,
+      "chapterNumber": 17,
       "pageNumberStart": 273,
       "pageNumberEnd": 305,
       "contentLength": 84118
     },
     {
       "title": "Yes, Breathing Is Different for Women",
-      "chapterNumber": 12,
+      "chapterNumber": 18,
       "pageNumberStart": 306,
       "pageNumberEnd": 327,
       "contentLength": 53717
     },
     {
       "title": "Female Sex Hormones and the Breath",
-      "chapterNumber": 13,
+      "chapterNumber": 19,
       "pageNumberStart": 328,
       "pageNumberEnd": 351,
       "contentLength": 59464
     },
     {
       "title": "Sugar, Sugar",
-      "chapterNumber": 14,
+      "chapterNumber": 20,
       "pageNumberStart": 352,
       "pageNumberEnd": 369,
       "contentLength": 42233
     },
     {
       "title": "Seizure Control and the Breath",
-      "chapterNumber": 15,
+      "chapterNumber": 21,
       "pageNumberStart": 370,
       "pageNumberEnd": 400,
       "contentLength": 79713
+    }
+  ],
+  "originalChapters": [
+    {
+      "title": "Half Title",
+      "chapterNumber": 0,
+      "pageNumberStart": 1,
+      "pageNumberEnd": 8,
+      "contentLength": 5561,
+      "filtered": true
+    },
+    {
+      "title": "Introduction: Are You Breathing Comfortably?",
+      "chapterNumber": 1,
+      "pageNumberStart": 9,
+      "pageNumberEnd": 14,
+      "contentLength": 14301,
+      "filtered": false
+    },
+    {
+      "title": "A New Approach",
+      "chapterNumber": 2,
+      "pageNumberStart": 15,
+      "pageNumberEnd": 33,
+      "contentLength": 42709,
+      "filtered": false
+    },
+    {
+      "title": "Section One: Functional Breathing",
+      "chapterNumber": 3,
+      "pageNumberStart": 34,
+      "pageNumberEnd": 57,
+      "contentLength": 33642,
+      "filtered": false
+    },
+    {
+      "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
+      "chapterNumber": 4,
+      "pageNumberStart": 58,
+      "pageNumberEnd": 67,
+      "contentLength": 12618,
+      "filtered": false
+    },
+    {
+      "title": "Section Three: Tailored Breathing Programs for Specific Conditions",
+      "chapterNumber": 5,
+      "pageNumberStart": 68,
+      "pageNumberEnd": 82,
+      "contentLength": 31567,
+      "filtered": false
+    },
+    {
+      "title": "Section Four: Exercises to Improve Focus and Concentration",
+      "chapterNumber": 6,
+      "pageNumberStart": 83,
+      "pageNumberEnd": 86,
+      "contentLength": 5666,
+      "filtered": true
+    },
+    {
+      "title": "Section Five: Stress and Relax Body and Mind",
+      "chapterNumber": 7,
+      "pageNumberStart": 87,
+      "pageNumberEnd": 103,
+      "contentLength": 26150,
+      "filtered": false
+    },
+    {
+      "title": "Section Six: Exercises for Children",
+      "chapterNumber": 8,
+      "pageNumberStart": 104,
+      "pageNumberEnd": 109,
+      "contentLength": 13623,
+      "filtered": false
+    },
+    {
+      "title": "How to Breathe",
+      "chapterNumber": 9,
+      "pageNumberStart": 110,
+      "pageNumberEnd": 126,
+      "contentLength": 40597,
+      "filtered": false
+    },
+    {
+      "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
+      "chapterNumber": 10,
+      "pageNumberStart": 127,
+      "pageNumberEnd": 156,
+      "contentLength": 76405,
+      "filtered": false
+    },
+    {
+      "title": "Functional Breathing, The Secret of Functional Movement",
+      "chapterNumber": 11,
+      "pageNumberStart": 157,
+      "pageNumberEnd": 176,
+      "contentLength": 48799,
+      "filtered": false
+    },
+    {
+      "title": "When Breathing Makes You Hurt",
+      "chapterNumber": 12,
+      "pageNumberStart": 177,
+      "pageNumberEnd": 191,
+      "contentLength": 38136,
+      "filtered": false
+    },
+    {
+      "title": "Sleep-Disordered Breathing",
+      "chapterNumber": 13,
+      "pageNumberStart": 192,
+      "pageNumberEnd": 215,
+      "contentLength": 57776,
+      "filtered": false
+    },
+    {
+      "title": "Developing Healthy Airways in Children",
+      "chapterNumber": 14,
+      "pageNumberStart": 216,
+      "pageNumberEnd": 241,
+      "contentLength": 64669,
+      "filtered": false
+    },
+    {
+      "title": "The Breathing Secret for Healthy Blood Pressure",
+      "chapterNumber": 15,
+      "pageNumberStart": 242,
+      "pageNumberEnd": 252,
+      "contentLength": 26695,
+      "filtered": false
+    },
+    {
+      "title": "Freedom From Respiratory Discomfort",
+      "chapterNumber": 16,
+      "pageNumberStart": 253,
+      "pageNumberEnd": 272,
+      "contentLength": 48111,
+      "filtered": false
+    },
+    {
+      "title": "Sex and Breath, an Intimate Connection",
+      "chapterNumber": 17,
+      "pageNumberStart": 273,
+      "pageNumberEnd": 305,
+      "contentLength": 84118,
+      "filtered": false
+    },
+    {
+      "title": "Yes, Breathing Is Different for Women",
+      "chapterNumber": 18,
+      "pageNumberStart": 306,
+      "pageNumberEnd": 327,
+      "contentLength": 53717,
+      "filtered": false
+    },
+    {
+      "title": "Female Sex Hormones and the Breath",
+      "chapterNumber": 19,
+      "pageNumberStart": 328,
+      "pageNumberEnd": 351,
+      "contentLength": 59464,
+      "filtered": false
+    },
+    {
+      "title": "Sugar, Sugar",
+      "chapterNumber": 20,
+      "pageNumberStart": 352,
+      "pageNumberEnd": 369,
+      "contentLength": 42233,
+      "filtered": false
+    },
+    {
+      "title": "Seizure Control and the Breath",
+      "chapterNumber": 21,
+      "pageNumberStart": 370,
+      "pageNumberEnd": 400,
+      "contentLength": 79713,
+      "filtered": false
     },
     {
       "title": "Join The Breathing Revolution",
-      "chapterNumber": 16,
+      "chapterNumber": 22,
       "pageNumberStart": 401,
       "pageNumberEnd": 403,
-      "contentLength": 7100
+      "contentLength": 7100,
+      "filtered": true
     },
     {
       "title": "Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
-      "chapterNumber": 17,
+      "chapterNumber": 23,
       "pageNumberStart": 404,
+      "pageNumberEnd": 408,
+      "contentLength": 9651,
+      "filtered": true
+    },
+    {
+      "title": "Resources",
+      "chapterNumber": 24,
+      "pageNumberStart": 409,
       "pageNumberEnd": 416,
-      "contentLength": 15304
+      "contentLength": 5651,
+      "filtered": true
     }
   ]
 }

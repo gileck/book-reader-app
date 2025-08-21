@@ -534145,7 +534145,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-16T10:26:24.311Z",
+    "processingStartTime": "2025-08-21T09:36:00.735Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -534154,7 +534154,7 @@
       "lineCount": 14226,
       "wordCount": 150725,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-16T10:26:28.102Z",
+      "extractionTime": "2025-08-21T09:36:01.944Z",
       "averageWordsPerPage": 361,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 33228

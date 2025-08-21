@@ -2,37 +2,10 @@
  * Validation functions for Step 1: Text Extraction
  */
 
-/**
- * Validate word lengths to detect concatenated words or other text quality issues
- * @param {string} text - Text to analyze
- * @returns {Object} - Analysis results
- */
-function validateWordLengths(text) {
-    // Extract words (alphanumeric sequences)
-    const words = text.match(/[a-zA-Z0-9]+/g) || [];
-    
-    // Categorize words by length
-    const longWords = words.filter(word => word.length > 20);
-    const veryLongWords = words.filter(word => word.length > 30);
-    const suspiciousWords = words.filter(word => word.length > 50);
-    
-    // Find longest word
-    const longestWord = words.reduce((longest, current) => 
-        current.length > longest.length ? current : longest, ''
-    );
-    
-    // Sort suspicious words by length (descending)
-    suspiciousWords.sort((a, b) => b.length - a.length);
-    
-    return {
-        totalWords: words.length,
-        longWords: longWords,
-        veryLongWords: veryLongWords,
-        suspiciousWords: suspiciousWords,
-        longestWord: longestWord,
-        averageWordLength: words.reduce((sum, word) => sum + word.length, 0) / words.length
-    };
-}
+// Import shared text processing utilities
+const { validateWordLengths } = require('../../utils/text-processing-utils');
+
+// Note: validateWordLengths function now imported from shared utilities
 
 /**
  * Validate text extraction results

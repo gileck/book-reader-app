@@ -31,6 +31,14 @@
 const fs = require('fs');
 const path = require('path');
 
+// Import shared text processing utilities
+const { 
+    endsWithSentenceTerminator, 
+    getWordCount, 
+    getSentenceCount,
+    splitIntoSentencesBasic 
+} = require('../../utils/text-processing-utils');
+
 // Debug: capture detailed paragraph boundary decisions
 let debugBoundaryEvents = [];
 
@@ -953,7 +961,7 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
  * @returns {Array} - Array of smaller chunks
  */
 function splitLargeParagraph(chunk) {
-    const sentences = splitIntoSentences(chunk.content);
+    const sentences = splitIntoSentencesBasic(chunk.content);
     const chunks = [];
     let currentContent = '';
     let currentSentenceCount = 0;
@@ -1002,74 +1010,9 @@ function splitLargeParagraph(chunk) {
     return chunks;
 }
 
-/**
- * Split text into sentences
- * @param {string} text - Text to split
- * @returns {Array} - Array of sentences
- */
-function splitIntoSentences(text) {
-    // Split on sentence terminators, keeping the punctuation
-    // But avoid splitting after common abbreviations and multi-initials
-    const sentences = text.split(/(?<=[.!?])(?<!\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.)(?<!(?:\b(?:[A-Z]\.)){2,})\s+/);
-    return sentences.filter(s => s.trim().length > 0);
-}
+// Note: splitIntoSentences, getWordCount, and getSentenceCount now imported from shared utilities
 
-/**
- * Get word count of text
- * @param {string} text - Text to count
- * @returns {number} - Word count
- */
-function getWordCount(text) {
-    if (!text || typeof text !== 'string') return 0;
-    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-}
-
-/**
- * Get sentence count of text
- * @param {string} text - Text to count
- * @returns {number} - Sentence count
- */
-function getSentenceCount(text) {
-    return (text.match(/[.!?]/g) || []).length;
-}
-
-/**
- * Check if line ends with sentence terminator
- * @param {string} line - Line to check
- * @returns {boolean} - True if line ends with sentence terminator
- */
-function endsWithSentenceTerminator(line) {
-    const trimmed = line.trim();
-
-    // Check if it ends with sentence terminator
-    if (!/[.!?]$/.test(trimmed)) {
-        return false;
-    }
-
-    // If it ends with a period, check if it's an initial (single capital letter followed by period)
-    if (trimmed.endsWith('.')) {
-        // Check if it's an initial like "J." or "H." at the end
-        if (/\b[A-Z]\.$/.test(trimmed)) {
-            return false;
-        }
-
-        // Ignore common abbreviations that shouldn't end a sentence
-        const abbreviationAtEnd = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|i\.e|e\.g)\.$/;
-        if (abbreviationAtEnd.test(trimmed)) {
-            return false;
-        }
-
-        // Ignore multi-initial sequences like "P.U.", "U.S.", "A.B.", "U.S.A." at the end (optionally closed by quotes or ) )
-        const multiInitialTest = /(?:\b(?:[A-Z]\.)){2,}(?:["'"')]{1})?$/.test(trimmed);
-        if (multiInitialTest) {
-            return false;
-        }
-        
-
-    }
-
-    return true;
-}
+// Note: endsWithSentenceTerminator function now imported from shared utilities
 
 // endsWithInitials function is now imported from validation module
 

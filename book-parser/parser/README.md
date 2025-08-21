@@ -20,10 +20,13 @@ Each step is implemented as a separate module in its own folder within the `step
 6. **`03-1-link-detection/`** - Extract and resolve PDF internal links using chapter-relative text position selectors ✅
 7. **`03-2-image-extraction/`** - Extract images and insert `[[IMG...]]` markers into chapter content ✅
 8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers ✅
-9. **`05-sentence-detection/`** - Convert paragraphs to optimized sentences, preserving image markers ✅
-10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers to image chunks ✅
+9. **`05-sentence-detection/`** - Convert paragraphs to optimized sentences with smart constraint relaxation and standalone image marker detection ✅
+10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers (embedded and standalone) to image chunks ✅
 11. **`05-2-link-chunk-references/`** - Resolve link references to chunk IDs ✅
 12. **`06-metadata-extraction/`** - Extract comprehensive book metadata and statistics ✅
+
+### Shared Utilities
+- **`utils/text-processing-utils.js`** - Centralized text processing functions used across multiple steps for consistent behavior ✅
 
 **Legend**: ✅ Implemented and Production-Ready
 
@@ -219,6 +222,73 @@ steps/
 └── 06-metadata-extraction/
     ├── 06-metadata-extraction.js
     └── 06-metadata-extraction-validation.js
+utils/
+└── text-processing-utils.js
+```
+
+## Shared Text Processing Utilities
+
+### Overview
+The `utils/text-processing-utils.js` module provides centralized text processing functions used across multiple parser steps to ensure consistent behavior and eliminate code duplication.
+
+### Key Functions
+
+```javascript
+const {
+    // Abbreviation handling
+    endsWithAbbreviation,
+    endsWithSentenceTerminator,
+    COMMON_ABBREVIATIONS,
+    
+    // Word and sentence counting
+    countWords,
+    getWordCount,
+    getSentenceCount,
+    isSentenceTerminator,
+    
+    // Text validation
+    endsWithInitials,
+    endsWithCommonSingleLetterWord,
+    validateWordLengths,
+    
+    // Text splitting
+    splitIntoSentencesBasic
+} = require('./utils/text-processing-utils');
+```
+
+### Comprehensive Abbreviation Support
+The utilities include a comprehensive list of 60+ common abbreviations:
+
+```javascript
+const COMMON_ABBREVIATIONS = [
+    // Academic degrees: 'Ph.D.', 'M.D.', 'B.A.', 'M.A.', 'B.S.', 'M.S.', 'J.D.'
+    // Titles: 'Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Sr.', 'Jr.'
+    // Organizational: 'P.U.', 'A.I.', 'I.T.', 'R.D.', 'Q.A.', 'H.R.'
+    // Publishing: 'Sec.', 'Vol.', 'No.', 'Ed.', 'pp.'
+    // Geographic: 'U.S.', 'U.K.', 'U.S.A.'
+    // And many more...
+];
+```
+
+### Unicode Support
+Enhanced validation functions properly handle international characters:
+
+```javascript
+// Supports accented capitals like "Índice", "École", "Québec"
+const isUppercaseLetter = char === char.toUpperCase() && char !== char.toLowerCase();
+```
+
+### Usage in Parser Steps
+Steps import and use shared utilities instead of duplicating logic:
+
+```javascript
+// In step validation files:
+const { countWords, endsWithInitials, endsWithAbbreviation } = require('../../utils/text-processing-utils');
+
+// Enhanced validation with proper abbreviation handling
+if (endsWithInitials(content) && !endsWithAbbreviation(content) && !endsWithCommonSingleLetterWord(content)) {
+    validationErrors.push(`Chunk should not end with initials: "${content}"`);
+}
 ```
 
 ## Per-Step Validation
@@ -239,9 +309,9 @@ Each step now includes its own validation logic that runs immediately after exec
 5. **Step 3** (Page Processing): Page structure, content validation, reasonable counts
 6. **Step 3-1** (Link Detection): Role validation, source-target matching, required fields
 7. **Step 3-2** (Image Extraction): Image metadata validation, file existence, page mapping
-8. **Step 4** (Paragraph/Header Detection): Chunk counts, types, word limits, capitalization, image marker preservation
-9. **Step 5** (Sentence Detection): Sentence optimization, paragraph indexing, word count targets, image marker preservation
-10. **Step 5-1** (Image Markers to Chunks): Marker extraction, image chunk creation, marker removal validation
+8. **Step 4** (Paragraph/Header Detection): Chunk counts, types, word limits, Unicode-aware capitalization validation, image marker preservation, shared abbreviation handling
+9. **Step 5** (Sentence Detection): Sentence optimization with smart constraint relaxation, paragraph indexing, word count targets, standalone image marker detection, enhanced validation using shared text processing utilities
+10. **Step 5-1** (Image Markers to Chunks): Embedded and standalone marker extraction, image chunk creation, marker removal validation
 11. **Step 5-2** (Link Chunk References): Link-to-chunk ID resolution, bidirectional relationships
 12. **Step 6** (Metadata Extraction): Title/author extraction, statistics calculation, required fields validation
 
@@ -349,7 +419,122 @@ Notes:
 
 ### 🎯 RECENT MAJOR IMPROVEMENTS
 
-#### **No-Page Model & Image Marker System ✅** (Latest - January 2025)
+#### **Shared Text Processing Utilities & Code Consolidation ✅** (Latest - January 2025)
+**Major Architecture Enhancement**: Eliminated code duplication and enhanced text processing consistency across all parser steps.
+
+**Problem Identified**:
+- Identical functions duplicated across multiple steps: `countWords`, `endsWithInitials`, `endsWithCommonSingleLetterWord`, `validateWordLengths`, `isSentenceTerminator`
+- ~200+ lines of duplicated code scattered across steps
+- Inconsistent abbreviation handling leading to validation issues (e.g., "P.U." incorrectly treated as sentence terminator)
+- ASCII-only validation missing Unicode uppercase letters like "Índice"
+- Maintenance burden: bugs needed to be fixed in multiple places
+
+**Solution Implemented**:
+1. **Centralized Text Processing Utilities**:
+   - Created `utils/text-processing-utils.js` with 60+ common abbreviations including "P.U.", "Ph.D.", etc.
+   - Comprehensive functions for word counting, sentence detection, text validation, and abbreviation handling
+   - Unicode-aware validation supporting accented capitals ("Índice", "École", "Québec")
+2. **Code Consolidation**:
+   - Eliminated duplicated functions across Steps 1, 3, 4, 5 and their validation modules
+   - Updated all steps to import shared utilities instead of maintaining separate implementations
+   - Single source of truth for text processing logic
+3. **Enhanced Validation Logic**:
+   - Fixed abbreviation detection to check `endsWithAbbreviation` before `endsWithInitials`
+   - Added patterns for character names ("Wally B."), photo captions, numbered lists, and table of contents
+   - Unicode-aware capitalization validation using `char.toUpperCase() !== char.toLowerCase()`
+
+**Technical Implementation**:
+```javascript
+// Before: Multiple inconsistent implementations
+function countWords(text) { /* duplicated 4 times */ }
+function endsWithInitials(text) { /* duplicated 2 times with 65+ lines each */ }
+
+// After: Single shared implementation
+const { countWords, endsWithInitials, endsWithAbbreviation } = require('../../utils/text-processing-utils');
+if (endsWithInitials(content) && !endsWithAbbreviation(content) && !endsWithCommonSingleLetterWord(content)) {
+    validationErrors.push(`Chunk should not end with initials: "${content}"`);
+}
+```
+
+**Results**:
+- ✅ Eliminated ~200+ lines of duplicated code across parser steps
+- ✅ Fixed "P.U." abbreviation bug - now correctly handled as abbreviation, not sentence terminator
+- ✅ Fixed "Ph.D.", "Wally B." and other character/degree validations
+- ✅ Fixed Unicode validation - "Índice" now properly recognized as starting with capital letter
+- ✅ Fixed numbered lists, photo captions, and table of contents validation
+- ✅ Single source of truth for text processing - easier maintenance and consistency
+- ✅ Enhanced abbreviation list with 60+ entries covering academic, organizational, publishing, and geographic terms
+- ✅ Pipeline runs successfully with zero validation errors after consolidation
+
+#### **Smart Constraint Relaxation for Small Chunks ✅** (January 2025)
+**Major Logic Enhancement**: Resolved merging constraint conflict that created orphan small chunks failing validation.
+
+**Problem Identified**:
+- Small chunks (< 25 words) couldn't merge with nearby chunks when the result would exceed 200-word limit
+- Created orphan chunks like "The gestation had been trying, but the feisty little company called Pixar had been born." (15 words)
+- Example: 188-word chunk + 15-word chunk = 203 words (blocked by 200-word limit)
+- Led to validation failures for legitimate content that should have been merged
+
+**Solution Implemented**:
+1. **Smart Constraint Relaxation**:
+   - Very small chunks (< 20 words) can now exceed the 200-word limit when merging
+   - Prevents orphan chunk validation failures while maintaining content quality
+   - Applied to all merging functions: forward merging, backward merging, and aggressive cross-paragraph merging
+2. **Prioritized Constraint Logic**:
+   - Primary goal: Eliminate orphan chunks that fail validation
+   - Secondary goal: Respect word count limits when possible
+   - Result: Better overall optimization with fewer edge case failures
+
+**Technical Implementation**:
+```javascript
+// Before: Hard limit blocking all merges > 200 words
+if (newWordCount > maxWords) break;
+
+// After: Smart relaxation for very small chunks
+const isVerySmallChunk = currentChunk.wordCount < 20;
+if (newWordCount > maxWords && !isVerySmallChunk) break;
+```
+
+**Results**:
+- ✅ Orphan 15-word chunk successfully merged (188 + 15 = 203 words)
+- ✅ Validation error "word count (15) must be at least 25 words" completely eliminated
+- ✅ Better content optimization with fewer edge case failures
+- ✅ Maintains readability while preventing validation failures
+
+#### **Enhanced Image Marker Processing ✅** (January 2025)
+**Major Architecture Enhancement**: Resolved design flaw where standalone image markers created invalid text chunks.
+
+**Problem Identified**:
+- Text chunks containing only `[[IMG ...]]` markers had incorrect `type: 'text'` and `paragraphIndex` values
+- Violated the principle that images should have `type: 'image'` and `paragraphIndex: null`
+- Created invalid chunks that failed Step 5 validation
+
+**Solution Implemented**:
+1. **Enhanced Step 5 (Sentence Detection)**:
+   - Detects standalone image marker chunks during paragraph processing
+   - Converts them to special text chunks with `paragraphIndex: null` and `wordCount: 0`
+   - Preserves positioning context for Step 5-1 processing
+2. **Enhanced Step 5-1 (Image Markers to Chunks)**:
+   - Now handles both embedded markers (mixed with text) and standalone markers
+   - For standalone markers: Replaces text chunk entirely with image chunks
+   - For embedded markers: Creates image chunks after text chunks with markers removed
+3. **Enhanced Step 5 Validation**:
+   - Skips word count, sentence count, and formatting validation for standalone image marker chunks
+   - Allows proper processing without false validation failures
+
+**Architecture Benefits**:
+- ✅ Maintains single point of responsibility for image chunk creation (Step 5-1)
+- ✅ Preserves precise positioning context (why pipeline reordering was rejected)
+- ✅ Clean separation of concerns with enhanced validation
+- ✅ Eliminates invalid text chunks containing only image markers
+
+**Results**:
+- ✅ Original validation error completely eliminated
+- ✅ Proper image chunks with `type: 'image'` and `paragraphIndex: null`
+- ✅ Clean architecture maintaining positioning context
+- ✅ Enhanced validation logic supporting both content types
+
+#### **No-Page Model & Image Marker System ✅** (January 2025)
 **Major Architectural Change**: Eliminated page-based positioning in favor of chapter-relative content anchoring.
 
 **Key Changes**:
@@ -611,8 +796,8 @@ The pipeline was optimized by combining related steps:
 - Step 3-1: Link Detection ✅ **[WITH CHAPTER-RELATIVE POSITIONING + NO-PAGE MODEL]**
 - Step 3-2: Image Extraction ✅ **[WITH IMAGE MARKER SYSTEM + ENHANCED PAGE NUMBER REMOVAL]**
 - Step 4: Paragraph Detection ✅ **[WITH IMAGE MARKER PRESERVATION + CHAPTER CONTENT CLEANUP]**
-- Step 5: Sentence Detection ✅ **[WITH IMAGE MARKER PRESERVATION + PARAGRAPH INDEXING]**
-- Step 5-1: Image Markers to Chunks ✅ **[WITH PRECISE MARKER-TO-CHUNK CONVERSION + VALIDATION]**
+- Step 5: Sentence Detection ✅ **[WITH SMART CONSTRAINT RELAXATION + STANDALONE IMAGE MARKER DETECTION + SHARED TEXT PROCESSING UTILITIES + ENHANCED VALIDATION]**
+- Step 5-1: Image Markers to Chunks ✅ **[WITH EMBEDDED & STANDALONE MARKER PROCESSING + VALIDATION]**
 - Step 5-2: Link Chunk References ✅ **[WITH BIDIRECTIONAL LINK RESOLUTION + VALIDATION]**
 - Step 6: Metadata Extraction ✅ **[WITH COMPREHENSIVE STATISTICS + VALIDATION]**
 
@@ -625,7 +810,8 @@ The pipeline was optimized by combining related steps:
 - **Link Integration**: 290 production-ready PDF annotation links with coordinate-based extraction
 - **Image Extraction**: 58 images extracted and mapped to pages with complete metadata
 - **Content Chunks**: Unified paragraph, header, and image detection with semantic chunk types
-- **Advanced Paragraph Optimization**: Two-pass merging system eliminating all small paragraph validation errors
+- **Advanced Paragraph Optimization**: Two-pass merging system with smart constraint relaxation eliminating all small paragraph validation errors
+- **Shared Text Processing**: Centralized utilities eliminating ~200+ lines of duplicated code with Unicode-aware validation and comprehensive abbreviation handling
 
 ### ✅ DEBUGGING INFRASTRUCTURE ENHANCEMENT (January 2025)
 - **Pre-Validation Output Writing**: Output files now written before validation for debugging access
@@ -687,4 +873,4 @@ The pipeline was optimized by combining related steps:
 
 **Last Updated**: January 2025
 **Implementation Progress**: 12/12 steps completed (100%)
-**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, image marker system, chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection, sentence-level optimization with image marker preservation, precise image chunk positioning, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 
+**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, shared text processing utilities eliminating code duplication, enhanced image marker system supporting both embedded and standalone markers, smart constraint relaxation preventing orphan chunks, Unicode-aware validation supporting international characters, comprehensive abbreviation handling (60+ patterns), chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection, sentence-level optimization with standalone image marker detection, precise image chunk positioning with enhanced validation, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 

@@ -1,11 +1,11 @@
 {
-  "processingTime": 12955,
+  "processingTime": 5232,
   "detectionStats": {
-    "chaptersDetected": 18,
+    "chaptersDetected": 25,
     "tocSource": "pdf_bookmarks",
-    "tocEntriesFound": 18,
+    "tocEntriesFound": 27,
     "patternMatches": 81,
-    "averageDetectionConfidence": 0.9333333333333333,
+    "averageDetectionConfidence": 0.9159999999999999,
     "pageOffset": 0
   },
   "tocAnalysis": {
@@ -13,112 +13,166 @@
     "tocFound": true,
     "tocEntries": [
       {
-        "chapterTitle": "Introduction: Are You Breathing Comfortably?",
+        "chapterTitle": "Half Title",
         "chapterNumber": 0,
+        "startingPage": 1,
+        "bookmarkTitle": "Half Title"
+      },
+      {
+        "chapterTitle": "Epigraph",
+        "chapterNumber": 1,
+        "startingPage": 4,
+        "bookmarkTitle": "Epigraph"
+      },
+      {
+        "chapterTitle": "Foreword",
+        "chapterNumber": 2,
+        "startingPage": 7,
+        "bookmarkTitle": "Foreword"
+      },
+      {
+        "chapterTitle": "Introduction: Are You Breathing Comfortably?",
+        "chapterNumber": 3,
         "startingPage": 9,
         "bookmarkTitle": "Introduction: Are You Breathing Comfortably?"
       },
       {
         "chapterTitle": "A New Approach",
-        "chapterNumber": 1,
+        "chapterNumber": 4,
         "startingPage": 15,
         "bookmarkTitle": "Chapter One: A New Approach"
       },
       {
-        "chapterTitle": "Exercises for Adults and Children",
-        "chapterNumber": 2,
-        "startingPage": 33,
-        "bookmarkTitle": "Chapter Two: Exercises for Adults and Children"
+        "chapterTitle": "Section One: Functional Breathing",
+        "chapterNumber": 5,
+        "startingPage": 34,
+        "bookmarkTitle": "Section One: Functional Breathing"
+      },
+      {
+        "chapterTitle": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
+        "chapterNumber": 6,
+        "startingPage": 58,
+        "bookmarkTitle": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder"
+      },
+      {
+        "chapterTitle": "Section Three: Tailored Breathing Programs for Specific Conditions",
+        "chapterNumber": 7,
+        "startingPage": 68,
+        "bookmarkTitle": "Section Three: Tailored Breathing Programs for Specific Conditions"
+      },
+      {
+        "chapterTitle": "Section Four: Exercises to Improve Focus and Concentration",
+        "chapterNumber": 8,
+        "startingPage": 83,
+        "bookmarkTitle": "Section Four: Exercises to Improve Focus and Concentration"
+      },
+      {
+        "chapterTitle": "Section Five: Stress and Relax Body and Mind",
+        "chapterNumber": 9,
+        "startingPage": 87,
+        "bookmarkTitle": "Section Five: Stress and Relax Body and Mind"
+      },
+      {
+        "chapterTitle": "Section Six: Exercises for Children",
+        "chapterNumber": 10,
+        "startingPage": 104,
+        "bookmarkTitle": "Section Six: Exercises for Children"
       },
       {
         "chapterTitle": "How to Breathe",
-        "chapterNumber": 3,
+        "chapterNumber": 11,
         "startingPage": 110,
         "bookmarkTitle": "Chapter Three: How to Breathe"
       },
       {
         "chapterTitle": "The Vagus Nerve and the Heart-Breath-Brain Connection",
-        "chapterNumber": 4,
+        "chapterNumber": 12,
         "startingPage": 127,
         "bookmarkTitle": "Chapter Four: The Vagus Nerve and the Heart-Breath-Brain Connection"
       },
       {
         "chapterTitle": "Functional Breathing, The Secret of Functional Movement",
-        "chapterNumber": 5,
+        "chapterNumber": 13,
         "startingPage": 157,
         "bookmarkTitle": "Chapter Five: Functional Breathing, The Secret of Functional Movement"
       },
       {
         "chapterTitle": "When Breathing Makes You Hurt",
-        "chapterNumber": 6,
+        "chapterNumber": 14,
         "startingPage": 177,
         "bookmarkTitle": "Chapter Six: When Breathing Makes You Hurt"
       },
       {
         "chapterTitle": "Sleep-Disordered Breathing",
-        "chapterNumber": 7,
+        "chapterNumber": 15,
         "startingPage": 192,
         "bookmarkTitle": "Chapter Seven: Sleep-Disordered Breathing"
       },
       {
         "chapterTitle": "Developing Healthy Airways in Children",
-        "chapterNumber": 8,
+        "chapterNumber": 16,
         "startingPage": 216,
         "bookmarkTitle": "Chapter Eight: Developing Healthy Airways in Children"
       },
       {
         "chapterTitle": "The Breathing Secret for Healthy Blood Pressure",
-        "chapterNumber": 9,
+        "chapterNumber": 17,
         "startingPage": 242,
         "bookmarkTitle": "Chapter Nine: The Breathing Secret for Healthy Blood Pressure"
       },
       {
         "chapterTitle": "Freedom From Respiratory Discomfort",
-        "chapterNumber": 10,
+        "chapterNumber": 18,
         "startingPage": 253,
         "bookmarkTitle": "Chapter Ten: Freedom From Respiratory Discomfort"
       },
       {
         "chapterTitle": "Sex and Breath, an Intimate Connection",
-        "chapterNumber": 11,
+        "chapterNumber": 19,
         "startingPage": 273,
         "bookmarkTitle": "Chapter Eleven: Sex and Breath, an Intimate Connection"
       },
       {
         "chapterTitle": "Yes, Breathing Is Different for Women",
-        "chapterNumber": 12,
+        "chapterNumber": 20,
         "startingPage": 306,
         "bookmarkTitle": "Chapter Twelve: Yes, Breathing Is Different for Women"
       },
       {
         "chapterTitle": "Female Sex Hormones and the Breath",
-        "chapterNumber": 13,
+        "chapterNumber": 21,
         "startingPage": 328,
         "bookmarkTitle": "Chapter Thirteen: Female Sex Hormones and the Breath"
       },
       {
         "chapterTitle": "Sugar, Sugar",
-        "chapterNumber": 14,
+        "chapterNumber": 22,
         "startingPage": 352,
         "bookmarkTitle": "Chapter Fourteen: Sugar, Sugar"
       },
       {
         "chapterTitle": "Seizure Control and the Breath",
-        "chapterNumber": 15,
+        "chapterNumber": 23,
         "startingPage": 370,
         "bookmarkTitle": "Chapter Fifteen: Seizure Control and the Breath"
       },
       {
         "chapterTitle": "Join The Breathing Revolution",
-        "chapterNumber": 16,
+        "chapterNumber": 24,
         "startingPage": 401,
         "bookmarkTitle": "Chapter Sixteen: Join The Breathing Revolution"
       },
       {
         "chapterTitle": "Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
-        "chapterNumber": 17,
+        "chapterNumber": 25,
         "startingPage": 404,
         "bookmarkTitle": "Chapter Seventeen: Is Nasal Breathing Your First Line of Defense Against Coronavirus?"
+      },
+      {
+        "chapterTitle": "Resources",
+        "chapterNumber": 26,
+        "startingPage": 409,
+        "bookmarkTitle": "Resources"
       }
     ],
     "pdfBookmarksAvailable": true
@@ -130,8 +184,16 @@
   },
   "chapterMetadata": [
     {
-      "title": "Introduction: Are You Breathing Comfortably?",
+      "title": "Half Title",
       "chapterNumber": 0,
+      "startingPage": 1,
+      "endPage": 8,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "Introduction: Are You Breathing Comfortably?",
+      "chapterNumber": 1,
       "startingPage": 9,
       "endPage": 14,
       "detectionSource": "pdf_bookmarks",
@@ -139,23 +201,63 @@
     },
     {
       "title": "A New Approach",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "startingPage": 15,
-      "endPage": 32,
+      "endPage": 33,
       "detectionSource": "pdf_bookmarks",
       "confidence": 1
     },
     {
-      "title": "Exercises for Adults and Children",
-      "chapterNumber": 2,
-      "startingPage": 33,
+      "title": "Section One: Functional Breathing",
+      "chapterNumber": 3,
+      "startingPage": 34,
+      "endPage": 57,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
+      "chapterNumber": 4,
+      "startingPage": 58,
+      "endPage": 67,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Section Three: Tailored Breathing Programs for Specific Conditions",
+      "chapterNumber": 5,
+      "startingPage": 68,
+      "endPage": 82,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Section Four: Exercises to Improve Focus and Concentration",
+      "chapterNumber": 6,
+      "startingPage": 83,
+      "endPage": 86,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Section Five: Stress and Relax Body and Mind",
+      "chapterNumber": 7,
+      "startingPage": 87,
+      "endPage": 103,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Section Six: Exercises for Children",
+      "chapterNumber": 8,
+      "startingPage": 104,
       "endPage": 109,
       "detectionSource": "pdf_bookmarks",
       "confidence": 1
     },
     {
       "title": "How to Breathe",
-      "chapterNumber": 3,
+      "chapterNumber": 9,
       "startingPage": 110,
       "endPage": 126,
       "detectionSource": "pdf_bookmarks",
@@ -163,7 +265,7 @@
     },
     {
       "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
-      "chapterNumber": 4,
+      "chapterNumber": 10,
       "startingPage": 127,
       "endPage": 156,
       "detectionSource": "pdf_bookmarks",
@@ -171,7 +273,7 @@
     },
     {
       "title": "Functional Breathing, The Secret of Functional Movement",
-      "chapterNumber": 5,
+      "chapterNumber": 11,
       "startingPage": 157,
       "endPage": 176,
       "detectionSource": "pdf_bookmarks",
@@ -179,7 +281,7 @@
     },
     {
       "title": "When Breathing Makes You Hurt",
-      "chapterNumber": 6,
+      "chapterNumber": 12,
       "startingPage": 177,
       "endPage": 191,
       "detectionSource": "pdf_bookmarks",
@@ -187,7 +289,7 @@
     },
     {
       "title": "Sleep-Disordered Breathing",
-      "chapterNumber": 7,
+      "chapterNumber": 13,
       "startingPage": 192,
       "endPage": 215,
       "detectionSource": "pdf_bookmarks",
@@ -195,7 +297,7 @@
     },
     {
       "title": "Developing Healthy Airways in Children",
-      "chapterNumber": 8,
+      "chapterNumber": 14,
       "startingPage": 216,
       "endPage": 241,
       "detectionSource": "pdf_bookmarks",
@@ -203,7 +305,7 @@
     },
     {
       "title": "The Breathing Secret for Healthy Blood Pressure",
-      "chapterNumber": 9,
+      "chapterNumber": 15,
       "startingPage": 242,
       "endPage": 252,
       "detectionSource": "pdf_bookmarks",
@@ -211,7 +313,7 @@
     },
     {
       "title": "Freedom From Respiratory Discomfort",
-      "chapterNumber": 10,
+      "chapterNumber": 16,
       "startingPage": 253,
       "endPage": 272,
       "detectionSource": "pdf_bookmarks",
@@ -219,7 +321,7 @@
     },
     {
       "title": "Sex and Breath, an Intimate Connection",
-      "chapterNumber": 11,
+      "chapterNumber": 17,
       "startingPage": 273,
       "endPage": 305,
       "detectionSource": "pdf_bookmarks",
@@ -227,7 +329,7 @@
     },
     {
       "title": "Yes, Breathing Is Different for Women",
-      "chapterNumber": 12,
+      "chapterNumber": 18,
       "startingPage": 306,
       "endPage": 327,
       "detectionSource": "pdf_bookmarks",
@@ -235,7 +337,7 @@
     },
     {
       "title": "Female Sex Hormones and the Breath",
-      "chapterNumber": 13,
+      "chapterNumber": 19,
       "startingPage": 328,
       "endPage": 351,
       "detectionSource": "pdf_bookmarks",
@@ -243,7 +345,7 @@
     },
     {
       "title": "Sugar, Sugar",
-      "chapterNumber": 14,
+      "chapterNumber": 20,
       "startingPage": 352,
       "endPage": 369,
       "detectionSource": "pdf_bookmarks",
@@ -251,7 +353,7 @@
     },
     {
       "title": "Seizure Control and the Breath",
-      "chapterNumber": 15,
+      "chapterNumber": 21,
       "startingPage": 370,
       "endPage": 400,
       "detectionSource": "pdf_bookmarks",
@@ -259,7 +361,7 @@
     },
     {
       "title": "Join The Breathing Revolution",
-      "chapterNumber": 16,
+      "chapterNumber": 22,
       "startingPage": 401,
       "endPage": 403,
       "detectionSource": "pdf_bookmarks",
@@ -267,11 +369,19 @@
     },
     {
       "title": "Is Nasal Breathing Your First Line of Defense Against Coronavirus?",
-      "chapterNumber": 17,
+      "chapterNumber": 23,
       "startingPage": 404,
-      "endPage": null,
+      "endPage": 408,
       "detectionSource": "pdf_bookmarks",
       "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Resources",
+      "chapterNumber": 24,
+      "startingPage": 409,
+      "endPage": null,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
     }
   ]
 }

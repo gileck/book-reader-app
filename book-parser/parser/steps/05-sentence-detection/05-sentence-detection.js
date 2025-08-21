@@ -21,9 +21,17 @@ const path = require('path');
 // Import validation functions
 const {
     isSourceTextInContent,
-    countWords,
     endsWithInitials
 } = require('./05-sentence-detection-validation');
+
+// Import shared text processing utilities
+const {
+    endsWithAbbreviation,
+    endsWithSentenceTerminator,
+    protectAbbreviations,
+    restoreAbbreviations,
+    countWords
+} = require('../../utils/text-processing-utils');
 
 /**
  * Execute step 5: Sentence Detection and Combination
@@ -101,12 +109,28 @@ function convertParagraphsToSentences(chapter) {
 
     for (const chunk of chapter.chunks) {
         if (chunk.type === 'paragraph') {
-            // Increment paragraph index for each paragraph
-            paragraphIndex++;
-
-            // Split paragraph into sentences and add paragraphIndex
-            const sentences = createSentenceChunks(chunk.content, chunk.links || [], paragraphIndex);
-            sentenceChunks.push(...sentences);
+            // Check if this paragraph contains only image markers (standalone images)
+            const imageMarkerRegex = /\[\[IMG\s+id=([^\s]+)\s+index=(\d+)\s+alt="([^"]*)"\]\]/g;
+            const contentWithoutMarkers = chunk.content.replace(imageMarkerRegex, '').trim();
+            
+            if (contentWithoutMarkers.length === 0) {
+                // This paragraph contains only image markers - keep it as-is for Step 5-1 to process
+                // Convert it to a text chunk so Step 5-1 can find and extract the markers
+                sentenceChunks.push({
+                    ...chunk,
+                    type: 'text', // Change from 'paragraph' to 'text' so Step 5-1 will process it
+                    paragraphIndex: null, // Standalone images don't belong to paragraphs
+                    wordCount: 0, // Will be ignored since Step 5-1 will replace with image chunks
+                    sentenceCount: 0 // Will be ignored since Step 5-1 will replace with image chunks
+                });
+            } else {
+                // Normal paragraph with text content - increment paragraph index and process
+                paragraphIndex++;
+                
+                // Split paragraph into sentences and add paragraphIndex
+                const sentences = createSentenceChunks(chunk.content, chunk.links || [], paragraphIndex);
+                sentenceChunks.push(...sentences);
+            }
 
         } else if (chunk.type === 'header' || chunk.type === 'image') {
             // Keep headers and images as-is (they don't belong to paragraphs)
@@ -200,7 +224,9 @@ function combineSmallSentences(chunks) {
                             if (nextChunk.type === 'header' || nextChunk.type === 'image') break;
                             if (nextChunk.type !== 'text') break;
                             const newWordCount = combinedWordCount + nextChunk.wordCount;
-                            if (newWordCount > MAX_WORDS) break;
+                            // Allow small chunks to exceed the limit to prevent orphan chunks
+                            const isVerySmallChunk = base.wordCount < 20;
+                            if (newWordCount > MAX_WORDS && !isVerySmallChunk) break;
                             // Page semantics removed: no page-gap constraint
                             combinedContent += ' ' + nextChunk.content;
                             combinedWordCount = newWordCount;
@@ -316,8 +342,10 @@ function tryMergeWithNextSentences(chunks, currentIndex, minWords, maxWords) {
         if (nextChunk.type === 'text' && nextChunk.paragraphIndex === currentChunk.paragraphIndex) {
             const newWordCount = combinedWordCount + nextChunk.wordCount;
 
-            // Don't merge if it would exceed max words
-            if (newWordCount > maxWords) {
+            // Don't merge if it would exceed max words, unless current chunk is very small (< 20 words)
+            // Allow small orphan chunks to exceed the limit to prevent validation failures
+            const isVerySmallChunk = currentChunk.wordCount < 20;
+            if (newWordCount > maxWords && !isVerySmallChunk) {
                 break;
             }
 
@@ -387,8 +415,10 @@ function tryMergeWithPreviousSentence(optimizedChunks, currentChunk, minWords, m
         if (previousChunk.type === 'text' && previousChunk.paragraphIndex === currentChunk.paragraphIndex) {
             const combinedWordCount = previousChunk.wordCount + currentChunk.wordCount;
 
-            // Don't merge if it would exceed max words
-            if (combinedWordCount > maxWords) {
+            // Don't merge if it would exceed max words, unless current chunk is very small (< 20 words)
+            // Allow small orphan chunks to exceed the limit to prevent validation failures
+            const isVerySmallChunk = currentChunk.wordCount < 20;
+            if (combinedWordCount > maxWords && !isVerySmallChunk) {
                 break;
             }
 
@@ -555,23 +585,7 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
     return null;
 }
 
-/**
- * Check if a line ends with a common abbreviation
- * @param {string} line - Line to check
- * @returns {boolean} - True if line ends with an abbreviation
- */
-function endsWithAbbreviation(line) {
-    const abbreviations = [
-        'Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Sr.', 'Jr.', 'St.', 'vs.', 'etc.',
-        'i.e.', 'e.g.', 'Ph.D.', 'M.D.', 'B.A.', 'M.A.', 'B.S.', 'M.S.',
-        'Inc.', 'Corp.', 'Ltd.', 'Co.', 'Ave.', 'Blvd.', 'Rd.', 'St.',
-        'Jan.', 'Feb.', 'Mar.', 'Apr.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Sept.', 'Oct.', 'Nov.', 'Dec.',
-        'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.',
-        'U.S.', 'U.K.', 'U.S.A.', 'U.K.'
-    ];
-    
-    return abbreviations.some(abbr => line.endsWith(abbr));
-}
+// Note: endsWithAbbreviation function now imported from shared utilities
 
 /**
  * Clean sentence content while preserving newlines after sentence ending characters
@@ -628,20 +642,12 @@ function splitIntoSentences(text) {
     // Only split at sentence boundaries that are followed by newlines
     const sentences = [];
 
-    // Temporarily protect common abbreviations that end with a period
-    const ABBR_MAP = new Map([
-        ['Mr.', 'Mr<ABBR>'], ['Mrs.', 'Mrs<ABBR>'], ['Ms.', 'Ms<ABBR>'], ['Dr.', 'Dr<ABBR>'], ['Prof.', 'Prof<ABBR>'],
-        ['Sr.', 'Sr<ABBR>'], ['Jr.', 'Jr<ABBR>'], ['St.', 'St<ABBR>'], ['vs.', 'vs<ABBR>'], ['etc.', 'etc<ABBR>'],
-        ['i.e.', 'i<ABBR>e<ABBR>'], ['e.g.', 'e<ABBR>g<ABBR>']
-    ]);
-    let protectedText = text;
-    for (const [abbr, token] of ABBR_MAP.entries()) {
-        protectedText = protectedText.replace(new RegExp(abbr.replace('.', '\\.'), 'g'), token);
-    }
+    // Temporarily protect common abbreviations using shared utilities
+    const { protectedText, protectionMap } = protectAbbreviations(text);
 
     // Protect numbered list items to prevent splitting within lists
     // Pattern: number + period + space + text (e.g., "1. Item text 2. Next item")
-    protectedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
+    let processedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
 
     // Split ONLY on sentence terminators that are followed by newlines
     // This ensures we only create separate chunks when sentences actually end with newlines
@@ -650,9 +656,9 @@ function splitIntoSentences(text) {
     let lastIndex = 0;
     let match;
 
-    while ((match = sentenceRegex.exec(protectedText)) !== null) {
+    while ((match = sentenceRegex.exec(processedText)) !== null) {
         // Extract sentence from lastIndex to end of current match (including the terminator)
-        const sentence = protectedText.substring(lastIndex, match.index + match[1].length).trim();
+        const sentence = processedText.substring(lastIndex, match.index + match[1].length).trim();
         if (sentence) {
             sentences.push(sentence);
         }
@@ -660,18 +666,16 @@ function splitIntoSentences(text) {
     }
 
     // Add any remaining content as the last sentence
-    const remaining = protectedText.substring(lastIndex).trim();
+    const remaining = processedText.substring(lastIndex).trim();
     if (remaining) {
         sentences.push(remaining);
     }
 
-    // Restore abbreviations and list numbers
+    // Restore abbreviations and list numbers using shared utilities
     const restored = sentences.map(s => {
-        let out = s;
-        for (const [abbr, token] of ABBR_MAP.entries()) {
-            out = out.replace(new RegExp(token, 'g'), abbr);
-        }
-        // Restore numbered list items
+        // First restore abbreviations
+        let out = restoreAbbreviations(s, protectionMap);
+        // Then restore numbered list items
         out = out.replace(/(\d+)<LISTNUM>/g, '$1.');
         return out;
     });

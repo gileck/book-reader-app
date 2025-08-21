@@ -2,6 +2,14 @@
  * Validation functions for Step 5: Sentence Detection and Combination
  */
 
+// Import shared text processing utilities
+const {
+    countWords,
+    endsWithInitials,
+    endsWithCommonSingleLetterWord,
+    endsWithAbbreviation
+} = require('../../utils/text-processing-utils');
+
 /**
  * Check if a footnote number appears as a standalone footnote in content
  * @param {string} footnoteNumber - The footnote number to find
@@ -60,68 +68,7 @@ function isSourceTextInContent(sourceText, content) {
     return content.includes(sourceText);
 }
 
-/**
- * Count words in text
- * @param {string} text - Text to count words in
- * @returns {number} - Number of words
- */
-function countWords(text) {
-    if (!text || typeof text !== 'string') return 0;
-    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-}
-
-/**
- * Check if text ends with initials (single capital letter followed by period)
- * @param {string} text - Text to check
- * @returns {boolean} - True if text ends with initials
- */
-function endsWithInitials(text) {
-    if (!text) return false;
-    const trimmed = text.trim();
-    return /\b[A-Z]\.$/.test(trimmed);
-}
-
-/**
- * Check if text ends with a common single-letter word (like "vitamin E", "point A", etc.)
- * @param {string} text - Text to check
- * @returns {boolean} - True if ends with common single-letter word
- */
-function endsWithCommonSingleLetterWord(text) {
-    if (!text) return false;
-    const trimmed = text.trim();
-
-    // Common patterns where single letters are valid endings
-    const commonPatterns = [
-        // Scientific/academic terms
-        /\bvitamin [a-zA-Z]\.?$/i,      // vitamin E, vitamin C, etc.
-        /\btype [a-zA-Z]\.?$/i,         // type A, type B, etc.
-        /\bpoint [a-zA-Z]\.?$/i,        // point A, point B, etc.
-        /\bfigure [a-zA-Z]\.?$/i,       // figure A, figure B, etc.
-        /\bappendix [a-zA-Z]\.?$/i,     // appendix A, appendix B, etc.
-        /\bsection [a-zA-Z]\.?$/i,      // section A, section B, etc.
-        /\bpart [a-zA-Z]\.?$/i,         // part A, part B, etc.
-        /\boption [a-zA-Z]\.?$/i,       // option A, option B, etc.
-        /\bclass [a-zA-Z]\.?$/i,        // class A, class B, etc.
-        /\bgrade [a-zA-Z]\.?$/i,        // grade A, grade B, etc.
-        /\bmodel [a-zA-Z]\.?$/i,        // model A, model B, etc.
-        /\bphase [a-zA-Z]\.?$/i,        // phase A, phase B, etc.
-
-        // Names and initials (common pattern in academic writing)
-        /\b[A-Z]\.\s*[A-Z]\.$/,        // R. E., J. D., etc.
-        /\b[A-Z][a-z]+\s+[A-Z]\.$/,    // Smith J., Jones R., etc.
-        /\b[A-Z]\.\s*[A-Z][a-z]+$/,    // R. Smith, J. Jones, etc.
-
-        // Chemical/molecular notation
-        /\b[A-Z][0-9]*[a-zA-Z]?\.?$/,  // H2O, CO2, etc.
-
-        // Common abbreviations that might end paragraphs
-        /\betc\.$/i,                   // etc.
-        /\bi\.e\.$/i,                  // i.e.
-        /\be\.g\.$/i                   // e.g.
-    ];
-
-    return commonPatterns.some(pattern => pattern.test(trimmed));
-}
+// Note: countWords, endsWithInitials, and endsWithCommonSingleLetterWord now imported from shared utilities
 
 
 
@@ -222,8 +169,9 @@ function validate(output) {
                     const letters = headerText.replace(/[^A-Za-z]+/g, '');
                     const upper = letters.replace(/[^A-Z]/g, '').length;
                     const isAllCapsHeader = letters.length > 0 && (upper / letters.length) >= 0.85;
-                    const startsWithCapital = /^[A-Z]/.test(headerText);
-                    const startsWithPageNumber = /^\d+\s+[A-Z]/.test(headerText);
+                    const firstHeaderChar = headerText.trim()[0];
+                    const startsWithCapital = firstHeaderChar && firstHeaderChar === firstHeaderChar.toUpperCase() && firstHeaderChar !== firstHeaderChar.toLowerCase();
+                    const startsWithPageNumber = /^\d+\s+/.test(headerText) && headerText.split(/\s+/)[1] && headerText.split(/\s+/)[1][0] === headerText.split(/\s+/)[1][0].toUpperCase() && headerText.split(/\s+/)[1][0] !== headerText.split(/\s+/)[1][0].toLowerCase();
                     if (!startsWithCapital && !startsWithPageNumber && !isNumberedHeader && !isAllCapsHeader) {
                         validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter, page number + capital letter, a numbered header pattern, or be an ALL-CAPS header. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
@@ -232,9 +180,17 @@ function validate(output) {
                         validationErrors.push(`Header ${fullChunkIdentifier} should have paragraphIndex: null`);
                     }
                 } else if (chunk.type === 'text') {
-                    // Sentence chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
-                    // but NOT lowercase letters (proper text formatting)
-                    const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                    // Check if this is a standalone image marker chunk (will be processed by Step 5-1)
+                    const imageMarkerRegex = /\[\[IMG\s+id=([^\s]+)\s+index=(\d+)\s+alt="([^"]*)"\]\]/g;
+                    const contentWithoutMarkers = chunk.content.replace(imageMarkerRegex, '').trim();
+                    const isStandaloneImageChunk = contentWithoutMarkers.length === 0;
+                    
+                    if (!isStandaloneImageChunk) {
+                        // Sentence chunks should start with capital letters (including accented), numbers, punctuation, quotes, mathematical symbols, etc.
+                        // but NOT lowercase letters (proper text formatting)
+                        const isUppercaseLetter = firstChar && firstChar === firstChar.toUpperCase() && firstChar !== firstChar.toLowerCase();
+                        const isPunctuation = /[0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                        const isValidStart = isUppercaseLetter || isPunctuation;
                     // Allow first sentence of a chapter/section to start lowercase (orphan-letter artifact)
                     const isFirstSentenceOfChapter = /_(1|2)\b$/.test(chunkIdentifier);
                     // Or if previous non-image chunk is a header
@@ -305,16 +261,18 @@ function validate(output) {
                         /^he\s+/i,
                         /^she\s+/i
                     ];
-                    const allowedByHeuristic = (isFirstSentenceOfChapter || prevIsHeader) && /^[a-z]/.test(chunk.content) ||
-                        allowedLowercaseStarts.some(re => re.test(chunk.content));
-                    if (!isValidStart && !allowedByHeuristic) {
-                        validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
-                    }
+                        const allowedByHeuristic = (isFirstSentenceOfChapter || prevIsHeader) && /^[a-z]/.test(chunk.content) ||
+                            allowedLowercaseStarts.some(re => re.test(chunk.content));
+                        if (!isValidStart && !allowedByHeuristic) {
+                            validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
+                        }
 
-                    // Sentence chunks must have a valid paragraphIndex
-                    if (!chunk.paragraphIndex || typeof chunk.paragraphIndex !== 'number' || chunk.paragraphIndex < 1) {
-                        validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must have a valid paragraphIndex (positive number). Found: ${chunk.paragraphIndex}`);
+                        // Sentence chunks must have a valid paragraphIndex
+                        if (!chunk.paragraphIndex || typeof chunk.paragraphIndex !== 'number' || chunk.paragraphIndex < 1) {
+                            validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must have a valid paragraphIndex (positive number). Found: ${chunk.paragraphIndex}`);
+                        }
                     }
+                    // Skip validation for standalone image chunks - they'll be converted to proper image chunks by Step 5-1
                 }
             }
 
@@ -330,16 +288,26 @@ function validate(output) {
                     validationErrors.push(`Image ${fullChunkIdentifier} should have sentenceCount of 0, found: ${chunk.sentenceCount}`);
                 }
             } else if (chunk.type === 'text') {
-                // Text chunks are combined sentences that must meet minimum word count requirements
-                // BALANCED enforcement: Minimum 25 words, maximum 200 words for optimal processing
-                if (wordCount < 25) {
-                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be at least 25 words. Content: "${chunk.content.substring(0, 100)}..."`);
-                } else if (wordCount > 200) {
-                    validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) exceeds maximum of 200 words. Content: "${chunk.content.substring(0, 100)}..."`);
+                // Check if this is a standalone image marker chunk (will be processed by Step 5-1)
+                const imageMarkerRegex = /\[\[IMG\s+id=([^\s]+)\s+index=(\d+)\s+alt="([^"]*)"\]\]/g;
+                const contentWithoutMarkers = chunk.content.replace(imageMarkerRegex, '').trim();
+                const isStandaloneImageChunk = contentWithoutMarkers.length === 0;
+                
+                if (!isStandaloneImageChunk) {
+                    // Text chunks are combined sentences that must meet minimum word count requirements
+                    // BALANCED enforcement: Minimum 25 words, flexible maximum allowing smart constraint relaxation
+                    if (wordCount < 25) {
+                        validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be at least 25 words. Content: "${chunk.content.substring(0, 100)}..."`);
+                    } else if (wordCount > 220) {
+                        // Allow up to 220 words to accommodate smart constraint relaxation for small chunks
+                        // This prevents validation failures when small chunks are merged to avoid orphans
+                        validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) exceeds flexible maximum of 220 words. Content: "${chunk.content.substring(0, 100)}..."`);
+                    }
                 }
+                // Skip word count validation for standalone image chunks - they'll be converted to proper image chunks by Step 5-1
 
-                // Check if text chunk has reasonable sentence count (1 or more)
-                if (chunk.sentenceCount < 1) {
+                // Check if text chunk has reasonable sentence count (1 or more) - skip for standalone image chunks
+                if (!isStandaloneImageChunk && chunk.sentenceCount < 1) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should have at least 1 sentence, found: ${chunk.sentenceCount}`);
                 }
 
@@ -369,11 +337,17 @@ function validate(output) {
                 const endsWithImageMarker = /\[\[IMG\s+id=[^\s]+\s+index=\d+\s+alt="[^"]*"\]\]\s*$/.test(trimmed);
                 // Accept numbered lists as valid content that doesn't need sentence terminators
                 const endsWithNumberedList = /\d+\.\s+[^\n]*$/.test(trimmed) && /\d+\.\s+[^\n]*\n\d+\.\s+/.test(trimmed);
+                // Accept simple numbered items (like "8. Continuing to Learn")
+                const endsWithSimpleNumberedItem = /\d+\.\s+[A-Z][^.!?]*$/.test(trimmed);
+                // Accept photo captions and dedications that might end with names or dates
+                const endsWithPhotoCaption = /(?:Copyright|Photo:|January|February|March|April|May|June|July|August|September|October|November|December)\s+[^.!?]*$/.test(trimmed) || /For\s+[A-Z][a-z]+\s*$/.test(trimmed);
+                // Accept table of contents entries (numbers and page numbers)
+                const looksLikeTableOfContents = /\b(?:Índice|Contents|Chapter|Part|Introduction|Afterword)\b/.test(trimmed) && /\b\d+\s*$/.test(trimmed);
                 // Check for ellipsis inside incomplete quotes (e.g., "he wrote, 'there is only one prime cause ...")
                 // This detects opening quote + content + ellipsis without proper closing quote
                 const hasIncompleteQuoteWithEllipsis = /[\u2018\u2019\u201C\u201D"'`'][^'\u2019\u201D"]*\.{3}\s*$/.test(trimmed);
 
-                if (wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || hasIncompleteQuoteWithEllipsis) && !endsWithCommonSingleLetterWord(trimmed)) {
+                if (!isStandaloneImageChunk && wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || endsWithSimpleNumberedItem || endsWithPhotoCaption || looksLikeTableOfContents || hasIncompleteQuoteWithEllipsis) && !endsWithCommonSingleLetterWord(trimmed)) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
                 }
 

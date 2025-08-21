@@ -2,6 +2,14 @@
  * Validation functions for Step 4: Paragraph Detection
  */
 
+// Import shared text processing utilities
+const {
+    countWords,
+    endsWithInitials,
+    endsWithCommonSingleLetterWord,
+    endsWithAbbreviation
+} = require('../../utils/text-processing-utils');
+
 /**
  * Check if a footnote number appears as a standalone footnote in content
  * @param {string} footnoteNumber - The footnote number to find
@@ -60,68 +68,7 @@ function isSourceTextInContent(sourceText, content) {
     return content.includes(sourceText);
 }
 
-/**
- * Count words in text
- * @param {string} text - Text to count words in
- * @returns {number} - Number of words
- */
-function countWords(text) {
-    if (!text || typeof text !== 'string') return 0;
-    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-}
-
-/**
- * Check if text ends with initials (single capital letter followed by period)
- * @param {string} text - Text to check
- * @returns {boolean} - True if text ends with initials
- */
-function endsWithInitials(text) {
-    if (!text) return false;
-    const trimmed = text.trim();
-    return /\b[A-Z]\.$/.test(trimmed);
-}
-
-/**
- * Check if text ends with a common single-letter word (like "vitamin E", "point A", etc.)
- * @param {string} text - Text to check
- * @returns {boolean} - True if ends with common single-letter word
- */
-function endsWithCommonSingleLetterWord(text) {
-    if (!text) return false;
-    const trimmed = text.trim();
-
-    // Common patterns where single letters are valid endings
-    const commonPatterns = [
-        // Scientific/academic terms
-        /\bvitamin [a-zA-Z]\.?$/i,      // vitamin E, vitamin C, etc.
-        /\btype [a-zA-Z]\.?$/i,         // type A, type B, etc.
-        /\bpoint [a-zA-Z]\.?$/i,        // point A, point B, etc.
-        /\bfigure [a-zA-Z]\.?$/i,       // figure A, figure B, etc.
-        /\bappendix [a-zA-Z]\.?$/i,     // appendix A, appendix B, etc.
-        /\bsection [a-zA-Z]\.?$/i,      // section A, section B, etc.
-        /\bpart [a-zA-Z]\.?$/i,         // part A, part B, etc.
-        /\boption [a-zA-Z]\.?$/i,       // option A, option B, etc.
-        /\bclass [a-zA-Z]\.?$/i,        // class A, class B, etc.
-        /\bgrade [a-zA-Z]\.?$/i,        // grade A, grade B, etc.
-        /\bmodel [a-zA-Z]\.?$/i,        // model A, model B, etc.
-        /\bphase [a-zA-Z]\.?$/i,        // phase A, phase B, etc.
-
-        // Names and initials (common pattern in academic writing)
-        /\b[A-Z]\.\s*[A-Z]\.$/,        // R. E., J. D., etc.
-        /\b[A-Z][a-z]+\s+[A-Z]\.$/,    // Smith J., Jones R., etc.
-        /\b[A-Z]\.\s*[A-Z][a-z]+$/,    // R. Smith, J. Jones, etc.
-
-        // Chemical/molecular notation
-        /\b[A-Z][0-9]*[a-zA-Z]?\.?$/,  // H2O, CO2, etc.
-
-        // Common abbreviations that might end paragraphs
-        /\betc\.$/i,                   // etc.
-        /\bi\.e\.$/i,                  // i.e.
-        /\be\.g\.$/i                   // e.g.
-    ];
-
-    return commonPatterns.some(pattern => pattern.test(trimmed));
-}
+// Note: countWords, endsWithInitials, and endsWithCommonSingleLetterWord now imported from shared utilities
 
 /**
  * Find the previous paragraph chunk (skipping headers)
@@ -243,16 +190,20 @@ function validate(output) {
                     const isAllCapsHeader = letters.length > 0 && (upper / letters.length) >= 0.85;
                     const isMultiLine = /\n/.test(headerText);
 
-                    // Headers must start with capital OR page number + capital OR numbered header pattern
-                    const startsWithCapital = /^[A-Z]/.test(headerText);
-                    const startsWithPageNumber = /^\d+\s+[A-Z]/.test(headerText);
+                    // Headers must start with capital (including accented) OR page number + capital OR numbered header pattern
+                    const firstHeaderChar = headerText.trim()[0];
+                    const startsWithCapital = firstHeaderChar && firstHeaderChar === firstHeaderChar.toUpperCase() && firstHeaderChar !== firstHeaderChar.toLowerCase();
+                    const startsWithPageNumber = /^\d+\s+/.test(headerText) && headerText.split(/\s+/)[1] && headerText.split(/\s+/)[1][0] === headerText.split(/\s+/)[1][0].toUpperCase() && headerText.split(/\s+/)[1][0] !== headerText.split(/\s+/)[1][0].toLowerCase();
                     if (!startsWithCapital && !startsWithPageNumber && !isNumberedHeader && !isAllCapsHeader) {
                         validationErrors.push(`Header ${fullChunkIdentifier} must start with a capital letter, page number + capital letter, a numbered header pattern, or be an ALL-CAPS header. Found: "${chunk.content.substring(0, 20)}..."`);
                     }
                 } else if (chunk.type === 'paragraph') {
-                    // Paragraph chunks should start with capital letters, numbers, punctuation, quotes, mathematical symbols, etc.
+                    // Paragraph chunks should start with capital letters (including accented), numbers, punctuation, quotes, mathematical symbols, etc.
                     // but NOT lowercase letters (proper text formatting)
-                    const isValidStart = /[A-Z0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                    const firstChar = chunk.content.trim()[0];
+                    const isUppercaseLetter = firstChar && firstChar === firstChar.toUpperCase() && firstChar !== firstChar.toLowerCase();
+                    const isPunctuation = /[0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
+                    const isValidStart = isUppercaseLetter || isPunctuation;
 
                     // Heuristic allowance: known cases where the first capital letter is extracted alone before the header
                     const allowedLowercaseStarts = [
@@ -376,8 +327,8 @@ function validate(output) {
                     validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} word count (${wordCount}) must be between 20 and 500 words (absolute limits)${neighborInfo}`);
                 }
 
-                // Check if paragraph chunk ends with initials (but allow common words ending with single letters)
-                if (endsWithInitials(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
+                // Check if paragraph chunk ends with initials (but allow abbreviations and common single letter words)
+                if (endsWithInitials(chunk.content) && !endsWithAbbreviation(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
                     validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
                 }
             }

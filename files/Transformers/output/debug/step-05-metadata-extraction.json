@@ -1,0 +1,17 @@
+{
+  "title": "Transformers: The Deep Chemistry of Life and Death",
+  "author": "NICK LANE",
+  "publicationMatches": [
+    {
+      "type": "publisher",
+      "text": "publisher of this book"
+    }
+  ],
+  "languageConfidence": {
+    "language": "en",
+    "confidence": 0.9004739336492891,
+    "matches": 76,
+    "totalWords": 844
+  },
+  "processingTime": 4
+}

@@ -1,27 +1,27 @@
-const parser = require('../../book-parser/parser/parser.js');
-const { uploadParsedBookV2 } = require('../../book-parser/parser/upload-book.js');
+const parser = require('../book-parser/parser/parser.js');
+const { uploadParsedBookV2 } = require('../book-parser/parser/upload-book.js');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
 
 function findPdfFile(folderPath) {
     if (!fs.existsSync(folderPath)) {
-        throw new Error(`Current directory not found: ${folderPath}`);
+        throw new Error(`Directory not found: ${folderPath}`);
     }
 
     if (!fs.statSync(folderPath).isDirectory()) {
-        throw new Error(`Current path is not a directory: ${folderPath}`);
+        throw new Error(`Path is not a directory: ${folderPath}`);
     }
 
     const files = fs.readdirSync(folderPath);
     const pdfFiles = files.filter(file => file.toLowerCase().endsWith('.pdf'));
 
     if (pdfFiles.length === 0) {
-        throw new Error(`No PDF files found in current directory: ${folderPath}\nPlease run this script from a directory containing exactly one PDF file.`);
+        throw new Error(`No PDF files found in directory: ${folderPath}\nPlease provide a directory containing exactly one PDF file.`);
     }
 
     if (pdfFiles.length > 1) {
-        throw new Error(`Multiple PDF files found in current directory: ${folderPath}\nPlease ensure only one PDF file exists.\nFound: ${pdfFiles.join(', ')}`);
+        throw new Error(`Multiple PDF files found in directory: ${folderPath}\nPlease ensure only one PDF file exists.\nFound: ${pdfFiles.join(', ')}`);
     }
 
     return path.join(folderPath, pdfFiles[0]);
@@ -31,18 +31,21 @@ function showHelp() {
     console.log(`
 Generic Book Parser & Uploader
 
-Usage: node run-parser-and-upload.js
+Usage: node run-parser-and-upload.js <FOLDER_PATH>
+
+Arguments:
+  FOLDER_PATH    Path to folder containing a single PDF file (required)
 
 Description:
-  Processes a PDF book in the current directory and optionally uploads it to the database.
+  Processes a PDF book in the specified folder and optionally uploads it to the database.
 
 Requirements:
-  - Must be run from a directory containing exactly one PDF file
-  - Creates an 'output' folder in the current directory
+  - The specified folder must contain exactly one PDF file
+  - Creates an 'output' folder in the same directory as the PDF
   - After successful parsing, prompts to upload the book to the database
 
 Features:
-  - Automatically finds the PDF file in the current directory
+  - Automatically finds the PDF file in the specified folder
   - Runs the complete book parsing pipeline with validation
   - Prompts to upload to database only after successful parsing
   - Creates output folder with parsed content and extracted images
@@ -50,11 +53,13 @@ Features:
 Options:
   --help, -h     Show this help message
 
-Example:
-  cd /path/to/book/folder
-  node /path/to/run-creativity-inc-parser.js
+Examples:
+  node run-parser-and-upload.js ./my-book-folder
+  node run-parser-and-upload.js /path/to/book/folder
+  node run-parser-and-upload.js "C:\\Books\\My Book"
 `);
 }
+
 async function promptUser(question) {
     const rl = readline.createInterface({
         input: process.stdin,
@@ -69,12 +74,18 @@ async function promptUser(question) {
     });
 }
 
-async function runUploadScript(outputPath) {
+async function runUploadScript(outputPath, uploadImages) {
     try {
         console.log('\n🚀 Running upload process...\n');
         
+        if (uploadImages) {
+            console.log('📤 Images will be uploaded to Vercel Blob');
+        } else {
+            console.log('⏭️ Skipping image upload (book content only)');
+        }
+        
         await uploadParsedBookV2(outputPath, {
-            uploadImages: true
+            uploadImages: uploadImages
         });
         
         console.log('\n✅ Upload completed successfully!');
@@ -94,18 +105,27 @@ async function main() {
             process.exit(0);
         }
 
-        // Always use current directory
-        const currentDir = process.cwd();
+        // Get folder path from command line argument
+        const folderPath = args[0];
         
-        console.log(`📁 Looking for PDF file in current directory: ${currentDir}`);
+        if (!folderPath) {
+            console.error('❌ Folder path is required');
+            showHelp();
+            process.exit(1);
+        }
+
+        // Resolve the folder path to absolute path
+        const targetDir = path.resolve(folderPath);
         
-        // Find the PDF file in current directory
-        const pdfPath = findPdfFile(currentDir);
+        console.log(`📁 Looking for PDF file in: ${targetDir}`);
+        
+        // Find the PDF file in the specified directory
+        const pdfPath = findPdfFile(targetDir);
         const pdfName = path.basename(pdfPath);
         console.log(`📄 Found PDF: ${pdfName}`);
         
-        // Set output path in the current directory
-        const outputPath = path.join(currentDir, 'output');
+        // Set output path in the same directory as the PDF
+        const outputPath = path.join(targetDir, 'output');
         
         console.log(`📚 Starting book parser...\n`);
         console.log(`   Input:  ${pdfPath}`);
@@ -119,10 +139,13 @@ async function main() {
         // Parser completed successfully - now prompt for upload
         console.log('\n✅ Parser completed successfully!');
         
-        const answer = await promptUser('\n❓ Would you like to run the upload process? (y/n): ');
+        const uploadAnswer = await promptUser('\n❓ Would you like to run the upload process? (y/n): ');
         
-        if (answer === 'y' || answer === 'yes') {
-            await runUploadScript(outputPath);
+        if (uploadAnswer === 'y' || uploadAnswer === 'yes') {
+            const imagesAnswer = await promptUser('\n📤 Do you want to upload images to Vercel Blob? (y/n)\n   Note: Skip if images are already uploaded to avoid re-uploading: ');
+            const uploadImages = imagesAnswer === 'y' || imagesAnswer === 'yes';
+            
+            await runUploadScript(outputPath, uploadImages);
         } else {
             console.log('\n📝 Skipping upload process. You can run it later by using the upload script.');
         }

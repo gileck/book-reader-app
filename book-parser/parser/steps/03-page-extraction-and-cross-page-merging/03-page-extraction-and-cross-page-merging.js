@@ -1,14 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-/**
- * Check if a character is a valid sentence terminator
- * @param {string} char - Character to check
- * @returns {boolean} - True if character is a sentence terminator
- */
-function isSentenceTerminator(char) {
-    return ['.', '!', '?'].includes(char);
-}
+// Import shared text processing utilities
+const { isSentenceTerminator } = require('../../utils/text-processing-utils');
+
+// Note: isSentenceTerminator function now imported from shared utilities
 
 // ---- Simple detectors to keep merge logic readable ----
 function isBulletLineText(line) {

@@ -22,6 +22,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Import shared text processing utilities
+const { validateWordLengths } = require('../../utils/text-processing-utils');
+
 /**
  * Execute text extraction step using proper page-by-page extraction
  * @param {Object} pipelineState - Current pipeline state
@@ -298,37 +301,7 @@ function removeStandalonePageNumber(pageText, pageNum) {
     return pageText;
 }
 
-/**
- * Validate word lengths to detect concatenated words
- * @param {string} text - Text to validate
- * @returns {Object} - Validation results
- */
-function validateWordLengths(text) {
-    // Extract words (alphanumeric sequences)
-    const words = text.match(/[a-zA-Z0-9]+/g) || [];
-
-    // Categorize words by length
-    const longWords = words.filter(word => word.length > 20);
-    const veryLongWords = words.filter(word => word.length > 30);
-    const suspiciousWords = words.filter(word => word.length > 50);
-
-    // Find longest word
-    const longestWord = words.reduce((longest, current) =>
-        current.length > longest.length ? current : longest, ''
-    );
-
-    // Sort suspicious words by length (descending)
-    suspiciousWords.sort((a, b) => b.length - a.length);
-
-    return {
-        totalWords: words.length,
-        longWords: longWords,
-        veryLongWords: veryLongWords,
-        suspiciousWords: suspiciousWords,
-        longestWord: longestWord,
-        averageWordLength: words.reduce((sum, word) => sum + word.length, 0) / words.length
-    };
-}
+// Note: validateWordLengths function now imported from shared utilities
 
 /**
  * Validate text extraction results

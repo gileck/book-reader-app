@@ -1,80 +1,93 @@
 {
   "metadata": {
-    "totalDuration": 5330,
-    "timestamp": "2025-08-20T14:40:38.810Z",
-    "success": false,
-    "error": "Book title not found in Library of Congress cataloging data",
+    "totalDuration": 5781,
+    "timestamp": "2025-08-21T09:28:25.224Z",
+    "success": true,
     "totalSteps": 12,
-    "validatedSteps": 10,
-    "failedSteps": 1
+    "validatedSteps": 12,
+    "failedSteps": 0
   },
   "steps": {
     "step-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:34.475Z",
-      "duration": 52
+      "timestamp": "2025-08-21T09:28:20.559Z",
+      "duration": 57
     },
     "step-2-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:35.314Z",
-      "duration": 0
+      "timestamp": "2025-08-21T09:28:21.421Z",
+      "duration": 1
     },
     "step-2-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:35.326Z",
+      "timestamp": "2025-08-21T09:28:21.432Z",
       "duration": 3
     },
     "step-2-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:35.331Z",
-      "duration": 4
+      "timestamp": "2025-08-21T09:28:21.436Z",
+      "duration": 3
     },
     "step-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:35.398Z",
-      "duration": 7
+      "timestamp": "2025-08-21T09:28:21.505Z",
+      "duration": 8
     },
     "step-3-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:36.370Z",
+      "timestamp": "2025-08-21T09:28:22.515Z",
       "duration": 9
     },
     "step-3-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:38.476Z",
-      "duration": 12
+      "timestamp": "2025-08-21T09:28:24.793Z",
+      "duration": 9
     },
     "step-4": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:38.622Z",
-      "duration": 15
+      "timestamp": "2025-08-21T09:28:24.944Z",
+      "duration": 16
     },
     "step-5": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:38.678Z",
-      "duration": 25
+      "timestamp": "2025-08-21T09:28:25.016Z",
+      "duration": 27
     },
-    "step-5-1": null,
+    "step-5-1": {
+      "passed": {
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "stats": {
+          "totalImageChunks": 40,
+          "totalTextChunks": 657,
+          "totalRemainingMarkers": 0
+        }
+      },
+      "error": null,
+      "timestamp": "2025-08-21T09:28:25.082Z",
+      "duration": 58
+    },
     "step-5-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-08-20T14:40:38.809Z",
-      "duration": 62
+      "timestamp": "2025-08-21T09:28:25.143Z",
+      "duration": 60
     },
     "step-6": {
-      "passed": false,
-      "error": "Book title not found in Library of Congress cataloging data",
-      "timestamp": "2025-08-20T14:40:38.810Z",
-      "duration": 1
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-08-21T09:28:25.217Z",
+      "duration": 70
     }
   }
 }
