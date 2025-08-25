@@ -1,7 +1,10 @@
+//TODO: fix code duplication in setCurrentChapterNumber and loadReaderData
+
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
 import { getBook } from '../../../../apis/books/client';
 import { getChapterByNumber } from '../../../../apis/chapters/client';
+import { offlineDB } from '../../../offline/offlineDB';
 import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
@@ -155,32 +158,64 @@ export const useReader = () => {
                     }
                 }
 
-                // Step 4: Load the determined chapter
+                // Step 4: Load the determined chapter (prefer offline when available; fall back to network)
                 if (bookId) {
-                    const chapterResult = await getChapterByNumber({
-                        bookId,
-                        chapterNumber: currentChapter
-                    });
-
-                    if (!chapterResult.data || !chapterResult.data.chapter) {
-                        setState(prev => ({
-                            ...prev,
-                            error: 'Chapter not found',
-                            loading: false
-                        }));
-                        return;
+                    // Try local first
+                    const localRec = await offlineDB.getChapterByBookAndNumber(bookId, currentChapter);
+                    if (localRec) {
+                        const localChapter: ChapterClient = {
+                            _id: localRec.chapterId,
+                            bookId: localRec.bookId,
+                            chapterNumber: localRec.chapterNumber,
+                            title: localRec.title,
+                            content: localRec.content as any,
+                            wordCount: (localRec.content as any)?.chunks?.length || 0,
+                            createdAt: localRec.downloadedAt,
+                            updatedAt: localRec.contentVersion || localRec.downloadedAt
+                        };
+                        setState({
+                            book,
+                            chapter: localChapter,
+                            currentChapterNumber: currentChapter,
+                            currentChunkIndex: currentChunk,
+                            loading: false,
+                            chapterTransitionLoading: false,
+                            error: null
+                        });
+                        // If online, refresh from network in background
+                        if (typeof navigator === 'undefined' || navigator.onLine !== false) {
+                            try {
+                                const chapterResult = await getChapterByNumber({ bookId, chapterNumber: currentChapter });
+                                if (chapterResult.data?.chapter) {
+                                    setState(prev => ({
+                                        ...prev,
+                                        chapter: chapterResult.data!.chapter
+                                    }));
+                                }
+                            } catch { }
+                        }
+                    } else {
+                        // No local copy → fetch network
+                        const chapterResult = await getChapterByNumber({ bookId, chapterNumber: currentChapter });
+                        const chapterData = chapterResult.data?.chapter || null;
+                        if (!chapterData) {
+                            setState(prev => ({
+                                ...prev,
+                                error: 'Chapter not found',
+                                loading: false
+                            }));
+                            return;
+                        }
+                        setState({
+                            book,
+                            chapter: chapterData,
+                            currentChapterNumber: currentChapter,
+                            currentChunkIndex: currentChunk,
+                            loading: false,
+                            chapterTransitionLoading: false,
+                            error: null
+                        });
                     }
-
-                    // Step 5: Set all data to state
-                    setState({
-                        book: book,
-                        chapter: chapterResult.data.chapter,
-                        currentChapterNumber: currentChapter,
-                        currentChunkIndex: currentChunk,
-                        loading: false,
-                        chapterTransitionLoading: false,
-                        error: null
-                    });
                 } else {
                     setState(prev => ({
                         ...prev,
@@ -211,25 +246,51 @@ export const useReader = () => {
             setState(prev => ({ ...prev, chapterTransitionLoading: true }));
 
             if (bookId && chapterNumber !== undefined) {
-                const chapterResult = await getChapterByNumber({
-                    bookId,
-                    chapterNumber
-                });
-
-                if (chapterResult.data?.chapter) {
+                const localRec = await offlineDB.getChapterByBookAndNumber(bookId, chapterNumber);
+                if (localRec) {
+                    const localChapter: ChapterClient = {
+                        _id: localRec.chapterId,
+                        bookId: localRec.bookId,
+                        chapterNumber: localRec.chapterNumber,
+                        title: localRec.title,
+                        content: localRec.content as any,
+                        wordCount: (localRec.content as any)?.chunks?.length || 0,
+                        createdAt: localRec.downloadedAt,
+                        updatedAt: localRec.contentVersion || localRec.downloadedAt
+                    };
                     setState(prev => ({
                         ...prev,
-                        chapter: chapterResult.data!.chapter,
+                        chapter: localChapter,
                         currentChapterNumber: chapterNumber,
-                        currentChunkIndex: 0, // Reset to beginning of new chapter
+                        currentChunkIndex: 0,
                         chapterTransitionLoading: false
                     }));
+                    if (typeof navigator === 'undefined' || navigator.onLine !== false) {
+                        try {
+                            const chapterResult = await getChapterByNumber({ bookId, chapterNumber });
+                            if (chapterResult.data?.chapter) {
+                                setState(prev => ({ ...prev, chapter: chapterResult.data!.chapter }));
+                            }
+                        } catch { }
+                    }
                 } else {
-                    setState(prev => ({
-                        ...prev,
-                        error: 'Chapter not found',
-                        chapterTransitionLoading: false
-                    }));
+                    const chapterResult = await getChapterByNumber({ bookId, chapterNumber });
+                    const chapterData = chapterResult.data?.chapter || null;
+                    if (chapterData) {
+                        setState(prev => ({
+                            ...prev,
+                            chapter: chapterData,
+                            currentChapterNumber: chapterNumber,
+                            currentChunkIndex: 0,
+                            chapterTransitionLoading: false
+                        }));
+                    } else {
+                        setState(prev => ({
+                            ...prev,
+                            error: 'Chapter not found',
+                            chapterTransitionLoading: false
+                        }));
+                    }
                 }
             } else {
                 setState(prev => ({
@@ -424,4 +485,6 @@ export const useReader = () => {
             setCurrentChapterNumber
         }
     };
-}; 
+};
+
+

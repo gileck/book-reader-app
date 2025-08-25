@@ -1,5 +1,6 @@
 import "@/client/styles/globals.css";
 import type { AppProps } from "next/app";
+import { useEffect } from 'react';
 import { AuthProvider } from "@/client/context/AuthContext";
 import { SettingsProvider } from "@/client/settings/SettingsContext";
 import { AppThemeProvider } from "@/client/components/ThemeProvider";
@@ -10,7 +11,15 @@ import { Layout } from '@/client/components/Layout';
 
 const RouterProvider = dynamic(() => import('@/client/router/index').then(module => module.RouterProvider), { ssr: false });
 
-export default function App({}: AppProps) {
+export default function App({ }: AppProps) {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {
+        // noop
+      });
+    }
+  }, []);
+
   return (
     <SettingsProvider>
       <AppThemeProvider>
@@ -25,4 +34,3 @@ export default function App({}: AppProps) {
     </SettingsProvider>
   );
 }
-  

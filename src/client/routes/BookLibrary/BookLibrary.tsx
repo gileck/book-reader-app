@@ -4,12 +4,15 @@ import { getBooks, deleteBook, updateBook, uploadCoverImage } from '../../../api
 import { getReadingProgress } from '../../../apis/readingProgress/client';
 import { BookClient } from '../../../apis/books/types';
 import { ReadingProgressClient } from '../../../apis/readingProgress/types';
+import { getChaptersByBook } from '../../../apis/chapters/client';
+import { ChapterClient } from '../../../apis/chapters/types';
 import styles from './BookLibrary.module.css';
 import { IMAGES_BASE_PATH } from '@/common/constants';
-import { Dialog, DialogTitle, DialogContent, Button, IconButton, Box, TextField } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Button, IconButton, Box, TextField, CircularProgress } from '@mui/material';
 import { Close as CloseIcon, PlayArrow, Delete, Edit, Upload, Image } from '@mui/icons-material';
 import { useSettings } from '../../settings/SettingsContext';
 import { useAuth } from '../../context/AuthContext';
+import { offlineManager } from '../../offline/offlineManager';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -35,6 +38,14 @@ export const BookLibrary = () => {
     const [saveSuccess, setSaveSuccess] = useState(false);
     const [saveError, setSaveError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Offline downloads state
+    const [showDownloadsDialog, setShowDownloadsDialog] = useState<string | null>(null); // bookId
+    const [chaptersByBook, setChaptersByBook] = useState<Record<string, ChapterClient[]>>({});
+    const [downloadsLoading, setDownloadsLoading] = useState<boolean>(false);
+    const [downloadsError, setDownloadsError] = useState<string | null>(null);
+    const [downloadedSet, setDownloadedSet] = useState<Set<string>>(new Set()); // chapterIds for current dialog book
+    const [downloadingSet, setDownloadingSet] = useState<Set<string>>(new Set());
 
     const loadBooksWithProgress = useCallback(async () => {
         try {
@@ -711,6 +722,53 @@ export const BookLibrary = () => {
                         >
                             Remove Book
                         </Button>
+
+                        {/* Manage Downloads */}
+                        <Button
+                            variant="outlined"
+                            onClick={async () => {
+                                if (!showOptionsMenu) return;
+                                setDownloadsError(null);
+                                setDownloadsLoading(true);
+                                setShowDownloadsDialog(showOptionsMenu);
+                                try {
+                                    // Load chapters for this book if not loaded
+                                    if (!chaptersByBook[showOptionsMenu]) {
+                                        const res = await getChaptersByBook({ bookId: showOptionsMenu });
+                                        if (res.data?.chapters) {
+                                            setChaptersByBook(prev => ({ ...prev, [showOptionsMenu]: res.data!.chapters }));
+                                        }
+                                    }
+                                    // Load downloaded set
+                                    const downloaded = await offlineManager.getDownloadedChapters(showOptionsMenu);
+                                    setDownloadedSet(new Set(downloaded));
+                                } catch (e) {
+                                    setDownloadsError(e instanceof Error ? e.message : 'Failed to load chapters');
+                                } finally {
+                                    setDownloadsLoading(false);
+                                }
+                                closeOptionsMenu();
+                            }}
+                            sx={{
+                                backgroundColor: 'var(--color-background-secondary)',
+                                color: 'var(--color-text-primary)',
+                                borderColor: 'var(--color-border)',
+                                fontSize: '18px',
+                                fontWeight: 500,
+                                padding: 'var(--spacing-lg)',
+                                borderRadius: 'var(--border-radius-lg)',
+                                minHeight: '60px',
+                                boxShadow: 'var(--shadow-xs)',
+                                '&:hover': {
+                                    backgroundColor: 'var(--color-border)',
+                                    borderColor: 'var(--color-border)',
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: 'var(--shadow-md)'
+                                }
+                            }}
+                        >
+                            Manage Offline Chapters
+                        </Button>
                     </Box>
                 </DialogContent>
             </Dialog>
@@ -1061,6 +1119,125 @@ export const BookLibrary = () => {
                     </div>
                 </div>
             )}
+
+            {/* Downloads Dialog */}
+            <Dialog
+                open={!!showDownloadsDialog}
+                onClose={() => setShowDownloadsDialog(null)}
+                maxWidth="md"
+                fullWidth
+                sx={{
+                    '& .MuiDialog-paper': {
+                        backgroundColor: 'var(--color-background)',
+                        color: 'var(--color-text-primary)'
+                    }
+                }}
+            >
+                <DialogTitle sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid var(--color-border)'
+                }}>
+                    Manage Offline Chapters
+                    <IconButton onClick={() => setShowDownloadsDialog(null)} sx={{ color: 'var(--color-text-primary)' }}>
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    {downloadsLoading && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <CircularProgress size={20} />
+                            <span>Loading chapters…</span>
+                        </Box>
+                    )}
+                    {downloadsError && (
+                        <Box sx={{ color: 'var(--color-error)', mb: 2 }}>{downloadsError}</Box>
+                    )}
+                    {showDownloadsDialog && chaptersByBook[showDownloadsDialog] && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                            {chaptersByBook[showDownloadsDialog]
+                                .slice()
+                                .sort((a, b) => a.chapterNumber - b.chapterNumber)
+                                .map((ch) => {
+                                    const isDownloaded = downloadedSet.has(ch._id);
+                                    const isWorking = downloadingSet.has(ch._id);
+                                    return (
+                                        <Box key={ch._id} sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            borderBottom: '1px solid var(--color-border)',
+                                            py: 1
+                                        }}>
+                                            <Box>
+                                                <strong>Chapter {ch.chapterNumber}</strong>: {ch.title}
+                                            </Box>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                {isDownloaded ? (
+                                                    <>
+                                                        <span style={{ color: 'var(--color-success)' }}>Downloaded</span>
+                                                        <Button
+                                                            variant="outlined"
+                                                            disabled={isWorking}
+                                                            onClick={async () => {
+                                                                setDownloadingSet(prev => new Set(prev).add(ch._id));
+                                                                try {
+                                                                    await offlineManager.removeChapter(ch.bookId, ch._id);
+                                                                    setDownloadedSet(prev => {
+                                                                        const copy = new Set(prev);
+                                                                        copy.delete(ch._id);
+                                                                        return copy;
+                                                                    });
+                                                                } finally {
+                                                                    setDownloadingSet(prev => {
+                                                                        const copy = new Set(prev);
+                                                                        copy.delete(ch._id);
+                                                                        return copy;
+                                                                    });
+                                                                }
+                                                            }}
+                                                        >
+                                                            Remove
+                                                        </Button>
+                                                    </>
+                                                ) : (
+                                                    <Button
+                                                        variant="contained"
+                                                        disabled={isWorking}
+                                                        onClick={async () => {
+                                                            setDownloadingSet(prev => new Set(prev).add(ch._id));
+                                                            try {
+                                                                const book = books.find(b => b._id === ch.bookId);
+                                                                await offlineManager.downloadChapter({
+                                                                    bookId: ch.bookId,
+                                                                    bookTitle: book?.title,
+                                                                    bookImageBaseURL: book?.imageBaseURL,
+                                                                    chapterNumber: ch.chapterNumber
+                                                                });
+                                                                setDownloadedSet(prev => new Set(prev).add(ch._id));
+                                                            } catch (e) {
+                                                                console.warn('Download failed', e);
+                                                            } finally {
+                                                                setDownloadingSet(prev => {
+                                                                    const copy = new Set(prev);
+                                                                    copy.delete(ch._id);
+                                                                    return copy;
+                                                                });
+                                                            }
+                                                        }}
+                                                    >
+                                                        Download
+                                                    </Button>
+                                                )}
+                                            </Box>
+                                        </Box>
+                                    );
+                                })}
+                        </Box>
+                    )}
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }; 
