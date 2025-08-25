@@ -245,6 +245,19 @@ function ApiClientInitializer() {
 - Dependency: None beyond current Settings and Cache modules.
 - Decision: Offline Mode hard-blocks network calls and only serves cached entries. If none exist, return an offline/unavailable error.
 
+### Key complexities / loose ends to decide
+
+- Initialization order: ensure `apiClient` is initialized before any calls; consider gating rendering or defaulting to localStorage for initial settings.
+- Effective offline precedence: when effectiveOffline is true, override per-call options (e.g., ignore bypassCache that would hit network).
+- Missing cache UX: define a consistent offline error contract and UI (banner/toast/empty state) on cache miss in strict offline.
+- User scoping in cache keys: include `userId` in client-side cache params to avoid cross-user leakage on shared devices.
+- Storage constraints: localStorage capacity is limited; consider IndexedDB or Cache Storage for large resources (books/chapters, audio).
+- SWR background errors: when offline, background revalidation will fail; ensure errors are suppressed/handled without noisy logs.
+- Navigator.onLine reliability: captive portals can misreport; retain manual override and prefer effectiveOffline logic.
+- Toggle race conditions: define behavior when settings change during in-flight requests (cancel vs allow to complete).
+- SSR/CSR guards: reference `navigator` only in browser contexts; avoid server-side access.
+- Tests/checks: add coverage for strict offline hit/miss, SWR fresh/stale, init-before-use, per-call overrides, and effectiveOffline parity.
+
 ## 5. Task List
 
 - [ ] Task 1: Extend `Settings` with `offlineMode` and `staleWhileRevalidate`
