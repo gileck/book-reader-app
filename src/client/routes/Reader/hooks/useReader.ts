@@ -168,8 +168,8 @@ export const useReader = () => {
                             bookId: localRec.bookId,
                             chapterNumber: localRec.chapterNumber,
                             title: localRec.title,
-                            content: localRec.content as any,
-                            wordCount: (localRec.content as any)?.chunks?.length || 0,
+                            content: localRec.content as unknown as ChapterClient['content'],
+                            wordCount: (localRec.content as unknown as ChapterClient['content'])?.chunks?.length || 0,
                             createdAt: localRec.downloadedAt,
                             updatedAt: localRec.contentVersion || localRec.downloadedAt
                         };
@@ -253,8 +253,8 @@ export const useReader = () => {
                         bookId: localRec.bookId,
                         chapterNumber: localRec.chapterNumber,
                         title: localRec.title,
-                        content: localRec.content as any,
-                        wordCount: (localRec.content as any)?.chunks?.length || 0,
+                        content: localRec.content as unknown as ChapterClient['content'],
+                        wordCount: (localRec.content as unknown as ChapterClient['content'])?.chunks?.length || 0,
                         createdAt: localRec.downloadedAt,
                         updatedAt: localRec.contentVersion || localRec.downloadedAt
                     };

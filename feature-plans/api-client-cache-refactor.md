@@ -1,12 +1,12 @@
 ## 1. High-Level Solution
 
-Implement a cache policy that always writes successful API responses to the client cache but only serves cached data when either: (a) Offline Mode is enabled in Settings, or (b) a global Stale-While-Revalidate (SWR) toggle is ON. Add two app-wide settings toggles (Offline Mode, Serve Stale While Revalidate) to the Settings screen and persist them in the Settings Context. Refactor the API client to be initialized with a settings getter so it can dynamically decide whether to return cached data or fetch fresh data. Initialize the API client after Settings are available and before the rest of the app runs.
+Implement a cache policy that always writes successful API responses to the client cache when network is used, but only serves cached data when either: (a) Offline Mode is enabled in Settings, or (b) a global Stale-While-Revalidate (SWR) toggle is ON. Offline Mode is strict: no network calls are made while it is ON; only cached responses are returned, otherwise a clear offline error is surfaced. Additionally, when the device is offline (navigator.onLine === false), the app behaves exactly as if Offline Mode were enabled (no network, cache-only). Add two app-wide settings toggles (Offline Mode, Serve Stale While Revalidate) to the Settings screen and persist them in the Settings Context. Refactor the API client to be initialized with a settings getter so it can dynamically decide whether to return cached data or fetch fresh data. Initialize the API client after Settings are available and before the rest of the app runs.
 
 User flow (end-to-end): The user can toggle Offline Mode and SWR in Settings. When making API requests, the client always caches new successful responses. If Offline Mode is ON, cached responses are used (and the network is not relied upon). If SWR is ON, cached data is served immediately (when present) while a background refresh runs. If both are OFF, the client bypasses reading from cache but still writes the fresh response to cache for later offline/SWR usage.
 
 ## 2. Implementation Details
 
-### 2.1 Settings: Add Offline Mode and Global SWR Toggles
+### 2.1 Settings: Add Offline Mode and Global SWR Toggles (+ effective offline)
 
 - **Target file(s)**:
   - `src/client/settings/types.ts`
@@ -18,6 +18,7 @@ User flow (end-to-end): The user can toggle Offline Mode and SWR in Settings. Wh
   - Set defaults in `defaultSettings` (both default to `false`).
   - Ensure values are persisted to `localStorage` via the existing `SettingsContext` logic.
   - Add two `Switch` controls in Settings UI to toggle these values.
+  - Track device online/offline status in `SettingsContext` (ephemeral, not persisted) using `window` `online`/`offline` events, and derive `effectiveOffline = settings.offlineMode || isDeviceOffline`.
 
 - **Code snippets / examples**:
 
@@ -65,7 +66,7 @@ export const defaultSettings: Settings = {
 </FormControl>
 ```
 
-### 2.2 API Client: Initialize With Settings Context and Enforce New Policy
+### 2.2 API Client: Initialize With Settings Context and Enforce New Policy (use effective offline)
 
 - **Target file(s)**:
   - `src/client/utils/apiClient.ts` (refactor)
@@ -115,6 +116,10 @@ export const apiClient = {
     const settings = getSettingsSafe();
 
     const apiCall = async (): Promise<ResponseType> => {
+      // If strict offline, never hit the network
+      if (settings?.offlineMode) {
+        throw new Error('OFFLINE_MODE_NETWORK_BLOCKED');
+      }
       const response = await fetch('/api/process', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -131,16 +136,25 @@ export const apiClient = {
     };
 
     // Decide cache behavior based on settings
-    const offlineMode = settings?.offlineMode === true;
+    const effectiveOffline = (settings?.offlineMode === true) || (typeof navigator !== 'undefined' && !navigator.onLine);
     const globalSWR = settings?.staleWhileRevalidate === true;
 
-    // Always use cache layer so successful responses are written to cache
+    // Strict Offline: try to read (including stale) and do not attempt network
+    if (effectiveOffline) {
+      return clientCache.withCache(apiCall, { key: name, params: params || {} }, {
+        bypassCache: false,
+        staleWhileRevalidate: true, // serve cached if available; apiCall will throw to avoid network
+        disableCache: false,
+        ttl: options?.ttl,
+        maxStaleAge: options?.maxStaleAge,
+        isDataValidForCache: options?.isDataValidForCache,
+      });
+    }
+
+    // Normal: Always write to cache; read only if SWR is ON
     return clientCache.withCache(apiCall, { key: name, params: params || {} }, {
-      // When both settings are OFF: do not read cache, but write fresh result
-      bypassCache: !offlineMode && !globalSWR,
-      // Only enable SWR path when offline mode or global SWR is ON
-      staleWhileRevalidate: offlineMode || globalSWR,
-      // Never disable cache; we always want to write
+      bypassCache: !globalSWR, // when SWR off, skip reading cache
+      staleWhileRevalidate: globalSWR,
       disableCache: false,
       ttl: options?.ttl,
       maxStaleAge: options?.maxStaleAge,
@@ -183,8 +197,8 @@ function ApiClientInitializer() {
 
 ### 2.3 Notes on Error Handling and Offline Behavior
 
-- If `offlineMode` is true, `staleWhileRevalidate` is enabled to prefer cached reads. If cache is missing, the call will fetch and write on first success when network is available; if the network fails, no data is returned unless a prior cache exists.
-- We do not hard-check `navigator.onLine`. Offline Mode is a user setting that controls behavior regardless of actual connectivity.
+- If `effectiveOffline` is true (strict offline), the API client never performs a network call. It attempts to read from cache and returns it if present; if not present, it returns a clear offline/unavailable error.
+- The app treats actual offline (`!navigator.onLine`) the same as user-enabled Offline Mode, ensuring a seamless experience without special handling in callers.
 - Service worker and existing fetch error handling are not changed, but will naturally benefit from cached data when SWR or Offline Mode are ON.
 
 ### 2.4 Compliance and Consistency
@@ -229,12 +243,13 @@ function ApiClientInitializer() {
 - Risk: Early module imports might call `apiClient` before initialization. Mitigation: The initialization component mounts within `SettingsProvider` and runs on first render; if any API calls happen even earlier, consider defaulting `getSettingsSafe()` to read from `localStorage` or render the initializer before other providers. Current app structure mounts routes after providers, so risk is low.
 - Risk: SSR (if any) and window access. The client-only initializer should run only in the browser; ensure no server import paths rely on `initializeApiClient`.
 - Dependency: None beyond current Settings and Cache modules.
-- Open Question: Should Offline Mode also hard-block network calls or only prefer cache? Current plan prefers cache and does not artificially fail requests; if required, we can add a guard to skip network entirely.
+- Decision: Offline Mode hard-blocks network calls and only serves cached entries. If none exist, return an offline/unavailable error.
 
 ## 5. Task List
 
 - [ ] Task 1: Extend `Settings` with `offlineMode` and `staleWhileRevalidate`
 - [ ] Task 2: Persist and expose new settings in `SettingsContext`
+- [ ] Task 2.1: Track device offline (`online`/`offline` events) and derive `effectiveOffline`
 - [ ] Task 3: Add toggles to `Settings` route (UI)
 - [ ] Task 4: Add `initializeApiClient(getSettings)` to `apiClient`
 - [ ] Task 5: Implement new cache-return policy in `apiClient`

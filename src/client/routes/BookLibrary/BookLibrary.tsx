@@ -13,6 +13,7 @@ import { Close as CloseIcon, PlayArrow, Delete, Edit, Upload, Image } from '@mui
 import { useSettings } from '../../settings/SettingsContext';
 import { useAuth } from '../../context/AuthContext';
 import { offlineManager } from '../../offline/offlineManager';
+import { apiUpdateProfile } from '@/apis/auth/client';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressClient;
@@ -58,12 +59,12 @@ export const BookLibrary = () => {
                 throw new Error('Failed to load books');
             }
 
-            const storedActiveBookId = localStorage.getItem('activeBookId');
+            const activeBookId = user?.activeBookId;
 
             // Display books immediately without progress
             const booksWithoutProgress: BookWithProgress[] = booksResult.data.books.map(book => ({
                 ...book,
-                isActive: book._id === storedActiveBookId
+                isActive: book._id === activeBookId
             }));
 
             setBooks(booksWithoutProgress);
@@ -134,12 +135,18 @@ export const BookLibrary = () => {
         navigate(`/?bookId=${bookId}`);
     };
 
-    const handleSetActiveBook = (bookId: string) => {
-        localStorage.setItem('activeBookId', bookId);
-        setBooks(books.map(book => ({
-            ...book,
-            isActive: book._id === bookId
-        })));
+    const handleSetActiveBook = async (bookId: string) => {
+        try {
+            setError(null);
+            await apiUpdateProfile({ activeBookId: bookId }, { bypassCache: true });
+            setBooks(prevBooks => prevBooks.map(book => ({
+                ...book,
+                isActive: book._id === bookId
+            })));
+        } catch (e) {
+            console.error('Failed to set active book', e);
+            setError(e instanceof Error ? e.message : 'Failed to set active book');
+        }
     };
 
     const handleRemoveBook = (bookId: string) => {
@@ -158,11 +165,8 @@ export const BookLibrary = () => {
                 // Remove from local state only if API call succeeded
                 setBooks(books.filter(book => book._id !== bookId));
 
-                // If the removed book was active, clear active book
-                const activeBookId = localStorage.getItem('activeBookId');
-                if (activeBookId === bookId) {
-                    localStorage.removeItem('activeBookId');
-                }
+                // If the removed book was active, update local UI state
+                setBooks(prev => prev.map(b => ({ ...b, isActive: b._id === bookId ? false : b.isActive })));
             } else {
                 throw new Error('Failed to delete book');
             }

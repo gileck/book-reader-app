@@ -10,7 +10,11 @@ function getServiceWorkerController(): ServiceWorker | null {
     return navigator.serviceWorker.controller;
 }
 
-async function postMessageToSW(message: any): Promise<void> {
+type SWMessage =
+    | { type: 'CACHE_URLS'; urls: string[] }
+    | { type: 'CLEAR_USER_CACHES' };
+
+async function postMessageToSW(message: SWMessage): Promise<void> {
     const controller = getServiceWorkerController();
     if (!controller) return;
     controller.postMessage(message);
@@ -38,7 +42,7 @@ export const offlineManager = {
         chapterNumber: number;
         onProgress?: ProgressListener;
     }): Promise<void> {
-        const { bookId, chapterNumber, bookTitle, bookImageBaseURL, onProgress } = params;
+        const { bookId, chapterNumber, bookImageBaseURL, onProgress } = params;
         onProgress?.({ phase: 'fetch' });
         const response = await getChapterByNumber({ bookId, chapterNumber });
         const chapter = response.data?.chapter;
@@ -83,9 +87,9 @@ export const offlineManager = {
     async getStorageUsage(): Promise<number> {
         // Heuristic: size of IndexedDB is not easily known; return 0 for now
         // Can be implemented via serializing all records or using StorageManager API
-        if (navigator && (navigator as any).storage && (navigator as any).storage.estimate) {
+        if (navigator && (navigator as unknown as { storage?: { estimate?: () => Promise<{ usage?: number }> } }).storage?.estimate) {
             try {
-                const estimate = await (navigator as any).storage.estimate();
+                const estimate = await (navigator as unknown as { storage: { estimate: () => Promise<{ usage?: number }> } }).storage.estimate();
                 return estimate.usage || 0;
             } catch {
                 return 0;
