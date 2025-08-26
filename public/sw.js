@@ -21,3 +21,31 @@ self.addEventListener('message', function (event) {
 });
 
 // (No custom fetch override; rely on client-side cache for offline SWR and fail silently where needed.)
+
+// Add runtime caching for cross-origin blob images (allow opaque responses)
+try {
+    if (self && self.workbox && self.workbox.routing && self.workbox.strategies) {
+        const registerRoute = self.workbox.routing.registerRoute;
+        const CacheFirst = self.workbox.strategies.CacheFirst;
+        const CacheableResponsePlugin = self.workbox.cacheableResponse && self.workbox.cacheableResponse.CacheableResponsePlugin;
+        const ExpirationPlugin = self.workbox.expiration && self.workbox.expiration.ExpirationPlugin;
+
+        if (registerRoute && CacheFirst && CacheableResponsePlugin && ExpirationPlugin) {
+            registerRoute(
+                ({ url, request }) => request && request.method === 'GET' &&
+                    /\.vercel-storage\.com$/i.test(url.host) &&
+                    /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(url.pathname),
+                new CacheFirst({
+                    cacheName: 'blob-images',
+                    plugins: [
+                        new CacheableResponsePlugin({ statuses: [0, 200] }),
+                        new ExpirationPlugin({ maxEntries: 200, maxAgeSeconds: 30 * 24 * 60 * 60 })
+                    ]
+                }),
+                'GET'
+            );
+        }
+    }
+} catch (e) {
+    // ignore SW init errors
+}
