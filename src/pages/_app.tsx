@@ -3,6 +3,8 @@ import type { AppProps } from "next/app";
 import { useEffect } from 'react';
 import { AuthProvider } from "@/client/context/AuthContext";
 import { SettingsProvider } from "@/client/settings/SettingsContext";
+import { useSettings } from "@/client/settings/SettingsContext";
+import { initializeApiClient } from "@/client/utils/apiClient";
 import { AppThemeProvider } from "@/client/components/ThemeProvider";
 import AuthWrapper from "@/client/components/auth/AuthWrapper";
 import dynamic from 'next/dynamic';
@@ -22,6 +24,7 @@ export default function App({ }: AppProps) {
 
   return (
     <SettingsProvider>
+      <ApiClientInitializer />
       <AppThemeProvider>
         <AuthProvider>
           <AuthWrapper>
@@ -33,4 +36,12 @@ export default function App({ }: AppProps) {
       </AppThemeProvider>
     </SettingsProvider>
   );
+}
+
+function ApiClientInitializer() {
+  const { settings } = useSettings();
+  useEffect(() => {
+    initializeApiClient(() => settings);
+  }, [settings]);
+  return null;
 }

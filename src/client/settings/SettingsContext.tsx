@@ -7,6 +7,7 @@ import { Settings, SettingsContextType, defaultSettings } from './types';
 const SettingsContext = createContext<SettingsContextType>({
     settings: defaultSettings,
     updateSettings: () => { },
+    effectiveOffline: false,
     clearCache: async () => ({ success: false, message: 'Context not initialized' }),
 });
 
@@ -33,6 +34,21 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
         return defaultSettings;
     });
+
+    // Track device online/offline and derive effectiveOffline
+    const [isDeviceOffline, setIsDeviceOffline] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const update = () => setIsDeviceOffline(!navigator.onLine);
+        update();
+        window.addEventListener('online', update);
+        window.addEventListener('offline', update);
+        return () => {
+            window.removeEventListener('online', update);
+            window.removeEventListener('offline', update);
+        };
+    }, []);
 
     // Initialize AI model if not set
     useEffect(() => {
@@ -80,8 +96,10 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
     };
 
+    const effectiveOffline = settings.offlineMode || isDeviceOffline;
+
     return (
-        <SettingsContext.Provider value={{ settings, updateSettings, clearCache: handleClearCache }}>
+        <SettingsContext.Provider value={{ settings, updateSettings, effectiveOffline, clearCache: handleClearCache }}>
             {children}
         </SettingsContext.Provider>
     );

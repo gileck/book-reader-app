@@ -13,7 +13,9 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
-  TextField
+  TextField,
+  FormControlLabel,
+  Switch
 } from '@mui/material';
 import { getAllModels } from '@/server/ai';
 import { AIModelDefinition } from '@/server/ai/models';
@@ -162,6 +164,28 @@ export function Settings() {
           helperText="Number of previous sentences to include (1-10)"
           sx={{ mt: 2 }}
         />
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" gutterBottom>
+          Cache Behavior
+        </Typography>
+        <FormControl fullWidth sx={{ mt: 2 }}>
+          <FormControlLabel
+            control={<Switch checked={settings.offlineMode} onChange={(e) => updateSettings({ offlineMode: e.target.checked })} />}
+            label="Offline Mode"
+          />
+          <FormControlLabel
+            control={<Switch checked={settings.staleWhileRevalidate} onChange={(e) => updateSettings({ staleWhileRevalidate: e.target.checked })} />}
+            label="Serve Stale While Revalidate"
+          />
+          <Typography variant="body2" color="text.secondary">
+            When SWR is ON, cached data will be served immediately when available while a background refresh runs.
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Offline Mode forces using cache and avoids relying on network.
+          </Typography>
+        </FormControl>
       </Paper>
 
       <Snackbar
