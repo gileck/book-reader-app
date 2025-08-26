@@ -35,11 +35,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setIsInitialLoading(true);
         try {
             const response = await apiFetchCurrentUser({
-                staleWhileRevalidate: true,
-                //10 seconds  
-                ttl: 10 * 1000,
-                // 1 day
-                maxStaleAge: 24 * 60 * 60 * 1000 * 7,
                 isDataValidForCache: (data) => !!(data as CurrentUserResponse)?.user?.id,
             });
             if (response.data?.user) {
