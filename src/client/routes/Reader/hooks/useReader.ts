@@ -1,5 +1,3 @@
-//TODO: fix code duplication in setCurrentChapterNumber and loadReaderData
-
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from '../../../router';
 import { getBook } from '../../../../apis/books/client';
