@@ -48,6 +48,46 @@ export const useReader = () => {
         error: null
     });
 
+    // Helpers to avoid duplicated logic across initial load and chapter navigation
+    const buildChapterFromLocal = useCallback((localRec: any): ChapterClient => {
+        return {
+            _id: localRec.chapterId,
+            bookId: localRec.bookId,
+            chapterNumber: localRec.chapterNumber,
+            title: localRec.title,
+            content: localRec.content as unknown as ChapterClient['content'],
+            wordCount: (localRec.content as unknown as ChapterClient['content'])?.chunks?.length || 0,
+            createdAt: localRec.downloadedAt,
+            updatedAt: localRec.contentVersion || localRec.downloadedAt
+        };
+    }, []);
+
+    const isOnline = () => (typeof navigator === 'undefined' ? true : navigator.onLine !== false);
+
+    const loadChapterPreferOffline = useCallback(async (
+        bookIdParam: string,
+        chapterNumber: number
+    ): Promise<{ chapter: ChapterClient | null; fromLocal: boolean }> => {
+        // Try local first
+        const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
+        if (localRec) {
+            return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
+        }
+        // No local copy → fetch from network
+        const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
+        return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+    }, [buildChapterFromLocal]);
+
+    const refreshChapterInBackground = useCallback(async (bookIdParam: string, chapterNumber: number) => {
+        if (!isOnline()) return;
+        try {
+            const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
+            if (chapterResult.data?.chapter) {
+                setState(prev => ({ ...prev, chapter: chapterResult.data!.chapter }));
+            }
+        } catch { /* silently ignore background failures */ }
+    }, []);
+
     // Get current book ID from user.activeBookId only
     const getCurrentBookId = async (): Promise<string | null> => {
         try {
@@ -160,61 +200,22 @@ export const useReader = () => {
 
                 // Step 4: Load the determined chapter (prefer offline when available; fall back to network)
                 if (bookId) {
-                    // Try local first
-                    const localRec = await offlineDB.getChapterByBookAndNumber(bookId, currentChapter);
-                    if (localRec) {
-                        const localChapter: ChapterClient = {
-                            _id: localRec.chapterId,
-                            bookId: localRec.bookId,
-                            chapterNumber: localRec.chapterNumber,
-                            title: localRec.title,
-                            content: localRec.content as unknown as ChapterClient['content'],
-                            wordCount: (localRec.content as unknown as ChapterClient['content'])?.chunks?.length || 0,
-                            createdAt: localRec.downloadedAt,
-                            updatedAt: localRec.contentVersion || localRec.downloadedAt
-                        };
-                        setState({
-                            book,
-                            chapter: localChapter,
-                            currentChapterNumber: currentChapter,
-                            currentChunkIndex: currentChunk,
-                            loading: false,
-                            chapterTransitionLoading: false,
-                            error: null
-                        });
-                        // If online, refresh from network in background
-                        if (typeof navigator === 'undefined' || navigator.onLine !== false) {
-                            try {
-                                const chapterResult = await getChapterByNumber({ bookId, chapterNumber: currentChapter });
-                                if (chapterResult.data?.chapter) {
-                                    setState(prev => ({
-                                        ...prev,
-                                        chapter: chapterResult.data!.chapter
-                                    }));
-                                }
-                            } catch { }
-                        }
-                    } else {
-                        // No local copy → fetch network
-                        const chapterResult = await getChapterByNumber({ bookId, chapterNumber: currentChapter });
-                        const chapterData = chapterResult.data?.chapter || null;
-                        if (!chapterData) {
-                            setState(prev => ({
-                                ...prev,
-                                error: 'Chapter not found',
-                                loading: false
-                            }));
-                            return;
-                        }
-                        setState({
-                            book,
-                            chapter: chapterData,
-                            currentChapterNumber: currentChapter,
-                            currentChunkIndex: currentChunk,
-                            loading: false,
-                            chapterTransitionLoading: false,
-                            error: null
-                        });
+                    const { chapter: resolvedChapter, fromLocal } = await loadChapterPreferOffline(bookId, currentChapter);
+                    if (!resolvedChapter) {
+                        setState(prev => ({ ...prev, error: 'Chapter not found', loading: false }));
+                        return;
+                    }
+                    setState({
+                        book,
+                        chapter: resolvedChapter,
+                        currentChapterNumber: currentChapter,
+                        currentChunkIndex: currentChunk,
+                        loading: false,
+                        chapterTransitionLoading: false,
+                        error: null
+                    });
+                    if (fromLocal) {
+                        refreshChapterInBackground(bookId, currentChapter);
                     }
                 } else {
                     setState(prev => ({
@@ -246,51 +247,24 @@ export const useReader = () => {
             setState(prev => ({ ...prev, chapterTransitionLoading: true }));
 
             if (bookId && chapterNumber !== undefined) {
-                const localRec = await offlineDB.getChapterByBookAndNumber(bookId, chapterNumber);
-                if (localRec) {
-                    const localChapter: ChapterClient = {
-                        _id: localRec.chapterId,
-                        bookId: localRec.bookId,
-                        chapterNumber: localRec.chapterNumber,
-                        title: localRec.title,
-                        content: localRec.content as unknown as ChapterClient['content'],
-                        wordCount: (localRec.content as unknown as ChapterClient['content'])?.chunks?.length || 0,
-                        createdAt: localRec.downloadedAt,
-                        updatedAt: localRec.contentVersion || localRec.downloadedAt
-                    };
+                const { chapter: resolvedChapter, fromLocal } = await loadChapterPreferOffline(bookId, chapterNumber);
+                if (resolvedChapter) {
                     setState(prev => ({
                         ...prev,
-                        chapter: localChapter,
+                        chapter: resolvedChapter,
                         currentChapterNumber: chapterNumber,
                         currentChunkIndex: 0,
                         chapterTransitionLoading: false
                     }));
-                    if (typeof navigator === 'undefined' || navigator.onLine !== false) {
-                        try {
-                            const chapterResult = await getChapterByNumber({ bookId, chapterNumber });
-                            if (chapterResult.data?.chapter) {
-                                setState(prev => ({ ...prev, chapter: chapterResult.data!.chapter }));
-                            }
-                        } catch { }
+                    if (fromLocal) {
+                        refreshChapterInBackground(bookId, chapterNumber);
                     }
                 } else {
-                    const chapterResult = await getChapterByNumber({ bookId, chapterNumber });
-                    const chapterData = chapterResult.data?.chapter || null;
-                    if (chapterData) {
-                        setState(prev => ({
-                            ...prev,
-                            chapter: chapterData,
-                            currentChapterNumber: chapterNumber,
-                            currentChunkIndex: 0,
-                            chapterTransitionLoading: false
-                        }));
-                    } else {
-                        setState(prev => ({
-                            ...prev,
-                            error: 'Chapter not found',
-                            chapterTransitionLoading: false
-                        }));
-                    }
+                    setState(prev => ({
+                        ...prev,
+                        error: 'Chapter not found',
+                        chapterTransitionLoading: false
+                    }));
                 }
             } else {
                 setState(prev => ({
@@ -307,7 +281,7 @@ export const useReader = () => {
                 chapterTransitionLoading: false
             }));
         }
-    }, [bookId, state.currentChapterNumber]);
+    }, [bookId, state.currentChapterNumber, loadChapterPreferOffline, refreshChapterInBackground]);
 
     // Initialize hooks only after we have the data
     const userSettings = useUserSettings(user?.id || '');
