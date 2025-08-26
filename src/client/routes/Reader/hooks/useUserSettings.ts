@@ -4,6 +4,7 @@ import { generateTts } from '../../../../apis/tts/client';
 import { useSettings } from '../../../settings/SettingsContext';
 
 interface UserSettingsState {
+    ttsEnabled: boolean;
     playbackSpeed: number;
     selectedVoice: string;
     selectedProvider: string;
@@ -20,6 +21,7 @@ interface UserSettingsState {
 }
 
 const getDefaultUserSettingsState = (): UserSettingsState => ({
+    ttsEnabled: true,
     playbackSpeed: 1.0,
     selectedVoice: 'en-US-Neural2-A',
     selectedProvider: 'google',
@@ -52,6 +54,7 @@ export const useUserSettings = (userId: string) => {
                 if (settingsResult.data?.success && settingsResult.data.userSettings) {
                     const settings = settingsResult.data.userSettings;
                     updateState({
+                        ttsEnabled: settings.ttsEnabled ?? true,
                         playbackSpeed: settings.playbackSpeed,
                         selectedVoice: settings.selectedVoice,
                         selectedProvider: settings.selectedProvider || 'google',
@@ -64,6 +67,7 @@ export const useUserSettings = (userId: string) => {
                         fontFamily: settings.fontFamily,
                         textColor: settings.textColor
                     });
+
 
                     // CSS variables are now set locally in ReaderContent component
                     // No global CSS variable setting needed
@@ -78,6 +82,7 @@ export const useUserSettings = (userId: string) => {
         loadUserSettings();
     }, [userId, updateState]);
 
+
     const handleSpeedChange = useCallback(async (speed: number) => {
         updateState({ playbackSpeed: speed });
 
@@ -88,6 +93,19 @@ export const useUserSettings = (userId: string) => {
             });
         } catch (error) {
             console.error('Error updating playback speed:', error);
+        }
+    }, [userId, updateState]);
+
+    const handleTtsEnabledChange = useCallback(async (enabled: boolean) => {
+        updateState({ ttsEnabled: enabled });
+
+        try {
+            await updateUserSettings({
+                userId,
+                settings: { ttsEnabled: enabled }
+            });
+        } catch (error) {
+            console.error('Error updating TTS enabled setting:', error);
         }
     }, [userId, updateState]);
 
@@ -131,12 +149,13 @@ export const useUserSettings = (userId: string) => {
     }, [userId, updateState]);
 
     const handlePreviewVoice = useCallback(async (voice: string, provider: string) => {
+        if (!state.ttsEnabled) return;
         const previewText = "Hello! This is a preview of the selected voice.";
         try {
-            const result = await generateTts({ 
-                text: previewText, 
-                voiceId: voice, 
-                provider: provider as 'google' | 'polly' | 'elevenlabs' 
+            const result = await generateTts({
+                text: previewText,
+                voiceId: voice,
+                provider: provider as 'google' | 'polly' | 'elevenlabs'
             });
             if (result.data?.success && result.data.audioContent) {
                 const previewAudio = new Audio(`data:audio/mp3;base64,${result.data.audioContent}`);
@@ -145,7 +164,7 @@ export const useUserSettings = (userId: string) => {
         } catch (error) {
             console.error('Error generating voice preview:', error);
         }
-    }, []);
+    }, [state.ttsEnabled]);
 
     const handleSpeedSettings = useCallback(() => {
         updateState({ speedModalOpen: true });
@@ -165,7 +184,7 @@ export const useUserSettings = (userId: string) => {
 
     const handleThemeChange = useCallback(async (theme: 'light' | 'dark') => {
         updateState({ theme });
-        
+
         // Update global settings for app-wide theme
         updateSettings({ theme });
 
@@ -260,7 +279,7 @@ export const useUserSettings = (userId: string) => {
     const handleResetToDefaults = useCallback(async () => {
         // Get default values
         const defaults = getDefaultUserSettingsState();
-        
+
         // Update state with all defaults
         updateState({
             theme: defaults.theme,
@@ -292,6 +311,7 @@ export const useUserSettings = (userId: string) => {
     }, [userId, updateState]);
 
     return {
+        ttsEnabled: state.ttsEnabled,
         playbackSpeed: state.playbackSpeed,
         selectedVoice: state.selectedVoice,
         selectedProvider: state.selectedProvider,
@@ -307,6 +327,7 @@ export const useUserSettings = (userId: string) => {
         textColor: state.textColor,
         settingsLoaded,
         handleSpeedChange,
+        handleTtsEnabledChange,
         handleVoiceChange,
         handleProviderChange,
         handleWordTimingOffsetChange,

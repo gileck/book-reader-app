@@ -17,6 +17,7 @@ export async function getUserSettings(params: GetUserSettingsRequest): Promise<G
         const clientSettings = {
             _id: userSettings._id.toString(),
             userId: userSettings.userId.toString(),
+            ttsEnabled: userSettings.ttsEnabled,
             playbackSpeed: userSettings.playbackSpeed,
             selectedVoice: userSettings.voiceId || 'en-US-Neural2-A',
             selectedProvider: userSettings.selectedProvider || 'google',
@@ -51,6 +52,9 @@ export async function updateUserSettings(params: UpdateUserSettingsRequest): Pro
         const serverSettings: Record<string, unknown> = {};
         if (params.settings.playbackSpeed !== undefined) {
             serverSettings.playbackSpeed = params.settings.playbackSpeed;
+        }
+        if (params.settings.ttsEnabled !== undefined) {
+            serverSettings.ttsEnabled = params.settings.ttsEnabled;
         }
         if (params.settings.selectedVoice !== undefined) {
             serverSettings.voiceId = params.settings.selectedVoice;
@@ -93,6 +97,7 @@ export async function updateUserSettings(params: UpdateUserSettingsRequest): Pro
         const clientSettings = {
             _id: updatedSettings._id.toString(),
             userId: updatedSettings.userId.toString(),
+            ttsEnabled: updatedSettings.ttsEnabled,
             playbackSpeed: updatedSettings.playbackSpeed,
             selectedVoice: updatedSettings.voiceId || 'en-US-Neural2-A',
             selectedProvider: updatedSettings.selectedProvider || 'google',

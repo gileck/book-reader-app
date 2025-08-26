@@ -5,6 +5,7 @@ export interface UserSettings {
     userId: ObjectId;
 
     // Audio Settings
+    ttsEnabled: boolean;
     playbackSpeed: number;
     voiceId: string;
     selectedProvider: string;
@@ -40,6 +41,7 @@ export interface UserSettingsFilter {
 
 // Default settings values
 export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'createdAt' | 'updatedAt'> = {
+    ttsEnabled: true,
     playbackSpeed: 1.0,
     voiceId: 'en-US-Neural2-A',
     selectedProvider: 'google',

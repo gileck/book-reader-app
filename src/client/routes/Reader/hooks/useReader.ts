@@ -7,6 +7,7 @@ import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 import { useAudioPlayback } from './useAudioPlayback';
+import type { OfflineChapterRecord } from '../../../offline/offlineDB';
 import { useUserSettings } from './useUserSettings';
 import { useBookmarks } from './useBookmarks';
 import { useReadingProgress } from './useReadingProgress';
@@ -25,6 +26,7 @@ interface ReaderState {
     chapterTransitionLoading: boolean;
     error: string | null;
 }
+
 
 export const useReader = () => {
     const { queryParams, navigate } = useRouter();
@@ -47,7 +49,7 @@ export const useReader = () => {
     });
 
     // Helpers to avoid duplicated logic across initial load and chapter navigation
-    const buildChapterFromLocal = useCallback((localRec: any): ChapterClient => {
+    const buildChapterFromLocal = useCallback((localRec: OfflineChapterRecord): ChapterClient => {
         return {
             _id: localRec.chapterId,
             bookId: localRec.bookId,
@@ -298,7 +300,8 @@ export const useReader = () => {
         userSettings.playbackSpeed,
         userSettings.wordSpeedOffset,
         state.currentChapterNumber || 1,
-        setCurrentChunkIndex // Callback for audio to update reader state
+        setCurrentChunkIndex, // Callback for audio to update reader state
+        userSettings.ttsEnabled
     );
 
     // Reading progress hook - now just for tracking changes and saving
@@ -407,6 +410,7 @@ export const useReader = () => {
 
         // User settings
         settings: {
+            ttsEnabled: userSettings.ttsEnabled,
             playbackSpeed: userSettings.playbackSpeed,
             selectedVoice: userSettings.selectedVoice,
             selectedProvider: userSettings.selectedProvider,
@@ -422,6 +426,7 @@ export const useReader = () => {
             textColor: userSettings.textColor,
             settingsLoaded: userSettings.settingsLoaded,
             handleSpeedChange,
+            handleTtsEnabledChange: userSettings.handleTtsEnabledChange,
             handleVoiceChange: userSettings.handleVoiceChange,
             handleProviderChange: userSettings.handleProviderChange,
             handleWordTimingOffsetChange: userSettings.handleWordTimingOffsetChange,

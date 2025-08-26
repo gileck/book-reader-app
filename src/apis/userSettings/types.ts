@@ -2,6 +2,7 @@ import type { CacheResult } from '../../common/cache/types';
 
 // Client-facing DTOs
 export interface UserSettings {
+    ttsEnabled: boolean;
     playbackSpeed: number;
     selectedVoice: string;
     selectedProvider: string;
@@ -30,6 +31,7 @@ export interface GetUserSettingsPayload {
 
 export interface UpdateUserSettingsPayload {
     // Audio Settings
+    ttsEnabled?: boolean;
     playbackSpeed?: number;
     voiceId?: string;
     selectedProvider?: string;

@@ -72,7 +72,8 @@ export const useAudioPlayback = (
     playbackSpeed: number,
     wordSpeedOffset: number,
     currentChapterNumber: number,
-    onCurrentChunkChange: (chunkIndex: number) => void
+    onCurrentChunkChange: (chunkIndex: number) => void,
+    ttsEnabled: boolean = true
 ) => {
     const [state, setState] = useState(getDefaultAudioPlaybackState());
     const pendingRequests = useRef<Set<number>>(new Set());
@@ -140,11 +141,23 @@ export const useAudioPlayback = (
         failedChunks.current.clear();
     }, [selectedVoice, currentChapterNumber]);
 
+    // When TTS is disabled while something is playing or preloaded, immediately stop and clear state
+    useEffect(() => {
+        if (!ttsEnabled) {
+            Object.values(state.audioChunks).forEach(({ audio }) => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+            updateState({ isPlaying: false, intendedPlay: false });
+        }
+    }, [ttsEnabled, state.audioChunks, updateState]);
+
 
 
     // Audio generation effect - triggered by chunk index changes only
     useEffect(() => {
         if (!chapter || currentChunkIndex === null || currentChunkIndex >= allChunks.length) return;
+        if (!ttsEnabled) return;
 
         const fetchChunk = async (index: number) => {
             if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) {
@@ -227,7 +240,7 @@ export const useAudioPlayback = (
         if (currentChunkIndex < allChunks.length - 2) {
             fetchChunk(currentChunkIndex + 2);
         }
-    }, [chapter, currentChunkIndex, allChunks, selectedVoice, selectedProvider, currentChapterNumber]);
+    }, [chapter, currentChunkIndex, allChunks, selectedVoice, selectedProvider, currentChapterNumber, ttsEnabled]);
 
     // Word highlighting logic
     useEffect(() => {
@@ -315,6 +328,9 @@ export const useAudioPlayback = (
         }
 
         const audioData = state.audioChunks[targetIndex];
+        if (!ttsEnabled) {
+            return;
+        }
         if (audioData) {
             audioData.audio.playbackRate = playbackSpeed;
             audioData.audio.play();
@@ -323,7 +339,7 @@ export const useAudioPlayback = (
             // Target playable chunk isn't ready yet; auto-play when ready
             updateState({ intendedPlay: true });
         }
-    }, [state.audioChunks, currentChunkIndex, playbackSpeed, updateState, allChunks, findNextTextChunkIndex, onCurrentChunkChange]);
+    }, [state.audioChunks, currentChunkIndex, playbackSpeed, updateState, allChunks, findNextTextChunkIndex, onCurrentChunkChange, ttsEnabled]);
 
     const handlePause = useCallback(() => {
         if (currentChunkIndex === null) return;
@@ -414,6 +430,7 @@ export const useAudioPlayback = (
 
     const preloadChunk = useCallback(async (index: number) => {
         if (!chapter || index >= allChunks.length || index < 0) return;
+        if (!ttsEnabled) return;
         if (stateRef.current.audioChunks[index] || pendingRequests.current.has(index) || failedChunks.current.has(index)) return;
 
         const chunk = allChunks[index];
@@ -466,7 +483,7 @@ export const useAudioPlayback = (
         } finally {
             pendingRequests.current.delete(index);
         }
-    }, [chapter, allChunks, selectedVoice, selectedProvider]);
+    }, [chapter, allChunks, selectedVoice, selectedProvider, ttsEnabled]);
 
     // DOM-BASED HIGHLIGHTING SYSTEM - runs outside React rendering flow
     const previousHighlightRef = useRef<{ chunkIndex: number; wordIndex: number } | null>(null);

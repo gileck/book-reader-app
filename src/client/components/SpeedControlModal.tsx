@@ -7,6 +7,8 @@ import {
     Button,
     Slider,
     Typography,
+    FormControlLabel,
+    Switch,
     FormControl,
     InputLabel,
     Select,
@@ -22,11 +24,13 @@ import { VOICE_MAPPINGS, type Voice, type TtsProvider } from '../../common/tts/t
 interface SpeedControlModalProps {
     open: boolean;
     onClose: () => void;
+    ttsEnabled?: boolean;
     currentSpeed: number;
     currentVoice: string;
     currentProvider: string;
     wordTimingOffset: number;
     onSpeedChange: (speed: number) => void;
+    onTtsEnabledChange?: (enabled: boolean) => void;
     onVoiceChange: (voice: string) => void;
     onProviderChange: (provider: string) => void;
     onWordTimingOffsetChange: (offset: number) => void;
@@ -36,11 +40,13 @@ interface SpeedControlModalProps {
 export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     open,
     onClose,
+    ttsEnabled = true,
     currentSpeed,
     currentVoice,
     currentProvider,
     wordTimingOffset,
     onSpeedChange,
+    onTtsEnabledChange,
     onVoiceChange,
     onProviderChange,
     onWordTimingOffsetChange,
@@ -51,12 +57,14 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     const [localOffset, setLocalOffset] = useState(wordTimingOffset);
     const [selectedProvider, setSelectedProvider] = useState<TtsProvider>(currentProvider as TtsProvider || 'google');
     const [availableVoices, setAvailableVoices] = useState<Voice[]>(VOICE_MAPPINGS[currentProvider as TtsProvider] || VOICE_MAPPINGS.google);
+    const [localTtsEnabled, setLocalTtsEnabled] = useState<boolean>(ttsEnabled);
 
     useEffect(() => {
         setLocalSpeed(currentSpeed);
         setLocalVoice(currentVoice);
         setLocalOffset(wordTimingOffset);
-    }, [currentSpeed, currentVoice, wordTimingOffset]);
+        setLocalTtsEnabled(ttsEnabled);
+    }, [currentSpeed, currentVoice, wordTimingOffset, ttsEnabled]);
 
     // Ensure we have a valid voice selected when modal opens
     useEffect(() => {
@@ -71,10 +79,10 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
         setSelectedProvider(provider);
         const voices = VOICE_MAPPINGS[provider];
         setAvailableVoices(voices);
-        
+
         // Save provider change
         onProviderChange(provider);
-        
+
         // Auto-select the first voice when switching providers
         if (voices.length > 0) {
             const firstVoice = voices[0].id;
@@ -143,6 +151,28 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
             <DialogTitle>Playback Settings</DialogTitle>
             <DialogContent>
                 <Box sx={{ py: 2 }}>
+                    {/* TTS Enable Toggle */}
+                    <Box sx={{ mb: 3 }}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={localTtsEnabled}
+                                    onChange={(e) => {
+                                        const value = e.target.checked;
+                                        setLocalTtsEnabled(value);
+                                        if (onTtsEnabledChange) {
+                                            onTtsEnabledChange(value);
+                                        }
+                                    }}
+                                />
+                            }
+                            label={localTtsEnabled ? 'Text-to-Speech: On' : 'Text-to-Speech: Off'}
+                        />
+                        <Typography variant="body2" color="text.secondary">
+                            When off, audio preloading and playback are disabled.
+                        </Typography>
+                    </Box>
+
                     {/* Playback Speed */}
                     <Typography variant="h6" gutterBottom>
                         Playback Speed
@@ -190,25 +220,25 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                     <Typography variant="h6" gutterBottom>
                         Voice Selection
                     </Typography>
-                    
+
                     {/* Provider Selection */}
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                         Choose provider:
                     </Typography>
                     <ButtonGroup variant="outlined" sx={{ mb: 3 }}>
-                        <Button 
+                        <Button
                             variant={selectedProvider === 'google' ? 'contained' : 'outlined'}
                             onClick={() => handleProviderClick('google')}
                         >
                             Google
                         </Button>
-                        <Button 
+                        <Button
                             variant={selectedProvider === 'polly' ? 'contained' : 'outlined'}
                             onClick={() => handleProviderClick('polly')}
                         >
                             Polly
                         </Button>
-                        <Button 
+                        <Button
                             variant={selectedProvider === 'elevenlabs' ? 'contained' : 'outlined'}
                             onClick={() => handleProviderClick('elevenlabs')}
                         >
@@ -231,7 +261,7 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                             ))}
                         </Select>
                     </FormControl>
-                    
+
                     <Button
                         variant="outlined"
                         onClick={handlePreview}

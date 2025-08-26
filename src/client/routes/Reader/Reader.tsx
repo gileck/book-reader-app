@@ -226,6 +226,7 @@ export const Reader = () => {
                     onSpeedSettings={settings.handleSpeedSettings}
                     onAskAI={bookQA.togglePanel}
                     isPlaying={audio.isPlaying}
+                    ttsEnabled={settings.ttsEnabled}
                     isCurrentChunkLoading={audio.isCurrentChunkLoading}
                     isBookmarked={bookmarks.isBookmarked}
                     progress={audio.currentChunkIndex !== null ? (audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100 : 0}
@@ -248,11 +249,13 @@ export const Reader = () => {
                 <SpeedControlModal
                     open={settings.speedModalOpen}
                     onClose={settings.handleCloseSpeedModal}
+                    ttsEnabled={settings.ttsEnabled}
                     currentSpeed={settings.playbackSpeed}
                     currentVoice={settings.selectedVoice}
                     currentProvider={settings.selectedProvider}
                     wordTimingOffset={settings.wordSpeedOffset}
                     onSpeedChange={settings.handleSpeedChange}
+                    onTtsEnabledChange={settings.handleTtsEnabledChange}
                     onVoiceChange={settings.handleVoiceChange}
                     onProviderChange={settings.handleProviderChange}
                     onWordTimingOffsetChange={settings.handleWordTimingOffsetChange}

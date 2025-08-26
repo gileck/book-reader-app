@@ -17,7 +17,6 @@ import {
     Settings,
     QuestionMark,
     List,
-    Warning,
     Close
 } from '@mui/icons-material';
 import { BookmarkDropdown } from './BookmarkDropdown';
@@ -40,6 +39,7 @@ interface AudioControlsProps {
     onAskAI: () => void;
     onChapters?: () => void;
     isPlaying: boolean;
+    ttsEnabled?: boolean;
     isCurrentChunkLoading?: boolean;
     isBookmarked?: boolean;
     progress: number; // 0-100 (chapter progress)
@@ -80,6 +80,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onAskAI,
     onChapters,
     isPlaying,
+    ttsEnabled = true,
     isCurrentChunkLoading = false,
     isBookmarked = false,
     progress,
@@ -99,6 +100,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     const displayProgress = progress;
 
     // Determine if play button should be disabled
+    const ttsDisabled = !ttsEnabled;
     const hasError = !!ttsError || !ttsServiceAvailable;
 
     return (
@@ -115,10 +117,10 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
         }}>
             {/* Chapter Transition Progress Bar - Overlay at top */}
             {chapterTransitionLoading && (
-                <Box sx={{ 
-                    position: 'absolute', 
-                    top: 0, 
-                    left: 0, 
+                <Box sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
                     right: 0,
                     zIndex: 1001
                 }}>
@@ -135,8 +137,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     />
                 </Box>
             )}
-            {/* Error Alert - Show when there's a TTS error */}
-            {hasError && (
+            {/* Error Alert - Show when there's a TTS error (but not when TTS is disabled) */}
+            {hasError && !ttsDisabled && (
                 <Box sx={{ mb: 2, mx: 'auto', maxWidth: 600 }}>
                     <Alert
                         severity="error"
@@ -350,30 +352,30 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     {/* Play/Pause Button */}
                     <IconButton
                         onClick={isPlaying ? onPause : onPlay}
-                        disabled={isCurrentChunkLoading || hasError}
+                        disabled={isCurrentChunkLoading || hasError || ttsDisabled}
                         title={
-                            hasError
-                                ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
-                                : isCurrentChunkLoading
-                                    ? 'Loading current audio...'
-                                    : isPlaying
-                                        ? 'Pause'
-                                        : 'Play'
+                            ttsDisabled
+                                ? 'Text-to-Speech is disabled'
+                                : hasError
+                                    ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
+                                    : isCurrentChunkLoading
+                                        ? 'Loading current audio...'
+                                        : isPlaying
+                                            ? 'Pause'
+                                            : 'Play'
                         }
                         sx={{
-                            backgroundColor: hasError
-                                ? '#9e9e9e' // Gray when there's an error
+                            backgroundColor: (hasError || ttsDisabled)
+                                ? '#9e9e9e' // Gray when disabled due to error or TTS is off
                                 : isPlaying ? '#f44336' : '#4caf50',
                             color: 'white',
                             '&:hover': {
-                                backgroundColor: hasError
-                                    ? '#757575' // Darker gray on hover when there's an error
+                                backgroundColor: (hasError || ttsDisabled)
+                                    ? '#757575' // Darker gray on hover when disabled
                                     : isPlaying ? '#d32f2f' : '#388e3c'
                             },
                             '&:disabled': {
-                                backgroundColor: hasError
-                                    ? '#9e9e9e' // Keep gray when disabled due to error
-                                    : '#757575', // Gray when disabled due to loading
+                                backgroundColor: '#9e9e9e', // Keep gray when disabled
                                 color: 'white'
                             },
                             width: 64,
@@ -382,9 +384,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         }}
                         size="large"
                     >
-                        {hasError ? (
-                            <Warning sx={{ fontSize: 32 }} />
-                        ) : isPlaying ? (
+                        {isPlaying ? (
                             <Pause sx={{ fontSize: 32 }} />
                         ) : (
                             <PlayArrow sx={{ fontSize: 32 }} />
