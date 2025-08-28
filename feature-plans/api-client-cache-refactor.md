@@ -238,6 +238,29 @@ function ApiClientInitializer() {
 - Phase 5: Verification and cleanup
   - Objective: Ensure all API calls still behave correctly and pass project checks.
 
+- Phase 6: ApiClient provider and hook
+  - Objective: Replace global `apiClient` usage with a context-provided client instance initialized once with settings. Avoid global settings refs; the client is created via a factory and provided through `ApiClientProvider` with `useApiClient()` hook for consumers.
+
+### 3.1 Phase 6 Details
+
+- Target files:
+  - `src/client/utils/apiClient.ts` (convert to factory: `createApiClient(getSettings: () => Settings)` that returns `{ call }`)
+  - `src/client/context/ApiClientContext.tsx` (new): exports `ApiClientProvider`, `useApiClient`
+  - `src/pages/_app.tsx`: wrap app with `ApiClientProvider` after `SettingsProvider`
+  - Call sites currently importing global `apiClient` (clients, contexts, hooks): refactor to use `useApiClient()` where feasible
+
+- Description:
+  - Remove module-level `getSettingsRef` and `initializeApiClient`. The client should not hold a global settings ref.
+  - Implement `createApiClient(getSettings)` that closes over the `getSettings` function supplied by provider so each call sees latest settings.
+  - Add `ApiClientContext` with `ApiClientProvider` that creates the client once and provides it; re-create on settings changes if needed.
+  - Consumers in React (routes, contexts, hooks) import `useApiClient()` to perform API calls.
+  - For non-React modules (e.g., `src/apis/**/client.ts`) that cannot use hooks, prefer a thin singleton accessor set by the provider (no settings stored globally). Alternatively, accept an `ApiClient` parameter in those functions (larger refactor). Decision: Start with a provider-set singleton accessor for API modules, while React code uses `useApiClient()`.
+
+- Notes:
+  - Preserve API Guidelines: API modules continue to import API names from `index.ts` and return `CacheResult<T>`.
+  - Ensure no server code is imported client-side.
+  - Effective offline still overrides per-call options.
+
 ## 4. Potential Issues & Open Questions
 
 - Risk: Early module imports might call `apiClient` before initialization. Mitigation: The initialization component mounts within `SettingsProvider` and runs on first render; if any API calls happen even earlier, consider defaulting `getSettingsSafe()` to read from `localStorage` or render the initializer before other providers. Current app structure mounts routes after providers, so risk is low.
@@ -258,18 +281,27 @@ function ApiClientInitializer() {
 - SSR/CSR guards: reference `navigator` only in browser contexts; avoid server-side access.
 - Tests/checks: add coverage for strict offline hit/miss, SWR fresh/stale, init-before-use, per-call overrides, and effectiveOffline parity.
 
+- New: Using hooks vs non-React modules. Hooks cannot be used in `src/apis/**/client.ts`. We'll provide a singleton accessor set by the provider for those modules, or refactor API client calls to accept an instance parameter.
+
 ## 5. Task List
 
-- [ ] Task 1: Extend `Settings` with `offlineMode` and `staleWhileRevalidate`
-- [ ] Task 2: Persist and expose new settings in `SettingsContext`
-- [ ] Task 2.1: Track device offline (`online`/`offline` events) and derive `effectiveOffline`
-- [ ] Task 3: Add toggles to `Settings` route (UI)
-- [ ] Task 4: Add `initializeApiClient(getSettings)` to `apiClient`
-- [ ] Task 5: Implement new cache-return policy in `apiClient`
-- [ ] Task 6: Initialize API client in `_app.tsx` before main app code
-- [ ] Task 7: Verify all API modules still return `CacheResult` and no type leaks
-- [ ] Task 8: Run `yarn checks` and fix any lint/TS issues
-- [ ] Task 9: Update this plan file, marking completed items as [✅]
+- [✅] Task 1: Extend `Settings` with `offlineMode` and `staleWhileRevalidate`
+- [✅] Task 2: Persist and expose new settings in `SettingsContext`
+- [✅] Task 2.1: Track device offline (`online`/`offline` events) and derive `effectiveOffline`
+- [✅] Task 3: Add toggles to `Settings` route (UI)
+- [✅] Task 4: Add `initializeApiClient(getSettings)` to `apiClient`
+- [✅] Task 5: Implement new cache-return policy in `apiClient`
+- [✅] Task 6: Initialize API client in `_app.tsx` before main app code
+- [✅] Task 7: Verify all API modules still return `CacheResult` and no type leaks
+- [✅] Task 8: Run `yarn checks` and fix any lint/TS issues
+- [✅] Task 9: Update this plan file, marking completed items as [✅]
+
+New tasks for Phase 6:
+- [ ] Task 10: Convert `apiClient` to factory `createApiClient(getSettings)`
+- [ ] Task 11: Add `ApiClientContext.tsx` with `ApiClientProvider` and `useApiClient`
+- [ ] Task 12: Wrap app with `ApiClientProvider` in `_app.tsx`
+- [ ] Task 13: Refactor React consumers to use `useApiClient()`
+- [ ] Task 14: Provide non-hook accessor for API modules or refactor signatures
 
 Notes:
 - Mark tasks as [✅] when completed during implementation.
