@@ -13,12 +13,16 @@ export interface UserSettings {
 
     // Visual Settings
     theme: 'light' | 'dark';
-    highlightColor: string;
-    sentenceHighlightColor: string;
+    // Per-mode colors
+    highlightColorLight: string;
+    highlightColorDark: string;
+    sentenceHighlightColorLight: string;
+    sentenceHighlightColorDark: string;
     fontSize: number;
     lineHeight: number;
     fontFamily: string;
-    textColor: string;
+    textColorLight: string;
+    textColorDark: string;
 
     // Reading Preferences
     autoAdvance: boolean;
@@ -47,12 +51,15 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     selectedProvider: 'google',
     wordTimingOffset: 0,
     theme: 'light',
-    highlightColor: '#ffeb3b',
-    sentenceHighlightColor: '#e3f2fd', // Light mode default - will be adjusted by theme system
+    highlightColorLight: '#ffeb3b',
+    highlightColorDark: '#ffeb3b',
+    sentenceHighlightColorLight: '#e3f2fd',
+    sentenceHighlightColorDark: '#1a237e',
     fontSize: 1.0,
     lineHeight: 1.5,
     fontFamily: 'Inter, system-ui, sans-serif',
-    textColor: '#000000',
+    textColorLight: '#000000',
+    textColorDark: '#ffffff',
     autoAdvance: true,
     chunkSize: 10
 }; 

@@ -8,12 +8,20 @@ export interface UserSettings {
     selectedProvider: string;
     wordTimingOffset: number;
     theme: 'light' | 'dark';
+    // Effective colors (derived using current theme)
     highlightColor: string;
     sentenceHighlightColor: string;
     fontSize: number;
     lineHeight: number;
     fontFamily: string;
     textColor: string;
+    // Per-mode color storage
+    highlightColorLight?: string;
+    highlightColorDark?: string;
+    sentenceHighlightColorLight?: string;
+    sentenceHighlightColorDark?: string;
+    textColorLight?: string;
+    textColorDark?: string;
 }
 
 export interface UserSettingsClient extends UserSettings {
@@ -39,12 +47,19 @@ export interface UpdateUserSettingsPayload {
 
     // Visual Settings
     theme?: 'light' | 'dark';
-    highlightColor?: string;
-    sentenceHighlightColor?: string;
+    highlightColor?: string; // legacy/effective (optional)
+    sentenceHighlightColor?: string; // legacy/effective (optional)
     fontSize?: number;
     lineHeight?: number;
     fontFamily?: string;
-    textColor?: string;
+    textColor?: string; // legacy/effective (optional)
+    // New per-mode color fields
+    highlightColorLight?: string;
+    highlightColorDark?: string;
+    sentenceHighlightColorLight?: string;
+    sentenceHighlightColorDark?: string;
+    textColorLight?: string;
+    textColorDark?: string;
 
     // Reading Preferences
     autoAdvance?: boolean;

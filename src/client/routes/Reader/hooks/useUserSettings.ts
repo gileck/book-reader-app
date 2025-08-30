@@ -18,6 +18,13 @@ interface UserSettingsState {
     lineHeight: number;
     fontFamily: string;
     textColor: string;
+    // Per-mode stored colors
+    highlightColorLight: string;
+    highlightColorDark: string;
+    sentenceHighlightColorLight: string;
+    sentenceHighlightColorDark: string;
+    textColorLight: string;
+    textColorDark: string;
 }
 
 const getDefaultUserSettingsState = (): UserSettingsState => ({
@@ -34,13 +41,19 @@ const getDefaultUserSettingsState = (): UserSettingsState => ({
     fontSize: 1.0,
     lineHeight: 1.5,
     fontFamily: 'Inter, system-ui, sans-serif',
-    textColor: '#000000'
+    textColor: '#000000',
+    highlightColorLight: '#ffeb3b',
+    highlightColorDark: '#ffeb3b',
+    sentenceHighlightColorLight: '#e3f2fd',
+    sentenceHighlightColorDark: '#1a237e',
+    textColorLight: '#000000',
+    textColorDark: '#ffffff'
 });
 
 export const useUserSettings = (userId: string) => {
     const [state, setState] = useState(getDefaultUserSettingsState());
     const [settingsLoaded, setSettingsLoaded] = useState(false);
-    const { updateSettings } = useSettings();
+    const { settings, updateSettings } = useSettings();
 
     const updateState = useCallback((partialState: Partial<UserSettingsState>) => {
         setState(prev => ({ ...prev, ...partialState }));
@@ -52,20 +65,33 @@ export const useUserSettings = (userId: string) => {
             try {
                 const settingsResult = await getUserSettings({ userId });
                 if (settingsResult.data?.success && settingsResult.data.userSettings) {
-                    const settings = settingsResult.data.userSettings;
+                    const s = settingsResult.data.userSettings as any;
+                    const theme = s.theme as 'light' | 'dark';
+                    const highlightLight = s.highlightColorLight ?? s.highlightColor ?? '#ffeb3b';
+                    const highlightDark = s.highlightColorDark ?? s.highlightColor ?? '#ffeb3b';
+                    const sentenceLight = s.sentenceHighlightColorLight ?? s.sentenceHighlightColor ?? '#e3f2fd';
+                    const sentenceDark = s.sentenceHighlightColorDark ?? '#1a237e';
+                    const textLight = s.textColorLight ?? s.textColor ?? '#000000';
+                    const textDark = s.textColorDark ?? '#ffffff';
                     updateState({
-                        ttsEnabled: settings.ttsEnabled ?? true,
-                        playbackSpeed: settings.playbackSpeed,
-                        selectedVoice: settings.selectedVoice,
-                        selectedProvider: settings.selectedProvider || 'google',
-                        wordSpeedOffset: settings.wordTimingOffset,
-                        theme: settings.theme,
-                        highlightColor: settings.highlightColor,
-                        sentenceHighlightColor: settings.sentenceHighlightColor,
-                        fontSize: settings.fontSize,
-                        lineHeight: settings.lineHeight,
-                        fontFamily: settings.fontFamily,
-                        textColor: settings.textColor
+                        ttsEnabled: s.ttsEnabled ?? true,
+                        playbackSpeed: s.playbackSpeed,
+                        selectedVoice: s.selectedVoice,
+                        selectedProvider: s.selectedProvider || 'google',
+                        wordSpeedOffset: s.wordTimingOffset,
+                        theme,
+                        highlightColor: theme === 'dark' ? highlightDark : highlightLight,
+                        sentenceHighlightColor: theme === 'dark' ? sentenceDark : sentenceLight,
+                        fontSize: s.fontSize,
+                        lineHeight: s.lineHeight,
+                        fontFamily: s.fontFamily,
+                        textColor: theme === 'dark' ? textDark : textLight,
+                        highlightColorLight: highlightLight,
+                        highlightColorDark: highlightDark,
+                        sentenceHighlightColorLight: sentenceLight,
+                        sentenceHighlightColorDark: sentenceDark,
+                        textColorLight: textLight,
+                        textColorDark: textDark
                     });
 
 
@@ -81,6 +107,19 @@ export const useUserSettings = (userId: string) => {
 
         loadUserSettings();
     }, [userId, updateState]);
+
+    // Keep local theme in sync with global SettingsContext (e.g., TopNavBar toggle)
+    useEffect(() => {
+        if (!settings) return;
+        const newTheme = settings.theme;
+        if (state.theme !== newTheme) {
+            const effectiveHighlight = newTheme === 'dark' ? state.highlightColorDark : state.highlightColorLight;
+            const effectiveSentence = newTheme === 'dark' ? state.sentenceHighlightColorDark : state.sentenceHighlightColorLight;
+            const effectiveText = newTheme === 'dark' ? state.textColorDark : state.textColorLight;
+            updateState({ theme: newTheme, highlightColor: effectiveHighlight, sentenceHighlightColor: effectiveSentence, textColor: effectiveText });
+        }
+        // We intentionally do not persist here; the header already saves when authenticated
+    }, [settings.theme, state.theme, state.highlightColorDark, state.highlightColorLight, state.sentenceHighlightColorDark, state.sentenceHighlightColorLight, state.textColorDark, state.textColorLight, updateState]);
 
 
     const handleSpeedChange = useCallback(async (speed: number) => {
@@ -199,30 +238,40 @@ export const useUserSettings = (userId: string) => {
     }, [userId, updateState, updateSettings]);
 
     const handleHighlightColorChange = useCallback(async (highlightColor: string) => {
-        updateState({ highlightColor });
+        const isDark = (settings?.theme ?? state.theme) === 'dark';
+        if (isDark) {
+            updateState({ highlightColorDark: highlightColor, highlightColor });
+        } else {
+            updateState({ highlightColorLight: highlightColor, highlightColor });
+        }
 
         try {
             await updateUserSettings({
                 userId,
-                settings: { highlightColor }
+                settings: isDark ? { highlightColorDark: highlightColor } : { highlightColorLight: highlightColor }
             });
         } catch (error) {
             console.error('Error updating highlight color:', error);
         }
-    }, [userId, updateState]);
+    }, [userId, updateState, settings?.theme, state.theme]);
 
     const handleSentenceHighlightColorChange = useCallback(async (sentenceHighlightColor: string) => {
-        updateState({ sentenceHighlightColor });
+        const isDark = (settings?.theme ?? state.theme) === 'dark';
+        if (isDark) {
+            updateState({ sentenceHighlightColorDark: sentenceHighlightColor, sentenceHighlightColor });
+        } else {
+            updateState({ sentenceHighlightColorLight: sentenceHighlightColor, sentenceHighlightColor });
+        }
 
         try {
             await updateUserSettings({
                 userId,
-                settings: { sentenceHighlightColor }
+                settings: isDark ? { sentenceHighlightColorDark: sentenceHighlightColor } : { sentenceHighlightColorLight: sentenceHighlightColor }
             });
         } catch (error) {
             console.error('Error updating sentence highlight color:', error);
         }
-    }, [userId, updateState]);
+    }, [userId, updateState, settings?.theme, state.theme]);
 
     const handleFontSizeChange = useCallback(async (fontSize: number) => {
         updateState({ fontSize });
@@ -264,17 +313,22 @@ export const useUserSettings = (userId: string) => {
     }, [userId, updateState]);
 
     const handleTextColorChange = useCallback(async (textColor: string) => {
-        updateState({ textColor });
+        const isDark = (settings?.theme ?? state.theme) === 'dark';
+        if (isDark) {
+            updateState({ textColorDark: textColor, textColor });
+        } else {
+            updateState({ textColorLight: textColor, textColor });
+        }
 
         try {
             await updateUserSettings({
                 userId,
-                settings: { textColor }
+                settings: isDark ? { textColorDark: textColor } : { textColorLight: textColor }
             });
         } catch (error) {
             console.error('Error updating text color:', error);
         }
-    }, [userId, updateState]);
+    }, [userId, updateState, settings?.theme, state.theme]);
 
     const handleResetToDefaults = useCallback(async () => {
         // Get default values
@@ -297,12 +351,15 @@ export const useUserSettings = (userId: string) => {
                 userId,
                 settings: {
                     theme: defaults.theme,
-                    highlightColor: defaults.highlightColor,
-                    sentenceHighlightColor: defaults.sentenceHighlightColor,
+                    highlightColorLight: defaults.highlightColorLight,
+                    highlightColorDark: defaults.highlightColorDark,
+                    sentenceHighlightColorLight: defaults.sentenceHighlightColorLight,
+                    sentenceHighlightColorDark: defaults.sentenceHighlightColorDark,
                     fontSize: defaults.fontSize,
                     lineHeight: defaults.lineHeight,
                     fontFamily: defaults.fontFamily,
-                    textColor: defaults.textColor
+                    textColorLight: defaults.textColorLight,
+                    textColorDark: defaults.textColorDark
                 }
             });
         } catch (error) {

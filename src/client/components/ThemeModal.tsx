@@ -92,13 +92,13 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     };
 
     const handleHighlightColorChange = (color: string) => {
+        // Update local only; commit on dialog close
         setLocalHighlightColor(color);
-        onHighlightColorChange(color);
     };
 
     const handleSentenceHighlightColorChange = (color: string) => {
+        // Update local only; commit on dialog close
         setLocalSentenceHighlightColor(color);
-        onSentenceHighlightColorChange(color);
     };
 
     const handleFontSizeChange = (value: number) => {
@@ -117,8 +117,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     };
 
     const handleTextColorChange = (textColor: string) => {
+        // Update local only; commit on dialog close
         setLocalTextColor(textColor);
-        onTextColorChange(textColor);
     };
 
     const handleFontSizeDecrease = () => {
@@ -148,6 +148,14 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const handleResetToDefaults = () => {
         // Call the reset function passed from parent
         onResetToDefaults();
+    };
+
+    const handleDialogClose = () => {
+        // Commit color changes on dialog close only
+        if (localHighlightColor !== currentHighlightColor) onHighlightColorChange(localHighlightColor);
+        if (localSentenceHighlightColor !== currentSentenceHighlightColor) onSentenceHighlightColorChange(localSentenceHighlightColor);
+        if (localTextColor !== currentTextColor) onTextColorChange(localTextColor);
+        onClose();
     };
 
     const presetColors = [
@@ -200,7 +208,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     ];
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+        <Dialog open={open} onClose={handleDialogClose} maxWidth="md" fullWidth>
             <DialogTitle>Theme & Appearance Settings</DialogTitle>
             <DialogContent>
                 <Box sx={{ py: 2 }}>
@@ -438,14 +446,14 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button 
+                <Button
                     onClick={handleResetToDefaults}
                     variant="outlined"
                     color="secondary"
                 >
                     Reset to Defaults
                 </Button>
-                <Button onClick={onClose}>Close</Button>
+                <Button onClick={handleDialogClose}>Close</Button>
             </DialogActions>
         </Dialog>
     );
