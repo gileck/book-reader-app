@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
+import { useSettings } from '../../../../settings/SettingsContext';
 import { TextChunkClient } from '@/apis/chapters/types';
 
 interface HeaderChunkProps {
@@ -15,6 +16,8 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
     currentChunkIndex,
     level = 2
 }) => {
+    const { settings } = useSettings();
+
     // Determine header level based on content length and formatting
     const determineHeaderLevel = (text: string, suggestedLevel: number): number => {
         const textLength = text.length;
@@ -31,6 +34,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
 
     const headerLevel = Math.min(determineHeaderLevel(chunk.text, level), 6);
     const variant = `h${headerLevel}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    const headingColor = settings.theme === 'dark' ? '#ffffff' : '#000000';
 
     // Responsive font sizes for different header levels
     const getFontSize = (level: number) => {
@@ -81,7 +85,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                 variant={variant}
                 component={variant}
                 sx={{
-                    color: 'white',
+                    color: headingColor,
                     fontWeight: 'bold',
                     lineHeight: { xs: 1.2, sm: 1.3 },
                     fontSize: getFontSize(headerLevel),
