@@ -1,0 +1,109 @@
+---
+globs: src/**/*.css,src/**/*.tsx,src/**/*.ts,public/**/*.css
+description: CSS variables and utilities for iOS-like, mobile-first UI (safe areas, bars, typography)
+---
+
+## iOS CSS Tokens & Utilities
+
+Define and use semantic tokens to achieve a native iOS feel.
+
+### Root Tokens
+Implement or map these CSS variables at app root:
+
+```css
+:root {
+  /* Colors */
+  --color-tint: #007aff; /* iOS blue */
+  --color-label: #111111;
+  --color-secondary-label: #6b7280;
+  --color-system-bg: #ffffff;
+  --color-secondary-bg: #f6f7f8;
+  --color-separator: rgba(60,60,67,0.29);
+
+  /* Spacing & Radius */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --radius-card: 12px; --radius-large: 16px; --radius-pill: 999px;
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-size-body: 17px; --font-size-caption: 13px; --font-size-headline: 17px; --font-size-title1: 28px;
+  --line-body: 1.45; --line-tight: 1.25;
+
+  /* Elevation */
+  --shadow-soft: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-tint: #0a84ff;
+    --color-label: #ffffff;
+    --color-secondary-label: #9ca3af;
+    --color-system-bg: #000000;
+    --color-secondary-bg: #111213;
+    --color-separator: rgba(84,84,88,0.65);
+    --shadow-soft: 0 6px 24px rgba(0,0,0,0.5);
+  }
+}
+```
+
+### Safe Areas
+Use safe-area insets on pages and bars:
+
+```css
+.Page {
+  padding-left: max(var(--space-4), env(safe-area-inset-left));
+  padding-right: max(var(--space-4), env(safe-area-inset-right));
+  padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  background: var(--color-system-bg);
+  color: var(--color-label);
+  font-family: var(--font-sans);
+}
+
+.NavigationBar {
+  position: sticky; top: 0; z-index: 20;
+  padding-top: env(safe-area-inset-top);
+  backdrop-filter: saturate(180%) blur(20px);
+  background: color-mix(in oklab, var(--color-system-bg) 80%, transparent);
+  border-bottom: 0.5px solid var(--color-separator);
+}
+
+.TabBar {
+  position: sticky; bottom: 0; z-index: 20;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: saturate(180%) blur(20px);
+  background: color-mix(in oklab, var(--color-system-bg) 80%, transparent);
+  border-top: 0.5px solid var(--color-separator);
+}
+```
+
+### Utilities
+- **Large Title**: 28–34px, heavy, collapses on scroll.
+- **Button**:
+
+```css
+.ButtonPrimary {
+  min-height: 44px; padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-tint); color: #fff;
+}
+
+.ButtonSecondary {
+  min-height: 44px; padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  color: var(--color-tint); border: 1px solid var(--color-tint);
+  background: transparent;
+}
+```
+
+### Motion
+Use gentle spring-like easing:
+
+```css
+.ease-ios { transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+.duration-fast { transition-duration: 160ms; }
+.duration-default { transition-duration: 220ms; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+```
+

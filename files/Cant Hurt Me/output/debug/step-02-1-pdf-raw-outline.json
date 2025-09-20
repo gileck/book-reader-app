@@ -1,0 +1,198 @@
+[
+  {
+    "title": "Introduction",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 47,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "1. I Should Have Been a Statistic",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 50,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "2. Truth Hurts",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 76,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "3. The Impossible Task",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 105,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "4. Taking Souls",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 132,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "5. Armored Mind",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 156,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "6. It’s Not about a Trophy",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 185,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "7. The Most Powerful Weapon",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 211,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "8. Talent Not Required",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 245,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "9. Uncommon Amongst Uncommon",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 276,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "10. The Empowerment of Failure",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 305,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "11. What If?",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 339,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Acknowledgments",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 359,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "About the Author",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 364,
+          "gen": 0
+        }
+      }
+    }
+  }
+]

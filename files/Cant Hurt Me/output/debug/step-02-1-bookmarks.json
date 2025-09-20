@@ -1,0 +1,102 @@
+{
+  "pdfBookmarksAvailable": true,
+  "inputPdf": "/Users/gil/Projects/book-reader-app/files/Cant Hurt Me/Cant_Hurt_Me_Master_Your_Mind_and_Defy_the_Odds_-_David_gogin.pdf",
+  "tocFound": true,
+  "totalBookmarks": 14,
+  "outlineTitles": [
+    "Introduction",
+    "1. I Should Have Been a Statistic",
+    "2. Truth Hurts",
+    "3. The Impossible Task",
+    "4. Taking Souls",
+    "5. Armored Mind",
+    "6. It’s Not about a Trophy",
+    "7. The Most Powerful Weapon",
+    "8. Talent Not Required",
+    "9. Uncommon Amongst Uncommon",
+    "10. The Empowerment of Failure",
+    "11. What If?",
+    "Acknowledgments",
+    "About the Author"
+  ],
+  "extractedChapters": [
+    {
+      "chapterTitle": "Introduction",
+      "chapterNumber": 0,
+      "startingPage": 7,
+      "bookmarkTitle": "Introduction"
+    },
+    {
+      "chapterTitle": "I Should Have Been a Statistic",
+      "chapterNumber": 1,
+      "startingPage": 10,
+      "bookmarkTitle": "1. I Should Have Been a Statistic"
+    },
+    {
+      "chapterTitle": "Truth Hurts",
+      "chapterNumber": 2,
+      "startingPage": 36,
+      "bookmarkTitle": "2. Truth Hurts"
+    },
+    {
+      "chapterTitle": "The Impossible Task",
+      "chapterNumber": 3,
+      "startingPage": 65,
+      "bookmarkTitle": "3. The Impossible Task"
+    },
+    {
+      "chapterTitle": "Taking Souls",
+      "chapterNumber": 4,
+      "startingPage": 92,
+      "bookmarkTitle": "4. Taking Souls"
+    },
+    {
+      "chapterTitle": "Armored Mind",
+      "chapterNumber": 5,
+      "startingPage": 116,
+      "bookmarkTitle": "5. Armored Mind"
+    },
+    {
+      "chapterTitle": "It’s Not about a Trophy",
+      "chapterNumber": 6,
+      "startingPage": 145,
+      "bookmarkTitle": "6. It’s Not about a Trophy"
+    },
+    {
+      "chapterTitle": "The Most Powerful Weapon",
+      "chapterNumber": 7,
+      "startingPage": 171,
+      "bookmarkTitle": "7. The Most Powerful Weapon"
+    },
+    {
+      "chapterTitle": "Talent Not Required",
+      "chapterNumber": 8,
+      "startingPage": 205,
+      "bookmarkTitle": "8. Talent Not Required"
+    },
+    {
+      "chapterTitle": "Uncommon Amongst Uncommon",
+      "chapterNumber": 9,
+      "startingPage": 236,
+      "bookmarkTitle": "9. Uncommon Amongst Uncommon"
+    },
+    {
+      "chapterTitle": "The Empowerment of Failure",
+      "chapterNumber": 10,
+      "startingPage": 265,
+      "bookmarkTitle": "10. The Empowerment of Failure"
+    },
+    {
+      "chapterTitle": "What If?",
+      "chapterNumber": 11,
+      "startingPage": 299,
+      "bookmarkTitle": "11. What If?"
+    },
+    {
+      "chapterTitle": "About the Author",
+      "chapterNumber": 12,
+      "startingPage": 324,
+      "bookmarkTitle": "About the Author"
+    }
+  ]
+}

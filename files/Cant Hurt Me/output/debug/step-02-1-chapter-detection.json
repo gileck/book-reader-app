@@ -1,0 +1,199 @@
+{
+  "processingTime": 1676,
+  "detectionStats": {
+    "chaptersDetected": 12,
+    "tocSource": "pdf_bookmarks",
+    "tocEntriesFound": 13,
+    "patternMatches": 43,
+    "averageDetectionConfidence": 0.8833333333333333,
+    "pageOffset": 0
+  },
+  "tocAnalysis": {
+    "source": "pdf_bookmarks",
+    "tocFound": true,
+    "tocEntries": [
+      {
+        "chapterTitle": "Introduction",
+        "chapterNumber": 0,
+        "startingPage": 7,
+        "bookmarkTitle": "Introduction"
+      },
+      {
+        "chapterTitle": "I Should Have Been a Statistic",
+        "chapterNumber": 1,
+        "startingPage": 10,
+        "bookmarkTitle": "1. I Should Have Been a Statistic"
+      },
+      {
+        "chapterTitle": "Truth Hurts",
+        "chapterNumber": 2,
+        "startingPage": 36,
+        "bookmarkTitle": "2. Truth Hurts"
+      },
+      {
+        "chapterTitle": "The Impossible Task",
+        "chapterNumber": 3,
+        "startingPage": 65,
+        "bookmarkTitle": "3. The Impossible Task"
+      },
+      {
+        "chapterTitle": "Taking Souls",
+        "chapterNumber": 4,
+        "startingPage": 92,
+        "bookmarkTitle": "4. Taking Souls"
+      },
+      {
+        "chapterTitle": "Armored Mind",
+        "chapterNumber": 5,
+        "startingPage": 116,
+        "bookmarkTitle": "5. Armored Mind"
+      },
+      {
+        "chapterTitle": "It’s Not about a Trophy",
+        "chapterNumber": 6,
+        "startingPage": 145,
+        "bookmarkTitle": "6. It’s Not about a Trophy"
+      },
+      {
+        "chapterTitle": "The Most Powerful Weapon",
+        "chapterNumber": 7,
+        "startingPage": 171,
+        "bookmarkTitle": "7. The Most Powerful Weapon"
+      },
+      {
+        "chapterTitle": "Talent Not Required",
+        "chapterNumber": 8,
+        "startingPage": 205,
+        "bookmarkTitle": "8. Talent Not Required"
+      },
+      {
+        "chapterTitle": "Uncommon Amongst Uncommon",
+        "chapterNumber": 9,
+        "startingPage": 236,
+        "bookmarkTitle": "9. Uncommon Amongst Uncommon"
+      },
+      {
+        "chapterTitle": "The Empowerment of Failure",
+        "chapterNumber": 10,
+        "startingPage": 265,
+        "bookmarkTitle": "10. The Empowerment of Failure"
+      },
+      {
+        "chapterTitle": "What If?",
+        "chapterNumber": 11,
+        "startingPage": 299,
+        "bookmarkTitle": "11. What If?"
+      },
+      {
+        "chapterTitle": "About the Author",
+        "chapterNumber": 12,
+        "startingPage": 324,
+        "bookmarkTitle": "About the Author"
+      }
+    ],
+    "pdfBookmarksAvailable": true
+  },
+  "patternAnalysis": {
+    "potentialChapters": 55,
+    "validatedChapters": 43,
+    "highConfidenceMatches": 0
+  },
+  "chapterMetadata": [
+    {
+      "title": "I Should Have Been a Statistic",
+      "chapterNumber": 0,
+      "startingPage": 10,
+      "endPage": 35,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "Truth Hurts",
+      "chapterNumber": 1,
+      "startingPage": 36,
+      "endPage": 64,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "The Impossible Task",
+      "chapterNumber": 2,
+      "startingPage": 65,
+      "endPage": 91,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "Taking Souls",
+      "chapterNumber": 3,
+      "startingPage": 92,
+      "endPage": 115,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "Armored Mind",
+      "chapterNumber": 4,
+      "startingPage": 116,
+      "endPage": 144,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "It’s Not about a Trophy",
+      "chapterNumber": 5,
+      "startingPage": 145,
+      "endPage": 170,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "The Most Powerful Weapon",
+      "chapterNumber": 6,
+      "startingPage": 171,
+      "endPage": 204,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "Talent Not Required",
+      "chapterNumber": 7,
+      "startingPage": 205,
+      "endPage": 235,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Uncommon Amongst Uncommon",
+      "chapterNumber": 8,
+      "startingPage": 236,
+      "endPage": 264,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "The Empowerment of Failure",
+      "chapterNumber": 9,
+      "startingPage": 265,
+      "endPage": 298,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "What If?",
+      "chapterNumber": 10,
+      "startingPage": 299,
+      "endPage": 323,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.8999999999999999
+    },
+    {
+      "title": "About the Author",
+      "chapterNumber": 11,
+      "startingPage": 324,
+      "endPage": null,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    }
+  ]
+}

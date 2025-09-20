@@ -73,6 +73,21 @@ export const Reader = () => {
     // Initialize scroll handling hook
     const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
 
+    // When switching chapters without a specific current index, scroll container to top
+    useEffect(() => {
+        if (loading || !chapter) return;
+        // If there's no specific position (index 0), ensure we reset to top
+        if (audio.currentChunkIndex === 0) {
+            const container = scrollContainerRef.current;
+            if (container) {
+                // Use requestAnimationFrame to wait until content is laid out
+                requestAnimationFrame(() => {
+                    container.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+                });
+            }
+        }
+    }, [loading, chapter?.chapterNumber, audio.currentChunkIndex]);
+
     // Show a floating button when current chunk is outside of the scroll container's viewport
     useEffect(() => {
         const container = scrollContainerRef.current;

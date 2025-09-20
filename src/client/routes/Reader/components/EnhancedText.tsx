@@ -9,6 +9,9 @@ interface EnhancedTextProps {
 
 }
 
+// Escape special regex characters in a literal string
+const escapeRegExp = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 /**
  * Find footnote pattern in text - only matches specific footnote formats
  * @param text - The full text to search in
@@ -17,7 +20,8 @@ interface EnhancedTextProps {
  */
 const findFootnotePattern = (text: string, linkText: string): number => {
     // Pattern 1: ". {number} {Capital letter}" (e.g., ". 1 The", ". 2 If")
-    const dotPattern = new RegExp(`\\. ${linkText} [A-Z]`, 'g');
+    const safeLinkText = escapeRegExp(linkText);
+    const dotPattern = new RegExp(`\\. ${safeLinkText} [A-Z]`, 'g');
     const match = dotPattern.exec(text);
     if (match) {
         // Return index of the number, not the dot
@@ -25,7 +29,7 @@ const findFootnotePattern = (text: string, linkText: string): number => {
     }
 
     // Pattern 2: "{number} {Capital letter}" at start of chunk
-    const startPattern = new RegExp(`^${linkText} [A-Z]`);
+    const startPattern = new RegExp(`^${safeLinkText} [A-Z]`);
     if (startPattern.test(text)) {
         return 0; // Number is at the very start
     }
@@ -145,11 +149,16 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
 
         links.forEach(link => {
             if (link.role === 'source') {
-                const footnoteIndex = findFootnotePattern(text, link.text);
+                const linkTextTrimmed = (link.text || '').trim();
+                // Only attempt footnote pattern matching for numeric footnote texts like "1" or "1,2"
+                if (!/^\d+(?:,\d+)*$/.test(linkTextTrimmed)) {
+                    return;
+                }
+                const footnoteIndex = findFootnotePattern(text, linkTextTrimmed);
                 if (footnoteIndex !== -1) {
                     linkPositions.push({
                         start: footnoteIndex,
-                        end: footnoteIndex + link.text.length,
+                        end: footnoteIndex + linkTextTrimmed.length,
                         link
                     });
                 }

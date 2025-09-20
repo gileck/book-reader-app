@@ -1,0 +1,67 @@
+---
+alwaysApply: false
+description: Mobile-first iOS-style UI guidelines for building screens and components that feel native on iPhone
+---
+
+## iOS Mobile-First UI Guidelines
+
+Design and implement UIs that feel native to iOS while remaining web-based.
+
+### Goals
+- **Mobile-first**: prioritize small screens and touch interactions; progressive enhancement for larger screens.
+- **Feel native**: mirror iOS patterns (safe areas, navigation, gestures, motion, haptics cues).
+- **Accessible**: 44×44pt touch targets, Dynamic Type-friendly, strong color contrast.
+
+### Layout & Safe Areas
+- **Viewport**: ensure `viewport-fit=cover` is set in the root document to use full screen and safe areas.
+- **Safe area insets**: pad containers with `env(safe-area-inset-top/right/bottom/left)`.
+- **Horizontal rhythm**: default page gutters 16px; card/list internal padding 16px; adhere to a 4px spacing grid.
+- **Max width**: content is edge-to-edge on phone; for larger screens, center with a comfortable max width.
+- **Scrolling**: one primary vertical scroll per screen; avoid nested scroll areas.
+
+### Navigation Patterns
+- **Navigation bar**: sticky top bar with title; supports large-title pattern that collapses on scroll.
+- **Back navigation**: include a visible back affordance; support edge-swipe back when feasible.
+- **Tab bar**: persistent bottom tab bar (≤5 tabs), translucent with safe-area padding; avoid hamburger menus.
+- **Modals/Sheets**: present as bottom sheets or full-screen modals; include clear dismiss controls.
+- **Search**: inline in nav bar or as a pull-down reveal beneath it; avoid separate search screens when possible.
+
+### Components & Styling
+- **Buttons**: primary filled (tint color), secondary tinted (outline or text), destructive in red; generous hit areas.
+- **Lists**: grouped lists with separators; use chevrons for navigation rows; respect 56–60px row height.
+- **Cards**: subtle corner radius (12–16px) and soft shadow; avoid heavy borders.
+- **Segmented controls**: rounded segmented toggles for mode switching.
+- **Toggles**: use switch for binary states; immediate feedback.
+- **Sheets/Action panels**: rounded top corners, grabber indicator, safe-area bottom spacing.
+
+### Typography
+- **Font**: prefer San Francisco (system fonts) with fallbacks.
+- **Scale**: base size 17px body; title1 28–34px (large title), headline 17px semibold, caption 13–15px.
+- **Line height**: 1.25–1.5 depending on size; enable dynamic sizing where possible.
+
+### Color & Theming
+- **Semantic tokens**: define `tint`, `label`, `secondaryLabel`, `systemBackground`, `secondaryBackground`, `separator` for light/dark.
+- **Translucency**: allow blurred translucent bars over content when supported.
+- **Contrast**: meet WCAG AA; avoid low-contrast placeholder text.
+
+### Motion & Interaction
+- **Durations**: 180–280ms for UI transitions; 120–200ms for micro-interactions.
+- **Easing**: springy, gentle curves; avoid linear; use `cubic-bezier(0.22, 1, 0.36, 1)` for ease-out.
+- **Gestures**: pull to refresh; swipe to go back (if safe); avoid hidden-only interactions.
+- **Haptics**: map critical actions to light/medium impact (platform-permitting).
+
+### Accessibility
+- **Hit targets**: ≥44×44px; maintain spacing between interactive elements.
+- **Dynamic type**: respect user font scale; avoid fixed-height text containers.
+- **VoiceOver**: meaningful labels, traits/roles, ordered focus.
+
+### Checklists
+- Screen uses safe areas; nav/tab bars are translucent and padded for insets.
+- Primary actions are reachable at bottom; destructive actions clearly marked.
+- Single vertical scroll; large title collapses; content edges align to 16px grid.
+- Touch targets ≥44px; color and motion considerate of accessibility settings.
+
+### References
+- Tokens and examples: [ui-guidelines-example/design-tokens.json](mdc:ui-guidelines-example/design-tokens.json)
+- App guidelines: [app-guildelines/React-components-guidelines.md](mdc:app-guildelines/React-components-guidelines.md)
+

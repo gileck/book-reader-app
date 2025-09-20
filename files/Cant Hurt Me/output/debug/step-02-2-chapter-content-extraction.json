@@ -1,0 +1,189 @@
+{
+  "processingTime": 18,
+  "extractionStats": {
+    "totalChapters": 11,
+    "originalChapterCount": 12,
+    "filteredChapterCount": 1,
+    "totalPages": 314,
+    "averagePagesPerChapter": 28.545454545454547,
+    "totalCharacters": 584867,
+    "averageCharactersPerChapter": 53169.72727272727
+  },
+  "filteredChapters": [
+    {
+      "title": "I Should Have Been a Statistic",
+      "chapterNumber": 0,
+      "pageNumberStart": 10,
+      "pageNumberEnd": 35,
+      "contentLength": 50111
+    },
+    {
+      "title": "Truth Hurts",
+      "chapterNumber": 1,
+      "pageNumberStart": 36,
+      "pageNumberEnd": 64,
+      "contentLength": 49423
+    },
+    {
+      "title": "The Impossible Task",
+      "chapterNumber": 2,
+      "pageNumberStart": 65,
+      "pageNumberEnd": 91,
+      "contentLength": 48368
+    },
+    {
+      "title": "Taking Souls",
+      "chapterNumber": 3,
+      "pageNumberStart": 92,
+      "pageNumberEnd": 115,
+      "contentLength": 48364
+    },
+    {
+      "title": "Armored Mind",
+      "chapterNumber": 4,
+      "pageNumberStart": 116,
+      "pageNumberEnd": 144,
+      "contentLength": 59376
+    },
+    {
+      "title": "It’s Not about a Trophy",
+      "chapterNumber": 5,
+      "pageNumberStart": 145,
+      "pageNumberEnd": 170,
+      "contentLength": 52992
+    },
+    {
+      "title": "The Most Powerful Weapon",
+      "chapterNumber": 6,
+      "pageNumberStart": 171,
+      "pageNumberEnd": 204,
+      "contentLength": 62100
+    },
+    {
+      "title": "Talent Not Required",
+      "chapterNumber": 7,
+      "pageNumberStart": 205,
+      "pageNumberEnd": 235,
+      "contentLength": 54765
+    },
+    {
+      "title": "Uncommon Amongst Uncommon",
+      "chapterNumber": 8,
+      "pageNumberStart": 236,
+      "pageNumberEnd": 264,
+      "contentLength": 53218
+    },
+    {
+      "title": "The Empowerment of Failure",
+      "chapterNumber": 9,
+      "pageNumberStart": 265,
+      "pageNumberEnd": 298,
+      "contentLength": 54373
+    },
+    {
+      "title": "What If?",
+      "chapterNumber": 10,
+      "pageNumberStart": 299,
+      "pageNumberEnd": 323,
+      "contentLength": 51777
+    }
+  ],
+  "originalChapters": [
+    {
+      "title": "I Should Have Been a Statistic",
+      "chapterNumber": 0,
+      "pageNumberStart": 10,
+      "pageNumberEnd": 35,
+      "contentLength": 50111,
+      "filtered": false
+    },
+    {
+      "title": "Truth Hurts",
+      "chapterNumber": 1,
+      "pageNumberStart": 36,
+      "pageNumberEnd": 64,
+      "contentLength": 49423,
+      "filtered": false
+    },
+    {
+      "title": "The Impossible Task",
+      "chapterNumber": 2,
+      "pageNumberStart": 65,
+      "pageNumberEnd": 91,
+      "contentLength": 48368,
+      "filtered": false
+    },
+    {
+      "title": "Taking Souls",
+      "chapterNumber": 3,
+      "pageNumberStart": 92,
+      "pageNumberEnd": 115,
+      "contentLength": 48364,
+      "filtered": false
+    },
+    {
+      "title": "Armored Mind",
+      "chapterNumber": 4,
+      "pageNumberStart": 116,
+      "pageNumberEnd": 144,
+      "contentLength": 59376,
+      "filtered": false
+    },
+    {
+      "title": "It’s Not about a Trophy",
+      "chapterNumber": 5,
+      "pageNumberStart": 145,
+      "pageNumberEnd": 170,
+      "contentLength": 52992,
+      "filtered": false
+    },
+    {
+      "title": "The Most Powerful Weapon",
+      "chapterNumber": 6,
+      "pageNumberStart": 171,
+      "pageNumberEnd": 204,
+      "contentLength": 62100,
+      "filtered": false
+    },
+    {
+      "title": "Talent Not Required",
+      "chapterNumber": 7,
+      "pageNumberStart": 205,
+      "pageNumberEnd": 235,
+      "contentLength": 54765,
+      "filtered": false
+    },
+    {
+      "title": "Uncommon Amongst Uncommon",
+      "chapterNumber": 8,
+      "pageNumberStart": 236,
+      "pageNumberEnd": 264,
+      "contentLength": 53218,
+      "filtered": false
+    },
+    {
+      "title": "The Empowerment of Failure",
+      "chapterNumber": 9,
+      "pageNumberStart": 265,
+      "pageNumberEnd": 298,
+      "contentLength": 54373,
+      "filtered": false
+    },
+    {
+      "title": "What If?",
+      "chapterNumber": 10,
+      "pageNumberStart": 299,
+      "pageNumberEnd": 323,
+      "contentLength": 51777,
+      "filtered": false
+    },
+    {
+      "title": "About the Author",
+      "chapterNumber": 11,
+      "pageNumberStart": 324,
+      "pageNumberEnd": 327,
+      "contentLength": 1171,
+      "filtered": true
+    }
+  ]
+}

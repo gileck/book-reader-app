@@ -1,0 +1,100 @@
+{
+  "processingTime": 2,
+  "cleaningStats": {
+    "totalChapters": 11,
+    "totalCharactersRemoved": 155,
+    "averageCharactersRemovedPerChapter": 14.090909090909092,
+    "totalCharactersAfterCleaning": 584712,
+    "cleaningEfficiency": 0.026508776970542765
+  },
+  "chapters": [
+    {
+      "title": "I Should Have Been a Statistic",
+      "chapterNumber": 0,
+      "pageNumberStart": 10,
+      "pageNumberEnd": 35,
+      "contentLength": 50098,
+      "cleanedPreview": "--- PAGE 10 ---\n1. I SHOULD HAVE BEEN A STATISTIC \nWe found hell in a beautiful neighborhood. In 1981, Williamsville offered\nthe tastiest real estate in Buffalo, New York. Leafy and friendly, its safe..."
+    },
+    {
+      "title": "Truth Hurts",
+      "chapterNumber": 1,
+      "pageNumberStart": 36,
+      "pageNumberEnd": 64,
+      "contentLength": 49410,
+      "cleanedPreview": "--- PAGE 36 ---\n2. TRUTH HURTS \nWilmoth Irving was a new beginning. Up until he met my mother and asked\nfor her phone number, all I’d known was misery and struggle. When the\nmoney was good, our lives ..."
+    },
+    {
+      "title": "The Impossible Task",
+      "chapterNumber": 2,
+      "pageNumberStart": 65,
+      "pageNumberEnd": 91,
+      "contentLength": 48353,
+      "cleanedPreview": "--- PAGE 65 ---\n3. THE IMPOSSIBLE TASK \nIt was past midnight and the streets were dead. I steered my pickup truck\ninto another empty parking lot and killed the engine. In the quiet all I could\nhear we..."
+    },
+    {
+      "title": "Taking Souls",
+      "chapterNumber": 3,
+      "pageNumberStart": 92,
+      "pageNumberEnd": 115,
+      "contentLength": 48350,
+      "cleanedPreview": "--- PAGE 92 ---\n4. TAKING SOULS \nThe fi rst concussion grenade exploded at close range, and from there\neverything unraveled in slow motion. One minute we were chilling in the\ncommon room, hanging out,..."
+    },
+    {
+      "title": "Armored Mind",
+      "chapterNumber": 4,
+      "pageNumberStart": 116,
+      "pageNumberEnd": 144,
+      "contentLength": 59362,
+      "cleanedPreview": "--- PAGE 116 ---\n5. ARMORED MIND \n“Your knee looks pretty bad, Goggins.”\nThank you, Doctor Obvious. With two days to go in walk week, I’d come by\nmedical for a follow-up. The doctor rolled up my camo ..."
+    },
+    {
+      "title": "It’s Not about a Trophy",
+      "chapterNumber": 5,
+      "pageNumberStart": 145,
+      "pageNumberEnd": 170,
+      "contentLength": 52979,
+      "cleanedPreview": "--- PAGE 145 ---\n6. IT’S NOT ABOUT A TROPHY \nEverything about the race was going better than I could have hoped. There\nwere enough clouds in the sky to blunt the heat of the sun, my rhythm was\nas stea..."
+    },
+    {
+      "title": "The Most Powerful Weapon",
+      "chapterNumber": 6,
+      "pageNumberStart": 171,
+      "pageNumberEnd": 204,
+      "contentLength": 62085,
+      "cleanedPreview": "--- PAGE 171 ---\n7. THE MOST POWERFUL WEAPON \nTwenty-seven hours after savoring intense, gratifying pain and basking in\nthe afterglow of my greatest achievement so far, I was back at my desk on a\nMond..."
+    },
+    {
+      "title": "Talent Not Required",
+      "chapterNumber": 7,
+      "pageNumberStart": 205,
+      "pageNumberEnd": 235,
+      "contentLength": 54750,
+      "cleanedPreview": "--- PAGE 205 ---\n8. TALENT NOT REQUIRED \nThe night before the fi rst long-distance triathlon in my life, I stood with my\nmother on the deck of a sprawling, seven-million-dollar beach house in\nKona wat..."
+    },
+    {
+      "title": "Uncommon Amongst Uncommon",
+      "chapterNumber": 8,
+      "pageNumberStart": 236,
+      "pageNumberEnd": 264,
+      "contentLength": 53204,
+      "cleanedPreview": "--- PAGE 236 ---\n9. UNCOMMON AMONGST\nUNCOMMON \nThe anesthesia took hold, and I felt myself wheeling backward until I landed\nin a scene from my past. We were humping through the jungle in the dead of\nn..."
+    },
+    {
+      "title": "The Empowerment of Failure",
+      "chapterNumber": 9,
+      "pageNumberStart": 265,
+      "pageNumberEnd": 298,
+      "contentLength": 54360,
+      "cleanedPreview": "--- PAGE 265 ---\n10. THE EMPOWERMENT OF FAILURE \nOn September 27, 2012, I stood in a makeshift gym on the second fl oor of\n30 Rockefeller Center prepared to break the world record for pull-ups in a\ntw..."
+    },
+    {
+      "title": "What If?",
+      "chapterNumber": 10,
+      "pageNumberStart": 299,
+      "pageNumberEnd": 323,
+      "contentLength": 51761,
+      "cleanedPreview": "--- PAGE 299 ---\n11. WHAT IF? \nBefore the race even kicked off I knew I was in a bad place. In 2014, the\nNational Park Service wouldn’t approve the traditional Badwater course, so\nChris Kostman redrew..."
+    }
+  ]
+}

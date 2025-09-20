@@ -375,6 +375,23 @@ main();
 
 Then run: `node run-parser.js /path/to/book.pdf`
 
+### Metadata Overrides (metadata.json)
+
+You can provide a `metadata.json` file alongside your input PDF to override metadata extraction for title and author. If present, these values will be used instead of automatic detection.
+
+Location: same directory as the input PDF
+
+Example `metadata.json`:
+
+```json
+{
+  "title": "Cant Hurt Me: Master Your Mind and Defy the Odds",
+  "author": "David Goggins"
+}
+```
+
+Only `title` and `author` are supported currently.
+
 ## Uploader (upload-book.js)
 
 Programmatic and CLI tool to upload parsed books to the database and optionally upload images to Vercel Blob.

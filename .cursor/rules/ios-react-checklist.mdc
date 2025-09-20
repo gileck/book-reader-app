@@ -1,0 +1,41 @@
+---
+globs: src/**/*.tsx,src/**/*.ts,examples/**/*.tsx
+description: Implementation checklist for iOS-like mobile-first React components and routes
+---
+
+## iOS-like React Implementation Checklist
+
+Use this when building React components, screens, and routes intended for a native iOS feel.
+
+### Mobile-First Structure
+- Wrap pages in a root container that applies safe-area padding using CSS env insets.
+- Provide a top `NavigationBar` and optional `LargeTitleHeader` that collapses on scroll.
+- Place primary actions near the bottom; use a `TabBar` when multiple sections exist.
+
+### Component Patterns
+- Export typed components with explicit `Props` interfaces; avoid `any`.
+- Split presentation and logic: UI-only components do not import server modules.
+- Handle loading/empty/error states explicitly; do not block layout reflow.
+
+### Accessibility & Interactions
+- Ensure all interactive elements have ≥44px hit area and keyboard/focus support.
+- Use ARIA roles and labels; announce state changes for toggles and segmented controls.
+- Respect prefers-reduced-motion; gate non-essential animations.
+
+### Styling Guidelines
+- Consume semantic CSS variables (tokens) for color, spacing, radius, shadow, and typography.
+- Use 4px spacing grid; page gutters 16px; card radius 12–16px.
+- Prefer translucent bars over content with a blur backdrop when available.
+
+### Performance
+- Avoid heavy images in bars; keep nav/tab bars under 64px height plus safe area.
+- Defer off-screen content; virtualize long lists.
+
+### Do Nots
+- Do not use hidden-only gestures for core navigation.
+- Do not nest multiple vertical scrollers within the same viewport.
+
+### References
+- Core iOS mobile UI rules: [.cursor/rules/ios-mobile-ui.mdc](mdc:.cursor/rules/ios-mobile-ui.mdc)
+- Design tokens example: [ui-guidelines-example/design-tokens.json](mdc:ui-guidelines-example/design-tokens.json)
+

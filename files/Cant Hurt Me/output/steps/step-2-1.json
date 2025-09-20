@@ -1,0 +1,126 @@
+{
+  "chapterMetadata": [
+    {
+      "title": "I Should Have Been a Statistic",
+      "chapterNumber": 0,
+      "startingPage": 10,
+      "endPage": 35,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Truth Hurts",
+      "chapterNumber": 1,
+      "startingPage": 36,
+      "endPage": 64,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The Impossible Task",
+      "chapterNumber": 2,
+      "startingPage": 65,
+      "endPage": 91,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Taking Souls",
+      "chapterNumber": 3,
+      "startingPage": 92,
+      "endPage": 115,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Armored Mind",
+      "chapterNumber": 4,
+      "startingPage": 116,
+      "endPage": 144,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "It’s Not about a Trophy",
+      "chapterNumber": 5,
+      "startingPage": 145,
+      "endPage": 170,
+      "confidence": 0.7,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The Most Powerful Weapon",
+      "chapterNumber": 6,
+      "startingPage": 171,
+      "endPage": 204,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Talent Not Required",
+      "chapterNumber": 7,
+      "startingPage": 205,
+      "endPage": 235,
+      "confidence": 0.7999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "Uncommon Amongst Uncommon",
+      "chapterNumber": 8,
+      "startingPage": 236,
+      "endPage": 264,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "The Empowerment of Failure",
+      "chapterNumber": 9,
+      "startingPage": 265,
+      "endPage": 298,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "What If?",
+      "chapterNumber": 10,
+      "startingPage": 299,
+      "endPage": 323,
+      "confidence": 0.8999999999999999,
+      "detectionSource": "pdf_bookmarks"
+    },
+    {
+      "title": "About the Author",
+      "chapterNumber": 11,
+      "startingPage": 324,
+      "endPage": null,
+      "confidence": 1,
+      "detectionSource": "pdf_bookmarks"
+    }
+  ],
+  "metadata": {
+    "processingStartTime": "2025-09-04T13:33:48.006Z",
+    "processingEndTime": null,
+    "stepResults": {},
+    "textExtraction": {
+      "characterCount": 593336,
+      "pageCount": 328,
+      "lineCount": 9566,
+      "wordCount": 111923,
+      "literalNewlineCount": 0,
+      "extractionTime": "2025-09-04T13:33:49.795Z",
+      "averageWordsPerPage": 341,
+      "extractionMethod": "page_by_page_fixed",
+      "totalTextContentItems": 16730
+    },
+    "chapterDetection": {
+      "chaptersDetected": 12,
+      "tocSource": "pdf_bookmarks",
+      "tocEntriesFound": 13,
+      "patternMatches": 43,
+      "averageDetectionConfidence": 0.8833333333333333,
+      "pageOffset": 0,
+      "processingTime": 1676,
+      "detectionMethod": "hybrid_v1_toc_detection"
+    }
+  }
+}
