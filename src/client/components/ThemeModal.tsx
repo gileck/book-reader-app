@@ -34,9 +34,6 @@ interface ThemeModalProps {
     onLineHeightChange: (lineHeight: number) => void;
     onFontFamilyChange: (fontFamily: string) => void;
     onTextColorChange: (textColor: string) => void;
-    // New: word highlighting toggle
-    wordHighlightingEnabled?: boolean;
-    onWordHighlightingEnabledChange?: (enabled: boolean) => void;
     // New: highlight mode
     highlightMode?: 'word' | 'line' | 'off';
     onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
@@ -60,8 +57,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onLineHeightChange,
     onFontFamilyChange,
     onTextColorChange,
-    wordHighlightingEnabled = true,
-    onWordHighlightingEnabledChange,
     highlightMode = 'word',
     onHighlightModeChange,
     onResetToDefaults
@@ -73,7 +68,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localLineHeight, setLocalLineHeight] = useState(currentLineHeight);
     const [localFontFamily, setLocalFontFamily] = useState(currentFontFamily);
     const [localTextColor, setLocalTextColor] = useState(currentTextColor);
-    const [localWordHighlighting, setLocalWordHighlighting] = useState<boolean>(wordHighlightingEnabled);
     const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
 
     useEffect(() => {
@@ -84,9 +78,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalLineHeight(currentLineHeight);
         setLocalFontFamily(currentFontFamily);
         setLocalTextColor(currentTextColor);
-        setLocalWordHighlighting(wordHighlightingEnabled);
         setLocalHighlightMode(highlightMode);
-    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, wordHighlightingEnabled, highlightMode]);
+    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode]);
 
     const handleThemeToggle = (checked: boolean) => {
         const newTheme = checked ? 'dark' : 'light';
@@ -169,7 +162,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         if (localHighlightColor !== currentHighlightColor) onHighlightColorChange(localHighlightColor);
         if (localSentenceHighlightColor !== currentSentenceHighlightColor) onSentenceHighlightColorChange(localSentenceHighlightColor);
         if (localTextColor !== currentTextColor) onTextColorChange(localTextColor);
-        if (onWordHighlightingEnabledChange && localWordHighlighting !== wordHighlightingEnabled) onWordHighlightingEnabledChange(localWordHighlighting);
         if (onHighlightModeChange && localHighlightMode !== highlightMode) onHighlightModeChange(localHighlightMode);
         onClose();
     };
@@ -428,21 +420,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                     />
 
                     <Divider sx={{ my: 3 }} />
-
-                    {/* Word Highlighting Toggle */}
-                    <Typography variant="h6" gutterBottom>
-                        Word Highlighting
-                    </Typography>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={localWordHighlighting}
-                                onChange={(e) => setLocalWordHighlighting(e.target.checked)}
-                            />
-                        }
-                        label={localWordHighlighting ? 'Enabled' : 'Disabled'}
-                        sx={{ mb: 3 }}
-                    />
 
                     {/* Highlight Mode */}
                     <Typography variant="h6" gutterBottom>

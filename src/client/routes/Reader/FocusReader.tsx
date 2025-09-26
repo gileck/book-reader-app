@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import type { FocusAudioApi } from './hooks/useFocusAudioPlayback';
 import { useUserTheme } from '@/client/components/UserThemeProvider';
 
-export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; wordHighlightingEnabled?: boolean }> = ({ focusAudio, wordHighlightingEnabled = true }) => {
+export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; highlightMode?: 'word' | 'line' | 'off' }> = ({ focusAudio, highlightMode = 'word' }) => {
     const sentences = focusAudio.sentences;
     const currentSentenceIndex = focusAudio.currentSentenceIndex;
     const isPlaying = focusAudio.isPlaying;
@@ -29,8 +29,8 @@ export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; wordHighlighting
 
     // Animate sentence transitions (simple fade/slide)
     const containerRef = useRef<HTMLDivElement>(null);
-    // Keep for potential bar highlight; not used for bold-only
-    // const [linePos, setLinePos] = useState<{ top: number; height: number } | null>(null);
+    // Line highlight overlay position (for straight background across the whole line)
+    const [linePos, setLinePos] = useState<{ top: number; height: number } | null>(null);
     const [currentLineWordIndexes, setCurrentLineWordIndexes] = useState<Set<number>>(new Set());
     useEffect(() => {
         const el = containerRef.current;
@@ -44,18 +44,20 @@ export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; wordHighlighting
         });
     }, [currentSentenceIndex]);
 
-    // Compute line bolding group for the active word when word highlighting is off
+    // Compute current visual line (top/height) and which word indexes are on that line
     useEffect(() => {
         const updateLinePos = () => {
             const container = containerRef.current;
             if (!container) return;
             const wordEl = container.querySelector(`[data-word-index="${currentWordIndex}"]`) as HTMLElement | null;
             if (!wordEl) {
+                setLinePos(null);
                 setCurrentLineWordIndexes(new Set());
                 return;
             }
+            const cr = container.getBoundingClientRect();
             const wr = wordEl.getBoundingClientRect();
-            // setLinePos can be used if we re-enable a background bar; keep indexes for bolding
+            setLinePos({ top: wr.top - cr.top, height: wr.height });
 
             // Find all words on the same visual line (same top within tolerance)
             const sameLine = new Set<number>();
@@ -105,7 +107,7 @@ export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; wordHighlighting
             {/* Use same global class as full reader: .highlight-word; set CSS var for color */}
             {/* Previous (smaller, subdued, under) */}
             <Box sx={{ minHeight: 44 }}>
-                <Typography variant="body2" sx={{ color: 'var(--color-secondary-label)', textAlign: 'center', opacity: 0.9 }}>
+                <Typography variant="body2" sx={{ color: textColor, textAlign: 'center', opacity: 0.6 }}>
                     {prevText}
                 </Typography>
                 {/* CSS for line bolding; no layout shift */}
@@ -116,26 +118,45 @@ export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; wordHighlighting
 
             {/* Current (bold, big, centered) */}
             <Box ref={containerRef} sx={{ position: 'relative', ['--word-highlight-color' as unknown as string]: highlightColor }}>
+                {highlightMode === 'line' && linePos && (
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            zIndex: 0,
+                            left: 0,
+                            right: 0,
+                            top: `${linePos.top}px`,
+                            height: `${linePos.height}px`,
+                            backgroundColor: highlightColor,
+                            borderRadius: '6px',
+                            pointerEvents: 'none',
+                            transition: 'top 220ms cubic-bezier(0.22, 1, 0.36, 1)'
+                        }}
+                    />
+                )}
                 <Typography
                     variant="h4"
                     sx={{
                         fontSize: 'min(calc(var(--font-size-title1) * 1.2), 34px)',
                         lineHeight: 'var(--line-tight)',
-                        fontWeight: wordHighlightingEnabled ? 700 : 400,
+                        fontWeight: 700,
                         textAlign: 'center',
                         color: textColor,
                         whiteSpace: 'pre-wrap',
-                        wordBreak: 'break-word'
+                        wordBreak: 'break-word',
+                        position: 'relative',
+                        zIndex: 1
                     }}
                 >
                     {currentWords.map((w, i) => (
                         <span
                             key={`w-${i}`}
-                            className={
-                                wordHighlightingEnabled
-                                    ? (isPlaying && i === currentWordIndex ? 'highlight-word' : '')
-                                    : (currentLineWordIndexes.has(i) ? 'line-bold' : '')
-                            }
+                            className={(() => {
+                                if (highlightMode === 'off') return '';
+                                if (highlightMode === 'word') return (isPlaying && i === currentWordIndex) ? 'highlight-word' : '';
+                                // line mode uses overlay bar; no per-word class to keep line straight
+                                return '';
+                            })()}
                             data-word-index={i}
                         >
                             {w}

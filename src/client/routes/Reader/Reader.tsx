@@ -240,7 +240,7 @@ export const Reader = () => {
                 </Box>
 
                 {isFocusMode ? (
-                    <FocusReader focusAudio={focusAudio!} wordHighlightingEnabled={settings.highlightMode === 'word'} />
+                    <FocusReader focusAudio={focusAudio!} highlightMode={settings.highlightMode} />
                 ) : (
                     <Paper
                         ref={scrollContainerRef}
@@ -360,8 +360,6 @@ export const Reader = () => {
                     onLineHeightChange={settings.handleLineHeightChange}
                     onFontFamilyChange={settings.handleFontFamilyChange}
                     onTextColorChange={settings.handleTextColorChange}
-                    wordHighlightingEnabled={settings.wordHighlightingEnabled}
-                    onWordHighlightingEnabledChange={(enabled) => settings.handleWordHighlightingEnabledChange?.(enabled)}
                     highlightMode={settings.highlightMode}
                     onHighlightModeChange={settings.handleHighlightModeChange}
                     onResetToDefaults={settings.handleResetToDefaults}
