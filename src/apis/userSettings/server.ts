@@ -107,6 +107,14 @@ export async function updateUserSettings(params: UpdateUserSettingsRequest): Pro
         if (params.settings.textColorLight !== undefined) serverSettings.textColorLight = params.settings.textColorLight;
         if (params.settings.textColorDark !== undefined) serverSettings.textColorDark = params.settings.textColorDark;
 
+        // Focus Mode
+        if (params.settings.wordHighlightingEnabled !== undefined) {
+            serverSettings.wordHighlightingEnabled = params.settings.wordHighlightingEnabled;
+        }
+        if (params.settings.highlightMode !== undefined) {
+            serverSettings.highlightMode = params.settings.highlightMode;
+        }
+
         const updatedSettings = await updateSettings(params.userId, serverSettings);
 
         if (!updatedSettings) {

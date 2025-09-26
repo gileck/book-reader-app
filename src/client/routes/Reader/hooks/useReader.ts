@@ -424,6 +424,8 @@ export const useReader = () => {
             lineHeight: userSettings.lineHeight,
             fontFamily: userSettings.fontFamily,
             textColor: userSettings.textColor,
+            highlightMode: userSettings.highlightMode,
+            wordHighlightingEnabled: userSettings.wordHighlightingEnabled,
             settingsLoaded: userSettings.settingsLoaded,
             handleSpeedChange,
             handleTtsEnabledChange: userSettings.handleTtsEnabledChange,
@@ -442,7 +444,9 @@ export const useReader = () => {
             handleLineHeightChange: userSettings.handleLineHeightChange,
             handleFontFamilyChange: userSettings.handleFontFamilyChange,
             handleTextColorChange: userSettings.handleTextColorChange,
-            handleResetToDefaults: userSettings.handleResetToDefaults
+            handleResetToDefaults: userSettings.handleResetToDefaults,
+            handleWordHighlightingEnabledChange: userSettings.handleWordHighlightingEnabledChange,
+            handleHighlightModeChange: userSettings.handleHighlightModeChange
         },
 
         // Bookmarks

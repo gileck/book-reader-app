@@ -62,6 +62,7 @@ interface AudioControlsProps {
         currentSessionTime: number;
         sessionsCount: number;
     };
+    unitLabelOverride?: string;
 }
 
 export const AudioControls: React.FC<AudioControlsProps> = ({
@@ -94,7 +95,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     ttsServiceAvailable = true,
     ttsError,
     onDismissError,
-    chapterTransitionLoading = false
+    chapterTransitionLoading = false,
+    unitLabelOverride
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
     const displayProgress = progress;
@@ -286,7 +288,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         whiteSpace: 'nowrap'
                     }}
                 >
-                    {currentChunk} of {totalChunks} sentences
+                    {currentChunk} of {totalChunks} {unitLabelOverride || 'sentences'}
                 </Typography>
             </Box>
 

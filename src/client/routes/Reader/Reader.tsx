@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Box, Typography, CircularProgress, Paper, Alert, Snackbar, Fab } from '@mui/material';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { Box, Typography, CircularProgress, Paper, Alert, Snackbar, Fab, ToggleButtonGroup, ToggleButton, Tooltip } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
@@ -18,9 +18,13 @@ import { BookQAPanel } from './components/BookQAPanel';
 import { BookQAChatSettings } from './components/BookQAPanel/BookQAChatSettings';
 import { CostApprovalDialog } from './components/CostApprovalDialog';
 import { ChapterSelector } from './components/ChapterSelector';
+import { FocusReader } from './FocusReader';
+import { useFocusAudioPlayback } from './hooks/useFocusAudioPlayback';
+import { useSettings } from '../../settings/SettingsContext';
 
 export const Reader = () => {
-    const { navigate } = useRouter();
+    const { navigate, queryParams } = useRouter();
+    const { settings: appSettings, updateSettings } = useSettings();
     const {
         book,
         chapter,
@@ -67,8 +71,28 @@ export const Reader = () => {
         }
     });
 
+    // Sync reading mode from URL param on load/change
+    useEffect(() => {
+        const urlMode = (queryParams.mode as 'full' | 'focus' | undefined) || undefined;
+        if (urlMode && urlMode !== appSettings.readingMode) {
+            updateSettings({ readingMode: urlMode });
+        }
+    }, [queryParams.mode, appSettings.readingMode, updateSettings]);
+
     // Initialize content context hook with bookQA context lines
     const contentContext = useContentContext(chapter, audio, bookQA);
+
+    // Determine mode and prepare focus audio BEFORE any early returns
+    const isFocusMode = (appSettings.readingMode || 'full') === 'focus';
+    const focusAudio = useFocusAudioPlayback(
+        chapter,
+        settings.selectedVoice,
+        settings.selectedProvider,
+        settings.playbackSpeed,
+        settings.ttsEnabled,
+        audio.currentChunkIndex,
+        audio.currentWordIndex
+    );
 
     // Initialize scroll handling hook
     const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
@@ -88,8 +112,12 @@ export const Reader = () => {
         }
     }, [loading, chapter?.chapterNumber, audio.currentChunkIndex]);
 
-    // Show a floating button when current chunk is outside of the scroll container's viewport
+    // Show a floating button when current chunk is outside of the scroll container's viewport (full mode only)
     useEffect(() => {
+        if (appSettings.readingMode === 'focus') {
+            setShowScrollToCurrent(false);
+            return;
+        }
         const container = scrollContainerRef.current;
         if (!container || loading || !chapter || audio.currentChunkIndex === null) {
             setShowScrollToCurrent(false);
@@ -139,7 +167,21 @@ export const Reader = () => {
             if (retryTimeout) clearTimeout(retryTimeout);
             cancelAnimationFrame(raf);
         };
-    }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length]);
+    }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length, appSettings.readingMode]);
+
+    const handleModeChange = useCallback((_: unknown, nextMode: 'full' | 'focus' | null) => {
+        const mode = nextMode || 'full';
+        if (mode !== appSettings.readingMode) {
+            updateSettings({ readingMode: mode });
+        }
+        // Sync URL param
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (mode === 'full') params.delete('mode'); else params.set('mode', mode);
+            const path = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+            navigate(path);
+        }
+    }, [appSettings.readingMode, updateSettings, navigate]);
 
     if ((loading && !chapterTransitionLoading) || !settings.settingsLoaded) {
         return (
@@ -169,6 +211,8 @@ export const Reader = () => {
         );
     }
 
+    // isFocusMode and focusAudio initialized above
+
     return (
         <UserThemeProvider
             theme={settings.theme}
@@ -180,40 +224,58 @@ export const Reader = () => {
             textColor={settings.textColor}
         >
             <Box>
-                {/* Text Area */}
-                <Paper
-                    ref={scrollContainerRef}
-                    elevation={0}
-                    sx={{
-                        maxWidth: 800,
-                        mx: 'auto',
-                        p: 1,
-                        pb: { xs: 20, sm: 16 },
-                        borderRadius: 0,
-                        height: 'calc(100vh - 200px)', // Adjust to account for AudioControls height
-                        overflow: 'auto'
-                    }}
-                >
-                    <ReaderHeader book={book} chapter={chapter} />
+                {/* Mode Toggle */}
+                <Box sx={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', justifyContent: 'flex-end', maxWidth: 800, mx: 'auto', px: 1, pt: 1 }}>
+                    <Tooltip title="Reading Mode">
+                        <ToggleButtonGroup
+                            value={isFocusMode ? 'focus' : 'full'}
+                            exclusive
+                            size="small"
+                            onChange={handleModeChange}
+                        >
+                            <ToggleButton value="full">Full</ToggleButton>
+                            <ToggleButton value="focus">Focus</ToggleButton>
+                        </ToggleButtonGroup>
+                    </Tooltip>
+                </Box>
 
-                    <ReaderContent
-                        chapter={chapter}
-                        book={book}
-                        scrollContainerRef={scrollContainerRef}
-                        onNavigateToChapter={navigation.setCurrentChapterNumber}
-                        onNavigateToChunk={navigation.setCurrentChunkIndex}
-                        onNavigateToBookmark={navigation.handleNavigateToBookmark}
-                        currentChunkIndex={audio.currentChunkIndex}
-                        fontSize={settings.fontSize}
-                        lineHeight={settings.lineHeight}
-                        fontFamily={settings.fontFamily}
-                        textColor={settings.textColor}
-                        highlightColor={settings.highlightColor}
-                        sentenceHighlightColor={settings.sentenceHighlightColor}
-                    />
-                </Paper>
+                {isFocusMode ? (
+                    <FocusReader focusAudio={focusAudio!} wordHighlightingEnabled={settings.highlightMode === 'word'} />
+                ) : (
+                    <Paper
+                        ref={scrollContainerRef}
+                        elevation={0}
+                        sx={{
+                            maxWidth: 800,
+                            mx: 'auto',
+                            p: 1,
+                            pb: { xs: 20, sm: 16 },
+                            borderRadius: 0,
+                            height: 'calc(100vh - 200px)', // Adjust to account for AudioControls height
+                            overflow: 'auto'
+                        }}
+                    >
+                        <ReaderHeader book={book} chapter={chapter} />
 
-                {showScrollToCurrent && (
+                        <ReaderContent
+                            chapter={chapter}
+                            book={book}
+                            scrollContainerRef={scrollContainerRef}
+                            onNavigateToChapter={navigation.setCurrentChapterNumber}
+                            onNavigateToChunk={navigation.setCurrentChunkIndex}
+                            onNavigateToBookmark={navigation.handleNavigateToBookmark}
+                            currentChunkIndex={audio.currentChunkIndex}
+                            fontSize={settings.fontSize}
+                            lineHeight={settings.lineHeight}
+                            fontFamily={settings.fontFamily}
+                            textColor={settings.textColor}
+                            highlightColor={settings.highlightColor}
+                            sentenceHighlightColor={settings.sentenceHighlightColor}
+                        />
+                    </Paper>
+                )}
+
+                {!isFocusMode && showScrollToCurrent && (
                     <Fab
                         color="primary"
                         size="medium"
@@ -228,23 +290,25 @@ export const Reader = () => {
                 {/* Audio Controls - Fixed at bottom */}
                 <AudioControls
                     chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
-                    currentChunk={audio.currentChunkIndex + 1}
-                    totalChunks={audio.textChunks.length}
-                    onPlay={audio.handlePlay}
-                    onPause={audio.handlePause}
-                    onPreviousChunk={audio.handlePreviousChunk}
-                    onNextChunk={audio.handleNextChunk}
+                    currentChunk={isFocusMode ? focusAudio!.currentSentenceIndex + 1 : audio.currentChunkIndex + 1}
+                    totalChunks={isFocusMode ? focusAudio!.sentences.length : audio.textChunks.length}
+                    onPlay={isFocusMode ? focusAudio!.handlePlay : audio.handlePlay}
+                    onPause={isFocusMode ? focusAudio!.handlePause : audio.handlePause}
+                    onPreviousChunk={isFocusMode ? focusAudio!.handlePreviousSentence : audio.handlePreviousChunk}
+                    onNextChunk={isFocusMode ? focusAudio!.handleNextSentence : audio.handleNextChunk}
                     onPreviousChapter={navigation.handlePreviousChapter}
                     onNextChapter={navigation.handleNextChapter}
                     onBookmark={bookmarks.handleBookmark}
                     onSettings={settings.handleSettings}
                     onSpeedSettings={settings.handleSpeedSettings}
                     onAskAI={bookQA.togglePanel}
-                    isPlaying={audio.isPlaying}
+                    isPlaying={isFocusMode ? focusAudio!.isPlaying : audio.isPlaying}
                     ttsEnabled={settings.ttsEnabled}
                     isCurrentChunkLoading={audio.isCurrentChunkLoading}
                     isBookmarked={bookmarks.isBookmarked}
-                    progress={audio.currentChunkIndex !== null ? (audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100 : 0}
+                    progress={isFocusMode
+                        ? (focusAudio!.currentSentenceIndex / Math.max((focusAudio!.sentences.length - 1), 1)) * 100
+                        : (audio.currentChunkIndex !== null ? (audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100 : 0)}
                     playbackSpeed={settings.playbackSpeed}
                     bookmarks={bookmarks.bookmarks}
                     currentChapterNumber={chapter.chapterNumber}
@@ -254,10 +318,11 @@ export const Reader = () => {
                     progressData={progress}
                     onChapters={chapterDialog.openDialog}
                     minChapterNumber={book?.chapterStartNumber ?? 1}
-                    ttsServiceAvailable={audio.ttsServiceAvailable}
-                    ttsError={audio.ttsError}
+                    ttsServiceAvailable={isFocusMode ? true : audio.ttsServiceAvailable}
+                    ttsError={isFocusMode ? null : audio.ttsError}
                     onDismissError={audio.clearTtsError}
                     chapterTransitionLoading={chapterTransitionLoading}
+                    unitLabelOverride={isFocusMode ? 'sentences' : undefined}
                 />
 
                 {/* Speed Control Modal */}
@@ -295,6 +360,10 @@ export const Reader = () => {
                     onLineHeightChange={settings.handleLineHeightChange}
                     onFontFamilyChange={settings.handleFontFamilyChange}
                     onTextColorChange={settings.handleTextColorChange}
+                    wordHighlightingEnabled={settings.wordHighlightingEnabled}
+                    onWordHighlightingEnabledChange={(enabled) => settings.handleWordHighlightingEnabledChange?.(enabled)}
+                    highlightMode={settings.highlightMode}
+                    onHighlightModeChange={settings.handleHighlightModeChange}
                     onResetToDefaults={settings.handleResetToDefaults}
                 />
 

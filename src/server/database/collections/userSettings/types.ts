@@ -24,6 +24,10 @@ export interface UserSettings {
     textColorLight: string;
     textColorDark: string;
 
+    // Focus Mode
+    wordHighlightingEnabled?: boolean;
+    highlightMode?: 'word' | 'line' | 'off';
+
     // Reading Preferences
     autoAdvance: boolean;
     chunkSize: number;
@@ -60,6 +64,8 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     fontFamily: 'Inter, system-ui, sans-serif',
     textColorLight: '#000000',
     textColorDark: '#ffffff',
+    wordHighlightingEnabled: true,
+    highlightMode: 'word',
     autoAdvance: true,
     chunkSize: 10
 }; 

@@ -6,6 +6,7 @@ export interface Settings {
     theme: 'light' | 'dark';
     offlineMode: boolean;
     staleWhileRevalidate: boolean;
+    readingMode?: 'full' | 'focus';
 }
 
 // Define the settings context type
@@ -24,4 +25,5 @@ export const defaultSettings: Settings = {
     theme: 'light',
     offlineMode: false,
     staleWhileRevalidate: false,
+    readingMode: 'full',
 }; 

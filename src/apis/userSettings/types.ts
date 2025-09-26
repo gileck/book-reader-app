@@ -15,6 +15,9 @@ export interface UserSettings {
     lineHeight: number;
     fontFamily: string;
     textColor: string;
+    // Focus mode preferences
+    wordHighlightingEnabled?: boolean; // legacy toggle
+    highlightMode?: 'word' | 'line' | 'off';
     // Per-mode color storage
     highlightColorLight?: string;
     highlightColorDark?: string;
@@ -60,6 +63,10 @@ export interface UpdateUserSettingsPayload {
     sentenceHighlightColorDark?: string;
     textColorLight?: string;
     textColorDark?: string;
+
+    // Focus Mode
+    wordHighlightingEnabled?: boolean;
+    highlightMode?: 'word' | 'line' | 'off';
 
     // Reading Preferences
     autoAdvance?: boolean;

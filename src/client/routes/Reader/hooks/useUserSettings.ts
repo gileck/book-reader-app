@@ -25,6 +25,9 @@ interface UserSettingsState {
     sentenceHighlightColorDark: string;
     textColorLight: string;
     textColorDark: string;
+    // Focus mode
+    wordHighlightingEnabled: boolean;
+    highlightMode: 'word' | 'line' | 'off';
 }
 
 const getDefaultUserSettingsState = (): UserSettingsState => ({
@@ -48,6 +51,9 @@ const getDefaultUserSettingsState = (): UserSettingsState => ({
     sentenceHighlightColorDark: '#1a237e',
     textColorLight: '#000000',
     textColorDark: '#ffffff'
+    ,
+    wordHighlightingEnabled: true,
+    highlightMode: 'word'
 });
 
 export const useUserSettings = (userId: string) => {
@@ -65,7 +71,7 @@ export const useUserSettings = (userId: string) => {
             try {
                 const settingsResult = await getUserSettings({ userId });
                 if (settingsResult.data?.success && settingsResult.data.userSettings) {
-                    const s = settingsResult.data.userSettings as any;
+                    const s = settingsResult.data.userSettings;
                     const theme = s.theme as 'light' | 'dark';
                     const highlightLight = s.highlightColorLight ?? s.highlightColor ?? '#ffeb3b';
                     const highlightDark = s.highlightColorDark ?? s.highlightColor ?? '#ffeb3b';
@@ -92,6 +98,9 @@ export const useUserSettings = (userId: string) => {
                         sentenceHighlightColorDark: sentenceDark,
                         textColorLight: textLight,
                         textColorDark: textDark
+                        ,
+                        wordHighlightingEnabled: s.wordHighlightingEnabled ?? true,
+                        highlightMode: (s.highlightMode as 'word' | 'line' | 'off') ?? (s.wordHighlightingEnabled === false ? 'off' : 'word')
                     });
 
 
@@ -367,6 +376,24 @@ export const useUserSettings = (userId: string) => {
         }
     }, [userId, updateState]);
 
+    const handleWordHighlightingEnabledChange = useCallback(async (enabled: boolean) => {
+        updateState({ wordHighlightingEnabled: enabled });
+        try {
+            await updateUserSettings({ userId, settings: { wordHighlightingEnabled: enabled } });
+        } catch (error) {
+            console.error('Error updating word highlighting setting:', error);
+        }
+    }, [userId, updateState]);
+
+    const handleHighlightModeChange = useCallback(async (mode: 'word' | 'line' | 'off') => {
+        updateState({ highlightMode: mode, wordHighlightingEnabled: mode === 'word' });
+        try {
+            await updateUserSettings({ userId, settings: { highlightMode: mode, wordHighlightingEnabled: mode === 'word' ? true : mode === 'off' ? false : state.wordHighlightingEnabled } });
+        } catch (error) {
+            console.error('Error updating highlight mode:', error);
+        }
+    }, [userId, updateState, state.wordHighlightingEnabled]);
+
     return {
         ttsEnabled: state.ttsEnabled,
         playbackSpeed: state.playbackSpeed,
@@ -382,6 +409,8 @@ export const useUserSettings = (userId: string) => {
         lineHeight: state.lineHeight,
         fontFamily: state.fontFamily,
         textColor: state.textColor,
+        highlightMode: state.highlightMode,
+        wordHighlightingEnabled: state.wordHighlightingEnabled,
         settingsLoaded,
         handleSpeedChange,
         handleTtsEnabledChange,
@@ -400,6 +429,8 @@ export const useUserSettings = (userId: string) => {
         handleLineHeightChange,
         handleFontFamilyChange,
         handleTextColorChange,
-        handleResetToDefaults
+        handleWordHighlightingEnabledChange,
+        handleResetToDefaults,
+        handleHighlightModeChange
     };
 }; 

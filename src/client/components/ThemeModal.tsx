@@ -34,6 +34,12 @@ interface ThemeModalProps {
     onLineHeightChange: (lineHeight: number) => void;
     onFontFamilyChange: (fontFamily: string) => void;
     onTextColorChange: (textColor: string) => void;
+    // New: word highlighting toggle
+    wordHighlightingEnabled?: boolean;
+    onWordHighlightingEnabledChange?: (enabled: boolean) => void;
+    // New: highlight mode
+    highlightMode?: 'word' | 'line' | 'off';
+    onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
     onResetToDefaults: () => void;
 }
 
@@ -54,6 +60,10 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onLineHeightChange,
     onFontFamilyChange,
     onTextColorChange,
+    wordHighlightingEnabled = true,
+    onWordHighlightingEnabledChange,
+    highlightMode = 'word',
+    onHighlightModeChange,
     onResetToDefaults
 }) => {
     const [localTheme, setLocalTheme] = useState(currentTheme);
@@ -63,6 +73,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localLineHeight, setLocalLineHeight] = useState(currentLineHeight);
     const [localFontFamily, setLocalFontFamily] = useState(currentFontFamily);
     const [localTextColor, setLocalTextColor] = useState(currentTextColor);
+    const [localWordHighlighting, setLocalWordHighlighting] = useState<boolean>(wordHighlightingEnabled);
+    const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
 
     useEffect(() => {
         setLocalTheme(currentTheme);
@@ -72,7 +84,9 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalLineHeight(currentLineHeight);
         setLocalFontFamily(currentFontFamily);
         setLocalTextColor(currentTextColor);
-    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor]);
+        setLocalWordHighlighting(wordHighlightingEnabled);
+        setLocalHighlightMode(highlightMode);
+    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, wordHighlightingEnabled, highlightMode]);
 
     const handleThemeToggle = (checked: boolean) => {
         const newTheme = checked ? 'dark' : 'light';
@@ -155,6 +169,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         if (localHighlightColor !== currentHighlightColor) onHighlightColorChange(localHighlightColor);
         if (localSentenceHighlightColor !== currentSentenceHighlightColor) onSentenceHighlightColorChange(localSentenceHighlightColor);
         if (localTextColor !== currentTextColor) onTextColorChange(localTextColor);
+        if (onWordHighlightingEnabledChange && localWordHighlighting !== wordHighlightingEnabled) onWordHighlightingEnabledChange(localWordHighlighting);
+        if (onHighlightModeChange && localHighlightMode !== highlightMode) onHighlightModeChange(localHighlightMode);
         onClose();
     };
 
@@ -412,6 +428,31 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                     />
 
                     <Divider sx={{ my: 3 }} />
+
+                    {/* Word Highlighting Toggle */}
+                    <Typography variant="h6" gutterBottom>
+                        Word Highlighting
+                    </Typography>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={localWordHighlighting}
+                                onChange={(e) => setLocalWordHighlighting(e.target.checked)}
+                            />
+                        }
+                        label={localWordHighlighting ? 'Enabled' : 'Disabled'}
+                        sx={{ mb: 3 }}
+                    />
+
+                    {/* Highlight Mode */}
+                    <Typography variant="h6" gutterBottom>
+                        Highlight Mode
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+                        <Button variant={localHighlightMode === 'word' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('word')}>Word</Button>
+                        <Button variant={localHighlightMode === 'line' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('line')}>Line</Button>
+                        <Button variant={localHighlightMode === 'off' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('off')}>Off</Button>
+                    </Box>
 
                     {/* Preview */}
                     <Typography variant="h6" gutterBottom>
