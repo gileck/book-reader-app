@@ -7,7 +7,8 @@ const {
     countWords,
     endsWithInitials,
     endsWithCommonSingleLetterWord,
-    endsWithAbbreviation
+    endsWithAbbreviation,
+    splitIntoSentences // Use the SAME splitting logic as the parser
 } = require('../../utils/text-processing-utils');
 
 /**
@@ -184,84 +185,39 @@ function validate(output) {
                     const imageMarkerRegex = /\[\[IMG\s+id=([^\s]+)\s+index=(\d+)\s+alt="([^"]*)"\]\]/g;
                     const contentWithoutMarkers = chunk.content.replace(imageMarkerRegex, '').trim();
                     const isStandaloneImageChunk = contentWithoutMarkers.length === 0;
-                    
+
                     if (!isStandaloneImageChunk) {
                         // Sentence chunks should start with capital letters (including accented), numbers, punctuation, quotes, mathematical symbols, etc.
                         // but NOT lowercase letters (proper text formatting)
                         const isUppercaseLetter = firstChar && firstChar === firstChar.toUpperCase() && firstChar !== firstChar.toLowerCase();
                         const isPunctuation = /[0-9'"'''""«»„"‚'‛‹›\u2018\u2019\u201C\u201D\u2013\u2014\u2015\u2026\(\)\[\]\{\},.;:!?\-–—+*/<>=~`@#$%^&|\\αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ∞∑∏∫∂∆∇±×÷°′″‰%‱§¶†‡•‰‱]/.test(firstChar);
                         const isValidStart = isUppercaseLetter || isPunctuation;
-                    // Allow first sentence of a chapter/section to start lowercase (orphan-letter artifact)
-                    const isFirstSentenceOfChapter = /_(1|2)\b$/.test(chunkIdentifier);
-                    // Or if previous non-image chunk is a header
-                    let prevIsHeader = false;
-                    for (let k = i - 1; k >= 0; k--) {
-                        const prev = chunks[k];
-                        if (!prev) break;
-                        if (prev.type === 'image') continue;
-                        if (prev.type === 'header') prevIsHeader = true;
-                        break;
-                    }
-                    // Additional allowance: continuation text that legitimately starts with lowercase words  
-                    const allowedLowercaseStarts = [
-                        /^will\s+regenerate/i,
-                        /^but\s+nothing\s+is\s+set/i,
-                        /^and\s+/i,
-                        /^but\s+/i,
-                        /^or\s+/i,
-                        /^so\s+/i,
-                        /^for\s+/i,
-                        /^in\s+/i,
-                        /^on\s+/i,
-                        /^at\s+/i,
-                        /^to\s+/i,
-                        /^of\s+/i,
-                        /^with\s+/i,
-                        /^from\s+/i,
-                        /^by\s+/i,
-                        /^as\s+/i,
-                        /^if\s+/i,
-                        /^when\s+/i,
-                        /^where\s+/i,
-                        /^while\s+/i,
-                        /^since\s+/i,
-                        /^until\s+/i,
-                        /^unless\s+/i,
-                        /^because\s+/i,
-                        /^although\s+/i,
-                        /^though\s+/i,
-                        /^however\s+/i,
-                        /^therefore\s+/i,
-                        /^nonetheless\s+/i,
-                        /^nevertheless\s+/i,
-                        /^furthermore\s+/i,
-                        /^moreover\s+/i,
-                        /^consequently\s+/i,
-                        /^accordingly\s+/i,
-                        /^thus\s+/i,
-                        /^hence\s+/i,
-                        /^indeed\s+/i,
-                        /^meanwhile\s+/i,
-                        /^otherwise\s+/i,
-                        /^instead\s+/i,
-                        /^rather\s+/i,
-                        /^than\s+/i,
-                        /^then\s+/i,
-                        /^now\s+/i,
-                        /^here\s+/i,
-                        /^there\s+/i,
-                        /^this\s+/i,
-                        /^that\s+/i,
-                        /^these\s+/i,
-                        /^those\s+/i,
-                        /^they\s+/i,
-                        /^we\s+/i,
-                        /^you\s+/i,
-                        /^it\s+/i,
-                        /^he\s+/i,
-                        /^she\s+/i
-                    ];
-                        const allowedByHeuristic = (isFirstSentenceOfChapter || prevIsHeader) && /^[a-z]/.test(chunk.content) ||
+                        // Allow first sentence of a chapter/section to start lowercase (orphan-letter artifact)
+                        const isFirstSentenceOfChapter = /_(1|2)\b$/.test(chunkIdentifier);
+                        // Or if previous non-image chunk is a header
+                        let prevIsHeader = false;
+                        let prevEndsWithEllipsis = false;
+                        let prevEndsWithColonOrDash = false;
+                        for (let k = i - 1; k >= 0; k--) {
+                            const prev = chunks[k];
+                            if (!prev) break;
+                            if (prev.type === 'image') continue;
+                            if (prev.type === 'header') prevIsHeader = true;
+                            if (prev.type === 'text') {
+                                const prevTrimmed = (prev.content || '').trim();
+                                prevEndsWithEllipsis = /(?:\.|\u2026)(?:\s*\.\s*\.)?\s*$/.test(prevTrimmed) || /\.\s*\.\s*\.\s*$/.test(prevTrimmed) || /…\s*$/.test(prevTrimmed);
+                                prevEndsWithColonOrDash = /[:\u2014]\s*$/.test(prevTrimmed);
+                            }
+                            break;
+                        }
+                        // Additional allowance: continuation text that legitimately starts with lowercase words  
+                        const allowedLowercaseStarts = [
+                            /^will\s+regenerate/i,
+                            /^but\s+nothing\s+is\s+set/i,
+                            /^said\b/i,
+                            /^what\s+to\s+do\b/i
+                        ];
+                        const allowedByHeuristic = ((isFirstSentenceOfChapter || prevIsHeader || prevEndsWithEllipsis || prevEndsWithColonOrDash) && /^[a-z]/.test(chunk.content)) ||
                             allowedLowercaseStarts.some(re => re.test(chunk.content));
                         if (!isValidStart && !allowedByHeuristic) {
                             validationErrors.push(`Sentence chunk ${fullChunkIdentifier} must start with a capital letter or valid punctuation/symbol. Found: "${chunk.content.substring(0, 20)}..."`);
@@ -292,16 +248,28 @@ function validate(output) {
                 const imageMarkerRegex = /\[\[IMG\s+id=([^\s]+)\s+index=(\d+)\s+alt="([^"]*)"\]\]/g;
                 const contentWithoutMarkers = chunk.content.replace(imageMarkerRegex, '').trim();
                 const isStandaloneImageChunk = contentWithoutMarkers.length === 0;
-                
+
                 if (!isStandaloneImageChunk) {
-                    // Text chunks are combined sentences that must meet minimum word count requirements
-                    // BALANCED enforcement: Minimum 25 words, flexible maximum allowing smart constraint relaxation
-                    if (wordCount < 25) {
-                        validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) must be at least 25 words. Content: "${chunk.content.substring(0, 100)}..."`);
-                    } else if (wordCount > 220) {
-                        // Allow up to 220 words to accommodate smart constraint relaxation for small chunks
-                        // This prevents validation failures when small chunks are merged to avoid orphans
-                        validationErrors.push(`Text chunk ${fullChunkIdentifier} word count (${wordCount}) exceeds flexible maximum of 220 words. Content: "${chunk.content.substring(0, 100)}..."`);
+                    // Phase 1 sentence-level: no strict min/max word count; require at least 1 word
+                    if (wordCount < 1) {
+                        validationErrors.push(`Text chunk ${fullChunkIdentifier} should have at least 1 word.`);
+                    }
+
+                    // Validate: single sentence OR multiple sentences where all subsequent ones are < MIN_WORDS
+                    const MIN_WORDS = 12;
+                    const sentences = splitIntoSentences(chunk.content);
+
+                    if (sentences.length > 1) {
+                        // Check that all sentences after the first are < MIN_WORDS
+                        for (let i = 1; i < sentences.length; i++) {
+                            const wordCount = countWords(sentences[i]);
+                            if (wordCount >= MIN_WORDS) {
+                                validationErrors.push(
+                                    `Text chunk ${fullChunkIdentifier} has ${sentences.length} sentences, but sentence ${i + 1} has ${wordCount} words (must be < ${MIN_WORDS}). ` +
+                                    `Content: "${sentences[i].substring(0, 80)}..."`
+                                );
+                            }
+                        }
                     }
                 }
                 // Skip word count validation for standalone image chunks - they'll be converted to proper image chunks by Step 5-1
@@ -315,8 +283,8 @@ function validate(output) {
                 let trimmed = chunk.content.trim();
                 const endsWithEOS = /[.!?]$/.test(trimmed);
                 const endsWithFootnote = /\.[\s\u00A0]*\d+$/.test(trimmed); // period + optional space + digits
-                const endsWithQuoteFootnote = /[\u201D"']\s*\d+$/.test(trimmed); // closing quote followed by digits
-                const endsWithClosingQuote = /[\u201D"']$/.test(trimmed); // smart/straight quote at end
+                const endsWithQuoteFootnote = /[\u201D\u2019"']\s*\d+$/.test(trimmed); // allow curly right single or double quotes
+                const endsWithClosingQuote = /[\u201D\u2019"']$/.test(trimmed); // allow curly right single or double quotes
                 const endsWithAuthorAttribution = /[.!?]\s*[\u2014-]\s*[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){0,3}\s*$/.test(trimmed); // . —Name
                 const isBulletListIntro = /:\s*(?:•|\u2022)/.test(trimmed); // colon followed by bullet
                 const startsWithBullet = /^(?:•|\u2022)\s+\S/.test(trimmed);
@@ -335,6 +303,8 @@ function validate(output) {
                 }
                 // Accept image markers as valid endings (will be processed in step 5-1)
                 const endsWithImageMarker = /\[\[IMG\s+id=[^\s]+\s+index=\d+\s+alt="[^"]*"\]\]\s*$/.test(trimmed);
+                // Accept list-introduction colons at the end of a sentence (e.g., "Follow these steps:")
+                const endsWithListIntroColon = /:\s*$/.test(trimmed) && /(follow(ing)?\s+(the\s+)?steps|as\s+follows|do\s+the\s+following|instructions?|exercise(?:s)?)/i.test(trimmed);
                 // Accept numbered lists as valid content that doesn't need sentence terminators
                 const endsWithNumberedList = /\d+\.\s+[^\n]*$/.test(trimmed) && /\d+\.\s+[^\n]*\n\d+\.\s+/.test(trimmed);
                 // Accept simple numbered items (like "8. Continuing to Learn")
@@ -347,7 +317,7 @@ function validate(output) {
                 // This detects opening quote + content + ellipsis without proper closing quote
                 const hasIncompleteQuoteWithEllipsis = /[\u2018\u2019\u201C\u201D"'`'][^'\u2019\u201D"]*\.{3}\s*$/.test(trimmed);
 
-                if (!isStandaloneImageChunk && wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || endsWithSimpleNumberedItem || endsWithPhotoCaption || looksLikeTableOfContents || hasIncompleteQuoteWithEllipsis) && !endsWithCommonSingleLetterWord(trimmed)) {
+                if (!isStandaloneImageChunk && wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || endsWithSimpleNumberedItem || endsWithPhotoCaption || looksLikeTableOfContents || hasIncompleteQuoteWithEllipsis || endsWithListIntroColon) && !endsWithCommonSingleLetterWord(trimmed)) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
                 }
 

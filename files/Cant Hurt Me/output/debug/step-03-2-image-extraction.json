@@ -3,8 +3,8 @@
     "totalImages": 30,
     "totalExtractedImages": 35,
     "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/Cant Hurt Me/output/images",
-    "processingTime": 16310,
-    "extractionTime": "2025-09-04T13:34:10.724Z",
+    "processingTime": 11973,
+    "extractionTime": "2025-10-11T07:27:31.363Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [

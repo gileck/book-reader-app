@@ -30,7 +30,8 @@ const {
     endsWithSentenceTerminator,
     protectAbbreviations,
     restoreAbbreviations,
-    countWords
+    countWords,
+    splitIntoSentences // Import shared sentence splitter
 } = require('../../utils/text-processing-utils');
 
 /**
@@ -112,7 +113,7 @@ function convertParagraphsToSentences(chapter) {
             // Check if this paragraph contains only image markers (standalone images)
             const imageMarkerRegex = /\[\[IMG\s+id=([^\s]+)\s+index=(\d+)\s+alt="([^"]*)"\]\]/g;
             const contentWithoutMarkers = chunk.content.replace(imageMarkerRegex, '').trim();
-            
+
             if (contentWithoutMarkers.length === 0) {
                 // This paragraph contains only image markers - keep it as-is for Step 5-1 to process
                 // Convert it to a text chunk so Step 5-1 can find and extract the markers
@@ -126,7 +127,7 @@ function convertParagraphsToSentences(chapter) {
             } else {
                 // Normal paragraph with text content - increment paragraph index and process
                 paragraphIndex++;
-                
+
                 // Split paragraph into sentences and add paragraphIndex
                 const sentences = createSentenceChunks(chunk.content, chunk.links || [], paragraphIndex);
                 sentenceChunks.push(...sentences);
@@ -190,127 +191,50 @@ function createSentenceChunks(paragraphContent, paragraphLinks, paragraphIndex) 
  */
 function combineSmallSentences(chunks) {
     const optimized = [];
-    const MIN_WORDS = 25;  // Reduced from 50 to 25 for better practical results
     const MAX_WORDS = 200;
+    const MIN_WORDS = 12; // Merge sentences shorter than 12 words with previous sentence in same paragraph
 
     for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
 
-        // Headers and images are never combined
+        // Never combine headers or images
         if (chunk.type === 'header' || chunk.type === 'image') {
             optimized.push(chunk);
             continue;
         }
 
-        // For text chunks, aggressively combine if they're below target
-        if (chunk.type === 'text' && chunk.wordCount < MIN_WORDS) {
-            // PHASE 1: Try same-paragraph combinations
-            const combinedChunk = tryMergeWithNextSentences(chunks, i, MIN_WORDS, MAX_WORDS);
-            if (combinedChunk) {
-                let merged = combinedChunk.merged;
-                let lastIndex = combinedChunk.nextIndex;
-
-                // If still below MIN_WORDS, extend forward across paragraphs conservatively
-                if (merged.wordCount < MIN_WORDS) {
-                    const forwardAggressive = (base, startIdx) => {
-                        let combinedContent = base.content;
-                        let combinedWordCount = base.wordCount;
-                        let combinedSentenceCount = base.sentenceCount;
-                        let combinedLinks = [...(base.links || [])];
-                        let cursor = startIdx + 1;
-
-                        for (let j = cursor; j < chunks.length; j++) {
-                            const nextChunk = chunks[j];
-                            if (nextChunk.type === 'header' || nextChunk.type === 'image') break;
-                            if (nextChunk.type !== 'text') break;
-                            const newWordCount = combinedWordCount + nextChunk.wordCount;
-                            // Allow small chunks to exceed the limit to prevent orphan chunks
-                            const isVerySmallChunk = base.wordCount < 20;
-                            if (newWordCount > MAX_WORDS && !isVerySmallChunk) break;
-                            // Page semantics removed: no page-gap constraint
-                            combinedContent += ' ' + nextChunk.content;
-                            combinedWordCount = newWordCount;
-                            combinedSentenceCount += nextChunk.sentenceCount || 1;
-                            combinedLinks.push(...(nextChunk.links || []));
-                            lastIndex = j;
-                            if (combinedWordCount >= MIN_WORDS) break;
-                        }
-
-                        const validLinks = removeDuplicateLinks(combinedLinks);
-                        return {
-                            merged: {
-                                type: 'text',
-                                content: combinedContent,
-
-                                paragraphIndex: base.paragraphIndex,
-                                wordCount: combinedWordCount,
-                                sentenceCount: combinedSentenceCount,
-                                links: validLinks
-                            },
-                            lastIndex
+        if (chunk.type === 'text') {
+            // Merge sentences shorter than MIN_WORDS with the previous sentence in the same paragraph
+            if (chunk.wordCount < MIN_WORDS && optimized.length > 0) {
+                const previous = optimized[optimized.length - 1];
+                if (previous.type === 'text' && previous.paragraphIndex === chunk.paragraphIndex) {
+                    const combinedWordCount = previous.wordCount + chunk.wordCount;
+                    if (combinedWordCount <= MAX_WORDS) {
+                        const mergedContent = previous.content + ' ' + chunk.content;
+                        const mergedLinks = removeDuplicateLinks([...(previous.links || []), ...(chunk.links || [])]);
+                        optimized[optimized.length - 1] = {
+                            type: 'text',
+                            content: mergedContent,
+                            paragraphIndex: previous.paragraphIndex,
+                            wordCount: combinedWordCount,
+                            sentenceCount: (previous.sentenceCount || 1) + (chunk.sentenceCount || 1),
+                            links: mergedLinks
                         };
-                    };
-
-                    const extended = forwardAggressive(merged, lastIndex);
-                    merged = extended.merged;
-                    lastIndex = extended.lastIndex;
-
-                    // If still short, try merging with previous optimized text chunk
-                    if (merged.wordCount < MIN_WORDS) {
-                        // Merge with previous optimized text chunk if possible
-                        if (optimized.length > 0) {
-                            const lastOptimized = optimized[optimized.length - 1];
-                            if (lastOptimized.type === 'text') {
-                                const combinedWordCount = lastOptimized.wordCount + merged.wordCount;
-                                if (combinedWordCount <= MAX_WORDS) {
-                                    const newContent = lastOptimized.content + ' ' + merged.content;
-                                    const newLinks = removeDuplicateLinks([...(lastOptimized.links || []), ...(merged.links || [])]);
-                                    optimized[optimized.length - 1] = {
-                                        type: 'text',
-                                        content: newContent,
-
-                                        paragraphIndex: lastOptimized.paragraphIndex,
-                                        wordCount: combinedWordCount,
-                                        sentenceCount: lastOptimized.sentenceCount + merged.sentenceCount,
-                                        links: newLinks
-                                    };
-                                    i = lastIndex;
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                optimized.push(merged);
-                i = lastIndex; // Skip to after the merged chunks
-            } else {
-                const mergedWithPrevious = tryMergeWithPreviousSentence(optimized, chunk, MIN_WORDS, MAX_WORDS);
-                if (mergedWithPrevious) {
-                    optimized[optimized.length - 1] = mergedWithPrevious;
-                } else {
-                    // PHASE 2: AGGRESSIVE - Try cross-paragraph combinations
-                    const aggressiveMerge = tryAggressiveMergeAcrossParagraphs(chunks, i, optimized, MIN_WORDS, MAX_WORDS);
-                    if (aggressiveMerge) {
-                        if (aggressiveMerge.mergeWithPrevious) {
-                            optimized[optimized.length - 1] = aggressiveMerge.merged;
-                        } else {
-                            optimized.push(aggressiveMerge.merged);
-                            i = aggressiveMerge.nextIndex;
-                        }
-                    } else {
-                        // Last resort: keep as is (will fail validation)
-                        optimized.push(chunk);
+                        continue;
                     }
                 }
             }
-        } else {
+
+            // Default: keep sentence as-is
             optimized.push(chunk);
+            continue;
         }
+
+        // Fallback for any other chunk types
+        optimized.push(chunk);
     }
 
-    // POST-PROCESSING: Fix paragraph index gaps created by aggressive merging
-    return fixParagraphIndexSequence(optimized);
+    return optimized;
 }
 
 /**
@@ -595,19 +519,19 @@ function tryAggressiveMergeAcrossParagraphs(chunks, currentIndex, optimized, min
 function cleanSentenceContent(sentence) {
     // Define sentence ending characters
     const sentenceEnders = /[.!?]/;
-    
+
     // Split the text by newlines to process each line
     const lines = sentence.split('\n');
     const processedLines = [];
-    
+
     for (let i = 0; i < lines.length; i++) {
         const currentLine = lines[i].trim();
-        
+
         // Always add the current line (trimmed)
         if (currentLine) {
             processedLines.push(currentLine);
         }
-        
+
         // Check if we should preserve the newline after this line
         // Preserve newline if the line ends with a sentence ending character
         // BUT NOT if it ends with an abbreviation
@@ -616,71 +540,21 @@ function cleanSentenceContent(sentence) {
             processedLines.push('__PRESERVE_NEWLINE__');
         }
     }
-    
+
     // Join lines with spaces, but preserve marked newlines
     let result = processedLines.join(' ');
-    
+
     // Convert preserved newline markers back to actual newlines
     result = result.replace(/ __PRESERVE_NEWLINE__ /g, '\n');
     result = result.replace(/__PRESERVE_NEWLINE__/g, '\n');
-    
+
     // Normalize whitespace (but preserve the newlines we want to keep)
     result = result.replace(/[ \t]+/g, ' ');  // Normalize spaces and tabs
     result = result.replace(/\n[ \t]+/g, '\n');  // Remove spaces after newlines
     result = result.replace(/[ \t]+\n/g, '\n');  // Remove spaces before newlines
     result = result.replace(/\n{3,}/g, '\n\n');  // Collapse multiple newlines to max 2
-    
+
     return result.trim();
-}
-
-/**
- * Split text into sentences, only splitting at sentence endings followed by newlines
- * @param {string} text - Text to split
- * @returns {Array} - Array of sentences
- */
-function splitIntoSentences(text) {
-    // Only split at sentence boundaries that are followed by newlines
-    const sentences = [];
-
-    // Temporarily protect common abbreviations using shared utilities
-    const { protectedText, protectionMap } = protectAbbreviations(text);
-
-    // Protect numbered list items to prevent splitting within lists
-    // Pattern: number + period + space + text (e.g., "1. Item text 2. Next item")
-    let processedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
-
-    // Split ONLY on sentence terminators that are followed by newlines
-    // This ensures we only create separate chunks when sentences actually end with newlines
-    const sentenceRegex = /([.!?]+)\s*\n/g;
-
-    let lastIndex = 0;
-    let match;
-
-    while ((match = sentenceRegex.exec(processedText)) !== null) {
-        // Extract sentence from lastIndex to end of current match (including the terminator)
-        const sentence = processedText.substring(lastIndex, match.index + match[1].length).trim();
-        if (sentence) {
-            sentences.push(sentence);
-        }
-        lastIndex = match.index + match[0].length;
-    }
-
-    // Add any remaining content as the last sentence
-    const remaining = processedText.substring(lastIndex).trim();
-    if (remaining) {
-        sentences.push(remaining);
-    }
-
-    // Restore abbreviations and list numbers using shared utilities
-    const restored = sentences.map(s => {
-        // First restore abbreviations
-        let out = restoreAbbreviations(s, protectionMap);
-        // Then restore numbered list items
-        out = out.replace(/(\d+)<LISTNUM>/g, '$1.');
-        return out;
-    });
-
-    return restored.filter(s => s.length > 0);
 }
 
 /**

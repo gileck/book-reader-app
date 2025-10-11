@@ -19,7 +19,6 @@ import { BookQAChatSettings } from './components/BookQAPanel/BookQAChatSettings'
 import { CostApprovalDialog } from './components/CostApprovalDialog';
 import { ChapterSelector } from './components/ChapterSelector';
 import { FocusReader } from './FocusReader';
-import { useFocusAudioPlayback } from './hooks/useFocusAudioPlayback';
 import { useSettings } from '../../settings/SettingsContext';
 
 export const Reader = () => {
@@ -35,7 +34,8 @@ export const Reader = () => {
         settings,
         bookmarks,
         navigation,
-        progress
+        progress,
+        sentenceAudio
     } = useReader();
 
     // Initialize all hooks
@@ -82,17 +82,8 @@ export const Reader = () => {
     // Initialize content context hook with bookQA context lines
     const contentContext = useContentContext(chapter, audio, bookQA);
 
-    // Determine mode and prepare focus audio BEFORE any early returns
+    // Determine mode (unified sentence controller used for both full and focus)
     const isFocusMode = (appSettings.readingMode || 'full') === 'focus';
-    const focusAudio = useFocusAudioPlayback(
-        chapter,
-        settings.selectedVoice,
-        settings.selectedProvider,
-        settings.playbackSpeed,
-        settings.ttsEnabled,
-        audio.currentChunkIndex,
-        audio.currentWordIndex
-    );
 
     // Initialize scroll handling hook
     const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
@@ -240,7 +231,7 @@ export const Reader = () => {
                 </Box>
 
                 {isFocusMode ? (
-                    <FocusReader focusAudio={focusAudio!} highlightMode={settings.highlightMode} />
+                    <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} />
                 ) : (
                     <Paper
                         ref={scrollContainerRef}
@@ -265,6 +256,8 @@ export const Reader = () => {
                             onNavigateToChunk={navigation.setCurrentChunkIndex}
                             onNavigateToBookmark={navigation.handleNavigateToBookmark}
                             currentChunkIndex={audio.currentChunkIndex}
+                            sentences={sentenceAudio.sentences}
+                            paragraphGroups={sentenceAudio.paragraphGroups}
                             fontSize={settings.fontSize}
                             lineHeight={settings.lineHeight}
                             fontFamily={settings.fontFamily}
@@ -287,28 +280,26 @@ export const Reader = () => {
                     </Fab>
                 )}
 
-                {/* Audio Controls - Fixed at bottom */}
+                {/* Audio Controls - Fixed at bottom (unified sentence controller for both modes) */}
                 <AudioControls
                     chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
-                    currentChunk={isFocusMode ? focusAudio!.currentSentenceIndex + 1 : audio.currentChunkIndex + 1}
-                    totalChunks={isFocusMode ? focusAudio!.sentences.length : audio.textChunks.length}
-                    onPlay={isFocusMode ? focusAudio!.handlePlay : audio.handlePlay}
-                    onPause={isFocusMode ? focusAudio!.handlePause : audio.handlePause}
-                    onPreviousChunk={isFocusMode ? focusAudio!.handlePreviousSentence : audio.handlePreviousChunk}
-                    onNextChunk={isFocusMode ? focusAudio!.handleNextSentence : audio.handleNextChunk}
+                    currentChunk={sentenceAudio.controller.currentSentenceIndex + 1}
+                    totalChunks={sentenceAudio.sentences.length}
+                    onPlay={sentenceAudio.controller.play}
+                    onPause={sentenceAudio.controller.pause}
+                    onPreviousChunk={sentenceAudio.controller.prevSentence}
+                    onNextChunk={sentenceAudio.controller.nextSentence}
                     onPreviousChapter={navigation.handlePreviousChapter}
                     onNextChapter={navigation.handleNextChapter}
                     onBookmark={bookmarks.handleBookmark}
                     onSettings={settings.handleSettings}
                     onSpeedSettings={settings.handleSpeedSettings}
                     onAskAI={bookQA.togglePanel}
-                    isPlaying={isFocusMode ? focusAudio!.isPlaying : audio.isPlaying}
+                    isPlaying={sentenceAudio.controller.isPlaying}
                     ttsEnabled={settings.ttsEnabled}
-                    isCurrentChunkLoading={audio.isCurrentChunkLoading}
+                    isCurrentChunkLoading={false}
                     isBookmarked={bookmarks.isBookmarked}
-                    progress={isFocusMode
-                        ? (focusAudio!.currentSentenceIndex / Math.max((focusAudio!.sentences.length - 1), 1)) * 100
-                        : (audio.currentChunkIndex !== null ? (audio.currentChunkIndex / Math.max(audio.textChunks.length - 1, 1)) * 100 : 0)}
+                    progress={(sentenceAudio.controller.currentSentenceIndex / Math.max(sentenceAudio.sentences.length - 1, 1)) * 100}
                     playbackSpeed={settings.playbackSpeed}
                     bookmarks={bookmarks.bookmarks}
                     currentChapterNumber={chapter.chapterNumber}
@@ -318,11 +309,11 @@ export const Reader = () => {
                     progressData={progress}
                     onChapters={chapterDialog.openDialog}
                     minChapterNumber={book?.chapterStartNumber ?? 1}
-                    ttsServiceAvailable={isFocusMode ? true : audio.ttsServiceAvailable}
-                    ttsError={isFocusMode ? null : audio.ttsError}
-                    onDismissError={audio.clearTtsError}
+                    ttsServiceAvailable={sentenceAudio.controller.ttsServiceAvailable}
+                    ttsError={sentenceAudio.controller.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.controller.ttsError, timestamp: new Date().toISOString() } : null}
+                    onDismissError={() => { }}
                     chapterTransitionLoading={chapterTransitionLoading}
-                    unitLabelOverride={isFocusMode ? 'sentences' : undefined}
+                    unitLabelOverride="sentences"
                 />
 
                 {/* Speed Control Modal */}

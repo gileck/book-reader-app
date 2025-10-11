@@ -1,5 +1,5 @@
 {
-  "processingTime": 860,
+  "processingTime": 6069,
   "detectionStats": {
     "chaptersDetected": 16,
     "tocSource": "pdf_bookmarks",
@@ -14,49 +14,49 @@
     "tocEntries": [
       {
         "chapterTitle": "Praise for Transformer",
-        "chapterNumber": 7,
+        "chapterNumber": 0,
         "startingPage": 1,
         "bookmarkTitle": "Praise for Transformer"
       },
       {
         "chapterTitle": "Introduction: Life itself",
-        "chapterNumber": 0,
+        "chapterNumber": 1,
         "startingPage": 8,
         "bookmarkTitle": "Introduction: Life itself"
       },
       {
         "chapterTitle": "Discovering the nanocosm",
-        "chapterNumber": 1,
+        "chapterNumber": 2,
         "startingPage": 27,
         "bookmarkTitle": "1. Discovering the nanocosm"
       },
       {
         "chapterTitle": "The path of carbon",
-        "chapterNumber": 2,
+        "chapterNumber": 3,
         "startingPage": 62,
         "bookmarkTitle": "2. The path of carbon"
       },
       {
         "chapterTitle": "From gases to life",
-        "chapterNumber": 3,
+        "chapterNumber": 4,
         "startingPage": 91,
         "bookmarkTitle": "3. From gases to life"
       },
       {
         "chapterTitle": "Revolutions",
-        "chapterNumber": 4,
+        "chapterNumber": 5,
         "startingPage": 124,
         "bookmarkTitle": "4. Revolutions"
       },
       {
         "chapterTitle": "To the dark side",
-        "chapterNumber": 5,
+        "chapterNumber": 6,
         "startingPage": 150,
         "bookmarkTitle": "5. To the dark side"
       },
       {
         "chapterTitle": "The flux capacitor",
-        "chapterNumber": 6,
+        "chapterNumber": 7,
         "startingPage": 181,
         "bookmarkTitle": "6. The flux capacitor"
       },
@@ -131,7 +131,7 @@
   "chapterMetadata": [
     {
       "title": "Praise for Transformer",
-      "chapterNumber": 7,
+      "chapterNumber": 0,
       "startingPage": 1,
       "endPage": 7,
       "detectionSource": "pdf_bookmarks",
@@ -139,7 +139,7 @@
     },
     {
       "title": "Introduction: Life itself",
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "startingPage": 8,
       "endPage": 26,
       "detectionSource": "pdf_bookmarks",
@@ -147,7 +147,7 @@
     },
     {
       "title": "Discovering the nanocosm",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "startingPage": 27,
       "endPage": 61,
       "detectionSource": "pdf_bookmarks",
@@ -155,7 +155,7 @@
     },
     {
       "title": "The path of carbon",
-      "chapterNumber": 2,
+      "chapterNumber": 3,
       "startingPage": 62,
       "endPage": 90,
       "detectionSource": "pdf_bookmarks",
@@ -163,7 +163,7 @@
     },
     {
       "title": "From gases to life",
-      "chapterNumber": 3,
+      "chapterNumber": 4,
       "startingPage": 91,
       "endPage": 123,
       "detectionSource": "pdf_bookmarks",
@@ -171,7 +171,7 @@
     },
     {
       "title": "Revolutions",
-      "chapterNumber": 4,
+      "chapterNumber": 5,
       "startingPage": 124,
       "endPage": 149,
       "detectionSource": "pdf_bookmarks",
@@ -179,7 +179,7 @@
     },
     {
       "title": "To the dark side",
-      "chapterNumber": 5,
+      "chapterNumber": 6,
       "startingPage": 150,
       "endPage": 180,
       "detectionSource": "pdf_bookmarks",
@@ -187,7 +187,7 @@
     },
     {
       "title": "The flux capacitor",
-      "chapterNumber": 6,
+      "chapterNumber": 7,
       "startingPage": 181,
       "endPage": 210,
       "detectionSource": "pdf_bookmarks",

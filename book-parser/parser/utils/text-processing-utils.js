@@ -12,24 +12,24 @@
 const COMMON_ABBREVIATIONS = [
     // Titles and honorifics
     'Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Sr.', 'Jr.',
-    
+
     // Academic and professional degrees
     'Ph.D.', 'M.D.', 'B.A.', 'M.A.', 'B.S.', 'M.S.', 'J.D.',
-    
+
     // Geographic and organizational
     'St.', 'Ave.', 'Blvd.', 'Rd.', 'Inc.', 'Corp.', 'Ltd.', 'Co.',
     'U.S.', 'U.K.', 'U.S.A.', 'U.K.',
-    
+
     // Publishing and media
     'Sec.', 'Vol.', 'No.', 'Ed.', 'pp.',
-    
+
     // Time and dates
     'Jan.', 'Feb.', 'Mar.', 'Apr.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Sept.', 'Oct.', 'Nov.', 'Dec.',
     'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.',
-    
+
     // Common Latin and other abbreviations
     'vs.', 'etc.', 'i.e.', 'e.g.', 'cf.', 'et al.', 'ibid.',
-    
+
     // Organizational abbreviations (including the missing P.U.)
     'P.U.', 'A.I.', 'I.T.', 'R.D.', 'Q.A.', 'H.R.'
 ];
@@ -41,9 +41,13 @@ const COMMON_ABBREVIATIONS = [
  */
 function endsWithAbbreviation(line) {
     const trimmed = line.trim();
-    
+    // Allow trailing closing quotes/brackets/parentheses and commas after abbreviations
+    const sanitized = trimmed
+        .replace(/["'”’)}\]]+$/g, '')  // strip closing quotes and brackets
+        .replace(/[,:;]+$/g, '');        // strip trailing light punctuation (not period)
+
     // Check against comprehensive abbreviation list
-    return COMMON_ABBREVIATIONS.some(abbr => trimmed.endsWith(abbr));
+    return COMMON_ABBREVIATIONS.some(abbr => sanitized.endsWith(abbr));
 }
 
 /**
@@ -57,6 +61,13 @@ function endsWithSentenceTerminator(line) {
 
     // Must end with sentence terminator
     if (!/[.!?]$/.test(trimmed)) {
+        return false;
+    }
+
+    // Do NOT treat spaced ellipses (". . .") as sentence terminators
+    // Allow trailing quotes/brackets after the pattern
+    const sanitizedForEllipsis = trimmed.replace(/["'”’)}\]]+$/g, '');
+    if (/\.\s*\.\s*\.$/.test(sanitizedForEllipsis)) {
         return false;
     }
 
@@ -83,13 +94,13 @@ function endsWithSentenceTerminator(line) {
  */
 function getAbbreviationProtectionMap() {
     const map = new Map();
-    
+
     COMMON_ABBREVIATIONS.forEach((abbr, index) => {
         // Create unique tokens that won't conflict with text
         const token = `<ABBR${index}>`;
         map.set(abbr, token);
     });
-    
+
     return map;
 }
 
@@ -101,13 +112,13 @@ function getAbbreviationProtectionMap() {
 function protectAbbreviations(text) {
     const protectionMap = getAbbreviationProtectionMap();
     let protectedText = text;
-    
+
     for (const [abbr, token] of protectionMap.entries()) {
         // Escape periods for regex
         const escapedAbbr = abbr.replace(/\./g, '\\.');
         protectedText = protectedText.replace(new RegExp(escapedAbbr, 'g'), token);
     }
-    
+
     return { protectedText, protectionMap };
 }
 
@@ -119,11 +130,11 @@ function protectAbbreviations(text) {
  */
 function restoreAbbreviations(protectedText, protectionMap) {
     let restoredText = protectedText;
-    
+
     for (const [abbr, token] of protectionMap.entries()) {
         restoredText = restoredText.replace(new RegExp(token, 'g'), abbr);
     }
-    
+
     return restoredText;
 }
 
@@ -180,7 +191,20 @@ function isSentenceTerminator(char) {
 function endsWithInitials(text) {
     if (!text) return false;
     const trimmed = text.trim();
-    return /\b[A-Z]\.$/.test(trimmed);
+    // Allow trailing quotes/brackets when checking ending
+    const sanitized = trimmed.replace(/["'”’)}\]]+$/g, '');
+
+    // Single initial like "J."
+    if (/\b[A-Z]\.$/.test(sanitized)) return true;
+
+    // Common academic/professional degree abbreviations should behave like initials
+    const DEGREE_INITIALS = ['Ph.D.', 'M.D.', 'B.A.', 'M.A.', 'B.S.', 'M.S.', 'J.D.'];
+    if (DEGREE_INITIALS.some(d => sanitized.endsWith(d))) return true;
+
+    // Multi-initials (e.g., "E. H.", "R. E.")
+    if (/(?:\b[A-Z]\.\s*){2,}$/.test(sanitized)) return true;
+
+    return false;
 }
 
 /**
@@ -191,49 +215,66 @@ function endsWithInitials(text) {
 function endsWithCommonSingleLetterWord(text) {
     if (!text) return false;
     const trimmed = text.trim();
+    // Allow trailing closing quotes when checking the ending
+    const sanitized = trimmed.replace(/["'\u2019\u201D]+$/, '');
 
     // Common patterns where single letters are valid endings
     const commonPatterns = [
         // Scientific/academic terms
-        /\bvitamin [a-zA-Z]\.?$/i,      // vitamin E, vitamin C, etc.
-        /\btype [a-zA-Z]\.?$/i,         // type A, type B, etc.
-        /\bpoint [a-zA-Z]\.?$/i,        // point A, point B, etc.
-        /\bfigure [a-zA-Z]\.?$/i,       // figure A, figure B, etc.
-        /\bappendix [a-zA-Z]\.?$/i,     // appendix A, appendix B, etc.
-        /\bsection [a-zA-Z]\.?$/i,      // section A, section B, etc.
-        /\bpart [a-zA-Z]\.?$/i,         // part A, part B, etc.
-        /\boption [a-zA-Z]\.?$/i,       // option A, option B, etc.
-        /\bclass [a-zA-Z]\.?$/i,        // class A, class B, etc.
-        /\bgrade [a-zA-Z]\.?$/i,        // grade A, grade B, etc.
-        /\bmodel [a-zA-Z]\.?$/i,        // model A, model B, etc.
-        /\bphase [a-zA-Z]\.?$/i,        // phase A, phase B, etc.
+        /\bvitamin\s+[a-zA-Z]\.?$/i,      // vitamin E, vitamin C, etc. (allow line breaks)
+        /\btype\s+[a-zA-Z]\.?$/i,         // type A, type B, etc.
+        /\bpoint\s+[a-zA-Z]\.?$/i,        // point A, point B, etc.
+        /\bfigure\s+[a-zA-Z]\.?$/i,       // figure A, figure B, etc.
+        /\bappendix\s+[a-zA-Z]\.?$/i,     // appendix A, appendix B, etc.
+        /\bsection\s+[a-zA-Z]\.?$/i,      // section A, section B, etc.
+        /\bchapter\s+[a-zA-Z]\.?$/i,      // chapter A, chapter B, etc.
+        /\btable\s+[a-zA-Z]\.?$/i,        // table A, table B, etc.
+        /\bbox\s+[a-zA-Z]\.?$/i,          // box A, etc.
+        /\bpart\s+[a-zA-Z]\.?$/i,         // part A, part B, etc.
+        /\boption\s+[a-zA-Z]\.?$/i,       // option A, option B, etc.
+        /\bclass\s+[a-zA-Z]\.?$/i,        // class A, class B, etc.
+        /\bgrade\s+[a-zA-Z]\.?$/i,        // grade A, grade B, etc.
+        /\bmodel\s+[a-zA-Z]\.?$/i,        // model A, model B, etc.
+        /\bphase\s+[a-zA-Z]\.?$/i,        // phase A, phase B, etc.
+
+        // Radioisotopes or chemical notation like "14 C."
+        /\b\d+\s*[A-Z]\.$/,
+
+        // Respiratory complexes often referenced as "complex I." / "complex II."
+        /\bcomplex\s+[IVX]+\.?$/i,
+
+        // Scientific narration of symbols/letters/elements, e.g., "the symbol O."
+        /\b(?:symbol|letter|element)\s+[A-Z]\.$/i,
 
         // Items in lists/categories
-        /\bitem [a-zA-Z]\.?$/i,         // item A, item B, etc.
-        /\bstep [a-zA-Z]\.?$/i,         // step A, step B, etc.
-        /\btask [a-zA-Z]\.?$/i,         // task A, task B, etc.
-        /\bscenario [a-zA-Z]\.?$/i,     // scenario A, scenario B, etc.
-        /\bexample [a-zA-Z]\.?$/i,      // example A, example B, etc.
+        /\bitem\s+[a-zA-Z]\.?$/i,         // item A, item B, etc.
+        /\bstep\s+[a-zA-Z]\.?$/i,         // step A, step B, etc.
+        /\btask\s+[a-zA-Z]\.?$/i,         // task A, task B, etc.
+        /\bscenario\s+[a-zA-Z]\.?$/i,     // scenario A, scenario B, etc.
+        /\bexample\s+[a-zA-Z]\.?$/i,      // example A, example B, etc.
 
         // Plans and schedules
-        /\bplan [a-zA-Z]\.?$/i,         // plan A, plan B, etc.
-        /\bschema [a-zA-Z]\.?$/i,       // schema A, schema B, etc.
-        /\bcase [a-zA-Z]\.?$/i,         // case A, case B, etc.
+        /\bplan\s+[a-zA-Z]\.?$/i,         // plan A, plan B, etc.
+        /\bschema\s+[a-zA-Z]\.?$/i,       // schema A, schema B, etc.
+        /\bcase\s+[a-zA-Z]\.?$/i,         // case A, case B, etc.
 
         // Sizes and categories
-        /\bsize [a-zA-Z]\.?$/i,         // size A, size B, etc.
-        /\bcategory [a-zA-Z]\.?$/i,     // category A, category B, etc.
-        /\blevel [a-zA-Z]\.?$/i,        // level A, level B, etc.
+        /\bsize\s+[a-zA-Z]\.?$/i,         // size A, size B, etc.
+        /\bcategory\s+[a-zA-Z]\.?$/i,     // category A, category B, etc.
+        /\blevel\s+[a-zA-Z]\.?$/i,        // level A, level B, etc.
 
         // Character and person names (common in stories/books)
         /\b[A-Z][a-z]+ [A-Z]\.$/,           // "Wally B.", "André W.", etc.
         /\b[A-Z]\. [A-Z][a-z]+$/,           // "J. Smith", "A. Wilson", etc.
-        
+
+        // Bibliography-like endings with multiple initials, e.g., "E. H.", "R. E.", "J. N."
+        /(?:\b[A-Z]\.\s*){2,}$/,
+
         // Generic patterns - be more specific to avoid false positives
-        /\b(?:vitamin|type|point|figure|appendix|section|part|option|class|grade|model|phase|item|step|task|scenario|example|plan|schema|case|size|category|level) [a-zA-Z]\.?$/i
+        /\b(?:vitamin|type|point|figure|appendix|section|chapter|table|box|part|option|class|grade|model|phase|item|step|task|scenario|example|plan|schema|case|size|category|level)\s+[a-zA-Z]\.?$/i
     ];
 
-    return commonPatterns.some(pattern => pattern.test(trimmed));
+    return commonPatterns.some(pattern => pattern.test(sanitized));
 }
 
 /**
@@ -286,6 +327,53 @@ function splitIntoSentencesBasic(text) {
     return sentences.filter(s => s.trim().length > 0);
 }
 
+/**
+ * Split text into sentences with comprehensive protection
+ * Used by Step 5 (sentence detection) for consistent splitting in both parsing and validation
+ * @param {string} text - Text to split
+ * @returns {Array} - Array of sentences
+ */
+function splitIntoSentences(text) {
+    // Produce one sentence per part by splitting on EOS punctuation while protecting abbreviations, lists, decimals, and ellipses
+    const { protectedText, protectionMap } = protectAbbreviations(text);
+
+    // Protect numbered list items
+    let processedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
+
+    // Protect ellipses (". . .", "...", "…")
+    const ellipsisReplacements = [];
+    processedText = processedText.replace(/(?:\.\s*\.\s*\.|\.{3}|…)/g, (match) => {
+        const token = `<ELLIPSIS_${ellipsisReplacements.length}>`;
+        ellipsisReplacements.push(match);
+        return token;
+    });
+
+    // Protect decimals like 3.14
+    const decimalReplacements = [];
+    processedText = processedText.replace(/\b(\d+)\.(\d+)\b/g, (_, a, b) => {
+        const token = `<DEC_${decimalReplacements.length}>`;
+        decimalReplacements.push(`${a}.${b}`);
+        return token;
+    });
+
+    // Normalize whitespace (collapse layout newlines) and split on EOS punctuation
+    processedText = processedText.replace(/[\t\r\n]+/g, ' ').replace(/\s{2,}/g, ' ');
+    processedText = processedText.replace(/([.!?]+)(["'""')\]]*)\s+/g, '$1$2\n');
+
+    const parts = processedText.split(/\n+/).map(p => p.trim()).filter(Boolean);
+
+    // Restore tokens
+    const restored = parts.map(s => {
+        let out = s.replace(/<DEC_(\d+)>/g, (_, idx) => decimalReplacements[Number(idx)] || '');
+        out = out.replace(/<ELLIPSIS_(\d+)>/g, (_, idx) => ellipsisReplacements[Number(idx)] || '…');
+        out = out.replace(/(\d+)<LISTNUM>/g, '$1.');
+        out = restoreAbbreviations(out, protectionMap);
+        return out;
+    });
+
+    return restored.filter(s => s.length > 0);
+}
+
 // ============================================================================
 // EXPORTS
 // ============================================================================
@@ -298,18 +386,19 @@ module.exports = {
     getAbbreviationProtectionMap,
     protectAbbreviations,
     restoreAbbreviations,
-    
+
     // Word and sentence counting
     countWords,
     getWordCount,
     getSentenceCount,
     isSentenceTerminator,
-    
+
     // Text validation
     endsWithInitials,
     endsWithCommonSingleLetterWord,
     validateWordLengths,
-    
+
     // Text splitting
-    splitIntoSentencesBasic
+    splitIntoSentencesBasic,
+    splitIntoSentences // Advanced splitting used by Step 5
 };

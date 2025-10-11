@@ -1,0 +1,310 @@
+{
+  "processingTime": 56,
+  "extractionStats": {
+    "totalChapters": 18,
+    "originalChapterCount": 21,
+    "filteredChapterCount": 3,
+    "totalPages": 427,
+    "averagePagesPerChapter": 23.72222222222222,
+    "totalCharacters": 1135233,
+    "averageCharactersPerChapter": 63068.5
+  },
+  "filteredChapters": [
+    {
+      "title": "Introduction: The Two-Thousand-Year-Old Assumption",
+      "chapterNumber": 0,
+      "pageNumberStart": 11,
+      "pageNumberEnd": 18,
+      "contentLength": 16893
+    },
+    {
+      "title": "The Search for Emotion’s “Fingerprints”",
+      "chapterNumber": 1,
+      "pageNumberStart": 19,
+      "pageNumberEnd": 42,
+      "contentLength": 56313
+    },
+    {
+      "title": "Emotions Are Constructed",
+      "chapterNumber": 2,
+      "pageNumberStart": 43,
+      "pageNumberEnd": 59,
+      "contentLength": 43296
+    },
+    {
+      "title": "The Myth of Universal Emotions",
+      "chapterNumber": 3,
+      "pageNumberStart": 60,
+      "pageNumberEnd": 73,
+      "contentLength": 32320
+    },
+    {
+      "title": "The Origin of Feeling",
+      "chapterNumber": 4,
+      "pageNumberStart": 74,
+      "pageNumberEnd": 101,
+      "contentLength": 67038
+    },
+    {
+      "title": "Concepts, Goals, and Words",
+      "chapterNumber": 5,
+      "pageNumberStart": 102,
+      "pageNumberEnd": 129,
+      "contentLength": 71416
+    },
+    {
+      "title": "How the Brain Makes Emotions",
+      "chapterNumber": 6,
+      "pageNumberStart": 130,
+      "pageNumberEnd": 145,
+      "contentLength": 37805
+    },
+    {
+      "title": "Emotions as Social Reality",
+      "chapterNumber": 7,
+      "pageNumberStart": 146,
+      "pageNumberEnd": 169,
+      "contentLength": 62070
+    },
+    {
+      "title": "A New View of Human Nature",
+      "chapterNumber": 8,
+      "pageNumberStart": 170,
+      "pageNumberEnd": 192,
+      "contentLength": 60186
+    },
+    {
+      "title": "Mastering Your Emotions",
+      "chapterNumber": 9,
+      "pageNumberStart": 193,
+      "pageNumberEnd": 216,
+      "contentLength": 63337
+    },
+    {
+      "title": "Emotion and Illness",
+      "chapterNumber": 10,
+      "pageNumberStart": 217,
+      "pageNumberEnd": 236,
+      "contentLength": 52571
+    },
+    {
+      "title": "Emotion and the Law",
+      "chapterNumber": 11,
+      "pageNumberStart": 237,
+      "pageNumberEnd": 269,
+      "contentLength": 88882
+    },
+    {
+      "title": "Is a Growling Dog Angry?",
+      "chapterNumber": 12,
+      "pageNumberStart": 270,
+      "pageNumberEnd": 295,
+      "contentLength": 66624
+    },
+    {
+      "title": "From Brain to Mind: The New Frontier",
+      "chapterNumber": 13,
+      "pageNumberStart": 296,
+      "pageNumberEnd": 319,
+      "contentLength": 58851
+    },
+    {
+      "title": "Appendix D",
+      "chapterNumber": 17,
+      "pageNumberStart": 329,
+      "pageNumberEnd": 338,
+      "contentLength": 21744
+    },
+    {
+      "title": "Bibliography",
+      "chapterNumber": 18,
+      "pageNumberStart": 339,
+      "pageNumberEnd": 383,
+      "contentLength": 152263
+    },
+    {
+      "title": "Notes",
+      "chapterNumber": 19,
+      "pageNumberStart": 384,
+      "pageNumberEnd": 427,
+      "contentLength": 149747
+    },
+    {
+      "title": "Index",
+      "chapterNumber": 20,
+      "pageNumberStart": 428,
+      "pageNumberEnd": 446,
+      "contentLength": 33877
+    }
+  ],
+  "originalChapters": [
+    {
+      "title": "Introduction: The Two-Thousand-Year-Old Assumption",
+      "chapterNumber": 0,
+      "pageNumberStart": 11,
+      "pageNumberEnd": 18,
+      "contentLength": 16893,
+      "filtered": false
+    },
+    {
+      "title": "The Search for Emotion’s “Fingerprints”",
+      "chapterNumber": 1,
+      "pageNumberStart": 19,
+      "pageNumberEnd": 42,
+      "contentLength": 56313,
+      "filtered": false
+    },
+    {
+      "title": "Emotions Are Constructed",
+      "chapterNumber": 2,
+      "pageNumberStart": 43,
+      "pageNumberEnd": 59,
+      "contentLength": 43296,
+      "filtered": false
+    },
+    {
+      "title": "The Myth of Universal Emotions",
+      "chapterNumber": 3,
+      "pageNumberStart": 60,
+      "pageNumberEnd": 73,
+      "contentLength": 32320,
+      "filtered": false
+    },
+    {
+      "title": "The Origin of Feeling",
+      "chapterNumber": 4,
+      "pageNumberStart": 74,
+      "pageNumberEnd": 101,
+      "contentLength": 67038,
+      "filtered": false
+    },
+    {
+      "title": "Concepts, Goals, and Words",
+      "chapterNumber": 5,
+      "pageNumberStart": 102,
+      "pageNumberEnd": 129,
+      "contentLength": 71416,
+      "filtered": false
+    },
+    {
+      "title": "How the Brain Makes Emotions",
+      "chapterNumber": 6,
+      "pageNumberStart": 130,
+      "pageNumberEnd": 145,
+      "contentLength": 37805,
+      "filtered": false
+    },
+    {
+      "title": "Emotions as Social Reality",
+      "chapterNumber": 7,
+      "pageNumberStart": 146,
+      "pageNumberEnd": 169,
+      "contentLength": 62070,
+      "filtered": false
+    },
+    {
+      "title": "A New View of Human Nature",
+      "chapterNumber": 8,
+      "pageNumberStart": 170,
+      "pageNumberEnd": 192,
+      "contentLength": 60186,
+      "filtered": false
+    },
+    {
+      "title": "Mastering Your Emotions",
+      "chapterNumber": 9,
+      "pageNumberStart": 193,
+      "pageNumberEnd": 216,
+      "contentLength": 63337,
+      "filtered": false
+    },
+    {
+      "title": "Emotion and Illness",
+      "chapterNumber": 10,
+      "pageNumberStart": 217,
+      "pageNumberEnd": 236,
+      "contentLength": 52571,
+      "filtered": false
+    },
+    {
+      "title": "Emotion and the Law",
+      "chapterNumber": 11,
+      "pageNumberStart": 237,
+      "pageNumberEnd": 269,
+      "contentLength": 88882,
+      "filtered": false
+    },
+    {
+      "title": "Is a Growling Dog Angry?",
+      "chapterNumber": 12,
+      "pageNumberStart": 270,
+      "pageNumberEnd": 295,
+      "contentLength": 66624,
+      "filtered": false
+    },
+    {
+      "title": "From Brain to Mind: The New Frontier",
+      "chapterNumber": 13,
+      "pageNumberStart": 296,
+      "pageNumberEnd": 319,
+      "contentLength": 58851,
+      "filtered": false
+    },
+    {
+      "title": "Appendix A",
+      "chapterNumber": 14,
+      "pageNumberStart": 320,
+      "pageNumberEnd": 324,
+      "contentLength": 5929,
+      "filtered": true
+    },
+    {
+      "title": "Appendix B",
+      "chapterNumber": 15,
+      "pageNumberStart": 325,
+      "pageNumberEnd": 326,
+      "contentLength": 235,
+      "filtered": true
+    },
+    {
+      "title": "Appendix C",
+      "chapterNumber": 16,
+      "pageNumberStart": 327,
+      "pageNumberEnd": 328,
+      "contentLength": 305,
+      "filtered": true
+    },
+    {
+      "title": "Appendix D",
+      "chapterNumber": 17,
+      "pageNumberStart": 329,
+      "pageNumberEnd": 338,
+      "contentLength": 21744,
+      "filtered": false
+    },
+    {
+      "title": "Bibliography",
+      "chapterNumber": 18,
+      "pageNumberStart": 339,
+      "pageNumberEnd": 383,
+      "contentLength": 152263,
+      "filtered": false
+    },
+    {
+      "title": "Notes",
+      "chapterNumber": 19,
+      "pageNumberStart": 384,
+      "pageNumberEnd": 427,
+      "contentLength": 149747,
+      "filtered": false
+    },
+    {
+      "title": "Index",
+      "chapterNumber": 20,
+      "pageNumberStart": 428,
+      "pageNumberEnd": 446,
+      "contentLength": 33877,
+      "filtered": false
+    }
+  ]
+}

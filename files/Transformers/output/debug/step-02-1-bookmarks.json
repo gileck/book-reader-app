@@ -1,6 +1,6 @@
 {
   "pdfBookmarksAvailable": true,
-  "inputPdf": "/Users/gileck/projects/temp1/files/Transformers/book.pdf",
+  "inputPdf": "/Users/gil/Projects/book-reader-app/files/Transformers/book.pdf",
   "tocFound": true,
   "totalBookmarks": 22,
   "outlineTitles": [
@@ -30,49 +30,49 @@
   "extractedChapters": [
     {
       "chapterTitle": "Praise for Transformer",
-      "chapterNumber": 7,
+      "chapterNumber": 0,
       "startingPage": 1,
       "bookmarkTitle": "Praise for Transformer"
     },
     {
       "chapterTitle": "Introduction: Life itself",
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "startingPage": 8,
       "bookmarkTitle": "Introduction: Life itself"
     },
     {
       "chapterTitle": "Discovering the nanocosm",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "startingPage": 27,
       "bookmarkTitle": "1. Discovering the nanocosm"
     },
     {
       "chapterTitle": "The path of carbon",
-      "chapterNumber": 2,
+      "chapterNumber": 3,
       "startingPage": 62,
       "bookmarkTitle": "2. The path of carbon"
     },
     {
       "chapterTitle": "From gases to life",
-      "chapterNumber": 3,
+      "chapterNumber": 4,
       "startingPage": 91,
       "bookmarkTitle": "3. From gases to life"
     },
     {
       "chapterTitle": "Revolutions",
-      "chapterNumber": 4,
+      "chapterNumber": 5,
       "startingPage": 124,
       "bookmarkTitle": "4. Revolutions"
     },
     {
       "chapterTitle": "To the dark side",
-      "chapterNumber": 5,
+      "chapterNumber": 6,
       "startingPage": 150,
       "bookmarkTitle": "5. To the dark side"
     },
     {
       "chapterTitle": "The flux capacitor",
-      "chapterNumber": 6,
+      "chapterNumber": 7,
       "startingPage": 181,
       "bookmarkTitle": "6. The flux capacitor"
     },

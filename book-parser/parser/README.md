@@ -20,7 +20,7 @@ Each step is implemented as a separate module in its own folder within the `step
 6. **`03-1-link-detection/`** - Extract and resolve PDF internal links using chapter-relative text position selectors ✅
 7. **`03-2-image-extraction/`** - Extract images and insert `[[IMG...]]` markers into chapter content ✅
 8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers ✅
-9. **`05-sentence-detection/`** - Convert paragraphs to optimized sentences with smart constraint relaxation and standalone image marker detection ✅
+9. **`05-sentence-detection/`** - Split paragraphs into single-sentence text chunks (or one sentence + ultra-short follow-ups <10 words) for granular audio playback; protects abbreviations, decimals, and ellipses ✅
 10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers (embedded and standalone) to image chunks ✅
 11. **`05-2-link-chunk-references/`** - Resolve link references to chunk IDs ✅
 12. **`06-metadata-extraction/`** - Extract comprehensive book metadata and statistics ✅
@@ -48,7 +48,7 @@ PIPELINE_STATE = {
     chapters: [],           // Chapters with page content (content field removed after step 4)
     
     // Content structure  
-    chunks: [],            // Optimized sentence chunks with type "text", "header", or "image" + paragraphIndex
+    chunks: [],            // Single-sentence text chunks (or 1 sentence + ultra-short <10w follow-ups) with type "text", "header", or "image" + paragraphIndex
     
     // Metadata
     pages: [],             // Page information (for intermediate processing only)
@@ -171,6 +171,18 @@ function validate(output) {
 
 module.exports = { validate, /* helper functions */ };
 ```
+
+### Validation Logging Behavior
+
+- All detailed validation messages are written to `validation-output.txt` inside the parser run's output directory.
+- The console remains clean and prints only concise summaries, for example:
+  - `❗ Validation failed in step-4: 3 error(s). Details: <outputDir>/validation-output.txt`
+  - `   Error breakdown by chapter: 18 (Bibliography): 2, 19: 1`
+  - `⏭️  Validation skipped in step-5: 2 error(s) suppressed. See: <outputDir>/validation-output.txt`
+- A structured summary of validation pass/fail per step is also saved to `validation.json` in the output directory.
+- This ensures CI logs and terminal output stay readable, with full details available in files for inspection.
+
+Note: Sentence termination deliberately ignores spaced ellipses (". . .") so they are not treated as end-of-sentence markers during splitting or validation.
 
 Main step files import validation functions from the same directory:
 

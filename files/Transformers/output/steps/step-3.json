@@ -2,7 +2,7 @@
   "chapters": [
     {
       "title": "Introduction: Life itself",
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "pageNumberStart": 8,
       "pageNumberEnd": 26,
       "pages": [
@@ -145,7 +145,7 @@
     },
     {
       "title": "Discovering the nanocosm",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "pageNumberStart": 27,
       "pageNumberEnd": 61,
       "pages": [
@@ -400,7 +400,7 @@
     },
     {
       "title": "The path of carbon",
-      "chapterNumber": 2,
+      "chapterNumber": 3,
       "pageNumberStart": 62,
       "pageNumberEnd": 90,
       "pages": [
@@ -613,7 +613,7 @@
     },
     {
       "title": "From gases to life",
-      "chapterNumber": 3,
+      "chapterNumber": 4,
       "pageNumberStart": 91,
       "pageNumberEnd": 123,
       "pages": [
@@ -854,7 +854,7 @@
     },
     {
       "title": "Revolutions",
-      "chapterNumber": 4,
+      "chapterNumber": 5,
       "pageNumberStart": 124,
       "pageNumberEnd": 149,
       "pages": [
@@ -1046,7 +1046,7 @@
     },
     {
       "title": "To the dark side",
-      "chapterNumber": 5,
+      "chapterNumber": 6,
       "pageNumberStart": 150,
       "pageNumberEnd": 180,
       "pages": [
@@ -1273,7 +1273,7 @@
     },
     {
       "title": "The flux capacitor",
-      "chapterNumber": 6,
+      "chapterNumber": 7,
       "pageNumberStart": 181,
       "pageNumberEnd": 210,
       "pages": [
@@ -2136,7 +2136,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-21T09:28:19.435Z",
+    "processingStartTime": "2025-10-11T19:15:21.100Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -2145,7 +2145,7 @@
       "lineCount": 12120,
       "wordCount": 121693,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-21T09:28:20.431Z",
+      "extractionTime": "2025-10-11T19:15:24.711Z",
       "averageWordsPerPage": 384,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 27143
@@ -2157,7 +2157,7 @@
       "patternMatches": 419,
       "averageDetectionConfidence": 0.85625,
       "pageOffset": 0,
-      "processingTime": 860,
+      "processingTime": 6069,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -2168,7 +2168,7 @@
       "averagePagesPerChapter": 32.44444444444444,
       "totalCharacters": 707496,
       "averageCharactersPerChapter": 78610.66666666667,
-      "processingTime": 8,
+      "processingTime": 143,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     },
     "chapterNameCleaning": {
@@ -2177,7 +2177,7 @@
       "averageCharactersRemovedPerChapter": 0,
       "totalCharactersAfterCleaning": 707496,
       "cleaningEfficiency": 0,
-      "processingTime": 1,
+      "processingTime": 4,
       "cleaningMethod": "pattern_based_title_removal"
     },
     "pageExtractionAndCrossPageMerging": {
@@ -2185,8 +2185,8 @@
       "totalChapters": 9,
       "averageWordsPerPage": 390.71232876712327,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-21T09:28:21.497Z",
-      "processingTime": 61
+      "extractionTime": "2025-10-11T19:15:32.062Z",
+      "processingTime": 367
     }
   }
 }

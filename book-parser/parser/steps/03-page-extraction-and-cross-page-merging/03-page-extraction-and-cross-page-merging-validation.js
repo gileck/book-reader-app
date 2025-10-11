@@ -54,6 +54,12 @@ function endsWithSentenceTerminator(content) {
         return false;
     }
 
+    // Ignore spaced ellipses (". . .") as sentence terminators
+    const endSlice = trimmed.slice(Math.max(0, i - 10), i + 1);
+    if (/\.\s*\.\s*\.$/.test(endSlice)) {
+        return false;
+    }
+
     return true;
 }
 

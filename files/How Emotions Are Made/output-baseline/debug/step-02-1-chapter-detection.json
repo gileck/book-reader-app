@@ -1,0 +1,319 @@
+{
+  "processingTime": 14959,
+  "detectionStats": {
+    "chaptersDetected": 21,
+    "tocSource": "pdf_bookmarks",
+    "tocEntriesFound": 21,
+    "patternMatches": 637,
+    "averageDetectionConfidence": 0.9619047619047618,
+    "pageOffset": 0
+  },
+  "tocAnalysis": {
+    "source": "pdf_bookmarks",
+    "tocFound": true,
+    "tocEntries": [
+      {
+        "chapterTitle": "Introduction: The Two-Thousand-Year-Old Assumption",
+        "chapterNumber": 0,
+        "startingPage": 11,
+        "bookmarkTitle": "Introduction: The Two-Thousand-Year-Old Assumption"
+      },
+      {
+        "chapterTitle": "The Search for Emotion’s “Fingerprints”",
+        "chapterNumber": 1,
+        "startingPage": 19,
+        "bookmarkTitle": "1 The Search for Emotion’s “Fingerprints”"
+      },
+      {
+        "chapterTitle": "Emotions Are Constructed",
+        "chapterNumber": 2,
+        "startingPage": 43,
+        "bookmarkTitle": "2 Emotions Are Constructed"
+      },
+      {
+        "chapterTitle": "The Myth of Universal Emotions",
+        "chapterNumber": 3,
+        "startingPage": 60,
+        "bookmarkTitle": "3 The Myth of Universal Emotions"
+      },
+      {
+        "chapterTitle": "The Origin of Feeling",
+        "chapterNumber": 4,
+        "startingPage": 74,
+        "bookmarkTitle": "4 The Origin of Feeling"
+      },
+      {
+        "chapterTitle": "Concepts, Goals, and Words",
+        "chapterNumber": 5,
+        "startingPage": 102,
+        "bookmarkTitle": "5 Concepts, Goals, and Words"
+      },
+      {
+        "chapterTitle": "How the Brain Makes Emotions",
+        "chapterNumber": 6,
+        "startingPage": 130,
+        "bookmarkTitle": "6 How the Brain Makes Emotions"
+      },
+      {
+        "chapterTitle": "Emotions as Social Reality",
+        "chapterNumber": 7,
+        "startingPage": 146,
+        "bookmarkTitle": "7 Emotions as Social Reality"
+      },
+      {
+        "chapterTitle": "A New View of Human Nature",
+        "chapterNumber": 8,
+        "startingPage": 170,
+        "bookmarkTitle": "8 A New View of Human Nature"
+      },
+      {
+        "chapterTitle": "Mastering Your Emotions",
+        "chapterNumber": 9,
+        "startingPage": 193,
+        "bookmarkTitle": "9 Mastering Your Emotions"
+      },
+      {
+        "chapterTitle": "Emotion and Illness",
+        "chapterNumber": 10,
+        "startingPage": 217,
+        "bookmarkTitle": "10 Emotion and Illness"
+      },
+      {
+        "chapterTitle": "Emotion and the Law",
+        "chapterNumber": 11,
+        "startingPage": 237,
+        "bookmarkTitle": "11 Emotion and the Law"
+      },
+      {
+        "chapterTitle": "Is a Growling Dog Angry?",
+        "chapterNumber": 12,
+        "startingPage": 270,
+        "bookmarkTitle": "12 Is a Growling Dog Angry?"
+      },
+      {
+        "chapterTitle": "From Brain to Mind: The New Frontier",
+        "chapterNumber": 13,
+        "startingPage": 296,
+        "bookmarkTitle": "13 From Brain to Mind: The New Frontier"
+      },
+      {
+        "chapterTitle": "Appendix A",
+        "chapterNumber": 14,
+        "startingPage": 320,
+        "bookmarkTitle": "Appendix A"
+      },
+      {
+        "chapterTitle": "Appendix B",
+        "chapterNumber": 15,
+        "startingPage": 325,
+        "bookmarkTitle": "Appendix B"
+      },
+      {
+        "chapterTitle": "Appendix C",
+        "chapterNumber": 16,
+        "startingPage": 327,
+        "bookmarkTitle": "Appendix C"
+      },
+      {
+        "chapterTitle": "Appendix D",
+        "chapterNumber": 17,
+        "startingPage": 329,
+        "bookmarkTitle": "Appendix D"
+      },
+      {
+        "chapterTitle": "Bibliography",
+        "chapterNumber": 18,
+        "startingPage": 339,
+        "bookmarkTitle": "Bibliography"
+      },
+      {
+        "chapterTitle": "Notes",
+        "chapterNumber": 19,
+        "startingPage": 384,
+        "bookmarkTitle": "Notes"
+      },
+      {
+        "chapterTitle": "Index",
+        "chapterNumber": 20,
+        "startingPage": 428,
+        "bookmarkTitle": "Index"
+      }
+    ],
+    "pdfBookmarksAvailable": true
+  },
+  "patternAnalysis": {
+    "potentialChapters": 696,
+    "validatedChapters": 637,
+    "highConfidenceMatches": 0
+  },
+  "chapterMetadata": [
+    {
+      "title": "Introduction: The Two-Thousand-Year-Old Assumption",
+      "chapterNumber": 0,
+      "startingPage": 11,
+      "endPage": 18,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "The Search for Emotion’s “Fingerprints”",
+      "chapterNumber": 1,
+      "startingPage": 19,
+      "endPage": 42,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7999999999999999
+    },
+    {
+      "title": "Emotions Are Constructed",
+      "chapterNumber": 2,
+      "startingPage": 43,
+      "endPage": 59,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The Myth of Universal Emotions",
+      "chapterNumber": 3,
+      "startingPage": 60,
+      "endPage": 73,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "The Origin of Feeling",
+      "chapterNumber": 4,
+      "startingPage": 74,
+      "endPage": 101,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Concepts, Goals, and Words",
+      "chapterNumber": 5,
+      "startingPage": 102,
+      "endPage": 129,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "How the Brain Makes Emotions",
+      "chapterNumber": 6,
+      "startingPage": 130,
+      "endPage": 145,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Emotions as Social Reality",
+      "chapterNumber": 7,
+      "startingPage": 146,
+      "endPage": 169,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "A New View of Human Nature",
+      "chapterNumber": 8,
+      "startingPage": 170,
+      "endPage": 192,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Mastering Your Emotions",
+      "chapterNumber": 9,
+      "startingPage": 193,
+      "endPage": 216,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Emotion and Illness",
+      "chapterNumber": 10,
+      "startingPage": 217,
+      "endPage": 236,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Emotion and the Law",
+      "chapterNumber": 11,
+      "startingPage": 237,
+      "endPage": 269,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Is a Growling Dog Angry?",
+      "chapterNumber": 12,
+      "startingPage": 270,
+      "endPage": 295,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "From Brain to Mind: The New Frontier",
+      "chapterNumber": 13,
+      "startingPage": 296,
+      "endPage": 319,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 0.7
+    },
+    {
+      "title": "Appendix A",
+      "chapterNumber": 14,
+      "startingPage": 320,
+      "endPage": 324,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Appendix B",
+      "chapterNumber": 15,
+      "startingPage": 325,
+      "endPage": 326,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Appendix C",
+      "chapterNumber": 16,
+      "startingPage": 327,
+      "endPage": 328,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Appendix D",
+      "chapterNumber": 17,
+      "startingPage": 329,
+      "endPage": 338,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Bibliography",
+      "chapterNumber": 18,
+      "startingPage": 339,
+      "endPage": 383,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Notes",
+      "chapterNumber": 19,
+      "startingPage": 384,
+      "endPage": 427,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    },
+    {
+      "title": "Index",
+      "chapterNumber": 20,
+      "startingPage": 428,
+      "endPage": null,
+      "detectionSource": "pdf_bookmarks",
+      "confidence": 1
+    }
+  ]
+}

@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import type { FocusAudioApi } from './hooks/useFocusAudioPlayback';
+import type { SentenceAudioApi } from './hooks/useSentenceAudioController';
 import { useUserTheme } from '@/client/components/UserThemeProvider';
 
-export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; highlightMode?: 'word' | 'line' | 'off' }> = ({ focusAudio, highlightMode = 'word' }) => {
-    const sentences = focusAudio.sentences;
-    const currentSentenceIndex = focusAudio.currentSentenceIndex;
-    const isPlaying = focusAudio.isPlaying;
-    const currentWordIndex = focusAudio.currentWordIndex;
+export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode?: 'word' | 'line' | 'off' }> = ({ controller, highlightMode = 'word' }) => {
+    const sentences = controller.sentences;
+    const currentSentenceIndex = controller.currentSentenceIndex;
+    const isPlaying = controller.isPlaying;
+    const currentWordIndex = controller.currentWordIndex;
     const { textColor, highlightColor } = useUserTheme() as { textColor: string; highlightColor: string };
 
     const handleNext = useCallback(() => {
-        focusAudio.handleNextSentence();
-    }, [focusAudio]);
+        controller.nextSentence();
+    }, [controller]);
 
     const handlePrev = useCallback(() => {
-        focusAudio.handlePreviousSentence();
-    }, [focusAudio]);
+        controller.prevSentence();
+    }, [controller]);
 
     const prevText = sentences[currentSentenceIndex - 1]?.text ?? '';
     const currText = sentences[currentSentenceIndex]?.text ?? '';
@@ -31,7 +31,6 @@ export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; highlightMode?: 
     const containerRef = useRef<HTMLDivElement>(null);
     // Line highlight overlay position (for straight background across the whole line)
     const [linePos, setLinePos] = useState<{ top: number; height: number } | null>(null);
-    const [currentLineWordIndexes, setCurrentLineWordIndexes] = useState<Set<number>>(new Set());
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
@@ -52,27 +51,11 @@ export const FocusReader: React.FC<{ focusAudio: FocusAudioApi; highlightMode?: 
             const wordEl = container.querySelector(`[data-word-index="${currentWordIndex}"]`) as HTMLElement | null;
             if (!wordEl) {
                 setLinePos(null);
-                setCurrentLineWordIndexes(new Set());
                 return;
             }
             const cr = container.getBoundingClientRect();
             const wr = wordEl.getBoundingClientRect();
             setLinePos({ top: wr.top - cr.top, height: wr.height });
-
-            // Find all words on the same visual line (same top within tolerance)
-            const sameLine = new Set<number>();
-            const tolerance = 2; // px tolerance for same line
-            const all = container.querySelectorAll('[data-word-index]');
-            all.forEach(el => {
-                const idxStr = (el as HTMLElement).getAttribute('data-word-index');
-                if (!idxStr) return;
-                const idx = Number(idxStr);
-                const r = (el as HTMLElement).getBoundingClientRect();
-                if (Math.abs(r.top - wr.top) <= tolerance) {
-                    sameLine.add(idx);
-                }
-            });
-            setCurrentLineWordIndexes(sameLine);
         };
         updateLinePos();
         window.addEventListener('resize', updateLinePos);

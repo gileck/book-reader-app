@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "totalDuration": 23969,
-    "timestamp": "2025-09-04T13:34:11.991Z",
+    "totalDuration": 21340,
+    "timestamp": "2025-10-11T07:27:32.875Z",
     "success": true,
     "totalSteps": 12,
     "validatedSteps": 12,
@@ -11,56 +11,56 @@
     "step-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:33:50.001Z",
-      "duration": 96
+      "timestamp": "2025-10-11T07:27:14.584Z",
+      "duration": 123
     },
     "step-2-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:33:51.679Z",
+      "timestamp": "2025-10-11T07:27:16.623Z",
       "duration": 1
     },
     "step-2-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:33:51.706Z",
+      "timestamp": "2025-10-11T07:27:16.652Z",
       "duration": 8
     },
     "step-2-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:33:51.719Z",
-      "duration": 8
+      "timestamp": "2025-10-11T07:27:16.669Z",
+      "duration": 11
     },
     "step-3": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:33:51.850Z",
-      "duration": 21
+      "timestamp": "2025-10-11T07:27:16.835Z",
+      "duration": 30
     },
     "step-3-1": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:33:54.414Z",
-      "duration": 30
+      "timestamp": "2025-10-11T07:27:19.389Z",
+      "duration": 23
     },
     "step-3-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:34:10.776Z",
-      "duration": 28
+      "timestamp": "2025-10-11T07:27:31.407Z",
+      "duration": 21
     },
     "step-4": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:34:11.471Z",
-      "duration": 35
+      "timestamp": "2025-10-11T07:27:31.793Z",
+      "duration": 38
     },
     "step-5": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:34:11.630Z",
-      "duration": 54
+      "timestamp": "2025-10-11T07:27:32.256Z",
+      "duration": 158
     },
     "step-5-1": {
       "passed": {
@@ -74,20 +74,20 @@
         }
       },
       "error": null,
-      "timestamp": "2025-09-04T13:34:11.765Z",
-      "duration": 120
+      "timestamp": "2025-10-11T07:27:32.572Z",
+      "duration": 261
     },
     "step-5-2": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:34:11.873Z",
-      "duration": 107
+      "timestamp": "2025-10-11T07:27:32.741Z",
+      "duration": 168
     },
     "step-6": {
       "passed": true,
       "error": null,
-      "timestamp": "2025-09-04T13:34:11.982Z",
-      "duration": 98
+      "timestamp": "2025-10-11T07:27:32.866Z",
+      "duration": 115
     }
   }
 }

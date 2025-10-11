@@ -2,7 +2,7 @@
   "chapterMetadata": [
     {
       "title": "Praise for Transformer",
-      "chapterNumber": 7,
+      "chapterNumber": 0,
       "startingPage": 1,
       "endPage": 7,
       "confidence": 0.7,
@@ -10,7 +10,7 @@
     },
     {
       "title": "Introduction: Life itself",
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "startingPage": 8,
       "endPage": 26,
       "confidence": 0.7999999999999999,
@@ -18,7 +18,7 @@
     },
     {
       "title": "Discovering the nanocosm",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "startingPage": 27,
       "endPage": 61,
       "confidence": 1,
@@ -26,7 +26,7 @@
     },
     {
       "title": "The path of carbon",
-      "chapterNumber": 2,
+      "chapterNumber": 3,
       "startingPage": 62,
       "endPage": 90,
       "confidence": 1,
@@ -34,7 +34,7 @@
     },
     {
       "title": "From gases to life",
-      "chapterNumber": 3,
+      "chapterNumber": 4,
       "startingPage": 91,
       "endPage": 123,
       "confidence": 1,
@@ -42,7 +42,7 @@
     },
     {
       "title": "Revolutions",
-      "chapterNumber": 4,
+      "chapterNumber": 5,
       "startingPage": 124,
       "endPage": 149,
       "confidence": 1,
@@ -50,7 +50,7 @@
     },
     {
       "title": "To the dark side",
-      "chapterNumber": 5,
+      "chapterNumber": 6,
       "startingPage": 150,
       "endPage": 180,
       "confidence": 1,
@@ -58,7 +58,7 @@
     },
     {
       "title": "The flux capacitor",
-      "chapterNumber": 6,
+      "chapterNumber": 7,
       "startingPage": 181,
       "endPage": 210,
       "confidence": 1,
@@ -130,7 +130,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-21T09:28:19.435Z",
+    "processingStartTime": "2025-10-11T19:15:21.100Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -139,7 +139,7 @@
       "lineCount": 12120,
       "wordCount": 121693,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-21T09:28:20.431Z",
+      "extractionTime": "2025-10-11T19:15:24.711Z",
       "averageWordsPerPage": 384,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 27143
@@ -151,7 +151,7 @@
       "patternMatches": 419,
       "averageDetectionConfidence": 0.85625,
       "pageOffset": 0,
-      "processingTime": 860,
+      "processingTime": 6069,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

@@ -3493,7 +3493,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-21T12:11:58.424Z",
+    "processingStartTime": "2025-10-11T16:39:47.877Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -3502,7 +3502,7 @@
       "lineCount": 14226,
       "wordCount": 150725,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-21T12:11:59.664Z",
+      "extractionTime": "2025-10-11T16:39:52.420Z",
       "averageWordsPerPage": 361,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 33228
@@ -3514,7 +3514,7 @@
       "patternMatches": 81,
       "averageDetectionConfidence": 0.9159999999999999,
       "pageOffset": 0,
-      "processingTime": 4702,
+      "processingTime": 20578,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -3525,7 +3525,7 @@
       "averagePagesPerChapter": 19.4,
       "totalCharacters": 895043,
       "averageCharactersPerChapter": 44752.15,
-      "processingTime": 12,
+      "processingTime": 26,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     },
     "chapterNameCleaning": {
@@ -3542,21 +3542,21 @@
       "totalChapters": 20,
       "averageWordsPerPage": 364.8943298969072,
       "sentencesMerged": 0,
-      "extractionTime": "2025-08-21T12:12:04.614Z",
-      "processingTime": 60
+      "extractionTime": "2025-10-11T16:40:13.890Z",
+      "processingTime": 134
     },
     "linkDetection": {
       "totalLinks": 11,
       "totalPdfLinks": 85,
-      "processingTime": 1183,
-      "detectionTime": "2025-08-21T12:12:05.810Z"
+      "processingTime": 4178,
+      "detectionTime": "2025-10-11T16:40:18.097Z"
     },
     "imageExtraction": {
       "totalImages": 53,
       "totalExtractedImages": 71,
-      "imagesFolderPath": "/Users/gileck/projects/temp1/files/The Breathing Cure/output/images",
-      "processingTime": 6818,
-      "extractionTime": "2025-08-21T12:12:12.638Z"
+      "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/The Breathing Cure/output/images",
+      "processingTime": 12322,
+      "extractionTime": "2025-10-11T16:40:30.454Z"
     }
   }
 }

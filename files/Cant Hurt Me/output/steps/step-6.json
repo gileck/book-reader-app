@@ -6287,7 +6287,7 @@
     "totalLinks": 0,
     "averageWordsPerChapter": 9808,
     "averageWordsPerParagraph": 183,
-    "extractedAt": "2025-09-04T13:34:11.879Z",
+    "extractedAt": "2025-10-11T07:27:32.747Z",
     "parserVersion": 2,
     "chapterTitles": [
       "I Should Have Been a Statistic",
@@ -275964,7 +275964,7 @@
         "matches": 113,
         "totalWords": 913
       },
-      "processingTime": 9
+      "processingTime": 8
     }
   }
 }

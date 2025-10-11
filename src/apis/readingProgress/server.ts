@@ -5,6 +5,7 @@ import {
     calculateBookProgress,
     getReadingStats
 } from '../../server/database/collections/readingProgress';
+import { findBookById } from '../../server/database/collections/books';
 import { UPDATE_READING_POSITION_API_NAME, GET_READING_PROGRESS_API_NAME, GET_READING_STATS_API_NAME } from './index';
 import type {
     UpdateReadingPositionRequest,
@@ -92,6 +93,25 @@ export const readingProgressApis = {
                     success: false,
                     error: 'Unable to save reading progress: Invalid chunk number. Please try refreshing the page.'
                 };
+            }
+
+            // Validate currentChapter against book's chapterStartNumber
+            const book = await findBookById(new ObjectId(bookId));
+            if (book) {
+                const bookStartChapter = book.chapterStartNumber ?? 1;
+                if (currentChapter < bookStartChapter) {
+                    console.error('CRITICAL BUG: Attempt to save invalid chapter for book', {
+                        userId,
+                        bookId,
+                        currentChapter,
+                        bookStartChapter,
+                        bookTitle: book.title
+                    });
+                    return {
+                        success: false,
+                        error: `Unable to save reading progress: Chapter ${currentChapter} is invalid for this book (starts at chapter ${bookStartChapter}). Please try refreshing the page.`
+                    };
+                }
             }
 
             const result = await updateReadingPosition(

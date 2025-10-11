@@ -210,65 +210,7 @@ function validate(output) {
                         /^n\s+this\b/i,
                         /^n\s+texts\b/i,
                         /^ntil\b/i,
-                        /^what\s+to\s+do\b/i,
-                        /^this\s+means\b/i,
-                        // Allow continuation text that starts with common lowercase words
-                        /^will\s+regenerate/i,
-                        /^but\s+nothing\s+is\s+set/i,
-                        /^and\s+/i,
-                        /^but\s+/i,
-                        /^or\s+/i,
-                        /^so\s+/i,
-                        /^for\s+/i,
-                        /^in\s+/i,
-                        /^on\s+/i,
-                        /^at\s+/i,
-                        /^to\s+/i,
-                        /^of\s+/i,
-                        /^with\s+/i,
-                        /^from\s+/i,
-                        /^by\s+/i,
-                        /^as\s+/i,
-                        /^if\s+/i,
-                        /^when\s+/i,
-                        /^where\s+/i,
-                        /^while\s+/i,
-                        /^since\s+/i,
-                        /^until\s+/i,
-                        /^unless\s+/i,
-                        /^because\s+/i,
-                        /^although\s+/i,
-                        /^though\s+/i,
-                        /^however\s+/i,
-                        /^therefore\s+/i,
-                        /^nonetheless\s+/i,
-                        /^nevertheless\s+/i,
-                        /^furthermore\s+/i,
-                        /^moreover\s+/i,
-                        /^consequently\s+/i,
-                        /^accordingly\s+/i,
-                        /^thus\s+/i,
-                        /^hence\s+/i,
-                        /^indeed\s+/i,
-                        /^meanwhile\s+/i,
-                        /^otherwise\s+/i,
-                        /^instead\s+/i,
-                        /^rather\s+/i,
-                        /^than\s+/i,
-                        /^then\s+/i,
-                        /^now\s+/i,
-                        /^here\s+/i,
-                        /^there\s+/i,
-                        /^this\s+/i,
-                        /^that\s+/i,
-                        /^these\s+/i,
-                        /^those\s+/i,
-                        /^they\s+/i,
-                        /^we\s+/i,
-                        /^you\s+/i,
-                        /^it\s+/i,
-                        /^he\s+/i,
-                        /^she\s+/i
+                        /^this\s+means\b/i
                     ];
                     const isFirstParagraphOfChapter = /_1\b$/.test(chunkIdentifier);
                     const isFirstParaAlt = /_2\b$/.test(chunkIdentifier); // first paragraph often _2
@@ -276,7 +218,12 @@ function validate(output) {
                         (isFirstParagraphOfChapter && (/^n\b/i.test(chunk.content) || /^ntil\b/i.test(chunk.content))) ||
                         (isFirstParaAlt && /^[a-z]/.test(chunk.content));
 
-                    if (!isValidStart && !allowedByHeuristic) {
+                    const prevParaCtx = findPreviousParagraph(chunks, i);
+                    const prevTextTrim = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim() : '';
+                    const prevEndsWithAbbrev = prevTextTrim ? endsWithAbbreviation(prevTextTrim) : false;
+                    const prevEndsWithSpacedEllipsis = prevTextTrim ? (/(?:\.\s*){3,}["'”’)]?$/.test(prevTextTrim) || /\.\.\.["'”’)]?$/.test(prevTextTrim)) : false;
+
+                    if (!isValidStart && !allowedByHeuristic && !(prevEndsWithAbbrev || prevEndsWithSpacedEllipsis)) {
                         const prevParaCtx = findPreviousParagraph(chunks, i);
                         const prevLastWords = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim().split(/\s+/).slice(-8).join(' ') : 'none';
                         const prevLastWord = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim().split(/\s+/).slice(-1)[0] : '';
@@ -328,8 +275,12 @@ function validate(output) {
                 }
 
                 // Check if paragraph chunk ends with initials (but allow abbreviations and common single letter words)
-                if (endsWithInitials(chunk.content) && !endsWithAbbreviation(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
-                    validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+                // Relax rule for bibliography-like chapters (e.g., "Further reading") where initials are common
+                const isBibliographyLike = chunk.chapterTitle && /further\s+reading|references|bibliography/i.test(chunk.chapterTitle);
+                if (!isBibliographyLike) {
+                    if (endsWithInitials(chunk.content) && !endsWithAbbreviation(chunk.content) && !endsWithCommonSingleLetterWord(chunk.content)) {
+                        validationErrors.push(`Paragraph chunk ${fullChunkIdentifier} should not end with initials. Content: "${chunk.content}"`);
+                    }
                 }
             }
 

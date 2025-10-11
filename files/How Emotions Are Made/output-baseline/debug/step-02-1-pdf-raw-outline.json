@@ -1,0 +1,324 @@
+[
+  {
+    "title": "Contents",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 50,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Introduction: The Two-Thousand-Year-Old Assumption",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 60,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "1 The Search for Emotion’s “Fingerprints”",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 104,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "2 Emotions Are Constructed",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 248,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "3 The Myth of Universal Emotions",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 345,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "4 The Origin of Feeling",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 427,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "5 Concepts, Goals, and Words",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 596,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "6 How the Brain Makes Emotions",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 757,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "7 Emotions as Social Reality",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 852,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "8 A New View of Human Nature",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 994,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "9 Mastering Your Emotions",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1124,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "10 Emotion and Illness",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1257,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "11 Emotion and the Law",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1365,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "12 Is a Growling Dog Angry?",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1545,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "13 From Brain to Mind: The New Frontier",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1694,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Acknowledgments",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1778,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Appendix A",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1826,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Appendix B",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1862,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Appendix C",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1874,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Appendix D",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1886,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Bibliography",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 1947,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Notes",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 2217,
+          "gen": 0
+        }
+      }
+    }
+  },
+  {
+    "title": "Index",
+    "dest": {
+      "type": "array",
+      "length": 5,
+      "first": {
+        "type": "Object",
+        "ref": {
+          "num": 2481,
+          "gen": 0
+        }
+      }
+    }
+  }
+]

@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
 import { useParagraphGrouping, useFlatChunkIndex } from '../hooks/useParagraphGrouping';
+import type { SentenceChunk, ParagraphGroupMeta } from '../types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 import type { BookClient } from '../../../../apis/books/types';
 
@@ -14,6 +15,9 @@ interface ReaderContentProps {
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
     currentChunkIndex: number;
+    // Optional sentence-level data (Phase 4)
+    sentences?: SentenceChunk[];
+    paragraphGroups?: ParagraphGroupMeta[];
     // Theme settings - applied only to reader content
     fontSize: number;
     lineHeight: number;
@@ -55,7 +59,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
             container.style.setProperty('--reader-text-color', textColor);
             container.style.setProperty('--word-highlight-color', highlightColor);
             container.style.setProperty('--sentence-highlight-color', sentenceHighlightColor);
-            
+
             // Use requestAnimationFrame to ensure CSS variables are applied before showing content
             requestAnimationFrame(() => {
                 setTimeout(() => {
@@ -111,9 +115,9 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
 
     // Render content using ChunkRenderer - wait for CSS vars to be applied
     return (
-        <Box 
+        <Box
             ref={readerContentRef}
-            sx={{ 
+            sx={{
                 mt: 4,
                 // Apply theme settings directly to the reader content container
                 fontSize: 'var(--reader-font-size, 1rem)',

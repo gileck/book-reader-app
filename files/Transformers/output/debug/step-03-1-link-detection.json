@@ -2,8 +2,8 @@
   "linkDetectionMetadata": {
     "totalLinks": 282,
     "totalPdfLinks": 2214,
-    "processingTime": 987,
-    "detectionTime": "2025-08-21T09:28:22.492Z",
+    "processingTime": 4043,
+    "detectionTime": "2025-10-11T19:15:36.262Z",
     "note": "Link detection and resolution from PDF annotations"
   },
   "pdfLinks": [
@@ -66431,7 +66431,7 @@
   "chapters": [
     {
       "title": "Introduction: Life itself",
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "pageNumberStart": 8,
       "pageNumberEnd": 26,
       "pages": [
@@ -66693,7 +66693,7 @@
     },
     {
       "title": "Discovering the nanocosm",
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "pageNumberStart": 27,
       "pageNumberEnd": 61,
       "pages": [
@@ -67381,7 +67381,7 @@
     },
     {
       "title": "The path of carbon",
-      "chapterNumber": 2,
+      "chapterNumber": 3,
       "pageNumberStart": 62,
       "pageNumberEnd": 90,
       "pages": [
@@ -67956,7 +67956,7 @@
     },
     {
       "title": "From gases to life",
-      "chapterNumber": 3,
+      "chapterNumber": 4,
       "pageNumberStart": 91,
       "pageNumberEnd": 123,
       "pages": [
@@ -68447,7 +68447,7 @@
     },
     {
       "title": "Revolutions",
-      "chapterNumber": 4,
+      "chapterNumber": 5,
       "pageNumberStart": 124,
       "pageNumberEnd": 149,
       "pages": [
@@ -68832,7 +68832,7 @@
     },
     {
       "title": "To the dark side",
-      "chapterNumber": 5,
+      "chapterNumber": 6,
       "pageNumberStart": 150,
       "pageNumberEnd": 180,
       "pages": [
@@ -69341,7 +69341,7 @@
     },
     {
       "title": "The flux capacitor",
-      "chapterNumber": 6,
+      "chapterNumber": 7,
       "pageNumberStart": 181,
       "pageNumberEnd": 210,
       "pages": [

@@ -1,8 +1,8 @@
-# Step 5: Sentence Detection and Combination
+# Step 5: Sentence Detection (Phase 1: Sentence-Level Output)
 
 ## Overview
 
-Step 5 converts paragraph chunks from Step 4 into individual sentences with paragraph indexing, then combines small sentences to meet optimal word count requirements while preserving paragraph boundaries.
+Step 5 converts paragraph chunks from Step 4 into individual sentences with paragraph indexing. In Phase 1, we keep sentence-level chunks and only merge ultra‑short sentences (< 10 words) backward within the same paragraph to avoid tiny fragments.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 - Each text chunk has `paragraphIndex` field indicating which paragraph it belongs to
 - Headers have `paragraphIndex: null`
 - Image markers preserved in text content for Step 5-1 processing
-- Combined sentences meet 50-200 word target while respecting paragraph boundaries
+- Optional backward merge for ultra‑short sentences (< 10 words) within the same paragraph
 
 ## Technical Approach
 
@@ -26,10 +26,9 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 - Clean sentence content (remove newlines, normalize whitespace)
 - Extract links that exist within each sentence
 
-### 2. Sentence Combination and Optimization  
-- Combine sentences within the same paragraph to meet minimum 50 words
-- Respect maximum 200 words limit
-- Never combine sentences across different paragraphs
+### 2. Minimal Combination (Phase 1)
+- Only merge ultra‑short sentences (< 10 words) backward within same paragraph
+- No forward or cross‑paragraph merging
 - Preserve sentence count and link associations
 
 ### 3. Paragraph Boundary Preservation
@@ -48,10 +47,9 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
    - Clean and validate sentence content
    - Extract relevant links for each sentence
 3. **For headers:** Preserve as-is with `paragraphIndex: null`
-4. **Optimize sentence sizes:**
-   - Combine small sentences (< 50 words) within same paragraph
-   - Ensure combined chunks don't exceed 200 words
-   - Try merging with next sentences first, then previous if needed
+4. **Minimal combination:**
+   - Merge ultra‑short sentences (< 10 words) backward within same paragraph
+   - No forward or cross‑paragraph merges
 5. **Assign sequential chunk IDs** after optimization
 6. **Generate statistics** and return processed chapters
 
@@ -63,10 +61,10 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 - All sentences from second paragraph get `paragraphIndex: 2`
 - Enables easy paragraph reconstruction during rendering
 
-### Sentence Combination Logic
-- **Target**: 50-200 words per text chunk
+### Sentence Combination Logic (Phase 1)
+- **Target**: Sentence-level chunks (no 50–200 global target)
 - **Boundary Respect**: Never combine across different `paragraphIndex`
-- **Page Awareness**: Don't combine across non-consecutive pages
+- **Backward Merge Only**: Ultra‑short sentences < 10 words
 - **Link Preservation**: Re-validate links after combination
 
 ### Content Cleanliness
@@ -79,8 +77,8 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 ### Sentence Chunk Requirements
 - **Type**: Must be 'text'
 - **Content**: Clean text, no newlines, starts with capital letter or valid symbol
-- **Word Count**: 50-200 words (combined sentences)
-- **Sentence Count**: ≥1 (reflects number of original sentences combined)
+- **Word Count**: ≥ 1 word (no strict min/max in Phase 1)
+- **Sentence Count**: ≥1
 - **Paragraph Index**: Positive integer (1, 2, 3, etc.)
 - **Links**: All link text must exist in chunk content
 

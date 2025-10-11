@@ -32,12 +32,12 @@ const fs = require('fs');
 const path = require('path');
 
 // Import shared text processing utilities
-const { 
-    endsWithSentenceTerminator: sharedEndsWithSentenceTerminator, 
+const {
+    endsWithSentenceTerminator: sharedEndsWithSentenceTerminator,
     endsWithAbbreviation,
-    getWordCount: sharedGetWordCount, 
+    getWordCount: sharedGetWordCount,
     getSentenceCount: sharedGetSentenceCount,
-    splitIntoSentencesBasic 
+    splitIntoSentencesBasic
 } = require('../../utils/text-processing-utils');
 
 // Debug: capture detailed paragraph boundary decisions
@@ -73,6 +73,12 @@ async function execute(pipelineState, config) {
 
             // Merge paragraphs that were split across page boundaries (no page semantics now)
             chapterChunks = mergeSplitParagraphsAcrossPageBoundaries(chapterChunks);
+
+            // Merge continuation paragraphs where previous ends with abbreviation/ellipsis/initials
+            chapterChunks = mergeContinuationParagraphs(chapterChunks);
+
+            // Merge any paragraph that starts lowercase (after quotes/punct) into previous paragraph
+            chapterChunks = mergeLowercaseStartParagraphs(chapterChunks);
 
             // Apply size optimization for paragraphs only
             const optimizedChunks = optimizeChunkSizes(chapterChunks);
@@ -243,11 +249,13 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
 
             const currentText = (current.content || '').trim();
             const endsWithHardTerminator = /[.!?]["'”’)]?$/.test(currentText);
+            // Treat ellipsis (including spaced variants like ". . .") as non-terminating for merge purposes
+            const endsWithEllipsis = /(?:\.\s*){3,}["'”’)]?$/.test(currentText) || /\.\.\.["'”’)]?$/.test(currentText);
             // Treat common abbreviations/initials at the end as NOT a hard sentence terminator
             const endsWithSingleInitial = /\b[A-Z]\.$/.test(currentText);
             const endsWithMultiInitials = /(?:\b(?:[A-Z]\.)){2,}$/.test(currentText);
             const endsWithAbbreviationCheck = endsWithAbbreviation(currentText);
-            const currEndsWithTerminator = endsWithHardTerminator && !(endsWithSingleInitial || endsWithMultiInitials || endsWithAbbreviationCheck);
+            const currEndsWithTerminator = endsWithHardTerminator && !(endsWithSingleInitial || endsWithMultiInitials || endsWithAbbreviationCheck) && !endsWithEllipsis;
             const nextText = (next.content || '').trim();
             const nextStartsLower = /^[a-z]/.test(nextText);
             const nextLooksLikeHeader = isHeader(nextText, 0, [nextText]);
@@ -272,6 +280,98 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
         merged.push(...skippedImages);
         merged.push(current);
         i = j - 1 >= i ? j - 1 : i;
+    }
+    return merged;
+}
+
+/**
+ * Merge adjacent paragraph chunks when the first ends with abbreviation/initials/ellipsis
+ * and the second starts lowercase (ignoring leading quotes/punctuation).
+ * This fixes cases like: "Corp." followed by "said ..." becoming separate paragraphs.
+ */
+function mergeContinuationParagraphs(chunks) {
+    if (!Array.isArray(chunks) || chunks.length === 0) return chunks;
+    const merged = [];
+    for (let i = 0; i < chunks.length; i++) {
+        const curr = chunks[i];
+        if (curr.type !== 'paragraph') {
+            merged.push(curr);
+            continue;
+        }
+        let current = { ...curr };
+        let j = i + 1;
+        const skippedImages = [];
+        while (j < chunks.length) {
+            const next = chunks[j];
+            if (!next) break;
+            if (next.type === 'header') break;
+            if (next.type === 'image') { skippedImages.push(next); j++; continue; }
+            if (next.type !== 'paragraph') break;
+
+            const currentText = (current.content || '').trim();
+            const nextText = (next.content || '').trim();
+            // Determine if current ends with abbreviation/initials/ellipsis
+            const endsWithSingleInitial = /\b[A-Z]\.$/.test(currentText);
+            const endsWithMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(currentText);
+            const endsWithAbbrev = endsWithAbbreviation(currentText);
+            const endsWithEllipsis = /(?:\.\s*){3,}["'”’)]?$/.test(currentText) || /\.\.\.["'”’)]?$/.test(currentText);
+            // Determine if next starts lowercase (ignoring leading quotes/punct)
+            const nextFirstAlpha = nextText.replace(/^[^A-Za-z]+/, '')[0] || '';
+            const nextStartsLower = nextFirstAlpha && nextFirstAlpha === nextFirstAlpha.toLowerCase() && nextFirstAlpha !== nextFirstAlpha.toUpperCase();
+
+            const nextStartsAttribution = /^\s*[“"']?\s*(said|says|stated|wrote|added|noted|according to)\b/i.test(nextText);
+            const nextStartsWhatTo = /^\s*[“"']?\s*what\s+to\s+do\b/i.test(nextText);
+            if (nextStartsLower && (endsWithSingleInitial || endsWithMultiInitials || endsWithAbbrev || endsWithEllipsis || nextStartsAttribution || nextStartsWhatTo)) {
+                // Merge
+                const newContent = (current.content || '').replace(/\s+$/, '') + ' ' + (next.content || '').replace(/^\s+/, '');
+                current = {
+                    ...current,
+                    content: newContent,
+                };
+                // Recompute counts lazily; validation will compute, but keep simple here
+                j++;
+                continue;
+            }
+            break;
+        }
+        merged.push(current);
+        // Reinsert any images we skipped directly after the merged paragraph
+        if (skippedImages.length > 0) {
+            merged.push(...skippedImages);
+        }
+        i = j - 1;
+    }
+    return merged;
+}
+
+/**
+ * Merge paragraphs that start with lowercase (ignoring leading quotes/punctuation)
+ * into the previous paragraph, to avoid false paragraph starts caused by PDF line breaks.
+ */
+function mergeLowercaseStartParagraphs(chunks) {
+    if (!Array.isArray(chunks) || chunks.length === 0) return chunks;
+    const merged = [];
+    for (let i = 0; i < chunks.length; i++) {
+        const curr = chunks[i];
+        if (curr.type !== 'paragraph') {
+            merged.push(curr);
+            continue;
+        }
+        if (merged.length > 0 && merged[merged.length - 1].type === 'paragraph') {
+            const text = (curr.content || '').trim();
+            const firstAlpha = (text.replace(/^[^A-Za-z]+/, '')[0] || '');
+            const startsLower = firstAlpha && firstAlpha === firstAlpha.toLowerCase() && firstAlpha !== firstAlpha.toUpperCase();
+            if (startsLower) {
+                const prev = merged[merged.length - 1];
+                const newContent = (prev.content || '').replace(/\s+$/, '') + ' ' + (curr.content || '').replace(/^\s+/, '');
+                merged[merged.length - 1] = {
+                    ...prev,
+                    content: newContent
+                };
+                continue;
+            }
+        }
+        merged.push(curr);
     }
     return merged;
 }
@@ -448,11 +548,15 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             if (sharedEndsWithSentenceTerminator(line)) {
                 // Look ahead to see if next non-empty line starts a new paragraph or is a header
                 const nextContentIndex = findNextNonEmptyLine(lines, i + 1);
+                const nextLineTrim = nextContentIndex !== -1 ? (lines[nextContentIndex] || '').trim() : '';
+                // Consider leading quotes/punctuation before the first letter
+                const nextFirstAlpha = nextLineTrim.replace(/^[^A-Za-z]+/, '')[0] || '';
+                const nextStartsLower = nextContentIndex !== -1 && nextFirstAlpha && nextFirstAlpha === nextFirstAlpha.toLowerCase() && nextFirstAlpha !== nextFirstAlpha.toUpperCase();
 
                 // Special case: if current line ends with initials and next line starts with a capital letter
                 // that could be continuing the same sentence (like another name), don't split
                 if (nextContentIndex !== -1 && endsWithInitials(line) &&
-                    /^[A-Z]/.test(lines[nextContentIndex].trim())) {
+                    /^[A-Z]/.test(nextLineTrim)) {
                     continue; // Don't split, continue building the paragraph
                 }
 
@@ -462,10 +566,25 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                 const endIsSingleInitial = /\b[A-Z]\.$/.test(lineTrim);
                 const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(lineTrim);
                 const endIsAbbreviation = endsWithAbbreviation(lineTrim);
-                const nextStartsLower = nextContentIndex !== -1 && /^[a-z]/.test((lines[nextContentIndex] || '').trim());
                 if ((endIsSingleInitial || endIsMultiInitials || endIsAbbreviation) && nextStartsLower) {
                     // Continue building the paragraph instead of splitting
                     continue;
+                }
+
+                // If line ends with ellipsis (including spaced variants like ". . .") and next starts lowercase, continue same paragraph
+                const endsWithEllipsis = /(?:\.\s*){3,}["'”’)]?$/.test(lineTrim) || /\.\.\.["'”’)]?$/.test(lineTrim);
+                if (endsWithEllipsis && nextStartsLower) {
+                    continue;
+                }
+
+                // Continuation heuristics: if next line is a lowercase attribution or "what to do" intro, continue same paragraph
+                if (nextContentIndex !== -1) {
+                    const nextTrim = nextLineTrim;
+                    const isAttribution = /^\s*[“"']?\s*(said|says|stated|wrote|added|noted|according to)\b/i.test(nextTrim);
+                    const isWhatToDo = /^\s*[“"']?\s*what\s+to\s+do\b/i.test(nextTrim);
+                    if (nextStartsLower && (isAttribution || isWhatToDo)) {
+                        continue;
+                    }
                 }
 
                 // NEW REQUIREMENT: Paragraphs MUST end with a newline after the sentence terminator
@@ -484,7 +603,8 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                     const endIsAbbreviation = endsWithAbbreviation(lineTrim);
                     const nextLineTrim = nextContentIndex !== -1 ? (lines[nextContentIndex] || '').trim() : '';
                     const isHeaderNext = nextContentIndex !== -1 ? isHeader(lines[nextContentIndex], nextContentIndex, lines) : false;
-                    const nextStartsLowerDbg = nextLineTrim ? /^[a-z]/.test(nextLineTrim) : false;
+                    const dbgFirstAlpha = nextLineTrim.replace(/^[^A-Za-z]+/, '')[0] || '';
+                    const nextStartsLowerDbg = !!dbgFirstAlpha && dbgFirstAlpha === dbgFirstAlpha.toLowerCase() && dbgFirstAlpha !== dbgFirstAlpha.toUpperCase();
                     debugBoundaryEvents.push({
                         pageNumber: page.pageNumber,
                         lineIndex: i,
@@ -500,11 +620,14 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                         isHeaderNext,
                         treatedAsBoundary: (nextContentIndex === -1) || hasEmptyLineBetween || isHeaderNext
                     });
-                } catch (e) {}
+                } catch (e) { }
+
+                const nextIsHeader = nextContentIndex !== -1 && isHeader(lines[nextContentIndex], nextContentIndex, lines);
+                const emptyLineButContinuation = hasEmptyLineBetween && nextStartsLower && (endIsSingleInitial || endIsMultiInitials || endIsAbbreviation || endsWithEllipsis);
 
                 if (nextContentIndex === -1 || // End of page
-                    hasEmptyLineBetween || // Empty line(s) between current and next content
-                    isHeader(lines[nextContentIndex], nextContentIndex, lines)) { // Next line is header
+                    (hasEmptyLineBetween && !emptyLineButContinuation) || // Empty line(s) but not a continuation case
+                    nextIsHeader) { // Next line is header
 
                     // End current paragraph
                     chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
@@ -538,18 +661,18 @@ function isPartOfNumberedList(lineIndex, allLines) {
     const currentLine = allLines[lineIndex].trim();
     const currentMatch = currentLine.match(/^(\d+)[\.)]\s+/);
     if (!currentMatch) return false;
-    
+
     const currentNumber = parseInt(currentMatch[1]);
-    
+
     // Look for previous and next numbered items to confirm it's a list
     let foundPrevious = false;
     let foundNext = false;
-    
+
     // Check previous lines for (currentNumber - 1)
     for (let i = lineIndex - 1; i >= 0 && i >= lineIndex - 10; i--) {
         const line = allLines[i].trim();
         if (!line) continue;
-        
+
         const match = line.match(/^(\d+)[\.)]\s+/);
         if (match) {
             const num = parseInt(match[1]);
@@ -560,12 +683,12 @@ function isPartOfNumberedList(lineIndex, allLines) {
             if (num < currentNumber - 1) break; // Found an older number, stop looking
         }
     }
-    
+
     // Check next lines for (currentNumber + 1)
     for (let i = lineIndex + 1; i < allLines.length && i <= lineIndex + 10; i++) {
         const line = allLines[i].trim();
         if (!line) continue;
-        
+
         const match = line.match(/^(\d+)[\.)]\s+/);
         if (match) {
             const num = parseInt(match[1]);
@@ -576,13 +699,13 @@ function isPartOfNumberedList(lineIndex, allLines) {
             if (num > currentNumber + 1) break; // Found a future number, stop looking
         }
     }
-    
+
     // Also check for the common pattern where we have item 1 without a previous item
     // (like at the start of a list) - if we find the next number, it's likely a list
     if (currentNumber === 1 && foundNext) {
         return true;
     }
-    
+
     // If we found either previous or next sequential number, it's likely a list
     return foundPrevious || foundNext;
 }
@@ -883,7 +1006,7 @@ function tryMergeWithNextParagraph(chunks, currentIndex) {
         const combinedWordCount = currentChunk.wordCount + nextChunk.wordCount;
         const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
         if (combinedWordCount <= maxCombinedSize) {
-            const mergedContent = currentChunk.content + '\n' + nextChunk.content;
+            const mergedContent = (currentChunk.content || '').replace(/\s+$/, '') + ' ' + (nextChunk.content || '').replace(/^\s+/, '');
             const allPotentialLinks = [...(currentChunk.links || []), ...(nextChunk.links || [])];
             const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
             return {
@@ -933,7 +1056,7 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
             // Only merge if combined size is reasonable (more generous for very small paragraphs)
             const maxCombinedSize = currentChunk.wordCount < 20 ? 400 : 300;
             if (combinedWordCount <= maxCombinedSize) {
-                const mergedContent = previousChunk.content + '\n' + currentChunk.content;
+                const mergedContent = (previousChunk.content || '').replace(/\s+$/, '') + ' ' + (currentChunk.content || '').replace(/^\s+/, '');
                 // Get all potential links from both chunks and re-validate against merged content
                 const allPotentialLinks = [...(previousChunk.links || []), ...(currentChunk.links || [])];
                 const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));

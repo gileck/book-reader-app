@@ -6,14 +6,14 @@
 - Refresh rendering, highlighting, and controls so the only difference between reader modes is layout/presentation, not playback logic.
 
 ## Goals & Success Criteria
-- **Parser emits sentences:** each text chunk in `output.json` equals one (possibly merged) sentence, carrying `paragraphIndex`, word counts, links, etc.
+- **Parser emits sentences:** each text chunk in `output.json` equals exactly one sentence (no merging), carrying `paragraphIndex`, word counts, links, etc.
 - **Unified controller:** both modes consume one hook/object for play/pause, navigation, preloading, errors, and word-level highlighting.
 - **UI parity:** Full reader adopts sentence spans + highlighting while retaining paragraph grouping; Focus reader keeps its focused layout using the same data source.
 - **OPS confidence:** playback remains performant with hundreds of sentences, TTS requests stay manageable, and regression checks pass.
 
 ## Scope
 ### In Scope
-- Parser step 5 changes to stop aggressive paragraph recombination; optionally merge ultra-short sentences (<10 words) with neighbours while preserving `paragraphIndex`.
+- Parser step 5 changes to eliminate ALL sentence merging; every text chunk = exactly one sentence for maximum audio playback granularity.
 - Shared sentence metadata definitions (`SentenceChunk`, `ParagraphMeta`) consumed by client and downstream tooling.
 - Consolidation of `useAudioPlayback` + `useFocusAudioPlayback` into a new `useSentenceAudioController` hook.
 - Rendering updates in `ReaderContent`, `FocusReader`, and `AudioControls` to consume the new controller.
@@ -121,6 +121,32 @@
    - Refresh `docs/highlighting-systems.md`, `feature-plans/sentence-highlighting-mode.md` with new flow.
    - Manual QA checklist (desktop/mobile, bookmarks, theme toggles, TTS errors, offline mode).
    - Run `yarn checks` and targeted integration tests or smoke scripts.
+
+### Phase 6 – Optimization & Hardening (post-MVP)
+1. **Performance & DOM scale**
+   - Viewport-driven word-span hydration using `IntersectionObserver`; only create word spans for the active sentence and near-neighbours.
+   - Batch highlight DOM updates with `requestAnimationFrame`; precompute element lookups and avoid repeated selectors.
+
+2. **Audio caching & memory**
+   - Prefer Blob URLs over base64 for audio buffers; implement LRU with `maxCachedSentences` and `maxTotalBytes` caps and eviction.
+   - Tune preload window (±N sentences), set `maxConcurrentPreloads`, and add per-sentence abort/backoff on repeated failures.
+
+3. **ID stability & progress migration**
+   - Define stable `sentenceId` generation (e.g., content-hash + `paragraphIndex` + ordinal) to remain consistent across parser re-runs.
+   - Add a migration helper to map legacy chunk indexes to the first corresponding sentence index on first load.
+
+4. **Mobile/iOS media behaviour**
+   - Enforce user-gesture gating for play; handle audio-focus interruptions and resume semantics on iOS Safari.
+
+5. **Observability & QA**
+   - Instrument preload hit/miss, TTS error rates, retry counts, time-to-first-play, and memory samples.
+   - Add E2E tests for rapid next/prev during in-flight preloads, offline/unavailable TTS fallback, and mobile Safari gesture constraints.
+
+6. **Parser robustness**
+   - Improve sentence tokenisation for abbreviations, decimals, initials, quotes, ellipses, and non‑Latin scripts; consider ICU/tokenizer configuration.
+
+7. **Accessibility**
+   - Provide keyboard navigation across sentences; ARIA roles/labels for sentence containers; maintain focus management during playback.
 
 ## Detailed Task Breakdown
 

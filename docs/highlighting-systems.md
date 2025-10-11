@@ -8,6 +8,8 @@ This document describes both highlighting systems used in the application:
 
 Both systems are user-configurable through the theme panel and designed for optimal performance and user experience.
 
+**Note**: As of the sentence-chunk audio refactor, the reader now operates on sentence-level chunks by default. Both full and focus modes share a unified `useSentenceAudioController` that manages playback at sentence granularity. The highlighting systems work seamlessly with this sentence-based architecture.
+
 ## Table of Contents
 
 1. [Word Highlighting System](#word-highlighting-system)
@@ -46,7 +48,7 @@ The word highlighting system follows these core principles:
 
 ```mermaid
 graph TB
-    A[Audio Playback] --> B[useAudioPlayback Hook]
+    A[Audio Playback] --> B[useSentenceAudioController Hook]
     B --> C{Is Playing?}
     C -->|Yes| D[Start 100ms Interval]
     C -->|No| E[Stop Interval]

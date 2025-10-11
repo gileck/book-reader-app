@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "totalDuration": 46753,
+    "timestamp": "2025-10-11T16:40:37.509Z",
+    "success": true,
+    "totalSteps": 12,
+    "validatedSteps": 12,
+    "failedSteps": 0
+  },
+  "steps": {
+    "step-1": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:39:57.289Z",
+      "duration": 183
+    },
+    "step-2-1": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:06.231Z",
+      "duration": 1
+    },
+    "step-2-2": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:06.351Z",
+      "duration": 62
+    },
+    "step-2-3": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:06.375Z",
+      "duration": 18
+    },
+    "step-3": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:06.647Z",
+      "duration": 37
+    },
+    "step-3-1": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:12.313Z",
+      "duration": 37
+    },
+    "step-3-2": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:36.295Z",
+      "duration": 33
+    },
+    "step-4": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:36.700Z",
+      "duration": 47
+    },
+    "step-5": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:36.950Z",
+      "duration": 105
+    },
+    "step-5-1": {
+      "passed": {
+        "valid": false,
+        "errors": [
+          "No image chunks found - expected at least 1 image chunk to be created"
+        ],
+        "warnings": [],
+        "stats": {
+          "totalImageChunks": 0,
+          "totalTextChunks": 1009,
+          "totalRemainingMarkers": 0
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-11T16:40:37.128Z",
+      "duration": 158
+    },
+    "step-5-2": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:37.312Z",
+      "duration": 183
+    },
+    "step-6": {
+      "passed": true,
+      "error": null,
+      "timestamp": "2025-10-11T16:40:37.495Z",
+      "duration": 169
+    }
+  }
+}

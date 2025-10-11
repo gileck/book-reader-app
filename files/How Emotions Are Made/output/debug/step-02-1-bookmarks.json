@@ -1,0 +1,159 @@
+{
+  "pdfBookmarksAvailable": true,
+  "inputPdf": "/Users/gil/Projects/book-reader-app/files/How Emotions Are Made/book.pdf",
+  "tocFound": true,
+  "totalBookmarks": 23,
+  "outlineTitles": [
+    "Contents",
+    "Introduction: The Two-Thousand-Year-Old Assumption",
+    "1 The Search for Emotion’s “Fingerprints”",
+    "2 Emotions Are Constructed",
+    "3 The Myth of Universal Emotions",
+    "4 The Origin of Feeling",
+    "5 Concepts, Goals, and Words",
+    "6 How the Brain Makes Emotions",
+    "7 Emotions as Social Reality",
+    "8 A New View of Human Nature",
+    "9 Mastering Your Emotions",
+    "10 Emotion and Illness",
+    "11 Emotion and the Law",
+    "12 Is a Growling Dog Angry?",
+    "13 From Brain to Mind: The New Frontier",
+    "Acknowledgments",
+    "Appendix A",
+    "Appendix B",
+    "Appendix C",
+    "Appendix D",
+    "Bibliography",
+    "Notes",
+    "Index"
+  ],
+  "extractedChapters": [
+    {
+      "chapterTitle": "Introduction: The Two-Thousand-Year-Old Assumption",
+      "chapterNumber": 0,
+      "startingPage": 11,
+      "bookmarkTitle": "Introduction: The Two-Thousand-Year-Old Assumption"
+    },
+    {
+      "chapterTitle": "The Search for Emotion’s “Fingerprints”",
+      "chapterNumber": 1,
+      "startingPage": 19,
+      "bookmarkTitle": "1 The Search for Emotion’s “Fingerprints”"
+    },
+    {
+      "chapterTitle": "Emotions Are Constructed",
+      "chapterNumber": 2,
+      "startingPage": 43,
+      "bookmarkTitle": "2 Emotions Are Constructed"
+    },
+    {
+      "chapterTitle": "The Myth of Universal Emotions",
+      "chapterNumber": 3,
+      "startingPage": 60,
+      "bookmarkTitle": "3 The Myth of Universal Emotions"
+    },
+    {
+      "chapterTitle": "The Origin of Feeling",
+      "chapterNumber": 4,
+      "startingPage": 74,
+      "bookmarkTitle": "4 The Origin of Feeling"
+    },
+    {
+      "chapterTitle": "Concepts, Goals, and Words",
+      "chapterNumber": 5,
+      "startingPage": 102,
+      "bookmarkTitle": "5 Concepts, Goals, and Words"
+    },
+    {
+      "chapterTitle": "How the Brain Makes Emotions",
+      "chapterNumber": 6,
+      "startingPage": 130,
+      "bookmarkTitle": "6 How the Brain Makes Emotions"
+    },
+    {
+      "chapterTitle": "Emotions as Social Reality",
+      "chapterNumber": 7,
+      "startingPage": 146,
+      "bookmarkTitle": "7 Emotions as Social Reality"
+    },
+    {
+      "chapterTitle": "A New View of Human Nature",
+      "chapterNumber": 8,
+      "startingPage": 170,
+      "bookmarkTitle": "8 A New View of Human Nature"
+    },
+    {
+      "chapterTitle": "Mastering Your Emotions",
+      "chapterNumber": 9,
+      "startingPage": 193,
+      "bookmarkTitle": "9 Mastering Your Emotions"
+    },
+    {
+      "chapterTitle": "Emotion and Illness",
+      "chapterNumber": 10,
+      "startingPage": 217,
+      "bookmarkTitle": "10 Emotion and Illness"
+    },
+    {
+      "chapterTitle": "Emotion and the Law",
+      "chapterNumber": 11,
+      "startingPage": 237,
+      "bookmarkTitle": "11 Emotion and the Law"
+    },
+    {
+      "chapterTitle": "Is a Growling Dog Angry?",
+      "chapterNumber": 12,
+      "startingPage": 270,
+      "bookmarkTitle": "12 Is a Growling Dog Angry?"
+    },
+    {
+      "chapterTitle": "From Brain to Mind: The New Frontier",
+      "chapterNumber": 13,
+      "startingPage": 296,
+      "bookmarkTitle": "13 From Brain to Mind: The New Frontier"
+    },
+    {
+      "chapterTitle": "Appendix A",
+      "chapterNumber": 14,
+      "startingPage": 320,
+      "bookmarkTitle": "Appendix A"
+    },
+    {
+      "chapterTitle": "Appendix B",
+      "chapterNumber": 15,
+      "startingPage": 325,
+      "bookmarkTitle": "Appendix B"
+    },
+    {
+      "chapterTitle": "Appendix C",
+      "chapterNumber": 16,
+      "startingPage": 327,
+      "bookmarkTitle": "Appendix C"
+    },
+    {
+      "chapterTitle": "Appendix D",
+      "chapterNumber": 17,
+      "startingPage": 329,
+      "bookmarkTitle": "Appendix D"
+    },
+    {
+      "chapterTitle": "Bibliography",
+      "chapterNumber": 18,
+      "startingPage": 339,
+      "bookmarkTitle": "Bibliography"
+    },
+    {
+      "chapterTitle": "Notes",
+      "chapterNumber": 19,
+      "startingPage": 384,
+      "bookmarkTitle": "Notes"
+    },
+    {
+      "chapterTitle": "Index",
+      "chapterNumber": 20,
+      "startingPage": 428,
+      "bookmarkTitle": "Index"
+    }
+  ]
+}

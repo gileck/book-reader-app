@@ -31,7 +31,7 @@ function showHelp() {
     console.log(`
 Generic Book Parser & Uploader
 
-Usage: node run-parser-and-upload.js <FOLDER_PATH>
+Usage: node run-parser-and-upload.js [options] <FOLDER_PATH>
 
 Arguments:
   FOLDER_PATH    Path to folder containing a single PDF file (required)
@@ -52,9 +52,11 @@ Features:
 
 Options:
   --help, -h     Show this help message
+  --parser-only, -p  Run only the parser and exit without prompting for upload
 
 Examples:
   node run-parser-and-upload.js ./my-book-folder
+  node run-parser-and-upload.js -p ./my-book-folder
   node run-parser-and-upload.js /path/to/book/folder
   node run-parser-and-upload.js "C:\\Books\\My Book"
 `);
@@ -77,17 +79,17 @@ async function promptUser(question) {
 async function runUploadScript(outputPath, uploadImages) {
     try {
         console.log('\n🚀 Running upload process...\n');
-        
+
         if (uploadImages) {
             console.log('📤 Images will be uploaded to Vercel Blob');
         } else {
             console.log('⏭️ Skipping image upload (book content only)');
         }
-        
+
         await uploadParsedBookV2(outputPath, {
             uploadImages: uploadImages
         });
-        
+
         console.log('\n✅ Upload completed successfully!');
     } catch (error) {
         console.error('\n❌ Upload failed:', error.message);
@@ -98,16 +100,19 @@ async function runUploadScript(outputPath, uploadImages) {
 async function main() {
     try {
         const args = process.argv.slice(2);
+        const flags = new Set(args.filter(a => a.startsWith('-')));
+        const positionals = args.filter(a => !a.startsWith('-'));
+        const parserOnly = flags.has('--parser-only') || flags.has('-p');
 
         // Show help if requested
-        if (args.includes('--help') || args.includes('-h')) {
+        if (flags.has('--help') || flags.has('-h')) {
             showHelp();
             process.exit(0);
         }
 
         // Get folder path from command line argument
-        const folderPath = args[0];
-        
+        const folderPath = positionals[0];
+
         if (!folderPath) {
             console.error('❌ Folder path is required');
             showHelp();
@@ -116,21 +121,21 @@ async function main() {
 
         // Resolve the folder path to absolute path
         const targetDir = path.resolve(folderPath);
-        
+
         console.log(`📁 Looking for PDF file in: ${targetDir}`);
-        
+
         // Find the PDF file in the specified directory
         const pdfPath = findPdfFile(targetDir);
         const pdfName = path.basename(pdfPath);
         console.log(`📄 Found PDF: ${pdfName}`);
-        
+
         // Set output path in the same directory as the PDF
         const outputPath = path.join(targetDir, 'output');
-        
+
         console.log(`📚 Starting book parser...\n`);
         console.log(`   Input:  ${pdfPath}`);
         console.log(`   Output: ${outputPath}\n`);
-        
+
         await parser.parseBook(pdfPath, outputPath, {
             debug: true,
             validate: true
@@ -138,13 +143,17 @@ async function main() {
 
         // Parser completed successfully - now prompt for upload
         console.log('\n✅ Parser completed successfully!');
-        
+        if (parserOnly) {
+            console.log('\n⏭️  Skipping upload prompt due to --parser-only option.');
+            process.exit(0);
+        }
+
         const uploadAnswer = await promptUser('\n❓ Would you like to run the upload process? (y/n): ');
-        
+
         if (uploadAnswer === 'y' || uploadAnswer === 'yes') {
             const imagesAnswer = await promptUser('\n📤 Do you want to upload images to Vercel Blob? (y/n)\n   Note: Skip if images are already uploaded to avoid re-uploading: ');
             const uploadImages = imagesAnswer === 'y' || imagesAnswer === 'yes';
-            
+
             await runUploadScript(outputPath, uploadImages);
         } else {
             console.log('\n📝 Skipping upload process. You can run it later by using the upload script.');

@@ -6,7 +6,9 @@ import { offlineDB } from '../../../offline/offlineDB';
 import { getReadingProgress } from '../../../../apis/readingProgress/client';
 import type { BookClient } from '../../../../apis/books/types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
-import { useAudioPlayback } from './useAudioPlayback';
+import { useSentenceAudioController } from './useSentenceAudioController';
+import { buildSentenceMap } from '../utils/sentences';
+import type { TtsProvider } from '@/common/tts/ttsUtils';
 import type { OfflineChapterRecord } from '../../../offline/offlineDB';
 import { useUserSettings } from './useUserSettings';
 import { useBookmarks } from './useBookmarks';
@@ -182,9 +184,20 @@ export const useReader = () => {
                     try {
                         const progressResult = await getReadingProgress({ userId: user?.id || '', bookId });
                         if (progressResult.data?.success && progressResult.data.readingProgress) {
-                            // Use saved progress
-                            currentChapter = progressResult.data.readingProgress.currentChapter;
-                            currentChunk = progressResult.data.readingProgress.currentChunk;
+                            const savedChapter = progressResult.data.readingProgress.currentChapter;
+                            const bookStartChapter = book.chapterStartNumber ?? 1;
+                            
+                            // Validate saved chapter is valid for this book (>= chapterStartNumber)
+                            if (savedChapter >= bookStartChapter) {
+                                // Use saved progress
+                                currentChapter = savedChapter;
+                                currentChunk = progressResult.data.readingProgress.currentChunk;
+                            } else {
+                                // Invalid saved chapter (e.g., chapter 0 when book starts at 1), reset to start
+                                console.warn(`Invalid saved chapter ${savedChapter} for book starting at chapter ${bookStartChapter}, resetting to start`);
+                                currentChapter = bookStartChapter;
+                                currentChunk = 0;
+                            }
                         } else {
                             // No progress found, start from book's chapterStartNumber
                             currentChapter = book.chapterStartNumber ?? 1;
@@ -291,18 +304,41 @@ export const useReader = () => {
         setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
     }, []);
 
-    // Initialize audio playback with reader state as single source of truth
-    const audioPlayback = useAudioPlayback(
+    // Build sentence map (sentence-level view) and initialize unified sentence controller
+    const sentenceMap = state.chapter ? buildSentenceMap(state.chapter) : { sentences: [], paragraphGroups: [], chunkToSentenceIndexMap: new Map() };
+    const sentenceAudio = useSentenceAudioController(
         state.chapter,
-        state.currentChunkIndex,
         userSettings.selectedVoice,
-        userSettings.selectedProvider,
+        userSettings.selectedProvider as TtsProvider,
         userSettings.playbackSpeed,
-        userSettings.wordSpeedOffset,
-        state.currentChapterNumber || 1,
-        setCurrentChunkIndex, // Callback for audio to update reader state
-        userSettings.ttsEnabled
+        userSettings.ttsEnabled,
+        state.currentChunkIndex ?? 0,
+        0
     );
+
+    // Legacy audio adapter: map sentence controller to chunk-based interface for gradual migration
+    const audioPlayback = {
+        currentChunkIndex: sentenceAudio.currentSentenceIndex,
+        currentWordIndex: sentenceAudio.currentWordIndex,
+        isPlaying: sentenceAudio.isPlaying,
+        isCurrentChunkLoading: false,
+        textChunks: sentenceAudio.sentences,
+        handlePlay: sentenceAudio.play,
+        handlePause: sentenceAudio.pause,
+        handleWordClick: sentenceAudio.handleWordClick,
+        handlePreviousChunk: sentenceAudio.prevSentence,
+        handleNextChunk: sentenceAudio.nextSentence,
+        setCurrentChunkIndex: (index: number) => {
+            sentenceAudio.goToSentence(index);
+            setCurrentChunkIndex(index);
+        },
+        preloadChunk: sentenceAudio.preload,
+        ttsError: sentenceAudio.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.ttsError, timestamp: new Date().toISOString() } : null,
+        ttsServiceAvailable: sentenceAudio.ttsServiceAvailable,
+        clearTtsError: () => { },
+        retryFailedChunk: sentenceAudio.retryFailed,
+        isChunkFailed: () => false
+    };
 
     // Reading progress hook - now just for tracking changes and saving
     const readingProgress = useReadingProgress({
@@ -463,7 +499,18 @@ export const useReader = () => {
             handleNextChapter,
             handleNavigateToBookmark,
             setCurrentChunkIndex,
-            setCurrentChapterNumber
+            setCurrentChapterNumber,
+            mapParagraphToFirstSentenceIndex: (paragraphIndex: number) => {
+                const group = sentenceMap.paragraphGroups.find(g => g.paragraphIndex === paragraphIndex);
+                return group ? group.startSentenceIndex : 0;
+            }
+        }
+        ,
+        // Sentence-level audio and data (Phase 4 integration surface)
+        sentenceAudio: {
+            controller: sentenceAudio,
+            sentences: sentenceMap.sentences,
+            paragraphGroups: sentenceMap.paragraphGroups
         }
     };
 };

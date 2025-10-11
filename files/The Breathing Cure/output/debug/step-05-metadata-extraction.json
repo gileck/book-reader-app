@@ -1,0 +1,21 @@
+{
+  "title": "THE\nBREATHING\nCURE \nDEVELOP NEW HABITS FOR",
+  "author": "A HEALTHIER",
+  "publicationMatches": [
+    {
+      "type": "year",
+      "text": "© 2021"
+    },
+    {
+      "type": "isbn",
+      "text": "ISBN 9-781-63006-197-5"
+    }
+  ],
+  "languageConfidence": {
+    "language": "en",
+    "confidence": 1,
+    "matches": 86,
+    "totalWords": 798
+  },
+  "processingTime": 14
+}

@@ -1,6 +1,8 @@
 # Sentence Highlighting Mode Feature Plan
 
-This plan outlines the implementation of sentence-level highlighting as an alternative to the current word-level highlighting system in the Reader component.
+**Status**: ✅ **IMPLEMENTED** - This feature is now part of the core reader architecture following the sentence-chunk audio refactor.
+
+This plan outlined the implementation of sentence-level highlighting as an alternative to the current word-level highlighting system in the Reader component.
 
 ## 1. **High-Level Solution**
 

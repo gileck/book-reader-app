@@ -1,18 +1,18 @@
 {
-  "timestamp": "2025-08-21T09:28:24.925Z",
-  "processingTime": "132ms",
+  "timestamp": "2025-10-11T19:15:44.476Z",
+  "processingTime": "472ms",
   "summary": {
     "totalChapters": 9,
-    "totalChunks": 744,
+    "totalChunks": 743,
     "totalParagraphs": 633,
-    "totalHeaders": 111,
+    "totalHeaders": 110,
     "totalWords": 114302,
     "totalLinks": 1407
   },
   "statistics": {
-    "totalChunks": 744,
+    "totalChunks": 743,
     "totalParagraphs": 633,
-    "totalHeaders": 111,
+    "totalHeaders": 110,
     "totalWords": 114302,
     "totalLinks": 1407,
     "paragraphStats": {
@@ -93,14 +93,14 @@
         191,
         195,
         196,
-        130,
-        173,
-        198,
+        194,
         197,
-        198,
+        195,
         196,
+        191,
         184,
-        188,
+        195,
+        114,
         178,
         176,
         185,
@@ -652,12 +652,12 @@
         865,
         71
       ],
-      "averageWords": 179.98104265402844,
+      "averageWords": 179.98420221169036,
       "minWords": 22,
       "maxWords": 2155
     },
     "headerStats": {
-      "count": 111,
+      "count": 110,
       "wordCounts": [
         2,
         3,
@@ -671,7 +671,6 @@
         3,
         2,
         4,
-        2,
         2,
         5,
         2,
@@ -771,12 +770,42 @@
         3,
         1
       ],
-      "averageWords": 3.369369369369369,
+      "averageWords": 3.381818181818182,
       "minWords": 1,
       "maxWords": 5
     }
   },
   "boundaryEvents": [
+    {
+      "pageNumber": 236,
+      "lineIndex": 851,
+      "lineTail": "protocell growth.",
+      "endsWithTerminator": true,
+      "nextContentIndex": 852,
+      "hasEmptyLineBetween": false,
+      "nextLineHead": "Energy flow in hydrothermal vents",
+      "endIsSingleInitial": false,
+      "endIsMultiInitials": false,
+      "endIsAbbreviation": false,
+      "nextStartsLower": false,
+      "isHeaderNext": true,
+      "treatedAsBoundary": true
+    },
+    {
+      "pageNumber": 236,
+      "lineIndex": 857,
+      "lineTail": "O 2 , or cells? The answer is cells. That’s why life exists.",
+      "endsWithTerminator": true,
+      "nextContentIndex": 858,
+      "hasEmptyLineBetween": false,
+      "nextLineHead": "J. P. Amend, D. E. LaRowe, T. M. McCollom and E. L. Shock, ‘The energetics",
+      "endIsSingleInitial": false,
+      "endIsMultiInitials": false,
+      "endIsAbbreviation": false,
+      "nextStartsLower": false,
+      "isHeaderNext": false,
+      "treatedAsBoundary": false
+    },
     {
       "pageNumber": 236,
       "lineIndex": 863,
@@ -3134,21 +3163,6 @@
     },
     {
       "pageNumber": 236,
-      "lineIndex": 1671,
-      "lineTail": "here ...",
-      "endsWithTerminator": true,
-      "nextContentIndex": 1672,
-      "hasEmptyLineBetween": false,
-      "nextLineHead": "L. Turin and E. M. C. Skoulakis ‘Electron spin resonance (EPR) in Drosophila",
-      "endIsSingleInitial": false,
-      "endIsMultiInitials": false,
-      "endIsAbbreviation": false,
-      "nextStartsLower": false,
-      "isHeaderNext": false,
-      "treatedAsBoundary": false
-    },
-    {
-      "pageNumber": 236,
       "lineIndex": 1678,
       "lineTail": "consciousness.",
       "endsWithTerminator": true,
@@ -3380,21 +3394,6 @@
       "nextContentIndex": 1748,
       "hasEmptyLineBetween": false,
       "nextLineHead": "Johnjoe McFadden has been thinking about electrical fields in relation to",
-      "endIsSingleInitial": false,
-      "endIsMultiInitials": false,
-      "endIsAbbreviation": false,
-      "nextStartsLower": false,
-      "isHeaderNext": false,
-      "treatedAsBoundary": false
-    },
-    {
-      "pageNumber": 236,
-      "lineIndex": 1750,
-      "lineTail": "theory. I need to talk to him about mitochondria ...",
-      "endsWithTerminator": true,
-      "nextContentIndex": 1751,
-      "hasEmptyLineBetween": false,
-      "nextLineHead": "Membrane potential in bacteria and cell death",
       "endIsSingleInitial": false,
       "endIsMultiInitials": false,
       "endIsAbbreviation": false,
@@ -3780,7 +3779,7 @@
   ],
   "chapters": [
     {
-      "chapterNumber": 0,
+      "chapterNumber": 1,
       "title": "Introduction: Life itself",
       "chunkCount": 52,
       "paragraphCount": 45,
@@ -4153,11 +4152,11 @@
       ]
     },
     {
-      "chapterNumber": 1,
+      "chapterNumber": 2,
       "title": "Discovering the nanocosm",
-      "chunkCount": 91,
+      "chunkCount": 90,
       "paragraphCount": 81,
-      "headerCount": 10,
+      "headerCount": 9,
       "chunks": [
         {
           "type": "header",
@@ -4407,64 +4406,57 @@
         {
           "type": "paragraph",
           "content": "But\nsuccinate is not like that. It’s a simple molecule with just four carbon\natoms and nought else beyond the usual oxygen and hydrogen atoms. The molecule is beautifully symmetrical, as my portrait s...",
-          "wordCount": 130,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "Pulling hydrogen",
-          "wordCount": 2,
-          "sentenceCount": 1,
+          "wordCount": 194,
+          "sentenceCount": 15,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Szent-Györgyi had a hypothesis. It’s an excellent example of how an\ningenious hypothesis can drive science forward down a blind alley. Luckily not for long in this case. The idea was this. Succinate w...",
-          "wordCount": 173,
-          "sentenceCount": 12,
-          "linkCount": 2
-        },
-        {
-          "type": "paragraph",
-          "content": "And Szent-\nGyörgyi had been fascinated by the pale-yellow pigment found in cells\nthat he called ‘flave’ (which is now known as flavin adenine\ndinucleotide, or FAD, and is also involved in respiration)...",
-          "wordCount": 198,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "He’d\nbeen blinded by his infatuation with hydrogen carriers. But Krebs\nwasn’t. He saw something else. By now, in 1935, Krebs had moved to Sheffield. Hopkins had been\nunable to raise the funds to keep ...",
+          "content": "All were known to be\ninterchangeable, and none of them was consumed by respiration. They\ndiffered from each other in one crucial respect: the number of hydrogen\natoms in the short carbon chain. Each d...",
           "wordCount": 197,
-          "sentenceCount": 12,
+          "sentenceCount": 11,
           "linkCount": 2
         },
         {
           "type": "paragraph",
-          "content": "Two abstruse and superficially similar ideas\nin fact generate opposing predictions that can be tested in the lab. The\nexperiment pointed Krebs straight to the beautiful conception of a cycle,\nwhich ha...",
-          "wordCount": 198,
-          "sentenceCount": 8,
+          "content": "Recall that respiration consumes oxygen by reacting it with hydrogen,\nor more specifically 2H. The product is water, or H 2 O. Warburg had\nAlready shown that the enzyme that catalyses this final step ...",
+          "wordCount": 195,
+          "sentenceCount": 12,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Carboxylic acids\nwere acting as shuttles. In the meantime, the carbon husks of the glucose\nmolecule had to be discharged as CO 2 . That makes a clear prediction: adding an excess of the carboxylic aci...",
+          "content": "Krebs was torn, not\nsurprisingly, but he appreciated the support of his new colleagues in\nSheffield, where he also had more space. He’d also come to love the\nwild countryside of the nearby Peak Distri...",
           "wordCount": 196,
           "sentenceCount": 9,
-          "linkCount": 0
+          "linkCount": 2
         },
         {
           "type": "paragraph",
-          "content": "While both men agreed that this was the case, Szent-Györgyi ascribed\nthe discrepancy to issues with measurement in a tricky experimental\nsystem, while Krebs interpreted the result literally – he saw t...",
-          "wordCount": 184,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "It had not\nescaped Krebs’s notice that these steps released two CO 2 molecules, as\nthe carboxylic acids were clipped down from six to four carbon atoms in\nlength. Presumably, these steps, in which CO ...",
-          "wordCount": 188,
+          "content": "Again, I have to emphasise just how subtle\nour reasoning needs to be to understand anything in biochemistry; at no\npoint do we just ‘look’ at something. Let’s think this through. If C4 carboxylic acid...",
+          "wordCount": 191,
           "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Now, if the C4 carboxylic acids simply acted as a shuttle of 2H to\noxygen, then adding a lot more of them to a tissue slice should mop up\nall the 2H stripped out from sugars without needing to transfe...",
+          "wordCount": 184,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Going back to the case in point, if the C3 pyruvate\nreally was an intermediate, as Krebs imagined, then it had to be\ntransformed somehow into the next known intermediate – the C4\nsuccinate. That is os...",
+          "wordCount": 195,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "In a coup de grâce , Krebs showed that if he added citrate to\nthe tissue slices along with an inhibitor of respiration, then the succinate\nnow accumulated. That could only mean that the pathway from c...",
+          "wordCount": 114,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -4799,7 +4791,7 @@
       ]
     },
     {
-      "chapterNumber": 2,
+      "chapterNumber": 3,
       "title": "The path of carbon",
       "chunkCount": 73,
       "paragraphCount": 66,
@@ -5319,7 +5311,7 @@
       ]
     },
     {
-      "chapterNumber": 3,
+      "chapterNumber": 4,
       "title": "From gases to life",
       "chunkCount": 78,
       "paragraphCount": 72,
@@ -5874,7 +5866,7 @@
       ]
     },
     {
-      "chapterNumber": 4,
+      "chapterNumber": 5,
       "title": "Revolutions",
       "chunkCount": 67,
       "paragraphCount": 62,
@@ -6352,7 +6344,7 @@
       ]
     },
     {
-      "chapterNumber": 5,
+      "chapterNumber": 6,
       "title": "To the dark side",
       "chunkCount": 76,
       "paragraphCount": 70,
@@ -6893,7 +6885,7 @@
       ]
     },
     {
-      "chapterNumber": 6,
+      "chapterNumber": 7,
       "title": "The flux capacitor",
       "chunkCount": 79,
       "paragraphCount": 73,

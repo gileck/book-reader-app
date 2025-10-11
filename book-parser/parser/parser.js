@@ -204,7 +204,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                             // Capture validation output for file logging
                             let validationOutput = '';
                             const originalConsoleError = console.error;
-                            
+
                             console.error = (...args) => {
                                 const message = args.join(' ');
                                 validationOutput += message + '\n';
@@ -213,9 +213,53 @@ async function parseBook(pdfPath, outputPath, options = {}) {
 
                             // Run validation
                             let isValid = stepModule.validate(stepResult);
-                            
+
                             // Restore console immediately
                             console.error = originalConsoleError;
+
+                            // Compute error count
+                            const errorCount = (validationOutput.match(/^\s*\d+\./gm) || []).length || (validationOutput.trim() ? 1 : 0);
+                            const validationOutputPath = path.join(outputDir, 'validation-output.txt');
+
+                            // Prepare concise per-chapter error breakdown (best-effort)
+                            const computeChapterErrorSummary = () => {
+                                try {
+                                    const errorLines = validationOutput.split('\n').filter(line => /^\s*\d+\./.test(line));
+                                    if (errorLines.length === 0) return null;
+                                    const chapterToInfo = new Map();
+                                    let unknownCount = 0;
+
+                                    for (const line of errorLines) {
+                                        const idMatch = line.match(/\b(\d+)_\d+\b/);
+                                        if (idMatch) {
+                                            const chapterNum = idMatch[1];
+                                            // Try to capture title in parentheses, if present
+                                            const titleMatch = line.match(/\(([^)]+)\)/);
+                                            const title = titleMatch ? titleMatch[1] : null;
+                                            const existing = chapterToInfo.get(chapterNum) || { count: 0, title: null };
+                                            existing.count += 1;
+                                            if (!existing.title && title) existing.title = title;
+                                            chapterToInfo.set(chapterNum, existing);
+                                        } else {
+                                            unknownCount += 1;
+                                        }
+                                    }
+
+                                    const lines = Array.from(chapterToInfo.entries())
+                                        .sort((a, b) => Number(a[0]) - Number(b[0]))
+                                        .map(([num, info]) => {
+                                            const label = info.title ? `Chapter ${num} (${info.title})` : `Chapter ${num}`;
+                                            const plural = info.count === 1 ? 'error' : 'errors';
+                                            return `${label}: ${info.count} ${plural}`;
+                                        });
+                                    if (unknownCount > 0) {
+                                        const plural = unknownCount === 1 ? 'error' : 'errors';
+                                        lines.push(`Unknown: ${unknownCount} ${plural}`);
+                                    }
+                                    return lines.length ? lines : null;
+                                } catch { return null; }
+                            };
+                            const chapterErrorSummary = computeChapterErrorSummary();
 
                             // Handle skipped validation errors (if any)
                             if (!isValid) {
@@ -223,7 +267,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 if (fs.existsSync(skippedFile)) {
                                     try {
                                         const entries = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
-                                        
+
                                         // Helper function to check if a string matches a wildcard pattern
                                         const matchesWildcard = (text, pattern) => {
                                             if (!pattern.includes('*')) {
@@ -236,41 +280,36 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                             const regex = new RegExp(`^${regexPattern}$`);
                                             return regex.test(text);
                                         };
-                                        
-                                        // Handle chunk-level skipping with wildcard support
-                                        const skippedChunkPatterns = entries.filter(e => 
-                                            e?.step === stepName && typeof e?.chunkId === 'string'
-                                        ).map(e => e.chunkId);
-                                        
+
                                         // Helper function to check if step matches (also supports wildcards)
                                         const stepMatches = (entryStep) => matchesWildcard(stepName, entryStep);
-                                        
+
                                         // Get all skipped patterns (including step wildcards)
-                                        const allSkippedPatterns = entries.filter(e => 
+                                        const allSkippedPatterns = entries.filter(e =>
                                             stepMatches(e?.step) && typeof e?.chunkId === 'string'
                                         ).map(e => e.chunkId);
-                                        
+
                                         // Handle chapter-level skipping
-                                        const skippedChapters = entries.filter(e => 
-                                            stepMatches(e?.step) && 
+                                        const skippedChapters = entries.filter(e =>
+                                            stepMatches(e?.step) &&
                                             (typeof e?.chapterNumber === 'number' || typeof e?.chapterTitle === 'string')
                                         );
-                                        
+
                                         let shouldSkip = false;
-                                        
+
                                         // Check chunk-level skipping with wildcard support
                                         if (allSkippedPatterns.length > 0) {
                                             const chunkIds = [...validationOutput.matchAll(/(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/g)]
-                                                            .map(match => match[2]);
-                                            
+                                                .map(match => match[2]);
+
                                             // Check if any chunk ID matches any skip pattern
                                             const shouldSkipChunk = (chunkId) => {
                                                 return allSkippedPatterns.some(pattern => matchesWildcard(chunkId, pattern));
                                             };
-                                            
+
                                             // Check if any chunks should be skipped
                                             const chunksToSkip = chunkIds.filter(shouldSkipChunk);
-                                            
+
                                             if (chunksToSkip.length > 0) {
                                                 // If all error chunks should be skipped, skip the entire validation
                                                 if (chunkIds.every(shouldSkipChunk)) {
@@ -281,12 +320,13 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                                     if (skipRatio >= 0.8) {
                                                         shouldSkip = true;
                                                     } else {
-                                                        console.log(`⏭️  Partial skip: ${chunksToSkip.length}/${chunkIds.length} chunks match skip patterns in step ${stepName}: ${chunksToSkip.join(', ')}`);
+                                                        // Keep console clean: summarize only
+                                                        console.log(`⏭️  Partial skip in ${stepName}: ${chunksToSkip.length} / ${chunkIds.length} chunks match skip patterns.Details: ${validationOutputPath}`);
                                                     }
                                                 }
                                             }
                                         }
-                                        
+
                                         // Check chapter-level skipping
                                         if (!shouldSkip && skippedChapters.length > 0) {
                                             for (const skip of skippedChapters) {
@@ -307,42 +347,50 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                                 }
                                             }
                                         }
-                                        
+
                                         if (shouldSkip) {
                                             isValid = true;
-                                            // Don't print detailed errors, just print summary
-                                            const errorCount = (validationOutput.match(/^\s*\d+\./gm) || []).length;
                                             if (errorCount > 0) {
-                                                console.log(`⏭️  Validation skipped: ${errorCount} error(s) were suppressed due to skip configuration`);
+                                                console.log(`⏭️  Validation skipped in ${stepName}: ${errorCount} error(s) suppressed.`);
                                             }
-                                        } else {
-                                            // Print the captured validation errors since they're not being skipped
-                                            if (validationOutput.trim()) {
-                                                originalConsoleError(validationOutput.trim());
+                                        } else if (!isValid) {
+                                            // Not skipped and invalid: print only summary
+                                            if (errorCount > 0) {
+                                                console.log(`❗ Validation failed in ${stepName}: ${errorCount} error(s).Details: ${validationOutputPath}`);
+                                                if (Array.isArray(chapterErrorSummary) && chapterErrorSummary.length > 0) {
+                                                    console.log('   Error breakdown by chapter:');
+                                                    for (const line of chapterErrorSummary) {
+                                                        console.log(`   ${line}`);
+                                                    }
+                                                }
+                                                // Only write detailed output when NOT skipped
+                                                if (validationOutput.trim()) {
+                                                    const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
+                                                    fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
+                                                }
                                             }
                                         }
-                                        
+
                                     } catch (_) { /* ignore errors reading skipped file */ }
                                 } else {
-                                    // No skip file exists, print validation errors normally
-                                    if (validationOutput.trim()) {
-                                        originalConsoleError(validationOutput.trim());
+                                    // No skip file exists, invalid: summarize only
+                                    if (errorCount > 0) {
+                                        console.log(`❗ Validation failed in ${stepName}: ${errorCount} error(s).Details: ${validationOutputPath}`);
+                                        if (Array.isArray(chapterErrorSummary) && chapterErrorSummary.length > 0) {
+                                            console.log('   Error breakdown by chapter:');
+                                            for (const line of chapterErrorSummary) {
+                                                console.log(`   ${line}`);
+                                            }
+                                        }
+                                        // Only write details when there are errors and no skip
+                                        if (validationOutput.trim()) {
+                                            const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
+                                            fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
+                                        }
                                     }
-                                }
-                            } else if (!isValid) {
-                                // No skip file but validation failed, print errors
-                                if (validationOutput.trim()) {
-                                    originalConsoleError(validationOutput.trim());
                                 }
                             }
                             // If isValid is true initially, no need to print anything
-
-                            // Write validation output to file if validation failed
-                            if (!isValid && validationOutput.trim()) {
-                                const validationOutputPath = path.join(outputDir, 'validation-output.txt');
-                                const header = `\n==== ${stepName} validation output @ ${new Date().toISOString()} ====\n`;
-                                fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
-                            }
 
                             validationResult = {
                                 passed: isValid,
@@ -370,7 +418,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                 validationResults[stepName] = validationResult;
 
                 if (opts.debug) {
-                    console.log(`✓ ${stepName} completed (${stepDuration}ms)${validationResult?.passed ? ' [validated]' : ''}`);
+                    console.log(`✓ ${stepName} completed(${stepDuration}ms)${validationResult?.passed ? ' [validated]' : ''}`);
                 }
 
             } catch (error) {
@@ -398,7 +446,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                 }
 
                 if (opts.debug) {
-                    console.log(`✗ ${stepName} failed (${stepDuration}ms): ${error.message}`);
+                    console.log(`✗ ${stepName} failed(${stepDuration}ms): ${error.message}`);
                 }
 
                 throw error;
@@ -520,7 +568,7 @@ async function parseBookSteps(pdfPath, outputPath, stepNames, options = {}) {
     const stepIndices = stepNames.map(step => STEP_NAMES.indexOf(step));
     for (let i = 1; i < stepIndices.length; i++) {
         if (stepIndices[i] <= stepIndices[i - 1]) {
-            throw new Error(`Steps must be in correct order. Invalid sequence: ${stepNames.join(' -> ')}`);
+            throw new Error(`Steps must be in correct order.Invalid sequence: ${stepNames.join(' -> ')}`);
         }
     }
 
