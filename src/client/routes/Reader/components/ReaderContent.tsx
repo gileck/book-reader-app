@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
-import { useParagraphGrouping, useFlatChunkIndex } from '../hooks/useParagraphGrouping';
+import { useParagraphGrouping } from '../hooks/useParagraphGrouping';
 import type { SentenceChunk, ParagraphGroupMeta } from '../types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 import type { BookClient } from '../../../../apis/books/types';
@@ -100,7 +100,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
 
     // Group chunks by paragraphIndex
     const paragraphGroups = useParagraphGrouping(chapter.content.chunks);
-    const { getFlatChunkIndex } = useFlatChunkIndex(paragraphGroups);
 
     // Error handling for corrupted data
     if (paragraphGroups.length === 0) {
@@ -133,7 +132,6 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 paragraphGroups={paragraphGroups}
                 book={book}
                 handleLinkClick={handleLinkNavigation}
-                getFlatChunkIndex={getFlatChunkIndex}
                 currentChunkIndex={currentChunkIndex}
                 onChunkDoubleClick={onNavigateToChunk}
             />

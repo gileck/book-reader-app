@@ -8,7 +8,77 @@ This document describes both highlighting systems used in the application:
 
 Both systems are user-configurable through the theme panel and designed for optimal performance and user experience.
 
-**Note**: As of the sentence-chunk audio refactor, the reader now operates on sentence-level chunks by default. Both full and focus modes share a unified `useSentenceAudioController` that manages playback at sentence granularity. The highlighting systems work seamlessly with this sentence-based architecture.
+**Note**: As of the simplified refactor (2025), the reader operates with a one-to-one mapping between sentence indices and chunk indices. The `useSentenceAudioController` processes ALL chunks (including headers and images) but only generates TTS for text chunks. This eliminates the need for index mapping functions, making the code significantly simpler while maintaining full functionality.
+
+## Simplified Architecture (2025 Refactor)
+
+### Key Changes
+
+**Before:**
+- Filtered chunks to create a separate sentence array
+- Sentence indices (0, 1, 2...) didn't match chunk indices
+- Required `sentenceToChunkIndex` mapping function
+- Complex index translation throughout the codebase
+
+**After:**
+- No filtering - process ALL chunks directly
+- Sentence index = Chunk index (one-to-one)
+- No mapping function needed
+- Skip TTS generation for non-text chunks
+- Auto-advance to next text chunk during playback
+
+### Benefits
+
+- ✅ **40+ lines of code removed**
+- ✅ **No index mapping complexity**
+- ✅ **Simpler debugging** - indices match across the entire system
+- ✅ **Easier maintenance** - fewer abstractions
+- ✅ **Same functionality** - user experience unchanged
+
+### Implementation
+
+```typescript
+// useSentenceAudioController.ts
+
+// Use ALL chunks - no filtering!
+const sentences = chapter?.content?.chunks || [];
+
+// Skip TTS for non-text chunks
+const loadSentence = async (index: number) => {
+    const chunk = sentences[index];
+    if (chunk.type !== 'text' || !chunk.text?.trim()) {
+        return; // Skip silently
+    }
+    // Generate TTS only for text chunks
+    await generateTts({ text: chunk.text, ... });
+};
+
+// Auto-advance past non-text chunks
+const play = async () => {
+    const chunk = sentences[currentIndex];
+    if (chunk.type !== 'text') {
+        // Find next text chunk and play that
+        const nextTextIndex = sentences.findIndex(...);
+        goToSentence(nextTextIndex);
+    }
+    // Play current text chunk
+};
+```
+
+### Highlighting Integration
+
+With sentence index = chunk index, highlighting is direct:
+
+```typescript
+// Word highlighting - no mapping needed!
+WordHighlightingAPI.highlightWord(currentSentenceIndex, wordIndex);
+
+// Sentence highlighting - same index!
+<TextChunk 
+    chunkIndex={chunk.index}
+    currentChunkIndex={currentSentenceIndex}  // Direct match!
+/>
+```
 
 ## Table of Contents
 

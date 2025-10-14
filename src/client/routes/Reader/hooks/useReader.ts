@@ -186,7 +186,7 @@ export const useReader = () => {
                         if (progressResult.data?.success && progressResult.data.readingProgress) {
                             const savedChapter = progressResult.data.readingProgress.currentChapter;
                             const bookStartChapter = book.chapterStartNumber ?? 1;
-                            
+
                             // Validate saved chapter is valid for this book (>= chapterStartNumber)
                             if (savedChapter >= bookStartChapter) {
                                 // Use saved progress
@@ -304,8 +304,10 @@ export const useReader = () => {
         setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
     }, []);
 
-    // Build sentence map (sentence-level view) and initialize unified sentence controller
+    // Build sentence map (sentence-level view) for progress tracking
     const sentenceMap = state.chapter ? buildSentenceMap(state.chapter) : { sentences: [], paragraphGroups: [], chunkToSentenceIndexMap: new Map() };
+
+    // Initialize sentence audio controller (sentence indices = chunk indices now!)
     const sentenceAudio = useSentenceAudioController(
         state.chapter,
         userSettings.selectedVoice,
@@ -313,10 +315,11 @@ export const useReader = () => {
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
         state.currentChunkIndex ?? 0,
-        0
+        0,
+        userSettings.highlightMode
     );
 
-    // Legacy audio adapter: map sentence controller to chunk-based interface for gradual migration
+    // Legacy audio adapter: sentence index IS chunk index (simplified!)
     const audioPlayback = {
         currentChunkIndex: sentenceAudio.currentSentenceIndex,
         currentWordIndex: sentenceAudio.currentWordIndex,
@@ -425,7 +428,7 @@ export const useReader = () => {
 
         // Audio playback
         audio: {
-            currentChunkIndex: state.currentChunkIndex || 0,
+            currentChunkIndex: audioPlayback.currentChunkIndex,
             currentWordIndex: audioPlayback.currentWordIndex,
             isPlaying: audioPlayback.isPlaying,
             isCurrentChunkLoading: audioPlayback.isCurrentChunkLoading,

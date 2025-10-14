@@ -17,19 +17,21 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     handleLinkClick,
     onChunkDoubleClick
 }) => {
+    const isHighlighted = currentChunkIndex === chunkIndex;
+
     return (
         <div
-        style={{
-            lineHeight: 'var(--reader-line-height, 1.6)',
-            fontSize: 'var(--reader-font-size, 1rem)',
-            fontFamily: 'var(--reader-font-family, inherit)',
-            color: 'var(--reader-text-color, inherit)',
-            padding: '0px 5px 0px 5px',
-            backgroundColor: currentChunkIndex === chunkIndex ? 'var(--sentence-highlight-color, transparent)' : 'transparent',
-            borderRadius: '6px',
-            transition: 'all 0.3s ease',
-            cursor: onChunkDoubleClick ? 'pointer' : 'default'
-        }}
+            style={{
+                lineHeight: 'var(--reader-line-height, 1.6)',
+                fontSize: 'var(--reader-font-size, 1rem)',
+                fontFamily: 'var(--reader-font-family, inherit)',
+                color: 'var(--reader-text-color, inherit)',
+                padding: '0px 5px 0px 5px',
+                backgroundColor: isHighlighted ? 'var(--sentence-highlight-color, transparent)' : 'transparent',
+                borderRadius: '6px',
+                transition: 'all 0.3s ease',
+                cursor: onChunkDoubleClick ? 'pointer' : 'default'
+            }}
             id={`text-chunk-${chunkIndex}`}
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}

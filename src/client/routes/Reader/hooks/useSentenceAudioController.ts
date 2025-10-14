@@ -46,7 +46,8 @@ export function useSentenceAudioController(
     playbackSpeed: number,
     ttsEnabled: boolean,
     initialSentenceIndex: number | null,
-    initialWordIndex: number | null
+    initialWordIndex: number | null,
+    highlightMode: 'word' | 'line' | 'off' = 'word'
 ): SentenceAudioApi {
     const [state, setState] = useState<SentenceAudioState>(getDefaultState());
     const stateRef = useRef(state);
@@ -57,9 +58,9 @@ export function useSentenceAudioController(
 
     useEffect(() => { stateRef.current = state; }, [state]);
 
+    // Use ALL chunks - sentence indices will match chunk indices (no mapping needed!)
     const sentences: TextChunkClient[] = useMemo(() => {
-        const chunks = chapter?.content?.chunks || [];
-        return chunks.filter(c => c.type === 'text' && (c.text || '').trim().length > 0);
+        return chapter?.content?.chunks || [];
     }, [chapter]);
 
     useEffect(() => {
@@ -78,6 +79,10 @@ export function useSentenceAudioController(
         if (cacheRef.current[index]) return;
         const chunk = sentences[index];
         if (!chunk) return;
+
+        // Skip TTS for non-text chunks (headers, images)
+        if (chunk.type !== 'text' || !chunk.text?.trim()) return;
+
         try {
             const result = await generateTts({
                 text: chunk.text,
@@ -100,6 +105,20 @@ export function useSentenceAudioController(
 
     const play = useCallback(async () => {
         const { currentSentenceIndex } = stateRef.current;
+        const chunk = sentences[currentSentenceIndex];
+
+        // Skip playback for non-text chunks
+        if (!chunk || chunk.type !== 'text' || !chunk.text?.trim()) {
+            // Auto-advance to next text chunk
+            const nextTextIndex = sentences.findIndex((c, i) => i > currentSentenceIndex && c.type === 'text' && c.text?.trim());
+            if (nextTextIndex !== -1) {
+                update({ currentSentenceIndex: nextTextIndex });
+                // Retry play with new index
+                setTimeout(() => void play(), 50);
+            }
+            return;
+        }
+
         await loadSentence(currentSentenceIndex);
         const audio = audioRef.current;
         const entry = cacheRef.current[currentSentenceIndex];
@@ -114,7 +133,7 @@ export function useSentenceAudioController(
             const errorMessage = e instanceof Error ? e.message : 'Playback failed';
             update({ ttsError: errorMessage, isPlaying: false });
         }
-    }, [loadSentence, playbackSpeed, update]);
+    }, [loadSentence, playbackSpeed, update, sentences]);
 
     const pause = useCallback(() => {
         const audio = audioRef.current;
@@ -130,13 +149,25 @@ export function useSentenceAudioController(
 
     const nextSentence = useCallback(() => {
         const { currentSentenceIndex } = stateRef.current;
-        if (currentSentenceIndex < sentences.length - 1) goToSentence(currentSentenceIndex + 1);
-    }, [goToSentence, sentences.length]);
+        // Find next text chunk
+        const nextTextIndex = sentences.findIndex((c, i) =>
+            i > currentSentenceIndex && c.type === 'text' && c.text?.trim()
+        );
+        if (nextTextIndex !== -1) {
+            goToSentence(nextTextIndex);
+        }
+    }, [goToSentence, sentences]);
 
     const prevSentence = useCallback(() => {
         const { currentSentenceIndex } = stateRef.current;
-        if (currentSentenceIndex > 0) goToSentence(currentSentenceIndex - 1);
-    }, [goToSentence]);
+        // Find previous text chunk
+        for (let i = currentSentenceIndex - 1; i >= 0; i--) {
+            if (sentences[i]?.type === 'text' && sentences[i]?.text?.trim()) {
+                goToSentence(i);
+                break;
+            }
+        }
+    }, [goToSentence, sentences]);
 
     const handleWordClick = useCallback((sentenceIndex: number, wordIndex: number) => {
         goToSentence(sentenceIndex);
@@ -167,17 +198,20 @@ export function useSentenceAudioController(
 
     // Handle word highlighting when word index changes
     useEffect(() => {
+        // Only apply word highlighting when highlightMode is 'word'
+        if (highlightMode !== 'word') return;
         if (!state.isPlaying) return;
 
         const { currentSentenceIndex, currentWordIndex } = state;
         const previous = previousHighlightRef.current;
 
+        // No mapping needed - sentence index IS chunk index!
         // Remove previous highlight
         if (previous) {
             WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
         }
 
-        // Add new highlight
+        // Add new highlight (sentence index = chunk index)
         WordHighlightingAPI.highlightWord(currentSentenceIndex, currentWordIndex);
         previousHighlightRef.current = { sentenceIndex: currentSentenceIndex, wordIndex: currentWordIndex };
 
@@ -190,7 +224,7 @@ export function useSentenceAudioController(
                 );
             }
         };
-    }, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex]);
+    }, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex, highlightMode]);
 
     // Setup audio element and event listeners
     useEffect(() => {
