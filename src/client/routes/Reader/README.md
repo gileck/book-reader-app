@@ -32,12 +32,19 @@ const sentences = chunks.filter(c => c.type === 'text');  // Filtered array
 const currentChunkIndex = sentenceToChunkIndex(sentenceIndex);  // Mapping required
 ```
 
-### 2. Skip Non-Text Chunks in Audio
-Headers and images are included in the array but skipped during TTS generation and playback.
+### 2. Headers and Text Are Playable
+Headers and text chunks both generate TTS audio and can be played. Only images are skipped.
 
 ```typescript
-if (chunk.type !== 'text' || !chunk.text?.trim()) {
-    // Skip TTS, auto-advance to next text chunk
+// ✅ Playable chunks
+if (chunk.type === 'text' || chunk.type === 'header') {
+    // Generate TTS and play
+    await generateTts({ text: chunk.text, ... });
+}
+
+// ❌ Skip only images
+if (chunk.type === 'image' || !chunk.text?.trim()) {
+    // Auto-advance to next playable chunk
     return;
 }
 ```
@@ -114,19 +121,19 @@ const sentences = chapter?.content?.chunks || [];  // ALL chunks!
 - ✅ Simple debugging: indices match everywhere
 - ✅ Cleaner code: 40+ lines removed
 
-### How Non-Text Chunks Are Handled
+### How Different Chunk Types Are Handled
 
 **TTS Generation:**
 ```typescript
 const loadSentence = async (index: number) => {
     const chunk = sentences[index];
     
-    // Skip non-text chunks silently
-    if (chunk.type !== 'text' || !chunk.text?.trim()) {
+    // Skip only images - generate TTS for both text and headers
+    if (chunk.type === 'image' || !chunk.text?.trim()) {
         return;  // No TTS generated
     }
     
-    // Generate TTS only for text chunks
+    // Generate TTS for text and header chunks
     await generateTts({ text: chunk.text, ... });
 };
 ```
@@ -136,19 +143,21 @@ const loadSentence = async (index: number) => {
 const play = async () => {
     const chunk = sentences[currentSentenceIndex];
     
-    // Auto-advance past headers/images
-    if (chunk.type !== 'text') {
-        const nextTextIndex = sentences.findIndex(
-            (c, i) => i > currentSentenceIndex && c.type === 'text'
+    // Auto-advance past images only
+    if (chunk.type === 'image' || !chunk.text?.trim()) {
+        const nextPlayableIndex = sentences.findIndex(
+            (c, i) => i > currentSentenceIndex && 
+            (c.type === 'text' || c.type === 'header') && 
+            c.text?.trim()
         );
-        if (nextTextIndex !== -1) {
-            goToSentence(nextTextIndex);
+        if (nextPlayableIndex !== -1) {
+            goToSentence(nextPlayableIndex);
             setTimeout(() => play(), 50);
         }
         return;
     }
     
-    // Play text chunk normally
+    // Play text or header chunk normally
     await loadSentence(currentSentenceIndex);
     // ...
 };
@@ -157,20 +166,39 @@ const play = async () => {
 **Navigation:**
 ```typescript
 const nextSentence = () => {
-    // Find next text chunk
-    const nextTextIndex = sentences.findIndex(
-        (c, i) => i > currentSentenceIndex && c.type === 'text'
+    // Stop current audio
+    audioRef.current?.pause();
+    
+    // Find next playable chunk (text or header)
+    const nextPlayableIndex = sentences.findIndex(
+        (c, i) => i > currentSentenceIndex && 
+        (c.type === 'text' || c.type === 'header') && 
+        c.text?.trim()
     );
-    if (nextTextIndex !== -1) {
-        goToSentence(nextTextIndex);
+    if (nextPlayableIndex !== -1) {
+        goToSentence(nextPlayableIndex);
+        
+        // Resume playback if audio was playing
+        if (intendedPlay) {
+            setTimeout(() => play(), 50);
+        }
     }
 };
 
 const prevSentence = () => {
-    // Find previous text chunk
+    // Stop current audio
+    audioRef.current?.pause();
+    
+    // Find previous playable chunk (text or header)
     for (let i = currentSentenceIndex - 1; i >= 0; i--) {
-        if (sentences[i]?.type === 'text' && sentences[i]?.text?.trim()) {
+        const chunk = sentences[i];
+        if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk.text?.trim()) {
             goToSentence(i);
+            
+            // Resume playback if audio was playing
+            if (intendedPlay) {
+                setTimeout(() => play(), 50);
+            }
             break;
         }
     }
@@ -610,36 +638,71 @@ export const EnhancedText = ({ chunk, chunkIndex }) => {
 
 ### FocusReader (Focus Mode)
 
-Shows one sentence at a time in large text:
+Shows one sentence at a time in large text with special header styling:
 
 ```typescript
 export const FocusReader = ({ controller, highlightMode }) => {
-    const currentSentence = controller.sentences[controller.currentSentenceIndex];
-    const currentWords = currentSentence?.text.split(/\s+/) || [];
+    const currentChunk = controller.sentences[controller.currentSentenceIndex];
+    const isHeader = currentChunk?.type === 'header';
+    const currentWords = currentChunk?.text.split(/\s+/) || [];
     
     return (
         <Box>
-            <Typography variant="h4">
-                {currentWords.map((word, i) => (
-                    <span
-                        key={i}
-                        className={
-                            highlightMode === 'word' && 
-                            controller.isPlaying && 
-                            i === controller.currentWordIndex
-                                ? 'highlight-word'
-                                : ''
-                        }
-                        data-word-index={i}
-                    >
-                        {word}{' '}
-                    </span>
-                ))}
-            </Typography>
+            {/* Current sentence/header display */}
+            <Box
+                sx={{
+                    ...(isHeader && {
+                        mx: -2,
+                        px: 2,
+                        py: 3,
+                        backgroundColor: '#d3d3d3',  // Light gray in light mode
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: '#333333'  // Dark gray in dark mode
+                        },
+                        borderTop: '2px solid var(--color-separator)',
+                        borderBottom: '2px solid var(--color-separator)'
+                    })
+                }}
+            >
+                <Typography
+                    variant={isHeader ? "h2" : "h4"}
+                    sx={{
+                        fontSize: isHeader ? `${fontSize * 2.2}rem` : `${fontSize * 1.5}rem`,
+                        fontWeight: isHeader ? 800 : 700,
+                        textAlign: 'center',
+                        color: textColor,  // Uses user's theme color
+                        letterSpacing: isHeader ? '-0.01em' : 'normal',
+                        textTransform: isHeader ? 'uppercase' : 'none'
+                    }}
+                >
+                    {currentWords.map((word, i) => (
+                        <span
+                            key={i}
+                            className={
+                                highlightMode === 'word' && 
+                                controller.isPlaying && 
+                                i === controller.currentWordIndex
+                                    ? 'highlight-word'
+                                    : ''
+                            }
+                            data-word-index={i}
+                        >
+                            {word}{' '}
+                        </span>
+                    ))}
+                </Typography>
+            </Box>
         </Box>
     );
 };
 ```
+
+**Focus Mode Features:**
+- ✅ **Headers rendered distinctly** - Gray background, uppercase, larger font
+- ✅ **Headers play with TTS** - Both text and headers are read aloud
+- ✅ **User theme colors** - Text uses customizable theme colors
+- ✅ **Word highlighting** - Works for both headers and text
+- ✅ **Previous/Next preview** - Shows adjacent chunks with styling
 
 ## Data Flow
 
@@ -744,9 +807,23 @@ graph LR
 ### 3. Automatic Progress Tracking
 
 - Saves current position (chapter + chunk)
+- **Syncs on every sentence change** - Both modes track progress
 - Tracks reading time and sessions
-- Syncs with server
+- Syncs with server (debounced)
 - Restores position on reload
+
+**Implementation:**
+```typescript
+// Sync state.currentChunkIndex with audio controller
+useEffect(() => {
+    if (sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+        prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
+        setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
+    }
+}, [sentenceAudio.currentSentenceIndex]);
+
+// useReadingProgress tracks currentChunkIndex and saves automatically
+```
 
 ### 4. Bookmarks
 
@@ -758,10 +835,29 @@ graph LR
 ### 5. Theme Customization
 
 - Font size, family, line height
-- Text color
-- Word highlight color
-- Sentence highlight color
+- Text color (per-mode: light/dark)
+- Word highlight color (per-mode: light/dark)
+- Sentence highlight color (per-mode: light/dark)
 - Light/Dark theme
+- **Highlight Mode** (`'word'` | `'line'` | `'off'`) - Persisted per user
+
+**Highlight Mode Persistence:**
+```typescript
+// Saved to user settings in database
+interface UserSettings {
+    highlightMode?: 'word' | 'line' | 'off';
+    // ... other settings
+}
+
+// Updated via Theme & Appearance modal
+const handleHighlightModeChange = async (mode: 'word' | 'line' | 'off') => {
+    updateState({ highlightMode: mode });
+    await updateUserSettings({ 
+        userId, 
+        settings: { highlightMode: mode } 
+    });
+};
+```
 
 ### 6. Speed Control
 
@@ -769,6 +865,32 @@ graph LR
 - Voice selection (multiple providers)
 - TTS provider selection
 - Word timing offset adjustment
+
+### 7. Smart Audio Navigation
+
+**Next/Prev Button Behavior:**
+- **Stops current audio** immediately
+- **Navigates** to next/previous playable chunk
+- **Auto-resumes playback** if audio was playing before navigation
+- **Maintains state** if audio was paused
+
+```typescript
+const nextSentence = () => {
+    const { intendedPlay } = stateRef.current;
+    
+    // Stop current audio
+    audioRef.current?.pause();
+    update({ isPlaying: false });
+    
+    // Navigate to next chunk
+    update({ currentSentenceIndex: nextIndex, currentWordIndex: 0 });
+    
+    // Resume if was playing
+    if (intendedPlay) {
+        setTimeout(() => play(), 50);
+    }
+};
+```
 
 ## Usage Examples
 
@@ -835,17 +957,52 @@ if (cacheRef.current[index]) {
 }
 ```
 
-### 2. Pre-loading Adjacent Sentences
+### 2. Aggressive TTS Pre-fetching
+
+**Initial Load Strategy:**
 ```typescript
+// On page load: prefetch current + next 3 sentences
 useEffect(() => {
-    const currentIndex = state.currentSentenceIndex;
-    const adjacentIndices = [currentIndex - 1, currentIndex + 1]
-        .filter(i => i >= 0 && i < sentences.length);
-    
-    // Pre-load for smooth transitions
-    adjacentIndices.forEach(i => loadSentence(i));
+    if (!hasInitiallyLoadedRef.current && sentences.length > 0) {
+        const initialIndexes = [
+            currentSentenceIndex,      // Current
+            currentSentenceIndex + 1,  // Next
+            currentSentenceIndex + 2,  // Next +2
+            currentSentenceIndex + 3   // Next +3
+        ].filter(i => i >= 0 && i < sentences.length);
+        
+        initialIndexes.forEach(i => void loadSentence(i));
+        hasInitiallyLoadedRef.current = true;
+    }
+}, [state.currentSentenceIndex, sentences.length, loadSentence]);
+```
+
+**Rolling Window Strategy:**
+```typescript
+// When moving between sentences: maintain 3-sentence lookahead
+useEffect(() => {
+    if (hasInitiallyLoadedRef.current) {
+        // Prefetch +3 ahead (rolling window)
+        // The next 2 are already cached from previous moves
+        const nextIndex = currentSentenceIndex + 3;
+        if (nextIndex < sentences.length) {
+            void loadSentence(nextIndex);
+        }
+        
+        // Also prefetch previous for backward navigation
+        const prevIndex = currentSentenceIndex - 1;
+        if (prevIndex >= 0) {
+            void loadSentence(prevIndex);
+        }
+    }
 }, [state.currentSentenceIndex]);
 ```
+
+**Benefits:**
+- ✅ **Instant playback** - current sentence always ready
+- ✅ **3-sentence buffer** - next 3 sentences pre-cached
+- ✅ **Efficient** - only loads 1 new sentence per move
+- ✅ **Smooth transitions** - no waiting between sentences
 
 ### 3. DOM-Based Word Highlighting
 ```typescript

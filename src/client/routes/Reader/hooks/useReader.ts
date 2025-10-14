@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { useRouter } from '../../../router';
 import { getBook } from '../../../../apis/books/client';
 import { getChapterByNumber } from '../../../../apis/chapters/client';
@@ -318,6 +318,16 @@ export const useReader = () => {
         0,
         userSettings.highlightMode
     );
+
+    // Sync state.currentChunkIndex with sentenceAudio.currentSentenceIndex
+    const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
+    useEffect(() => {
+        // Only update if sentence index actually changed (avoid infinite loop)
+        if (sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+            prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
+            setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
+        }
+    }, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex]);
 
     // Legacy audio adapter: sentence index IS chunk index (simplified!)
     const audioPlayback = {

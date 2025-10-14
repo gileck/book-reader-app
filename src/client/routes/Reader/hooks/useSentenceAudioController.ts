@@ -150,27 +150,62 @@ export function useSentenceAudioController(
     }, [sentences.length, update]);
 
     const nextSentence = useCallback(() => {
-        const { currentSentenceIndex } = stateRef.current;
+        const { currentSentenceIndex, intendedPlay } = stateRef.current;
         // Find next playable chunk (text or header)
         const nextPlayableIndex = sentences.findIndex((c, i) =>
             i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
         );
         if (nextPlayableIndex !== -1) {
-            goToSentence(nextPlayableIndex);
+            // Stop current audio if playing
+            const audio = audioRef.current;
+            if (audio) {
+                audio.pause();
+                update({ isPlaying: false });
+            }
+
+            // Update to new sentence
+            update({ currentSentenceIndex: nextPlayableIndex, currentWordIndex: 0 });
+
+            // If audio was playing, start playing the new chunk
+            if (intendedPlay) {
+                setTimeout(() => {
+                    void play();
+                }, 50);
+            }
         }
-    }, [goToSentence, sentences]);
+    }, [sentences, play, update]);
 
     const prevSentence = useCallback(() => {
-        const { currentSentenceIndex } = stateRef.current;
+        const { currentSentenceIndex, intendedPlay } = stateRef.current;
         // Find previous playable chunk (text or header)
+        let foundIndex = -1;
         for (let i = currentSentenceIndex - 1; i >= 0; i--) {
             const chunk = sentences[i];
             if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk.text?.trim()) {
-                goToSentence(i);
+                foundIndex = i;
                 break;
             }
         }
-    }, [goToSentence, sentences]);
+
+        if (foundIndex !== -1) {
+            // Stop current audio if playing
+            const audio = audioRef.current;
+            if (audio) {
+                audio.pause();
+                update({ isPlaying: false });
+            }
+
+            // Update to new sentence
+            update({ currentSentenceIndex: foundIndex, currentWordIndex: 0 });
+
+            // If audio was playing, start playing the new chunk
+            if (intendedPlay) {
+                setTimeout(() => {
+                    void play();
+                }, 50);
+            }
+        }
+    }, [sentences, play, update]);
 
     const handleWordClick = useCallback((sentenceIndex: number, wordIndex: number) => {
         goToSentence(sentenceIndex);
@@ -186,11 +221,41 @@ export function useSentenceAudioController(
         void loadSentence(sentenceIndex);
     }, [loadSentence]);
 
+    // Preload current sentence and next 3 sentences for smooth playback
+    const hasInitiallyLoadedRef = useRef(false);
     useEffect(() => {
         const { currentSentenceIndex } = stateRef.current;
-        const windowIndexes = [currentSentenceIndex - 1, currentSentenceIndex + 1].filter(i => i >= 0 && i < sentences.length);
-        windowIndexes.forEach(i => void loadSentence(i));
+
+        if (!hasInitiallyLoadedRef.current && sentences.length > 0) {
+            // On initial load: preload current + next 3 sentences
+            const initialIndexes = [
+                currentSentenceIndex,
+                currentSentenceIndex + 1,
+                currentSentenceIndex + 2,
+                currentSentenceIndex + 3
+            ].filter(i => i >= 0 && i < sentences.length);
+            initialIndexes.forEach(i => void loadSentence(i));
+            hasInitiallyLoadedRef.current = true;
+        } else {
+            // When moving between sentences: preload the next sentence
+            // (the 2 after should already be prefetched from previous moves)
+            const nextIndex = currentSentenceIndex + 3;
+            if (nextIndex >= 0 && nextIndex < sentences.length) {
+                void loadSentence(nextIndex);
+            }
+
+            // Also preload previous sentence for backward navigation
+            const prevIndex = currentSentenceIndex - 1;
+            if (prevIndex >= 0 && prevIndex < sentences.length) {
+                void loadSentence(prevIndex);
+            }
+        }
     }, [state.currentSentenceIndex, sentences.length, loadSentence]);
+
+    // Reset initial load flag when chapter changes
+    useEffect(() => {
+        hasInitiallyLoadedRef.current = false;
+    }, [chapter?.chapterNumber]);
 
     // Update playback speed when it changes
     useEffect(() => {

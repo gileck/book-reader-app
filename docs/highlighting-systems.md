@@ -8,7 +8,7 @@ This document describes both highlighting systems used in the application:
 
 Both systems are user-configurable through the theme panel and designed for optimal performance and user experience.
 
-**Note**: As of the simplified refactor (2025), the reader operates with a one-to-one mapping between sentence indices and chunk indices. The `useSentenceAudioController` processes ALL chunks (including headers and images) but only generates TTS for text chunks. This eliminates the need for index mapping functions, making the code significantly simpler while maintaining full functionality.
+**Note**: As of the simplified refactor (2025), the reader operates with a one-to-one mapping between sentence indices and chunk indices. The `useSentenceAudioController` processes ALL chunks (including headers, images, and text) and generates TTS for both text and headers. Only images are skipped for TTS. This eliminates the need for index mapping functions, making the code significantly simpler while maintaining full functionality.
 
 ## Simplified Architecture (2025 Refactor)
 
@@ -43,25 +43,30 @@ Both systems are user-configurable through the theme panel and designed for opti
 // Use ALL chunks - no filtering!
 const sentences = chapter?.content?.chunks || [];
 
-// Skip TTS for non-text chunks
+// Skip TTS only for images - generate for text and headers
 const loadSentence = async (index: number) => {
     const chunk = sentences[index];
-    if (chunk.type !== 'text' || !chunk.text?.trim()) {
+    if (chunk.type === 'image' || !chunk.text?.trim()) {
         return; // Skip silently
     }
-    // Generate TTS only for text chunks
+    // Generate TTS for text and header chunks
     await generateTts({ text: chunk.text, ... });
 };
 
-// Auto-advance past non-text chunks
+// Auto-advance past images only
 const play = async () => {
     const chunk = sentences[currentIndex];
-    if (chunk.type !== 'text') {
-        // Find next text chunk and play that
-        const nextTextIndex = sentences.findIndex(...);
-        goToSentence(nextTextIndex);
+    if (chunk.type === 'image' || !chunk.text?.trim()) {
+        // Find next playable chunk (text or header) and play that
+        const nextPlayableIndex = sentences.findIndex(
+            (c, i) => i > currentIndex && 
+            (c.type === 'text' || c.type === 'header') && 
+            c.text?.trim()
+        );
+        goToSentence(nextPlayableIndex);
+        setTimeout(() => play(), 50);
     }
-    // Play current text chunk
+    // Play current text or header chunk
 };
 ```
 

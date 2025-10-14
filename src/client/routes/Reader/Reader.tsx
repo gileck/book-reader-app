@@ -306,6 +306,7 @@ export const Reader = () => {
                     currentChunkIndex={audio.currentChunkIndex}
                     totalChapters={book.totalChapters}
                     onNavigateToBookmark={navigation.handleNavigateToBookmark}
+                    onNavigateToChunk={sentenceAudio.controller.goToSentence}
                     progressData={progress}
                     onChapters={chapterDialog.openDialog}
                     minChapterNumber={book?.chapterStartNumber ?? 1}

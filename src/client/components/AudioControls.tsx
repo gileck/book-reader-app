@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     IconButton,
     Typography,
     LinearProgress,
     Alert,
-    AlertTitle
+    AlertTitle,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
+    TextField
 } from '@mui/material';
 import {
     PlayArrow,
@@ -17,7 +23,9 @@ import {
     Settings,
     QuestionMark,
     List,
-    Close
+    Close,
+    Menu,
+    VerticalAlignTop
 } from '@mui/icons-material';
 import { BookmarkDropdown } from './BookmarkDropdown';
 import type { BookmarkClient } from '../../apis/bookmarks/types';
@@ -50,6 +58,7 @@ interface AudioControlsProps {
     totalChapters?: number;
     minChapterNumber?: number;
     onNavigateToBookmark?: (chapterNumber: number, chunkIndex: number) => void;
+    onNavigateToChunk?: (chunkIndex: number) => void;
     ttsServiceAvailable?: boolean;
     ttsError?: TtsErrorDetail | null;
     onDismissError?: () => void;
@@ -92,6 +101,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     totalChapters = 1,
     minChapterNumber = 1,
     onNavigateToBookmark,
+    onNavigateToChunk,
     ttsServiceAvailable = true,
     ttsError,
     onDismissError,
@@ -104,6 +114,10 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     // Determine if play button should be disabled
     const ttsDisabled = !ttsEnabled;
     const hasError = !!ttsError || !ttsServiceAvailable;
+
+    // Sentence navigation dialog state
+    const [navigationDialogOpen, setNavigationDialogOpen] = useState(false);
+    const [targetSentence, setTargetSentence] = useState('');
 
     return (
         <Box sx={{
@@ -276,8 +290,26 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 mb: 2,
-                minHeight: 24
+                minHeight: 24,
+                gap: 1
             }}>
+                {/* Go to Top Button */}
+                <IconButton
+                    onClick={() => onNavigateToChunk?.(0)}
+                    size="small"
+                    sx={{
+                        color: '#b0b0b0',
+                        padding: '4px',
+                        '&:hover': {
+                            color: '#e0e0e0',
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    }}
+                    title="Go to first sentence"
+                >
+                    <VerticalAlignTop sx={{ fontSize: 18 }} />
+                </IconButton>
+
                 {/* Sentence Counter (centered) */}
                 <Typography
                     variant="body2"
@@ -290,6 +322,23 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 >
                     {currentChunk} of {totalChunks} {unitLabelOverride || 'sentences'}
                 </Typography>
+
+                {/* Navigate to Sentence Button */}
+                <IconButton
+                    onClick={() => setNavigationDialogOpen(true)}
+                    size="small"
+                    sx={{
+                        color: '#b0b0b0',
+                        padding: '4px',
+                        '&:hover': {
+                            color: '#e0e0e0',
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    }}
+                    title="Go to sentence..."
+                >
+                    <Menu sx={{ fontSize: 18 }} />
+                </IconButton>
             </Box>
 
             {/* Main Controls */}
@@ -448,6 +497,102 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     />
                 </Box>
             </Box>
+
+            {/* Sentence Navigation Dialog */}
+            <Dialog
+                open={navigationDialogOpen}
+                onClose={() => {
+                    setNavigationDialogOpen(false);
+                    setTargetSentence('');
+                }}
+                PaperProps={{
+                    sx: {
+                        backgroundColor: '#1a1a1a',
+                        color: 'white',
+                        minWidth: 300
+                    }
+                }}
+            >
+                <DialogTitle sx={{ pb: 1 }}>Go to Sentence</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        label={`Sentence (1-${totalChunks})`}
+                        type="number"
+                        fullWidth
+                        variant="outlined"
+                        value={targetSentence}
+                        onChange={(e) => setTargetSentence(e.target.value)}
+                        inputProps={{
+                            min: 1,
+                            max: totalChunks
+                        }}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                color: 'white',
+                                '& fieldset': {
+                                    borderColor: 'rgba(255, 255, 255, 0.23)'
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: 'rgba(255, 255, 255, 0.4)'
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: '#4285f4'
+                                }
+                            },
+                            '& .MuiInputLabel-root': {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                const sentence = parseInt(targetSentence);
+                                if (sentence >= 1 && sentence <= totalChunks) {
+                                    onNavigateToChunk?.(sentence - 1);
+                                    setNavigationDialogOpen(false);
+                                    setTargetSentence('');
+                                }
+                            }
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions sx={{ px: 3, pb: 2 }}>
+                    <Button
+                        onClick={() => {
+                            setNavigationDialogOpen(false);
+                            setTargetSentence('');
+                        }}
+                        sx={{ color: '#b0b0b0' }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            const sentence = parseInt(targetSentence);
+                            if (sentence >= 1 && sentence <= totalChunks) {
+                                onNavigateToChunk?.(sentence - 1);
+                                setNavigationDialogOpen(false);
+                                setTargetSentence('');
+                            }
+                        }}
+                        sx={{
+                            backgroundColor: '#4285f4',
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#3367d6'
+                            }
+                        }}
+                        disabled={
+                            !targetSentence ||
+                            parseInt(targetSentence) < 1 ||
+                            parseInt(targetSentence) > totalChunks
+                        }
+                    >
+                        Go
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }; 
