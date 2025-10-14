@@ -80,8 +80,8 @@ export function useSentenceAudioController(
         const chunk = sentences[index];
         if (!chunk) return;
 
-        // Skip TTS for non-text chunks (headers, images)
-        if (chunk.type !== 'text' || !chunk.text?.trim()) return;
+        // Skip TTS for images only - play both text and headers
+        if (chunk.type === 'image' || !chunk.text?.trim()) return;
 
         try {
             const result = await generateTts({
@@ -107,12 +107,14 @@ export function useSentenceAudioController(
         const { currentSentenceIndex } = stateRef.current;
         const chunk = sentences[currentSentenceIndex];
 
-        // Skip playback for non-text chunks
-        if (!chunk || chunk.type !== 'text' || !chunk.text?.trim()) {
-            // Auto-advance to next text chunk
-            const nextTextIndex = sentences.findIndex((c, i) => i > currentSentenceIndex && c.type === 'text' && c.text?.trim());
-            if (nextTextIndex !== -1) {
-                update({ currentSentenceIndex: nextTextIndex });
+        // Skip playback for images only - play both text and headers
+        if (!chunk || chunk.type === 'image' || !chunk.text?.trim()) {
+            // Auto-advance to next playable chunk (text or header)
+            const nextPlayableIndex = sentences.findIndex((c, i) =>
+                i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
+            );
+            if (nextPlayableIndex !== -1) {
+                update({ currentSentenceIndex: nextPlayableIndex });
                 // Retry play with new index
                 setTimeout(() => void play(), 50);
             }
@@ -149,20 +151,21 @@ export function useSentenceAudioController(
 
     const nextSentence = useCallback(() => {
         const { currentSentenceIndex } = stateRef.current;
-        // Find next text chunk
-        const nextTextIndex = sentences.findIndex((c, i) =>
-            i > currentSentenceIndex && c.type === 'text' && c.text?.trim()
+        // Find next playable chunk (text or header)
+        const nextPlayableIndex = sentences.findIndex((c, i) =>
+            i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
         );
-        if (nextTextIndex !== -1) {
-            goToSentence(nextTextIndex);
+        if (nextPlayableIndex !== -1) {
+            goToSentence(nextPlayableIndex);
         }
     }, [goToSentence, sentences]);
 
     const prevSentence = useCallback(() => {
         const { currentSentenceIndex } = stateRef.current;
-        // Find previous text chunk
+        // Find previous playable chunk (text or header)
         for (let i = currentSentenceIndex - 1; i >= 0; i--) {
-            if (sentences[i]?.type === 'text' && sentences[i]?.text?.trim()) {
+            const chunk = sentences[i];
+            if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk.text?.trim()) {
                 goToSentence(i);
                 break;
             }

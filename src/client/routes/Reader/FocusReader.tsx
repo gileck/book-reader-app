@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import type { SentenceAudioApi } from './hooks/useSentenceAudioController';
+import type { TextChunkClient } from '@/apis/chapters/types';
 import { useUserTheme } from '@/client/components/UserThemeProvider';
 
 export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode?: 'word' | 'line' | 'off' }> = ({ controller, highlightMode = 'word' }) => {
@@ -18,9 +19,40 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
         controller.prevSentence();
     }, [controller]);
 
-    const prevText = sentences[currentSentenceIndex - 1]?.text ?? '';
-    const currText = sentences[currentSentenceIndex]?.text ?? '';
-    const nextText = sentences[currentSentenceIndex + 1]?.text ?? '';
+    // Get chunks including headers - skip only images
+    const getPlayableChunk = useCallback((fromIndex: number, direction: 'prev' | 'current' | 'next'): TextChunkClient | null => {
+        if (direction === 'current') {
+            const chunk = sentences[fromIndex];
+            return (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) ? chunk : null;
+        }
+
+        if (direction === 'next') {
+            for (let i = fromIndex + 1; i < sentences.length; i++) {
+                const chunk = sentences[i];
+                if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return chunk;
+            }
+            return null;
+        }
+
+        // prev
+        for (let i = fromIndex - 1; i >= 0; i--) {
+            const chunk = sentences[i];
+            if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return chunk;
+        }
+        return null;
+    }, [sentences]);
+
+    const prevChunk = getPlayableChunk(currentSentenceIndex, 'prev');
+    const currChunk = getPlayableChunk(currentSentenceIndex, 'current');
+    const nextChunk = getPlayableChunk(currentSentenceIndex, 'next');
+
+    const prevText = prevChunk?.text ?? '';
+    const currText = currChunk?.text ?? '';
+    const nextText = nextChunk?.text ?? '';
+
+    const isHeader = currChunk?.type === 'header';
+    const isPrevHeader = prevChunk?.type === 'header';
+    const isNextHeader = nextChunk?.type === 'header';
 
     const currentWords = useMemo(() => {
         // Split into words preserving order; spaces will be inserted during render
@@ -93,7 +125,18 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             {/* Use same global class as full reader: .highlight-word; set CSS var for color */}
             {/* Previous (smaller, subdued, under) */}
             <Box
-                sx={{ minHeight: 44, cursor: prevText ? 'pointer' : 'default' }}
+                sx={{
+                    minHeight: 44,
+                    cursor: prevText ? 'pointer' : 'default',
+                    ...(isPrevHeader && {
+                        mx: -2,
+                        px: 2,
+                        py: 1.5,
+                        borderTop: '1px solid var(--color-separator)',
+                        borderBottom: '1px solid var(--color-separator)',
+                        backgroundColor: 'rgba(128, 128, 128, 0.08)'
+                    })
+                }}
                 onClick={(e) => {
                     if (prevText) {
                         e.stopPropagation();
@@ -101,7 +144,21 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                     }
                 }}
             >
-                <Typography variant="body2" sx={{ color: textColor, textAlign: 'center', opacity: 0.6 }}>
+                <Typography
+                    variant="body2"
+                    sx={{
+                        color: isPrevHeader ? '#000000' : textColor,
+                        '@media (prefers-color-scheme: dark)': isPrevHeader ? {
+                            color: '#ffffff'
+                        } : {},
+                        textAlign: 'center',
+                        opacity: isPrevHeader ? 0.5 : 0.6,
+                        fontWeight: isPrevHeader ? 700 : 400,
+                        fontSize: isPrevHeader ? '0.95rem' : 'inherit',
+                        textTransform: isPrevHeader ? 'uppercase' : 'none',
+                        letterSpacing: isPrevHeader ? '0.05em' : 'normal'
+                    }}
+                >
                     {prevText}
                 </Typography>
                 {/* CSS for line bolding; no layout shift */}
@@ -111,8 +168,23 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             </Box>
 
             {/* Current (bold, big, centered) */}
-            <Box ref={containerRef} sx={{ position: 'relative', ['--word-highlight-color' as unknown as string]: highlightColor }}>
-                {highlightMode === 'line' && linePos && (
+            <Box
+                ref={containerRef}
+                sx={{
+                    position: 'relative',
+                    ['--word-highlight-color' as unknown as string]: highlightColor,
+                    ...(isHeader && {
+                        mx: -2,
+                        px: 2,
+                        py: 3,
+                        backgroundColor: 'rgba(128, 128, 128, 0.15)',
+                        borderTop: '2px solid var(--color-separator)',
+                        borderBottom: '2px solid var(--color-separator)',
+                        backdropFilter: 'blur(10px)'
+                    })
+                }}
+            >
+                {highlightMode === 'line' && linePos && !isHeader && (
                     <Box
                         sx={{
                             position: 'absolute',
@@ -129,18 +201,24 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                     />
                 )}
                 <Typography
-                    variant="h4"
+                    variant={isHeader ? "h2" : "h4"}
                     sx={{
-                        fontSize: `${fontSize * 1.5}rem`,
-                        lineHeight: lineHeight,
-                        fontWeight: 700,
+                        fontSize: isHeader ? `${fontSize * 2}rem` : `${fontSize * 1.5}rem`,
+                        lineHeight: isHeader ? 1.3 : lineHeight,
+                        fontWeight: isHeader ? 800 : 700,
                         textAlign: 'center',
-                        color: textColor,
+                        color: isHeader ? '#000000' : textColor,
+                        '@media (prefers-color-scheme: dark)': isHeader ? {
+                            color: '#ffffff'
+                        } : {},
                         fontFamily: fontFamily,
                         whiteSpace: 'pre-wrap',
                         wordBreak: 'break-word',
                         position: 'relative',
-                        zIndex: 1
+                        zIndex: 1,
+                        letterSpacing: isHeader ? '-0.01em' : 'normal',
+                        textTransform: isHeader ? 'uppercase' : 'none',
+                        mb: 0
                     }}
                 >
                     {currentWords.map((w, i) => (
@@ -162,8 +240,34 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             </Box>
 
             {/* Next (smaller, subdued, under) */}
-            <Box sx={{ minHeight: 44 }}>
-                <Typography variant="body2" sx={{ color: textColor, textAlign: 'center', opacity: 0.6 }}>
+            <Box
+                sx={{
+                    minHeight: 44,
+                    ...(isNextHeader && {
+                        mx: -2,
+                        px: 2,
+                        py: 1.5,
+                        borderTop: '1px solid var(--color-separator)',
+                        borderBottom: '1px solid var(--color-separator)',
+                        backgroundColor: 'rgba(128, 128, 128, 0.08)'
+                    })
+                }}
+            >
+                <Typography
+                    variant="body2"
+                    sx={{
+                        color: isNextHeader ? '#000000' : textColor,
+                        '@media (prefers-color-scheme: dark)': isNextHeader ? {
+                            color: '#ffffff'
+                        } : {},
+                        textAlign: 'center',
+                        opacity: isNextHeader ? 0.5 : 0.6,
+                        fontWeight: isNextHeader ? 700 : 400,
+                        fontSize: isNextHeader ? '0.95rem' : 'inherit',
+                        textTransform: isNextHeader ? 'uppercase' : 'none',
+                        letterSpacing: isNextHeader ? '0.05em' : 'normal'
+                    }}
+                >
                     {nextText}
                 </Typography>
             </Box>
