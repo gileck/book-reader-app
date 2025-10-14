@@ -9,6 +9,9 @@ This document provides a comprehensive list of all features supported in the Boo
 ### 1. Reading Modes
 - ✅ **Full Reading Mode**: Traditional book reading with all content visible
 - ✅ **Focus Reading Mode**: Minimalist view showing previous, current, and next sentences only
+  - Click current sentence area to advance to next
+  - Click previous sentence (when visible) to go back
+  - Keyboard navigation: Arrow Right (next), Arrow Left (previous)
 
 ### 2. Audio Playback
 
@@ -64,17 +67,17 @@ This document provides a comprehensive list of all features supported in the Boo
 ### 6. Theme Customization
 
 #### Typography
-- ✅ **Font Size**: Adjustable from 0.8rem to 2.0rem
-- ✅ **Line Height**: Adjustable from 1.2 to 2.5
-- ✅ **Font Family**: Multiple font choices (Sans-serif, Serif, Monospace, Custom)
+- ✅ **Font Size**: Adjustable from 0.8rem to 2.0rem (applies to both full and focus modes)
+- ✅ **Line Height**: Adjustable from 1.2 to 2.5 (applies to both full and focus modes)
+- ✅ **Font Family**: Multiple font choices - Sans-serif, Serif, Monospace, Custom (applies to both full and focus modes)
 
 #### Colors
 - ✅ **Theme Mode**: Light, Dark, Sepia, Custom
-- ✅ **Text Color**: Customizable text color
+- ✅ **Text Color**: Customizable text color (applies to both full and focus modes)
 - ✅ **Background Color**: Customizable background color
 - ✅ **Word Highlight Color**: Customizable word highlighting color
 - ✅ **Sentence Highlight Color**: Customizable sentence highlighting color
-- ✅ **Real-time Preview**: Changes apply instantly
+- ✅ **Real-time Preview**: Changes apply instantly in both reading modes
 
 ### 7. Content Rendering
 
@@ -141,7 +144,7 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ## Implementation Status
 
-### ✅ Completed Features (33/36)
+### ✅ Completed Features (34/36)
 - All core reading modes
 - Audio playback with auto-advance
 - Playback speed control
@@ -149,17 +152,21 @@ This document provides a comprehensive list of all features supported in the Boo
 - Sentence highlighting
 - Line highlighting (focus mode)
 - Chapter navigation
-- Sentence-level navigation
+- Sentence-level navigation (keyboard + click)
 - Bookmarks system
-- Complete theme customization
+- Complete theme customization (both modes)
 - Settings persistence
 - Cross-reference links
 - Mixed content rendering
 - Offline support
 - AI chat integration
+- Focus mode theme integration
 
-### ⚠️ To Be Verified (3/36)
-- Line highlighting in focus mode (verify works correctly)
+### ✅ Recently Verified
+- ✅ **Focus Mode Theme Integration**: All theme settings (font size, line height, font family, text color) now apply to focus mode (October 2025)
+- ✅ **Focus Mode Navigation**: Click interactions for previous/next sentence navigation (October 2025)
+
+### ⚠️ To Be Verified (2/36)
 - Sentence background highlighting (verify styling)
 - TTS voice selection (verify voice is applied)
 
@@ -215,16 +222,23 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ### Navigation
 - [ ] Chapter navigation works (next/previous)
-- [ ] Sentence navigation works (next/previous)
+- [ ] Sentence navigation works (next/previous buttons)
+- [ ] Focus mode: Click current area to advance
+- [ ] Focus mode: Click previous sentence to go back
+- [ ] Focus mode: Arrow Right/Left keyboard navigation
 - [ ] Scroll to current button works in full mode
 - [ ] Word click starts playback from that word
 - [ ] Bookmarks navigate correctly
 - [ ] Reading progress restores on page load
 
 ### Theme Customization
-- [ ] Font size changes apply immediately
-- [ ] Line height changes apply immediately
-- [ ] Font family changes apply immediately
+- [ ] Font size changes apply immediately (full mode)
+- [ ] Font size changes apply immediately (focus mode)
+- [ ] Line height changes apply immediately (full mode)
+- [ ] Line height changes apply immediately (focus mode)
+- [ ] Font family changes apply immediately (full mode)
+- [ ] Font family changes apply immediately (focus mode)
+- [ ] Text color changes apply immediately (both modes)
 - [ ] Theme mode changes (light/dark/sepia) apply
 - [ ] Word highlight color changes work
 - [ ] Sentence highlight color changes work
@@ -279,7 +293,15 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ---
 
-**Last Updated**: January 2025  
-**Implementation Status**: ✅ 33/36 features complete (92%)  
-**Next Steps**: Verify remaining 3 features, then proceed with Phase 6 optimizations
+**Last Updated**: October 2025  
+**Implementation Status**: ✅ 34/36 features complete (94%)  
+**Next Steps**: Verify remaining 2 features, then proceed with Phase 6 optimizations
+
+## Recent Updates
+
+### October 14, 2025
+- ✅ **Focus Mode Theme Integration**: Fixed FocusReader to properly apply all theme settings including fontSize, lineHeight, and fontFamily from Theme & Appearance Settings
+- ✅ **Focus Mode Click Navigation**: Added click handlers for previous sentence navigation in focus mode
+- ✅ **Focus Mode Previous Click Bug Fix**: Fixed issue where clicking previous sentence was going forward instead of backward by adding proper event propagation handling
+- Updated testing checklist to include focus mode theme verification
 

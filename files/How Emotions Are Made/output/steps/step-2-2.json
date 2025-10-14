@@ -146,7 +146,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-10-11T16:39:50.740Z",
+    "processingStartTime": "2025-10-14T09:24:33.692Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -155,10 +155,10 @@
       "lineCount": 18442,
       "wordCount": 185826,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-10-11T16:39:56.892Z",
-      "averageWordsPerPage": 416,
-      "extractionMethod": "page_by_page_fixed",
-      "totalTextContentItems": 30944
+      "extractionTime": "2025-10-14T09:24:33.925Z",
+      "source": "cached-txt-file",
+      "txtFilePath": "/Users/gil/Projects/book-reader-app/files/How Emotions Are Made/book.txt",
+      "extractionMethod": "text-file-load"
     },
     "chapterDetection": {
       "chaptersDetected": 21,
@@ -167,7 +167,7 @@
       "patternMatches": 637,
       "averageDetectionConfidence": 0.9619047619047618,
       "pageOffset": 0,
-      "processingTime": 8940,
+      "processingTime": 18488,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -178,7 +178,7 @@
       "averagePagesPerChapter": 23.72222222222222,
       "totalCharacters": 1135233,
       "averageCharactersPerChapter": 63068.5,
-      "processingTime": 56,
+      "processingTime": 39,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     }
   }

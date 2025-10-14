@@ -1,13 +1,13 @@
 {
-  "processingTime": 26,
+  "processingTime": 22,
   "extractionStats": {
     "totalChapters": 20,
     "originalChapterCount": 25,
     "filteredChapterCount": 5,
     "totalPages": 388,
     "averagePagesPerChapter": 19.4,
-    "totalCharacters": 895043,
-    "averageCharactersPerChapter": 44752.15
+    "totalCharacters": 895038,
+    "averageCharactersPerChapter": 44751.9
   },
   "filteredChapters": [
     {
@@ -29,7 +29,7 @@
       "chapterNumber": 3,
       "pageNumberStart": 34,
       "pageNumberEnd": 57,
-      "contentLength": 33642
+      "contentLength": 33643
     },
     {
       "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
@@ -99,7 +99,7 @@
       "chapterNumber": 14,
       "pageNumberStart": 216,
       "pageNumberEnd": 241,
-      "contentLength": 64669
+      "contentLength": 64667
     },
     {
       "title": "The Breathing Secret for Healthy Blood Pressure",
@@ -113,7 +113,7 @@
       "chapterNumber": 16,
       "pageNumberStart": 253,
       "pageNumberEnd": 272,
-      "contentLength": 48111
+      "contentLength": 48109
     },
     {
       "title": "Sex and Breath, an Intimate Connection",
@@ -141,7 +141,7 @@
       "chapterNumber": 20,
       "pageNumberStart": 352,
       "pageNumberEnd": 369,
-      "contentLength": 42233
+      "contentLength": 42231
     },
     {
       "title": "Seizure Control and the Breath",
@@ -181,7 +181,7 @@
       "chapterNumber": 3,
       "pageNumberStart": 34,
       "pageNumberEnd": 57,
-      "contentLength": 33642,
+      "contentLength": 33643,
       "filtered": false
     },
     {
@@ -269,7 +269,7 @@
       "chapterNumber": 14,
       "pageNumberStart": 216,
       "pageNumberEnd": 241,
-      "contentLength": 64669,
+      "contentLength": 64667,
       "filtered": false
     },
     {
@@ -285,7 +285,7 @@
       "chapterNumber": 16,
       "pageNumberStart": 253,
       "pageNumberEnd": 272,
-      "contentLength": 48111,
+      "contentLength": 48109,
       "filtered": false
     },
     {
@@ -317,7 +317,7 @@
       "chapterNumber": 20,
       "pageNumberStart": 352,
       "pageNumberEnd": 369,
-      "contentLength": 42233,
+      "contentLength": 42231,
       "filtered": false
     },
     {

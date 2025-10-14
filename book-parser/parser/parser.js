@@ -80,6 +80,7 @@ const STEP_MODULES = {
  * @param {Object} options - Parsing options
  * @param {boolean} options.validate - Whether to run validation (default: true)
  * @param {boolean} options.debug - Enable debug logging (default: false)
+ * @param {boolean} options.forceReparse - Force re-extraction from PDF, ignoring cached .txt file (default: false)
  * @returns {Object} - Complete parsing results with step-by-step outputs
  */
 async function parseBook(pdfPath, outputPath, options = {}) {
@@ -96,6 +97,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
     const opts = {
         validate: options.validate !== false, // default true
         debug: options.debug || false,
+        forceReparse: options.forceReparse || false,
         ...options
     };
 
@@ -122,6 +124,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         PDF_PATH: pdfPath,
         OUTPUT_DIR: outputDir,
         DEBUG_DIR: path.join(outputDir, 'debug'),
+        FORCE_REPARSE: opts.forceReparse,
         CHUNK_TARGET_MIN: opts.chunkTargetMin || 80,
         CHUNK_TARGET_MAX: opts.chunkTargetMax || 300,
         CHUNK_ABSOLUTE_MIN: opts.chunkAbsoluteMin || 50,

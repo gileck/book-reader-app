@@ -17,6 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js');
 
 /**
  * Execute metadata extraction step
@@ -35,6 +36,20 @@ async function execute(pipelineState, config) {
 
         if (!pipelineState.rawText) {
             throw new Error('Raw text is required for metadata extraction. Ensure step 1 (text extraction) was completed.');
+        }
+
+        // Extract metadata from PDF first (most reliable)
+        let pdfTitle = null;
+        let pdfAuthor = null;
+        try {
+            const pdfPath = config.PDF_PATH || config.INPUT_PDF;
+            if (pdfPath && fs.existsSync(pdfPath)) {
+                const pdfMetadata = await extractPdfMetadata(pdfPath);
+                pdfTitle = pdfMetadata.title;
+                pdfAuthor = pdfMetadata.author;
+            }
+        } catch (err) {
+            console.log('⚠️  Failed to extract PDF metadata:', err.message);
         }
 
         // Attempt to load metadata overrides from a metadata.json file
@@ -58,9 +73,9 @@ async function execute(pipelineState, config) {
             }
         } catch (_) { /* ignore override read errors */ }
 
-        // Resolve title/author using overrides first, then extraction
-        const title = overrideTitle || extractTitle(pipelineState.rawText);
-        const author = overrideAuthor || extractAuthor(pipelineState.rawText);
+        // Resolve title/author using priority: overrides > PDF metadata > text extraction
+        const title = overrideTitle || pdfTitle || extractTitle(pipelineState.rawText);
+        const author = overrideAuthor || pdfAuthor || extractAuthor(pipelineState.rawText);
 
         // Extract publication info
         const publicationInfo = extractPublicationInfo(pipelineState.rawText);
@@ -138,6 +153,43 @@ async function execute(pipelineState, config) {
 }
 
 /**
+ * Extract metadata from PDF document properties
+ * @param {string} pdfPath - Path to PDF file
+ * @returns {Object} - Object with title and author from PDF metadata
+ */
+async function extractPdfMetadata(pdfPath) {
+    try {
+        const loadingTask = pdfjsLib.getDocument(pdfPath);
+        const pdf = await loadingTask.promise;
+        const metadata = await pdf.getMetadata();
+
+        let title = null;
+        let author = null;
+
+        // Extract title from PDF metadata
+        if (metadata.info && metadata.info.Title) {
+            title = metadata.info.Title.trim();
+            // Format title to proper title case
+            if (title && title.length > 0) {
+                title = formatTitleCase(title);
+            }
+        }
+
+        // Extract author from PDF metadata
+        if (metadata.info && metadata.info.Author) {
+            author = metadata.info.Author.trim();
+            // Clean up author (remove trailing semicolons, etc.)
+            author = author.replace(/[;,]+$/, '').trim();
+        }
+
+        return { title, author };
+    } catch (error) {
+        console.log('⚠️  PDF metadata extraction failed:', error.message);
+        return { title: null, author: null };
+    }
+}
+
+/**
  * Extract book title from Library of Congress cataloging data only
  */
 function extractTitle(rawText) {
@@ -199,10 +251,36 @@ function extractTitleFromTitlePage(rawText) {
     const pages = rawText.split(/--- PAGE \d+ ---/);
     const firstPages = pages.slice(0, 15).join('\n'); // First 15 pages
 
-    // Pattern 1: All caps title followed by subtitle and author (like Transformers)
+    // Pattern 1: Multi-line all caps title (e.g., "THE\nBREATHING\nCURE")
+    // Matches 1-5 consecutive all-caps lines, followed by subtitle, then author
+    // Example: "THE\nBREATHING\nCURE\nDEVELOP NEW HABITS FOR\nA HEALTHIER...\nPATRICK M C KEOWN"
+    const multiLineAllCapsPattern = /(?:^|\n)([A-Z][A-Z\s]*(?:\n[A-Z][A-Z\s]*){0,4})\n([A-Z][^A-Z]*?)\n([A-Z][A-Z\s]{5,40})\s*(?:\n|$)/gm;
+    let match = multiLineAllCapsPattern.exec(firstPages);
+    if (match) {
+        const title = match[1].replace(/\n/g, ' ').trim();
+        const subtitle = match[2].replace(/\n/g, ' ').trim();
+        const author = match[3].trim();
+
+        // Validate title and author to ensure we have the right match
+        if (isValidTitleCandidate(title) && title.split(/\s+/).length >= 2 && title.split(/\s+/).length <= 10) {
+            if (isValidAuthorCandidate(author)) {
+                // Clean up subtitle
+                const cleanSubtitle = subtitle.length <= 100 && !subtitle.match(/copyright|published|isbn/i) && isValidTitleCandidate(subtitle) ? subtitle : '';
+
+                if (cleanSubtitle) {
+                    const formattedTitle = formatTitleCase(title);
+                    const formattedSubtitle = formatTitleCase(cleanSubtitle);
+                    return `${formattedTitle}: ${formattedSubtitle}`;
+                }
+                return formatTitleCase(title);
+            }
+        }
+    }
+
+    // Pattern 2: All caps title on single line followed by subtitle and author (like Transformers)
     // Example: "3 TRANSFORMER \nThe deep chemistry of life and death \nNICK LANE"
     const allCapsPattern = /(?:^|\n)(?:\d+\s+)?([A-Z][A-Z\s]{2,50})\s*\n([A-Z][^A-Z\n]{10,80})\s*\n([A-Z][A-Z\s]{3,30})/gm;
-    let match = allCapsPattern.exec(firstPages);
+    match = allCapsPattern.exec(firstPages);
     if (match) {
         const title = match[1].trim();
         const subtitle = match[2].trim();
@@ -409,10 +487,21 @@ function extractAuthorFromTitlePage(rawText) {
     const pages = rawText.split(/--- PAGE \d+ ---/);
     const firstPages = pages.slice(0, 15).join('\n'); // First 15 pages
 
-    // Pattern 1: All caps author after title and subtitle (like Transformers)
+    // Pattern 1: Multi-line all caps title followed by subtitle and author
+    // Example: "THE\nBREATHING\nCURE\nDEVELOP NEW HABITS FOR...\nPATRICK M C KEOWN"
+    const multiLineAllCapsPattern = /(?:^|\n)([A-Z][A-Z\s]*(?:\n[A-Z][A-Z\s]*){0,4})\n([A-Z][^A-Z]*?)\n([A-Z][A-Z\s]{5,40})\s*(?:\n|$)/gm;
+    let match = multiLineAllCapsPattern.exec(firstPages);
+    if (match) {
+        const author = match[3].trim();
+        if (isValidAuthorCandidate(author)) {
+            return author;
+        }
+    }
+
+    // Pattern 2: All caps author after single-line title and subtitle (like Transformers)
     // Example: "TRANSFORMER \nThe deep chemistry of life and death \nNICK LANE"
     const allCapsPattern = /(?:^|\n)([A-Z][A-Z\s]{2,50})\s*\n([A-Z][^A-Z\n]{10,80})\s*\n([A-Z][A-Z\s]{3,30})/gm;
-    let match = allCapsPattern.exec(firstPages);
+    match = allCapsPattern.exec(firstPages);
     if (match) {
         const author = match[3].trim();
         if (isValidAuthorCandidate(author)) {

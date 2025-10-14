@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-10-11T16:40:36.642Z",
-  "processingTime": "345ms",
+  "timestamp": "2025-10-14T09:25:22.892Z",
+  "processingTime": "526ms",
   "summary": {
     "totalChapters": 18,
     "totalChunks": 1112,
-    "totalParagraphs": 1008,
-    "totalHeaders": 104,
-    "totalWords": 179889,
+    "totalParagraphs": 1009,
+    "totalHeaders": 103,
+    "totalWords": 180473,
     "totalLinks": 0
   },
   "statistics": {
     "totalChunks": 1112,
-    "totalParagraphs": 1008,
-    "totalHeaders": 104,
-    "totalWords": 179889,
+    "totalParagraphs": 1009,
+    "totalHeaders": 103,
+    "totalWords": 180473,
     "totalLinks": 0,
     "paragraphStats": {
-      "count": 1008,
+      "count": 1009,
       "wordCounts": [
         200,
         191,
@@ -40,16 +40,16 @@
         193,
         197,
         192,
-        195,
-        196,
         200,
-        156,
-        194,
+        191,
+        186,
         190,
+        194,
+        195,
         183,
         194,
         188,
-        183,
+        188,
         169,
         177,
         192,
@@ -74,7 +74,7 @@
         171,
         172,
         189,
-        191,
+        196,
         171,
         200,
         184,
@@ -82,7 +82,7 @@
         180,
         179,
         26,
-        182,
+        187,
         186,
         191,
         187,
@@ -120,20 +120,20 @@
         185,
         183,
         183,
-        176,
+        181,
         187,
         181,
         175,
-        193,
+        198,
         180,
-        192,
-        186,
+        197,
+        191,
         186,
         191,
         198,
         198,
         174,
-        189,
+        194,
         167,
         177,
         192,
@@ -161,20 +161,20 @@
         196,
         184,
         193,
-        174,
+        179,
         200,
         175,
-        191,
+        196,
         183,
         193,
         195,
+        180,
         199,
-        175,
         181,
         184,
         195,
         191,
-        193,
+        198,
         193,
         199,
         185,
@@ -188,7 +188,7 @@
         191,
         178,
         190,
-        193,
+        198,
         174,
         199,
         178,
@@ -200,16 +200,16 @@
         188,
         199,
         198,
-        187,
+        192,
         183,
         187,
         184,
         198,
         130,
-        194,
+        199,
         195,
         156,
-        190,
+        195,
         192,
         187,
         194,
@@ -223,14 +223,14 @@
         193,
         165,
         197,
-        176,
-        140,
-        189,
-        196,
-        180,
-        190,
         181,
+        190,
         198,
+        187,
+        174,
+        194,
+        191,
+        150,
         192,
         189,
         195,
@@ -293,14 +293,14 @@
         192,
         24,
         146,
-        186,
+        191,
         193,
         194,
         177,
         190,
         187,
-        199,
-        190,
+        194,
+        200,
         180,
         186,
         171,
@@ -314,7 +314,7 @@
         193,
         192,
         197,
-        191,
+        196,
         199,
         192,
         196,
@@ -347,7 +347,7 @@
         191,
         183,
         164,
-        184,
+        189,
         185,
         197,
         199,
@@ -599,27 +599,26 @@
         34,
         190,
         200,
-        172,
-        190,
-        181,
-        194,
-        166,
-        194,
-        175,
-        199,
-        188,
-        192,
-        176,
-        194,
-        187,
-        156,
+        195,
+        196,
+        193,
+        186,
+        189,
         198,
         198,
-        191,
+        197,
+        196,
+        195,
+        194,
+        180,
+        194,
+        197,
+        168,
         200,
+        198,
+        190,
         192,
-        199,
-        101,
+        195,
         187,
         190,
         198,
@@ -646,7 +645,7 @@
         138,
         170,
         193,
-        183,
+        188,
         199,
         189,
         193,
@@ -716,7 +715,7 @@
         161,
         194,
         190,
-        157,
+        162,
         193,
         199,
         195,
@@ -724,11 +723,11 @@
         195,
         189,
         184,
-        198,
-        199,
-        170,
+        197,
+        186,
         189,
-        192,
+        189,
+        197,
         197,
         68,
         197,
@@ -1023,16 +1022,18 @@
         171,
         132,
         143,
-        149,
+        210,
+        216,
         176,
-        150
+        150,
+        120
       ],
-      "averageWords": 177.9751984126984,
+      "averageWords": 178.3587710604559,
       "minWords": 22,
       "maxWords": 497
     },
     "headerStats": {
-      "count": 104,
+      "count": 103,
       "wordCounts": [
         2,
         5,
@@ -1040,7 +1041,6 @@
         5,
         5,
         5,
-        5,
         4,
         5,
         5,
@@ -1052,7 +1052,6 @@
         4,
         4,
         5,
-        3,
         5,
         5,
         3,
@@ -1136,12 +1135,13 @@
         2,
         2,
         18,
+        27,
         18,
         18
       ],
-      "averageWords": 4.711538461538462,
+      "averageWords": 4.941747572815534,
       "minWords": 2,
-      "maxWords": 18
+      "maxWords": 27
     }
   },
   "boundaryEvents": [
@@ -4102,10 +4102,10 @@
     },
     {
       "pageNumber": 428,
-      "lineIndex": 1283,
+      "lineIndex": 1325,
       "lineTail": "immense implications for us all.",
       "endsWithTerminator": true,
-      "nextContentIndex": 1284,
+      "nextContentIndex": 1326,
       "hasEmptyLineBetween": false,
       "nextLineHead": "Leading the charge is psychologist and",
       "endIsSingleInitial": false,
@@ -4117,10 +4117,10 @@
     },
     {
       "pageNumber": 428,
-      "lineIndex": 1288,
+      "lineIndex": 1330,
       "lineTail": "ding new light on what it means to be human.",
       "endsWithTerminator": true,
-      "nextContentIndex": 1289,
+      "nextContentIndex": 1331,
       "hasEmptyLineBetween": false,
       "nextLineHead": "Her research overturns the widely held be-",
       "endIsSingleInitial": false,
@@ -4132,10 +4132,10 @@
     },
     {
       "pageNumber": 428,
-      "lineIndex": 1301,
+      "lineIndex": 1343,
       "lineTail": "even airport security.",
       "endsWithTerminator": true,
-      "nextContentIndex": 1302,
+      "nextContentIndex": 1344,
       "hasEmptyLineBetween": false,
       "nextLineHead": "Why do emotions feel automatic? Does",
       "endIsSingleInitial": false,
@@ -4327,29 +4327,29 @@
         {
           "type": "paragraph",
           "content": "The human face is laced with forty-two small muscles on each side. The facial movements that we see each other make every day — winks and\nblinks, smirks and grimaces, raised and wrinkled brows — occur...",
-          "wordCount": 195,
+          "wordCount": 200,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "These photos,\nwhich featured actors who were carefully coached, were supposed to be the\nclearest examples of facial expressions for these emotions. (They might look\nexaggerated or artificial to you, b...",
-          "wordCount": 196,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "6\nFigure 1-3: Basic emotion method: picking a word to match the face\nFigure 1-4: Basic emotion method: picking a face to match the story\nThe Search for Emotion’s “Fingerprints” 7\nThis research techniq...",
-          "wordCount": 200,
+          "wordCount": 191,
           "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The\nonly way expressions could be universally recognized, the reasoning went,\nis if they are universally produced: thus, facial expressions must be reliable,\ndiagnostic fingerprints of emotion. 8\nOthe...",
-          "wordCount": 156,
-          "sentenceCount": 7,
+          "content": "In this case, the intended face\nis on the right. 6\nFigure 1-3: Basic emotion method: picking a word to match the face\nFigure 1-4: Basic emotion method: picking a face to match the story\n[[IMG id=image...",
+          "wordCount": 186,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "7\nFrom this evidence, scientists concluded that emotion recognition is\nuniversal: no matter where you are born or grow up, you should be able to\nrecognize American-style facial expressions like those ...",
+          "wordCount": 190,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -4362,7 +4362,7 @@
         {
           "type": "paragraph",
           "content": "We all move our\nfacial muscles all the time, of course, and when we look at each other, we\neffortlessly see emotion in some of these movements. Nevertheless, from a\npurely objective standpoint, when s...",
-          "wordCount": 190,
+          "wordCount": 195,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -4390,7 +4390,7 @@
         {
           "type": "paragraph",
           "content": "But for subjects who saw Landau’s face alone, devoid of con-\ntext, only 38 percent of them rated it as fear and 56 percent rated it as sur-\nprise. (Figure 1-6 compares Landau’s facial configuration to...",
-          "wordCount": 183,
+          "wordCount": 188,
           "sentenceCount": 6,
           "linkCount": 0
         },
@@ -4565,7 +4565,7 @@
         {
           "type": "paragraph",
           "content": "Our comprehensive meta-analysis found little to support the classical\nview of emotion. The amygdala, for example, did show a consistent increase\nin activity for studies of fear, more than what you’d e...",
-          "wordCount": 191,
+          "wordCount": 196,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -4630,7 +4630,7 @@
         {
           "type": "paragraph",
           "content": "P lease take a look at the black splotches in figure 2-1. If this is your first time viewing these blobs, your brain is working hard\nto make sense of them. Neurons in your visual cortex are processing...",
-          "wordCount": 182,
+          "wordCount": 187,
           "sentenceCount": 11,
           "linkCount": 0
         },
@@ -4905,7 +4905,7 @@
         {
           "type": "paragraph",
           "content": "T ake a look at the woman in figure 3-1, who is screaming in terror. Most\npeople who were born and raised in a Western culture can effortlessly see\nthis emotion in her face, even with no other context...",
-          "wordCount": 176,
+          "wordCount": 181,
           "sentenceCount": 14,
           "linkCount": 0
         },
@@ -4933,7 +4933,7 @@
         {
           "type": "paragraph",
           "content": "Ultimately, these emotion “recognition” findings have\nbeen so well replicated over the last several decades that universal emotions\nseem to qualify as one of those rare bulletproof scientific facts, l...",
-          "wordCount": 193,
+          "wordCount": 198,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -4946,15 +4946,15 @@
         },
         {
           "type": "paragraph",
-          "content": "Your knowl-\nedge of concepts is a key ingredient for experiencing other people as emo-\nFigure 3-3: Basic emotion method with the emotion words removed\nHow emotions are made 46\ntional, and emotion word...",
-          "wordCount": 192,
+          "content": "Your knowl-\nedge of concepts is a key ingredient for experiencing other people as emo-\nFigure 3-3: Basic emotion method with the emotion words removed\n[[IMG id=image-064-1 index=2 alt=\"Figure 53\"]]\nHo...",
+          "wordCount": 197,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "We had them repeat an emotion word\nlike “anger” over and over. Eventually, the word becomes just a sound to\nthe subject (“ang-gurr”) that’s mentally disconnected from its meaning. This technique has t...",
-          "wordCount": 186,
+          "wordCount": 191,
           "sentenceCount": 11,
           "linkCount": 0
         },
@@ -5003,7 +5003,7 @@
         {
           "type": "paragraph",
           "content": "Sauter, had visited the Himba a few\nyears earlier and reported evidence of universal emotion “recognition.” Sau-\nter and her colleagues brought the basic emotion method to the Himba us-\ning vocal soun...",
-          "wordCount": 189,
+          "wordCount": 194,
           "sentenceCount": 6,
           "linkCount": 0
         },
@@ -5214,8 +5214,8 @@
         },
         {
           "type": "paragraph",
-          "content": "13\nHow emotions are made 62\niments, when we show photographs to test subjects or ask them to perform\ntasks, only a small portion of the signal we measure is due to the photos and\ntasks; most of the si...",
-          "wordCount": 174,
+          "content": "13\n[[IMG id=image-080-1 index=0 alt=\"Figure 56\"]]\nHow emotions are made 62\niments, when we show photographs to test subjects or ask them to perform\ntasks, only a small portion of the signal we measure...",
+          "wordCount": 179,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -5236,7 +5236,7 @@
         {
           "type": "paragraph",
           "content": "This isn’t\nenough time to process the visual input, calculate where the ball will land,\nmake the decision to move, coordinate all the muscle movements, and send\nthe motor commands to move you into pos...",
-          "wordCount": 191,
+          "wordCount": 196,
           "sentenceCount": 15,
           "linkCount": 0
         },
@@ -5264,15 +5264,15 @@
         {
           "type": "paragraph",
           "content": "Your brain can also be a biased scientist and selec-\ntively choose data that fits the hypotheses, ignoring everything else. Your\nbrain can also be an unscrupulous scientist and ignore the data altoget...",
-          "wordCount": 199,
-          "sentenceCount": 9,
+          "wordCount": 180,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "This is your brain’s default mode. And\nmarvelously, your brain does not just predict the future: it can imagine the\nfuture at will. As far as we know, no other animal brain can do that. • • •\nYour bra...",
-          "wordCount": 175,
-          "sentenceCount": 10,
+          "content": "Once your predictions are cor-\nrect enough, they not only create your perception and action but also ex-\nplain the meaning of your sensations. This is your brain’s default mode. And\nmarvelously, your ...",
+          "wordCount": 199,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
@@ -5305,8 +5305,8 @@
         },
         {
           "type": "paragraph",
-          "content": "The interocep-\ntive network encompasses two networks commonly known as the salience network\nand the default mode network. Visual cortex is shown for reference. 25\nThe Origin of Feeling 69\nchange, like...",
-          "wordCount": 193,
+          "content": "The interocep-\ntive network encompasses two networks commonly known as the salience network\nand the default mode network. Visual cortex is shown for reference. 25\n[[IMG id=image-087-1 index=3 alt=\"Fig...",
+          "wordCount": 198,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -5418,7 +5418,7 @@
         {
           "type": "paragraph",
           "content": "You are listening\nto the inmate’s story, hearing about his behavior in prison, and you have a\nbad feeling. If you agree to parole, he could hurt someone else. Your hunch\nis that you should keep him lo...",
-          "wordCount": 193,
+          "wordCount": 198,
           "sentenceCount": 13,
           "linkCount": 0
         },
@@ -5509,7 +5509,7 @@
         {
           "type": "paragraph",
           "content": "Interoception\nin the moment is more influential to perception, and how you act, than the\noutside world is. You might believe that you are a rational creature, weighing the pros and\ncons before decidin...",
-          "wordCount": 187,
+          "wordCount": 192,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -5551,7 +5551,7 @@
         {
           "type": "paragraph",
           "content": "A visual prediction, for example,\ndoesn’t just answer the question, “What did I see last time I was in this situ-\nation?” It answers, “What did I see last time I was in this situation when my\nbody was...",
-          "wordCount": 194,
+          "wordCount": 199,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -5574,14 +5574,14 @@
     {
       "chapterNumber": 5,
       "title": "Concepts, Goals, and Words",
-      "chunkCount": 67,
+      "chunkCount": 66,
       "paragraphCount": 64,
-      "headerCount": 3,
+      "headerCount": 2,
       "chunks": [
         {
           "type": "paragraph",
           "content": "Concepts, Goals, and Words\nW hen you look at a rainbow, you see discrete stripes of color, roughly\nlike the drawing on the left side of figure 5-1. But in nature, a rainbow has\nno stripes — it’s a con...",
-          "wordCount": 190,
+          "wordCount": 195,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -5679,64 +5679,57 @@
         {
           "type": "paragraph",
           "content": "They classified each pat-\ntern into one of two categories, A and B. This was called the “learning phase” of the\nexperiment. Next, they classified more patterns, some old and some new, including\nthe pr...",
-          "wordCount": 176,
+          "wordCount": 181,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "Sometimes a car is an in-\nstance of the concept “Status Symbol.” In the right circumstances, a car can\nbe a “Bed” for a homeless person, or even a “Murder Weapon.” Drive a car\ninto the ocean and it be...",
-          "wordCount": 140,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "How emotions are made 92",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Instances of the category are remarkably diverse: a flyswatter, a beekeep-\ner’s suit, a house, a Maserati, a large trash can, a vacation in Antarctica, a\ncalm demeanor, even a university degree in ent...",
-          "wordCount": 189,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Goal-\nbased concepts therefore free you from the shackles of physical appearance. When you walk into an entirely new situation, you don’t experience it based\nsolely on how things look, sound, or smell...",
-          "wordCount": 196,
-          "sentenceCount": 12,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "You’ve also perceived many other people\nas happy in various ways. Altogether, this motley assortment of experiences\nand perceptions can involve different actions and inner-body changes, they\nmay feel ...",
-          "wordCount": 180,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "You could experience the happi-\nness of seeing your friend, the anticipation that she’s about to appear, the\nfear that she won’t arrive, or worry that you might no longer have anything\nin common. You ...",
           "wordCount": 190,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Do these predictions match the actual sensory input from the\nworld and your body? Or is there prediction error that must be resolved? That’s a matter for your prediction loops to work out and, if nece...",
-          "wordCount": 181,
           "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "On the other hand, if you\nconstructed some other instance of “Fear,” such as the exuberant fear of rid-\ning a rollercoaster, you might have trouble understanding why your friend\nwas so upset by the fl...",
+          "content": "This category is clearly and entirely a construction of the\nhuman mind. Not all instances work in every context: for example, when\nyou’re gardening, whacking away at a bed of overgrown iris, and you a...",
           "wordCount": 198,
+          "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "You are not find-\ning similarities in the world but creating them. When your brain needs a con-\ncept, it constructs one on the fly, mixing and matching from a population\nof instances from your past ex...",
+          "wordCount": 187,
           "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "To you, in the moment, however, these sets of physical changes\nare equivalent for some goal. Perhaps your goal is to feel accepted, to feel\nC oncep ts, Goals, and Words 93\npleasure, to achieve an ambi...",
+          "wordCount": 174,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "You could also have a non-emotional experience, like the ex-\nhaustion of your long drive to the airport, or the perception of tightness in\nyour chest as a symptom that you’re coming down with a cold. ...",
+          "wordCount": 194,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Let’s suppose your friend arrived safely, and later over coffee, she de-\nscribes her turbulent plane flight that scared her out of her wits. She con-\nstructs an instance of “Fear” with the goal of com...",
+          "wordCount": 191,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Think back to Darwin’s ideas about the importance of variation within a\nspecies (chapter 1). Each animal species is a population of unique individ-\nuals who vary from one another. No feature or set of...",
+          "wordCount": 150,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -6205,8 +6198,8 @@
         },
         {
           "type": "paragraph",
-          "content": "How the Brain Makes Emotions 121\n— Uncle Kevin is indeed in front of you, his hair pulled back in a partic-\nular way, wearing a particular shirt, his voice sounding a particular way,\nyour body in a pa...",
-          "wordCount": 186,
+          "content": "[[IMG id=image-139-1 index=0 alt=\"Figure 66\"]]\nHow the Brain Makes Emotions 121\n— Uncle Kevin is indeed in front of you, his hair pulled back in a partic-\nular way, wearing a particular shirt, his voi...",
+          "wordCount": 191,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -6248,15 +6241,15 @@
         {
           "type": "paragraph",
           "content": "This tinkering ultimately helps your brain simultaneously to regulate\nyour body budget, produce a stable perception, and launch an action. 17\nFigure 6-2: The control network helps the brain select amo...",
-          "wordCount": 199,
-          "sentenceCount": 8,
+          "wordCount": 194,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "When you have an experience that feels like\nyour so-called rational side is tempering your emotional side — a mythical\narrangement that you’ve learned is not respected by brain wiring — you are\nconstr...",
-          "wordCount": 190,
-          "sentenceCount": 7,
+          "content": "From the brain’s perspective, however, reg-\nulation is just categorization. When you have an experience that feels like\nyour so-called rational side is tempering your emotional side — a mythical\narran...",
+          "wordCount": 200,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -6362,7 +6355,7 @@
         {
           "type": "paragraph",
           "content": "All humans with a normally functioning brain have the po-\ntential for this little bit of magic, and we use it all the time. If you doubt your power as a conjurer of reality, look at figure 7-1. This\np...",
-          "wordCount": 191,
+          "wordCount": 196,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -6593,7 +6586,7 @@
         {
           "type": "paragraph",
           "content": "If you visit the Russian Google (images.google.ru) and search for the\nRussian word for rainbow, радуга, you’ll see that Russian drawings contain\nseven colors, not six: the Western blue stripe has been...",
-          "wordCount": 184,
+          "wordCount": 189,
           "sentenceCount": 7,
           "linkCount": 0
         },
@@ -8437,9 +8430,9 @@
     {
       "chapterNumber": 12,
       "title": "Is a Growling Dog Angry?",
-      "chunkCount": 62,
-      "paragraphCount": 61,
-      "headerCount": 1,
+      "chunkCount": 60,
+      "paragraphCount": 60,
+      "headerCount": 0,
       "chunks": [
         {
           "type": "paragraph",
@@ -8458,155 +8451,141 @@
         {
           "type": "paragraph",
           "content": "Yes, they do. Do humans have animal emo-\ntions? Yes, they’re largely the same.” 1\nSome scientists are not so sure. They suggest that emotions in animals\nare just illusions: that Rowdy has brain circui...",
-          "wordCount": 172,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "Figure 12-1: Rowdy",
-          "wordCount": 3,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "How emotions are made 254\nI myself have succumbed to the allure of animal emotions. For years, my\ndaughter has maintained a herd of guinea pigs in her bedroom. One day, we\nacquired a small baby, Cupca...",
-          "wordCount": 190,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "In this chapter, we’ll systematically explore what animals are capable of\nfeeling, based on their brain circuitry and on experimental research. We’ll\nhave to set aside our fond feelings for our pets, ...",
-          "wordCount": 181,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The second is emotion concepts:\ncan animals learn purely mental concepts like “Fear” and “Happiness,” and\nif so, can they predict with these concepts to categorize their sensations and\nmake emotions l...",
-          "wordCount": 194,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The macaque network is\nstructured to function by prediction in the same way that the human net-\nwork does. 4\nMacaques also likely experience affect. They can’t tell us verbally how\nthey feel, of cours...",
-          "wordCount": 166,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "5\nBased on these and other clues from biology, macaques pretty definitely\nprocess interoception and feel affect, and if that’s the case, then great apes\nsuch as chimpanzees, bonobos, gorillas, and ora...",
-          "wordCount": 194,
-          "sentenceCount": 13,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "I realize this\ndiscussion has the potential to transport us from the land of science to the\nland of ethics, coming perilously close to moral issues such as pain and suf-\nfering in laboratory animals, ...",
-          "wordCount": 175,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Many, many objects and events in your world, from the tini-\nest insect to the largest mountain, cause fluctuations in your body budget\nand change your affective feelings. That is, you have a large aff...",
-          "wordCount": 199,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "(Eliza tells me that favorite monkey\ntreats include white grape juice, dried fruit, Honey Nut Cheerios, grapes,\ncucumbers, clementines, and popcorn.) Repeat the reward enough times\nand the macaque wil...",
-          "wordCount": 188,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "They say the word “lamp” to him\nwith intent, alerting and orienting him with a “baby talk” tone of voice. 9\nOther primates do not share attention like this, and so they cannot use\nit to regulate each ...",
-          "wordCount": 192,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The\nhuman brain employs this heavy-duty machinery to compress and summa-\nrize prediction error in the way we discussed in chapter 6. This allows us to\nintegrate and process more sensory information fr...",
-          "wordCount": 176,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "You might not think of smell as con-\nceptual knowledge, but each time you smell the same aroma, such as pop-\ncorn in a movie theater, you’re categorizing. The mix of chemicals in the air\ndiffers each ...",
-          "wordCount": 194,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Humans construct goal-based concepts, and a macaque brain\nsimply lacks the necessary wiring to do so. It’s the same lack of wiring that\naccounts for their smaller affective niche. What about apes — ca...",
-          "wordCount": 187,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Most scien-\ntists assume that mental inference is a core ability of the human mind. So\na lot is at stake if apes can do it. We know that monkeys cannot; they can\nIs a Growling D o g Angry? 259\nunderst...",
-          "wordCount": 156,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "So the real test would be whether chimps would understand that\na person running up a flight of stairs, ambling up a ladder, and crawling up\na rock face all share the goal “To Climb.” That mental feat ...",
-          "wordCount": 198,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "They can even combine\nsymbols to communicate complex requests for food, such as “cheese eat\n— wanting to” and “gum hurry — wanting to have some.” Scientists still de-\nbate whether these apes understan...",
-          "wordCount": 198,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "For example, it appears that chimps can\ncategorize dissimilar-looking objects according to their function — tools,\ncontainers, food — if you reward them, and if they already have firsthand\nexperience ...",
-          "wordCount": 191,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "They also have a larger social network and play longer before assuming\nadult roles. And some bonobos appear able to complete tasks without exter-\nnal rewards, whereas chimps seem to require them. Take...",
-          "wordCount": 200,
+          "wordCount": 195,
           "sentenceCount": 12,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Chimps in language experiments were re-\nIs a Growling D o g Angry? 261\nmoved from their mothers in infancy and raised in a human-like environ-\nment vastly different from their natural habitat. These i...",
-          "wordCount": 192,
+          "content": "For years, my\ndaughter has maintained a herd of guinea pigs in her bedroom. One day, we\nacquired a small baby, Cupcake. Every night for the first week, all by herself\nin a strange pen, Cupcake sounded...",
+          "wordCount": 196,
+          "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "We’ll\nhave to set aside our fond feelings for our pets, as well as the essentialist\ntheory of human nature, to look carefully at the evidence. Scientists pretty\nmuch agree that many of the earth’s ani...",
+          "wordCount": 193,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Finally, there’s social reality: can animals share\nemotion concepts with each other so they are passed down to the next gen-\neration? To see what animals are capable of feeling, we’ll focus primarily ...",
+          "wordCount": 186,
+          "sentenceCount": 12,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "They can’t tell us verbally how\nthey feel, of course, but one of my former doctoral students, Eliza Bliss-\nMoreau, has evidence that they show the same bodily changes in the same\nsituations that we hu...",
+          "wordCount": 189,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "They undoubt-\nedly feel pleasure and pain, as well as alertness and fatigue. Many mam-\nmals have circuitry that looks similar to ours but has different functions, so\nwe can’t answer the question just ...",
+          "wordCount": 198,
+          "sentenceCount": 12,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "The natural\nchemicals that relieve suffering within our own nervous systems, opioids,\nare found in fish, nematodes, snails, shrimps, crabs, and some insects. Even\ntiny flies might feel pain; we know t...",
+          "wordCount": 198,
+          "sentenceCount": 12,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Simply\nput, more things matter to us. 8\nAn affective niche is one area of life where size truly matters. In the lab, if\nwe present a human toddler with a collection of toys, they are usually within\nhe...",
+          "wordCount": 197,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "A mother chimp will hold her baby on her lap and allow a human to run\nan experiment with her infant. For example, one study tested human and\nchimp infants as they learned concepts for mammals, furnitu...",
-          "wordCount": 199,
+          "content": "His caregivers become part of his affective\nniche because they feed him, keep him warm, and so on. He is born with\nrudimentary concepts for his mother’s scent and voice, learned in utero. In\nthe first...",
+          "wordCount": 196,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Baby primates do learn concepts without the explicit reward of\ntheir mother’s presence, but not with the range and diversity that baby hu-\nmans do. 10\nWhy do humans and macaques have such differently ...",
+          "wordCount": 195,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "For that, a brain must\nalso be equipped to build a conceptual system, to construct emotion con-\ncepts, and to make sensations meaningful as emotions in themselves and\nothers. A hypothetical macaque wi...",
+          "wordCount": 194,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "At present, however, we have no firm evidence that chimps can form\ngoal-based concepts. They cannot imagine something completely novel,\nlike a flying leopard, even though they and macaques have a netw...",
-          "wordCount": 101,
-          "sentenceCount": 6,
+          "content": "Baboons can learn to distin-\nguish a “B” from a “3” regardless of font, and macaques can distinguish ani-\nmal images from food images. Rhesus macaques can learn the concept “Rhe-\nsus macaque” as disti...",
+          "wordCount": 180,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "It’s just likely that your brain is better equipped to create purely mental con-\ncepts, such as “Wealth,” whereas a chimpanzee brain is better equipped to\ncreate concepts for actions and concrete obje...",
+          "wordCount": 194,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "For instance, they know\nthat leopards climb trees, snakes climb trees, and monkeys climb trees. It’s\nconceivable that chimps could extend this concept to a new animal who can\nperform a similar action,...",
+          "wordCount": 197,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "16\nScientists have been trying to teach language to apes since the 1960s, usu-\nally with a visual symbol system such as American Sign Language because\ntheir vocal machinery is not well-adapted for hum...",
+          "wordCount": 168,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "They appear to have only one such concept that they can map\nto a symbol without requiring an external reward: “Food.” But when apes\ndo learn to use a word, do they take the next step? Do they use a wo...",
+          "wordCount": 200,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "(It would be interesting to observe what\nwould happen to symbol-trained apes if their trainers stopped rewarding\nthem. Would they continue to use the symbols?) The important point, I\nthink, is that wo...",
+          "wordCount": 198,
+          "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "20\nChimps, in contrast to bonobos, have been characterized as charming,\nclever creatures with a dark side. They hunt and kill each other opportunis-\ntically to take over territory or get food. They al...",
+          "wordCount": 190,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "For this insight, we\nhave to thank the primatologist Tetsuro Matsuzawa at Kyoto University’s\nPrimate Research Institute. Matsuzawa has accomplished a truly impressive\ntask. He has three generations of...",
+          "wordCount": 192,
+          "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Still, the human infants spon-\ntaneously manipulated the objects, like moving toy trucks around, making\nconcept formation more likely, whereas the chimps did not. 22\nMatsuzawa’s troupe would be ideal ...",
+          "wordCount": 195,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -8794,7 +8773,7 @@
         {
           "type": "paragraph",
           "content": "The video features two\ntriangles and a circle moving around a large rectangle. The video contains\nno sound and no explanation for the movements. Even so, viewers readily\nassigned emotions and other me...",
-          "wordCount": 183,
+          "wordCount": 188,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -9344,7 +9323,7 @@
         {
           "type": "paragraph",
           "content": "4\nNeuroscientists have demonstrated pretty definitively that the default\nmode network represents key portions of concepts. This discovery required\nFigure AD-1: The default mode network, which lies wit...",
-          "wordCount": 157,
+          "wordCount": 162,
           "sentenceCount": 11,
           "linkCount": 0
         },
@@ -9400,22 +9379,22 @@
         {
           "type": "paragraph",
           "content": "We could also see evidence that their\nbody budgets were perturbed, associated with changes in the interoceptive\nnetwork. In a second phase after each immersion, test subjects were shown\na word and ask...",
-          "wordCount": 198,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "14\nIn a more recent set of experiments, our test subjects watched evoca-\ntive movie scenes, and we saw the interoceptive network construct ongo-\ning emotional experiences. Talma Hendler’s lab at Tel A...",
-          "wordCount": 199,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Their brains showed increased activity in the interoceptive network,\nin nodes of the control network, and in visual cortex where objects are rep-\nresented. 16\n• • •\nWhen discussing concepts, we must b...",
-          "wordCount": 170,
+          "wordCount": 197,
           "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "This is exactly what we observed. 14\nIn a more recent set of experiments, our test subjects watched evoca-\ntive movie scenes, and we saw the interoceptive network construct ongo-\ning emotional experie...",
+          "wordCount": 186,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "In other words, they made men-\ntal inferences about what the movements meant, a task that requires con-\ncepts. Their brains showed increased activity in the interoceptive network,\nin nodes of the cont...",
+          "wordCount": 189,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -9428,7 +9407,7 @@
         {
           "type": "paragraph",
           "content": "Even the highest-level, multisensory summary of “Happiness,” repre-\nsented by sets of neurons in the default mode network, can be different each\ntime. None of these instances need be physically alike,...",
-          "wordCount": 192,
+          "wordCount": 197,
           "sentenceCount": 10,
           "linkCount": 0
         },
@@ -11842,9 +11821,9 @@
     {
       "chapterNumber": 20,
       "title": "Index",
-      "chunkCount": 35,
-      "paragraphCount": 31,
-      "headerCount": 4,
+      "chunkCount": 38,
+      "paragraphCount": 33,
+      "headerCount": 5,
       "chunks": [
         {
           "type": "paragraph",
@@ -12057,10 +12036,24 @@
           "linkCount": 0
         },
         {
+          "type": "header",
+          "content": "L I S A F E L D M\nL I S A\nF E L D M A N\nB A R R E T T",
+          "wordCount": 27,
+          "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
           "type": "paragraph",
-          "content": "This is a provocative, accessible, important book.”\n— ro b e rt s a p o l s k y , author of Why Zebras Don’t Get Ulcers\n“Lisa Barrett masterfully integrates discoveries from affective science, neurosc...",
-          "wordCount": 149,
-          "sentenceCount": 3,
+          "content": "[[IMG id=image-446-1 index=0 alt=\"Figure 83\"]]\n[[IMG id=image-446-2 index=1 alt=\"Figure 84\"]]\n[[IMG id=image-446-3 index=2 alt=\"Figure 85\"]]\n[[IMG id=image-446-4 index=3 alt=\"Figure 86\"]]\n[[IMG id=ima...",
+          "wordCount": 210,
+          "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "[[IMG id=image-446-1 index=0 alt=\"Figure 83\"]]\n[[IMG id=image-446-2 index=1 alt=\"Figure 84\"]]\n[[IMG id=image-446-3 index=2 alt=\"Figure 85\"]]\n[[IMG id=image-446-4 index=3 alt=\"Figure 86\"]]\n[[IMG id=ima...",
+          "wordCount": 216,
+          "sentenceCount": 1,
           "linkCount": 0
         },
         {
@@ -12089,6 +12082,13 @@
           "content": "L I S A\nF E L D M A N\nB A R R E T T",
           "wordCount": 18,
           "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "[[IMG id=image-447-24 index=65 alt=\"Figure 148\"]]\n[[IMG id=image-447-23 index=64 alt=\"Figure 147\"]]\n[[IMG id=image-447-22 index=63 alt=\"Figure 146\"]]\n[[IMG id=image-447-21 index=62 alt=\"Figure 145\"]]\n...",
+          "wordCount": 120,
+          "sentenceCount": 0,
           "linkCount": 0
         }
       ]

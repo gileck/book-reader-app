@@ -12535,7 +12535,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-10-13T11:14:59.638Z",
+    "processingStartTime": "2025-10-14T09:29:45.116Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -12544,10 +12544,10 @@
       "lineCount": 12120,
       "wordCount": 121693,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-10-13T11:15:03.043Z",
-      "averageWordsPerPage": 384,
-      "extractionMethod": "page_by_page_fixed",
-      "totalTextContentItems": 27143
+      "extractionTime": "2025-10-14T09:29:45.158Z",
+      "source": "cached-txt-file",
+      "txtFilePath": "/Users/gil/Projects/book-reader-app/files/Transformers/book.txt",
+      "extractionMethod": "text-file-load"
     },
     "chapterDetection": {
       "chaptersDetected": 16,
@@ -12556,7 +12556,7 @@
       "patternMatches": 419,
       "averageDetectionConfidence": 0.85625,
       "pageOffset": 0,
-      "processingTime": 4260,
+      "processingTime": 2686,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -12567,7 +12567,7 @@
       "averagePagesPerChapter": 32.44444444444444,
       "totalCharacters": 707496,
       "averageCharactersPerChapter": 78610.66666666667,
-      "processingTime": 21,
+      "processingTime": 16,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     },
     "chapterNameCleaning": {
@@ -12584,14 +12584,14 @@
       "totalChapters": 9,
       "averageWordsPerPage": 390.71232876712327,
       "sentencesMerged": 0,
-      "extractionTime": "2025-10-13T11:15:08.309Z",
-      "processingTime": 151
+      "extractionTime": "2025-10-14T09:29:48.015Z",
+      "processingTime": 124
     },
     "linkDetection": {
       "totalLinks": 282,
       "totalPdfLinks": 2214,
-      "processingTime": 3098,
-      "detectionTime": "2025-10-13T11:15:11.430Z"
+      "processingTime": 2327,
+      "detectionTime": "2025-10-14T09:29:50.361Z"
     }
   }
 }

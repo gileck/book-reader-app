@@ -914,33 +914,25 @@
         {
           "chunkId": "2_27",
           "type": "paragraph",
-          "content": "That’s normally quite stable and inert. Stolid. But there’s lots of pent-up energy stored in those hydrogen atoms. How\neasy it is to get at depends on the molecular surroundings. Is this stout-\nbellied group associated with the molecular equivalent of a pin-striped\nsuit, or a peg-leg and an eye-patch? It’s closer to the pirate in this case. That’s because the middle carbon atom in pyruvic acid has a double bond\nto oxygen, which likes nothing better than getting into a fight; the extra\nbond tends to throw its weight about. That’s what makes pyruvic acid a\ntouch unstable and rea\n[[IMG id=image-037-1 index=1 alt=\"Figure 4\"]]\nctive. Now the middle oxygen in my picture is\nStaring back at me like Mad-Eye Moody. This bad-ass oxygen is\ntechnically called an ‘alpha-keto’ group, but we don’t need to worry\nabout the terminology; we just need to know that it makes things happen.",
-          "wordCount": 150,
-          "sentenceCount": 10,
+          "content": "That’s normally quite stable and inert. Stolid. But there’s lots of pent-up energy stored in those hydrogen atoms. How\neasy it is to get at depends on the molecular surroundings. Is this stout-\nbellied group associated with the molecular equivalent of a pin-striped\nsuit, or a peg-leg and an eye-patch? It’s closer to the pirate in this case. That’s because the middle carbon atom in pyruvic acid has a double bond\nto oxygen, which likes nothing better than getting into a fight; the extra\nbond tends to throw its weight about. That’s what makes pyruvic acid a\ntouch unstable and reactive. Now the middle oxygen in my picture is\n[[IMG id=image-037-1 index=1 alt=\"Figure 4\"]]\nStaring back at me like Mad-Eye Moody. This bad-ass oxygen is\ntechnically called an ‘alpha-keto’ group, but we don’t need to worry\nabout the terminology; we just need to know that it makes things happen. This part of the molecule reacts to form an amino acid, for example,\nwhere the oxygen is switched with ammonia to form an amino group, or\nvice versa, one of the most important transformations in biology (and\nwhat Krebs was studying when he was working on the breakdown of\namino acids).",
+          "wordCount": 200,
+          "sentenceCount": 11,
           "links": []
         },
         {
           "chunkId": "2_28",
           "type": "paragraph",
-          "content": "This part of the molecule reacts to form an amino acid, for example,\nwhere the oxygen is switched with ammonia to form an amino group, or\nvice versa, one of the most important transformations in biology (and\nwhat Krebs was studying when he was working on the breakdown of\namino acids). What about the third carbon, then, at the right-hand side? That also\nhas a double-bonded oxygen, along with another oxygen bound to a\nhydrogen, yet this arrangement has a very different character. In fact, it’s\nthis group that defines pyruvic acid as a carboxylic acid. An acid is a\nmolecule that wants to cast off a proton whenever it can – a proton being\nthe charged nucleus of a hydrogen atom. Here’s what happens when you\nput pyruvic acid in water:\nNote that the relative size of a proton is much smaller than\ndepicted here, but if I drew it to scale it would be smaller than a\nmicrodot. I’ve drawn it the same size as a hydrogen atom for\nclarity.",
-          "wordCount": 172,
-          "sentenceCount": 7,
+          "content": "What about the third carbon, then, at the right-hand side? That also\nhas a double-bonded oxygen, along with another oxygen bound to a\nhydrogen, yet this arrangement has a very different character. In fact, it’s\nthis group that defines pyruvic acid as a carboxylic acid. An acid is a\nmolecule that wants to cast off a proton whenever it can – a proton being\nthe charged nucleus of a hydrogen atom. Here’s what happens when you\nput pyruvic acid in water:\nNote that the relative size of a proton is much smaller than\ndepicted here, but if I drew it to scale it would be smaller than a\nmicrodot. I’ve drawn it the same size as a hydrogen atom for\nclarity. In this case, I’ve drawn a dotted line next to the carboxylic acid group,\nwhich consists of a CO 2 (one carbon and two oxygen atoms) plus a\nhydrogen atom attached to one of the oxygens. All carboxylic acids have\nat least one group like this by definition; there can be two or three of\nthem.",
+          "wordCount": 177,
+          "sentenceCount": 8,
           "links": []
         },
         {
           "chunkId": "2_29",
           "type": "paragraph",
-          "content": "In this case, I’ve drawn a dotted line next to the carboxylic acid group,\nwhich consists of a CO 2 (one carbon and two oxygen atoms) plus a\nhydrogen atom attached to one of the oxygens. All carboxylic acids have\nat least one group like this by definition; there can be two or three of\nthem. Now when a carboxylic acid loses a positively charged proton, it’s\nleft with a negative charge (–) which I’ve shown on the top oxygen for\nclarity. But in reality this charge is smeared in space between the two\noxygen atoms, giving a ‘delocalised cloud’ of electrons that confers\nsymmetry\n[[IMG id=image-038-1 index=2 alt=\"Figure 5\"]]\nand stability. It can be drawn like this, giving pyruvate\nsomething of a Cheshire Cat grin:\nIn cells, carboxylic acids are normally found in this negatively\ncharged form, which changes its name to end in ‘ate’. Pyruvic acid (with\na proton) becomes ‘pyruvate’ after it has lost the proton. The same\nconvention applies to all carboxylic acids.",
-          "wordCount": 167,
-          "sentenceCount": 7,
-          "links": []
-        },
-        {
-          "chunkId": "2_30",
-          "type": "paragraph",
-          "content": "Notice too that the\ncarboxylate group has the formula CO 2 , and it can indeed break off\nrelatively easily as CO 2 (in this case leaving a C2 carboxylic acid,\nacetate, or vinegar). But for the most part the Cheshire Cat grin says it\nall: carboxylate groups are as lazy as fat cats, and prefer not to react at\nall. Overall, pyruvate is quite a complex composite character – a stout,\nmad-eyed pirate with a smug grin. Pyruvate the pirate.",
-          "wordCount": 81,
-          "sentenceCount": 4,
+          "content": "Now when a carboxylic acid loses a positively charged proton, it’s\nleft with a negative charge (–) which I’ve shown on the top oxygen for\nclarity. But in reality this charge is smeared in space between the two\noxygen atoms, giving a ‘delocalised cloud’ of electrons that confers\nsymmetry and stability. It can be drawn like this, giving pyruvate\nsomething of a Cheshire Cat grin:\n[[IMG id=image-038-1 index=2 alt=\"Figure 5\"]]\nIn cells, carboxylic acids are normally found in this negatively\ncharged form, which changes its name to end in ‘ate’. Pyruvic acid (with\na proton) becomes ‘pyruvate’ after it has lost the proton. The same\nconvention applies to all carboxylic acids. Notice too that the\ncarboxylate group has the formula CO 2 , and it can indeed break off\nrelatively easily as CO 2 (in this case leaving a C2 carboxylic acid,\nacetate, or vinegar). But for the most part the Cheshire Cat grin says it\nall: carboxylate groups are as lazy as fat cats, and prefer not to react at\nall. Overall, pyruvate is quite a complex composite character – a stout,\nmad-eyed pirate with a smug grin. Pyruvate the pirate.",
+          "wordCount": 192,
+          "sentenceCount": 9,
           "links": []
         },
         {
@@ -949,18 +941,18 @@
           "wordCount": 4,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "2_31"
+          "chunkId": "2_30"
         },
         {
-          "chunkId": "2_32",
+          "chunkId": "2_31",
           "type": "paragraph",
-          "content": "Having now familiarised ourselves with the nature of carboxylic acids,\nlet’s return to Krebs, who was wrestling with their fate. We’ve seen that\npyruvate itself plays a central role in respiration, yet Krebs knew that\nother carboxylic acids were involved too. The strange thing was that\nvirtually all of them had more carbons than pyruvate, between four and\nsix carbon atoms in length, compared to just three carbons in pyruvate. Why would that matter, I hear you say? Recall that respiration converts\norganic molecules into CO 2 and H 2 O. Glucose starts with six carbons\nand ends up as six molecules of CO 2 . If each carbon is extracted\nindividually, then the remaining molecule must get progressively shorter. Krebs knew that the six-carbon glucose is initially split into two three-\ncarbon molecules of pyruvate, so a reasonable working assumption was\nth\n[[IMG id=image-039-1 index=3 alt=\"Figure 6\"]]\nat the intermediates should be stripped down to two carbons and then\none carbon. In other words, the C3 pyruvate should be broken down into\nThe C2 acetate and ultimately the C1 CO 2 . Yet it seemed the opposite\nhappened.",
-          "wordCount": 189,
+          "content": "Having now familiarised ourselves with the nature of carboxylic acids,\nlet’s return to Krebs, who was wrestling with their fate. We’ve seen that\npyruvate itself plays a central role in respiration, yet Krebs knew that\nother carboxylic acids were involved too. The strange thing was that\nvirtually all of them had more carbons than pyruvate, between four and\nsix carbon atoms in length, compared to just three carbons in pyruvate. Why would that matter, I hear you say? Recall that respiration converts\norganic molecules into CO 2 and H 2 O. Glucose starts with six carbons\nand ends up as six molecules of CO 2 . If each carbon is extracted\nindividually, then the remaining molecule must get progressively shorter. Krebs knew that the six-carbon glucose is initially split into two three-\ncarbon molecules of pyruvate, so a reasonable working assumption was\nthat the intermediates should be stripped down to two carbons and then\none carbon. In other words, the C3 pyruvate should be broken down into\n[[IMG id=image-039-1 index=3 alt=\"Figure 6\"]]\nThe C2 acetate and ultimately the C1 CO 2 . Yet it seemed the opposite\nhappened.",
+          "wordCount": 188,
           "sentenceCount": 10,
           "links": []
         },
         {
-          "chunkId": "2_33",
+          "chunkId": "2_32",
           "type": "paragraph",
           "content": "Instead of getting shorter, the C3 pyruvate somehow became a\nC4 or even a C6 carboxylic acid. Why would the carbon chain get longer\ninstead of shorter? It made no sense. The first clue came from a madcap Hungarian scientist who had\ncompleted his PhD with Sir Frederick Gowland Hopkins in 1927. From a\nfamily of minor nobility with a scientific bent, Albert Szent-Györgyi was\na true original. His mother was an opera singer who had auditioned with\nGustav Mahler, then a conductor at the Budapest Opera; Mahler had\nadvised her to marry instead, as her voice was not quite good enough. The young Szent-Györgyi fought in the Great War and became so\ndisgusted after two years that he shot himself through the bone in his\narm, claiming that he was wounded by enemy fire – a story he narrates in\nhis short autobiography Lost in the Twentieth Century . He completed his\nmedical degree during his convalescence. After some scientific\nperegrinations around Europe, he eventually arrived in Cambridge,\nwhere he began work on what became known as vitamin C; his isolation\nof this won him a Nobel prize in 1937.",
           "wordCount": 191,
@@ -968,7 +960,7 @@
           "links": []
         },
         {
-          "chunkId": "2_34",
+          "chunkId": "2_33",
           "type": "paragraph",
           "content": "Vitamin C is a C6 molecule, quite\nsimilar to glucose, with the formula C 6 H 8 O 6 . Szent-Györgyi struggled to\ndetermine its structure. With an impish sense of humour, he first named\nit ‘ignose’ (the ‘nose’ denoting its sugary affinities, and the ‘ig’ his own\nignorance). When that name was rejected, he proposed ‘Godnose’; it was\neventually given the chemical name ascorbic acid, for its anti-scorbutic\nproperties (preventing the deficiency disease scurvy). 5\nKrebs and Szent-Györgyi had crossed paths on several occasions\nwhen Krebs was still in Germany, and despite some scientific\ndisagreements plainly held each other in high esteem. Indeed, Szent-\nGyörgyi wrote to his old mentor Sir Frederick, bringing Krebs’s plight to\nhis attention. Now back in Hungary, Szent-Györgyi published a striking\nfinding in an unusual system – minced pigeon-breast muscle – which he\nhad learned from Dorothy Needham while in Cambridge. This is a flight\nmuscle, which can support exceptionally high metabolic rates, because\nflying is energetically highly costly. That was important at the time\nbecause higher rates of respiration made it easier to measure any\nchanges; in retrospect it was also misleading, for reasons that we’ll come\nto.",
           "wordCount": 195,
@@ -1001,7 +993,7 @@
           ]
         },
         {
-          "chunkId": "2_35",
+          "chunkId": "2_34",
           "type": "paragraph",
           "content": "Szent-Györgyi found that adding small amounts of C4 carboxylic\nacids, notably succinate, dramatically increased the rate of respiration\n(by up to 600 per cent!!) over prolonged periods. Yet when he analysed\nexactly how much of the carboxylic acid remained in the muscle after the\nExperiment, he found that none had disappeared. These simple molecules\nsped up reactions without being consumed themselves. That is, by\ndefinition, a catalyst . It might appear strange, Szent-Györgyi remarked,\nto attribute to a substance as simple as succinate the role of a catalyst. But what else could it be? A catalyst! That comment might not trouble a chemist much, but it\nwas certainly unexpected for most biochemists. Say ‘catalyst’ to a\nbiologist in a word-association game, and they will probably reply\n‘enzyme’. An enzyme is a protein, encoded by a gene, typically\ncomposed of a chain of several hundred amino acids with a total of\nperhaps 1,500 carbon atoms. An enzyme has a complex shape and can\nspeed up a specific biochemical reaction with sensational selectivity and\nspeed. In general, one enzyme catalyses a single reaction, being honed to\nthe shape and charge of a specific molecule known as its substrate.",
           "wordCount": 196,
@@ -1009,18 +1001,18 @@
           "links": []
         },
         {
-          "chunkId": "2_36",
+          "chunkId": "2_35",
           "type": "paragraph",
-          "content": "But\nsuccinate is not like that. It’s a simple molecule with just four carbon\natoms and nought else beyond the usual oxygen and hydrogen atoms. The molecule is beautifully symmetrical, as my portrait shows. It has two\ncarboxylate groups, one at each end – two smugly unreactive Cheshire\nCat grins. No mad-eye oxygen atoms. A quick personality read-out says\nthat it is more like an extra-smug banker than a pirate. Yet somehow\nsuccinate doesn’t increase the rate of a single reaction, but rather the\noverall speed of respiration. That only made the individual steps even\nmore perpl\n[[IMG id=image-041-1 index=4 alt=\"Figure 7\"]]\nexing. The bottom line is that succinate was fairly unreactive\nyet had a general catalytic activity, unlike almost anything else known in\nbiology at the time. Almost ... Pulling hydrogen\nSzent-Györgyi had a hypothesis. It’s an excellent example of how an\ningenious hypothesis can drive science forward down a blind alley. Luckily not for long in this case. The idea was this. Succinate was one of\nfour C4 carboxylic acids (the others being fumarate, malate and\noxaloacetate), all of which could speed up respiration to a comparable\ndegree, as Szent-Györgyi had shown.",
-          "wordCount": 194,
+          "content": "But\nsuccinate is not like that. It’s a simple molecule with just four carbon\natoms and nought else beyond the usual oxygen and hydrogen atoms. The molecule is beautifully symmetrical, as my portrait shows. It has two\ncarboxylate groups, one at each end – two smugly unreactive Cheshire\nCat grins. No mad-eye oxygen atoms. A quick personality read-out says\nthat it is more like an extra-smug banker than a pirate. Yet somehow\nsuccinate doesn’t increase the rate of a single reaction, but rather the\noverall speed of respiration. That only made the individual steps even\nmore perplexing. The bottom line is that succinate was fairly unreactive\nyet had a general catalytic activity, unlike almost anything else known in\nbiology at the time. Almost ... Pulling hydrogen\n[[IMG id=image-041-1 index=4 alt=\"Figure 7\"]]\nSzent-Györgyi had a hypothesis. It’s an excellent example of how an\ningenious hypothesis can drive science forward down a blind alley. Luckily not for long in this case. The idea was this. Succinate was one of\nfour C4 carboxylic acids (the others being fumarate, malate and\noxaloacetate), all of which could speed up respiration to a comparable\ndegree, as Szent-Györgyi had shown.",
+          "wordCount": 193,
           "sentenceCount": 15,
           "links": []
         },
         {
-          "chunkId": "2_37",
+          "chunkId": "2_36",
           "type": "paragraph",
-          "content": "All were known to be\ninterchangeable, and none of them was consumed by respiration. They\ndiffered from each other in one crucial respect: the number of hydrogen\natoms in the short carbon chain. Each differed from its neighbour by two\nhydrogen atoms; let’s adopt the simpler convention of saying 2H. 6 Here\nthey are:\nAs Szent-Györgyi observed, the four C4 carboxylic acids differ\nfrom each other by 2H. Notice that there is also an O difference\nbetween fumarate and malate, so the difference here is actually\nH 2 O. Szent-Györgyi had seen this pattern before. Vitamin C can pick up 2H,\nand then pass them onto something else, notably vitamin E. And Szent-\nGyörgyi had been fascinated by the pale-yellow pigment found in cells\nthat he called ‘flave’ (which is now known as flavin adenine\ndinucleotide, or FAD, and is also involved in respiration). It too could\nlose 2H and in doing so became colourless; on picking them up again it\nwould regain its yellow colour. These spooky colour changes as\nhydrogen was transferred had entranced Szent-Györgyi. No\n[[IMG id=image-042-1 index=5 alt=\"Figure 8\"]]\nw here were\neven more intriguing examples of hydrogen transfer, somehow linked to\nrespiration.",
-          "wordCount": 197,
+          "content": "All were known to be\ninterchangeable, and none of them was consumed by respiration. They\ndiffered from each other in one crucial respect: the number of hydrogen\natoms in the short carbon chain. Each differed from its neighbour by two\nhydrogen atoms; let’s adopt the simpler convention of saying 2H. 6 Here\nthey are:\nAs Szent-Györgyi observed, the four C4 carboxylic acids differ\nfrom each other by 2H. Notice that there is also an O difference\nbetween fumarate and malate, so the difference here is actually\nH 2 O. Szent-Györgyi had seen this pattern before. Vitamin C can pick up 2H,\nand then pass them onto something else, notably vitamin E. And Szent-\nGyörgyi had been fascinated by the pale-yellow pigment found in cells\nthat he called ‘flave’ (which is now known as flavin adenine\ndinucleotide, or FAD, and is also involved in respiration). It too could\nlose 2H and in doing so became colourless; on picking them up again it\nwould regain its yellow colour. These spooky colour changes as\nhydrogen was transferred had entranced Szent-Györgyi. Now here were\neven more intriguing examples of hydrogen transfer, somehow linked to\nrespiration.",
+          "wordCount": 191,
           "sentenceCount": 11,
           "links": [
             {
@@ -1050,15 +1042,15 @@
           ]
         },
         {
-          "chunkId": "2_38",
+          "chunkId": "2_37",
           "type": "paragraph",
-          "content": "Recall that respiration consumes oxygen by reacting it with hydrogen,\nor more specifically 2H. The product is water, or H 2 O. Warburg had\nAlready shown that the enzyme that catalyses this final step is the haem\nprotein cytochrome oxidase, but it had to get its 2H from somewhere. Szent-Györgyi pictured a shuttle of carriers that stripped 2H from sugars,\nand then passed them from one to another, and eventually to oxygen to\nform H 2 O. It was a beautiful conception, and as it turned out, specifically\nwrong. Specifically, but not generally – he was correct that 2H carriers\nare vital in respiration, but wrong about the identity of the carriers. He’d\nbeen blinded by his infatuation with hydrogen carriers. But Krebs\nwasn’t. He saw something else. By now, in 1935, Krebs had moved to Sheffield. Hopkins had been\nunable to raise the funds to keep paying his salary in Cambridge, and\nalthough he saw Krebs as his anointed successor, there was little he\ncould do in the short term. Ironically, soon after Krebs had gone, a\nlectureship became available in Cambridge, which Hopkins offered to\nKrebs, along with the title ‘Director of Research’.",
-          "wordCount": 195,
+          "content": "Recall that respiration consumes oxygen by reacting it with hydrogen,\nor more specifically 2H. The product is water, or H 2 O. Warburg had\n[[IMG id=image-042-1 index=5 alt=\"Figure 8\"]]\nAlready shown that the enzyme that catalyses this final step is the haem\nprotein cytochrome oxidase, but it had to get its 2H from somewhere. Szent-Györgyi pictured a shuttle of carriers that stripped 2H from sugars,\nand then passed them from one to another, and eventually to oxygen to\nform H 2 O. It was a beautiful conception, and as it turned out, specifically\nwrong. Specifically, but not generally – he was correct that 2H carriers\nare vital in respiration, but wrong about the identity of the carriers. He’d\nbeen blinded by his infatuation with hydrogen carriers. But Krebs\nwasn’t. He saw something else. By now, in 1935, Krebs had moved to Sheffield. Hopkins had been\nunable to raise the funds to keep paying his salary in Cambridge, and\nalthough he saw Krebs as his anointed successor, there was little he\ncould do in the short term. Ironically, soon after Krebs had gone, a\nlectureship became available in Cambridge, which Hopkins offered to\nKrebs, along with the title ‘Director of Research’.",
+          "wordCount": 200,
           "sentenceCount": 12,
           "links": []
         },
         {
-          "chunkId": "2_39",
+          "chunkId": "2_38",
           "type": "paragraph",
           "content": "Krebs was torn, not\nsurprisingly, but he appreciated the support of his new colleagues in\nSheffield, where he also had more space. He’d also come to love the\nwild countryside of the nearby Peak District. He eventually stayed for\nnineteen years, marrying a local girl and raising a family, before moving\nto Oxford in 1954. 7\nWhile stimulated by Szent-Györgyi’s findings, Krebs could also see\nsome problems. It boiled down to whether the C4 carboxylic acids were\nsimply hydrogen carriers, as argued by Szent-Györgyi, or were actual\nintermediates in the breakdown of sugars, as Krebs himself thought. This\nis such a fine example of how clever scientific reasoning works it’s\nworth chewing over briefly. Two abstruse and superficially similar ideas\nin fact generate opposing predictions that can be tested in the lab. The\nexperiment pointed Krebs straight to the beautiful conception of a cycle,\nwhich has played a central, if deceptive, role in biochemistry ever since. It’s also worth noting that, even though Szent-Györgyi’s idea turned out\nto be wrong in detail, it was valuable nonetheless, because it focused\nattention on a primary feature of the cycle – the removal of hydrogen\n(2H) from carboxylic acids.",
           "wordCount": 196,
@@ -1091,7 +1083,7 @@
           ]
         },
         {
-          "chunkId": "2_40",
+          "chunkId": "2_39",
           "type": "paragraph",
           "content": "Again, I have to emphasise just how subtle\nour reasoning needs to be to understand anything in biochemistry; at no\npoint do we just ‘look’ at something. Let’s think this through. If C4 carboxylic acids were merely hydrogen carriers, then as each\n2H was stripped out from the sugar and passed onto a carboxylic acid,\nthen CO 2 should be released from the skeletal remains of the sugar. Remember that the formula for glucose is C 6 H 12 O 6 . Szent-Györgyi\nImagined that all the hydrogens were stripped out from glucose to give\nsix sets of 2H, which were transferred onto the C4 carboxylic acids\nbefore being passed onwards to oxygen to form water. Carboxylic acids\nwere acting as shuttles. In the meantime, the carbon husks of the glucose\nmolecule had to be discharged as CO 2 . That makes a clear prediction: adding an excess of the carboxylic acid\nshuttle should lead to the complete breakdown of the sugar even in the\nabsence of oxygen. To grasp this, remember that oxygen is normally the\nfinal 2H acceptor; it accepts 2H to form water, which is excreted as\nwaste.",
           "wordCount": 191,
@@ -1099,7 +1091,7 @@
           "links": []
         },
         {
-          "chunkId": "2_41",
+          "chunkId": "2_40",
           "type": "paragraph",
           "content": "Now, if the C4 carboxylic acids simply acted as a shuttle of 2H to\noxygen, then adding a lot more of them to a tissue slice should mop up\nall the 2H stripped out from sugars without needing to transfer them onto\noxygen. Think of the chain of 2H carriers as a bucket brigade: adding\nmore buckets means that more 2H can be stripped from food,\naccumulating in the buckets, even if the 2H buckets aren’t emptied onto\noxygen. We just have more full buckets. If so, then CO 2 formation\nshould be the same, regardless of whether oxygen was present or not. But the experiment showed that in fact very little CO 2 was formed in the\nabsence of oxygen. While both men agreed that this was the case, Szent-Györgyi ascribed\nthe discrepancy to issues with measurement in a tricky experimental\nsystem, while Krebs interpreted the result literally – he saw the C4\ncarboxylic acids as intermediates in the breakdown of sugars, hence they\nhad not yet had all their CO 2 stripped out, and the final steps to do so\nrequired oxygen.",
           "wordCount": 184,
@@ -1107,7 +1099,7 @@
           "links": []
         },
         {
-          "chunkId": "2_42",
+          "chunkId": "2_41",
           "type": "paragraph",
           "content": "Going back to the case in point, if the C3 pyruvate\nreally was an intermediate, as Krebs imagined, then it had to be\ntransformed somehow into the next known intermediate – the C4\nsuccinate. That is ostensibly the opposite of breakdown, as the chain\nlength gets longer rather than shorter. Perplexing. But Krebs had a clue, which others may have overlooked as\nirrelevant. The C6 carboxylic acid citric acid, which is responsible for\nthe tang of citrus fruit, had recently been shown to break down in several\nsteps to give the C4 succinate. That gave quite a long series of apparently\ninterconnected steps, which ran from the C6 citrate via a C5 intermediate\n(called α-ketoglutarate) to the four C4 carboxylic acids. It had not\nescaped Krebs’s notice that these steps released two CO 2 molecules, as\nthe carboxylic acids were clipped down from six to four carbon atoms in\nlength. Presumably, these steps, in which CO 2 was pulled out, needed\nOxygen to go ahead. Krebs also found that adding citrate to his pigeon-\nbreast slices (he’d modified Szent-Györgyi’s method) sped up respiration\nin a similar way to succinate. Citrate was definitely involved in\nrespiration.",
           "wordCount": 195,
@@ -1115,7 +1107,7 @@
           "links": []
         },
         {
-          "chunkId": "2_43",
+          "chunkId": "2_42",
           "type": "paragraph",
           "content": "In a coup de grâce , Krebs showed that if he added citrate to\nthe tissue slices along with an inhibitor of respiration, then the succinate\nnow accumulated. That could only mean that the pathway from citrate to\nsuccinate and onwards was indeed a normal part of respiration –\nblocking respiration led to the accumulation of these intermediates. In\nshort: Krebs now had a succession of intermediates, which somehow\nwent from pyruvate (C3) to citrate (C6) then α-ketoglutarate (C5) and\nfinally succinate (C4). Adding any of these intermediates had a catalytic\neffect, speeding up the overall rate of respiration. It all added up to pretty\nmuch the scientific equivalent of a cryptic crossword puzzle.",
           "wordCount": 114,
@@ -1128,10 +1120,10 @@
           "wordCount": 2,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "2_44"
+          "chunkId": "2_43"
         },
         {
-          "chunkId": "2_45",
+          "chunkId": "2_44",
           "type": "paragraph",
           "content": "Only Krebs was thinking about the cryptic crossword in the right way;\neven his closest collaborators had little inkling of what was on his mind. But Krebs had thought about the catalytic effects of small molecules\nbefore. His work on the urea cycle was just that. Unlike anyone else in\nthe field, who all had just the same information, Krebs was already\nthinking about a cycle. The urea cycle starts with a C6 amino acid called arginine. An\nenzyme splits this into two unequal pieces, the C1 waste product urea,\nplus a shorter (C5) amino acid called ornithine. What happened to\nornithine next was unknown, but Krebs had found that adding more\nornithine to his tissue slices somehow increased the rate of urea\nformation without the ornithine being consumed itself. That had initially\nbaffled him, as normally the accumulation of products in a reaction tends\nto get in the way of forming any more, yet this did the opposite. Finally,\nKrebs realised that ornithine was acting as a catalyst: it sped up the\nreaction, without being consumed itself.",
           "wordCount": 178,
@@ -1139,7 +1131,7 @@
           "links": []
         },
         {
-          "chunkId": "2_46",
+          "chunkId": "2_45",
           "type": "paragraph",
           "content": "To do so, ornithine had to give\nrise to more arginine, from which more urea could form in turn, thereby\nregenerating the ornithine he had added. In other words, it had to be a\ncycle! Arginine was re-formed via several steps from ornithine, through\nthe addition of a CO 2 and two molecules of NH 3 . It was this beautiful\ninsight, with just the degree of unexpectedness to be expected of living\nsystems, that Hopkins had celebrated at the Royal Society in 1932. Krebs realised that biochemical cycles are necessarily catalytic. In\nessence, adding more of any constituent gives rise to more of the next,\nAnd so on in turn, until the cycle has run full circle and regenerated the\nfirst constituent again. That explains why none of the constituents are\nconsumed: each one has to be regenerated from its precursor indefinitely. This might sound suspiciously like a perpetual motion machine that\noperates with 100 per cent efficiency. But of course in reality the cycle\nmust be continuously fed with materials to keep on spinning.",
           "wordCount": 176,
@@ -1147,7 +1139,7 @@
           "links": []
         },
         {
-          "chunkId": "2_47",
+          "chunkId": "2_46",
           "type": "paragraph",
           "content": "If, in the\nfirst few steps of a cycle beginning with citrate, two CO 2 molecules and\nmultiple sets of 2H are stripped out, then one full turn of the cycle would\nneed to replenish those same constituents, or it would not be a cycle at\nall. But the carbon, hydrogen and oxygen that have to be replenished do\nnot need to come in the same molecular form: they could be in the form\nof an organic molecule combining them all. To return to our traffic\nanalogy from the Introduction, you might think of the Krebs cycle as a\nfully laden car-carrier arriving at a magic roundabout. At each junction,\nthere’s a blinding flash and one of the cars vanishes from the trailer,\nsetting out on its own shape-changing journey, or being scrapped for the\nmetals. Only the tractor unit ever makes it all the way round. Then:\nbang! The truck is magically reloaded with a full trailer. The cycle can\nstart again only if the tractor unit is coupled to a fully loaded trailer, so\neach turn of the roundabout always regenerates the tractor.",
           "wordCount": 185,
@@ -1155,7 +1147,7 @@
           "links": []
         },
         {
-          "chunkId": "2_48",
+          "chunkId": "2_47",
           "type": "paragraph",
           "content": "To put that\nback into chemical terms, Krebs realised that the cycle could be fed with\norganic molecules (the trailer), and a full turn of the cycle would break\nthem down into CO 2 plus multiple sets of 2H to be fed into the furnace\nof respiration, leaving only the simplest carbon skeleton (the tractor unit)\nto be reloaded with the next organic molecule for breaking into its\nconstituent parts. If so, then which organic molecule was being fed into the cycle? Krebs focused on pyruvate. Remember that pyruvate is the intermediate\nbreakdown product of sugars and some amino acids. Was it being fed\ninto a cycle and catalytically broken down into CO 2 and 2H? The crux of the matter was the final C4 carboxylic acid, known as\noxaloacetate. Could this be the ‘tractor unit’? Oxaloacetate was the last\nclear step in the breakdown of citrate, but its metabolic fate was\nambiguous, or rather, it frayed into several possible pathways (we’ll\ncome back to these in Chapter 5). Just one of those ambiguous paths\nmattered to Krebs.",
           "wordCount": 178,
@@ -1163,7 +1155,7 @@
           "links": []
         },
         {
-          "chunkId": "2_49",
+          "chunkId": "2_48",
           "type": "paragraph",
           "content": "It had recently been shown that citrate could be made\nfrom oxaloacetate and pyruvate, in effect welding them together under\nquite harsh chemical conditions, and without an enzyme. If a similar\nreaction did operate under normal metabolic conditions, catalysed by an\nEnzyme, then Krebs had completed a first draft of his cycle: pyruvate\nwas fed into the cycle by cobbling it onto oxaloacetate, equivalent to\nloading a full trailer onto the tractor unit. It was a quick experiment to\ndo, and it worked as well as he must have most fervently desired. Adding\npyruvate and oxaloacetate to tissue slices did indeed generate citrate\nquickly under normal physiological conditions. The rest was accounting. Could the proposed cycle account for the consumption of oxygen, the\nrelease of CO 2 , the loss of pyruvate, the formation of citrate? Yes! Yes! Yes! Yes! It did account for each in full! Here is Krebs’s first simple\nconception of the cycle, more or less as he depicted it in his famous 1937\npaper:\nThe overall effect of this cycle is to burn up one molecule of\npyruvate, or at least something closely related to it.",
           "wordCount": 190,
@@ -1171,15 +1163,15 @@
           "links": []
         },
         {
-          "chunkId": "2_50",
+          "chunkId": "2_49",
           "type": "paragraph",
-          "content": "Exactly what was\njoined onto oxaloacetate to form citrate was still a mystery. It could not\nhave been the C3 pyruvate itself, as depicted here, because that has one\ncarbon too many – one C4 plus one C3 should give a C7 molecule, not\nthe C6 citrate. One carbon was presumably lost as a CO 2 somewhere\ndown the line. Perhaps this uncertainty was partly behind one of Nature ’s\nmore famous rejections – the journal returned Krebs’s paper on the cycle\nwith a quaint recommendation that he might prefer to publish it\nelsewhere as they had a long queue of papers awaiting publication. A full decade later, in 1947, Fritz Lipmann discovered that pyruvate\nwas indeed stripped of one CO 2 (and 2H) leaving a C2 carboxylic acid\nattached to a larger molecule that acted as a kind of molecular handle. He\n[[IMG id=image-047-1 index=6 alt=\"Figure 9\"]]\nnamed the overall assemblage acetyl coenzyme A or acetyl CoA for\nshort. This turned out to be perhaps the single most central molecule in\nmetabolism across the whole of life, from ancient bacteria to ourselves,\nand we will encounter it repeatedly. Once formed, acetyl CoA reacted\nWith oxaloacetate to make citrate.",
+          "content": "Exactly what was\njoined onto oxaloacetate to form citrate was still a mystery. It could not\nhave been the C3 pyruvate itself, as depicted here, because that has one\ncarbon too many – one C4 plus one C3 should give a C7 molecule, not\nthe C6 citrate. One carbon was presumably lost as a CO 2 somewhere\ndown the line. Perhaps this uncertainty was partly behind one of Nature ’s\nmore famous rejections – the journal returned Krebs’s paper on the cycle\nwith a quaint recommendation that he might prefer to publish it\nelsewhere as they had a long queue of papers awaiting publication. A full decade later, in 1947, Fritz Lipmann discovered that pyruvate\nwas indeed stripped of one CO 2 (and 2H) leaving a C2 carboxylic acid\nattached to a larger molecule that acted as a kind of molecular handle. He\nnamed the overall assemblage acetyl coenzyme A or acetyl CoA for\nshort. This turned out to be perhaps the single most central molecule in\nmetabolism across the whole of life, from ancient bacteria to ourselves,\nand we will encounter it repeatedly. Once formed, acetyl CoA reacted\n[[IMG id=image-047-1 index=6 alt=\"Figure 9\"]]\nWith oxaloacetate to make citrate.",
           "wordCount": 199,
           "sentenceCount": 8,
           "links": []
         },
         {
-          "chunkId": "2_51",
+          "chunkId": "2_50",
           "type": "paragraph",
           "content": "So the ‘full trailer’ was really acetyl\nCoA. Lipmann had trained in Berlin in the late 1920s, in the lab next door\nto Krebs. He, too, later fled from the Nazis, in his case from Denmark to\nNew York and eventually Boston. Lipmann was a notoriously slow\nthinker, who would interrupt and ask people to repeat what they had just\nsaid, yet he seemed able to read between their lines, interrogating the\nunspoken assumptions to see things that nobody else had spotted. He\npursued a lifelong interest in the energy currencies of biology, and the\nways they are exchanged. Lipmann’s extraordinary intellectual bequest\nto biochemistry included what he dubbed the ‘universal energy currency’\nof life, ATP (short for adenosine triphosphate) along with acetyl\nphosphate and acetyl CoA itself, three central pillars of energy\nmetabolism. We will return to all three of them when we think about the\norigin of life in Chapter 3, following in Lipmann’s own footsteps. The term ‘acetyl’ refers to the 2C acetic acid – vinegar – which is not\nvery reactive.",
           "wordCount": 175,
@@ -1187,15 +1179,15 @@
           "links": []
         },
         {
-          "chunkId": "2_52",
+          "chunkId": "2_51",
           "type": "paragraph",
-          "content": "Look at my portrait of it below and you can see that it has\nthe stout belly and Cheshire Cat grin of pyruvate – but no mad-eye\noxygen to stir up trouble. To make it react with oxaloacetate, the acetate\nneeds to be activated by attaching it to coenzyme A. Lipmann didn’t\ndesignate coenzyme ‘A’ to distinguish it from some coenzyme ‘B’; the\n‘A’ stood for ‘activation of acetate’. We can put aside the baroque\ncomplexity of coenzyme A here, and simply consider the acetyl group in\nmy portrait. Note that one of the oxygen atoms in acetate is replaced with\nthe sulfur of CoA (which is marked with an ‘S’); this slippery sulfur is\nwhat makes\n[[IMG id=image-048-1 index=7 alt=\"Figure 10\"]]\nthe composite molecule more reactive than acetate itself\n(and that remaining oxygen is beginning to stare a bit):\nOnce activated in this way, the C2 acetate can be attached onto the C4\noxaloacetate, to give the C6 citrate. At last, everything added up\nproperly. The process by which glucose is oxidised goes like this. First,\nThe C6 glucose is split into two molecules of the C3 pyruvate, each of\nwhich is broken down to acetyl CoA.",
+          "content": "Look at my portrait of it below and you can see that it has\nthe stout belly and Cheshire Cat grin of pyruvate – but no mad-eye\noxygen to stir up trouble. To make it react with oxaloacetate, the acetate\nneeds to be activated by attaching it to coenzyme A. Lipmann didn’t\ndesignate coenzyme ‘A’ to distinguish it from some coenzyme ‘B’; the\n‘A’ stood for ‘activation of acetate’. We can put aside the baroque\ncomplexity of coenzyme A here, and simply consider the acetyl group in\nmy portrait. Note that one of the oxygen atoms in acetate is replaced with\nthe sulfur of CoA (which is marked with an ‘S’); this slippery sulfur is\nwhat makes the composite molecule more reactive than acetate itself\n(and that remaining oxygen is beginning to stare a bit):\nOnce activated in this way, the C2 acetate can be attached onto the C4\noxaloacetate, to give the C6 citrate. At last, everything added up\nproperly. The process by which glucose is oxidised goes like this. First,\n[[IMG id=image-048-1 index=7 alt=\"Figure 10\"]]\nThe C6 glucose is split into two molecules of the C3 pyruvate, each of\nwhich is broken down to acetyl CoA.",
           "wordCount": 198,
           "sentenceCount": 8,
           "links": []
         },
         {
-          "chunkId": "2_53",
+          "chunkId": "2_52",
           "type": "paragraph",
           "content": "These are then fed into the Krebs\ncycle. One complete spin of the cycle (from pyruvate) generates three\nmolecules of CO 2 and five sets of 2H, equivalent to five molecules of\nH 2 . 8 This hydrogen is then fed to oxygen to generate energy, in the form\nof ATP, via cellular respiration. There is some poetry in the parallel lives and eventual convergence of\nthe scientific ideas of Lipmann and Krebs, so it seems only fitting that\nthey shared the Nobel prize in 1953. Yet this was by no means the end of\nthe story. There was another detail (one might call it the whole point)\nwhich Krebs could not explain in 1937; nor could Lipmann in 1947. The\nquestion taunted: how was the energy released by burning multiple sets\nof 2H captured by cells and used to drive metabolism? Although\nLipmann had shown that the energy released was conserved in the form\nof ATP, nobody knew how the burning of 2H was coupled to the\nsynthesis of ATP. It was the burning question in biochemistry over the\nnext two decades. And it took a very different genius nurtured in\nHopkins’s Cambridge laboratory to solve the problem.",
           "wordCount": 199,
@@ -1233,10 +1225,10 @@
           "wordCount": 5,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "2_54"
+          "chunkId": "2_53"
         },
         {
-          "chunkId": "2_55",
+          "chunkId": "2_54",
           "type": "paragraph",
           "content": "Peter Mitchell arrived as an undergraduate in Cambridge several years\nafter Krebs had left, at the outbreak of war in 1939. A sporting injury at\nschool had prevented him joining the army. He had been a mixed\nstudent, and his example serves as another reminder of the dangers of\ncategorising intelligence. He had flourished in maths and physics,\nsubjects that he could understand from the bottom up by working out the\nunderlying principles for himself; but he was dismal at English and\nhistory, where he couldn’t see any fundamental principles at all. He only\nscraped into Cambridge because his school’s headmaster, a\nmathematician himself who could see how gifted Mitchell was, had\nintervened on his behalf. Mitchell hardly repaid his trust. He did badly in his degree and\ninitially failed his doctorate. He had written an opaquely philosophical\nthesis on how bacteria transport molecules in and out of the cell,\ngrounded in his own development of ancient Greek theory on ‘fluctids’\nand ‘statids’. The examiners dismissed his work as ‘not really a thesis at\nall’.",
           "wordCount": 175,
@@ -1244,7 +1236,7 @@
           "links": []
         },
         {
-          "chunkId": "2_56",
+          "chunkId": "2_55",
           "type": "paragraph",
           "content": "Mitchell’s mentor, the distinguished Polish biochemist David Keilin,\ncommented that ‘Peter is too original for his examiners.’ He finally\nPassed his PhD in 1951, with a more conventional thesis on the\nmechanism of action of penicillin. Like Francis Crick, who took seven\nyears to complete his own PhD thesis, having taught himself the\nmathematical theory of X-ray crystallography along the way, Mitchell\nmight not have thrived in today’s research environment. Despite these failings, Mitchell certainly impressed those around him. Fred Sanger, a double Nobel laureate, wrote that ‘Peter had an original\nidea on every subject and we all knew even then that he would possibly\nchange science.’ Just after the war, in 1947, Marjory Stephenson was\nelected President of the Society for General Microbiology (with strong\nsupport from Alexander Fleming and J. B. S. Haldane). In this capacity,\nshe invited Mitchell to deliver a keynote lecture at the Society’s annual\nconference – an unprecedented honour for a graduate student. Tragically,\nStephenson died of breast cancer before the meeting took place. In one\nof her final acts, she recommended that her laboratory assistant Jennifer\nMoyle should work with Mitchell, thinking the pair would complement\neach other well.",
           "wordCount": 196,
@@ -1252,7 +1244,7 @@
           "links": []
         },
         {
-          "chunkId": "2_57",
+          "chunkId": "2_56",
           "type": "paragraph",
           "content": "Moyle was a brilliant experimentalist, while Mitchell\nwas brimming with radical scientific ideas, but was less focused in the\nlab; a fellow student commented that Peter wanted to debate what was\ngoing on, rather than get on with the prescribed experiment. I can hardly begin to imagine what Jennifer Moyle might have\naccomplished in another age. She had gone to Girton College Cambridge\nin 1939 where she studied Natural Sciences, specialising in biochemistry. She was inspired by the lectures of the comparative biochemist Ernest\nBaldwin, another protégé of Hopkins, while attending many lectures in\nphilosophy. She completed her ‘Title of Bachelor of Arts’ degree in 1942\n– sad to say, formal degrees were not awarded to women in Cambridge\nuntil 1948, when Girton College was granted full college status by the\nuniversity. Straight after her ‘title of’ degree, Moyle joined the Auxiliary\nTerritorial Service, the women’s branch of the British Army during the\nwar, and she soon went into military intelligence, becoming an\nintelligence officer in MI8, the group responsible for signals intelligence.",
           "wordCount": 173,
@@ -1260,7 +1252,7 @@
           "links": []
         },
         {
-          "chunkId": "2_58",
+          "chunkId": "2_57",
           "type": "paragraph",
           "content": "By the end of the war she was second in command of a unit that analysed\nintelligence from the breaking of German ciphers, and afterwards spent a\nyear helping prepare servicemen for their return to civilian life. She then\njoined Marjory Stephenson in Cambridge as a research assistant in 1946,\nfirst meeting Mitchell at departmental tea in 1947. She was struck by his\nkeen intellect and wide-ranging interests, as well as his cultivated\n‘Beethovenian’ appearance, with a flowing mane of hair (he too later\nWent deaf). Moyle herself was an enthusiastic musician, who sang in\nchoirs throughout her life. Marjory Stephenson could hardly have been more prescient in\nrecommending that Mitchell and Moyle work together. They formed a\nlifelong scientific partnership, which drove a paradigm shift in twentieth-\ncentury biology, starting in the free air of Hopkins’s biochemistry\ndepartment, before moving to Edinburgh in the mid-1950s, and\nculminating at the Glynn Institute, the remarkable eighteenth-century\nmanor house near Bodmin in Cornwall that Mitchell lovingly restored as\na laboratory and home.",
           "wordCount": 170,
@@ -1268,7 +1260,7 @@
           "links": []
         },
         {
-          "chunkId": "2_59",
+          "chunkId": "2_58",
           "type": "paragraph",
           "content": "9 The Glynn was animated by Mitchell’s unique\nvision of science, and became a place of pilgrimage for bioenergeticists\nthe world over, who would stay for weeks or months to work in the lab,\ndiscuss the physics of biology, and drink deeply from the source. For source it was: Mitchell reconceived energy flow, in a way that we\nare only just beginning to assimilate properly into biology today – a\ntheme I’ll return to later in the book. Krebs had thought beyond linear\npathways and discovered cycles, four of them in all. But Mitchell really\ntranscended chemistry altogether, and talked in a new language that few\nunderstood, about the proton-motive force, electrical membrane\npotentials, vectorial chemistry and proticity. While Mitchell’s theories\nwere dressed in mysterious mathematical symbols and rejected the crude\nnotion of the cell as a bag of molecules dissolved in water, his ideas were\nquite simple in essence. They grew from his early preoccupation with\nhow bacteria keep their inside different from the outside.",
           "wordCount": 166,
@@ -1301,7 +1293,7 @@
           ]
         },
         {
-          "chunkId": "2_60",
+          "chunkId": "2_59",
           "type": "paragraph",
           "content": "Mitchell\nrealised that bacteria had to recognise specific molecules with the same\nfinesse as an enzyme, and then actively transfer them in or out of the cell\nacross its bounding membrane – they had to pump. A selective pump\nembedded in the membrane plainly needs to be powered, which costs\nenergy. Conversely, Mitchell saw that if the pump went into reverse,\nallowing whatever had been pumped out to flow back into the cell down\na concentration gradient, then the energy released could in principle be\nput to work. The pump becomes a turbine. This is no more complex than\nblowing air into a balloon. Releasing the pent-up air can power work, in\nthis case zipping the balloon around the room by jet propulsion. Warburg and Krebs had both talked about the ‘living structure of\ncells’, arguing that some processes were ‘bound to the life of the cells’. Many biochemists were uncomfortable with this view, as it recalled the\ndiscredited idea of vitalism, implying that there was something special\nabout living matter that could not be reduced to mere chemistry; and\nfrankly, this view is still prevalent today.",
           "wordCount": 187,
@@ -1309,7 +1301,7 @@
           "links": []
         },
         {
-          "chunkId": "2_61",
+          "chunkId": "2_60",
           "type": "paragraph",
           "content": "The goal of biochemistry was\nTo grind up tissue, isolate an enzyme, then measure its precise function in\nas pure and uncontaminated a preparation as was humanly possible. Fermentation was the classic example: it did indeed proceed in\nhomogenised tissues. Other biochemical reactions did not work initially,\nbut with better preparation methods were eventually demonstrated in\ncell-free extracts. So, while Warburg and Krebs contended that\nrespiration could only take place in intact cells, most biochemists\nthought it was only a matter of time and more meticulous methods before\nall biochemical processes could be demonstrated in purified\npreparations. For Mitchell that view was anathema. The integrity of the membrane\nwas indispensable to the life of cells. The membrane is the thin oily layer\nthat surrounds all cells, barely six millionths of a millimetre (6\nnanometres) in thickness, enclosing the gel-like cytoplasm inside. Some\ncells such as plants, fungi and bacteria also have a more robust, mesh-\nlike cell wall, which prevents swelling and protects against mechanical\ninjury, while allowing the movement of small molecules in and out; but\nit is the flimsy membrane that matters here.",
           "wordCount": 185,
@@ -1317,7 +1309,7 @@
           "links": []
         },
         {
-          "chunkId": "2_62",
+          "chunkId": "2_61",
           "type": "paragraph",
           "content": "Being composed of oily\nlipids, the membrane obstructs the transfer of charged particles, even tiny\nprotons. If critical membranes sprang a leak to protons, the cell would\nswiftly die. Mitchell’s profound insight was to see that this law applied\nnot only to the transport of materials in and out of bacterial cells, but to\nthe process of respiration itself. For ‘the living structure of cells’, read\n‘membrane’. To burn the 2H derived from the Krebs cycle, a membrane\nwas needed. That observation alone was enough for Mitchell to frame his\nwhole hypothesis. We’ll see that the Krebs cycle is intimately linked to\nthe electrical properties of this membrane, just as Mitchell predicted –\nbut in ways that neither Mitchell nor Krebs could have begun to imagine.",
           "wordCount": 126,
@@ -1330,10 +1322,10 @@
           "wordCount": 2,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "2_63"
+          "chunkId": "2_62"
         },
         {
-          "chunkId": "2_64",
+          "chunkId": "2_63",
           "type": "paragraph",
           "content": "I have talked about stripping hydrogen (2H) from molecules and feeding\nthem to oxygen. These 2H are not free in solution, nor are they shuttled\nby carboxylic acids, as Szent-Györgyi once thought; it turned out they\nare bound to a large molecule called NAD + (or ‘nicotinamide adenine\ndinucleotide’, since you ask). The form of NAD + that has picked up the\ncomponents of hydrogen (or more exactly, two electrons and one proton,\nleaving another proton nearby, bound onto water) is called NADH. 10\nNADH will figure large later in this book, but for now, when you see the\nterm NADH, just focus on the ‘H’. I hope you will develop a Pavlovian\nResponse, and when you see NADH, you’ll think ‘Aha! Once more this is\nthe beast that transfers hydrogen, or rather, the two electrons and two\nprotons that constitute 2H!’\nIn cell respiration, NADH transfers its 2H to oxygen to form water\n(H 2 O), capturing some of the energy released in the process.",
           "wordCount": 166,
@@ -1341,7 +1333,7 @@
           "links": []
         },
         {
-          "chunkId": "2_65",
+          "chunkId": "2_64",
           "type": "paragraph",
           "content": "But NADH\ndoes not transfer its 2H directly to oxygen; instead, the electrons hop (in\nactuality, they ‘quantum tunnel’) down a chain of carriers associated\nwith the membrane itself, what’s now called the respiratory chain – an\nidea conceived by Mitchell’s mentor David Keilin. 11 Notice that I say\nelectrons , not whole hydrogen atoms. What happened to the protons was\nanybody’s guess, though plainly they too ended up on oxygen to form\nwater. Only Mitchell saw the path of protons as the key to the decades-\nold puzzle of coupling – how exactly the transfer of 2H to oxygen is\ncoupled to the synthesis of ATP. Mitchell proposed that the 2H (derived from the Krebs cycle, in the\nform of NADH) are split into their component protons and electrons. The\nelectrons are transferred to oxygen by way of the respiratory chain of\ncarriers embedded in the membrane itself – an electrical current,\ninsulated by the surrounding lipids. This electrical current powers the\nextrusion of protons across the membrane. Mitchell knew that the\nmembrane is nearly impermeable to protons; any damage to the\nmembrane that renders it leaky to protons will dissipate respiration.",
           "wordCount": 193,
@@ -1374,7 +1366,7 @@
           ]
         },
         {
-          "chunkId": "2_66",
+          "chunkId": "2_65",
           "type": "paragraph",
           "content": "The\nprotons accumulate outside, giving a difference in proton concentration\n(which is to say, pH) between the inside and outside. Critically, because\nprotons are positively charged, their accumulation outside generates an\nelectrical charge across the membrane, analogous to a battery. Finally,\nthe flow of protons back through protein turbines embedded in the\nmembrane powers the synthesis of ATP, Lipmann’s universal energy\ncurrency. So ATP synthesis is powered by what Mitchell called the\nproton-motive force . Only then are protons reunited with electrons on\noxygen, to form water. 12 Overall, it looks something like the figure\noverleaf. All this is now received wisdom, but it was hard won. These ideas\nwere bitterly contested over two decades. Jennifer Moyle’s experiments\ncontributed largely to the eventual acceptance of Mitchell’s ideas, for\nwhich he alone was awarded the Nobel prize in 1978. Her essential\ncontribution would surely not have been overlooked today. Mitchell and\nMoyle together published a series of ground-breaking papers in Nature\nin the mid-1960s, laying out the basic experimental approaches still used\nToday. Let me just give you a flavour (don’t worry about the details).",
           "wordCount": 184,
@@ -1407,7 +1399,7 @@
           ]
         },
         {
-          "chunkId": "2_67",
+          "chunkId": "2_66",
           "type": "paragraph",
           "content": "They demonstrated that mitochondrial membranes really do pump\nprotons when given various substrates (including succinate) and oxygen,\ntransiently acidifying the medium. They showed that inhibitors of\nelectron transfer, such as the pesticide rotenone, partially blocked the\nacidification of the medium. And they showed that ‘uncouplers’ such as\nthe antibiotic gramicidin, which disconnect electron transfer from ATP\nsynthesis, allowed protons to flow back through the membrane instead of\ndriving ATP synthesis. By controlling these experimental parameters\nwith exquisite finesse, Mitchell and Moyle were even able to establish\nrough stoichiometries, which is to say, the ratio of the number of protons\npumped to the number of oxygen molecules consumed, or ATP\nsynthesised. These papers are wholly modern in their thinking and idiom,\ndespite being breathtakingly new in conception. A grossly simplified schematic of the respiratory chain. The\ntransfer of electrons from NADH to oxygen is shown by the dotted\nline. These electrons pass through three great protein complexes\nembedded in the membrane (complex I, III and IV; we’ll meet\ncomplex II in Chapter 4).",
           "wordCount": 172,
@@ -1415,10 +1407,10 @@
           "links": []
         },
         {
-          "chunkId": "2_68",
+          "chunkId": "2_67",
           "type": "paragraph",
-          "content": "This current of electrons powers the\nextrusion of ten protons across the membrane, generating a\ncombined electrical charge and concentration difference (the\nproton-motive force) that drives ATP synthesis from ADP\n(adenosine diphosphate) and inorganic phosphate (P i ). In humans,\neight protons pass throu\n[[IMG id=image-054-1 index=8 alt=\"Figure 11\"]]\ngh the ATP synthase for one turn of the\nmotor, which generates three ATPs. The other two protons are not\n‘wasted’ but are saved up towards the next ATP. Note this means\nthat the number of ATPs formed from a single NADH is not a\nwhole number but a fraction (3.3 in humans) and can vary\ndepending on factors that have kept bioenergeticists busy for\ndecades, right up to today. Such experiments established the indispensable role of the membrane\nin respiration, as well as the basic topology of proton pumping and ATP\nsynthesis, but said little about how protons were actually pumped. Mitchell had revolutionary ideas here too, although he was wrong about\nsome of the specifics. In particular, he long opposed the idea that\npumping could be accomplished by rapid conformational changes in\nproteins spanning the membrane (rather than in the order and properties\nof the carriers themselves).",
-          "wordCount": 198,
+          "content": "This current of electrons powers the\nextrusion of ten protons across the membrane, generating a\ncombined electrical charge and concentration difference (the\nproton-motive force) that drives ATP synthesis from ADP\n(adenosine diphosphate) and inorganic phosphate (P i ). In humans,\neight protons pass through the ATP synthase for one turn of the\nmotor, which generates three ATPs. The other two protons are not\n‘wasted’ but are saved up towards the next ATP. Note this means\nthat the number of ATPs formed from a single NADH is not a\nwhole number but a fraction (3.3 in humans) and can vary\ndepending on factors that have kept bioenergeticists busy for\ndecades, right up to today. [[IMG id=image-054-1 index=8 alt=\"Figure 11\"]]\nSuch experiments established the indispensable role of the membrane\nin respiration, as well as the basic topology of proton pumping and ATP\nsynthesis, but said little about how protons were actually pumped. Mitchell had revolutionary ideas here too, although he was wrong about\nsome of the specifics. In particular, he long opposed the idea that\npumping could be accomplished by rapid conformational changes in\nproteins spanning the membrane (rather than in the order and properties\nof the carriers themselves).",
+          "wordCount": 197,
           "sentenceCount": 7,
           "links": [
             {
@@ -1448,7 +1440,7 @@
           ]
         },
         {
-          "chunkId": "2_69",
+          "chunkId": "2_68",
           "type": "paragraph",
           "content": "In short, Mitchell’s beautiful conception was\nright in principle – electron transfer from 2H to O 2 is indeed coupled to a\nproton circuit that drives ATP synthesis, which Mitchell and Moyle\ndemonstrated together – but wrong about some of the detailed\nmechanisms of pumping. Perhaps Mitchell’s greatest error concerned the iconic ATP synthase. This extraordinary protein is a rotating motor embedded in the\nmembrane. Dubbed ‘the elementary particles of life’ when first observed\nby electron microscopy in the early 1960s, there are many thousands of\nthem in every mitochondrion. We now know that the inward flow of\nprotons through these nanoscale turbines drives the synthesis of ATP. Their operation is wholly mechanical, utterly different from anything\nthat Mitchell had ever imagined, and yet the ATP synthase has come to\nrepresent the essence of his hypothesis – its rotation, up to 500\nrevolutions per second, is powered by the proton-motive force, just as he\npredicted from the beginning. 13\nRegardless of his errors, Mitchell’s conception was just magnificent. The energy released by the reaction between 2H (extracted from Krebs\ncycle intermediates) and oxygen is transduced into an electrical charge\non the membrane. This charge is awesome.",
           "wordCount": 196,
@@ -1481,7 +1473,7 @@
           ]
         },
         {
-          "chunkId": "2_70",
+          "chunkId": "2_69",
           "type": "paragraph",
           "content": "It might not sound like much\n– just 150–200 millivolts – yet the membrane is extremely thin, only 6\nnanometres in thickness as noted earlier. This means that the electrical\nfield strength (what you would experience as a molecule in the\nmembrane) is about 30 million volts per metre, equivalent to a bolt of\nlightning across every square nanometre of membrane. And the area of\nelectrically charged membrane in the human body defies belief. If we\nwere to iron out all the mitochondrial membranes in the body, so they\nwere flat, they would cover an area equivalent to about four football\npitches – all charged with the power of a bolt of lightning. This is how respiration works in our own mitochondria, the\n‘powerhouses’ of complex cells. When Mitchell was developing his\nchemiosmotic hypothesis, in the mid-1960s, Lynn Margulis was\nBeginning to marshal the evidence that mitochondria derived from free-\nliving bacteria that had moved inside other cells (in what’s called an\nendosymbiosis) nearly two billion years ago. I’ve discussed the singular\nimportance of mitochondria to complex life in other books and we can\nput it aside here.",
           "wordCount": 188,
@@ -1489,7 +1481,7 @@
           "links": []
         },
         {
-          "chunkId": "2_71",
+          "chunkId": "2_70",
           "type": "paragraph",
           "content": "The key point for us right now is that bacteria work the\nsame way as mitochondria, except that their electrical charge is on the\nbounding membrane of the bacterial cell, as Mitchell knew well – a\ncellular force field. In bacteria, this electrical force field powers far more\nthan ATP synthesis, explaining in part why this mechanism is universally\nconserved across all life. Crucially, we’ll see that the proton-motive force\ndrives CO 2 fixation in some of the most ancient bacteria, making it\nrelevant to the very beginnings of life. I’ll argue that this force field\nmight even cohere cells as individual entities, defining the ‘self’, if such\na thing can be said to exist for bacteria (I think so). I’d like to think that\nMitchell would have been sympathetic to this view of life, as it is\ngrounded in his own philosophical conception of biology. But that’s not the message that others have taken from the\nextraordinary sophistication of cell respiration. Biochemistry turned\naway from the philosophical ideas that underpinned Mitchell’s\nframework, and concerned itself with the marvellous mechanics of\nproton pumps and nanomotors.",
           "wordCount": 185,
@@ -1497,7 +1489,7 @@
           "links": []
         },
         {
-          "chunkId": "2_72",
+          "chunkId": "2_71",
           "type": "paragraph",
           "content": "We are left with cellular mechanics that\nseem to be so Platonically perfect that it’s hard to imagine how they\nmight have evolved. At face value, the spinning of the Krebs cycle\ngenerates an electrical membrane potential, humming in trillions of our\nmitochondria, which in turn spins the ATP synthase nanomotors. Cycles\ndriving cycles. Cogs within cogs. No wonder biochemists prefer to avoid\ntalk of origins, or speculations on the evolution of perfection. But that\nwould be to overlook hard prosaic reality. Perfect it ain’t.",
           "wordCount": 85,
@@ -1510,10 +1502,10 @@
           "wordCount": 2,
           "sentenceCount": 1,
           "links": [],
-          "chunkId": "2_73"
+          "chunkId": "2_72"
         },
         {
-          "chunkId": "2_74",
+          "chunkId": "2_73",
           "type": "paragraph",
           "content": "Imagine you’re starving. You are beginning to break down the proteins\nin your own muscles for the energy you need to keep going. Nothing\nmuch can be harvested from the proteins themselves; it’s their\ncomponent amino acids that you need to burn. That’s how it began for\nKrebs back in the early 1930s. Recall that amino acids are split into\nammonia plus the carboxylic acids that enter the Krebs cycle. By far the\nmost common amino acid that is shipped around the body from muscle\nwasting is glutamine. This is converted into the C5 carboxylic acid α-\nketoglutarate. The α-ketoglutarate spins round the Krebs cycle to form\n... more α-ketoglutarate. Don’t think of the Krebs cycle as a furnace\nburning organic molecules. It’s catalytic – and it catalyses the breakdown\nof the 2C acetate, not the carboxylic acids themselves. So the Krebs\ncycle can only spin faster if it’s provided with more acetate. Normally\nthat comes from the breakdown of glucose or fats; but if we’re starving,\nwe have already burned most of them. We need to turn to proteins\ninstead. Of course we can burn amino acids, but it can be surprisingly\ncomplex.",
           "wordCount": 194,
@@ -1521,7 +1513,7 @@
           "links": []
         },
         {
-          "chunkId": "2_75",
+          "chunkId": "2_74",
           "type": "paragraph",
           "content": "Here’s what happens in the case of α-ketoglutarate. It is first\nbroken down by way of the Krebs cycle to one of the C4 carboxylic\nacids, malate. Malate is then exported out of the mitochondria, across\ntwo membranes, into the cytosol. There it is oxidised to oxaloacetate,\nthen to an activated form of pyruvate called phosphoenol-pyruvate, and\nfinally to pyruvate itself. Pyruvate is shipped back into the mitochondria,\nwhere it is stripped of more hydrogen and CO 2 to form acetyl CoA, and\nfed back into the Krebs cycle. At last it can be fully burnt. What a\nconvoluted path! It’s hard to imagine a rational engineer would have\ncome up with that. Why so roundabout? Part of the answer relates to contingency. The Krebs cycle and\ncellular respiration take place inside the mitochondria, which we’ve\nnoted were once free-living bacteria; they brought along their bacterial\nmetabolism to the ancestor of complex (eukaryotic) cells two billion\nyears ago. To some extent they remain another world within the cell,\nenclosed by two membranes, the innermost one so impermeable, even to\nprotons, that the only way across is through selective pumps. That’s why\nmalate has to be exported and pyruvate imported.",
           "wordCount": 199,
@@ -1529,7 +1521,7 @@
           "links": []
         },
         {
-          "chunkId": "2_76",
+          "chunkId": "2_75",
           "type": "paragraph",
           "content": "But that only answers\npart of the question. The reactive molecule phosphoenol-pyruvate is a\ncentral metabolic branch point, for example in the synthesis of new\nsugars, which are needed for many reasons, notably making the sugar-\nphosphate backbone of DNA and RNA. Most of this synthesis takes\nplace outside the mitochondria. So new sugars can be made from amino\nacids, via the Krebs cycle, and in our own cells this thoroughfare often\ninvolves transport in or out of the mitochondria. And that brings us back\nto a point I touched on earlier – the lucky choice of model made by\nSzent-Györgyi and Krebs: pigeon-breast muscle. Adding succinate to pigeon-breast muscle raised the respiratory rate\nby 600% because that tissue is poised to oxidise glucose as quickly as\npossible, to provide energy for flying (and the tissue slices were supplied\nwith plenty of glucose needed to form acetyl CoA). But had they\nRepeated the experiment with liver tissue, they would not have seen the\nsame thing. That’s because the liver does all kinds of other jobs which\nrequire flux in and out of the Krebs cycle, such as making glucose from\namino acids.",
           "wordCount": 192,
@@ -1537,7 +1529,7 @@
           "links": []
         },
         {
-          "chunkId": "2_77",
+          "chunkId": "2_76",
           "type": "paragraph",
           "content": "It’s not really a cycle so much as a roundabout, where\ntraffic enters and exits as well as going around. Overall there has to be\nbalance, but there is no sense in which it is normally catalytic, however\nmuch that particular insight opened the door to Krebs and generations\nafter him. Catalysis is a special case. The reason is simple enough but has profound consequences for life,\nwhich we will explore in this book. The Krebs cycle supplies precursors\nfor the synthesis of amino acids, fats, sugars and more. If Krebs-cycle\nintermediates are siphoned off for these syntheses, then fewer\nintermediates remain to provide hydrogen for respiration. Because each\nintermediate can be regenerated through one complete spin of the cycle,\nyou could think of each molecule as its own mini-cycle, with millions of\nintermediates in each mitochondrion all whirring around in their own\nprivate cycles. Draw off intermediates to make new sugars, and you’ll\nhave fewer mini-cycles – a direct sap on the cell’s energy, just when you\nneed it most for making new molecules.",
           "wordCount": 175,
@@ -1545,7 +1537,7 @@
           "links": []
         },
         {
-          "chunkId": "2_78",
+          "chunkId": "2_77",
           "type": "paragraph",
           "content": "Add more intermediates, and\nyou’ll have extra mini-cycles, each one able to spin off hydrogen that\ncan be burnt in respiration – the catalytic effect observed by Krebs. To\nkeep an overall balance, the intermediates siphoned off for any\nbiosyntheses must be replaced by an input to the Krebs cycle from\nelsewhere (what’s called anaplerosis). So, for much of the time, flux\nenters and exits the cycle at every junction. All of this passing trade uses\nthe Krebs cycle as a roundabout and not a full cycle. It adds up to no\nordinary roundabout, but a crazy traffic system like the Arc de Triomphe\nroundabout in Paris or the famous magic roundabout in Swindon, with\ncircles within a circle. It might seem easier to explain the evolution of a crazy roundabout\nsystem than a perfect cycle, but these reflections really just raise the\nopposite problem. Why did several billion years of evolution come up\nwith such a crazy system, or fail to improve it? Krebs himself grappled\nwith this question, and in his final year, 1981, he wrote a paper on the\nevolution of metabolic pathways.",
           "wordCount": 186,
@@ -1553,7 +1545,7 @@
           "links": []
         },
         {
-          "chunkId": "2_79",
+          "chunkId": "2_78",
           "type": "paragraph",
           "content": "It seems to me that, although he was\nperfectly aware of the synthetic side of the cycle, he tended to see the\ncycle in animals as largely dedicated to the breakdown of organics; and\nthat’s still how it is presented in most textbooks, and how I have\npresented it in this chapter: breakdown is its primary purpose, and\nsynthesis is secondary. That impression is strengthened by the fact that\nKey metabolic branch-points such as phosphoenol-pyruvate lie outside\nthe mitochondria, off the Krebs cycle itself, which therefore seems to fall\nslightly outside the metabolic centre of gravity in animals. Krebs knew\nthat many microbes living in the absence of oxygen use the cycle mainly\nfor synthesis. Yet not once, to my knowledge, did he cite a revolutionary\nseries of papers stretching back to 1966, which showed that in some\nancient bacteria the Krebs cycle can spin in reverse – rather than\nstripping 2H and CO 2 from food to generate energy, it uses energy to\nreact 2H and CO 2 to form organic molecules. In the next chapter, we’ll\nsee that this so-called ‘reverse’ Krebs cycle makes much more sense of\nevolution.",
           "wordCount": 191,
@@ -1561,7 +1553,7 @@
           "links": []
         },
         {
-          "chunkId": "2_80",
+          "chunkId": "2_79",
           "type": "paragraph",
           "content": "1 For balance it should be said that there were also some protests outside the lab\nagainst foreigners taking scarce British jobs during the Great Depression. The\nparallel with modern times is uncomfortably close. But here is a more edifying\nmodern parallel. Lord John Krebs, the distinguished son of Hans, tells a beautiful\nstory to mirror his father’s. After reading a newspaper article about the high price\nthat Nobel medals can fetch at auction, he felt obliged to either donate his\nfather’s medal to a museum, or seal it in a vault, or sell it and put the proceeds to\na good cause. He chose the latter, and put the funds into the Sir Hans Krebs\nTrust, to support today’s refugee scientists forced to flee from their home\ncountry. In collaboration with CARA (Council for At-Risk Academics, the\ndescendant of the Academic Assistance Council) the Sir Hans Krebs Trust has\nsince 2015 supported a number of scientists fleeing from Syria and other\ncountries. You can find more information here: https://www.cara.ngo/sir-hans-\nkrebs-trust-cara-fellowships/.",
           "wordCount": 171,
@@ -1594,7 +1586,7 @@
           ]
         },
         {
-          "chunkId": "2_81",
+          "chunkId": "2_80",
           "type": "paragraph",
           "content": "Should you wish to donate, please alert Stephen\nWordsworth that the donation is for the Sir Hans Krebs Trust (email:\nWordsworth@cara.ngo)\n2 If you are sharp-eyed you might notice that the rates of oxygen consumption\nand CO 2 release counterbalance each other exactly, so there is no overall change\nin pressure in this case. But there’s a clever trick. The CO 2 can be absorbed by a\nsolution of potassium hydroxide, so that it exerts no gas pressure. An equivalent\nmethod is used today industrially as a CO 2 ‘scrubber’ for carbon capture; the\nCO 2 is converted into carbonate, which is eventually precipitated out as calcium\ncarbonate (in effect, limescale). For manometry, instead of measuring the change\nin pressure exerted by both CO 2 and oxygen, the manometer only measures the\ndiminishing pressure exerted by the consumption of oxygen. 3 Carbon monoxide poisoning can kill you by binding to the iron in the\nhaemoglobin of your red blood cells and displacing oxygen, but if you survived\nthat, CO would stifle respiration in your cells for the same reasons. The haem\nprotein that Warburg discovered is now called cytochrome oxidase, ‘cytochrome’\nMeaning ‘cell colour’.",
           "wordCount": 194,
@@ -1627,7 +1619,7 @@
           ]
         },
         {
-          "chunkId": "2_82",
+          "chunkId": "2_81",
           "type": "paragraph",
           "content": "Without cytochromes, cells are nearly colourless (in fact\nthey’re a pale yellow from flavins, also discovered by Warburg). At much lower\nlevels, CO is an important cellular signal that operates in part by modulating the\nrate of respiration, as does another important gaseous signal, nitric oxide (NO). These gases can control the rate of respiration so exquisitely that they alter the\nlocal concentration of oxygen. This trick is employed wonderfully by fireflies to\ngenerate flashes of light using the oxygen-dependent enzyme luciferase. 4 A ‘group’ refers to a few atoms bound together within a molecule, which tend\nto stick together in the same arrangement even when transferred to another\nmolecule. Groups are chemically semi-stable configurations that are found in\nmultiple molecules, such as the amino group in all amino acids. While atoms are\nthe basic building blocks of molecules, atoms primarily assemble into groups,\nwhich together make up larger molecules. It goes on. Molecules such as amino\nacids can be linked together to form macromolecules, such as proteins, but the\nactual chemistry a protein carries out (for example, at the active site of an\nenzyme) depends on the specific chemical properties of the groups involved.",
           "wordCount": 195,
@@ -1660,7 +1652,7 @@
           ]
         },
         {
-          "chunkId": "2_83",
+          "chunkId": "2_82",
           "type": "paragraph",
           "content": "Some are more reactive than others. We’ll consider the diverse chemical\nproperties of the different groups in a simple molecule in a moment. 5 Szent-Györgyi had a way with words. Some of the most arresting aphorisms in\nbiochemistry trace back to him. One of my favourites is ‘Life is nothing but an\nelectron looking for a place to rest.’ Szent-Györgyi wrote a number of books,\nranging widely across science and life, including a collection of deeply troubled\nessays on the nuclear threat in the 1960s entitled The Crazy Ape , with overtones\nof Dr Strangelove. I stumbled across one of his books that I didn’t know while I\nwas writing this book: The Living State , published in 1972. His thinking was\nastonishingly close to my own, albeit we’ve learned a lot in the last half century. He begins: ‘Every biologist has at some time asked “What is life?” and none has\never given a satisfactory answer.’ That’s still true today. He continues: ‘Life, as\nsuch, does not exist. What we can see and measure are material systems which\nhave the wonderful quality of “being alive”.",
           "wordCount": 186,
@@ -1693,7 +1685,7 @@
           ]
         },
         {
-          "chunkId": "2_84",
+          "chunkId": "2_83",
           "type": "paragraph",
           "content": "What we can ask more hopefully is\n“What are the properties which bring matter to life?”’ I could have written that in\nmy own introduction. Later, there’s a celebrated passage, which again resonates\nwith me: ‘My own scientific career was a descent from higher to lower\ndimension, led by the desire to understand life. I went from animals to cells, from\ncells to bacteria, from bacteria to molecules, from molecules to electrons. The\nstory had its irony, for molecules and electrons have no life at all. On my way,\nlife ran out between my fingers. The present book is the result of my effort to\nfind my way back again, climbing up the same ladder I had so laboriously\ndescended. Having started in medicine, it is befitting that I should end with a\nmedical problem, cancer, which took away most of what was dear to me.’\n6 Let me just clarify the distinction between 2H and H 2 . It’s an important\ndifference but might leave you feeling exasperated with pedantic scientists. 2H\nrefers to two hydrogen atoms, which are typically attached to other molecules,\nSuch as the carboxylic acids shown in the figure.",
           "wordCount": 194,
@@ -1701,7 +1693,7 @@
           "links": []
         },
         {
-          "chunkId": "2_85",
+          "chunkId": "2_84",
           "type": "paragraph",
           "content": "A hydrogen atom comprises a\nsingle proton in the nucleus along with a single electron around the nucleus. 2H\ntherefore refers to two protons and two electrons, which can be drawn from\nalmost anywhere. In contrast H 2 is a gas: two hydrogen atoms bound together by\na covalent bond, in which each hydrogen atom shares its single electron, so each\natom now has a full inner shell of two electrons, giving quantum mechanical\nstability. H 2 is also composed of two protons and two electrons, but in this case\nonly in the gaseous form H 2 . 7 He married Margaret Fieldhouse in 1938. She taught in a Catholic convent\nschool near the university, having been instructed in the Montessori teaching\nmethod by the inspirational Maria Montessori herself. When Hans asked\nMargaret’s father for her hand in marriage, Mr Fieldhouse said to Margaret ‘I\ndon’t know what you see in him.",
           "wordCount": 152,
@@ -1734,7 +1726,7 @@
           ]
         },
         {
-          "chunkId": "2_86",
+          "chunkId": "2_85",
           "type": "paragraph",
           "content": "The chap seems to have no vices.’ Margaret\nwas reportedly amused and answered ‘I expect I shall find them before long.’\nThey had two sons and a daughter, the youngest, John, becoming a distinguished\nzoologist and science policy advisor (chairing the Food Standards Agency,\nBritish Science Association and Committee on Climate Change among others). He was ennobled in 2007 as Lord Krebs and – as mentioned earlier – founded the\nSir Hans Krebs Trust in 2015, to support refugee scientists. 8 For the more astute accountants among you, some of the hydrogens burnt in\nfact derive from water, which is added at two separate steps onto Krebs-cycle\nintermediates (see figure on page 286 for one of them). Recall that stripping the\n2H from glucose would give you six sets of 2H, whereas the Krebs cycle actually\nstrips out ten sets of 2H. So nearly half the 2H burnt in respiration comes from\nsplitting water (which is basically what happens in photosynthesis) and then\nburning the extracted hydrogen. Did you know you could do that? Just wow!",
           "wordCount": 176,
@@ -1767,7 +1759,7 @@
           ]
         },
         {
-          "chunkId": "2_87",
+          "chunkId": "2_86",
           "type": "paragraph",
           "content": "9 Mitchell had some wealth through his uncle, Sir Godfrey Mitchell, a\nconstruction engineer who had bought a small, insolvent construction company,\nGeorge Wimpey, in 1919. Under Godfrey’s dynamic direction, Wimpey went on\nto build some 300,000 homes in England by the time of his death in 1982. During the Second World War, the Wimpey Construction Company built\nhundreds of airfields, balloon stations, docks and army camps, for which\nGodfrey was knighted in 1948; it built Heathrow Airport soon afterwards. During the war years, the success of Wimpey allowed Peter Mitchell to cut a\nflamboyant figure around Cambridge, driving a silver Rolls-Royce, with his\nflowing mane of hair. Later on, periodic gifts of shares allowed him to purchase\nand renovate Glynn House, and helped him to maintain the institute through\ndifficult times. 10 NADH was also discovered by Warburg, but he failed to appreciate its full\nsignificance. It fell to the great US biochemist Albert Lehninger (author of a\nfamous textbook) to show that the oxidation of NADH by oxygen was linked to\nATP synthesis, in two classic papers in the late 1940s.",
           "wordCount": 183,
@@ -1775,7 +1767,7 @@
           "links": []
         },
         {
-          "chunkId": "2_88",
+          "chunkId": "2_87",
           "type": "paragraph",
           "content": "Lehninger’s pioneering\nwork on bioenergetics included demonstrating that respiration takes place in\nMitochondria, the ‘power-houses’ of the cell. Yet for all his brilliance, Lehninger\ncould not solve exactly how NADH oxidation was coupled to ATP synthesis. The\nentire field got stuck for two decades. It took Mitchell’s unprecedented\nconceptual leap to answer the question. 11 A much-loved figure, with a faintly owlish look, Keilin headed the Molteno\nInstitute in Cambridge, just across the lawn from Hopkins’s biochemistry\ndepartment. He had welcomed Krebs into his home a decade earlier, despite a\nlong and acrimonious dispute with Warburg about the nature of respiration. The\nbasis of that dispute was three separate cytochromes, each one distinct from\nWarburg’s ferment, which Keilin had detected and proposed acted as a\n‘respiratory chain’ of carriers that passed electrons to oxygen. 12 There’s an irony here because Krebs and R. E.",
           "wordCount": 144,
@@ -1832,7 +1824,7 @@
           ]
         },
         {
-          "chunkId": "2_89",
+          "chunkId": "2_88",
           "type": "paragraph",
           "content": "Davies came up with a similar\nidea a decade before Mitchell, in 1951, in which they proposed that ‘It is feasible\nthat ionic concentration differences form the link between the free energy of\nrespiration on the one hand and ATP synthesis on the other.’ They went on to say\n‘the operation of a mechanism depending on concentration differences\nnecessarily postulates specific structures which prevent wasteful mixing of ions’\n– a membrane. But Krebs and Davies never went into testable detail, still less\ntesting it, and never discussed electrical membrane potentials. Mitchell had been\nunaware of Krebs’s idea, and some years later apologised to him for overlooking\nit; Krebs responded: ‘After all it was no more than an idea – hardly a hypothesis\n– and did not lead directly to any useful experiments.’ What a magnanimous\nman. 13 Although Mitchell had himself proposed conformational changes in proteins\nin his early work on bacteria, he stubbornly resisted the idea in later years, in a\nlong-running dispute with Paul Boyer (who eventually received the Nobel prize\nalongside Sir John Walker for their work on the structure and mechanism of the\nATP synthase).",
           "wordCount": 189,
@@ -1865,7 +1857,7 @@
           ]
         },
         {
-          "chunkId": "2_90",
+          "chunkId": "2_89",
           "type": "paragraph",
           "content": "Mitchell’s reasoning was curious – it related to testing\nhypotheses, not the veracity of the idea itself. Mitchell was an ardent supporter of\nKarl Popper’s ideas on the formal need to disprove hypotheses in science. By\ninitially specifying alternating carriers of electrons and 2H, Mitchell also\nspecified precise (therefore testable) ratios of protons pumped to electrons\ntransferred. Simply imagining a protein that changed its shape lacked proper\nrigour, Mitchell argued, because a conformational change could be associated\nwith the transfer of any number of protons or electrons, making it difficult to\ndisprove a hypothesis, regardless of whether it was true or not. Despite these\nerrors, Mitchell was in fact correct about one of the most baffling pumping\nmechanisms, known as the Q cycle, in which quinones transfer protons across\nthe membrane through precisely the type of spatial coupling proposed by\nMitchell.",
           "wordCount": 141,
@@ -2288,8 +2280,8 @@
         {
           "chunkId": "3_36",
           "type": "paragraph",
-          "content": "Chemical analysis\nshowed this to be a three-carbon carboxylic acid called\nphosphoglycerate:\nNotice that the newly fixed CO 2 (highlighted with the dotted line) seems\nto be joined onto a two-carbon acceptor molecule, with a phosphate\ngroup also attached (PO 4 2– ), as anticipated by Ruben and Kamen. It’s\nhard to convey the excitement that one dark smudge signifying this\nunprepossessing little molecule must have caused. Think about it for a\nmoment: what is more mysterious than the everyday miracle of\nphotosynthesis, in which plants turn thin air into wood and leaves,\nflowers and fruit? How on earth do they do that? Here was the first\ntangible clue, which transformed nature’s deepest magic into the\nlanguage of science, of human comprehension, of the rational mind – a\nsimple molecule that made sense. All that in one dark smudge. This is\nwhy scientists get so excited about the seemingly abs\n[[IMG id=image-075-1 index=1 alt=\"Figure 13\"]]\ntruse. That is no\nsmudge, it is a whole world! But it was also the only cheap insight.",
-          "wordCount": 173,
+          "content": "Chemical analysis\nshowed this to be a three-carbon carboxylic acid called\nphosphoglycerate:\nNotice that the newly fixed CO 2 (highlighted with the dotted line) seems\nto be joined onto a two-carbon acceptor molecule, with a phosphate\ngroup also attached (PO 4 2– ), as anticipated by Ruben and Kamen. It’s\nhard to convey the excitement that one dark smudge signifying this\nunprepossessing little molecule must have caused. Think about it for a\nmoment: what is more mysterious than the everyday miracle of\nphotosynthesis, in which plants turn thin air into wood and leaves,\nflowers and fruit? How on earth do they do that? Here was the first\ntangible clue, which transformed nature’s deepest magic into the\nlanguage of science, of human comprehension, of the rational mind – a\nsimple molecule that made sense. All that in one dark smudge. This is\nwhy scientists get so excited about the seemingly abstruse. That is no\nsmudge, it is a whole world! [[IMG id=image-075-1 index=1 alt=\"Figure 13\"]]\nBut it was also the only cheap insight.",
+          "wordCount": 172,
           "sentenceCount": 9,
           "links": []
         },
@@ -2353,8 +2345,8 @@
         {
           "chunkId": "3_41",
           "type": "paragraph",
-          "content": "Calvin’s own cherished idea\n[[IMG id=image-077-1 index=2 alt=\"Figure 14\"]]\ns on photochemistry had recently\nimploded, so his greatest achievements in the field were more\nAttributable to Benson, which must have rankled. And I suspect that\nBenson didn’t mince his words in telling Calvin what he thought of some\nof Calvin’s more wayward ideas. Benson was certainly capable of being\ncaustic in his judgements. Calvin’s wife Genevieve told Benson that\nCalvin would have another heart attack if he stayed. I wonder if Benson\ntreated Calvin with some measure of disdain; he had certainly stopped\ntelling him what he was doing on a daily basis. Be that as it may, Calvin\nonly diminished himself through his later actions. Seven years after\nBenson had gone, in 1961, Calvin was awarded the Nobel prize, alone,\nfor ‘his research on carbon dioxide assimilation in plants’. In his Nobel\nlecture, Calvin mentioned Benson just once, in passing. Even more\ndisturbingly, in 1991 Calvin published his autobiography, in which he\nairbrushed Benson from history.",
-          "wordCount": 167,
+          "content": "Calvin’s own cherished ideas on photochemistry had recently\nimploded, so his greatest achievements in the field were more\n[[IMG id=image-077-1 index=2 alt=\"Figure 14\"]]\nAttributable to Benson, which must have rankled. And I suspect that\nBenson didn’t mince his words in telling Calvin what he thought of some\nof Calvin’s more wayward ideas. Benson was certainly capable of being\ncaustic in his judgements. Calvin’s wife Genevieve told Benson that\nCalvin would have another heart attack if he stayed. I wonder if Benson\ntreated Calvin with some measure of disdain; he had certainly stopped\ntelling him what he was doing on a daily basis. Be that as it may, Calvin\nonly diminished himself through his later actions. Seven years after\nBenson had gone, in 1961, Calvin was awarded the Nobel prize, alone,\nfor ‘his research on carbon dioxide assimilation in plants’. In his Nobel\nlecture, Calvin mentioned Benson just once, in passing. Even more\ndisturbingly, in 1991 Calvin published his autobiography, in which he\nairbrushed Benson from history.",
+          "wordCount": 166,
           "sentenceCount": 9,
           "links": []
         },
@@ -2442,8 +2434,8 @@
         {
           "chunkId": "3_49",
           "type": "paragraph",
-          "content": "As we’ve seen, these\ncarbon skeletons are the currency of biochemistry. Do you want to make\nan amino acid? Your starting point is right here in the Krebs cycle. Do\nyou want to make fatty acids or isoprenes for cell membranes? You start\nwith acetyl CoA. How about sugars? Start with pyruvate. Nucleotides for\nRNA or DNA? Your building blocks are amino acids (derived from the\nKrebs cycle) and sugars (ditto). Please note that I’m not showing the full\ncycle here – that’s shown on page 287. But you can see here that the\nreverse cycle is slightly longer than the standard cycle running\nbackwards: it includes several extra carboxylic acids that are not u\n[[IMG id=image-081-1 index=3 alt=\"Figure 15\"]]\nsually\nthought of as Krebs-cycle intermediates, notably acetyl CoA and\npyruvate (plus that metabolic link between carboxylic acids and sugars,\nPhosphoenol-pyruvate, as you can see on page 287). The reverse cycle\nintegrates them into a biosynthetic engine at the very heart of\nmetabolism, in a way that makes perfect sense. The Krebs cycle provides\nC2 to C6 carbon skeletons, the Lego bricks of life, to make virtually\neverything else.",
-          "wordCount": 189,
+          "content": "As we’ve seen, these\ncarbon skeletons are the currency of biochemistry. Do you want to make\nan amino acid? Your starting point is right here in the Krebs cycle. Do\nyou want to make fatty acids or isoprenes for cell membranes? You start\nwith acetyl CoA. How about sugars? Start with pyruvate. Nucleotides for\nRNA or DNA? Your building blocks are amino acids (derived from the\nKrebs cycle) and sugars (ditto). Please note that I’m not showing the full\ncycle here – that’s shown on page 287. But you can see here that the\nreverse cycle is slightly longer than the standard cycle running\nbackwards: it includes several extra carboxylic acids that are not usually\nthought of as Krebs-cycle intermediates, notably acetyl CoA and\npyruvate (plus that metabolic link between carboxylic acids and sugars,\n[[IMG id=image-081-1 index=3 alt=\"Figure 15\"]]\nPhosphoenol-pyruvate, as you can see on page 287). The reverse cycle\nintegrates them into a biosynthetic engine at the very heart of\nmetabolism, in a way that makes perfect sense. The Krebs cycle provides\nC2 to C6 carbon skeletons, the Lego bricks of life, to make virtually\neverything else.",
+          "wordCount": 188,
           "sentenceCount": 13,
           "links": []
         },
@@ -2531,8 +2523,8 @@
         {
           "chunkId": "3_57",
           "type": "paragraph",
-          "content": "It forces its electrons onto CO 2 (indirectly in the Calvin–\nBenson cycle) or onto those two most recalcitrant Krebs-cycle\nintermediates – acetate (C2) and succinate (C4) – enabling the Krebs\ncycle to run backwards right the way round, to fix CO 2 . Remember my\nportraits of succinate and acetate in Chapter 1 (pages 46 and 57) with\ntheir stout bellies and Cheshire Cat grins ... they’re far too placid to\nreact unless poked. The basic chemistry is similar for both acetate and succinate,\nrequiring CO 2 to be joined onto a virtually inert carboxylate group. Remember that the carboxylate group has a structure of -CO 2 , so the\nCO 2 has to be bound onto something very like itself. Ferredoxin (Fd)\ntakes the electrons from the 2H and transfers them ont\n[[IMG id=image-084-1 index=4 alt=\"Figure 16\"]]\no CO 2 , enabling it\nto form a carbon-to-carbon bond:\nLet’s not worry about exactly how that works here (it requires several\nsteps; see Appendix 1 if you want to know – the process is rather\nBeautiful). The critical point here is that ferredoxin has a biologically\nunparalleled ability to press electrons onto even the most unreactive\nmolecules.",
-          "wordCount": 198,
+          "content": "It forces its electrons onto CO 2 (indirectly in the Calvin–\nBenson cycle) or onto those two most recalcitrant Krebs-cycle\nintermediates – acetate (C2) and succinate (C4) – enabling the Krebs\ncycle to run backwards right the way round, to fix CO 2 . Remember my\nportraits of succinate and acetate in Chapter 1 (pages 46 and 57) with\ntheir stout bellies and Cheshire Cat grins ... they’re far too placid to\nreact unless poked. The basic chemistry is similar for both acetate and succinate,\nrequiring CO 2 to be joined onto a virtually inert carboxylate group. Remember that the carboxylate group has a structure of -CO 2 , so the\nCO 2 has to be bound onto something very like itself. Ferredoxin (Fd)\ntakes the electrons from the 2H and transfers them onto CO 2 , enabling it\nto form a carbon-to-carbon bond:\nLet’s not worry about exactly how that works here (it requires several\nsteps; see Appendix 1 if you want to know – the process is rather\n[[IMG id=image-084-1 index=4 alt=\"Figure 16\"]]\nBeautiful). The critical point here is that ferredoxin has a biologically\nunparalleled ability to press electrons onto even the most unreactive\nmolecules.",
+          "wordCount": 197,
           "sentenceCount": 7,
           "links": []
         },
@@ -2547,8 +2539,8 @@
         {
           "chunkId": "3_59",
           "type": "paragraph",
-          "content": "Plants still depend on ferredoxin, but keep its levels to a strict minimum,\ntransferring its electrons straight to NADP + (nicotinamide adenine\ndinucleotide phosphate) to form NADPH like this:\nTransfer of electrons from 2H to CO 2 to form organics, C(H 2 O), in\nphotosynthesis, powered b\n[[IMG id=image-085-1 index=5 alt=\"Figure 17\"]]\ny sunlight. The 2H could come from\nH 2 S, H 2 or H 2 O depending on the type of photosynthesis – but all\nneed sunlight to transfer the electrons from 2H onto ferredoxin\n(Fd) to form Fd 2– . In the presence of oxygen, Fd 2– is dangerous as\nIt can generate reactive free radicals. This eventuality is largely\navoided by Fd 2– swiftly passing its electrons on to NADP + to form\nNADPH, rather than directly to CO 2 . Rather than dealing in single electrons, like ferredoxin, NADPH\ntransfers pairs of electrons, which makes it far less reactive with oxygen,\nwhile retaining just enough power to push its electrons onto other\nmolecules. 11 NADPH doesn’t have the potency to drive the Krebs cycle\nbackwards, but it can promote the sugar chemistry of the Calvin–Benson\ncycle.",
-          "wordCount": 191,
+          "content": "Plants still depend on ferredoxin, but keep its levels to a strict minimum,\ntransferring its electrons straight to NADP + (nicotinamide adenine\ndinucleotide phosphate) to form NADPH like this:\nTransfer of electrons from 2H to CO 2 to form organics, C(H 2 O), in\nphotosynthesis, powered by sunlight. The 2H could come from\nH 2 S, H 2 or H 2 O depending on the type of photosynthesis – but all\nneed sunlight to transfer the electrons from 2H onto ferredoxin\n(Fd) to form Fd 2– . In the presence of oxygen, Fd 2– is dangerous as\n[[IMG id=image-085-1 index=5 alt=\"Figure 17\"]]\nIt can generate reactive free radicals. This eventuality is largely\navoided by Fd 2– swiftly passing its electrons on to NADP + to form\nNADPH, rather than directly to CO 2 . Rather than dealing in single electrons, like ferredoxin, NADPH\ntransfers pairs of electrons, which makes it far less reactive with oxygen,\nwhile retaining just enough power to push its electrons onto other\nmolecules. 11 NADPH doesn’t have the potency to drive the Krebs cycle\nbackwards, but it can promote the sugar chemistry of the Calvin–Benson\ncycle.",
+          "wordCount": 190,
           "sentenceCount": 6,
           "links": [
             {
@@ -3408,16 +3400,16 @@
         {
           "chunkId": "4_40",
           "type": "paragraph",
-          "content": "The\nparallel between mineral surfaces and enzymes such as ferredoxin is\nremarkable: the lattice structure of iron and sulfur in minerals such as\ngreigite is nearly identica\n[[IMG id=image-107-1 index=1 alt=\"Figure 19\"]]\nl to the tiny clusters of iron and sulfur that\nPerform the chemistry in ferredoxin. Both the minerals and clusters can\nalso incorporate other metals that transfer pairs of electrons even more\nreadily, especially nickel. So how far does this parallel between enzymes\nand mineral surfaces go? Might it even explain the repeating chemistry\nof the Krebs cycle? Let’s see what happens next. Now another electron jiggle splits the bound CO 2 into carbon\nmonoxide (CO) and a charged oxygen atom, both still attached to the\nsurface. Knowing exactly how electrons behave during these jiggles is a\nquantum artform in itself, uncertain in detail even today – electrons\n‘tunnel’ (hop) across these tiny distances and simply appear where they\nare most likely to be – but experimentally there’s no doubt that CO 2\nbinding to a surface is reduced to CO, roughly as depicted here:\nAll this chemistry is promoted by electrons passing from the surface of\nthe mineral onto CO 2 .",
-          "wordCount": 195,
+          "content": "The\nparallel between mineral surfaces and enzymes such as ferredoxin is\nremarkable: the lattice structure of iron and sulfur in minerals such as\ngreigite is nearly identical to the tiny clusters of iron and sulfur that\n[[IMG id=image-107-1 index=1 alt=\"Figure 19\"]]\nPerform the chemistry in ferredoxin. Both the minerals and clusters can\nalso incorporate other metals that transfer pairs of electrons even more\nreadily, especially nickel. So how far does this parallel between enzymes\nand mineral surfaces go? Might it even explain the repeating chemistry\nof the Krebs cycle? Let’s see what happens next. Now another electron jiggle splits the bound CO 2 into carbon\nmonoxide (CO) and a charged oxygen atom, both still attached to the\nsurface. Knowing exactly how electrons behave during these jiggles is a\nquantum artform in itself, uncertain in detail even today – electrons\n‘tunnel’ (hop) across these tiny distances and simply appear where they\nare most likely to be – but experimentally there’s no doubt that CO 2\nbinding to a surface is reduced to CO, roughly as depicted here:\nAll this chemistry is promoted by electrons passing from the surface of\nthe mineral onto CO 2 .",
+          "wordCount": 194,
           "sentenceCount": 7,
           "links": []
         },
         {
           "chunkId": "4_41",
           "type": "paragraph",
-          "content": "But as in respiration, protons and electrons can\nunite to form hydrogen atoms. This happens much more readily in mildly\nacidic environments. Under these conditions, protons can bind to sulfur\nonto the surface of the mineral, positioning them close to the action. They can then follow the electrons onto CO 2 attached to the surface. Overall, the transfer of electrons and protons onto CO 2 equates to the\ntransfer of hyd\n[[IMG id=image-108-1 index=2 alt=\"Figure 20\"]]\nrogen, even in the absence of hydrogen itself. Here’s a\nsequence showing roughly what happens:\nAs before, the curly arrows depict the movement of a pair of electrons,\ninitially from the surface of the mineral onto the carbon atom, allowing\nthe oxygen atom to take back the electron pair it had previously donated\nto form the triple bond of carbon monoxide. As you might imagine, a\nnegative charge on the carbon atom, in the middle of the panel, is not a\nstable arrangement, but in a mildly acidic environment, where protons\nare likely to bind nearby, it lasts for the merest instant, before a proton\nhops across, and balances charges.",
-          "wordCount": 186,
+          "content": "But as in respiration, protons and electrons can\nunite to form hydrogen atoms. This happens much more readily in mildly\nacidic environments. Under these conditions, protons can bind to sulfur\nonto the surface of the mineral, positioning them close to the action. They can then follow the electrons onto CO 2 attached to the surface. Overall, the transfer of electrons and protons onto CO 2 equates to the\ntransfer of hydrogen, even in the absence of hydrogen itself. Here’s a\nsequence showing roughly what happens:\n[[IMG id=image-108-1 index=2 alt=\"Figure 20\"]]\nAs before, the curly arrows depict the movement of a pair of electrons,\ninitially from the surface of the mineral onto the carbon atom, allowing\nthe oxygen atom to take back the electron pair it had previously donated\nto form the triple bond of carbon monoxide. As you might imagine, a\nnegative charge on the carbon atom, in the middle of the panel, is not a\nstable arrangement, but in a mildly acidic environment, where protons\nare likely to bind nearby, it lasts for the merest instant, before a proton\nhops across, and balances charges.",
+          "wordCount": 185,
           "sentenceCount": 7,
           "links": []
         },
@@ -3432,7 +3424,7 @@
         {
           "chunkId": "4_43",
           "type": "paragraph",
-          "content": "The\nsame thing can happen repeatedly. So here’s what happens next. Notice\nin\n[[IMG id=image-109-1 index=3 alt=\"Figure 21\"]]\nthe middle panel that the electron pair on the oxygen is quickly shared\nwith a nearby proton, in this case forming an OH (an ‘alcohol’ group):\nThe final step in this sequence is another repeat, but this time the oxygen\ntakes its final bonding pair of electrons and detaches as a hydroxide ion\n(OH – ), leaving now a methyl group (-CH 3 ) bound to the surface. This is\nthe same stout belly that we’ve seen in pyruvate or acetate. In other\nwords, what started out as a fully oxidised carbon, bound to two oxygen\natoms in the form of CO 2 , ends up bound to multiple hydrogen atoms (it\nis said to be ‘reduced’) still attached to the surface. That final step goes\nlike this:\nNotice what else is happening here. The OH – has detached in a mildly\nacidic environment, so there are plenty of H + ions around.",
+          "content": "The\nsame thing can happen repeatedly. So here’s what happens next. Notice\nin the middle panel that the electron pair on the oxygen is quickly shared\nwith a nearby proton, in this case forming an OH (an ‘alcohol’ group):\n[[IMG id=image-109-1 index=3 alt=\"Figure 21\"]]\nThe final step in this sequence is another repeat, but this time the oxygen\ntakes its final bonding pair of electrons and detaches as a hydroxide ion\n(OH – ), leaving now a methyl group (-CH 3 ) bound to the surface. This is\nthe same stout belly that we’ve seen in pyruvate or acetate. In other\nwords, what started out as a fully oxidised carbon, bound to two oxygen\natoms in the form of CO 2 , ends up bound to multiple hydrogen atoms (it\nis said to be ‘reduced’) still attached to the surface. That final step goes\nlike this:\nNotice what else is happening here. The OH – has detached in a mildly\nacidic environment, so there are plenty of H + ions around.",
           "wordCount": 171,
           "sentenceCount": 7,
           "links": []
@@ -3440,8 +3432,8 @@
         {
           "chunkId": "4_44",
           "type": "paragraph",
-          "content": "These react\nimmediately to form water, H 2 O, shown in the right-hand panel – a\nfizzing neutralisation reaction that many of us might remember from\ntitrating acids and bases at school, perhaps even in your mouth. This is\nimportant for two reasons. First, it means that the OH – ions detach easily\nin acidic environments, but not under alkaline conditions, where there’s\nalready an excess of OH – ions in the surroundings. And second, look\nwhat’s formed o\n[[IMG id=image-110-2 index=5 alt=\"Figure 23\"]]\n[[IMG id=image-110-1 index=4 alt=\"Figure 22\"]]\nverall – water! This is what’s called a dehydration\nreaction: water is being removed in a watery environment. It’s\nsometimes said that this kind of dehydration is impossible at the origin of\nLife, but of course cells do it all the time, albeit using enzymes and ATP. A deep secret of life is that enzymes never pull water from a hat. Rather,\nthe constituent parts of water are removed, OH – and H + , which can\ncombine to form water, as in this case, or may simply attach themselves\nindependently to other molecules such as phosphate.",
-          "wordCount": 186,
+          "content": "These react\nimmediately to form water, H 2 O, shown in the right-hand panel – a\nfizzing neutralisation reaction that many of us might remember from\ntitrating acids and bases at school, perhaps even in your mouth. This is\nimportant for two reasons. First, it means that the OH – ions detach easily\nin acidic environments, but not under alkaline conditions, where there’s\nalready an excess of OH – ions in the surroundings. And second, look\nwhat’s formed overall – water! This is what’s called a dehydration\nreaction: water is being removed in a watery environment. It’s\nsometimes said that this kind of dehydration is impossible at the origin of\n[[IMG id=image-110-1 index=4 alt=\"Figure 22\"]]\n[[IMG id=image-110-2 index=5 alt=\"Figure 23\"]]\nLife, but of course cells do it all the time, albeit using enzymes and ATP. A deep secret of life is that enzymes never pull water from a hat. Rather,\nthe constituent parts of water are removed, OH – and H + , which can\ncombine to form water, as in this case, or may simply attach themselves\nindependently to other molecules such as phosphate.",
+          "wordCount": 185,
           "sentenceCount": 8,
           "links": []
         },
@@ -3456,24 +3448,24 @@
         {
           "chunkId": "4_46",
           "type": "paragraph",
-          "content": "That’s the part that I find surprising,\nalthough evidently it happens, both in the industrial Fischer–Tropsch\nprocess as well as in cells – the ancient, widespread iron–nickel\n[[IMG id=image-111-1 index=6 alt=\"Figure 24\"]]\n–sulfur\nenzyme carbon monoxide dehydrogenase catalyses exactly this reaction. But now look at the product. This bound molecule is a prebiotic\nequivalent to acetyl CoA – discovered, if you recall, by Fritz Lipmann,\nand one of the most important molecules in all metabolism. We have just\nPulled it out of a hat by a simple trick. Rather than being bound through\nthe sulfur to the handle that is coenzyme A, in this case the acetyl is\nbound directly to the surface. Critically, it shares the same relatively high\nreactivity of acetyl CoA. And it can be released as free acetate easily\nenough by reacting with a negatively charged oxygen atom (which is\nalso formed in the first step, as shown on page 135):\nNotice that I’m depicting an electron pair returning to the surface here. Iron–sulfide minerals are semiconducting, which is to say they can\ntransfer electrons across themselves.",
-          "wordCount": 181,
+          "content": "That’s the part that I find surprising,\nalthough evidently it happens, both in the industrial Fischer–Tropsch\nprocess as well as in cells – the ancient, widespread iron–nickel–sulfur\nenzyme carbon monoxide dehydrogenase catalyses exactly this reaction. But now look at the product. This bound molecule is a prebiotic\nequivalent to acetyl CoA – discovered, if you recall, by Fritz Lipmann,\nand one of the most important molecules in all metabolism. We have just\n[[IMG id=image-111-1 index=6 alt=\"Figure 24\"]]\nPulled it out of a hat by a simple trick. Rather than being bound through\nthe sulfur to the handle that is coenzyme A, in this case the acetyl is\nbound directly to the surface. Critically, it shares the same relatively high\nreactivity of acetyl CoA. And it can be released as free acetate easily\nenough by reacting with a negatively charged oxygen atom (which is\nalso formed in the first step, as shown on page 135):\nNotice that I’m depicting an electron pair returning to the surface here. Iron–sulfide minerals are semiconducting, which is to say they can\ntransfer electrons across themselves.",
+          "wordCount": 180,
           "sentenceCount": 8,
           "links": []
         },
         {
           "chunkId": "4_47",
           "type": "paragraph",
-          "content": "This means that electrons\ntransferred from the surface onto CO 2 can be replenished, so the process\ncan happen over and over again without any permanent change in the\nsurface – the surface is catalytic. Every time a pair of electrons transfers\nfrom the surface, the iron or nickel in the surface becomes oxidised, so it\nloses electrons. If the missing electrons are not replenished from\nelsewhere, then the electrons can return, as shown above, from\ncarboxylic acids bound to the surface, detaching the bound molecule, in\nthis case as free acetate. That reaction is very close to equilibrium and\ncan go either way. Conversely, if the electrons are replenished from elsewhere, then this\nchemistry can go on and on in remarkably similar steps. If you don’t\nbelieve me, look at Appendix 2, where I’ve drawn out the first half of the\nreverse Krebs cycle step by step, following the same ground rules. As\nMorowitz observed, the second half repeats the same chemistry as the\nfirst half. No\n[[IMG id=image-112-1 index=7 alt=\"Figure 25\"]]\nwonder these molecules are beginning to crop up in\nexperiments that start with CO 2 and minerals. But where exactly are all\nthese electrons being replenished from?",
-          "wordCount": 200,
+          "content": "This means that electrons\ntransferred from the surface onto CO 2 can be replenished, so the process\ncan happen over and over again without any permanent change in the\nsurface – the surface is catalytic. Every time a pair of electrons transfers\nfrom the surface, the iron or nickel in the surface becomes oxidised, so it\nloses electrons. If the missing electrons are not replenished from\nelsewhere, then the electrons can return, as shown above, from\ncarboxylic acids bound to the surface, detaching the bound molecule, in\nthis case as free acetate. That reaction is very close to equilibrium and\ncan go either way. Conversely, if the electrons are replenished from elsewhere, then this\nchemistry can go on and on in remarkably similar steps. If you don’t\nbelieve me, look at Appendix 2, where I’ve drawn out the first half of the\nreverse Krebs cycle step by step, following the same ground rules. As\nMorowitz observed, the second half repeats the same chemistry as the\nfirst half. No wonder these molecules are beginning to crop up in\nexperiments that start with CO 2 and minerals. But where exactly are all\nthese electrons being replenished from?",
+          "wordCount": 195,
           "sentenceCount": 9,
           "links": []
         },
         {
           "chunkId": "4_48",
           "type": "paragraph",
-          "content": "The answer is simple: hydrogen\ngas, bubbling straight out of alkaline hydrothermal vents. If the\nconcentration of hydrogen in hydrothermal fluids is high, that tends to\nFavour the continuous transfer of electrons from the surface, forming not\nonly Krebs-cycle intermediates, but also longer-chain carboxylic acids –\nfatty acids – capable of forming membranes. On the other hand, if the\nconcentration of hydrogen is lower, then smaller carboxylic acids are\nmore likely to be released from the surface, as electrons flow back onto\nthe barrier. So the ultimate source of electrons to fix CO 2 is H 2 . And that\ncomes with its own requirements for cellular structure.",
-          "wordCount": 108,
+          "content": "The answer is simple: hydrogen\ngas, bubbling straight out of alkaline hydrothermal vents. If the\nconcentration of hydrogen in hydrothermal fluids is high, that tends to\n[[IMG id=image-112-1 index=7 alt=\"Figure 25\"]]\nFavour the continuous transfer of electrons from the surface, forming not\nonly Krebs-cycle intermediates, but also longer-chain carboxylic acids –\nfatty acids – capable of forming membranes. On the other hand, if the\nconcentration of hydrogen is lower, then smaller carboxylic acids are\nmore likely to be released from the surface, as electrons flow back onto\nthe barrier. So the ultimate source of electrons to fix CO 2 is H 2 . And that\ncomes with its own requirements for cellular structure.",
+          "wordCount": 113,
           "sentenceCount": 5,
           "links": []
         },
@@ -3601,8 +3593,8 @@
         {
           "chunkId": "4_61",
           "type": "paragraph",
-          "content": "Transfer of protons across an inorganic barrier (left) or the same\nbarrier enclosing a protocell (right) could drive the formation of\norganics (CH 2 O) within the pore or the protocell. The triangles in\nthe membrane of the protocell (on the arrows) symbolise iron–\nsulfur clusters bound to amino acids, associated with the\nmembrane – a proto-Ech (see text). Growing protocells must\nremain bound to the barriers in hydrothermal vents to tap the\ngeologically sustained proton\n[[IMG id=image-117-1 index=8 alt=\"Figure 26\"]]\n-motive force. CO 2 crosses the\nbarriers much more slowly than protons, hence the dotted arrows. Perhaps the most important property of this system is that it can in\nprinciple make copies of itself, and over time can become more complex. For reasons of physical chemistry, new fatty acids will go straight into\nthe membrane, whereas a proportion of amino acids should interact with\nIron and sulfide, generating more ferredoxin-like FeS clusters. The\nprotocells with the most FeS clusters should make the most new\norganics, favouring more of the same physical interactions. That would\ngenerate more FeS clusters, so more organics, and so on.",
-          "wordCount": 185,
+          "content": "Transfer of protons across an inorganic barrier (left) or the same\nbarrier enclosing a protocell (right) could drive the formation of\norganics (CH 2 O) within the pore or the protocell. The triangles in\nthe membrane of the protocell (on the arrows) symbolise iron–\nsulfur clusters bound to amino acids, associated with the\nmembrane – a proto-Ech (see text). Growing protocells must\nremain bound to the barriers in hydrothermal vents to tap the\ngeologically sustained proton-motive force. CO 2 crosses the\nbarriers much more slowly than protons, hence the dotted arrows. Perhaps the most important property of this system is that it can in\nprinciple make copies of itself, and over time can become more complex. For reasons of physical chemistry, new fatty acids will go straight into\nthe membrane, whereas a proportion of amino acids should interact with\n[[IMG id=image-117-1 index=8 alt=\"Figure 26\"]]\nIron and sulfide, generating more ferredoxin-like FeS clusters. The\nprotocells with the most FeS clusters should make the most new\norganics, favouring more of the same physical interactions. That would\ngenerate more FeS clusters, so more organics, and so on.",
+          "wordCount": 184,
           "sentenceCount": 8,
           "links": []
         },
@@ -3731,25 +3723,25 @@
         {
           "chunkId": "4_68",
           "type": "paragraph",
-          "content": "This awesome nanomotor is\nunquestionably a product of genetic information and natural selection; it\nDidn’t just pop into existence by accident in a prebiotic world. So if the\nfirst cells needed ATP to make genes and proteins, how did they manage\nwithout an ATP synthase? The answer turns out to be quite simple. ATP can be formed directly\nfrom acetyl phosphate, which in turn is formed from acetyl CoA, or\nsimpler prebiotic equivalents. Going back to the reaction steps I outlined\nearlier, recall that I finished by depicting an acetyl group (as in acetyl\nCoA), bound to the FeS surface. If this were to react with an inorganic\nphosphate bound to the surface (rather than the oxygen I showed before),\nthe product released would be acetyl phosphate:\nAcetyl phosphate remains a critical intermediate between acetyl CoA\nand ATP\n[[IMG id=image-120-2 index=10 alt=\"Figure 28\"]]\n[[IMG id=image-120-1 index=9 alt=\"Figure 27\"]]\nin bacteria and archaea today, as first discovered by Fritz\nLipmann. This simple chemistry takes place in water. Theory says it\nshould occur under prebiotic conditions too, and we have shown that it\nreally does – acetyl phosphate is formed from a two-carbon precursor\nthioacetate.",
-          "wordCount": 193,
+          "content": "This awesome nanomotor is\nunquestionably a product of genetic information and natural selection; it\nDidn’t just pop into existence by accident in a prebiotic world. So if the\nfirst cells needed ATP to make genes and proteins, how did they manage\nwithout an ATP synthase? The answer turns out to be quite simple. ATP can be formed directly\nfrom acetyl phosphate, which in turn is formed from acetyl CoA, or\nsimpler prebiotic equivalents. Going back to the reaction steps I outlined\nearlier, recall that I finished by depicting an acetyl group (as in acetyl\nCoA), bound to the FeS surface. If this were to react with an inorganic\nphosphate bound to the surface (rather than the oxygen I showed before),\nthe product released would be acetyl phosphate:\nAcetyl phosphate remains a critical intermediate between acetyl CoA\nand ATP in bacteria and archaea today, as first discovered by Fritz\nLipmann. This simple chemistry takes place in water. Theory says it\nshould occur under prebiotic conditions too, and we have shown that it\nreally does – acetyl phosphate is formed from a two-carbon precursor\nthioacetate.",
+          "wordCount": 183,
           "sentenceCount": 8,
           "links": []
         },
         {
           "chunkId": "4_69",
           "type": "paragraph",
-          "content": "Once formed, acetyl phosphate will pass its phosphate onto\nADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield,\nroughly like this:\nSilvana Pinna, a PhD student in my lab, has shown that ATP synthesis is\ncatalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she\ntried could do the same job. This finding might explain why ATP is the\nuniversal energy currency. But the key point is that ATP can be formed\ndirectly through simple chemistry in water. Equally critical: this simple\nchemistry does not release cells from their dependence on proton\ngradients. On the contrary, these are still needed to drive the synthesis of\nreactive molecules such as thioacetate and acetyl phosphate in the first\nplace. You can think of the proton gradient as a ratchet, pushing the\nchemistry of protocells far from equilibrium. In this case, acetyl\nphosphate and ATP can form readily in locally acidic conditions close to\nthe membrane, but become much less stable (and so more reactive, or\nfurther from equilibrium) under more alkaline conditions inside the cell. In terms of reactivity, the difference is about three orders of magnitude,\nso it’s not to be sneezed at.",
-          "wordCount": 199,
-          "sentenceCount": 8,
+          "content": "Once formed, acetyl phosphate will pass its phosphate onto\nADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield,\nroughly like this:\n[[IMG id=image-120-1 index=9 alt=\"Figure 27\"]]\n[[IMG id=image-120-2 index=10 alt=\"Figure 28\"]]\nSilvana Pinna, a PhD student in my lab, has shown that ATP synthesis is\ncatalysed beautifully by ferric iron (Fe 3+ ), yet no other metal ions she\ntried could do the same job. This finding might explain why ATP is the\nuniversal energy currency. But the key point is that ATP can be formed\ndirectly through simple chemistry in water. Equally critical: this simple\nchemistry does not release cells from their dependence on proton\ngradients. On the contrary, these are still needed to drive the synthesis of\nreactive molecules such as thioacetate and acetyl phosphate in the first\nplace. You can think of the proton gradient as a ratchet, pushing the\nchemistry of protocells far from equilibrium. In this case, acetyl\nphosphate and ATP can form readily in locally acidic conditions close to\nthe membrane, but become much less stable (and so more reactive, or\nfurther from equilibrium) under more alkaline conditions inside the cell.",
+          "wordCount": 190,
+          "sentenceCount": 7,
           "links": []
         },
         {
           "chunkId": "4_70",
           "type": "paragraph",
-          "content": "The bigger picture that emerges is this. Vents provide a steady supply\nof H 2 and CO 2 , in just the right conditions needed to promote their\nreaction to make carboxylic acids. These form through chemical\nmechanisms that resemble steps of the reverse Krebs cycle, implying that\nthis chemistry really is the primordial basis for metabolism. The Krebs-\ncycle intermediates are universal precursors for making amino acids,\nfatty acids, sugars and eventually nucleotides. Exactly how all those are\nformed under prebiotic conditions (which catalysts, which feedbacks) is\na question of active research in my own lab and others. But some\nprinciples are clear. Catalysts and proton gradients do no more than\nlower the kinetic barriers to reactions that are thermodynamically\nfavoured. How far forwards those reactions can go depends on the\ndriving force, which is the reactivity between H 2 and CO 2 . The more H 2\navailable, the more organic products will be produced, and the further\nthese reactions will be driven from the starting point.",
-          "wordCount": 169,
-          "sentenceCount": 9,
+          "content": "In terms of reactivity, the difference is about three orders of magnitude,\nso it’s not to be sneezed at. The bigger picture that emerges is this. Vents provide a steady supply\nof H 2 and CO 2 , in just the right conditions needed to promote their\nreaction to make carboxylic acids. These form through chemical\nmechanisms that resemble steps of the reverse Krebs cycle, implying that\nthis chemistry really is the primordial basis for metabolism. The Krebs-\ncycle intermediates are universal precursors for making amino acids,\nfatty acids, sugars and eventually nucleotides. Exactly how all those are\nformed under prebiotic conditions (which catalysts, which feedbacks) is\na question of active research in my own lab and others. But some\nprinciples are clear. Catalysts and proton gradients do no more than\nlower the kinetic barriers to reactions that are thermodynamically\nfavoured. How far forwards those reactions can go depends on the\ndriving force, which is the reactivity between H 2 and CO 2 . The more H 2\navailable, the more organic products will be produced, and the further\nthese reactions will be driven from the starting point.",
+          "wordCount": 188,
+          "sentenceCount": 10,
           "links": []
         },
         {
@@ -4371,8 +4363,8 @@
         {
           "chunkId": "5_35",
           "type": "paragraph",
-          "content": "Set against the tight constraints of this anaerobic world, imagine the\nfreedom offered by that everyday miracle, oxygenic photosynthesis. Silently humming in trees and algae and cyanobacteria, all use virtually\nthe same machinery to fix CO 2 and generate ATP. Oxygen is the waste\nproduct, cast away, the first great pollutant. Please remember that oxygen\ndoes not come from CO 2 – it comes from water, which is split apart to\nextract the hydrogen – 2H. That should sound familiar by now. It’s not\neasy to split water, hence the energy of the sun, focused to work by that\nmarvellous transducer chlorophyll. Literally a transducer, chlorophyll\nabsorbs a photon of light, red light, which excites an electron. The\nexcited electron, zapped away from its former owner, is swiftly spirited\noff down an electron-transport chain embedded in the membrane. Transiently angry, chlorophyll snatches a replacement from the\nsacrificial gift offered by the trembling priestly protein. This sacrifice is\nnot some virgin to plac\n[[IMG id=image-137-1 index=1 alt=\"Figure 30\"]]\nate a medieval dragon, but water. Zap. Repeat. Zap. Repeat. It really can do this all day. Electrons flow. Chlorophyll\ntransduces light into electricity.",
-          "wordCount": 191,
+          "content": "Set against the tight constraints of this anaerobic world, imagine the\nfreedom offered by that everyday miracle, oxygenic photosynthesis. Silently humming in trees and algae and cyanobacteria, all use virtually\nthe same machinery to fix CO 2 and generate ATP. Oxygen is the waste\nproduct, cast away, the first great pollutant. Please remember that oxygen\ndoes not come from CO 2 – it comes from water, which is split apart to\nextract the hydrogen – 2H. That should sound familiar by now. It’s not\neasy to split water, hence the energy of the sun, focused to work by that\nmarvellous transducer chlorophyll. Literally a transducer, chlorophyll\nabsorbs a photon of light, red light, which excites an electron. The\nexcited electron, zapped away from its former owner, is swiftly spirited\noff down an electron-transport chain embedded in the membrane. Transiently angry, chlorophyll snatches a replacement from the\nsacrificial gift offered by the trembling priestly protein. This sacrifice is\nnot some virgin to placate a medieval dragon, but water. Zap. Repeat. [[IMG id=image-137-1 index=1 alt=\"Figure 30\"]]\nZap. Repeat. It really can do this all day. Electrons flow. Chlorophyll\ntransduces light into electricity.",
+          "wordCount": 190,
           "sentenceCount": 17,
           "links": []
         },
@@ -4501,8 +4493,8 @@
         {
           "chunkId": "5_42",
           "type": "paragraph",
-          "content": "We met two of these previously, in Chapter 2: 11 C and 14 C. Here, we’re concerned with a third isotope, 13 C, which happens to be\nstable. The nucleus of 13 C has six protons and seven neutrons. The fact\nthat it’s stable means that the 12 C to 13 C ratio in the environment does not\nchange over time, or at least not as a result of radioactive decay; but 13 C\nis not common, barely a hundredth as abundant of 12 C. Remember rubisco, the world’s most abundant protein, responsible\nfor fixing CO 2 in the Calvin–Benson cycle. Rubisco has a slight bias\ntowards the lighter of the two stable forms of carbon, 12 C. I think of these\nmolecules as ping-pong balls, bouncing around and occasionally\nbumping into enzymes such as rubisco. Lighter molecules bounce around\na touch faster, so encounter enzymes more frequently. In the case of\nrubisco, the outcome is that organic carbon becom\n[[IMG id=image-140-1 index=2 alt=\"Figure 31\"]]\nes slightly enriched in\n12 C over 13 C (compared with a standard ratio) by around 30 per mille\n(30/1,000).",
-          "wordCount": 185,
+          "content": "We met two of these previously, in Chapter 2: 11 C and 14 C. Here, we’re concerned with a third isotope, 13 C, which happens to be\nstable. The nucleus of 13 C has six protons and seven neutrons. The fact\nthat it’s stable means that the 12 C to 13 C ratio in the environment does not\nchange over time, or at least not as a result of radioactive decay; but 13 C\nis not common, barely a hundredth as abundant of 12 C. Remember rubisco, the world’s most abundant protein, responsible\nfor fixing CO 2 in the Calvin–Benson cycle. Rubisco has a slight bias\ntowards the lighter of the two stable forms of carbon, 12 C. I think of these\nmolecules as ping-pong balls, bouncing around and occasionally\nbumping into enzymes such as rubisco. Lighter molecules bounce around\na touch faster, so encounter enzymes more frequently. In the case of\nrubisco, the outcome is that organic carbon becomes slightly enriched in\n12 C over 13 C (compared with a standard ratio) by around 30 per mille\n[[IMG id=image-140-1 index=2 alt=\"Figure 31\"]]\n(30/1,000).",
+          "wordCount": 184,
           "sentenceCount": 9,
           "links": []
         },
@@ -4647,8 +4639,8 @@
         {
           "chunkId": "5_54",
           "type": "paragraph",
-          "content": "The two prongs of the Krebs non-cycle, a common flux pattern in\nmicrobes. The prongs balance the formation of 2H against its\nconsumption when oxygen levels are low, allowing metabolism and\nATP synthesis to keep going without a large accumulation of\nNADH or waste products such as lactate. The two prongs of this pathway meet in the vicinity of the C4\nsuccinate. In the reverse Krebs cycle, the enzyme that converts fumarate\ninto succinate is called fumarate reductase. This is unique in being the\nonly enzyme in the cycle that is still embedded in the mitochondrial\nmembrane, and it can capture electrons from the respiratory chain. In the\nabsence of oxygen, fumarate can therefore act as a terminal electron\nacceptor, generating succinate as a waste product, while allowing some\nproton pumping and ATP synthesis (we’ll see how in the next chapter). Accumulation of succinate is a powerful signal for physiological\nadaptation to low-oxygen (hypoxic) conditions, switching many genes\no\n[[IMG id=image-145-1 index=3 alt=\"Figure 32\"]]\nn and off. Conversely, when oxygen is available fumarate reductase is\nswitched off, and an alternative enzyme is expressed instead – succinate\nDehydrogenase.",
-          "wordCount": 187,
+          "content": "The two prongs of the Krebs non-cycle, a common flux pattern in\nmicrobes. The prongs balance the formation of 2H against its\nconsumption when oxygen levels are low, allowing metabolism and\nATP synthesis to keep going without a large accumulation of\nNADH or waste products such as lactate. The two prongs of this pathway meet in the vicinity of the C4\nsuccinate. In the reverse Krebs cycle, the enzyme that converts fumarate\ninto succinate is called fumarate reductase. This is unique in being the\nonly enzyme in the cycle that is still embedded in the mitochondrial\nmembrane, and it can capture electrons from the respiratory chain. In the\nabsence of oxygen, fumarate can therefore act as a terminal electron\nacceptor, generating succinate as a waste product, while allowing some\nproton pumping and ATP synthesis (we’ll see how in the next chapter). Accumulation of succinate is a powerful signal for physiological\nadaptation to low-oxygen (hypoxic) conditions, switching many genes\non and off. Conversely, when oxygen is available fumarate reductase is\nswitched off, and an alternative enzyme is expressed instead – succinate\n[[IMG id=image-145-1 index=3 alt=\"Figure 32\"]]\nDehydrogenase.",
+          "wordCount": 186,
           "sentenceCount": 8,
           "links": []
         },
@@ -5174,7 +5166,7 @@
         {
           "chunkId": "6_21",
           "type": "paragraph",
-          "content": "the replacement of the\nrespiration of oxygen in normal body cells by a fermentation of sugar.’\nThis view of the degeneracy of cancer, and the promise of a cure,\nprobably saved Warburg’s life during the Hitler years. Despite seeing\nhimself as a Protestant German patriot, the Nazis considered him to be\n50 per cent Jewish, and he was for a brief period relieved of his position. But he was swiftly reinstated, under Göring’s declaration ‘I will decide\nwho is a Jew.’ The reasons are shrouded in mystery, but Hitler apparently\nhad a deep-seated fear of\n[[IMG id=image-158-1 index=1 alt=\"Figure 34\"]]\ncancer. His mother, said to be the only person\nHe ever truly loved, died from breast cancer when Adolf was eighteen. Her Jewish doctor, Eduard Bloch, wrote that ‘outwardly, Hitler’s love for\nhis mother was his most striking feature. I have never witnessed a closer\nattachment’ and ‘in all my career, I never saw anyone so prostrate with\ngrief as Adolf Hitler’. For some years, Hitler wrote postcards to Dr\nBloch, and in 1937 granted Bloch and his family safe passage from\nAustria; they eventually arrived in the Bronx, New York.",
+          "content": "the replacement of the\nrespiration of oxygen in normal body cells by a fermentation of sugar.’\nThis view of the degeneracy of cancer, and the promise of a cure,\nprobably saved Warburg’s life during the Hitler years. Despite seeing\nhimself as a Protestant German patriot, the Nazis considered him to be\n50 per cent Jewish, and he was for a brief period relieved of his position. But he was swiftly reinstated, under Göring’s declaration ‘I will decide\nwho is a Jew.’ The reasons are shrouded in mystery, but Hitler apparently\nhad a deep-seated fear of cancer. His mother, said to be the only person\n[[IMG id=image-158-1 index=1 alt=\"Figure 34\"]]\nHe ever truly loved, died from breast cancer when Adolf was eighteen. Her Jewish doctor, Eduard Bloch, wrote that ‘outwardly, Hitler’s love for\nhis mother was his most striking feature. I have never witnessed a closer\nattachment’ and ‘in all my career, I never saw anyone so prostrate with\ngrief as Adolf Hitler’. For some years, Hitler wrote postcards to Dr\nBloch, and in 1937 granted Bloch and his family safe passage from\nAustria; they eventually arrived in the Bronx, New York.",
           "wordCount": 191,
           "sentenceCount": 7,
           "links": []
@@ -5373,8 +5365,8 @@
         {
           "chunkId": "6_38",
           "type": "paragraph",
-          "content": "Overall, it works like this (where CI d\n[[IMG id=image-164-1 index=2 alt=\"Figure 35\"]]\nepicts complex I, CII is\ncomplex II and the right-hand complex is the nanomotor ATP synthase):\nThe dotted line shows the transfer of two electrons from NADH to\nfumarate. The waste product, succinate, accumulates, and can readily\nescape from the mitochondria. Now, here’s the rub, which makes this\nancient mechanism still relevant to cancer. Succinate is a powerful\nsignal. That’s because it is the only Krebs-cycle intermediate that can\nonly be made in mitochondria (other intermediates can be formed\nelsewhere in the cell), precisely because the enzyme sits in the inner\nmitochondrial membrane, as complex II. This location means that\nsuccinate gives unique feedback on the overall status of mitochondrial\nfunction – on the ability of mitochondria to provide enough ATP to\nsupply the needs of the cell. In short, if succinate is accumulating, then\nsomething is going wrong with respiration that needs fixing right now! Succinate is therefore far more than a waste product – it is an active\nsignal that switches genes on or off. Once in the cytosol, succinate binds to a class of proteins called prolyl\nhydroxylases, which blocks their normal action.",
-          "wordCount": 199,
+          "content": "Overall, it works like this (where CI depicts complex I, CII is\ncomplex II and the right-hand complex is the nanomotor ATP synthase):\n[[IMG id=image-164-1 index=2 alt=\"Figure 35\"]]\nThe dotted line shows the transfer of two electrons from NADH to\nfumarate. The waste product, succinate, accumulates, and can readily\nescape from the mitochondria. Now, here’s the rub, which makes this\nancient mechanism still relevant to cancer. Succinate is a powerful\nsignal. That’s because it is the only Krebs-cycle intermediate that can\nonly be made in mitochondria (other intermediates can be formed\nelsewhere in the cell), precisely because the enzyme sits in the inner\nmitochondrial membrane, as complex II. This location means that\nsuccinate gives unique feedback on the overall status of mitochondrial\nfunction – on the ability of mitochondria to provide enough ATP to\nsupply the needs of the cell. In short, if succinate is accumulating, then\nsomething is going wrong with respiration that needs fixing right now! Succinate is therefore far more than a waste product – it is an active\nsignal that switches genes on or off. Once in the cytosol, succinate binds to a class of proteins called prolyl\nhydroxylases, which blocks their normal action.",
+          "wordCount": 198,
           "sentenceCount": 9,
           "links": []
         },
@@ -5462,7 +5454,7 @@
         {
           "chunkId": "6_46",
           "type": "paragraph",
-          "content": "Most cancers need no more than glucose and glutamine to grow. These\n[[IMG id=image-167-1 index=3 alt=\"Figure 36\"]]\nsubstrates serve all of their needs. And of the two of them ... give the\ncancers glutamine. I have a vivid memory of discussing glutamine and\nThe Krebs cycle with Salvador Moncada in his directorial office at the\nWolfson Institute a decade ago. Moncada had few equals in bestriding\npharmaceutical and academic research. He arrived at the question of\ncancer after decades of working on the vascular system, culminating in\nthe simultaneous discovery, by two different labs, that the reactive gas\nnitric oxide (NO) dilates blood vessels, a process that was to become the\nbasis of a blockbuster drug for erectile dysfunction, Viagra. Like carbon\nmonoxide (used by Warburg to identify the haem pigment in his\n‘respiratory ferment’), nitric oxide binds to cytochrome oxidase,\nblocking respiration and modulating programmed cell death. These\nfindings led Moncada to explore the role of mitochondria in controlling\nthe cell cycle. Cancer cells growing in culture can be checked in their mad career\nthrough the cell cycle by depriving them of glucose or glutamine.",
+          "content": "Most cancers need no more than glucose and glutamine to grow. These\nsubstrates serve all of their needs. And of the two of them ... give the\ncancers glutamine. I have a vivid memory of discussing glutamine and\n[[IMG id=image-167-1 index=3 alt=\"Figure 36\"]]\nThe Krebs cycle with Salvador Moncada in his directorial office at the\nWolfson Institute a decade ago. Moncada had few equals in bestriding\npharmaceutical and academic research. He arrived at the question of\ncancer after decades of working on the vascular system, culminating in\nthe simultaneous discovery, by two different labs, that the reactive gas\nnitric oxide (NO) dilates blood vessels, a process that was to become the\nbasis of a blockbuster drug for erectile dysfunction, Viagra. Like carbon\nmonoxide (used by Warburg to identify the haem pigment in his\n‘respiratory ferment’), nitric oxide binds to cytochrome oxidase,\nblocking respiration and modulating programmed cell death. These\nfindings led Moncada to explore the role of mitochondria in controlling\nthe cell cycle. Cancer cells growing in culture can be checked in their mad career\nthrough the cell cycle by depriving them of glucose or glutamine.",
           "wordCount": 186,
           "sentenceCount": 10,
           "links": []
@@ -5470,16 +5462,16 @@
         {
           "chunkId": "6_47",
           "type": "paragraph",
-          "content": "Around the time we were talking, Moncada had just shown that\ndepriving cells of glucose did not pause their growth for long, but\ndepriving them of glutamine put paid to their prospects permanently. And now here he was, chalk in hand, eyes sparkling, drawing arrows\nspiralling out from the Krebs cycle into the cytosol. Flux in reverse to\ncitrate. Export, then break down to acetyl CoA and oxaloacetate. Thence\npyruvate and lactate. Not from glucose at all, but glutamine. And on. It\nwas dizzying, a prelude to the coming storm. I regret the storm was not\nof Moncada’s making. He left UCL soon afterwards, to direct a new\nInstitute for Cancer Sciences at the University of Manchester; but\nwhenever I think of glutamine, I can’t help but see Moncada pacing\nurgently before\n[[IMG id=image-168-1 index=4 alt=\"Figure 37\"]]\nhis blackboard. Molecules acquire personality this way. The first wave of the storm came from Navdeep Chandel, Ralph\nDeBerardinis and colleagues in 2012.",
-          "wordCount": 160,
+          "content": "Around the time we were talking, Moncada had just shown that\ndepriving cells of glucose did not pause their growth for long, but\ndepriving them of glutamine put paid to their prospects permanently. And now here he was, chalk in hand, eyes sparkling, drawing arrows\nspiralling out from the Krebs cycle into the cytosol. Flux in reverse to\ncitrate. Export, then break down to acetyl CoA and oxaloacetate. Thence\npyruvate and lactate. Not from glucose at all, but glutamine. And on. It\nwas dizzying, a prelude to the coming storm. I regret the storm was not\nof Moncada’s making. He left UCL soon afterwards, to direct a new\nInstitute for Cancer Sciences at the University of Manchester; but\nwhenever I think of glutamine, I can’t help but see Moncada pacing\nurgently before his blackboard. Molecules acquire personality this way. The first wave of the storm came from Navdeep Chandel, Ralph\nDeBerardinis and colleagues in 2012.",
+          "wordCount": 155,
           "sentenceCount": 12,
           "links": []
         },
         {
           "chunkId": "6_48",
           "type": "paragraph",
-          "content": "They reported in Nature that cells\nWith defective mitochondria would habitually drive part of their Krebs\ncycle backwards, to make citrate (C6) by reacting α-ketoglutarate (C5)\nwith CO 2 – a rare case of carbon fixation in animals, equivalent to\nphotosynthesis without the sun. As I noted in Chapter 2, this reaction\nwas discovered long ago, by the great Spanish biochemist Severo Ochoa,\nin New York in 1946, and had become well known in bacteria as part of\nthe reverse Krebs cycle. But what was unusual here was the sheer scale. This reverse flux is the dominant pattern in cancer cells with mutations\nin fumarate hydratase, or more widely in cells with damaged respiration,\ncaused by mutations or drugs that impair electron transfer. Make a\nmental note of that: damaged respiration ... roughly as predicted by\nWarburg. That will be important, but we need to understand how the\nKrebs cycle can go into reverse first. Once again, cancer cells take advantage of existing machinery, and in\nthis case subvert a marvellous mechanism, a mechanism that showcases\nboth the glory of natural selection and the cleverness of cancer.",
-          "wordCount": 187,
+          "content": "They reported in Nature that cells\n[[IMG id=image-168-1 index=4 alt=\"Figure 37\"]]\nWith defective mitochondria would habitually drive part of their Krebs\ncycle backwards, to make citrate (C6) by reacting α-ketoglutarate (C5)\nwith CO 2 – a rare case of carbon fixation in animals, equivalent to\nphotosynthesis without the sun. As I noted in Chapter 2, this reaction\nwas discovered long ago, by the great Spanish biochemist Severo Ochoa,\nin New York in 1946, and had become well known in bacteria as part of\nthe reverse Krebs cycle. But what was unusual here was the sheer scale. This reverse flux is the dominant pattern in cancer cells with mutations\nin fumarate hydratase, or more widely in cells with damaged respiration,\ncaused by mutations or drugs that impair electron transfer. Make a\nmental note of that: damaged respiration ... roughly as predicted by\nWarburg. That will be important, but we need to understand how the\nKrebs cycle can go into reverse first. Once again, cancer cells take advantage of existing machinery, and in\nthis case subvert a marvellous mechanism, a mechanism that showcases\nboth the glory of natural selection and the cleverness of cancer.",
+          "wordCount": 192,
           "sentenceCount": 8,
           "links": []
         },
@@ -5559,49 +5551,49 @@
         {
           "chunkId": "6_55",
           "type": "paragraph",
-          "content": "The enzyme sitting in the membrane is the transhydrogenase,\nwhich regenerates NADPH from NADH, so long as there is a\nmembrane potential. We are left with a peculiar situation, in which Krebs-cycle flux is\nrunning backwards through large parts of the cycle; nothing like the\ncanonical picture in textbooks. Far from being geared to ATP synthesis,\nthe cycle is now exporting succinate and citrate from the mitochondria\nout to the cytosol. Together, these keep the levers for growth pushed hard\ndown in the ‘on’ position. We’ve already seen how succinate promotes\nthe Warburg effect, so now let’s see what citrate does. Turn left (or right) at Krebs junction\nOnce citrate is exported out to the cytosol, it is broken down into the C2\nacetyl CoA, plus the C4 oxaloacetate. Acetyl CoA is used for fatty acid\nsynthesis, but it also binds to proteins that control access to DNA, called\nhistones. This enables many genes to be switched on: an ‘epigenetic\nswitch’ known as acetylation. The genes switched\n[[IMG id=image-172-1 index=5 alt=\"Figure 38\"]]\non drive cell growth\nand proliferation – another signal that says grow! This epigenetic switch\nis reinforced by the context.",
-          "wordCount": 192,
+          "content": "The enzyme sitting in the membrane is the transhydrogenase,\nwhich regenerates NADPH from NADH, so long as there is a\nmembrane potential. We are left with a peculiar situation, in which Krebs-cycle flux is\nrunning backwards through large parts of the cycle; nothing like the\ncanonical picture in textbooks. Far from being geared to ATP synthesis,\nthe cycle is now exporting succinate and citrate from the mitochondria\nout to the cytosol. Together, these keep the levers for growth pushed hard\ndown in the ‘on’ position. We’ve already seen how succinate promotes\nthe Warburg effect, so now let’s see what citrate does. Turn left (or right) at Krebs junction\nOnce citrate is exported out to the cytosol, it is broken down into the C2\nacetyl CoA, plus the C4 oxaloacetate. Acetyl CoA is used for fatty acid\nsynthesis, but it also binds to proteins that control access to DNA, called\nhistones. This enables many genes to be switched on: an ‘epigenetic\nswitch’ known as acetylation. The genes switched on drive cell growth\nand proliferation – another signal that says grow! This epigenetic switch\nis reinforced by the context.",
+          "wordCount": 187,
           "sentenceCount": 10,
           "links": []
         },
         {
           "chunkId": "6_56",
           "type": "paragraph",
-          "content": "The sirtuins are a group of enzymes that\nstrip out the acetyl group, switching off the growth signal. But their\nActivity depends on the availability of NADH. The sirtuins normally\nclose down growth and sexual development when times are lean, and\nthere’s little NADH from food. Conversely, if NADH levels build up,\nwhich might happen if we eat too much and don’t exercise, the sirtuins\nclose down. They no longer strip out the acetyl groups, permitting the\ngrowth signal to persist. The problem in cancer is that reverse Krebs-\ncycle flux triggers the same signal, because cancer cells have lots of\nNADH from aerobic glycolysis, and lots of acetyl CoA from citrate. So\nthe growth switch remains jammed on. How export of citrate from the mitochondria can drive growth\nthrough an epigenetic switch. When NADH is plentiful, the sirtuins\nare suppressed. Because they would normally switch off the growth\nsignal by deacetylating histones, the combined effect of acetyl CoA\nand NADH is to promote growth. The other breakdown product from citrate, oxaloacetate, is equally\nimportant.",
-          "wordCount": 175,
+          "content": "The sirtuins are a group of enzymes that\nstrip out the acetyl group, switching off the growth signal. But their\n[[IMG id=image-172-1 index=5 alt=\"Figure 38\"]]\nActivity depends on the availability of NADH. The sirtuins normally\nclose down growth and sexual development when times are lean, and\nthere’s little NADH from food. Conversely, if NADH levels build up,\nwhich might happen if we eat too much and don’t exercise, the sirtuins\nclose down. They no longer strip out the acetyl groups, permitting the\ngrowth signal to persist. The problem in cancer is that reverse Krebs-\ncycle flux triggers the same signal, because cancer cells have lots of\nNADH from aerobic glycolysis, and lots of acetyl CoA from citrate. So\nthe growth switch remains jammed on. How export of citrate from the mitochondria can drive growth\nthrough an epigenetic switch. When NADH is plentiful, the sirtuins\nare suppressed. Because they would normally switch off the growth\nsignal by deacetylating histones, the combined effect of acetyl CoA\nand NADH is to promote growth. The other breakdown product from citrate, oxaloacetate, is equally\nimportant.",
+          "wordCount": 180,
           "sentenceCount": 11,
           "links": []
         },
         {
           "chunkId": "6_57",
           "type": "paragraph",
-          "content": "It stands at a unique crossroads in metabolism, where almost\nevery direction is good for cancer, which means the more you make, the\nbetter it gets. The choice is a bit overwhelming (see the figure opposite). You can pick up nitrogen to become an amino acid called aspartate,\nneeded for nucleotide synthesis and to form urea (via the urea cycle that\nfirst brought Krebs to fame in 1932). Or you can be converted to the C4\nmalate, then stripped of CO 2 and 2H by the malic enzyme, to form the\nC3 pyruvate, plus (worth its weight in gold) the powerfu\n[[IMG id=image-173-1 index=6 alt=\"Figure 39\"]]\nl NADPH,\nneeded for biosynthesis. From pyruvate, you can form lactate and be\nwashed out as waste. Much of the lactate excreted by cancer cells comes\nfrom glutamine in this way. Alternatively, from pyruvate, you can be\nbroken down to acetyl CoA. And we’ve seen the havoc that can cause. You’re not out of choices yet. You can be stripped of CO 2 , then\nstrapped to a phosphate to form the C3 phosphoenol-pyruvate, the\nstarting point for sugar synthesis via gluconeogenesis.",
-          "wordCount": 188,
+          "content": "It stands at a unique crossroads in metabolism, where almost\nevery direction is good for cancer, which means the more you make, the\nbetter it gets. The choice is a bit overwhelming (see the figure opposite). You can pick up nitrogen to become an amino acid called aspartate,\nneeded for nucleotide synthesis and to form urea (via the urea cycle that\nfirst brought Krebs to fame in 1932). Or you can be converted to the C4\nmalate, then stripped of CO 2 and 2H by the malic enzyme, to form the\nC3 pyruvate, plus (worth its weight in gold) the powerful NADPH,\nneeded for biosynthesis. From pyruvate, you can form lactate and be\nwashed out as waste. Much of the lactate excreted by cancer cells comes\nfrom glutamine in this way. Alternatively, from pyruvate, you can be\nbroken down to acetyl CoA. And we’ve seen the havoc that can cause. [[IMG id=image-173-1 index=6 alt=\"Figure 39\"]]\nYou’re not out of choices yet. You can be stripped of CO 2 , then\nstrapped to a phosphate to form the C3 phosphoenol-pyruvate, the\nstarting point for sugar synthesis via gluconeogenesis.",
+          "wordCount": 187,
           "sentenceCount": 10,
           "links": []
         },
         {
           "chunkId": "6_58",
           "type": "paragraph",
-          "content": "This pathway is\nanother ancient backbone of metabolism, more or less the opposite of\nglycolysis, which forms glucose. Hang on a minute ... don’t we want to\nburn glucose? No! Glucose is the starting point for making other sugars,\nmost notably the ribose and deoxyribose needed for RNA and DNA, as\nwell as more NADPH (via the pentose phosphate pathway mentioned\nearlier). And the path to glucose is replete with other useful\nintermediates, first among them the C3 sugar glyceraldehyde phosphate. That’s the starting point for making glycerol phosphate, which binds to\nfatty acids to form the main phospholipid components of cell\nmembranes. You can’t grow without membranes. Krebs junction – oxaloacetate is at a crossroads in metabolism,\nwith paths leading to nitrogen or sugar metabolism, or generating\nNADPH for biosynthesis and antioxidant defences. This is a key\ncrossroads in energy metabolism; you see why Krebs was\nuncertain about the fate of oxaloacetate. Glycerol phosphate has another equally important use. It can be used\nto ge\n[[IMG id=image-174-1 index=7 alt=\"Figure 40\"]]\nnerate electrical membrane potential in mitochondria, without\ninvolving the Krebs cycle. It works like this.",
-          "wordCount": 186,
-          "sentenceCount": 13,
+          "content": "This pathway is\nanother ancient backbone of metabolism, more or less the opposite of\nglycolysis, which forms glucose. Hang on a minute ... don’t we want to\nburn glucose? No! Glucose is the starting point for making other sugars,\nmost notably the ribose and deoxyribose needed for RNA and DNA, as\nwell as more NADPH (via the pentose phosphate pathway mentioned\nearlier). And the path to glucose is replete with other useful\nintermediates, first among them the C3 sugar glyceraldehyde phosphate. That’s the starting point for making glycerol phosphate, which binds to\nfatty acids to form the main phospholipid components of cell\nmembranes. You can’t grow without membranes. Krebs junction – oxaloacetate is at a crossroads in metabolism,\nwith paths leading to nitrogen or sugar metabolism, or generating\nNADPH for biosynthesis and antioxidant defences. This is a key\ncrossroads in energy metabolism; you see why Krebs was\nuncertain about the fate of oxaloacetate. Glycerol phosphate has another equally important use. It can be used\nto generate electrical membrane potential in mitochondria, without\ninvolving the Krebs cycle. It works like this. Glycerol phosphate is\nstripped of 2H, which is fed into complex III of the respiratory chain\nfrom outside the mitochondria.",
+          "wordCount": 200,
+          "sentenceCount": 14,
           "links": []
         },
         {
           "chunkId": "6_59",
           "type": "paragraph",
-          "content": "Glycerol phosphate is\nstripped of 2H, which is fed into complex III of the respiratory chain\nfrom outside the mitochondria. These electrons are transferred onto\noxygen in the normal way. Glycerol phosphate can be recycled by\nPicking up 2H (from NADH in the cytosol) again and again. Overall, this\nunusual form of respiration oxidises NADH in the cytosol, passing its\nelectrons onto oxygen, bolstering the power of aerobic glycolysis. Only\nsix protons can be pumped this way (still enough to make a couple of\nATPs) but there are two big advantages. First, making less ATP better\nmatches the demands of growing cells, as we’ve seen, and the cycle can\neasily be switched off when it’s not needed. Most tissues can get most of\nthe energy they need most of the time through this mechanism, perhaps\nover many decades. And second, this peripheral cycle can drive the\ntranshydrogenase enzyme to form NADPH inside the mitochondria,\nsustaining reverse flux through the Krebs cycle. Overall, your choices at\nwhat I’ll call the Krebs junction look like the figure on page 225. No wonder cancer cells are addicted to glutamine!",
-          "wordCount": 186,
-          "sentenceCount": 10,
+          "content": "These electrons are transferred onto\noxygen in the normal way. Glycerol phosphate can be recycled by\n[[IMG id=image-174-1 index=7 alt=\"Figure 40\"]]\nPicking up 2H (from NADH in the cytosol) again and again. Overall, this\nunusual form of respiration oxidises NADH in the cytosol, passing its\nelectrons onto oxygen, bolstering the power of aerobic glycolysis. Only\nsix protons can be pumped this way (still enough to make a couple of\nATPs) but there are two big advantages. First, making less ATP better\nmatches the demands of growing cells, as we’ve seen, and the cycle can\neasily be switched off when it’s not needed. Most tissues can get most of\nthe energy they need most of the time through this mechanism, perhaps\nover many decades. And second, this peripheral cycle can drive the\ntranshydrogenase enzyme to form NADPH inside the mitochondria,\nsustaining reverse flux through the Krebs cycle. Overall, your choices at\nwhat I’ll call the Krebs junction look like the figure on page 225. No wonder cancer cells are addicted to glutamine! Anything glucose\ncan do, glutamine can do too, and it also brings nitrogen to the table. Glutamine even works as a self-fulfilling prophecy.",
+          "wordCount": 194,
+          "sentenceCount": 11,
           "links": []
         },
         {
           "chunkId": "6_60",
           "type": "paragraph",
-          "content": "Anything glucose\ncan do, glutamine can do too, and it also brings nitrogen to the table. Glutamine even works as a self-fulfilling prophecy. I mentioned that one\nof the uses of oxaloacetate is to make aspartate for the urea cycle. In fact,\nthe urea cycle is the only pathway here that is no use to cancer cells. Quite the opposite. It’s long been puzzling that much of the nitrogen\nfrom glutamine is not bound into amino acids or nucleotides in cancer\ncells, nor is it safely incorporated into urea as a waste product, but rather\nit bubbles away as toxic ammonia. In a chilling scenario, it seems that\nthe release of ammonia from glutamine in cancer cells actually promotes\nthe breakdown of proteins in distant muscles. This works because\nglutamine is unusual in having two amino groups. To mop up the\nammonia, muscle proteins break down and release their amino acids. The\nnitrogen from these amino acids is transferred onto α-ketoglutarate to\nform glutamate, which then mops up the excess ammonia to form\nglutamine with its two amino groups. The glutamine is then recirculated\nin the blood – straight back to the cancer.",
-          "wordCount": 193,
-          "sentenceCount": 11,
+          "content": "I mentioned that one\nof the uses of oxaloacetate is to make aspartate for the urea cycle. In fact,\nthe urea cycle is the only pathway here that is no use to cancer cells. Quite the opposite. It’s long been puzzling that much of the nitrogen\nfrom glutamine is not bound into amino acids or nucleotides in cancer\ncells, nor is it safely incorporated into urea as a waste product, but rather\nit bubbles away as toxic ammonia. In a chilling scenario, it seems that\nthe release of ammonia from glutamine in cancer cells actually promotes\nthe breakdown of proteins in distant muscles. This works because\nglutamine is unusual in having two amino groups. To mop up the\nammonia, muscle proteins break down and release their amino acids. The\nnitrogen from these amino acids is transferred onto α-ketoglutarate to\nform glutamate, which then mops up the excess ammonia to form\nglutamine with its two amino groups. The glutamine is then recirculated\nin the blood – straight back to the cancer.",
+          "wordCount": 170,
+          "sentenceCount": 9,
           "links": []
         },
         {
@@ -5615,9 +5607,9 @@
         {
           "chunkId": "6_62",
           "type": "paragraph",
-          "content": "There is no common pattern, although what I’ve\ndescribed here is arguably as close to an ‘archetypal’ cancer metabolism\nas one could get. How cancer cells grow depends on what they’re fed\nand whereabouts they are, even within the confines of a single tumour. For example, some cancer cells release lactate as a waste product, while\nothers take it up. From lactate you can make pyruvate, then oxaloacetate\nand acetyl CoA. Everything I’ve just described is now possible, except\nthat these cells must still get their nitrogen from somewhere (and are\nmore likely to have normal Krebs-cycle flux). 7 In each case the rule is\nalways ‘follow the money’. Given any particular substrate, how do\ncancer cells find the right balance between NADPH, ATP, nitrogen and\ncarbon skeletons to drive growth? Probably the only substrate that cancer\ncells may struggle to deal with are ketones. These are formed f\n[[IMG id=image-176-1 index=8 alt=\"Figure 41\"]]\nrom acetyl\nCoA, either by breaking down stored fats, or through a ‘ketogenic diet’. Because our physiology links ketone bodies with starvation, their\npresence tends to switch off growth signals.",
-          "wordCount": 184,
-          "sentenceCount": 10,
+          "content": "There is no common pattern, although what I’ve\ndescribed here is arguably as close to an ‘archetypal’ cancer metabolism\nas one could get. How cancer cells grow depends on what they’re fed\nand whereabouts they are, even within the confines of a single tumour. For example, some cancer cells release lactate as a waste product, while\nothers take it up. From lactate you can make pyruvate, then oxaloacetate\nand acetyl CoA. Everything I’ve just described is now possible, except\nthat these cells must still get their nitrogen from somewhere (and are\nmore likely to have normal Krebs-cycle flux). 7 In each case the rule is\nalways ‘follow the money’. Given any particular substrate, how do\ncancer cells find the right balance between NADPH, ATP, nitrogen and\ncarbon skeletons to drive growth? Probably the only substrate that cancer\ncells may struggle to deal with are ketones. These are formed from acetyl\nCoA, either by breaking down stored fats, or through a ‘ketogenic diet’. Because our physiology links ketone bodies with starvation, their\npresence tends to switch off growth signals. It’s also notoriously tricky to\nmake sugars from fats (although it can be done via the C3 intermediary\nacetone).",
+          "wordCount": 197,
+          "sentenceCount": 11,
           "links": [
             {
               "text": "7",
@@ -5648,9 +5640,9 @@
         {
           "chunkId": "6_63",
           "type": "paragraph",
-          "content": "It’s also notoriously tricky to\nmake sugars from fats (although it can be done via the C3 intermediary\nacetone). Yet even these metabolic hurdles are not insurmountable for\ncancer cells. I’ve implied that cancer is primarily a metabolic disease, yet if\nanything goes for metabolism, then what actually turns a cell cancerous? You’ve probably appreciated by now that the underlying problem is an\nenvironment that continuously and erroneously shouts ‘ grow! ’. This\ntoxic environment can be induced by mutations, infections, low oxygen\nlevels ... or the decline in metabolism associated with ageing itself. Remember that ageing is the single greatest risk factor for cancer. That’s\nthe main reason why I’ve talked so much about reverse flux through the\nKrebs cycle. I’m not trying to explain every case of cancer, but why our\nrisk increases with age. Because age hits us all in the end.",
-          "wordCount": 145,
-          "sentenceCount": 11,
+          "content": "Yet even these metabolic hurdles are not insurmountable for\ncancer cells. [[IMG id=image-176-1 index=8 alt=\"Figure 41\"]]\nI’ve implied that cancer is primarily a metabolic disease, yet if\nanything goes for metabolism, then what actually turns a cell cancerous? You’ve probably appreciated by now that the underlying problem is an\nenvironment that continuously and erroneously shouts ‘ grow! ’. This\ntoxic environment can be induced by mutations, infections, low oxygen\nlevels ... or the decline in metabolism associated with ageing itself. Remember that ageing is the single greatest risk factor for cancer. That’s\nthe main reason why I’ve talked so much about reverse flux through the\nKrebs cycle. I’m not trying to explain every case of cancer, but why our\nrisk increases with age. Because age hits us all in the end.",
+          "wordCount": 131,
+          "sentenceCount": 10,
           "links": []
         },
         {
@@ -23146,23 +23138,23 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-10-13T11:14:59.638Z",
+    "processingStartTime": "2025-10-14T09:29:45.116Z",
     "processingEndTime": null,
     "stepResults": {
       "step-4": {
-        "totalChunks": 743,
-        "totalParagraphs": 633,
+        "totalChunks": 742,
+        "totalParagraphs": 632,
         "totalHeaders": 110,
         "totalLinksExtracted": 1407,
-        "processingTime": 431,
+        "processingTime": 304,
         "stats": {
-          "totalChunks": 743,
-          "totalParagraphs": 633,
+          "totalChunks": 742,
+          "totalParagraphs": 632,
           "totalHeaders": 110,
-          "totalWords": 114302,
+          "totalWords": 114280,
           "totalLinks": 1407,
           "paragraphStats": {
-            "count": 633,
+            "count": 632,
             "wordCounts": [
               194,
               188,
@@ -23231,17 +23223,16 @@
               192,
               197,
               200,
-              150,
-              172,
-              167,
-              81,
-              189,
+              200,
+              177,
+              192,
+              188,
               191,
               195,
               196,
-              194,
-              197,
-              195,
+              193,
+              191,
+              200,
               196,
               191,
               184,
@@ -23268,7 +23259,7 @@
               193,
               184,
               172,
-              198,
+              197,
               196,
               188,
               185,
@@ -23320,28 +23311,28 @@
               189,
               183,
               158,
-              173,
+              172,
               199,
               193,
               170,
               172,
-              167,
+              166,
               200,
               152,
               190,
               198,
               194,
               191,
-              189,
+              188,
               198,
               177,
               199,
               62,
               200,
               164,
-              198,
+              197,
               192,
-              191,
+              190,
               186,
               190,
               194,
@@ -23392,15 +23383,15 @@
               149,
               171,
               195,
-              195,
-              186,
+              194,
+              185,
               196,
               171,
-              186,
+              185,
               199,
-              181,
-              200,
-              108,
+              180,
+              195,
+              113,
               177,
               188,
               193,
@@ -23411,15 +23402,15 @@
               191,
               200,
               187,
-              185,
+              184,
               179,
               193,
               179,
               52,
               181,
-              193,
-              199,
-              169,
+              183,
+              190,
+              188,
               183,
               172,
               181,
@@ -23458,14 +23449,14 @@
               179,
               195,
               163,
-              191,
+              190,
               175,
               192,
               182,
               176,
               160,
               191,
-              185,
+              184,
               167,
               167,
               198,
@@ -23476,7 +23467,7 @@
               176,
               188,
               195,
-              187,
+              186,
               182,
               188,
               181,
@@ -23523,7 +23514,7 @@
               52,
               186,
               199,
-              199,
+              198,
               193,
               191,
               192,
@@ -23531,23 +23522,23 @@
               196,
               94,
               186,
-              160,
-              187,
+              155,
+              192,
               192,
               199,
               193,
               187,
               187,
               181,
-              192,
-              175,
-              188,
-              186,
-              186,
-              193,
+              187,
+              180,
+              187,
+              200,
+              194,
+              170,
               198,
-              184,
-              145,
+              197,
+              131,
               196,
               182,
               191,
@@ -23798,7 +23789,7 @@
               865,
               71
             ],
-            "averageWords": 179.98420221169036,
+            "averageWords": 180.23417721518987,
             "minWords": 22,
             "maxWords": 2155
           },
@@ -23929,10 +23920,10 @@
       "lineCount": 12120,
       "wordCount": 121693,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-10-13T11:15:03.043Z",
-      "averageWordsPerPage": 384,
-      "extractionMethod": "page_by_page_fixed",
-      "totalTextContentItems": 27143
+      "extractionTime": "2025-10-14T09:29:45.158Z",
+      "source": "cached-txt-file",
+      "txtFilePath": "/Users/gil/Projects/book-reader-app/files/Transformers/book.txt",
+      "extractionMethod": "text-file-load"
     },
     "chapterDetection": {
       "chaptersDetected": 16,
@@ -23941,7 +23932,7 @@
       "patternMatches": 419,
       "averageDetectionConfidence": 0.85625,
       "pageOffset": 0,
-      "processingTime": 4260,
+      "processingTime": 2686,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -23952,7 +23943,7 @@
       "averagePagesPerChapter": 32.44444444444444,
       "totalCharacters": 707496,
       "averageCharactersPerChapter": 78610.66666666667,
-      "processingTime": 21,
+      "processingTime": 16,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     },
     "chapterNameCleaning": {
@@ -23969,21 +23960,21 @@
       "totalChapters": 9,
       "averageWordsPerPage": 390.71232876712327,
       "sentencesMerged": 0,
-      "extractionTime": "2025-10-13T11:15:08.309Z",
-      "processingTime": 151
+      "extractionTime": "2025-10-14T09:29:48.015Z",
+      "processingTime": 124
     },
     "linkDetection": {
       "totalLinks": 282,
       "totalPdfLinks": 2214,
-      "processingTime": 3098,
-      "detectionTime": "2025-10-13T11:15:11.430Z"
+      "processingTime": 2327,
+      "detectionTime": "2025-10-14T09:29:50.361Z"
     },
     "imageExtraction": {
       "totalImages": 40,
       "totalExtractedImages": 60,
       "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/Transformers/output/images",
-      "processingTime": 6122,
-      "extractionTime": "2025-10-13T11:15:17.577Z"
+      "processingTime": 5492,
+      "extractionTime": "2025-10-14T09:29:55.875Z"
     }
   }
 }

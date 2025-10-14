@@ -6,6 +6,8 @@ This document explains how users can customize their reading experience through 
 
 The theme customization system allows users to personalize their reading experience by adjusting colors, typography, and visual appearance. **All customizations are scoped to the book content within the Reader only** - they do not affect other parts of the application like the ThemeModal itself, navigation, or other UI components.
 
+All customizations work in both **Full Reading Mode** and **Focus Reading Mode**, providing a consistent experience across both modes.
+
 All customizations are managed through the **ThemeModal** component and are automatically saved to the user's preferences.
 
 ## Important: Scoped Theming
@@ -23,17 +25,26 @@ All customizations are managed through the **ThemeModal** component and are auto
 - **Real-time preview**: Changes are applied immediately with a live preview
 
 ### 2. Data Flow
+
+#### Full Reading Mode
 ```
 ThemeModal → useUserSettings → ReaderContent → CSS Variables → Book Content
 ```
 
+#### Focus Reading Mode
+```
+ThemeModal → useUserSettings → FocusReader → Direct Style Props → Book Content
+```
+
+**Process**:
 1. User changes setting in `ThemeModal`
 2. `onXXXChange` callback is triggered
 3. `useUserSettings` hook updates state
-4. Updated settings are passed to `ReaderContent` component
-5. CSS variables are set locally on the reader content container only
-6. Book content components consume CSS variables for styling
-7. Settings are saved to backend storage
+4. Updated settings are passed to `ReaderContent` or `FocusReader` component
+5. **Full mode**: CSS variables are set locally on the reader content container
+6. **Focus mode**: Theme properties are applied directly via Material-UI `sx` props
+7. Book content components consume styling
+8. Settings are saved to backend storage
 
 ### 3. CSS Variables System
 CSS variables are set immediately when users make changes, ensuring instant visual feedback. **Crucially, these variables are scoped to the reader content container only, not applied globally.**
@@ -125,8 +136,12 @@ container.style.setProperty('--reader-font-size', `${fontSize}rem`);
 
 **Where it's consumed**:
 ```typescript
-// src/client/routes/Reader/components/chunks/TextChunk.tsx
+// src/client/routes/Reader/components/chunks/TextChunk.tsx (full mode)
 fontSize: 'var(--reader-font-size, 1rem)'
+
+// src/client/routes/Reader/FocusReader.tsx (focus mode)
+fontSize: `${fontSize}rem` // Base container
+fontSize: `${fontSize * 1.5}rem` // Main sentence (scaled for emphasis)
 ```
 
 ### 5. Line Height
@@ -145,8 +160,11 @@ container.style.setProperty('--reader-line-height', lineHeight.toString());
 
 **Where it's consumed**:
 ```typescript
-// src/client/routes/Reader/components/chunks/TextChunk.tsx
+// src/client/routes/Reader/components/chunks/TextChunk.tsx (full mode)
 lineHeight: 'var(--reader-line-height, 1.6)'
+
+// src/client/routes/Reader/FocusReader.tsx (focus mode)
+lineHeight: lineHeight
 ```
 
 ### 6. Font Family
@@ -178,8 +196,11 @@ container.style.setProperty('--reader-font-family', fontFamily);
 
 **Where it's consumed**:
 ```typescript
-// src/client/routes/Reader/components/chunks/TextChunk.tsx
+// src/client/routes/Reader/components/chunks/TextChunk.tsx (full mode)
 fontFamily: 'var(--reader-font-family, inherit)'
+
+// src/client/routes/Reader/FocusReader.tsx (focus mode)
+fontFamily: fontFamily
 ```
 
 ### 7. Text Color
@@ -197,8 +218,11 @@ container.style.setProperty('--reader-text-color', textColor);
 
 **Where it's consumed**:
 ```typescript
-// src/client/routes/Reader/components/chunks/TextChunk.tsx
+// src/client/routes/Reader/components/chunks/TextChunk.tsx (full mode)
 color: 'var(--reader-text-color, inherit)'
+
+// src/client/routes/Reader/FocusReader.tsx (focus mode)
+color: textColor
 ```
 
 ## Code Architecture
@@ -216,9 +240,14 @@ color: 'var(--reader-text-color, inherit)'
    - ⚠️ No longer sets CSS variables globally
 
 3. **`src/client/routes/Reader/components/ReaderContent.tsx`**
-   - **Core**: Sets CSS variables scoped to reader content only
+   - **Core**: Sets CSS variables scoped to reader content only (full mode)
    - Receives theme settings as props
    - Applies styling to reading container
+
+3b. **`src/client/routes/Reader/FocusReader.tsx`**
+   - **Core**: Applies theme settings directly via inline styles (focus mode)
+   - Receives theme settings from `useUserTheme()` context
+   - Scales font size by 1.5x for emphasis in focus mode
 
 4. **`src/client/components/UserThemeProvider.tsx`**
    - Material-UI theme configuration for app-wide styling
@@ -353,3 +382,24 @@ style={{ someProperty: 'var(--reader-new-property, defaultValue)' }}
 ```
 
 **Important**: Always scope new CSS variables to the reader content container to maintain the principle of isolated theming.
+
+## Reading Mode Support
+
+### Full Reading Mode
+- Theme settings applied via CSS variables on the reader content container
+- CSS variables provide separation and instant updates
+- All chunk components consume CSS variables
+
+### Focus Reading Mode
+- Theme settings retrieved from `useUserTheme()` context
+- Applied directly as inline styles via Material-UI `sx` props
+- Font size scaled by 1.5x for the main sentence to create visual emphasis
+- All typography settings (font size, line height, font family) fully supported
+- Color settings (text color, highlight color) fully supported
+
+Both modes receive the same settings from `useUserSettings`, ensuring consistent theming across the entire reader experience.
+
+---
+
+**Last Updated**: October 14, 2025  
+**Recent Changes**: Added focus mode theme integration - all theme settings now work in both full and focus reading modes

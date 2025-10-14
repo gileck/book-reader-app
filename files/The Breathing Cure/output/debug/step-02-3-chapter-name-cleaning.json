@@ -1,11 +1,11 @@
 {
-  "processingTime": 1,
+  "processingTime": 2,
   "cleaningStats": {
     "totalChapters": 20,
-    "totalCharactersRemoved": 398,
-    "averageCharactersRemovedPerChapter": 19.9,
-    "totalCharactersAfterCleaning": 894645,
-    "cleaningEfficiency": 0.044486919392608244
+    "totalCharactersRemoved": 426,
+    "averageCharactersRemovedPerChapter": 21.3,
+    "totalCharactersAfterCleaning": 894612,
+    "cleaningEfficiency": 0.047618408874461775
   },
   "chapters": [
     {
@@ -29,7 +29,7 @@
       "chapterNumber": 3,
       "pageNumberStart": 34,
       "pageNumberEnd": 57,
-      "contentLength": 33642,
+      "contentLength": 33643,
       "cleanedPreview": "--- PAGE 34 ---\nSECTION ONE: FUNCTIONAL BREATHING \nTHE BOLT \nBefore we begin, it’s time to test your breathing. I use a measurement called the\nBOLT, or Body Oxygen Level Test. It’s a simple exercise t..."
     },
     {
@@ -109,8 +109,8 @@
       "chapterNumber": 14,
       "pageNumberStart": 216,
       "pageNumberEnd": 241,
-      "contentLength": 64651,
-      "cleanedPreview": "--- PAGE 216 ---\nDEVELOPING HEALTHY AIRWAYS IN CHILDREN \nWHAT CAUSES CHILDHOOD MOUTH BREATHING? \nack in 1909, an article, “Habitual Mouth-Breathing and Consequent\nMalocclusion of the Teeth,” was publi..."
+      "contentLength": 64652,
+      "cleanedPreview": "--- PAGE 216 ---\nDEVELOPING HEALTHY AIRWAYS IN CHILDREN \nWHAT CAUSES CHILDHOOD MOUTH BREATHING? \nBack in 1909, an article, \"Habitual Mouth-Breathing and Consequent\nMalocclusion of the Teeth,” was publ..."
     },
     {
       "title": "The Breathing Secret for Healthy Blood Pressure",
@@ -125,8 +125,8 @@
       "chapterNumber": 16,
       "pageNumberStart": 253,
       "pageNumberEnd": 272,
-      "contentLength": 48095,
-      "cleanedPreview": "--- PAGE 253 ---\nFREEDOM FROM RESPIRATORY DISCOMFORT \nWHAT IS ASTHMA? \no book on breathing would be complete without a discussion about\nasthma. But just what is asthma? The word asthma is borrowed fro..."
+      "contentLength": 48059,
+      "cleanedPreview": "--- PAGE 253 ---\nWHAT IS ASTHMA? \nNo book on breathing would be complete without a discussion about\nasthma. But just what is asthma? The word asthma is borrowed from the\nancient Greek ἆσθμα, âsthma, m..."
     },
     {
       "title": "Sex and Breath, an Intimate Connection",
@@ -157,8 +157,8 @@
       "chapterNumber": 20,
       "pageNumberStart": 352,
       "pageNumberEnd": 369,
-      "contentLength": 42212,
-      "cleanedPreview": "--- PAGE 352 ---\nSUGAR, SUGAR \nWHAT IS DIABETES? \niabetes is a long-term disease that affects the way the body metabolizes\nblood sugar or glucose, an important source of energy. Glucose comes\nfrom the..."
+      "contentLength": 42213,
+      "cleanedPreview": "--- PAGE 352 ---\nSUGAR, SUGAR \nWHAT IS DIABETES? \nDiabetes is a long-term disease that affects the way the body metabolizes\nblood sugar or glucose, an important source of energy. Glucose comes\nfrom th..."
     },
     {
       "title": "Seizure Control and the Breath",

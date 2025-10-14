@@ -61,14 +61,21 @@ async function execute(pipelineState, config) {
             let chapterContent = pieces.join('\n');
 
             // Insert markers using enhanced spatial positioning
-            let imageIndex = 0;
-            for (const info of images.filter(i => !i.placeholder)) {
+            // Filter and assign index first
+            const chapterImages = images.filter(i => !i.placeholder && pageOffsets.has(i.pageNumber));
+            chapterImages.forEach((info, idx) => {
+                info.chapterIndex = idx;
+            });
+
+            // Process images in REVERSE order (last page first) to avoid offset corruption
+            // When inserting text at position N, all positions > N shift, but positions < N remain valid
+            for (let i = chapterImages.length - 1; i >= 0; i--) {
+                const info = chapterImages[i];
                 const pageStart = pageOffsets.get(info.pageNumber);
-                if (pageStart === undefined) continue;
 
                 const id = info.imageName.replace(/\.[^.]+$/, '');
                 const alt = info.imageAlt || id;
-                const marker = `[[IMG id=${id} index=${imageIndex} alt="${alt}"]]`;
+                const marker = `[[IMG id=${id} index=${info.chapterIndex} alt="${alt}"]]`;
 
                 // Simple positioning: always at BOTTOM of page
                 const pageEnd = pageOffsets.get(info.pageNumber + 1) || chapterContent.length;
@@ -97,7 +104,6 @@ async function execute(pipelineState, config) {
                     const prefix = '\n'; // Always add newline before
                     targetPage.rawContent = rawContent + prefix + marker;
                 }
-                imageIndex += 1;
                 totalImagesAdded += 1;
             }
 

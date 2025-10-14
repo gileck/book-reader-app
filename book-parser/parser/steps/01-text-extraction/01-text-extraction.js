@@ -37,6 +37,63 @@ async function execute(pipelineState, config) {
         throw new Error(`PDF file not found: ${config.INPUT_PDF}`);
     }
 
+    // Determine .txt file path (same directory and name as PDF, but with .txt extension)
+    const pdfDir = path.dirname(config.INPUT_PDF);
+    const pdfBaseName = path.basename(config.INPUT_PDF, path.extname(config.INPUT_PDF));
+    const txtFilePath = path.join(pdfDir, `${pdfBaseName}.txt`);
+
+    // Check if we should force re-parsing from PDF
+    const forceReparse = config.FORCE_REPARSE || false;
+
+    // If forceReparse is true, delete existing .txt file
+    if (forceReparse && fs.existsSync(txtFilePath)) {
+        console.log(`🔄 Force reparse enabled: deleting existing ${path.basename(txtFilePath)}`);
+        fs.unlinkSync(txtFilePath);
+    }
+
+    // Check if .txt file exists and use it instead of parsing PDF
+    if (fs.existsSync(txtFilePath) && !forceReparse) {
+        console.log(`📄 Found existing text file: ${path.basename(txtFilePath)}`);
+        console.log(`   Using cached text extraction (skip PDF parsing)`);
+
+        const rawText = fs.readFileSync(txtFilePath, 'utf-8');
+
+        // Calculate basic statistics for metadata
+        const characterCount = rawText.length;
+        const lineCount = rawText.split('\n').length;
+        const wordCount = rawText.split(/\s+/).filter(word => word.length > 0).length;
+        const literalNewlineCount = (rawText.match(/\\n/g) || []).length;
+
+        // Count pages from page markers
+        const pageMarkers = rawText.match(/--- PAGE \d+ ---/g) || [];
+        const pageCount = pageMarkers.length;
+
+        // Return the same structure as PDF extraction would
+        return {
+            rawText: rawText,
+            metadata: {
+                ...pipelineState.metadata,
+                textExtraction: {
+                    characterCount,
+                    pageCount,
+                    lineCount,
+                    wordCount,
+                    literalNewlineCount,
+                    extractionTime: new Date().toISOString(),
+                    source: 'cached-txt-file',
+                    txtFilePath: txtFilePath,
+                    extractionMethod: 'text-file-load'
+                }
+            }
+        };
+    }
+
+    // No .txt file exists or force reparse - extract from PDF
+    console.log(`📖 Extracting text from PDF: ${path.basename(config.INPUT_PDF)}`);
+    if (!fs.existsSync(txtFilePath)) {
+        console.log(`   (Will save to ${path.basename(txtFilePath)} for future runs)`);
+    }
+
     try {
         // Read PDF file
         const pdfBuffer = fs.readFileSync(config.INPUT_PDF);
@@ -170,6 +227,11 @@ async function execute(pipelineState, config) {
 
         // Validate text quality - check for overly long words
         const wordValidation = validateWordLengths(rawText);
+
+        // Save extracted text to .txt file for future use and manual editing
+        console.log(`💾 Saving extracted text to: ${path.basename(txtFilePath)}`);
+        fs.writeFileSync(txtFilePath, rawText, 'utf-8');
+        console.log(`   ✓ Text file saved (${characterCount} characters)`);
 
         return {
             rawText: rawText,

@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-10-13T11:15:18.098Z",
-  "processingTime": "431ms",
+  "timestamp": "2025-10-14T09:29:56.260Z",
+  "processingTime": "304ms",
   "summary": {
     "totalChapters": 9,
-    "totalChunks": 743,
-    "totalParagraphs": 633,
+    "totalChunks": 742,
+    "totalParagraphs": 632,
     "totalHeaders": 110,
-    "totalWords": 114302,
+    "totalWords": 114280,
     "totalLinks": 1407
   },
   "statistics": {
-    "totalChunks": 743,
-    "totalParagraphs": 633,
+    "totalChunks": 742,
+    "totalParagraphs": 632,
     "totalHeaders": 110,
-    "totalWords": 114302,
+    "totalWords": 114280,
     "totalLinks": 1407,
     "paragraphStats": {
-      "count": 633,
+      "count": 632,
       "wordCounts": [
         194,
         188,
@@ -85,17 +85,16 @@
         192,
         197,
         200,
-        150,
-        172,
-        167,
-        81,
-        189,
+        200,
+        177,
+        192,
+        188,
         191,
         195,
         196,
-        194,
-        197,
-        195,
+        193,
+        191,
+        200,
         196,
         191,
         184,
@@ -122,7 +121,7 @@
         193,
         184,
         172,
-        198,
+        197,
         196,
         188,
         185,
@@ -174,28 +173,28 @@
         189,
         183,
         158,
-        173,
+        172,
         199,
         193,
         170,
         172,
-        167,
+        166,
         200,
         152,
         190,
         198,
         194,
         191,
-        189,
+        188,
         198,
         177,
         199,
         62,
         200,
         164,
-        198,
+        197,
         192,
-        191,
+        190,
         186,
         190,
         194,
@@ -246,15 +245,15 @@
         149,
         171,
         195,
-        195,
-        186,
+        194,
+        185,
         196,
         171,
-        186,
+        185,
         199,
-        181,
-        200,
-        108,
+        180,
+        195,
+        113,
         177,
         188,
         193,
@@ -265,15 +264,15 @@
         191,
         200,
         187,
-        185,
+        184,
         179,
         193,
         179,
         52,
         181,
-        193,
-        199,
-        169,
+        183,
+        190,
+        188,
         183,
         172,
         181,
@@ -312,14 +311,14 @@
         179,
         195,
         163,
-        191,
+        190,
         175,
         192,
         182,
         176,
         160,
         191,
-        185,
+        184,
         167,
         167,
         198,
@@ -330,7 +329,7 @@
         176,
         188,
         195,
-        187,
+        186,
         182,
         188,
         181,
@@ -377,7 +376,7 @@
         52,
         186,
         199,
-        199,
+        198,
         193,
         191,
         192,
@@ -385,23 +384,23 @@
         196,
         94,
         186,
-        160,
-        187,
+        155,
+        192,
         192,
         199,
         193,
         187,
         187,
         181,
-        192,
-        175,
-        188,
-        186,
-        186,
-        193,
+        187,
+        180,
+        187,
+        200,
+        194,
+        170,
         198,
-        184,
-        145,
+        197,
+        131,
         196,
         182,
         191,
@@ -652,7 +651,7 @@
         865,
         71
       ],
-      "averageWords": 179.98420221169036,
+      "averageWords": 180.23417721518987,
       "minWords": 22,
       "maxWords": 2155
     },
@@ -4154,8 +4153,8 @@
     {
       "chapterNumber": 2,
       "title": "Discovering the nanocosm",
-      "chunkCount": 90,
-      "paragraphCount": 81,
+      "chunkCount": 89,
+      "paragraphCount": 80,
       "headerCount": 9,
       "chunks": [
         {
@@ -4343,29 +4342,22 @@
         {
           "type": "paragraph",
           "content": "That’s normally quite stable and inert. Stolid. But there’s lots of pent-up energy stored in those hydrogen atoms. How\neasy it is to get at depends on the molecular surroundings. Is this stout-\nbellie...",
-          "wordCount": 150,
-          "sentenceCount": 10,
+          "wordCount": 200,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "This part of the molecule reacts to form an amino acid, for example,\nwhere the oxygen is switched with ammonia to form an amino group, or\nvice versa, one of the most important transformations in biolo...",
-          "wordCount": 172,
-          "sentenceCount": 7,
+          "content": "What about the third carbon, then, at the right-hand side? That also\nhas a double-bonded oxygen, along with another oxygen bound to a\nhydrogen, yet this arrangement has a very different character. In ...",
+          "wordCount": 177,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "In this case, I’ve drawn a dotted line next to the carboxylic acid group,\nwhich consists of a CO 2 (one carbon and two oxygen atoms) plus a\nhydrogen atom attached to one of the oxygens. All carboxylic...",
-          "wordCount": 167,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Notice too that the\ncarboxylate group has the formula CO 2 , and it can indeed break off\nrelatively easily as CO 2 (in this case leaving a C2 carboxylic acid,\nacetate, or vinegar). But for the most pa...",
-          "wordCount": 81,
-          "sentenceCount": 4,
+          "content": "Now when a carboxylic acid loses a positively charged proton, it’s\nleft with a negative charge (–) which I’ve shown on the top oxygen for\nclarity. But in reality this charge is smeared in space betwee...",
+          "wordCount": 192,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
@@ -4378,7 +4370,7 @@
         {
           "type": "paragraph",
           "content": "Having now familiarised ourselves with the nature of carboxylic acids,\nlet’s return to Krebs, who was wrestling with their fate. We’ve seen that\npyruvate itself plays a central role in respiration, ye...",
-          "wordCount": 189,
+          "wordCount": 188,
           "sentenceCount": 10,
           "linkCount": 0
         },
@@ -4406,21 +4398,21 @@
         {
           "type": "paragraph",
           "content": "But\nsuccinate is not like that. It’s a simple molecule with just four carbon\natoms and nought else beyond the usual oxygen and hydrogen atoms. The molecule is beautifully symmetrical, as my portrait s...",
-          "wordCount": 194,
+          "wordCount": 193,
           "sentenceCount": 15,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "All were known to be\ninterchangeable, and none of them was consumed by respiration. They\ndiffered from each other in one crucial respect: the number of hydrogen\natoms in the short carbon chain. Each d...",
-          "wordCount": 197,
+          "wordCount": 191,
           "sentenceCount": 11,
           "linkCount": 2
         },
         {
           "type": "paragraph",
-          "content": "Recall that respiration consumes oxygen by reacting it with hydrogen,\nor more specifically 2H. The product is water, or H 2 O. Warburg had\nAlready shown that the enzyme that catalyses this final step ...",
-          "wordCount": 195,
+          "content": "Recall that respiration consumes oxygen by reacting it with hydrogen,\nor more specifically 2H. The product is water, or H 2 O. Warburg had\n[[IMG id=image-042-1 index=5 alt=\"Figure 8\"]]\nAlready shown t...",
+          "wordCount": 200,
           "sentenceCount": 12,
           "linkCount": 0
         },
@@ -4630,7 +4622,7 @@
         {
           "type": "paragraph",
           "content": "This current of electrons powers the\nextrusion of ten protons across the membrane, generating a\ncombined electrical charge and concentration difference (the\nproton-motive force) that drives ATP synthe...",
-          "wordCount": 198,
+          "wordCount": 197,
           "sentenceCount": 7,
           "linkCount": 2
         },
@@ -5045,7 +5037,7 @@
         {
           "type": "paragraph",
           "content": "Chemical analysis\nshowed this to be a three-carbon carboxylic acid called\nphosphoglycerate:\nNotice that the newly fixed CO 2 (highlighted with the dotted line) seems\nto be joined onto a two-carbon acc...",
-          "wordCount": 173,
+          "wordCount": 172,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -5079,8 +5071,8 @@
         },
         {
           "type": "paragraph",
-          "content": "Calvin’s own cherished idea\n[[IMG id=image-077-1 index=2 alt=\"Figure 14\"]]\ns on photochemistry had recently\nimploded, so his greatest achievements in the field were more\nAttributable to Benson, which ...",
-          "wordCount": 167,
+          "content": "Calvin’s own cherished ideas on photochemistry had recently\nimploded, so his greatest achievements in the field were more\n[[IMG id=image-077-1 index=2 alt=\"Figure 14\"]]\nAttributable to Benson, which m...",
+          "wordCount": 166,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -5136,7 +5128,7 @@
         {
           "type": "paragraph",
           "content": "As we’ve seen, these\ncarbon skeletons are the currency of biochemistry. Do you want to make\nan amino acid? Your starting point is right here in the Krebs cycle. Do\nyou want to make fatty acids or isop...",
-          "wordCount": 189,
+          "wordCount": 188,
           "sentenceCount": 13,
           "linkCount": 0
         },
@@ -5192,7 +5184,7 @@
         {
           "type": "paragraph",
           "content": "It forces its electrons onto CO 2 (indirectly in the Calvin–\nBenson cycle) or onto those two most recalcitrant Krebs-cycle\nintermediates – acetate (C2) and succinate (C4) – enabling the Krebs\ncycle to...",
-          "wordCount": 198,
+          "wordCount": 197,
           "sentenceCount": 7,
           "linkCount": 0
         },
@@ -5206,7 +5198,7 @@
         {
           "type": "paragraph",
           "content": "Plants still depend on ferredoxin, but keep its levels to a strict minimum,\ntransferring its electrons straight to NADP + (nicotinamide adenine\ndinucleotide phosphate) to form NADPH like this:\nTransfe...",
-          "wordCount": 191,
+          "wordCount": 190,
           "sentenceCount": 6,
           "linkCount": 2
         },
@@ -5592,15 +5584,15 @@
         },
         {
           "type": "paragraph",
-          "content": "The\nparallel between mineral surfaces and enzymes such as ferredoxin is\nremarkable: the lattice structure of iron and sulfur in minerals such as\ngreigite is nearly identica\n[[IMG id=image-107-1 index=...",
-          "wordCount": 195,
+          "content": "The\nparallel between mineral surfaces and enzymes such as ferredoxin is\nremarkable: the lattice structure of iron and sulfur in minerals such as\ngreigite is nearly identical to the tiny clusters of ir...",
+          "wordCount": 194,
           "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "But as in respiration, protons and electrons can\nunite to form hydrogen atoms. This happens much more readily in mildly\nacidic environments. Under these conditions, protons can bind to sulfur\nonto the...",
-          "wordCount": 186,
+          "wordCount": 185,
           "sentenceCount": 7,
           "linkCount": 0
         },
@@ -5613,7 +5605,7 @@
         },
         {
           "type": "paragraph",
-          "content": "The\nsame thing can happen repeatedly. So here’s what happens next. Notice\nin\n[[IMG id=image-109-1 index=3 alt=\"Figure 21\"]]\nthe middle panel that the electron pair on the oxygen is quickly shared\nwith...",
+          "content": "The\nsame thing can happen repeatedly. So here’s what happens next. Notice\nin the middle panel that the electron pair on the oxygen is quickly shared\nwith a nearby proton, in this case forming an OH (a...",
           "wordCount": 171,
           "sentenceCount": 7,
           "linkCount": 0
@@ -5621,7 +5613,7 @@
         {
           "type": "paragraph",
           "content": "These react\nimmediately to form water, H 2 O, shown in the right-hand panel – a\nfizzing neutralisation reaction that many of us might remember from\ntitrating acids and bases at school, perhaps even in...",
-          "wordCount": 186,
+          "wordCount": 185,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -5634,22 +5626,22 @@
         },
         {
           "type": "paragraph",
-          "content": "That’s the part that I find surprising,\nalthough evidently it happens, both in the industrial Fischer–Tropsch\nprocess as well as in cells – the ancient, widespread iron–nickel\n[[IMG id=image-111-1 ind...",
-          "wordCount": 181,
+          "content": "That’s the part that I find surprising,\nalthough evidently it happens, both in the industrial Fischer–Tropsch\nprocess as well as in cells – the ancient, widespread iron–nickel–sulfur\nenzyme carbon mon...",
+          "wordCount": 180,
           "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "This means that electrons\ntransferred from the surface onto CO 2 can be replenished, so the process\ncan happen over and over again without any permanent change in the\nsurface – the surface is catalyti...",
-          "wordCount": 200,
+          "wordCount": 195,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The answer is simple: hydrogen\ngas, bubbling straight out of alkaline hydrothermal vents. If the\nconcentration of hydrogen in hydrothermal fluids is high, that tends to\nFavour the continuous transfer ...",
-          "wordCount": 108,
+          "content": "The answer is simple: hydrogen\ngas, bubbling straight out of alkaline hydrothermal vents. If the\nconcentration of hydrogen in hydrothermal fluids is high, that tends to\n[[IMG id=image-112-1 index=7 al...",
+          "wordCount": 113,
           "sentenceCount": 5,
           "linkCount": 0
         },
@@ -5740,7 +5732,7 @@
         {
           "type": "paragraph",
           "content": "Transfer of protons across an inorganic barrier (left) or the same\nbarrier enclosing a protocell (right) could drive the formation of\norganics (CH 2 O) within the pore or the protocell. The triangles ...",
-          "wordCount": 185,
+          "wordCount": 184,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -5789,22 +5781,22 @@
         {
           "type": "paragraph",
           "content": "This awesome nanomotor is\nunquestionably a product of genetic information and natural selection; it\nDidn’t just pop into existence by accident in a prebiotic world. So if the\nfirst cells needed ATP to...",
-          "wordCount": 193,
+          "wordCount": 183,
           "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Once formed, acetyl phosphate will pass its phosphate onto\nADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield,\nroughly like this:\nSilvana Pinna, a PhD student in my lab, has shown t...",
-          "wordCount": 199,
-          "sentenceCount": 8,
+          "content": "Once formed, acetyl phosphate will pass its phosphate onto\nADP (adenosine diphosphate) to form ATP at modest (20 per cent) yield,\nroughly like this:\n[[IMG id=image-120-1 index=9 alt=\"Figure 27\"]]\n[[IM...",
+          "wordCount": 190,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The bigger picture that emerges is this. Vents provide a steady supply\nof H 2 and CO 2 , in just the right conditions needed to promote their\nreaction to make carboxylic acids. These form through chem...",
-          "wordCount": 169,
-          "sentenceCount": 9,
+          "content": "In terms of reactivity, the difference is about three orders of magnitude,\nso it’s not to be sneezed at. The bigger picture that emerges is this. Vents provide a steady supply\nof H 2 and CO 2 , in jus...",
+          "wordCount": 188,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -6113,7 +6105,7 @@
         {
           "type": "paragraph",
           "content": "Set against the tight constraints of this anaerobic world, imagine the\nfreedom offered by that everyday miracle, oxygenic photosynthesis. Silently humming in trees and algae and cyanobacteria, all use...",
-          "wordCount": 191,
+          "wordCount": 190,
           "sentenceCount": 17,
           "linkCount": 0
         },
@@ -6162,7 +6154,7 @@
         {
           "type": "paragraph",
           "content": "We met two of these previously, in Chapter 2: 11 C and 14 C. Here, we’re concerned with a third isotope, 13 C, which happens to be\nstable. The nucleus of 13 C has six protons and seven neutrons. The f...",
-          "wordCount": 185,
+          "wordCount": 184,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -6246,7 +6238,7 @@
         {
           "type": "paragraph",
           "content": "The two prongs of the Krebs non-cycle, a common flux pattern in\nmicrobes. The prongs balance the formation of 2H against its\nconsumption when oxygen levels are low, allowing metabolism and\nATP synthes...",
-          "wordCount": 187,
+          "wordCount": 186,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -6611,8 +6603,8 @@
         },
         {
           "type": "paragraph",
-          "content": "Overall, it works like this (where CI d\n[[IMG id=image-164-1 index=2 alt=\"Figure 35\"]]\nepicts complex I, CII is\ncomplex II and the right-hand complex is the nanomotor ATP synthase):\nThe dotted line sh...",
-          "wordCount": 199,
+          "content": "Overall, it works like this (where CI depicts complex I, CII is\ncomplex II and the right-hand complex is the nanomotor ATP synthase):\n[[IMG id=image-164-1 index=2 alt=\"Figure 35\"]]\nThe dotted line sho...",
+          "wordCount": 198,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -6667,7 +6659,7 @@
         },
         {
           "type": "paragraph",
-          "content": "Most cancers need no more than glucose and glutamine to grow. These\n[[IMG id=image-167-1 index=3 alt=\"Figure 36\"]]\nsubstrates serve all of their needs. And of the two of them ... give the\ncancers glut...",
+          "content": "Most cancers need no more than glucose and glutamine to grow. These\nsubstrates serve all of their needs. And of the two of them ... give the\ncancers glutamine. I have a vivid memory of discussing glut...",
           "wordCount": 186,
           "sentenceCount": 10,
           "linkCount": 0
@@ -6675,14 +6667,14 @@
         {
           "type": "paragraph",
           "content": "Around the time we were talking, Moncada had just shown that\ndepriving cells of glucose did not pause their growth for long, but\ndepriving them of glutamine put paid to their prospects permanently. An...",
-          "wordCount": 160,
+          "wordCount": 155,
           "sentenceCount": 12,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "They reported in Nature that cells\nWith defective mitochondria would habitually drive part of their Krebs\ncycle backwards, to make citrate (C6) by reacting α-ketoglutarate (C5)\nwith CO 2 – a rare case...",
-          "wordCount": 187,
+          "content": "They reported in Nature that cells\n[[IMG id=image-168-1 index=4 alt=\"Figure 37\"]]\nWith defective mitochondria would habitually drive part of their Krebs\ncycle backwards, to make citrate (C6) by reacti...",
+          "wordCount": 192,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -6731,43 +6723,43 @@
         {
           "type": "paragraph",
           "content": "The enzyme sitting in the membrane is the transhydrogenase,\nwhich regenerates NADPH from NADH, so long as there is a\nmembrane potential. We are left with a peculiar situation, in which Krebs-cycle flu...",
-          "wordCount": 192,
+          "wordCount": 187,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The sirtuins are a group of enzymes that\nstrip out the acetyl group, switching off the growth signal. But their\nActivity depends on the availability of NADH. The sirtuins normally\nclose down growth an...",
-          "wordCount": 175,
+          "content": "The sirtuins are a group of enzymes that\nstrip out the acetyl group, switching off the growth signal. But their\n[[IMG id=image-172-1 index=5 alt=\"Figure 38\"]]\nActivity depends on the availability of N...",
+          "wordCount": 180,
           "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "It stands at a unique crossroads in metabolism, where almost\nevery direction is good for cancer, which means the more you make, the\nbetter it gets. The choice is a bit overwhelming (see the figure opp...",
-          "wordCount": 188,
+          "wordCount": 187,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "This pathway is\nanother ancient backbone of metabolism, more or less the opposite of\nglycolysis, which forms glucose. Hang on a minute ... don’t we want to\nburn glucose? No! Glucose is the starting po...",
-          "wordCount": 186,
-          "sentenceCount": 13,
+          "wordCount": 200,
+          "sentenceCount": 14,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Glycerol phosphate is\nstripped of 2H, which is fed into complex III of the respiratory chain\nfrom outside the mitochondria. These electrons are transferred onto\noxygen in the normal way. Glycerol phos...",
-          "wordCount": 186,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Anything glucose\ncan do, glutamine can do too, and it also brings nitrogen to the table. Glutamine even works as a self-fulfilling prophecy. I mentioned that one\nof the uses of oxaloacetate is to make...",
-          "wordCount": 193,
+          "content": "These electrons are transferred onto\noxygen in the normal way. Glycerol phosphate can be recycled by\n[[IMG id=image-174-1 index=7 alt=\"Figure 40\"]]\nPicking up 2H (from NADH in the cytosol) again and a...",
+          "wordCount": 194,
           "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "I mentioned that one\nof the uses of oxaloacetate is to make aspartate for the urea cycle. In fact,\nthe urea cycle is the only pathway here that is no use to cancer cells. Quite the opposite. It’s long...",
+          "wordCount": 170,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
@@ -6780,15 +6772,15 @@
         {
           "type": "paragraph",
           "content": "There is no common pattern, although what I’ve\ndescribed here is arguably as close to an ‘archetypal’ cancer metabolism\nas one could get. How cancer cells grow depends on what they’re fed\nand whereabo...",
-          "wordCount": 184,
-          "sentenceCount": 10,
+          "wordCount": 197,
+          "sentenceCount": 11,
           "linkCount": 2
         },
         {
           "type": "paragraph",
-          "content": "It’s also notoriously tricky to\nmake sugars from fats (although it can be done via the C3 intermediary\nacetone). Yet even these metabolic hurdles are not insurmountable for\ncancer cells. I’ve implied ...",
-          "wordCount": 145,
-          "sentenceCount": 11,
+          "content": "Yet even these metabolic hurdles are not insurmountable for\ncancer cells. [[IMG id=image-176-1 index=8 alt=\"Figure 41\"]]\nI’ve implied that cancer is primarily a metabolic disease, yet if\nanything goes...",
+          "wordCount": 131,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {

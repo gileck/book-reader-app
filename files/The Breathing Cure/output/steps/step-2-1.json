@@ -202,19 +202,19 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-10-11T16:39:47.877Z",
+    "processingStartTime": "2025-10-14T09:24:09.668Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
-      "characterCount": 928758,
+      "characterCount": 928753,
       "pageCount": 417,
-      "lineCount": 14226,
-      "wordCount": 150725,
+      "lineCount": 14223,
+      "wordCount": 150722,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-10-11T16:39:52.420Z",
-      "averageWordsPerPage": 361,
-      "extractionMethod": "page_by_page_fixed",
-      "totalTextContentItems": 33228
+      "extractionTime": "2025-10-14T09:24:09.762Z",
+      "source": "cached-txt-file",
+      "txtFilePath": "/Users/gil/Projects/book-reader-app/files/The Breathing Cure/the-breathing-cure.txt",
+      "extractionMethod": "text-file-load"
     },
     "chapterDetection": {
       "chaptersDetected": 25,
@@ -223,7 +223,7 @@
       "patternMatches": 81,
       "averageDetectionConfidence": 0.9159999999999999,
       "pageOffset": 0,
-      "processingTime": 20578,
+      "processingTime": 18252,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

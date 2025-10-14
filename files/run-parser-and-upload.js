@@ -51,12 +51,19 @@ Features:
   - Creates output folder with parsed content and extracted images
 
 Options:
-  --help, -h     Show this help message
-  --parser-only, -p  Run only the parser and exit without prompting for upload
+  --help, -h            Show this help message
+  --parser-only, -p     Run only the parser and exit without prompting for upload
+  --force-reparse, -f   Force re-extraction from PDF (ignore cached .txt file)
+
+Text File Caching:
+  - First run: Extracts text from PDF and saves to <book-name>.txt
+  - Subsequent runs: Uses the .txt file (faster, allows manual editing)
+  - Use --force-reparse to regenerate .txt from PDF
 
 Examples:
   node run-parser-and-upload.js ./my-book-folder
   node run-parser-and-upload.js -p ./my-book-folder
+  node run-parser-and-upload.js --force-reparse ./my-book-folder
   node run-parser-and-upload.js /path/to/book/folder
   node run-parser-and-upload.js "C:\\Books\\My Book"
 `);
@@ -103,6 +110,7 @@ async function main() {
         const flags = new Set(args.filter(a => a.startsWith('-')));
         const positionals = args.filter(a => !a.startsWith('-'));
         const parserOnly = flags.has('--parser-only') || flags.has('-p');
+        const forceReparse = flags.has('--force-reparse') || flags.has('-f');
 
         // Show help if requested
         if (flags.has('--help') || flags.has('-h')) {
@@ -138,7 +146,8 @@ async function main() {
 
         await parser.parseBook(pdfPath, outputPath, {
             debug: true,
-            validate: true
+            validate: true,
+            forceReparse: forceReparse
         });
 
         // Parser completed successfully - now prompt for upload

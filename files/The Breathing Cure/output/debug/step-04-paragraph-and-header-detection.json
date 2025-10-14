@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-10-11T16:40:30.910Z",
-  "processingTime": "424ms",
+  "timestamp": "2025-10-14T09:24:58.310Z",
+  "processingTime": "1343ms",
   "summary": {
     "totalChapters": 20,
-    "totalChunks": 1105,
-    "totalParagraphs": 853,
-    "totalHeaders": 252,
-    "totalWords": 141866,
+    "totalChunks": 1099,
+    "totalParagraphs": 851,
+    "totalHeaders": 248,
+    "totalWords": 141844,
     "totalLinks": 15
   },
   "statistics": {
-    "totalChunks": 1105,
-    "totalParagraphs": 853,
-    "totalHeaders": 252,
-    "totalWords": 141866,
+    "totalChunks": 1099,
+    "totalParagraphs": 851,
+    "totalHeaders": 248,
+    "totalWords": 141844,
     "totalLinks": 15,
     "paragraphStats": {
-      "count": 853,
+      "count": 851,
       "wordCounts": [
         164,
         185,
@@ -84,51 +84,49 @@
         197,
         196,
         82,
-        96,
+        95,
         192,
         183,
         166,
-        193,
+        192,
         39,
-        198,
-        22,
-        173,
-        90,
+        192,
+        192,
+        101,
         192,
         34,
         187,
         172,
         195,
-        61,
-        195,
-        102,
         199,
-        117,
+        164,
+        199,
+        116,
         187,
-        184,
-        175,
-        198,
-        187,
+        183,
+        174,
+        193,
+        192,
         180,
         55,
-        116,
-        166,
+        110,
+        165,
         116,
         70,
-        105,
+        110,
         198,
         193,
         52,
         110,
         194,
-        192,
+        191,
         214,
         190,
-        130,
-        180,
-        120,
-        180,
-        176,
+        124,
+        189,
+        119,
+        169,
+        186,
         143,
         83,
         196,
@@ -167,7 +165,7 @@
         165,
         175,
         91,
-        171,
+        170,
         182,
         169,
         197,
@@ -177,8 +175,8 @@
         51,
         189,
         40,
-        38,
-        93,
+        32,
+        98,
         191,
         39,
         196,
@@ -190,8 +188,8 @@
         172,
         56,
         64,
-        177,
-        133,
+        197,
+        112,
         189,
         172,
         176,
@@ -338,7 +336,7 @@
         181,
         192,
         191,
-        176,
+        175,
         160,
         166,
         196,
@@ -872,12 +870,12 @@
         199,
         110
       ],
-      "averageWords": 164.98827667057444,
+      "averageWords": 165.3713278495887,
       "minWords": 22,
       "maxWords": 214
     },
     "headerStats": {
-      "count": 252,
+      "count": 248,
       "wordCounts": [
         2,
         3,
@@ -908,8 +906,6 @@
         4,
         4,
         4,
-        4,
-        5,
         7,
         8,
         7,
@@ -927,7 +923,6 @@
         4,
         6,
         9,
-        5,
         4,
         9,
         12,
@@ -1057,7 +1052,6 @@
         6,
         5,
         6,
-        4,
         3,
         3,
         3,
@@ -1132,7 +1126,7 @@
         5,
         6
       ],
-      "averageWords": 4.488095238095238,
+      "averageWords": 4.487903225806452,
       "minWords": 1,
       "maxWords": 15
     }
@@ -1580,11 +1574,11 @@
       "endsWithTerminator": true,
       "nextContentIndex": 2,
       "hasEmptyLineBetween": false,
-      "nextLineHead": "iabetes is a long-term disease that affects the way the body metabolizes",
+      "nextLineHead": "Diabetes is a long-term disease that affects the way the body metabolizes",
       "endIsSingleInitial": false,
       "endIsMultiInitials": false,
       "endIsAbbreviation": false,
-      "nextStartsLower": true,
+      "nextStartsLower": false,
       "isHeaderNext": false,
       "treatedAsBoundary": false
     },
@@ -4700,9 +4694,9 @@
     {
       "chapterNumber": 3,
       "title": "Section One: Functional Breathing",
-      "chunkCount": 63,
-      "paragraphCount": 40,
-      "headerCount": 23,
+      "chunkCount": 59,
+      "paragraphCount": 38,
+      "headerCount": 21,
       "chunks": [
         {
           "type": "header",
@@ -4791,7 +4785,7 @@
         {
           "type": "paragraph",
           "content": "Throughout this book you will read about addressing breathing pattern disorders\nin three ways. Those three approaches encompass the biochemistry,\nbiomechanics, and cadence of the breath. In simple ter...",
-          "wordCount": 96,
+          "wordCount": 95,
           "sentenceCount": 6,
           "linkCount": 0
         },
@@ -4839,8 +4833,8 @@
         },
         {
           "type": "paragraph",
-          "content": "Dir\n[[IMG id=image-041-1 index=2 alt=\"Figure 9\"]]\nections:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back. • If sitting, imagine a piece of string gently pulling yo...",
-          "wordCount": 193,
+          "content": "Directions:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back. [[IMG id=image-041-1 index=2 alt=\"Figure 9\"]]\n• If sitting, imagine a piece of string gently pulling you...",
+          "wordCount": 192,
           "sentenceCount": 12,
           "linkCount": 0
         },
@@ -4861,36 +4855,22 @@
         {
           "type": "paragraph",
           "content": "Directions:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back. • If sitting, imagine a piece of string gently pulling you upward toward the ceiling from the\ncrown of y...",
-          "wordCount": 198,
+          "wordCount": 192,
           "sentenceCount": 12,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "I need you to feel\nlike you want to breathe in more air. • Continue practicing the exercise for around four minutes.",
-          "wordCount": 22,
-          "sentenceCount": 2,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "Breathe Light, Variation Three",
-          "wordCount": 4,
-          "sentenceCount": 1,
+          "content": "I need you to feel\nlike you want to breathe in more air. • Continue practicing the exercise for around four minutes. [[IMG id=image-042-1 index=3 alt=\"Figure 10\"]]\nBreathe Light, Variation Three\nDirec...",
+          "wordCount": 192,
+          "sentenceCount": 16,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Directions:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back. • If sitting, imagine a piece of string gently pulling you upward toward the ceiling from the\ncrown of y...",
-          "wordCount": 173,
-          "sentenceCount": 15,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "• The goal is to create a feeling that you would like to take in more air, to feel an air hunger\n—the feeling that you would like to take in a deeper breath. • If you feel stressed or lose control of ...",
-          "wordCount": 90,
-          "sentenceCount": 5,
+          "content": "It is almost as if you are hardly\nbreathing at all. • The goal is to create a feeling that you would like to take in more air, to feel an air hunger\n—the feeling that you would like to take in a deepe...",
+          "wordCount": 101,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
@@ -4944,30 +4924,16 @@
         },
         {
           "type": "paragraph",
-          "content": "Breathe in, 1, 2, 3, 4, 5,\n[[IMG id=image-046-1 index=6 alt=\"Figure 13\"]]\nbreathe out, 1, 2, 3, 4, 5. Both options result in a breathing rate of six breaths per minute and work\nwell in helping improve...",
-          "wordCount": 61,
-          "sentenceCount": 2,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "A Question of Air Hunger",
-          "wordCount": 5,
-          "sentenceCount": 1,
+          "content": "Breathe in, 1, 2, 3, 4, 5, breathe out, 1, 2, 3, 4, 5. Both options result in a breathing rate of six breaths per minute and work\nwell in helping improve the automatic functioning of the body—those pr...",
+          "wordCount": 199,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "I had the following question from a student:\nWhen practicing to achieve air hunger and cadence breathing, is the\nwhole point to minimize the volume of air during this time? The reason I\nask is that yo...",
-          "wordCount": 195,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "• Breathe Light, Slow, Deep (LSD)—biochemistry, biomechanics, cadence—brings all three\ntogether, breathing light, slow, and deep. The main thing to remember is that when practicing for biomechanics an...",
-          "wordCount": 102,
-          "sentenceCount": 7,
+          "content": "Any thoughts on doing this? The answer is that these are three different exercises. You should focus on each\none separately at first. Then bring all three together. • Breathe Light (biochemistry)—the ...",
+          "wordCount": 164,
+          "sentenceCount": 14,
           "linkCount": 0
         },
         {
@@ -4987,8 +4953,8 @@
         {
           "type": "paragraph",
           "content": "• Gradually reduce your breathing rhythm so that you are breathing in for four seconds and\nout for six seconds. • Breathe in, 1, 2, 3, 4, and breathe out, 1, 2, 3, 4, 5, 6. • Breathe light, slow, and ...",
-          "wordCount": 117,
-          "sentenceCount": 6,
+          "wordCount": 116,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
@@ -5008,7 +4974,7 @@
         {
           "type": "paragraph",
           "content": "The objectives here are to breathe lightly during your walk, to breathe less\nair than you normally would, and to feel a hunger for more air. Remember to\nbring your focused awareness to the breath, jus...",
-          "wordCount": 184,
+          "wordCount": 183,
           "sentenceCount": 12,
           "linkCount": 0
         },
@@ -5022,7 +4988,7 @@
         {
           "type": "paragraph",
           "content": "This variation is also to be practiced at a steady, comfortable walking pace. You\nshould remove your hand from your nostril at this point. Also, ensure that you\nare breathing light during walking.\nDir...",
-          "wordCount": 175,
+          "wordCount": 174,
           "sentenceCount": 12,
           "linkCount": 0
         },
@@ -5036,14 +5002,14 @@
         {
           "type": "paragraph",
           "content": "This exercise involves jogging or fast walking with the mouth closed for one\nminute, followed by normal walking for one minute. Combining metabolic\nactivity with reduced nasal breathing offers several...",
-          "wordCount": 198,
+          "wordCount": 193,
           "sentenceCount": 14,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Breathe Slow : Slow down the speed of your breathing. • Breathe Deep : Bring the air into the lower regions of the lungs and allow a complete and\nnormal exhalation. • After one minute of fast walkin...",
-          "wordCount": 187,
+          "content": "• Breathe Slow : Slow down the speed of your breathing. [[IMG id=image-053-1 index=10 alt=\"Figure 17\"]]\n• Breathe Deep : Bring the air into the lower regions of the lungs and allow a complete and\nnorm...",
+          "wordCount": 192,
           "sentenceCount": 17,
           "linkCount": 0
         },
@@ -5085,7 +5051,7 @@
         {
           "type": "paragraph",
           "content": "The Buteyko Belt is specifically designed as an aid to enhance and support your\npractice of functional breathing. It will assist you in activating the diaphragm\nand breathing lightly with a minimum of...",
-          "wordCount": 116,
+          "wordCount": 110,
           "sentenceCount": 5,
           "linkCount": 0
         },
@@ -5099,7 +5065,7 @@
         {
           "type": "paragraph",
           "content": "Wrap the belt around your diaphragm so that it sits midway between your\nnavel and your chest. Tighten or loosen the straps on each side of the belt to\nachieve the optimum resistance to your breathing....",
-          "wordCount": 166,
+          "wordCount": 165,
           "sentenceCount": 9,
           "linkCount": 0
         },
@@ -5114,7 +5080,7 @@
           "type": "paragraph",
           "content": "It is easier to activate abdominal breathing when lying on your back in a semi-\nsupine position or when lying on your front.\nDirections:\n• Lie on a mat with a small pillow under your head and knees be...",
           "wordCount": 116,
-          "sentenceCount": 8,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
@@ -5140,8 +5106,8 @@
         },
         {
           "type": "paragraph",
-          "content": "Directions:\n• Take a soft silent breath in through your nose.\n• Allow a soft silent breath out through your nose.\n• Pinch your nose with your fingers to hold your breath for about 10 seconds or so.\n• ...",
-          "wordCount": 105,
+          "content": "[[IMG id=image-057-1 index=13 alt=\"Figure 20\"]]\nDirections:\n• Take a soft silent breath in through your nose.\n• Allow a soft silent breath out through your nose.\n• Pinch your nose with your fingers to...",
+          "wordCount": 110,
           "sentenceCount": 8,
           "linkCount": 0
         }
@@ -5150,9 +5116,9 @@
     {
       "chapterNumber": 4,
       "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
-      "chunkCount": 22,
+      "chunkCount": 21,
       "paragraphCount": 13,
-      "headerCount": 9,
+      "headerCount": 8,
       "chunks": [
         {
           "type": "header",
@@ -5220,7 +5186,7 @@
         {
           "type": "paragraph",
           "content": "• Repeat the exercise until you can breathe easily through your nose. If your nose does not\nbecome fully unblocked, wait around one minute and practice the same steps again. You\nmay need to do the exe...",
-          "wordCount": 192,
+          "wordCount": 191,
           "sentenceCount": 10,
           "linkCount": 0
         },
@@ -5248,7 +5214,7 @@
         {
           "type": "paragraph",
           "content": "Directions:\nThis exercise can help ease the diaphragm back to its resting position. • Slowly exhale through your nose. Do not force the breath in any way. • As you exhale, gently suck your stomach inw...",
-          "wordCount": 130,
+          "wordCount": 124,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -5260,24 +5226,17 @@
           "linkCount": 0
         },
         {
-          "type": "header",
-          "content": "1. Breathing into Cupped Hands",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
           "type": "paragraph",
-          "content": "At the first sign of a panic attack, cup your hands across your mouth and nose,\nand gently slow down your breathing. If you can breathe slow and low with\nlateral expansion and contraction of the lower...",
-          "wordCount": 180,
-          "sentenceCount": 10,
+          "content": "[[IMG id=image-064-1 index=3 alt=\"Figure 25\"]]\n1. Breathing into Cupped Hands\nAt the first sign of a panic attack, cup your hands across your mouth and nose,\nand gently slow down your breathing. If yo...",
+          "wordCount": 189,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
           "content": "If this feels okay, you can slow down your breathing a little more,\ninhaling for five seconds and exhaling for five seconds. Place your hands on\nyour sides to feel the ribs gently expanding and contra...",
-          "wordCount": 120,
-          "sentenceCount": 10,
+          "wordCount": 119,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
@@ -5290,7 +5249,7 @@
         {
           "type": "paragraph",
           "content": "This exercise can be practiced before you go to sleep. (The procedure and\nevidence for nose breathing during sleep is described in detail in Chapter Seven\non sleep and in the Children’s Exercises sect...",
-          "wordCount": 180,
+          "wordCount": 169,
           "sentenceCount": 12,
           "linkCount": 0
         },
@@ -5303,8 +5262,8 @@
         },
         {
           "type": "paragraph",
-          "content": "The normal response to the feeling of air hunger or suffocation is to begin\nbreathing fast through an open mouth. This kind of breathing is shallow and will\nOnly feed into your discomfort and fear. Th...",
-          "wordCount": 176,
+          "content": "The normal response to the feeling of air hunger or suffocation is to begin\nbreathing fast through an open mouth. This kind of breathing is shallow and will\n[[IMG id=image-067-1 index=7 alt=\"Figure 29...",
+          "wordCount": 186,
           "sentenceCount": 9,
           "linkCount": 0
         }
@@ -5798,7 +5757,7 @@
         {
           "type": "paragraph",
           "content": "This exercise is to be performed to a comfortable air hunger only.\nThe objectives are to experience a light to medium hunger for air (depending\non your BOLT score) and to prepare for stronger breath h...",
-          "wordCount": 171,
+          "wordCount": 170,
           "sentenceCount": 13,
           "linkCount": 0
         },
@@ -5874,7 +5833,7 @@
         },
         {
           "type": "paragraph",
-          "content": "• Breathe light with air hunger for three minutes. Slow down the speed of\n[[IMG id=image-095-1 index=4 alt=\"Figure 40\"]]\nyour breathing.\nDuring the inhalation, feel hardly any air entering your nose. ...",
+          "content": "• Breathe light with air hunger for three minutes. Slow down the speed of your breathing.\nDuring the inhalation, feel hardly any air entering your nose. Allow the exhalation to be\nslow, prolonged, and...",
           "wordCount": 51,
           "sentenceCount": 5,
           "linkCount": 0
@@ -5909,8 +5868,8 @@
         },
         {
           "type": "paragraph",
-          "content": "• Increase the speed to a respiratory rate of up to three breaths per se\n[[IMG id=image-096-1 index=5 alt=\"Figure 41\"]]\ncond. Continue\nbreathing using the belly. Breathe as fast as you comfortably can...",
-          "wordCount": 38,
+          "content": "• Increase the speed to a respiratory rate of up to three breaths per second. Continue\nbreathing using the belly. Breathe as fast as you comfortably can. Do this for 45 seconds.",
+          "wordCount": 32,
           "sentenceCount": 4,
           "linkCount": 0
         },
@@ -5923,8 +5882,8 @@
         },
         {
           "type": "paragraph",
-          "content": "• Practice Breathe Light (exercise #1) with prolonged exhalations, developing the feeling of\nair hunger. Do this for 1 minute.\nPractice three rounds of the fast breathing for one minute followed by li...",
-          "wordCount": 93,
+          "content": "• Practice Breathe Light (exercise #1) with prolonged exhalations, developing the feeling of\nair hunger. Do this for 1 minute.\n[[IMG id=image-096-1 index=5 alt=\"Figure 41\"]]\nPractice three rounds of t...",
+          "wordCount": 98,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -6057,15 +6016,15 @@
         {
           "type": "paragraph",
           "content": "This breathing exercise takes its name from its dual action on the metabolism—\ncatabolic (CAT) and anabolic (ANA). It isn’t necessary to understand what these\nterms mean, only that the practice is a f...",
-          "wordCount": 177,
-          "sentenceCount": 15,
+          "wordCount": 197,
+          "sentenceCount": 16,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Take a deep and slow inhale, and, at the top, hold your breath again for as long as\npossibl\n[[IMG id=image-101-1 index=6 alt=\"Figure 42\"]]\ne. During this phase, contract your pelvic floor muscles an...",
-          "wordCount": 133,
-          "sentenceCount": 7,
+          "content": "During this phase, contract your pelvic floor muscles and bring your navel in\ntoward your spine. • When you can’t hold your breath any longer, exhale as slowly as possible and resume\nbreathing as slow...",
+          "wordCount": 112,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
@@ -6375,7 +6334,7 @@
         },
         {
           "type": "paragraph",
-          "content": "In 1999, Lundberg and Weitzberg reported that nitric oxide inhibits the growth\nof various pathogens, including\n[[IMG id=image-115-1 index=1 alt=\"Figure 44\"]]\nbacteria and viruses. This suggests that N...",
+          "content": "In 1999, Lundberg and Weitzberg reported that nitric oxide inhibits the growth\nof various pathogens, including bacteria and viruses. This suggests that NO in\n[[IMG id=image-115-1 index=1 alt=\"Figure 4...",
           "wordCount": 184,
           "sentenceCount": 9,
           "linkCount": 0
@@ -7366,7 +7325,7 @@
         },
         {
           "type": "paragraph",
-          "content": "When athletes are physically active, dysfunctional breathing can manifest as\npremature breathlessness or muscle fatigue, inevitably resulting in suboptimal\nperformance 23 . A combination\n[[IMG id=imag...",
+          "content": "When athletes are physically active, dysfunctional breathing can manifest as\npremature breathlessness or muscle fatigue, inevitably resulting in suboptimal\nperformance 23 . A combination of upper ches...",
           "wordCount": 179,
           "sentenceCount": 7,
           "linkCount": 0
@@ -7402,7 +7361,7 @@
         {
           "type": "paragraph",
           "content": "Around 80% of this oxygen is used by the\nbrain, heart, liver, and kidneys. 28 Skeletal muscle does not generally use much\noxygen unless those muscles are contracting. During exercise, a young, untrain...",
-          "wordCount": 176,
+          "wordCount": 175,
           "sentenceCount": 8,
           "linkCount": 0
         },
@@ -8436,7 +8395,7 @@
         },
         {
           "type": "paragraph",
-          "content": "WHAT CAUSES CHILDHOOD MOUTH BREATHING? ack in 1909, an article, “Habitual Mouth-Breathing and Consequent\nMalocclusion of the Teeth,” was published in The Dental Cosmos . In it,\nDeLong described how mo...",
+          "content": "WHAT CAUSES CHILDHOOD MOUTH BREATHING? Back in 1909, an article, \"Habitual Mouth-Breathing and Consequent\nMalocclusion of the Teeth,” was published in The Dental Cosmos . In it,\nDeLong described how m...",
           "wordCount": 186,
           "sentenceCount": 8,
           "linkCount": 0
@@ -9028,7 +8987,7 @@
           "type": "paragraph",
           "content": "At first, as blood begins to flow, it makes a turbulent\nnoise, because the artery is still partially constricted. The diastolic reading is\ntaken at the first moment the blood begins to flow effortless...",
           "wordCount": 188,
-          "sentenceCount": 9,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -9169,20 +9128,13 @@
     {
       "chapterNumber": 16,
       "title": "Freedom From Respiratory Discomfort",
-      "chunkCount": 61,
+      "chunkCount": 60,
       "paragraphCount": 46,
-      "headerCount": 15,
+      "headerCount": 14,
       "chunks": [
         {
-          "type": "header",
-          "content": "FREEDOM FROM RESPIRATORY DISCOMFORT",
-          "wordCount": 4,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
           "type": "paragraph",
-          "content": "WHAT IS ASTHMA? o book on breathing would be complete without a discussion about\nasthma. But just what is asthma? The word asthma is borrowed from the\nancient Greek ἆσθμα, âsthma, meaning “laborious b...",
+          "content": "WHAT IS ASTHMA? No book on breathing would be complete without a discussion about\nasthma. But just what is asthma? The word asthma is borrowed from the\nancient Greek ἆσθμα, âsthma, meaning “laborious ...",
           "wordCount": 192,
           "sentenceCount": 7,
           "linkCount": 0
@@ -11073,7 +11025,7 @@
         },
         {
           "type": "paragraph",
-          "content": "WHAT IS DIABETES? iabetes is a long-term disease that affects the way the body metabolizes\nblood sugar or glucose, an important source of energy. Glucose comes\nfrom the food we eat, especially foods r...",
+          "content": "WHAT IS DIABETES? Diabetes is a long-term disease that affects the way the body metabolizes\nblood sugar or glucose, an important source of energy. Glucose comes\nfrom the food we eat, especially foods ...",
           "wordCount": 176,
           "sentenceCount": 10,
           "linkCount": 0

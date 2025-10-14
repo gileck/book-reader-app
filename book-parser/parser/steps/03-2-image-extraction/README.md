@@ -15,6 +15,9 @@ This step extracts embedded images from the PDF file and emits inline image mark
 2. **Image Extraction**: Uses the `pdfimages` command-line tool to extract actual image files from the PDF
 3. **Flow Positioning**: Determines nearest text position in chapter flow for each detected image
 4. **Marker Insertion**: Inserts inline markers into chapter content to mark image positions
+   - **Critical**: Images are processed in **reverse order** (last page first) to prevent offset corruption
+   - When inserting text at position N, all positions > N shift, but positions < N remain valid
+   - Reverse processing ensures all future insertions use uncorrupted position offsets
 
 ## Output
 
@@ -75,4 +78,35 @@ The validation checks:
     }
   }
 }
+```
+
+## Technical Notes
+
+### Reverse-Order Processing Bug Fix (October 2025)
+
+**Issue**: When multiple images appeared on consecutive pages, the marker insertion was creating malformed bracket structures:
+```
+❌ BEFORE: [ [[IMG...]] [IMG...]] ]
+```
+
+**Root Cause**: After inserting the first marker, `chapterContent` string grows and all positions shift. The `pageOffsets` map was never updated, causing subsequent insertions to use corrupted positions.
+
+**Solution**: Process images in reverse order (last page first):
+```javascript
+// Pre-assign indices
+chapterImages.forEach((info, idx) => { info.chapterIndex = idx; });
+
+// Process in reverse
+for (let i = chapterImages.length - 1; i >= 0; i--) {
+    const info = chapterImages[i];
+    // Insert using info.chapterIndex
+}
+```
+
+**Why it works**: When inserting at position N, all positions < N remain valid. Reverse processing ensures all future insertions use uncorrupted offsets.
+
+**Result**: Correctly formatted individual markers:
+```
+✅ AFTER: [[IMG id=image-090-1 index=0 alt="Figure 36"]]
+         [[IMG id=image-091-1 index=1 alt="Figure 37"]]
 ```

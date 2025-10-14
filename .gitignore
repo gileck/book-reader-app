@@ -44,3 +44,9 @@ next-env.d.ts
 *.pdf
 images/
 mitochondria-and-the-future-of-medicine/
+
+files/*/output/**
+files/*/images/**
+files/*/debug/**
+
+files/*/*.json

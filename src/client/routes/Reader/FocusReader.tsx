@@ -8,7 +8,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
     const currentSentenceIndex = controller.currentSentenceIndex;
     const isPlaying = controller.isPlaying;
     const currentWordIndex = controller.currentWordIndex;
-    const { textColor, highlightColor } = useUserTheme() as { textColor: string; highlightColor: string };
+    const { textColor, highlightColor, fontSize, lineHeight, fontFamily } = useUserTheme();
 
     const handleNext = useCallback(() => {
         controller.nextSentence();
@@ -76,7 +76,10 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                 justifyContent: 'center',
                 gap: 2,
                 background: 'var(--color-system-bg)',
-                color: 'var(--color-label)'
+                color: textColor,
+                fontSize: `${fontSize}rem`,
+                lineHeight: lineHeight,
+                fontFamily: fontFamily
             }}
             role="region"
             aria-label="Focus reading area"
@@ -89,7 +92,15 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
         >
             {/* Use same global class as full reader: .highlight-word; set CSS var for color */}
             {/* Previous (smaller, subdued, under) */}
-            <Box sx={{ minHeight: 44 }}>
+            <Box
+                sx={{ minHeight: 44, cursor: prevText ? 'pointer' : 'default' }}
+                onClick={(e) => {
+                    if (prevText) {
+                        e.stopPropagation();
+                        handlePrev();
+                    }
+                }}
+            >
                 <Typography variant="body2" sx={{ color: textColor, textAlign: 'center', opacity: 0.6 }}>
                     {prevText}
                 </Typography>
@@ -120,11 +131,12 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                 <Typography
                     variant="h4"
                     sx={{
-                        fontSize: 'min(calc(var(--font-size-title1) * 1.2), 34px)',
-                        lineHeight: 'var(--line-tight)',
+                        fontSize: `${fontSize * 1.5}rem`,
+                        lineHeight: lineHeight,
                         fontWeight: 700,
                         textAlign: 'center',
                         color: textColor,
+                        fontFamily: fontFamily,
                         whiteSpace: 'pre-wrap',
                         wordBreak: 'break-word',
                         position: 'relative',
