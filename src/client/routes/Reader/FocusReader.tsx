@@ -125,16 +125,21 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             {/* Use same global class as full reader: .highlight-word; set CSS var for color */}
             {/* Previous (smaller, subdued, under) */}
             <Box
-                sx={{
-                    minHeight: 44,
+                sx={{ 
+                    minHeight: 44, 
                     cursor: prevText ? 'pointer' : 'default',
                     ...(isPrevHeader && {
                         mx: -2,
                         px: 2,
                         py: 1.5,
-                        borderTop: '1px solid var(--color-separator)',
-                        borderBottom: '1px solid var(--color-separator)',
-                        backgroundColor: 'rgba(128, 128, 128, 0.08)'
+                        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+                        backgroundColor: 'rgba(211, 211, 211, 0.6)',
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: 'rgba(51, 51, 51, 0.6)',
+                            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                        }
                     })
                 }}
                 onClick={(e) => {
@@ -147,12 +152,9 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                 <Typography
                     variant="body2"
                     sx={{
-                        color: isPrevHeader ? '#000000' : textColor,
-                        '@media (prefers-color-scheme: dark)': isPrevHeader ? {
-                            color: '#ffffff'
-                        } : {},
+                        color: textColor,
                         textAlign: 'center',
-                        opacity: isPrevHeader ? 0.5 : 0.6,
+                        opacity: isPrevHeader ? 0.8 : 0.6,
                         fontWeight: isPrevHeader ? 700 : 400,
                         fontSize: isPrevHeader ? '0.95rem' : 'inherit',
                         textTransform: isPrevHeader ? 'uppercase' : 'none',
@@ -168,19 +170,23 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             </Box>
 
             {/* Current (bold, big, centered) */}
-            <Box
-                ref={containerRef}
-                sx={{
-                    position: 'relative',
+            <Box 
+                ref={containerRef} 
+                sx={{ 
+                    position: 'relative', 
                     ['--word-highlight-color' as unknown as string]: highlightColor,
                     ...(isHeader && {
                         mx: -2,
                         px: 2,
                         py: 3,
-                        backgroundColor: 'rgba(128, 128, 128, 0.15)',
-                        borderTop: '2px solid var(--color-separator)',
-                        borderBottom: '2px solid var(--color-separator)',
-                        backdropFilter: 'blur(10px)'
+                        backgroundColor: '#d3d3d3',
+                        borderTop: '2px solid rgba(0, 0, 0, 0.1)',
+                        borderBottom: '2px solid rgba(0, 0, 0, 0.1)',
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: '#333333',
+                            borderTop: '2px solid rgba(255, 255, 255, 0.1)',
+                            borderBottom: '2px solid rgba(255, 255, 255, 0.1)'
+                        }
                     })
                 }}
             >
@@ -207,10 +213,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                         lineHeight: isHeader ? 1.3 : lineHeight,
                         fontWeight: isHeader ? 800 : 700,
                         textAlign: 'center',
-                        color: isHeader ? '#000000' : textColor,
-                        '@media (prefers-color-scheme: dark)': isHeader ? {
-                            color: '#ffffff'
-                        } : {},
+                        color: textColor,
                         fontFamily: fontFamily,
                         whiteSpace: 'pre-wrap',
                         wordBreak: 'break-word',
@@ -240,28 +243,25 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             </Box>
 
             {/* Next (smaller, subdued, under) */}
-            <Box
-                sx={{
+            <Box 
+                sx={{ 
                     minHeight: 44,
                     ...(isNextHeader && {
                         mx: -2,
                         px: 2,
                         py: 1.5,
-                        borderTop: '1px solid var(--color-separator)',
-                        borderBottom: '1px solid var(--color-separator)',
-                        backgroundColor: 'rgba(128, 128, 128, 0.08)'
+                        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                        backgroundColor: 'rgba(51, 51, 51, 0.6)'
                     })
                 }}
             >
                 <Typography
                     variant="body2"
                     sx={{
-                        color: isNextHeader ? '#000000' : textColor,
-                        '@media (prefers-color-scheme: dark)': isNextHeader ? {
-                            color: '#ffffff'
-                        } : {},
+                        color: textColor,
                         textAlign: 'center',
-                        opacity: isNextHeader ? 0.5 : 0.6,
+                        opacity: isNextHeader ? 0.8 : 0.6,
                         fontWeight: isNextHeader ? 700 : 400,
                         fontSize: isNextHeader ? '0.95rem' : 'inherit',
                         textTransform: isNextHeader ? 'uppercase' : 'none',
