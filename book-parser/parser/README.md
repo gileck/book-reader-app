@@ -20,7 +20,7 @@ Each step is implemented as a separate module in its own folder within the `step
 6. **`03-1-link-detection/`** - Extract and resolve PDF internal links using chapter-relative text position selectors ✅
 7. **`03-2-image-extraction/`** - Extract images and insert `[[IMG...]]` markers into chapter content ✅
 8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers ✅
-9. **`05-sentence-detection/`** - Split paragraphs into single-sentence text chunks (or one sentence + ultra-short follow-ups <10 words) for granular audio playback; protects abbreviations, decimals, and ellipses ✅
+9. **`05-sentence-detection/`** - Split paragraphs into single-sentence text chunks for granular audio playback; only merges ultra-short sentences (<12 words) backward within the same paragraph; protects abbreviations, decimals, and ellipses ✅
 10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers (embedded and standalone) to image chunks ✅
 11. **`05-2-link-chunk-references/`** - Resolve link references to chunk IDs ✅
 12. **`06-metadata-extraction/`** - Extract comprehensive book metadata and statistics ✅
@@ -48,7 +48,7 @@ PIPELINE_STATE = {
     chapters: [],           // Chapters with page content (content field removed after step 4)
     
     // Content structure  
-    chunks: [],            // Single-sentence text chunks (or 1 sentence + ultra-short <10w follow-ups) with type "text", "header", or "image" + paragraphIndex
+    chunks: [],            // Single-sentence text chunks (or 1 sentence + merged ultra-short <12w follow-ups) with type "text", "header", or "image" + paragraphIndex
     
     // Metadata
     pages: [],             // Page information (for intermediate processing only)
@@ -563,6 +563,30 @@ if (newWordCount > maxWords && !isVerySmallChunk) break;
 - ✅ Clean architecture maintaining positioning context
 - ✅ Enhanced validation logic supporting both content types
 
+#### **Sentence-Based Audio Refactor ✅** (January 2025)
+**Major Reader Enhancement**: Refactored parser and reader to use single-sentence chunks for granular audio playback.
+
+**Parser Changes**:
+1. **Single-Sentence Output**: Step 5 now produces predominantly single-sentence text chunks for maximum audio playback granularity
+2. **Ultra-Short Merging**: Only merges sentences with <12 words backward into the previous sentence within the same paragraph
+3. **Shared Splitting Logic**: Moved `splitIntoSentences` to `text-processing-utils.js` so parser and validation use identical logic
+4. **Abbreviation Protection**: Comprehensive protection for abbreviations (Mr., Dr., etc.), ellipses (..., …), decimals (3.14), and numbered lists
+5. **Consistent Validation**: Validation uses the same `splitIntoSentences` function, ensuring accurate error detection
+
+**Reader Changes**:
+1. **Unified Audio Controller**: `useSentenceAudioController` replaces separate `useAudioPlayback` and `useFocusAudioPlayback` hooks
+2. **Single Audio Element**: Reuses one `HTMLAudioElement` across all modes with per-sentence caching
+3. **Sentence-Level Navigation**: All playback operates at sentence level; both Full and Focus modes use the same controller
+4. **Eliminated Mode Branching**: Removed all `isFocusMode ? ... : ...` ternaries from audio logic
+5. **Shared Types**: `SentenceChunk`, `ParagraphGroupMeta`, `SentenceMap` interfaces consumed by all reader components
+
+**Results**:
+- ✅ Typical chapters: 80-90% single-sentence chunks, 10-20% multi-sentence (merged short sentences)
+- ✅ Maximum audio granularity for word-level highlighting and playback control
+- ✅ Unified codebase: ~400 lines of duplicated audio logic eliminated
+- ✅ Better UX: consistent playback behavior across all reading modes
+- ✅ Maintainable: single source of truth for audio playback logic
+
 #### **No-Page Model & Image Marker System ✅** (January 2025)
 **Major Architectural Change**: Eliminated page-based positioning in favor of chapter-relative content anchoring.
 
@@ -825,7 +849,7 @@ The pipeline was optimized by combining related steps:
 - Step 3-1: Link Detection ✅ **[WITH CHAPTER-RELATIVE POSITIONING + NO-PAGE MODEL]**
 - Step 3-2: Image Extraction ✅ **[WITH IMAGE MARKER SYSTEM + ENHANCED PAGE NUMBER REMOVAL]**
 - Step 4: Paragraph Detection ✅ **[WITH IMAGE MARKER PRESERVATION + CHAPTER CONTENT CLEANUP]**
-- Step 5: Sentence Detection ✅ **[WITH SMART CONSTRAINT RELAXATION + STANDALONE IMAGE MARKER DETECTION + SHARED TEXT PROCESSING UTILITIES + ENHANCED VALIDATION]**
+- Step 5: Sentence Detection ✅ **[SINGLE-SENTENCE CHUNKS FOR AUDIO PLAYBACK + ULTRA-SHORT SENTENCE MERGING (<12 WORDS) + SHARED splitIntoSentences + ABBREVIATION/ELLIPSIS PROTECTION + STANDALONE IMAGE MARKER DETECTION]**
 - Step 5-1: Image Markers to Chunks ✅ **[WITH EMBEDDED & STANDALONE MARKER PROCESSING + VALIDATION]**
 - Step 5-2: Link Chunk References ✅ **[WITH BIDIRECTIONAL LINK RESOLUTION + VALIDATION]**
 - Step 6: Metadata Extraction ✅ **[WITH COMPREHENSIVE STATISTICS + VALIDATION]**

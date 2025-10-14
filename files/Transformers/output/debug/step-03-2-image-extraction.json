@@ -3,8 +3,8 @@
     "totalImages": 40,
     "totalExtractedImages": 60,
     "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/Transformers/output/images",
-    "processingTime": 7571,
-    "extractionTime": "2025-10-11T19:15:43.913Z",
+    "processingTime": 6052,
+    "extractionTime": "2025-10-13T11:15:17.507Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [

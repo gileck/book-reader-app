@@ -78847,7 +78847,7 @@
     "totalLinks": 3385,
     "averageWordsPerChapter": 12700,
     "averageWordsPerParagraph": 181,
-    "extractedAt": "2025-10-11T19:15:46.168Z",
+    "extractedAt": "2025-10-13T11:15:19.317Z",
     "parserVersion": 2,
     "chapterTitles": [
       "Introduction: Life itself",
@@ -520576,7 +520576,7 @@
         "matches": 76,
         "totalWords": 844
       },
-      "processingTime": 97
+      "processingTime": 9
     }
   }
 }

@@ -2136,7 +2136,7 @@
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-10-11T19:15:21.100Z",
+    "processingStartTime": "2025-10-13T11:14:59.638Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
@@ -2145,7 +2145,7 @@
       "lineCount": 12120,
       "wordCount": 121693,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-10-11T19:15:24.711Z",
+      "extractionTime": "2025-10-13T11:15:03.043Z",
       "averageWordsPerPage": 384,
       "extractionMethod": "page_by_page_fixed",
       "totalTextContentItems": 27143
@@ -2157,7 +2157,7 @@
       "patternMatches": 419,
       "averageDetectionConfidence": 0.85625,
       "pageOffset": 0,
-      "processingTime": 6069,
+      "processingTime": 4260,
       "detectionMethod": "hybrid_v1_toc_detection"
     },
     "chapterContentExtraction": {
@@ -2168,7 +2168,7 @@
       "averagePagesPerChapter": 32.44444444444444,
       "totalCharacters": 707496,
       "averageCharactersPerChapter": 78610.66666666667,
-      "processingTime": 143,
+      "processingTime": 21,
       "extractionMethod": "page_based_content_extraction_with_filtering"
     },
     "chapterNameCleaning": {
@@ -2177,7 +2177,7 @@
       "averageCharactersRemovedPerChapter": 0,
       "totalCharactersAfterCleaning": 707496,
       "cleaningEfficiency": 0,
-      "processingTime": 4,
+      "processingTime": 1,
       "cleaningMethod": "pattern_based_title_removal"
     },
     "pageExtractionAndCrossPageMerging": {
@@ -2185,8 +2185,8 @@
       "totalChapters": 9,
       "averageWordsPerPage": 390.71232876712327,
       "sentencesMerged": 0,
-      "extractionTime": "2025-10-11T19:15:32.062Z",
-      "processingTime": 367
+      "extractionTime": "2025-10-13T11:15:08.309Z",
+      "processingTime": 151
     }
   }
 }

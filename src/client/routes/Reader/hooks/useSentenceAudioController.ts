@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChapterClient, TextChunkClient } from '../../../../../src/apis/chapters/types';
 import { generateTts } from '../../../../../src/apis/tts/client';
 import type { TtsProvider } from '../../../../../src/common/tts/ttsUtils';
+import { WordHighlightingAPI } from '../utils/WordHighlightingAPI';
 
 export interface SentenceAudioState {
     currentSentenceIndex: number;
@@ -52,12 +53,9 @@ export function useSentenceAudioController(
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const timepointsRef = useRef<Array<{ time: number; wordIndex: number }>>([]);
     const cacheRef = useRef<Record<number, { src: string; timepoints: Array<{ time: number; wordIndex: number }> }>>({});
+    const previousHighlightRef = useRef<{ sentenceIndex: number; wordIndex: number } | null>(null);
 
     useEffect(() => { stateRef.current = state; }, [state]);
-
-    useEffect(() => {
-        if (!audioRef.current) audioRef.current = new Audio();
-    }, []);
 
     const sentences: TextChunkClient[] = useMemo(() => {
         const chunks = chapter?.content?.chunks || [];
@@ -107,6 +105,7 @@ export function useSentenceAudioController(
         const entry = cacheRef.current[currentSentenceIndex];
         if (!audio || !entry) return;
         audio.src = entry.src;
+        audio.playbackRate = playbackSpeed; // Apply playback speed
         timepointsRef.current = entry.timepoints;
         try {
             await audio.play();
@@ -115,7 +114,7 @@ export function useSentenceAudioController(
             const errorMessage = e instanceof Error ? e.message : 'Playback failed';
             update({ ttsError: errorMessage, isPlaying: false });
         }
-    }, [loadSentence, update]);
+    }, [loadSentence, playbackSpeed, update]);
 
     const pause = useCallback(() => {
         const audio = audioRef.current;
@@ -158,6 +157,95 @@ export function useSentenceAudioController(
         const windowIndexes = [currentSentenceIndex - 1, currentSentenceIndex + 1].filter(i => i >= 0 && i < sentences.length);
         windowIndexes.forEach(i => void loadSentence(i));
     }, [state.currentSentenceIndex, sentences.length, loadSentence]);
+
+    // Update playback speed when it changes
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.playbackRate = playbackSpeed;
+        }
+    }, [playbackSpeed]);
+
+    // Handle word highlighting when word index changes
+    useEffect(() => {
+        if (!state.isPlaying) return;
+
+        const { currentSentenceIndex, currentWordIndex } = state;
+        const previous = previousHighlightRef.current;
+
+        // Remove previous highlight
+        if (previous) {
+            WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
+        }
+
+        // Add new highlight
+        WordHighlightingAPI.highlightWord(currentSentenceIndex, currentWordIndex);
+        previousHighlightRef.current = { sentenceIndex: currentSentenceIndex, wordIndex: currentWordIndex };
+
+        // Clean up when playback stops
+        return () => {
+            if (!stateRef.current.isPlaying && previousHighlightRef.current) {
+                WordHighlightingAPI.unhighlightWord(
+                    previousHighlightRef.current.sentenceIndex,
+                    previousHighlightRef.current.wordIndex
+                );
+            }
+        };
+    }, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex]);
+
+    // Setup audio element and event listeners
+    useEffect(() => {
+        if (!audioRef.current) {
+            audioRef.current = new Audio();
+        }
+
+        const audio = audioRef.current;
+
+        // Handle timeupdate for word highlighting
+        const handleTimeUpdate = () => {
+            const currentTime = audio.currentTime;
+            const timepoints = timepointsRef.current;
+            if (timepoints.length === 0) return;
+
+            // Find the current word index based on timepoints
+            let newWordIndex = 0;
+            for (let i = 0; i < timepoints.length; i++) {
+                if (currentTime >= timepoints[i].time) {
+                    newWordIndex = timepoints[i].wordIndex;
+                } else {
+                    break;
+                }
+            }
+
+            if (stateRef.current.currentWordIndex !== newWordIndex) {
+                setState(prev => ({ ...prev, currentWordIndex: newWordIndex }));
+            }
+        };
+
+        // Handle ended event for auto-play next sentence
+        const handleEnded = () => {
+            const { currentSentenceIndex, intendedPlay } = stateRef.current;
+            setState(prev => ({ ...prev, isPlaying: false }));
+
+            // Auto-play next sentence if user intended continuous play
+            if (intendedPlay && currentSentenceIndex < sentences.length - 1) {
+                goToSentence(currentSentenceIndex + 1);
+                // Play next sentence after a brief delay
+                setTimeout(() => {
+                    if (stateRef.current.intendedPlay) {
+                        void play();
+                    }
+                }, 100);
+            }
+        };
+
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+        audio.addEventListener('ended', handleEnded);
+
+        return () => {
+            audio.removeEventListener('timeupdate', handleTimeUpdate);
+            audio.removeEventListener('ended', handleEnded);
+        };
+    }, [sentences.length, goToSentence, play]);
 
     return {
         sentences,
