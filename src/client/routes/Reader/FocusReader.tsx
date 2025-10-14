@@ -125,8 +125,8 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             {/* Use same global class as full reader: .highlight-word; set CSS var for color */}
             {/* Previous (smaller, subdued, under) */}
             <Box
-                sx={{ 
-                    minHeight: 44, 
+                sx={{
+                    minHeight: 44,
                     cursor: prevText ? 'pointer' : 'default',
                     ...(isPrevHeader && {
                         mx: -2,
@@ -170,10 +170,10 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             </Box>
 
             {/* Current (bold, big, centered) */}
-            <Box 
-                ref={containerRef} 
-                sx={{ 
-                    position: 'relative', 
+            <Box
+                ref={containerRef}
+                sx={{
+                    position: 'relative',
                     ['--word-highlight-color' as unknown as string]: highlightColor,
                     ...(isHeader && {
                         mx: -2,
@@ -243,16 +243,21 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             </Box>
 
             {/* Next (smaller, subdued, under) */}
-            <Box 
-                sx={{ 
+            <Box
+                sx={{
                     minHeight: 44,
                     ...(isNextHeader && {
                         mx: -2,
                         px: 2,
                         py: 1.5,
-                        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                        backgroundColor: 'rgba(51, 51, 51, 0.6)'
+                        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+                        backgroundColor: 'rgba(211, 211, 211, 0.6)',
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: 'rgba(51, 51, 51, 0.6)',
+                            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                        }
                     })
                 }}
             >

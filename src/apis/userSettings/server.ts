@@ -37,6 +37,9 @@ export async function getUserSettings(params: GetUserSettingsRequest): Promise<G
             sentenceHighlightColorDark: userSettings.sentenceHighlightColorDark,
             textColorLight: userSettings.textColorLight,
             textColorDark: userSettings.textColorDark,
+            // Focus mode
+            wordHighlightingEnabled: userSettings.wordHighlightingEnabled,
+            highlightMode: userSettings.highlightMode,
             createdAt: userSettings.createdAt.toISOString(),
             updatedAt: userSettings.updatedAt.toISOString()
         };
@@ -143,6 +146,9 @@ export async function updateUserSettings(params: UpdateUserSettingsRequest): Pro
             sentenceHighlightColorDark: updatedSettings.sentenceHighlightColorDark,
             textColorLight: updatedSettings.textColorLight,
             textColorDark: updatedSettings.textColorDark,
+            // Focus mode
+            wordHighlightingEnabled: updatedSettings.wordHighlightingEnabled,
+            highlightMode: updatedSettings.highlightMode,
             createdAt: updatedSettings.createdAt.toISOString(),
             updatedAt: updatedSettings.updatedAt.toISOString()
         };
