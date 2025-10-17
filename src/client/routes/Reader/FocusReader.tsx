@@ -175,6 +175,16 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                 sx={{
                     position: 'relative',
                     ['--word-highlight-color' as unknown as string]: highlightColor,
+                    ...(!isHeader && {
+                        py: 2,
+                        px: 2,
+                        mx: -2,
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        borderRadius: '12px',
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.6)'
+                        }
+                    }),
                     ...(isHeader && {
                         mx: -2,
                         px: 2,
@@ -224,21 +234,27 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                         mb: 0
                     }}
                 >
-                    {currentWords.map((w, i) => (
-                        <span
-                            key={`w-${i}`}
-                            className={(() => {
-                                if (highlightMode === 'off') return '';
-                                if (highlightMode === 'word') return (isPlaying && i === currentWordIndex) ? 'highlight-word' : '';
-                                // line mode uses overlay bar; no per-word class to keep line straight
-                                return '';
-                            })()}
-                            data-word-index={i}
-                        >
-                            {w}
-                            {i < currentWords.length - 1 ? ' ' : ''}
-                        </span>
-                    ))}
+                    {currentWords.map((w, i) => {
+                        // Check if this word starts with a bullet character
+                        const startsWithBullet = /^[*•]/.test(w);
+                        return (
+                            <React.Fragment key={`w-${i}`}>
+                                {startsWithBullet && i > 0 && <br />}
+                                <span
+                                    className={(() => {
+                                        if (highlightMode === 'off') return '';
+                                        if (highlightMode === 'word') return (isPlaying && i === currentWordIndex) ? 'highlight-word' : '';
+                                        // line mode uses overlay bar; no per-word class to keep line straight
+                                        return '';
+                                    })()}
+                                    data-word-index={i}
+                                >
+                                    {w}
+                                    {i < currentWords.length - 1 ? ' ' : ''}
+                                </span>
+                            </React.Fragment>
+                        );
+                    })}
                 </Typography>
             </Box>
 

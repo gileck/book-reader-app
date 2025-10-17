@@ -100,6 +100,14 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Chapter Navigation**: Links can navigate between chapters
 - ✅ **Chunk Navigation**: Links can navigate to specific chunks
 
+#### Lists
+- ✅ **Bullet List Rendering**: Automatic detection and formatting of bullet lists using `•` or `*` characters
+- ✅ **Line Break Insertion**: Inserts line breaks before each bullet for proper list display
+- ✅ **Full Mode Support**: Lists render with proper line breaks in full reading mode
+- ✅ **Focus Mode Support**: Lists render with line breaks and center alignment in focus mode
+- ✅ **Preserves Highlighting**: Word-by-word highlighting works across list items
+- ✅ **Consistent Styling**: List sentences maintain same font size, weight, and styling as regular text
+
 ### 8. Settings Persistence
 
 - ✅ **User Settings**: All theme and playback settings saved to user account
@@ -144,7 +152,7 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ## Implementation Status
 
-### ✅ Completed Features (34/36)
+### ✅ Completed Features (35/37)
 - All core reading modes
 - Audio playback with auto-advance
 - Playback speed control
@@ -161,6 +169,7 @@ This document provides a comprehensive list of all features supported in the Boo
 - Offline support
 - AI chat integration
 - Focus mode theme integration
+- Bullet list rendering (both modes)
 
 ### ✅ Recently Verified
 - ✅ **Focus Mode Theme Integration**: All theme settings (font size, line height, font family, text color) now apply to focus mode (October 2025)
@@ -250,6 +259,10 @@ This document provides a comprehensive list of all features supported in the Boo
 - [ ] Images display inline with captions
 - [ ] Links are clickable and navigate correctly
 - [ ] Paragraphs grouped visually
+- [ ] Bullet lists (`•` or `*`) render with line breaks (full mode)
+- [ ] Bullet lists render with line breaks (focus mode)
+- [ ] Word highlighting works across bullet list items
+- [ ] List styling matches regular text (font size, weight)
 
 ### Edge Cases
 - [ ] First sentence in chapter plays correctly
@@ -293,11 +306,20 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ---
 
-**Last Updated**: October 2025  
-**Implementation Status**: ✅ 34/36 features complete (94%)  
+**Last Updated**: October 17, 2025  
+**Implementation Status**: ✅ 35/37 features complete (95%)  
 **Next Steps**: Verify remaining 2 features, then proceed with Phase 6 optimizations
 
 ## Recent Updates
+
+### October 17, 2025
+- ✅ **Bullet List Rendering**: Implemented automatic detection and rendering of bullet lists
+  - Detects `•` and `*` characters as bullet markers
+  - Inserts `<br/>` elements before each bullet for proper line breaks
+  - Works in both full reading mode and focus mode
+  - Maintains word-by-word highlighting across list items
+  - Preserves consistent styling (font size, weight, alignment) with regular text
+  - Implementation in `EnhancedText.tsx` and `FocusReader.tsx`
 
 ### October 14, 2025
 - ✅ **Focus Mode Theme Integration**: Fixed FocusReader to properly apply all theme settings including fontSize, lineHeight, and fontFamily from Theme & Appearance Settings

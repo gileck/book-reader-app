@@ -19,7 +19,7 @@ Each step is implemented as a separate module in its own folder within the `step
 5. **`03-page-extraction-and-cross-page-merging/`** - Extract pages, merge sentences, and enhanced page number removal ✅
 6. **`03-1-link-detection/`** - Extract and resolve PDF internal links using chapter-relative text position selectors ✅
 7. **`03-2-image-extraction/`** - Extract images and insert `[[IMG...]]` markers into chapter content ✅
-8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers ✅
+8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers; intelligently separates numbered lists and bullet points after newlines while keeping colon-introduced lists together ✅
 9. **`05-sentence-detection/`** - Split paragraphs into single-sentence text chunks for granular audio playback; only merges ultra-short sentences (<12 words) backward within the same paragraph; protects abbreviations, decimals, and ellipses ✅
 10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers (embedded and standalone) to image chunks ✅
 11. **`05-2-link-chunk-references/`** - Resolve link references to chunk IDs ✅
@@ -321,7 +321,7 @@ Each step now includes its own validation logic that runs immediately after exec
 5. **Step 3** (Page Processing): Page structure, content validation, reasonable counts
 6. **Step 3-1** (Link Detection): Role validation, source-target matching, required fields
 7. **Step 3-2** (Image Extraction): Image metadata validation, file existence, page mapping
-8. **Step 4** (Paragraph/Header Detection): Chunk counts, types, word limits, Unicode-aware capitalization validation, image marker preservation, shared abbreviation handling
+8. **Step 4** (Paragraph/Header Detection): Chunk counts, types, word limits, Unicode-aware capitalization validation, image marker preservation, shared abbreviation handling, smart list separation (numbered lists and bullet points after newlines)
 9. **Step 5** (Sentence Detection): Sentence optimization with smart constraint relaxation, paragraph indexing, word count targets, standalone image marker detection, enhanced validation using shared text processing utilities
 10. **Step 5-1** (Image Markers to Chunks): Embedded and standalone marker extraction, image chunk creation, marker removal validation
 11. **Step 5-2** (Link Chunk References): Link-to-chunk ID resolution, bidirectional relationships
@@ -517,7 +517,7 @@ Notes:
 - **Step 3**: Page Extraction and Cross-Page Merging - 309 pages with enhanced page number removal **[PRODUCTION-READY WITH VALIDATION]**
 - **Step 3-1**: Link Detection - 290 chapter-relative position links **[PRODUCTION-READY WITH NO-PAGE MODEL]**
 - **Step 3-2**: Image Extraction - 58 images with `[[IMG...]]` markers **[PRODUCTION-READY WITH MARKER SYSTEM]**
-- **Step 4**: Paragraph Detection - 547 paragraph chunks preserving image markers **[PRODUCTION-READY WITH VALIDATION]**
+- **Step 4**: Paragraph Detection - 547 paragraph chunks preserving image markers **[PRODUCTION-READY WITH SMART LIST SEPARATION + VALIDATION]**
 - **Step 5**: Sentence Detection - 1,657 sentence chunks preserving image markers **[PRODUCTION-READY WITH VALIDATION]**
 - **Step 5-1**: Image Markers to Chunks - 58 `[[IMG...]]` markers converted to image chunks **[PRODUCTION-READY WITH VALIDATION]**
 - **Step 5-2**: Link Chunk References - Link-to-chunk ID resolution **[PRODUCTION-READY WITH VALIDATION]**
@@ -525,7 +525,77 @@ Notes:
 
 ### 🎯 RECENT MAJOR IMPROVEMENTS
 
-#### **PDF Metadata Extraction Enhancement ✅** (Latest - October 2025)
+#### **Numbered List & Bullet Point Separation Fix ✅** (Latest - October 2025)
+**Critical UX Improvement**: Fixed parser incorrectly merging numbered list items and bullet points with previous sentences when they appeared after newlines.
+
+**Problem Identified**:
+- List items appearing after newlines were being merged with the previous sentence
+- Example failure: `"...fatigue. \n2. The breath hold strengthens..."` was merged into a single chunk
+- Created poor reading experience with unrelated content appearing in the same sentence
+- Root cause: Step 4 (paragraph detection) was adding list items to the same paragraph as previous text, then Step 5 would merge them as sentences from the same paragraph
+
+**Solution Implemented**:
+1. **Smart List Item Detection in Step 4**:
+   - Detect lines starting with numbered list items (`1.`, `2.`, etc.) or bullet points (`•`)
+   - Flush current paragraph before adding list item (creates paragraph boundary)
+   - **Exception**: Keep lists with their introduction when previous text ends with `:` (e.g., "The following factors:")
+2. **Intelligent Paragraph Boundaries**:
+   - Numbered lists after newlines → separate paragraphs
+   - Bullet points after newlines → separate paragraphs
+   - Lists introduced by colons → same paragraph as introduction
+3. **Preserved Existing Behavior**:
+   - Lists that are part of continuous text remain together
+   - Validation still passes for introduced lists
+
+**Technical Implementation**:
+```javascript
+// In 04-paragraph-detection.js, before adding line to paragraph:
+const startsWithNumberedListItem = /^\d+[\.)]\s+/.test(line.trim());
+const startsWithBulletPoint = /^•\s+/.test(line.trim());
+
+if ((startsWithNumberedListItem || startsWithBulletPoint) && currentParagraph.trim()) {
+    // Check if paragraph ends with colon (introducing the list)
+    const currentParagraphEndsWithColon = /:\s*$/.test(currentParagraph.trim());
+    
+    // Only flush if paragraph does NOT end with colon
+    if (!currentParagraphEndsWithColon) {
+        chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+        currentParagraph = '';
+    }
+}
+```
+
+**Results**:
+- ✅ Numbered list items after newlines are now separate chunks (improved UX)
+- ✅ Bullet points after newlines are now separate chunks  
+- ✅ Lists introduced by colons remain with their introduction text
+- ✅ All existing validation continues to pass
+- ✅ Example fix: `"...fatigue."` (chunk 7_29) and `"2. The breath hold..."` (chunk 7_30) are now properly separated
+
+**Before**:
+```json
+{
+  "chunkId": "7_29",
+  "content": "...delay in the onset of fatigue. 2. The breath hold strengthens the breathing muscles.",
+  "type": "text"
+}
+```
+
+**After**:
+```json
+{
+  "chunkId": "7_29",
+  "content": "...delay in the onset of fatigue.",
+  "type": "text"
+},
+{
+  "chunkId": "7_30", 
+  "content": "2. The breath hold strengthens the breathing muscles.",
+  "type": "text"
+}
+```
+
+#### **PDF Metadata Extraction Enhancement ✅** (October 2025)
 **Major Reliability Improvement**: Added PDF document metadata extraction for title and author, providing more reliable metadata than text-based pattern matching.
 
 **Problem Identified**:
@@ -999,7 +1069,7 @@ The pipeline was optimized by combining related steps:
 - Step 3: Page Extraction and Cross-Page Merging ✅ **[WITH HEADER PRESERVATION + PAGE VALIDATION]**
 - Step 3-1: Link Detection ✅ **[WITH CHAPTER-RELATIVE POSITIONING + NO-PAGE MODEL]**
 - Step 3-2: Image Extraction ✅ **[WITH IMAGE MARKER SYSTEM + ENHANCED PAGE NUMBER REMOVAL]**
-- Step 4: Paragraph Detection ✅ **[WITH IMAGE MARKER PRESERVATION + CHAPTER CONTENT CLEANUP]**
+- Step 4: Paragraph Detection ✅ **[WITH SMART LIST SEPARATION + IMAGE MARKER PRESERVATION + CHAPTER CONTENT CLEANUP]**
 - Step 5: Sentence Detection ✅ **[SINGLE-SENTENCE CHUNKS FOR AUDIO PLAYBACK + ULTRA-SHORT SENTENCE MERGING (<12 WORDS) + SHARED splitIntoSentences + ABBREVIATION/ELLIPSIS PROTECTION + STANDALONE IMAGE MARKER DETECTION]**
 - Step 5-1: Image Markers to Chunks ✅ **[WITH EMBEDDED & STANDALONE MARKER PROCESSING + VALIDATION]**
 - Step 5-2: Link Chunk References ✅ **[WITH BIDIRECTIONAL LINK RESOLUTION + VALIDATION]**

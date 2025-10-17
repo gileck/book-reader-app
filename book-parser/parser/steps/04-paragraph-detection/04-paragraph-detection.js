@@ -520,6 +520,24 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             currentParagraphStartIndex = i + 1;
             headerJustEmitted = true;
         } else {
+            // NEW FIX: Check if current line starts a numbered list item or bullet point
+            // If so, flush the current paragraph first (if any) UNLESS the previous line ends with ":"
+            // (which would indicate the list is being introduced by the previous text)
+            const startsWithNumberedListItem = /^\d+[\.)]\s+/.test(line.trim());
+            const startsWithBulletPoint = /^•\s+/.test(line.trim());
+            if ((startsWithNumberedListItem || startsWithBulletPoint) && currentParagraph.trim()) {
+                // Check if the current paragraph ends with a colon (introducing the list)
+                const currentParagraphEndsWithColon = /:\s*$/.test(currentParagraph.trim());
+                
+                // Only flush if the paragraph does NOT end with a colon
+                if (!currentParagraphEndsWithColon) {
+                    // Flush the current paragraph
+                    chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                    currentParagraph = '';
+                    currentParagraphStartIndex = i;
+                }
+            }
+
             // Add line to current paragraph
             if (currentParagraph) {
                 currentParagraph += '\n' + line;

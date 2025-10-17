@@ -58,19 +58,24 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
         const words = text.split(/\s+/).filter(word => word.length > 0);
         return (
             <>
-                {words.map((word, wordIndex) => (
-                    <React.Fragment key={wordIndex}>
-                        <span
-                            data-chunk-index={chunkIndex}
-                            data-word-index={wordIndex}
-                            data-word-id={`chunk-${chunkIndex}-word-${wordIndex}`}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {word}
-                        </span>
-                        {wordIndex < words.length - 1 && ' '}
-                    </React.Fragment>
-                ))}
+                {words.map((word, wordIndex) => {
+                    // Check if this word starts with a bullet character
+                    const startsWithBullet = /^[*•]/.test(word);
+                    return (
+                        <React.Fragment key={wordIndex}>
+                            {startsWithBullet && wordIndex > 0 && <br />}
+                            <span
+                                data-chunk-index={chunkIndex}
+                                data-word-index={wordIndex}
+                                data-word-id={`chunk-${chunkIndex}-word-${wordIndex}`}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {word}
+                            </span>
+                            {wordIndex < words.length - 1 && ' '}
+                        </React.Fragment>
+                    );
+                })}
             </>
         );
     };

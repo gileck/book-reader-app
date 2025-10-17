@@ -12,146 +12,146 @@
       "title": "Animated",
       "chapterNumber": 1,
       "startingPage": 11,
-      "endPage": 21,
+      "endPage": 22,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Pixar is Born",
       "chapterNumber": 2,
-      "startingPage": 22,
-      "endPage": 35,
+      "startingPage": 23,
+      "endPage": 36,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "A Defining Goal",
       "chapterNumber": 3,
-      "startingPage": 36,
-      "endPage": 47,
+      "startingPage": 37,
+      "endPage": 49,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Establishing Pixar’s Identity",
       "chapterNumber": 4,
-      "startingPage": 48,
-      "endPage": 58,
+      "startingPage": 50,
+      "endPage": 61,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Honesty and Candor",
       "chapterNumber": 5,
-      "startingPage": 59,
-      "endPage": 70,
+      "startingPage": 62,
+      "endPage": 74,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Fear and Failure",
       "chapterNumber": 6,
-      "startingPage": 71,
-      "endPage": 84,
+      "startingPage": 75,
+      "endPage": 88,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "The Hungry Beast and the Ugly Baby",
       "chapterNumber": 7,
-      "startingPage": 85,
-      "endPage": 93,
+      "startingPage": 89,
+      "endPage": 98,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Change and Randomness",
       "chapterNumber": 8,
-      "startingPage": 94,
-      "endPage": 106,
+      "startingPage": 99,
+      "endPage": 111,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "The Hidden",
       "chapterNumber": 9,
-      "startingPage": 107,
-      "endPage": 118,
+      "startingPage": 112,
+      "endPage": 124,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Broadening Our View",
       "chapterNumber": 10,
-      "startingPage": 119,
-      "endPage": 140,
+      "startingPage": 125,
+      "endPage": 146,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "The Unmade Future",
       "chapterNumber": 11,
-      "startingPage": 141,
-      "endPage": 151,
+      "startingPage": 147,
+      "endPage": 157,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "A New Challenge",
       "chapterNumber": 12,
-      "startingPage": 152,
-      "endPage": 170,
+      "startingPage": 158,
+      "endPage": 177,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Notes Day",
       "chapterNumber": 13,
-      "startingPage": 171,
-      "endPage": 182,
+      "startingPage": 178,
+      "endPage": 190,
       "confidence": 1,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Afterword: The Steve We Knew",
       "chapterNumber": 14,
-      "startingPage": 183,
-      "endPage": 193,
+      "startingPage": 191,
+      "endPage": 201,
       "confidence": 0.7,
       "detectionSource": "pdf_bookmarks"
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
       "chapterNumber": 15,
-      "startingPage": 194,
+      "startingPage": 202,
       "endPage": null,
       "confidence": 0.7,
       "detectionSource": "pdf_bookmarks"
     }
   ],
   "metadata": {
-    "processingStartTime": "2025-08-21T08:40:16.648Z",
+    "processingStartTime": "2025-10-17T07:50:16.162Z",
     "processingEndTime": null,
     "stepResults": {},
     "textExtraction": {
-      "characterCount": 643180,
-      "pageCount": 212,
-      "lineCount": 9186,
-      "wordCount": 112801,
+      "characterCount": 641669,
+      "pageCount": 218,
+      "lineCount": 8686,
+      "wordCount": 112520,
       "literalNewlineCount": 0,
-      "extractionTime": "2025-08-21T08:40:17.537Z",
-      "averageWordsPerPage": 532,
+      "extractionTime": "2025-10-17T07:50:23.039Z",
+      "averageWordsPerPage": 516,
       "extractionMethod": "page_by_page_fixed",
-      "totalTextContentItems": 19959
+      "totalTextContentItems": 17989
     },
     "chapterDetection": {
       "chaptersDetected": 16,
       "tocSource": "pdf_bookmarks",
       "tocEntriesFound": 16,
-      "patternMatches": 47,
+      "patternMatches": 33,
       "averageDetectionConfidence": 0.9437499999999999,
       "pageOffset": 0,
-      "processingTime": 787,
+      "processingTime": 8091,
       "detectionMethod": "hybrid_v1_toc_detection"
     }
   }

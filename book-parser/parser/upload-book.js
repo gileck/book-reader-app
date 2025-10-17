@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
 const { put } = require('@vercel/blob');
+const inquirer = require('inquirer');
 
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
@@ -307,6 +308,57 @@ function extractBookMetadata(finalOutput) {
 }
 
 /**
+ * Prompt user to select an existing book or create a new one
+ * @param {Object} booksCollection - MongoDB books collection
+ * @param {string} suggestedTitle - The title from the parser metadata
+ * @returns {Object|null} Selected book document or null to create new
+ */
+async function selectOrCreateBook(booksCollection, suggestedTitle) {
+    // Fetch all books from database
+    const allBooks = await booksCollection.find({}).sort({ title: 1 }).toArray();
+
+    if (allBooks.length === 0) {
+        console.log('📚 No books found in database. Will create a new book.');
+        return null;
+    }
+
+    const choices = [
+        {
+            name: `➕ Create new book: "${suggestedTitle}"`,
+            value: 'CREATE_NEW',
+            short: 'Create new'
+        },
+        new inquirer.Separator('--- Existing Books ---')
+    ];
+
+    // Add all existing books as options
+    allBooks.forEach(book => {
+        const bookInfo = `${book.title}${book.author ? ` by ${book.author}` : ''} (${book.totalChapters || 0} chapters)`;
+        choices.push({
+            name: bookInfo,
+            value: book._id.toString(),
+            short: book.title
+        });
+    });
+
+    const answer = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'bookId',
+            message: `Book "${suggestedTitle}" not found. Select an existing book to update or create a new one:`,
+            choices: choices,
+            pageSize: 15
+        }
+    ]);
+
+    if (answer.bookId === 'CREATE_NEW') {
+        return null;
+    }
+
+    return allBooks.find(book => book._id.toString() === answer.bookId);
+}
+
+/**
  * Upload parsed book data from Parser v2 to MongoDB database and upload images to Vercel Blob
  * If a book with the same title exists, it will be updated with new content (keeping same ID)
  * @param {string} outputFolderPath - Path to the parser output folder containing output.json and images/
@@ -393,18 +445,24 @@ async function uploadParsedBookV2(outputFolderPath, options = {}) {
         console.log('✅ Connected successfully!');
 
         // Check if book already exists by title (case-insensitive)
-        const existingBook = await booksCollection.findOne({
+        let existingBook = await booksCollection.findOne({
             title: { $regex: new RegExp(`^${bookMetadata.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
         });
         let bookId;
         let isUpdate = false;
 
+        // If book not found by name, prompt user to select or create
+        if (!existingBook) {
+            console.log(`📚 Book "${bookMetadata.title}" not found in database.`);
+            existingBook = await selectOrCreateBook(booksCollection, bookMetadata.title);
+        }
+
         if (existingBook) {
             // Book exists - update it
             bookId = existingBook._id;
             isUpdate = true;
-            console.log(`📚 Book "${bookMetadata.title}" already exists with ID: ${bookId}`);
-            console.log(`🔄 Updating existing book content...`);
+            console.log(`📚 Updating existing book: "${existingBook.title}" (ID: ${bookId})`);
+            console.log(`🔄 Updating book content...`);
             console.log(`   📊 Previous: ${existingBook.totalChapters} chapters, ${existingBook.totalWords?.toLocaleString() || 'unknown'} words`);
             console.log(`   📊 New:      ${bookMetadata.totalChapters} chapters, ${bookMetadata.totalWords.toLocaleString()} words`);
 
@@ -412,7 +470,7 @@ async function uploadParsedBookV2(outputFolderPath, options = {}) {
             const deleteChaptersResult = await chaptersCollection.deleteMany({ bookId: bookId });
             console.log(`   🗑️  Deleted ${deleteChaptersResult.deletedCount} existing chapters`);
 
-            // Update book metadata
+            // Update book metadata (keeping original title if user selected existing book)
             const bookUpdateData = {
                 author: bookMetadata.author,
                 description: bookMetadata.description,
@@ -431,7 +489,7 @@ async function uploadParsedBookV2(outputFolderPath, options = {}) {
             console.log(`   📖 Updated book metadata (${bookUpdateResult.modifiedCount} book record modified)`);
 
         } else {
-            // Book doesn't exist - create new one
+            // Create new book
             console.log(`📖 Creating new book: "${bookMetadata.title}"`);
 
             const bookToInsert = {
@@ -638,7 +696,10 @@ Output.json format:
 Behavior:
   - If a book with the same title already exists in the database, the script will update it
     with the new content, keeping the same book ID
-  - If no book with that title exists, a new book will be created
+  - If no book with that title exists, you will be prompted to:
+    • Create a new book with the parsed title
+    • OR select an existing book from the database to update
+  - Only creates a new book if you explicitly choose "Create new book" option
   - Parser version 2 is automatically added to the book metadata
   - Images will be uploaded to Vercel Blob only if --upload-images flag is provided
   - The script reads ONLY the output.json file and images/ folder

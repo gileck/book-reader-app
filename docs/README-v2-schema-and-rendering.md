@@ -303,7 +303,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({ chunk, handleLinkClick, ..
 
 ### EnhancedText Component
 
-Sophisticated link detection and click handling:
+Sophisticated link detection and click handling, with additional support for bullet list rendering:
 
 ```tsx
 export const EnhancedText: React.FC<EnhancedTextProps> = ({ chunk, onLinkClick }) => {
@@ -329,6 +329,53 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({ chunk, onLinkClick }
             dangerouslySetInnerHTML={{ __html: processTextWithLinks() }}
             onClick={handleLinkClick}
         />
+    );
+};
+```
+
+#### Bullet List Rendering
+
+The `EnhancedText` component automatically detects and renders bullet lists by inserting line breaks before bullet characters (`•` or `*`):
+
+**Detection Logic:**
+- Scans each word during rendering
+- Detects words starting with `•` or `*` using regex: `/^[*•]/`
+- Inserts `<br/>` element before each bullet (except first word)
+
+**Features:**
+- Works in both full reading mode and focus mode
+- Preserves word-by-word highlighting across list items
+- Maintains consistent styling with regular text
+- No special markup required in source text
+
+**Example:**
+```typescript
+// Input text:
+"The exercise causes: • Creates hunger • Activates diaphragm"
+
+// Renders as:
+The exercise causes:
+• Creates hunger
+• Activates diaphragm
+```
+
+**Implementation:**
+```tsx
+const renderTextWithHighlighting = (text: string) => {
+    const words = text.split(/\s+/).filter(word => word.length > 0);
+    return (
+        <>
+            {words.map((word, wordIndex) => {
+                const startsWithBullet = /^[*•]/.test(word);
+                return (
+                    <React.Fragment key={wordIndex}>
+                        {startsWithBullet && wordIndex > 0 && <br />}
+                        <span data-word-index={wordIndex}>{word}</span>
+                        {wordIndex < words.length - 1 && ' '}
+                    </React.Fragment>
+                );
+            })}
+        </>
     );
 };
 ```

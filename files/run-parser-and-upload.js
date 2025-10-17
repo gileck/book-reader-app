@@ -2,7 +2,7 @@ const parser = require('../book-parser/parser/parser.js');
 const { uploadParsedBookV2 } = require('../book-parser/parser/upload-book.js');
 const path = require('path');
 const fs = require('fs');
-const readline = require('readline');
+const inquirer = require('inquirer');
 
 function findPdfFile(folderPath) {
     if (!fs.existsSync(folderPath)) {
@@ -27,14 +27,34 @@ function findPdfFile(folderPath) {
     return path.join(folderPath, pdfFiles[0]);
 }
 
+function hasOutputFolder(folderPath) {
+    const outputPath = path.join(folderPath, 'output');
+    return fs.existsSync(outputPath) && fs.existsSync(path.join(outputPath, 'output.json'));
+}
+
+function getBookFolders(filesDir) {
+    if (!fs.existsSync(filesDir)) {
+        return [];
+    }
+
+    const items = fs.readdirSync(filesDir);
+    const folders = items.filter(item => {
+        const fullPath = path.join(filesDir, item);
+        return fs.statSync(fullPath).isDirectory();
+    });
+
+    return folders.sort();
+}
+
 function showHelp() {
     console.log(`
 Generic Book Parser & Uploader
 
-Usage: node run-parser-and-upload.js [options] <FOLDER_PATH>
+Usage: node run-parser-and-upload.js [options] [FOLDER_PATH]
 
 Arguments:
-  FOLDER_PATH    Path to folder containing a single PDF file (required)
+  FOLDER_PATH    Path to folder containing a single PDF file (optional)
+                 If not provided, you can select from available folders interactively
 
 Description:
   Processes a PDF book in the specified folder and optionally uploads it to the database.
@@ -42,18 +62,23 @@ Description:
 Requirements:
   - The specified folder must contain exactly one PDF file
   - Creates an 'output' folder in the same directory as the PDF
-  - After successful parsing, prompts to upload the book to the database
 
 Features:
+  - Interactive folder selection from /files directory if no path provided
+  - Interactive mode selection (parse only, parse + upload, or upload only)
   - Automatically finds the PDF file in the specified folder
   - Runs the complete book parsing pipeline with validation
-  - Prompts to upload to database only after successful parsing
   - Creates output folder with parsed content and extracted images
 
 Options:
   --help, -h            Show this help message
-  --parser-only, -p     Run only the parser and exit without prompting for upload
   --force-reparse, -f   Force re-extraction from PDF (ignore cached .txt file)
+
+Modes:
+  - Parser only: Only parse the book, don't upload
+  - Parse + Upload: Parse the book and upload to database (without images)
+  - Parse + Upload + Images: Parse the book and upload with images to Vercel Blob
+  - Upload only: Use existing output file to upload (skip parsing)
 
 Text File Caching:
   - First run: Extracts text from PDF and saves to <book-name>.txt
@@ -61,47 +86,120 @@ Text File Caching:
   - Use --force-reparse to regenerate .txt from PDF
 
 Examples:
+  node run-parser-and-upload.js
   node run-parser-and-upload.js ./my-book-folder
-  node run-parser-and-upload.js -p ./my-book-folder
   node run-parser-and-upload.js --force-reparse ./my-book-folder
   node run-parser-and-upload.js /path/to/book/folder
-  node run-parser-and-upload.js "C:\\Books\\My Book"
 `);
 }
 
-async function promptUser(question) {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
+async function selectFolder() {
+    const filesDir = path.join(__dirname);
+    const folders = getBookFolders(filesDir);
+
+    if (folders.length === 0) {
+        throw new Error('No book folders found in /files directory');
+    }
+
+    const choices = folders.map(folder => {
+        const folderPath = path.join(filesDir, folder);
+        const hasOutput = hasOutputFolder(folderPath);
+        const label = hasOutput ? `${folder} (has output)` : folder;
+        return {
+            name: label,
+            value: folder,
+            short: folder
+        };
     });
 
-    return new Promise((resolve) => {
-        rl.question(question, (answer) => {
-            rl.close();
-            resolve(answer.toLowerCase().trim());
-        });
-    });
+    const answer = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'folder',
+            message: 'Select a book folder:',
+            choices: choices,
+            pageSize: 15
+        }
+    ]);
+
+    return path.join(filesDir, answer.folder);
 }
 
-async function runUploadScript(outputPath, uploadImages) {
-    try {
-        console.log('\n🚀 Running upload process...\n');
-
-        if (uploadImages) {
-            console.log('📤 Images will be uploaded to Vercel Blob');
-        } else {
-            console.log('⏭️ Skipping image upload (book content only)');
+async function selectMode(hasExistingOutput) {
+    const modes = [
+        {
+            name: 'Parser only',
+            value: 'parse-only',
+            short: 'Parse only'
+        },
+        {
+            name: 'Parse + Upload (book content only)',
+            value: 'parse-upload',
+            short: 'Parse + Upload'
+        },
+        {
+            name: 'Parse + Upload + Images (upload to Vercel Blob)',
+            value: 'parse-upload-images',
+            short: 'Parse + Upload + Images'
         }
+    ];
 
-        await uploadParsedBookV2(outputPath, {
-            uploadImages: uploadImages
-        });
-
-        console.log('\n✅ Upload completed successfully!');
-    } catch (error) {
-        console.error('\n❌ Upload failed:', error.message);
-        throw error;
+    // Add upload-only options if there's an existing output folder
+    if (hasExistingOutput) {
+        modes.push(
+            {
+                name: 'Upload only (book content only)',
+                value: 'upload-only',
+                short: 'Upload only'
+            },
+            {
+                name: 'Upload only + Images (upload to Vercel Blob)',
+                value: 'upload-only-images',
+                short: 'Upload only + Images'
+            }
+        );
     }
+
+    const answer = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'mode',
+            message: 'Select operation mode:',
+            choices: modes
+        }
+    ]);
+
+    return answer.mode;
+}
+
+async function runParser(pdfPath, outputPath, forceReparse) {
+    console.log(`📚 Starting book parser...\n`);
+    console.log(`   Input:  ${pdfPath}`);
+    console.log(`   Output: ${outputPath}\n`);
+
+    await parser.parseBook(pdfPath, outputPath, {
+        debug: true,
+        validate: true,
+        forceReparse: forceReparse
+    });
+
+    console.log('\n✅ Parser completed successfully!');
+}
+
+async function runUpload(outputPath, uploadImages) {
+    console.log('\n🚀 Running upload process...\n');
+
+    if (uploadImages) {
+        console.log('📤 Images will be uploaded to Vercel Blob');
+    } else {
+        console.log('⏭️ Skipping image upload (book content only)');
+    }
+
+    await uploadParsedBookV2(outputPath, {
+        uploadImages: uploadImages
+    });
+
+    console.log('\n✅ Upload completed successfully!');
 }
 
 async function main() {
@@ -109,7 +207,6 @@ async function main() {
         const args = process.argv.slice(2);
         const flags = new Set(args.filter(a => a.startsWith('-')));
         const positionals = args.filter(a => !a.startsWith('-'));
-        const parserOnly = flags.has('--parser-only') || flags.has('-p');
         const forceReparse = flags.has('--force-reparse') || flags.has('-f');
 
         // Show help if requested
@@ -118,59 +215,61 @@ async function main() {
             process.exit(0);
         }
 
-        // Get folder path from command line argument
+        // Get folder path from command line argument or prompt user
+        let targetDir;
         const folderPath = positionals[0];
 
         if (!folderPath) {
-            console.error('❌ Folder path is required');
-            showHelp();
-            process.exit(1);
+            console.log('📂 No folder path provided. Select from available folders:\n');
+            targetDir = await selectFolder();
+        } else {
+            targetDir = path.resolve(folderPath);
         }
 
-        // Resolve the folder path to absolute path
-        const targetDir = path.resolve(folderPath);
+        console.log(`\n📁 Selected folder: ${targetDir}`);
 
-        console.log(`📁 Looking for PDF file in: ${targetDir}`);
-
-        // Find the PDF file in the specified directory
-        const pdfPath = findPdfFile(targetDir);
-        const pdfName = path.basename(pdfPath);
-        console.log(`📄 Found PDF: ${pdfName}`);
-
-        // Set output path in the same directory as the PDF
+        // Check if output folder exists
         const outputPath = path.join(targetDir, 'output');
+        const hasExistingOutput = hasOutputFolder(targetDir);
 
-        console.log(`📚 Starting book parser...\n`);
-        console.log(`   Input:  ${pdfPath}`);
-        console.log(`   Output: ${outputPath}\n`);
+        if (hasExistingOutput) {
+            console.log('✓ Found existing output folder');
+        }
 
-        await parser.parseBook(pdfPath, outputPath, {
-            debug: true,
-            validate: true,
-            forceReparse: forceReparse
-        });
+        // Select operation mode
+        const mode = await selectMode(hasExistingOutput);
+        console.log(`\n🎯 Mode: ${mode}\n`);
 
-        // Parser completed successfully - now prompt for upload
-        console.log('\n✅ Parser completed successfully!');
-        if (parserOnly) {
-            console.log('\n⏭️  Skipping upload prompt due to --parser-only option.');
+        // Handle upload-only modes
+        if (mode === 'upload-only' || mode === 'upload-only-images') {
+            if (!hasExistingOutput) {
+                throw new Error('No existing output folder found. Cannot run upload-only mode.');
+            }
+            const uploadImages = mode === 'upload-only-images';
+            await runUpload(outputPath, uploadImages);
+            console.log('\n✅ Process completed successfully!');
             process.exit(0);
         }
 
-        const uploadAnswer = await promptUser('\n❓ Would you like to run the upload process? (y/n): ');
+        // For all parse modes, find the PDF file
+        console.log(`📁 Looking for PDF file in: ${targetDir}`);
+        const pdfPath = findPdfFile(targetDir);
+        const pdfName = path.basename(pdfPath);
+        console.log(`📄 Found PDF: ${pdfName}\n`);
 
-        if (uploadAnswer === 'y' || uploadAnswer === 'yes') {
-            const imagesAnswer = await promptUser('\n📤 Do you want to upload images to Vercel Blob? (y/n)\n   Note: Skip if images are already uploaded to avoid re-uploading: ');
-            const uploadImages = imagesAnswer === 'y' || imagesAnswer === 'yes';
+        // Run parser for all parse modes
+        await runParser(pdfPath, outputPath, forceReparse);
 
-            await runUploadScript(outputPath, uploadImages);
-        } else {
-            console.log('\n📝 Skipping upload process. You can run it later by using the upload script.');
+        // Run upload if requested
+        if (mode === 'parse-upload' || mode === 'parse-upload-images') {
+            const uploadImages = mode === 'parse-upload-images';
+            await runUpload(outputPath, uploadImages);
         }
+
+        console.log('\n✅ Process completed successfully!');
 
     } catch (error) {
         console.error('\n❌ Error:', error.message);
-        console.log('\n🚫 Upload process will not be run due to errors.');
         process.exit(1);
     }
 }

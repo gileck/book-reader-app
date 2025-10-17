@@ -1,32 +1,33 @@
 {
-  "timestamp": "2025-10-14T09:24:58.310Z",
-  "processingTime": "1343ms",
+  "timestamp": "2025-10-17T07:21:38.460Z",
+  "processingTime": "279ms",
   "summary": {
     "totalChapters": 20,
-    "totalChunks": 1099,
-    "totalParagraphs": 851,
-    "totalHeaders": 248,
-    "totalWords": 141844,
+    "totalChunks": 1238,
+    "totalParagraphs": 992,
+    "totalHeaders": 246,
+    "totalWords": 142049,
     "totalLinks": 15
   },
   "statistics": {
-    "totalChunks": 1099,
-    "totalParagraphs": 851,
-    "totalHeaders": 248,
-    "totalWords": 141844,
+    "totalChunks": 1238,
+    "totalParagraphs": 992,
+    "totalHeaders": 246,
+    "totalWords": 142049,
     "totalLinks": 15,
     "paragraphStats": {
-      "count": 851,
+      "count": 992,
       "wordCounts": [
         164,
         185,
         189,
         189,
-        180,
-        188,
-        198,
-        198,
-        181,
+        178,
+        118,
+        195,
+        190,
+        82,
+        182,
         185,
         180,
         183,
@@ -42,9 +43,12 @@
         139,
         192,
         199,
-        93,
-        196,
-        62,
+        118,
+        43,
+        42,
+        86,
+        104,
+        44,
         193,
         136,
         208,
@@ -61,115 +65,197 @@
         199,
         200,
         104,
-        169,
-        39,
+        185,
+        23,
         108,
         55,
         194,
         66,
-        167,
+        31,
+        136,
         195,
         187,
         197,
         186,
-        191,
-        68,
+        99,
+        160,
         186,
         100,
         190,
-        200,
-        200,
-        47,
+        80,
         26,
-        197,
+        180,
+        161,
+        26,
+        34,
+        190,
         196,
-        82,
+        55,
         95,
         192,
         183,
         166,
-        192,
-        39,
-        192,
-        192,
-        101,
-        192,
-        34,
+        45,
+        41,
+        56,
+        89,
+        40,
+        26,
+        32,
+        79,
+        65,
+        76,
+        77,
+        90,
+        104,
+        38,
+        41,
+        43,
         187,
         172,
-        195,
-        199,
-        164,
-        199,
-        116,
-        187,
-        183,
-        174,
-        193,
-        192,
-        180,
-        55,
-        110,
-        165,
-        116,
-        70,
-        110,
-        198,
-        193,
+        58,
+        40,
         52,
-        110,
-        194,
-        191,
-        214,
-        190,
-        124,
-        189,
+        272,
+        20,
+        116,
         119,
-        169,
+        51,
+        49,
+        22,
+        74,
+        187,
+        55,
+        64,
+        64,
+        73,
+        63,
+        38,
+        138,
+        38,
+        33,
+        59,
+        81,
+        36,
+        36,
+        83,
+        61,
+        29,
+        26,
+        110,
+        104,
+        61,
+        50,
+        20,
+        46,
+        30,
+        40,
+        26,
+        34,
+        28,
+        22,
+        198,
+        128,
+        37,
+        80,
+        45,
+        65,
+        95,
+        44,
+        55,
+        191,
+        143,
+        71,
+        47,
+        156,
+        35,
+        33,
+        43,
+        123,
+        125,
+        39,
+        21,
+        93,
+        22,
+        29,
+        25,
         186,
         143,
         83,
-        196,
-        168,
-        144,
-        164,
-        196,
+        145,
+        22,
+        51,
+        28,
+        46,
+        30,
+        107,
+        79,
+        114,
+        50,
+        38,
+        92,
+        66,
         107,
         184,
-        61,
+        28,
+        33,
         106,
-        123,
-        147,
+        83,
+        40,
+        22,
+        29,
+        96,
         98,
-        131,
+        21,
+        43,
+        67,
         116,
-        45,
+        25,
+        20,
         78,
-        189,
-        191,
+        114,
+        55,
+        166,
+        25,
+        77,
+        25,
         195,
-        211,
-        81,
+        129,
+        148,
+        62,
         180,
-        161,
+        57,
+        31,
+        47,
+        26,
         199,
         31,
-        139,
-        172,
+        70,
+        69,
+        116,
+        56,
         186,
         54,
-        191,
-        50,
+        91,
+        24,
+        24,
+        102,
         126,
         200,
         165,
         175,
         91,
-        170,
-        182,
-        169,
-        197,
+        63,
+        31,
         51,
+        25,
+        91,
+        294,
+        44,
+        64,
+        31,
+        48,
+        27,
         84,
         29,
         51,
@@ -179,17 +265,20 @@
         98,
         191,
         39,
-        196,
-        55,
+        41,
+        210,
         194,
         189,
         57,
         185,
         172,
         56,
-        64,
-        197,
-        112,
+        44,
+        20,
+        132,
+        45,
+        62,
+        70,
         189,
         172,
         176,
@@ -197,10 +286,13 @@
         200,
         46,
         200,
-        129,
+        22,
+        25,
+        82,
         175,
         192,
-        51,
+        28,
+        23,
         182,
         106,
         179,
@@ -209,13 +301,16 @@
         185,
         198,
         153,
-        197,
+        49,
+        45,
+        103,
         183,
         112,
         188,
         193,
         197,
-        142,
+        75,
+        67,
         187,
         189,
         198,
@@ -234,18 +329,23 @@
         190,
         182,
         123,
-        189,
+        45,
+        61,
+        83,
         212,
         190,
         120,
         190,
         198,
         198,
-        186,
-        190,
-        43,
+        67,
+        30,
+        198,
+        34,
+        90,
         58,
-        172,
+        108,
+        64,
         180,
         166,
         149,
@@ -312,9 +412,10 @@
         187,
         199,
         185,
-        190,
-        199,
-        191,
+        110,
+        195,
+        182,
+        93,
         175,
         172,
         188,
@@ -391,13 +492,15 @@
         195,
         170,
         43,
-        196,
-        198,
-        199,
-        167,
+        79,
+        195,
+        192,
+        197,
+        97,
         193,
-        186,
-        95,
+        109,
+        31,
+        141,
         200,
         180,
         52,
@@ -407,27 +510,27 @@
         189,
         196,
         197,
-        187,
-        182,
-        191,
-        195,
-        182,
-        187,
-        44,
+        145,
+        197,
+        186,
+        186,
+        194,
+        193,
+        67,
         184,
         176,
-        143,
+        189,
+        121,
+        183,
         195,
-        176,
-        188,
-        177,
+        191,
         172,
         188,
         197,
-        191,
-        194,
-        189,
-        71,
+        146,
+        199,
+        168,
+        132,
         191,
         179,
         193,
@@ -435,7 +538,8 @@
         173,
         171,
         35,
-        70,
+        26,
+        44,
         180,
         187,
         192,
@@ -449,8 +553,11 @@
         168,
         115,
         196,
-        193,
-        155,
+        144,
+        44,
+        51,
+        28,
+        81,
         158,
         186,
         194,
@@ -505,9 +612,11 @@
         190,
         186,
         36,
-        199,
-        189,
-        55,
+        178,
+        32,
+        26,
+        26,
+        181,
         193,
         182,
         195,
@@ -518,12 +627,13 @@
         189,
         172,
         192,
-        147,
-        61,
+        176,
+        32,
         197,
         188,
-        199,
-        135,
+        103,
+        178,
+        53,
         187,
         180,
         193,
@@ -534,13 +644,16 @@
         180,
         200,
         180,
-        191,
-        190,
-        200,
-        81,
+        59,
+        30,
+        195,
+        130,
+        25,
+        223,
         192,
-        185,
-        100,
+        51,
+        24,
+        210,
         196,
         176,
         134,
@@ -558,21 +671,31 @@
         199,
         196,
         193,
-        189,
-        166,
-        41,
+        110,
+        69,
+        79,
+        58,
+        80,
         93,
         57,
-        113,
-        194,
-        144,
-        185,
-        200,
-        96,
+        24,
+        41,
+        48,
+        45,
         149,
+        21,
+        50,
+        73,
+        185,
+        103,
+        50,
+        143,
+        121,
+        28,
         192,
         186,
-        102,
+        29,
+        73,
         191,
         198,
         184,
@@ -639,9 +762,9 @@
         195,
         180,
         194,
-        194,
-        200,
-        162,
+        211,
+        111,
+        234,
         185,
         149,
         194,
@@ -654,13 +777,22 @@
         131,
         183,
         143,
-        178,
-        199,
-        128,
+        76,
+        26,
+        46,
+        21,
+        34,
+        44,
+        29,
+        114,
+        22,
+        36,
+        57,
         196,
         168,
-        189,
-        43,
+        118,
+        36,
+        78,
         177,
         199,
         194,
@@ -710,9 +842,10 @@
         126,
         164,
         187,
-        200,
-        196,
-        103,
+        24,
+        143,
+        181,
+        151,
         182,
         193,
         194,
@@ -771,7 +904,8 @@
         200,
         199,
         199,
-        169,
+        45,
+        124,
         195,
         180,
         194,
@@ -816,11 +950,12 @@
         146,
         182,
         180,
-        173,
-        191,
-        177,
-        200,
-        120,
+        97,
+        188,
+        196,
+        123,
+        183,
+        74,
         175,
         167,
         183,
@@ -859,30 +994,35 @@
         194,
         180,
         194,
+        135,
+        73,
+        198,
+        189,
+        177,
         191,
-        174,
-        200,
-        197,
-        173,
-        199,
-        191,
-        41,
-        199,
-        110
+        196,
+        184,
+        23,
+        51,
+        39,
+        36,
+        64,
+        39,
+        55,
+        25
       ],
-      "averageWords": 165.3713278495887,
-      "minWords": 22,
-      "maxWords": 214
+      "averageWords": 142.0826612903226,
+      "minWords": 20,
+      "maxWords": 294
     },
     "headerStats": {
-      "count": 248,
+      "count": 246,
       "wordCounts": [
         2,
         3,
         3,
         4,
         2,
-        5,
         5,
         2,
         2,
@@ -941,7 +1081,6 @@
         4,
         2,
         8,
-        5,
         5,
         3,
         2,
@@ -1126,7 +1265,7 @@
         5,
         6
       ],
-      "averageWords": 4.487903225806452,
+      "averageWords": 4.483739837398374,
       "minWords": 1,
       "maxWords": 15
     }
@@ -4137,8 +4276,8 @@
     {
       "chapterNumber": 1,
       "title": "Introduction: Are You Breathing Comfortably?",
-      "chunkCount": 13,
-      "paragraphCount": 13,
+      "chunkCount": 14,
+      "paragraphCount": 14,
       "headerCount": 0,
       "chunks": [
         {
@@ -4172,36 +4311,43 @@
         {
           "type": "paragraph",
           "content": "Everyday habits that may come from\nchoice or necessity (such as sedentary deskwork, watching TV, eating processed\nFoods, and excessive talking) or from psychological conditions (such as stress\nand anx...",
-          "wordCount": 180,
+          "wordCount": 178,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "2. Biomechanical. The physical aspects of breathing; the functioning of the respiratory\nmuscles, including the intercostal muscles (which run between the ribs and help form and\nmove the chest wall) an...",
+          "wordCount": 118,
+          "sentenceCount": 13,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "3. Cadence. Reducing the respiratory rate to between 4.5 and 6.5 breaths per minute in\norder to influence the autonomic functioning of the body. The breathing method I will share in this book forms a ...",
+          "wordCount": 195,
+          "sentenceCount": 14,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Think of the three dimensions of the breath as a three-legged stool. If one leg is\nmissing, the stool will fall over! Throughout this book, you will find everything you need to understand how\nbreathin...",
+          "wordCount": 190,
           "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The physical aspects of breathing; the functioning of the respiratory\nmuscles, including the intercostal muscles (which run between the ribs and help form and\nmove the chest wall) and diaphragm (the m...",
-          "wordCount": 188,
-          "sentenceCount": 18,
+          "content": "A score of less than 25 seconds strongly suggests a breathing pattern\ndisorder. The BOLT, which will be explained in more detail later, is\ninterchangeable with the three dimensions of breathing as a m...",
+          "wordCount": 82,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The Oxygen Advantage is a program of simple exercises designed to retrain your\nbreathing. The focus is on light, slow, deep breathing (LSD), which targets the\nBiochemistry and biomechanics of the body...",
-          "wordCount": 198,
-          "sentenceCount": 12,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "You won’t need to\nlearn them all. Instead, choose one or two exercises, work with them, and then\nreturn to learn more. You will learn how to measure your BOLT (Body Oxygen\nLevel Test) score to assess ...",
-          "wordCount": 198,
-          "sentenceCount": 12,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Achieving the optimal respiratory rate, as understood by scientific study\nYou can achieve a higher BOLT score by breathing only through the nose\nand practicing the exercises in this book. I always tel...",
-          "wordCount": 181,
-          "sentenceCount": 7,
+          "content": "3. Achieving the optimal respiratory rate, as understood by scientific study\nYou can achieve a higher BOLT score by breathing only through the nose\nand practicing the exercises in this book. I always ...",
+          "wordCount": 182,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -4237,9 +4383,9 @@
     {
       "chapterNumber": 2,
       "title": "A New Approach",
-      "chunkCount": 64,
-      "paragraphCount": 45,
-      "headerCount": 19,
+      "chunkCount": 67,
+      "paragraphCount": 49,
+      "headerCount": 18,
       "chunks": [
         {
           "type": "header",
@@ -4363,29 +4509,43 @@
         {
           "type": "paragraph",
           "content": "8 At the same time, every one of those\nailments can be made worse by disordered breathing. Put simply, the quality of\nbreathing has significant implications for health and longevity. A comprehensive l...",
-          "wordCount": 93,
+          "wordCount": 118,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Respiratory (breathing): breathlessness after exertion, tight chest, frequent sighing,\nyawning and sniffing, irritable cough, inability to take a satisfying breath • Cardiovascular (the heart and bl...",
+          "wordCount": 43,
+          "sentenceCount": 0,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Muscles: muscle pain, cramping, twitching, weakness, stiffness and tetany (muscles that\nspasm and seize up) • Gastrointestinal (the digestion): heartburn, acid regurgitation or hiatus hernia, flatul...",
+          "wordCount": 42,
+          "sentenceCount": 0,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Neurological (the nervous system): dizziness, headaches and migraines, paresthesia\n(tingling or numbness, pins and needles) of the hands, feet, or face, hot flashes • Psychological: anxiety, tension...",
+          "wordCount": 86,
           "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Faulty breathing can affect any organ or\nsystem producing symptoms that include:\n• General: fatigue, poor concentration, poor performance, impaired memory, weakness,\ndisturbed sleep, allergies\n• Respi...",
-          "wordCount": 196,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "CAUSES OF UNHEALTHY BREATHING PATTERNS",
-          "wordCount": 5,
-          "sentenceCount": 1,
+          "content": "• Neurological (the nervous system): dizziness, headaches and migraines, paresthesia\n(tingling or numbness, pins and needles) of the hands, feet, or face, hot flashes • Psychological: anxiety, tension...",
+          "wordCount": 104,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Remember, three main factors are at play in the development of breathing\npattern disorders:\n1. Biochemical\n2. Biomechanical\n3. Psychological 10\nWhile the underlying causes of problem breathing can var...",
-          "wordCount": 62,
-          "sentenceCount": 5,
+          "content": "3. Psychological 10\nWhile the underlying causes of problem breathing can vary, environmental\nfactors, lifestyle habits, and genetic predisposition are common triggers. Often,\nthese disorders are simpl...",
+          "wordCount": 44,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -4552,15 +4712,15 @@
         {
           "type": "paragraph",
           "content": "The movement of air in and out of the airways is achieved by cyclic changes in\nthe volume of the lungs. As the diaphragm and chest wall moves, pressure\nwithin the chest varies, causing the inhalation ...",
-          "wordCount": 169,
+          "wordCount": 185,
           "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "It will:\n• Slow respiration\n• Calm the mind\n• Draw air deep into the lungs\n• Improve gas exchange\n• Support functional breathing for functional movement\n• Generate intra-abdominal pressure (IAP) for c...",
-          "wordCount": 39,
-          "sentenceCount": 1,
+          "content": "• Improve gas exchange • Support functional breathing for functional movement • Generate intra-abdominal pressure (IAP) for control of posture and spinal stability",
+          "wordCount": 23,
+          "sentenceCount": 0,
           "linkCount": 0
         },
         {
@@ -4621,9 +4781,16 @@
         },
         {
           "type": "paragraph",
-          "content": "• Tidal volume (V T ). The normal volume of air entering the lungs during one inhalation while\nat rest\n• Respiratory rate (RR). The number of breaths per minute (bpm)\n• Minute ventilation (MV). The vo...",
-          "wordCount": 167,
-          "sentenceCount": 8,
+          "content": "• Tidal volume (V T ). The normal volume of air entering the lungs during one inhalation while\nat rest • Respiratory rate (RR). The number of breaths per minute (bpm)",
+          "wordCount": 31,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Minute ventilation (MV). The volume of air that enters the lungs during one minute\n(respiratory rate multiplied by tidal volume) RR x V T = MV 32\nThe following calculations clearly show what happens...",
+          "wordCount": 136,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
@@ -4657,15 +4824,15 @@
         {
           "type": "paragraph",
           "content": "Each breath is taken in and\nout through the nose, even during light physical exercise such as walking. There\nshould be no feeling of breathlessness during rest. If you are breathing in a\nhealthy manne...",
-          "wordCount": 191,
-          "sentenceCount": 11,
+          "wordCount": 99,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "As you practice\neach exercise, you will learn how it will impact the biochemistry, biomechanics,\nor cadence of your breath. You will discover how light, slow, deep (LSD)\nbreathing improves all three d...",
-          "wordCount": 68,
-          "sentenceCount": 3,
+          "content": "• As soon as you breathe out, do you need to breathe back in immediately, or is there a\nnatural pause between your breaths? • Is it easy for you to see the movements of your breathing?\nIf your breathi...",
+          "wordCount": 160,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
@@ -4694,8 +4861,8 @@
     {
       "chapterNumber": 3,
       "title": "Section One: Functional Breathing",
-      "chunkCount": 59,
-      "paragraphCount": 38,
+      "chunkCount": 94,
+      "paragraphCount": 73,
       "headerCount": 21,
       "chunks": [
         {
@@ -4715,22 +4882,29 @@
         {
           "type": "paragraph",
           "content": "Scientists have proven that holding the breath in this way cannot be\ninfluenced by training or will power. 1 This means that the reading is less\nsubjective and more accurate. Your BOLT score provides ...",
-          "wordCount": 200,
-          "sentenceCount": 9,
+          "wordCount": 80,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Because CO 2 provides\nthe primary stimulus to breathe in, breath holding is a powerful method for\ninducing the sensation of breathlessness. Research has proven that the breath\nhold test provides a gre...",
-          "wordCount": 200,
-          "sentenceCount": 9,
+          "content": "• Bronchoconstriction in the lungs or airways (narrowing of the airways affects breath-hold\ntime) • Level of discomfort felt in the diaphragm during the breath hold",
+          "wordCount": 26,
+          "sentenceCount": 0,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "4 As the BOLT score\nincreases, respiratory rate decreases, and the natural pause following exhalation\nincreases. When the BOLT score is 40 seconds, the typical respiratory rate is\neight to ten breaths...",
-          "wordCount": 47,
-          "sentenceCount": 3,
+          "content": "• Anxiety and other psychological or emotional influences. Since 1975, scientists have demonstrated that breath-hold time offers a useful\nindex of sensitivity to CO 2 due to the relationship between t...",
+          "wordCount": 180,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "McArdle\nclaims that for a person with normal breathing patterns, the breath-hold time\nafter exhalation, before the desire to breathe triggers inhalation, is about 40\nseconds. 3 However, in my experien...",
+          "wordCount": 161,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -4756,23 +4930,30 @@
         },
         {
           "type": "paragraph",
-          "content": "• Take a normal, silent breath in through your nose. • Allow a normal, silent breath out through your nose. • Hold your nose with your fingers to prevent air from entering your lungs. • Count the numb...",
-          "wordCount": 197,
-          "sentenceCount": 12,
+          "content": "• Take a normal, silent breath in through your nose. • Allow a normal, silent breath out through your nose. • Hold your nose with your fingers to prevent air from entering your lungs.",
+          "wordCount": 34,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Physical exercise can be\ngradually introduced to increase the BOLT score above 20 seconds. When the breathing exercises are practiced correctly, your breathing pattern\ncan be retrained. If your very f...",
+          "content": "• Count the number of seconds until you feel the first distinct desire to breathe in. A low breath-hold time in seconds indicates a greater tendency toward faster,\nupper chest breathing with no natura...",
+          "wordCount": 190,
+          "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "If your very first BOLT score is 10 seconds, it will take at least\nthree weeks to reach a BOLT score of 20 seconds and six months to reach a\nBOLT score of 40 seconds. Improvement will depend on the se...",
           "wordCount": 196,
           "sentenceCount": 12,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "You will also have lighter breathing and begin to feel better. The BOLT measures the number of seconds you can comfortably hold your\nbreath after an exhalation. You must not try to push beyond the fir...",
-          "wordCount": 82,
-          "sentenceCount": 7,
+          "content": "You must not try to push beyond the first distinct\nurges to breathe. This isn’t a competitive challenge. Nor is it a measure of\nwillpower. Continually practicing the BOLT will not change the result ei...",
+          "wordCount": 55,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -4833,16 +5014,30 @@
         },
         {
           "type": "paragraph",
-          "content": "Directions:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back. [[IMG id=image-041-1 index=2 alt=\"Figure 9\"]]\n• If sitting, imagine a piece of string gently pulling you...",
-          "wordCount": 192,
-          "sentenceCount": 12,
+          "content": "Directions:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back.\n[[IMG id=image-041-1 index=2 alt=\"Figure 9\"]] • If sitting, imagine a piece of string gently pulling you...",
+          "wordCount": 45,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "When this\nhappens, take a rest for 20 or 30 seconds and start again. It is normal at the beginning to\ntake a rest a few times during the exercise. • Continue practicing the exercise for around four mi...",
-          "wordCount": 39,
+          "content": "• Place your hands on your chest and tummy, or in your lap. • Observe your breath as it enters and leaves your nose. Feel the slightly colder air entering\nyour nose and feel the slightly warmer air le...",
+          "wordCount": 41,
           "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Begin to reduce the speed of each breath as it enters and leaves your nose. Breathing\nshould be light, quiet, and calm. • Slow down your breathing so that you feel hardly any air entering and leavin...",
+          "wordCount": 56,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The goal is to create a feeling that you would like to take in more air. To create air hunger,\nyour breathing now should be “less” than it was when you started. • If you feel stressed or lose contro...",
+          "wordCount": 89,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
@@ -4855,22 +5050,57 @@
         {
           "type": "paragraph",
           "content": "Directions:\n• Sit up straight in a chair or cross-legged on the floor or lie down on your back. • If sitting, imagine a piece of string gently pulling you upward toward the ceiling from the\ncrown of y...",
-          "wordCount": 192,
-          "sentenceCount": 12,
+          "wordCount": 40,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "I need you to feel\nlike you want to breathe in more air. • Continue practicing the exercise for around four minutes. [[IMG id=image-042-1 index=3 alt=\"Figure 10\"]]\nBreathe Light, Variation Three\nDirec...",
-          "wordCount": 192,
-          "sentenceCount": 16,
+          "content": "• Place your finger underneath your nose so you can monitor the airflow from your nose. • Bring your attention to the airflow on your finger.",
+          "wordCount": 26,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "It is almost as if you are hardly\nbreathing at all. • The goal is to create a feeling that you would like to take in more air, to feel an air hunger\n—the feeling that you would like to take in a deepe...",
-          "wordCount": 101,
-          "sentenceCount": 6,
+          "content": "• As you feel the warm air on your finger, gently slow down your breathing. • Take a soft breath in through your nose and allow a gentle and prolonged breath out.",
+          "wordCount": 32,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe so softly that you feel hardly any air blowing onto your finger. Imagine that your\nfinger is a feather and that your breathing is so soft that the feather doesn’t even flutter. • There is no...",
+          "wordCount": 79,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• You are doing the exercise correctly if you feel a tolerable need for air. I need you to feel\nlike you want to breathe in more air. • Continue practicing the exercise for around four minutes.\n[[IMG ...",
+          "wordCount": 65,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• If sitting, imagine a piece of string gently pulling you upward toward the ceiling from the\ncrown of your head. • Cup your hands against your face. Have hardly any gaps between your fingers. This\nse...",
+          "wordCount": 76,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Take a short breath in through your nose. With your hands cupping your face, only breathe\nhalf an inch (1 cm) of air into your nose. Then breathe out half an inch.\n[[IMG id=image-043-1 index=4 alt=\"...",
+          "wordCount": 77,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The goal is to create a feeling that you would like to take in more air, to feel an air hunger\n—the feeling that you would like to take in a deeper breath. • If you feel stressed or lose control of ...",
+          "wordCount": 90,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -4883,15 +5113,29 @@
         {
           "type": "paragraph",
           "content": "This exercise helps practice diaphragmatic breathing, which in turn enables slow\nbreathing, calms the mind, improves oxygenation within the body, and has many\npositive effects on posture and breathing...",
-          "wordCount": 192,
-          "sentenceCount": 14,
+          "wordCount": 104,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• During the inhalation, as the diaphragm moves downward, expansion is generated to the\nfront, sides, and back of the trunk. Your diaphragm is producing intra-abdominal pressure,\nwhich causes the ribs...",
-          "wordCount": 34,
-          "sentenceCount": 2,
+          "content": "• Place your hands at either side of your lower ribs. • Silently breathe in, bringing the air deep into your lungs. As you inhale, feel your ribs\nexpanding outward. As you exhale, feel your ribs movin...",
+          "wordCount": 38,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Take fuller breaths but fewer of them. As you breathe in, feel your lower ribs moving\noutward, and, as you breathe out, feel your lower ribs moving inward. • There is no need to hear your breathing ...",
+          "wordCount": 41,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Continue practicing the exercise for approximately four minutes. • During the inhalation, as the diaphragm moves downward, expansion is generated to the\nfront, sides, and back of the trunk. Your dia...",
+          "wordCount": 43,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -4918,22 +5162,43 @@
         {
           "type": "paragraph",
           "content": "Directions:\nTo reach a cadence of approximately six breaths per minute, this exercise\nencourages you to reduce your breathing so that each inhale measures four\nseconds and each exhale measures six sec...",
-          "wordCount": 195,
+          "wordCount": 58,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• As you breathe in, feel your ribs moving outward, and, as you breathe out, feel your ribs\nmoving inward. • To pace your breathing, inhale for a count of four seconds and exhale for a count of six\nse...",
+          "wordCount": 40,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe in, 1, 2, 3, 4, breathe out, 1, 2, 3, 4, 5, 6. (If your BOLT score is less than 15\nseconds, breathe in 1,2,3, breathe out, 1, 2, 3). • As you breathe in, feel your ribs moving outward, and, ...",
+          "wordCount": 52,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe in for a count of four seconds and breathe out for a count of six seconds. • Continue the exercise for approximately four minutes.\nAlternatively, you can breathe in for a count of five secon...",
+          "wordCount": 272,
+          "sentenceCount": 13,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Light (biochemistry)—the focus is on air hunger. • Breathe Slow (cadence)—the focus is on six breaths per minute.",
+          "wordCount": 20,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Deep (biomechanics)—the focus is on breathing with greater use of the\ndiaphragm. • Breathe Light, Slow, Deep (LSD)—biochemistry, biomechanics, cadence—brings all three\ntogether, breathing li...",
+          "wordCount": 116,
           "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Breathe in, 1, 2, 3, 4, 5, breathe out, 1, 2, 3, 4, 5. Both options result in a breathing rate of six breaths per minute and work\nwell in helping improve the automatic functioning of the body—those pr...",
-          "wordCount": 199,
-          "sentenceCount": 6,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Any thoughts on doing this? The answer is that these are three different exercises. You should focus on each\none separately at first. Then bring all three together. • Breathe Light (biochemistry)—the ...",
-          "wordCount": 164,
-          "sentenceCount": 14,
           "linkCount": 0
         },
         {
@@ -4946,15 +5211,36 @@
         {
           "type": "paragraph",
           "content": "This exercise brings all three dimensions of functional breathing together to\nencourage you to Breathe Light, Slow, and Deep :\nLight: Create a light air hunger by taking in slightly less air with each...",
-          "wordCount": 199,
-          "sentenceCount": 14,
+          "wordCount": 119,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Gradually reduce your breathing rhythm so that you are breathing in for four seconds and\nout for six seconds. • Breathe in, 1, 2, 3, 4, and breathe out, 1, 2, 3, 4, 5, 6. • Breathe light, slow, and ...",
-          "wordCount": 116,
-          "sentenceCount": 7,
+          "content": "• At the top of each inhale, bring a feeling of relaxation throughout your body, and allow a\nslow, soft, relaxed breath out. The air should leave your body slowly and effortlessly. • Gently soften the...",
+          "wordCount": 51,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• With each inhalation, take the air deep into your lungs. As you breathe in, feel your ribs\nexpanding outward. As you breathe out, feel your ribs moving inward. • Gradually reduce your breathing rhyt...",
+          "wordCount": 49,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe in, 1, 2, 3, 4, and breathe out, 1, 2, 3, 4, 5, 6. • Breathe light, slow, and deep.",
+          "wordCount": 22,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Continue this exercise for approximately four minutes. • If you have difficulty reducing your breathing volume with lateral expansion of the lower\nribs, you could use a product called Buteyko Belt t...",
+          "wordCount": 74,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -4974,8 +5260,22 @@
         {
           "type": "paragraph",
           "content": "The objectives here are to breathe lightly during your walk, to breathe less\nair than you normally would, and to feel a hunger for more air. Remember to\nbring your focused awareness to the breath, jus...",
-          "wordCount": 183,
-          "sentenceCount": 12,
+          "wordCount": 55,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• As you continue to walk, block one of your nostrils (it doesn’t matter which) with your\nfinger. This will concentrate the air entering and leaving your nostrils. • Soften your breathing as you breat...",
+          "wordCount": 64,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Concentrating air flow through one nostril will reduce breathing volume to create a hunger\nfor air. Try to sustain the feeling of air hunger. • If the feeling of air hunger is too strong, then breat...",
+          "wordCount": 64,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -4988,8 +5288,22 @@
         {
           "type": "paragraph",
           "content": "This variation is also to be practiced at a steady, comfortable walking pace. You\nshould remove your hand from your nostril at this point. Also, ensure that you\nare breathing light during walking.\nDir...",
-          "wordCount": 174,
-          "sentenceCount": 12,
+          "wordCount": 73,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Reduce the number of breaths per minute, and allow the size of each breath to be deeper,\ntaking fuller breaths but fewer of them. Take fuller breaths but try to make sure that you\ndon’t breathe in t...",
+          "wordCount": 63,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Continue this exercise for five minutes.\n[[IMG id=image-051-1 index=9 alt=\"Figure 16\"]]\nThe objectives here are to breathe light, slow, and deep (LSD) during your walk,\nto breathe less than you norm...",
+          "wordCount": 38,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
@@ -5002,22 +5316,64 @@
         {
           "type": "paragraph",
           "content": "This exercise involves jogging or fast walking with the mouth closed for one\nminute, followed by normal walking for one minute. Combining metabolic\nactivity with reduced nasal breathing offers several...",
-          "wordCount": 193,
-          "sentenceCount": 14,
+          "wordCount": 138,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Breathe Slow : Slow down the speed of your breathing. [[IMG id=image-053-1 index=10 alt=\"Figure 17\"]]\n• Breathe Deep : Bring the air into the lower regions of the lungs and allow a complete and\nnorm...",
-          "wordCount": 192,
-          "sentenceCount": 17,
+          "content": "• Remember, this should be a slight challenge but not stressful. • Continue to breathe in and out through your nose. Don’t hold your breath or freeze your\nbreathing. Just breathe gently in and out thr...",
+          "wordCount": 38,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Feel the air coming into your nose, and feel the air leaving your nose. • It is normal for the mind to wander. If your mind wanders, gently bring your attention back\nto your breathing. • Follow your...",
-          "wordCount": 180,
-          "sentenceCount": 13,
+          "content": "• Breathe Light : Soften your breathing, taking in just the amount of air that you need. • Breathe Slow : Slow down the speed of your breathing.\n[[IMG id=image-053-1 index=10 alt=\"Figure 17\"]]",
+          "wordCount": 33,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Deep : Bring the air into the lower regions of the lungs and allow a complete and\nnormal exhalation. • After one minute of fast walking or jogging, slow down your pace to a walk. Walk for on...",
+          "wordCount": 59,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Take very small breaths in and out through your nose. Just take a flicker of air in and a\nflicker of air out. Bring enough air to fill your nostrils and no more. This will involve\nbreathing less tha...",
+          "wordCount": 81,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• As you walk or jog, take your attention out of your mind and direct it to your breath. • Concentrate on your breathing. Focus on your breathing. Make your walk or jog a\nbreathing meditation.",
+          "wordCount": 36,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Feel the air coming into your nose, and feel the air leaving your nose. • It is normal for the mind to wander. If your mind wanders, gently bring your attention back\nto your breathing.",
+          "wordCount": 36,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Follow your breath. Feel your breathing. Take your attention out of your head and onto\nyour breathing. Feel the air coming into your nose, and feel the air leaving your nose.\nThe objectives are to b...",
+          "wordCount": 83,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Slow: Breathe fewer breaths, but fuller breaths. Take the air deep into the lungs. • Deep: As you breathe in, feel your lower two ribs move outwards, and, as you breathe out,\nfeel your lower two rib...",
+          "wordCount": 61,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5029,9 +5385,16 @@
         },
         {
           "type": "paragraph",
-          "content": "This exercise incorporates the techniques from Breathe LSD and adds a\nmetabolic challenge in the form of a fast walk or jog.\n1. Jog for one minute, breathe LSD.\n2. Walk for one minute—practice minimal...",
-          "wordCount": 55,
-          "sentenceCount": 7,
+          "content": "This exercise incorporates the techniques from Breathe LSD and adds a\nmetabolic challenge in the form of a fast walk or jog. 1. Jog for one minute, breathe LSD.",
+          "wordCount": 29,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "2. Walk for one minute—practice minimal breathing for 6 breaths, then recover with normal\nbreathing for 12 to 18 breaths. 3. Repeat the exercise three times.",
+          "wordCount": 26,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5065,8 +5428,15 @@
         {
           "type": "paragraph",
           "content": "Wrap the belt around your diaphragm so that it sits midway between your\nnavel and your chest. Tighten or loosen the straps on each side of the belt to\nachieve the optimum resistance to your breathing....",
-          "wordCount": 165,
-          "sentenceCount": 9,
+          "wordCount": 104,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe light, slow, and deep (LSD).\nIn addition to wearing the Buteyko Belt to practice your breathing exercises,\nit can be worn while you are on the computer, driving your car, watching TV, or\ndoi...",
+          "wordCount": 61,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -5079,8 +5449,22 @@
         {
           "type": "paragraph",
           "content": "It is easier to activate abdominal breathing when lying on your back in a semi-\nsupine position or when lying on your front.\nDirections:\n• Lie on a mat with a small pillow under your head and knees be...",
-          "wordCount": 116,
-          "sentenceCount": 9,
+          "wordCount": 50,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Concentrate on breathing into your abdomen. • Breathe in, gently guiding the book upward.\n[[IMG id=image-056-1 index=12 alt=\"Figure 19\"]]",
+          "wordCount": 20,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe out, gently guiding the book downward. • While breathing in, imagine inflating your belly with a light amount of air, and watch your\nbook rise. While breathing out, imagine a balloon slowly ...",
+          "wordCount": 46,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5092,9 +5476,16 @@
         },
         {
           "type": "paragraph",
-          "content": "Directions:\n• Lie face down on the floor, resting on your elbows.\n• Push off the floor, resting on your elbows so that your tummy is not touching the floor.\n• As you breathe in, gently push your abdom...",
-          "wordCount": 70,
-          "sentenceCount": 6,
+          "content": "Directions:\n• Lie face down on the floor, resting on your elbows. • Push off the floor, resting on your elbows so that your tummy is not touching the floor.",
+          "wordCount": 30,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• As you breathe in, gently push your abdomen toward the floor. • As you exhale, gently draw your abdomen inward.\nThe floor and gravity can help activate movement of the diaphragm. Continue\nthis exerc...",
+          "wordCount": 40,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5106,9 +5497,30 @@
         },
         {
           "type": "paragraph",
-          "content": "[[IMG id=image-057-1 index=13 alt=\"Figure 20\"]]\nDirections:\n• Take a soft silent breath in through your nose.\n• Allow a soft silent breath out through your nose.\n• Pinch your nose with your fingers to...",
-          "wordCount": 110,
-          "sentenceCount": 8,
+          "content": "[[IMG id=image-057-1 index=13 alt=\"Figure 20\"]]\nDirections:\n• Take a soft silent breath in through your nose. • Allow a soft silent breath out through your nose.",
+          "wordCount": 26,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Pinch your nose with your fingers to hold your breath for about 10 seconds or so. • As you pinch your nose to hold your breath, gently try to breathe in and out.",
+          "wordCount": 34,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Feel your abdomen move in and out as you try to breathe. • After 10 seconds or so, release your nose, and resume breathing through the nose.",
+          "wordCount": 28,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Rest for one minute with normal breathing and repeat again. • Repeat three to five times.\n[[IMG id=image-058-1 index=14 alt=\"Figure 21\"]]",
+          "wordCount": 22,
+          "sentenceCount": 2,
           "linkCount": 0
         }
       ]
@@ -5116,8 +5528,8 @@
     {
       "chapterNumber": 4,
       "title": "Section Two: Exercises to Stop Symptoms of Asthma, Anxiety, Stress, Racing Mind, and Panic Disorder",
-      "chunkCount": 21,
-      "paragraphCount": 13,
+      "chunkCount": 34,
+      "paragraphCount": 26,
       "headerCount": 8,
       "chunks": [
         {
@@ -5144,15 +5556,22 @@
         {
           "type": "paragraph",
           "content": "Between the breath holds, try to avoid shallow, fast breathing as this will\nonly intensify the feeling of air hunger and breathlessness. It is much more\nefficient to breathe low and slow to optimize t...",
-          "wordCount": 193,
-          "sentenceCount": 12,
+          "wordCount": 128,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "If you are having a severe attack, take your rescue\nmedication immediately. If your symptoms do not respond to your medication\nwithin a few minutes, seek medical attention. Additional exercises and in...",
-          "wordCount": 52,
+          "content": "• Pinch your nose with your fingers to hold the breath for up to five seconds. Count: 5, 4, 3,\n2, 1. • Let go of your nose and breathe normally through your nose for 10 seconds.",
+          "wordCount": 37,
           "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat the sequence for as long as symptoms are present.\nIf you have asthma and your symptoms continue for as long as five minutes,\ntake your medication. If you are having a severe attack, take your...",
+          "wordCount": 80,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -5164,9 +5583,16 @@
         },
         {
           "type": "paragraph",
-          "content": "Directions:\n• Exhale through your nose.\n• Pinch your nose with your fingers to hold your breath, and walk for 5 to 10 paces, holding\nyour breath.\n• Stop walking.\n• Breathe in through your nose, and re...",
-          "wordCount": 110,
-          "sentenceCount": 8,
+          "content": "Directions:\n• Exhale through your nose. • Pinch your nose with your fingers to hold your breath, and walk for 5 to 10 paces, holding\nyour breath. • Stop walking. • Breathe in through your nose, and re...",
+          "wordCount": 45,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat up to 10 times.\nIf you are practicing at home, you can repeat this exercise six times, five\ntimes per day. Holding the breath for up to 10 paces is very suitable for anyone\n[[IMG id=image-061...",
+          "wordCount": 65,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5179,8 +5605,22 @@
         {
           "type": "paragraph",
           "content": "If you find it difficult to breathe nasally because of congestion or obstruction in\nyour nose, this exercise is very effective. Please note that holding the breath to\ngenerate a strong hunger for air ...",
-          "wordCount": 194,
-          "sentenceCount": 14,
+          "wordCount": 95,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• After exhaling, pinch your nose and hold your breath. Keep your lips sealed. • Gently nod your head or rock your body until you feel that you cannot hold your breath for\nany longer. You should feel ...",
+          "wordCount": 44,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• At this point, let go of your nose, and breathe in gently through it. Breathe gently in and out\nwith your mouth closed. When you first breathe in, try to avoid taking a deep breath.\nInstead, keep yo...",
+          "wordCount": 55,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -5193,8 +5633,15 @@
         {
           "type": "paragraph",
           "content": "In\ntime, with sustained practice of the breathing exercises and a better BOLT score,\nthe feeling of nasal congestion will dramatically reduce. Until that happens, you\ncan use this exercise whenever yo...",
-          "wordCount": 214,
-          "sentenceCount": 13,
+          "wordCount": 143,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Can you breathe through your nose yet?\nThe rule of thumb is, if you can breathe through your nose for one minute, you\ncan do so for life.\nThis exercise is the same for adults and children. If you ne...",
+          "wordCount": 71,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -5207,15 +5654,36 @@
         {
           "type": "paragraph",
           "content": "The main breathing muscle is called the diaphragm. It is located at the base of\nthe ribs and serves a number of important functions in the human body:\n• It provides postural support and stability for ...",
-          "wordCount": 190,
-          "sentenceCount": 12,
+          "wordCount": 47,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Directions:\nThis exercise can help ease the diaphragm back to its resting position. • Slowly exhale through your nose. Do not force the breath in any way. • As you exhale, gently suck your stomach inw...",
-          "wordCount": 124,
-          "sentenceCount": 8,
+          "content": "• Healthy diaphragm function helps optimal gas exchange take place. • Diaphragm breathing slows the breath.\nIt is important that the diaphragm muscle be able to move freely during\nbreathing. When you ...",
+          "wordCount": 156,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Slowly exhale through your nose. Do not force the breath in any way. • As you exhale, gently suck your stomach inward, almost as if you are “squeezing the air\nout of your stomach.”",
+          "wordCount": 35,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Continue to exhale slowly until you have breathed out all the remaining air from the lungs. • As you exhale, imagine that your diaphragm is moving back up to its resting position.",
+          "wordCount": 33,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Allow the inhalation to happen naturally. • Repeat several times over the course of 10 minutes.\nThis exercise can be used at any time—whether you are suffering from breathing\ndifficulties or not—and...",
+          "wordCount": 43,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -5227,16 +5695,30 @@
         },
         {
           "type": "paragraph",
-          "content": "[[IMG id=image-064-1 index=3 alt=\"Figure 25\"]]\n1. Breathing into Cupped Hands\nAt the first sign of a panic attack, cup your hands across your mouth and nose,\nand gently slow down your breathing. If yo...",
-          "wordCount": 189,
-          "sentenceCount": 11,
+          "content": "[[IMG id=image-064-1 index=3 alt=\"Figure 25\"]] 1. Breathing into Cupped Hands\nAt the first sign of a panic attack, cup your hands across your mouth and nose,\nand gently slow down your breathing. If yo...",
+          "wordCount": 123,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "If this feels okay, you can slow down your breathing a little more,\ninhaling for five seconds and exhaling for five seconds. Place your hands on\nyour sides to feel the ribs gently expanding and contra...",
-          "wordCount": 119,
-          "sentenceCount": 11,
+          "content": "2. Breathe Slow and Deep\n[[IMG id=image-065-1 index=4 alt=\"Figure 26\"]]\nFast and shallow breathing will feed into feelings of suffocation and air\nhunger. To help alleviate air hunger, slow down your b...",
+          "wordCount": 125,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Pinch your nose with your fingers to hold your breath for up to three seconds. Count: 3, 2,\n1 . . . • Let go of your nose and breathe through your nose for 10 to 15 seconds.",
+          "wordCount": 39,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat the sequence for as long as symptoms are present.\n[[IMG id=image-066-1 index=5 alt=\"Figure 27\"]]\n[[IMG id=image-066-2 index=6 alt=\"Figure 28\"]]",
+          "wordCount": 21,
+          "sentenceCount": 1,
           "linkCount": 0
         },
         {
@@ -5249,8 +5731,29 @@
         {
           "type": "paragraph",
           "content": "This exercise can be practiced before you go to sleep. (The procedure and\nevidence for nose breathing during sleep is described in detail in Chapter Seven\non sleep and in the Children’s Exercises sect...",
-          "wordCount": 169,
-          "sentenceCount": 12,
+          "wordCount": 93,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Slow down the speed of air as it enters your nostrils. • Allow the breath out to be slow and relaxed.",
+          "wordCount": 22,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The goal is to breathe softly so that about 30% less air enters your lungs. • You are doing it correctly when you feel a tolerable air hunger.",
+          "wordCount": 29,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• If the air hunger is too much, take a rest for 15 seconds and start again. • Continue the practice for approximately 15 minutes.",
+          "wordCount": 25,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
@@ -5272,9 +5775,9 @@
     {
       "chapterNumber": 5,
       "title": "Section Three: Tailored Breathing Programs for Specific Conditions",
-      "chunkCount": 63,
-      "paragraphCount": 36,
-      "headerCount": 27,
+      "chunkCount": 89,
+      "paragraphCount": 63,
+      "headerCount": 26,
       "chunks": [
         {
           "type": "header",
@@ -5314,22 +5817,57 @@
         {
           "type": "paragraph",
           "content": "Nasal breathing during wakefulness slows and deepens the breath. This may help\nmaintain the strength and function of the breathing muscles and reduce\nbreathlessness. Nasal breathing also harnesses a g...",
-          "wordCount": 196,
-          "sentenceCount": 16,
+          "wordCount": 145,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Release your nose and breathe in through it. • Rest for 30 to 60 seconds. • When breathing is comfortable, repeat. • Practice 5 to 10 repetitions two times per hour during the day. BOLT Score Betwee...",
-          "wordCount": 168,
-          "sentenceCount": 13,
+          "content": "• Exhale gently through your nose. • Pinch your nose with your fingers to hold your breath.\n[[IMG id=image-070-1 index=0 alt=\"Figure 31\"]]",
+          "wordCount": 22,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Follow the guidelines below.) To help decongest the nose, open\nthe airways and improve oxygen delivery to the brain, exhale and hold the breath to create\na medium air hunger (a tolerable feeling that ...",
-          "wordCount": 144,
+          "content": "• Walk for 5 to 10 paces while holding your breath. Take small paces, not great big strides.\nThe aim is not to see how far you can walk. • Release your nose and breathe in through it. • Rest for 30 to...",
+          "wordCount": 51,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Practice 5 to 10 repetitions two times per hour during the day.\nBOLT Score Between 10 and 15 Seconds • Nasal breathe during rest, exercise, and sleep.",
+          "wordCount": 28,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Practice Breathing Recovery, Sitting (exercise #12) for 10 minutes, two times per day (and\nif you experience symptoms such as wheezing, coughing, or chest tightness). • Or Breathing Recovery, Walkin...",
+          "wordCount": 46,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Light (exercise #1) for 10 minutes, three times daily. • Breathe Slow and Deep While Walking (exercise #6) for 10 minutes, daily.\nBOLT Score Greater Than 15 Seconds",
+          "wordCount": 30,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Nasal breathe during rest, exercise, and sleep. • Practise breath holds after an exhalation during your warm-up for 10 to 15 minutes prior to\nphysical exercise. (If you are pregnant or have a seriou...",
+          "wordCount": 107,
           "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Light (exercise #1) for 10 minutes, three times per day. • Breathe Slow and Deep While Walking (exercise #6) for 10 minutes, daily.\nIf you have symptoms such as wheezing, coughing, or chest ...",
+          "wordCount": 79,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5342,8 +5880,15 @@
         {
           "type": "paragraph",
           "content": "There is a strong connection between respiratory chemistry and cyclical\nfluctuations in sex hormones. This means that, if you are female, the way you\nbreathe is strongly affected by the way your hormo...",
-          "wordCount": 164,
-          "sentenceCount": 5,
+          "wordCount": 114,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Reduce headaches and menstrual migraines • Support bone mineral density\nAs your BOLT score increases, you will experience less cyclical\nhyperventilation—and a reduction in associated symptoms. You c...",
+          "wordCount": 50,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
@@ -5355,9 +5900,23 @@
         },
         {
           "type": "paragraph",
-          "content": "• Make sure you breathe only through your nose during rest, physical exercise, and sleep.\n• Track your BOLT score during your monthly cycle. This will give you clues as to how (and\nwhy) your breathing...",
-          "wordCount": 196,
-          "sentenceCount": 11,
+          "content": "• Make sure you breathe only through your nose during rest, physical exercise, and sleep. • Track your BOLT score during your monthly cycle. This will give you clues as to how (and\nwhy) your breathing...",
+          "wordCount": 38,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Is your BOLT score lower during days 10 to 22 of your monthly cycle (between ovulation\nand menstruation)? This may indicate breathing pattern changes due to hormonal\nfluctuations, most notably, an i...",
+          "wordCount": 92,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Light (exercise #1) for 15 to 30 seconds, followed by a rest of 1 minute. Practice\nthis for 10 minutes, three times per day.\nIf your BOLT score is greater than 15 seconds, practice:\n• Breath...",
+          "wordCount": 66,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5397,9 +5956,16 @@
         },
         {
           "type": "paragraph",
-          "content": "During your first trimester, do not practice any reduced breathing exercises.\nInstead, work to prevent hyperventilation with the following steps:\n• Avoid overeating,\n• Avoid overheated environments, a...",
-          "wordCount": 61,
-          "sentenceCount": 4,
+          "content": "During your first trimester, do not practice any reduced breathing exercises.\nInstead, work to prevent hyperventilation with the following steps:\n• Avoid overeating, • Avoid overheated environments, a...",
+          "wordCount": 28,
+          "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Use mindfulness meditations or similar practices to reduce stress.\nDuring this first three-month period, your BOLT score should not increase by\nmore than 2 seconds per week. Progress must be very ge...",
+          "wordCount": 33,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -5426,8 +5992,15 @@
         {
           "type": "paragraph",
           "content": "Functional breathing is helpful for people with both types of diabetes because it\nimproves blood glucose control. There is a link between diabetes and asthma,\nand there is an important correlation bet...",
-          "wordCount": 123,
-          "sentenceCount": 7,
+          "wordCount": 83,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Speak with your medical doctor before undertaking any of the breathing exercises in this\nbook. • Breathing exercises can cause blood sugar to drop. It is therefore important that you\nmonitor your bl...",
+          "wordCount": 40,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -5439,9 +6012,23 @@
         },
         {
           "type": "paragraph",
-          "content": "• Breathe Light (exercise #1) for 10 minutes, two times daily.\n• Breathe Slow (exercise #3) for 10 minutes, three times daily.\n• Breathe Deep (exercise #2) for 10 minutes, once daily.\n• If you have a ...",
-          "wordCount": 147,
-          "sentenceCount": 11,
+          "content": "• Breathe Light (exercise #1) for 10 minutes, two times daily. • Breathe Slow (exercise #3) for 10 minutes, three times daily.",
+          "wordCount": 22,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Deep (exercise #2) for 10 minutes, once daily. • If you have a racing mind, practice the small breath holds exercise, Breathing Recovery\n(exercise #12 or #13).",
+          "wordCount": 29,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe nasally during rest, exercise, and sleep. • When you exercise, keep your mouth closed.\nRemember, you must monitor your blood sugar levels more frequently.\nBreathe Light (exercise #1) to crea...",
+          "wordCount": 96,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
@@ -5467,9 +6054,23 @@
         },
         {
           "type": "paragraph",
-          "content": "• Breathe Light (exercise #1) for 10 minutes, three times daily.\n• Breathe Slow (exercise #3) for 10 minutes, twice daily.\n• Breathe Deep (exercise #2) for 10 minutes, once daily.\n• If you have a raci...",
-          "wordCount": 131,
-          "sentenceCount": 10,
+          "content": "• Breathe Light (exercise #1) for 10 minutes, three times daily. • Breathe Slow (exercise #3) for 10 minutes, twice daily.",
+          "wordCount": 21,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Deep (exercise #2) for 10 minutes, once daily. • If you have a racing mind, practice Breathing Recovery, Sitting or Walking (exercise #12 or\n#13). • Breathe nasally during rest, exercise, an...",
+          "wordCount": 43,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe nasally during sleep. If you use a lip tape to help ensure nasal breathing during\nsleep, do not place the tape directly across your lips. Instead, use a support like MyoTape\nwhich surrounds ...",
+          "wordCount": 67,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5495,9 +6096,16 @@
         },
         {
           "type": "paragraph",
-          "content": "• Slow breathing to an average of six breaths per minute.\n• Breathe Light (exercise #1) to create air hunger, for 10 minutes, twice daily.\n• Breathe Light, Breathe Slow, Breathe Deep (exercises #1–3) ...",
-          "wordCount": 45,
-          "sentenceCount": 3,
+          "content": "• Slow breathing to an average of six breaths per minute. • Breathe Light (exercise #1) to create air hunger, for 10 minutes, twice daily.",
+          "wordCount": 25,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Light, Breathe Slow, Breathe Deep (exercises #1–3) for 10 minutes four times\ndaily, or 20 minutes twice daily.",
+          "wordCount": 20,
+          "sentenceCount": 1,
           "linkCount": 0
         },
         {
@@ -5523,44 +6131,72 @@
         },
         {
           "type": "paragraph",
-          "content": "To enjoy a restful night’s sleep, it is important to practice good sleep hygiene. Most of us know that this involves less screen time and alcohol just before bed,\nbut many of us resist the idea, becau...",
-          "wordCount": 189,
-          "sentenceCount": 11,
+          "content": "To enjoy a restful night’s sleep, it is important to practice good sleep hygiene.\nMost of us know that this involves less screen time and alcohol just before bed,\nbut many of us resist the idea, becau...",
+          "wordCount": 114,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Enjoy a glass with dinner, but then set it\naside to give your body time to digest. If you regularly drink late into the evening, you will\nfeel noticeably less groggy in the morning if you give it a mi...",
-          "wordCount": 191,
+          "content": "• If you spend all day in front of a computer screen, you may find that wearing blue light\nfiltering glasses throughout your working day helps you sleep and relieves eyestrain and\nheadaches. • If you ...",
+          "wordCount": 55,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Your bedroom should be cool, airy, silent, and dark. • Don’t eat or drink alcohol late in the evening. Enjoy a glass with dinner, but then set it\naside to give your body time to digest. If you regul...",
+          "wordCount": 166,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Light (exercise #1) to achieve air hunger for 15 minutes before sleep. • Breathe Light (exercise #1) for 10 minutes, three times daily.",
+          "wordCount": 25,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Slow (exercise #3) for 10 minutes, twice daily. • Breathe Deep (exercise #2) for 10 minutes, once daily.\nIf you frequently wake up after four or five hours of sleep:\nWaking up after a few ho...",
+          "wordCount": 77,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Bring attention to your breathing to help calm racing thoughts. • Breathe Light and Slow to help activate your body’s relaxation response (exercise #1).",
+          "wordCount": 25,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Once your BOLT score is greater than 20 seconds, air turbulence in your nose and throat\nwill reduce. You will sleep more deeply and be less likely to wake during the night. Snoring\nMouth snoring is ...",
+          "wordCount": 195,
           "sentenceCount": 12,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "If you frequently wake up after four or five hours of sleep:\nWaking up after a few hours of sleep is challenging—not quite fully alert to get\nup and start the day, yet not tired enough to fall back as...",
-          "wordCount": 195,
+          "content": "Now, try and snore when your breathing is light\nand slow. You will find it more difficult. Snoring is not solely due to a compromised nasal airway. Breathing patterns\ncan also play a role. Having a lo...",
+          "wordCount": 129,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Now, try and snore when your breathing is light\nand slow. You will find it more difficult. Snoring is not solely due to a compromised nasal airway. Breathing patterns\ncan also play a role. Having a lo...",
+          "wordCount": 148,
           "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "To illustrate the impact of faster and harder breathing during nasal snoring, I\noften ask my students to make the sound of a snore through the nose. To do this,\nit is normal to tighten the throat at t...",
-          "wordCount": 211,
-          "sentenceCount": 14,
-          "linkCount": 0
-        },
-        {
-          "type": "header",
-          "content": "To significantly reduce nasal snoring:",
-          "wordCount": 5,
-          "sentenceCount": 1,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "• Decongest your nose using the nose unblocking exercise (exercise #14).\n• Restore nasal breathing during wakefulness and sleep.\n• Reduce the flow of breathing by using Breathe Light (exercise #1) for...",
-          "wordCount": 81,
-          "sentenceCount": 6,
+          "content": "• Reduce the flow of breathing by using Breathe Light (exercise #1) for 10 minutes, four\ntimes a day. • Increase your BOLT score to above 20 seconds.\nFor many people, nasal snoring can be eliminated a...",
+          "wordCount": 62,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5586,9 +6222,30 @@
         },
         {
           "type": "paragraph",
-          "content": "• Breathe only through your nose during rest, physical exercise, and sleep.\n• Adopt the correct tongue resting posture. Three quarters of your tongue should rest in the\nroof of your mouth, with the ti...",
-          "wordCount": 161,
-          "sentenceCount": 13,
+          "content": "• Breathe only through your nose during rest, physical exercise, and sleep. • Adopt the correct tongue resting posture. Three quarters of your tongue should rest in the\nroof of your mouth, with the ti...",
+          "wordCount": 57,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Achieve a minimum BOLT score of 25 seconds. • Practice Breathe Light (exercise #1) for 15 minutes, twice daily. Schedule one session just\nafter waking and another session before sleep.",
+          "wordCount": 31,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Slow and Deep While Walking (exercise #6) for 20 minutes, once per day. • Tape your mouth closed to sleep using MyoTape. If you feel anxious about wearing tape\naround your mouth, wear the ta...",
+          "wordCount": 47,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• If your mouth is naturally moist in the morning, there is no need for the tape. A dry mouth\nsignifies open mouth breathing during sleep.",
+          "wordCount": 26,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
@@ -5622,8 +6279,15 @@
         {
           "type": "paragraph",
           "content": "If you feel a panic attack coming on, there are three exercises you can use to\nhelp stop it in its tracks. These exercises are also helpful in calming a racing\nmind:\n1. Breathing Recovery (exercise #1...",
-          "wordCount": 139,
-          "sentenceCount": 11,
+          "wordCount": 70,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "3. Switch your breathing from fast and shallow to slow and deep. You can do this by placing\nyour hands on your trunk either side of your lower ribs so that you can feel the expansion\nand contraction o...",
+          "wordCount": 69,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -5636,8 +6300,15 @@
         {
           "type": "paragraph",
           "content": "If the feeling of air hunger brings on a strong fear response, regular practice of\nthe following short exercises will help desensitize your body’s reaction to the\nfeeling of air hunger:\nBreathing Reco...",
-          "wordCount": 172,
-          "sentenceCount": 10,
+          "wordCount": 116,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe Slow (exercise #3) for 10 minutes, two times daily. If your BOLT score is less than\n15 seconds, practice a 3-second inhale and a 3-second exhale. If your BOLT score is\ngreater than 15 second...",
+          "wordCount": 56,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5671,15 +6342,29 @@
         {
           "type": "paragraph",
           "content": "1. Breathing Recovery, Sitting (#12) for 10 minutes every hour. Also practice this exercise if\nthe nose feels congested. It is important to hold your breath for no longer than half your\nBOLT score at ...",
-          "wordCount": 191,
-          "sentenceCount": 18,
+          "wordCount": 91,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "If you\npractice intensive breath holds, headaches can occur due to increased CO 2 in the\nblood. Generally, the headache will subside fairly quicky. If you do experience a headache, reduce the intensit...",
-          "wordCount": 50,
-          "sentenceCount": 4,
+          "content": "• If you are comfortable with this, inhale slowly through your nose for 5 seconds. • Exhale slowly through your nose for 5 seconds.",
+          "wordCount": 24,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• As you breathe in, feel your lower ribs gently moving outward. • As you breathe out, feel your lower ribs gently moving inward.",
+          "wordCount": 24,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Practice for 5 minutes, 5 times a day. 3. Breathe only through your nose, day and night. Wear MyoTape to keep your mouth closed\nduring sleep. MyoTape is particularly suitable in this instance as it ...",
+          "wordCount": 102,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -5722,8 +6407,8 @@
     {
       "chapterNumber": 7,
       "title": "Section Five: Stress and Relax Body and Mind",
-      "chunkCount": 49,
-      "paragraphCount": 32,
+      "chunkCount": 58,
+      "paragraphCount": 41,
       "headerCount": 17,
       "chunks": [
         {
@@ -5757,8 +6442,29 @@
         {
           "type": "paragraph",
           "content": "This exercise is to be performed to a comfortable air hunger only.\nThe objectives are to experience a light to medium hunger for air (depending\non your BOLT score) and to prepare for stronger breath h...",
-          "wordCount": 170,
-          "sentenceCount": 13,
+          "wordCount": 63,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Stop walking and release your nose. Breathe in through your nose and resume gentle\nbreathing in and out of your nose. • Wait for 30 to 60 seconds and repeat.",
+          "wordCount": 31,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• And again, take a normal breath in and out through your nose. Pinch your nose with your\nfingers and walk 10 to 15 paces while holding your breath. • Stop walking and release your nose. Breathe in th...",
+          "wordCount": 51,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Wait for 30 to 60 seconds and repeat. • Repeat the exercise five times. [[IMG id=image-090-1 index=0 alt=\"Figure 36\"]]\n[[IMG id=image-091-1 index=1 alt=\"Figure 37\"]]",
+          "wordCount": 25,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
@@ -5770,30 +6476,51 @@
         },
         {
           "type": "paragraph",
-          "content": "When you hold your breath to create a strong air hunger following a passive\nexhalation, several things happen. 1. The breath hold causes a disturbance to the blood’s acid-base balance. As the breath i...",
-          "wordCount": 182,
-          "sentenceCount": 15,
+          "content": "When you hold your breath to create a strong air hunger following a passive\nexhalation, several things happen. 1. The breath hold causes a disturbance to the blood’s acid-base balance.\nAs the breath i...",
+          "wordCount": 91,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "When you hold your breath until a strong air hunger is experienced, you expose\nyour body to short-term stress. This is beneficial because it causes the body to\nmake adaptations that improve the functi...",
-          "wordCount": 169,
-          "sentenceCount": 9,
+          "content": "2. The breath hold strengthens the breathing muscles.\nThis combination of high CO 2 (hypercapnia) and low blood oxygen saturation\n(hypoxia), along with the sensation of discomfort in the diaphragm, ca...",
+          "wordCount": 294,
+          "sentenceCount": 16,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The exercise causes the following effects:\n• Creates a medium to strong hunger for air\n• Activates the diaphragm\n• Improves respiratory muscle strength\n• Improves immune function\n• Reduces the percept...",
-          "wordCount": 197,
-          "sentenceCount": 12,
+          "content": "• Greatly disturbs blood gases (hypoxic/hypercapnic response) to improve aerobic and\nanaerobic capacity • Generates anaerobic glycolysis without the need to perform intense physical exercise • Reduces...",
+          "wordCount": 44,
+          "sentenceCount": 0,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Just breathe in enough air to fill the nostrils and no more. Take hardly any air into your\nlungs for six breaths or so. • And now breathe normally for 12 to 18 breaths. Allow your breathing to recover...",
-          "wordCount": 51,
-          "sentenceCount": 6,
+          "content": "• Acts as a measure of the upper limit of breathlessness\nThis exercise is ONLY SUITABLE for those in good health.\n[[IMG id=image-093-1 index=2 alt=\"Figure 38\"]]\nDirections:\n• Take a normal breath in a...",
+          "wordCount": 64,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Relax into the muscle contractions.\n[[IMG id=image-094-1 index=3 alt=\"Figure 39\"]] • When the air hunger is moderate to strong, let go of your nose, and breathe in through the\nnose.",
+          "wordCount": 31,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Walk a few paces and stop. • Practice minimal breathing for six breaths. Take very short breaths in and out of the nose.\nJust breathe in enough air to fill the nostrils and no more. Take hardly any ...",
+          "wordCount": 48,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• And now breathe normally for 12 to 18 breaths. Allow your breathing to recover. • Following 18 normal breaths, repeat the exercise. • Repeat five times.",
+          "wordCount": 27,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -5917,16 +6644,16 @@
         },
         {
           "type": "paragraph",
-          "content": "One concept universally found in traditional yoga breathing (Pranayama and\nTibetan yoga breathing) is the balance of opposites. This ancient principle is relevant today. These are breathing techniques...",
-          "wordCount": 196,
-          "sentenceCount": 13,
+          "content": "One concept universally found in traditional yoga breathing (Pranayama and\nTibetan yoga breathing) is the balance of opposites.\nThis ancient principle is relevant today. These are breathing techniques...",
+          "wordCount": 41,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "To illustrate these differences, let’s take a look at two ancient breathing\ntechniques. One is from traditional Pranayama and the other from Tibet. These\nexercises use hyperventilation balanced with b...",
-          "wordCount": 55,
-          "sentenceCount": 4,
+          "content": "• Focus on keeping the breath to a minimum. • Involve not breathing at all for periods of time.\nAs with different strands of yoga, these methods can attract followers who are\nalmost evangelical in the...",
+          "wordCount": 210,
+          "sentenceCount": 14,
           "linkCount": 0
         },
         {
@@ -6001,9 +6728,16 @@
         },
         {
           "type": "paragraph",
-          "content": "What Leo suggests is a concept linked to hormetic stress using breathing\nexercises that work along the three dimensions of breathing patterns: 17\n1. The biochemical dimension—alters CO 2 levels in the...",
-          "wordCount": 64,
-          "sentenceCount": 6,
+          "content": "What Leo suggests is a concept linked to hormetic stress using breathing\nexercises that work along the three dimensions of breathing patterns: 17 1. The biochemical dimension—alters CO 2 levels in the...",
+          "wordCount": 44,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "2. The psychological dimension—activates both the sympathetic and parasympathetic\nnervous systems. 3. The biomechanical dimension—practices both deep and shallow breathing.",
+          "wordCount": 20,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -6016,15 +6750,29 @@
         {
           "type": "paragraph",
           "content": "This breathing exercise takes its name from its dual action on the metabolism—\ncatabolic (CAT) and anabolic (ANA). It isn’t necessary to understand what these\nterms mean, only that the practice is a f...",
-          "wordCount": 197,
-          "sentenceCount": 16,
+          "wordCount": 132,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "During this phase, contract your pelvic floor muscles and bring your navel in\ntoward your spine. • When you can’t hold your breath any longer, exhale as slowly as possible and resume\nbreathing as slow...",
-          "wordCount": 112,
+          "content": "• After these six breaths, inhale and hold your breath for five seconds with full lungs.\nRelease on the exhalation, naturally letting the exhaled breath out. • Hold your breath after the exhale. At th...",
+          "wordCount": 45,
           "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Take a deep and slow inhale, and, at the top, hold your breath again for as long as\npossible. During this phase, contract your pelvic floor muscles and bring your navel in\ntoward your spine. • When ...",
+          "wordCount": 62,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat the entire exercise up to five times.\n[[IMG id=image-101-1 index=6 alt=\"Figure 42\"]] • When you are comfortable with the exercise, you can add a final element to finish. This\nelement integrat...",
+          "wordCount": 70,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -6074,8 +6822,8 @@
     {
       "chapterNumber": 8,
       "title": "Section Six: Exercises for Children",
-      "chunkCount": 22,
-      "paragraphCount": 15,
+      "chunkCount": 27,
+      "paragraphCount": 20,
       "headerCount": 7,
       "chunks": [
         {
@@ -6108,9 +6856,23 @@
         },
         {
           "type": "paragraph",
-          "content": "Using the cat and mouse story, follow these instructions with your child:\n• Ask your child to sit down with good posture. • Now, it’s time to relax and become as soft and wobbly as jelly. • Place a fi...",
-          "wordCount": 129,
-          "sentenceCount": 8,
+          "content": "Using the cat and mouse story, follow these instructions with your child:\n• Ask your child to sit down with good posture.",
+          "wordCount": 22,
+          "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Now, it’s time to relax and become as soft and wobbly as jelly. • Place a finger under your child’s nose to monitor airflow.",
+          "wordCount": 25,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Next, the child should try to breathe so gently that the breathing is silent, with no\nmovement from the chest or tummy. • This reduction in breathing will create a feeling of air hunger. Your child ...",
+          "wordCount": 82,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -6138,14 +6900,21 @@
           "type": "paragraph",
           "content": "Small children (four to six years) can be introduced to the Steps Exercise by\nwalking a short distance of only five paces or so with the breath held. It can be\nuseful to ask another adult or an older ...",
           "wordCount": 192,
-          "sentenceCount": 10,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• After an exhalation, pinch your nostrils closed with your fingers to hold the breath. • With the breath held, walk the five-pace distance between your two helpers. • Let go of the nose and resume ge...",
-          "wordCount": 51,
-          "sentenceCount": 4,
+          "content": "• After an exhalation, pinch your nostrils closed with your fingers to hold the breath. • With the breath held, walk the five-pace distance between your two helpers.",
+          "wordCount": 28,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Let go of the nose and resume gentle nasal breathing. • Wait for between 30 and 60 seconds and repeat the exercise.",
+          "wordCount": 23,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
@@ -6228,8 +6997,22 @@
         {
           "type": "paragraph",
           "content": "If you would like to explore further ways to explain the concept of breathing\nlight and the Steps Exercise to your child, many people have found my book\nButeyko Meets Dr. Mew to be a useful aid in tea...",
-          "wordCount": 197,
-          "sentenceCount": 13,
+          "wordCount": 49,
+          "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Ask your child to wear MyoTape across the lips for at least half an hour each day. It is best\nto do this when the child is distracted. • Use games to introduce the techniques to small children. Be a...",
+          "wordCount": 45,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Start by practicing the Steps Exercise for beginners. • Practice the Steps while walking, jogging, or running. Do this for six repetitions, two to\nthree times a day.\nAs you will discover in Chapter ...",
+          "wordCount": 103,
+          "sentenceCount": 7,
           "linkCount": 1
         }
       ]
@@ -6237,8 +7020,8 @@
     {
       "chapterNumber": 9,
       "title": "How to Breathe",
-      "chunkCount": 51,
-      "paragraphCount": 40,
+      "chunkCount": 57,
+      "paragraphCount": 46,
       "headerCount": 11,
       "chunks": [
         {
@@ -6286,8 +7069,15 @@
         {
           "type": "paragraph",
           "content": "• The slower nasal exhalation gives the lungs more time to extract the oxygen. When this\noptimal blood gas exchange occurs, carbon dioxide (CO 2 ) is processed properly, and\nblood pH remains balanced....",
-          "wordCount": 142,
-          "sentenceCount": 7,
+          "wordCount": 75,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The air passes through the nose, which houses the olfactory bulbs. Those are connected\nto the hypothalamus, the part of the brain linked to many automatic functions such as\nheartbeat, blood pressure...",
+          "wordCount": 67,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -6454,8 +7244,22 @@
         {
           "type": "paragraph",
           "content": "Before you read any further, try this exercise to see just how effective it is for\nclearing your nose. The exercise is the same for adults and children. This\nexercise is not suitable for women who are...",
-          "wordCount": 189,
-          "sentenceCount": 16,
+          "wordCount": 45,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Normalize your breathing and breathe calmly. Take a small, light breath in through your\nnose if you can and a small breath out through your nose. If you are unable to inhale\nthrough your nose, take ...",
+          "wordCount": 61,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Gently nod your head or rock your body until you feel that you cannot hold your breath any\nlonger. You should feel a relatively strong need for air. • At this point, let go of your nose, and breathe...",
+          "wordCount": 83,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
@@ -6517,22 +7321,36 @@
         {
           "type": "paragraph",
           "content": "The trial used a graded exercise test to examine performance,\nbreathing rate, oxygen uptake, and breathing efficiency at VO 2 max. VO 2 max is\nmaximum oxygen consumption during intense exercise. It is...",
-          "wordCount": 186,
+          "wordCount": 67,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• End-tidal CO 2 was significantly higher in nose breathing than mouth breathing (44.7 mmHg\nvs 40.2 mmHg). • Ventilation (volume of breathing) was reduced by 22% in nasal breathing.",
+          "wordCount": 30,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Nose breathing resulted in lower end-tidal oxygen pressure and a lower percentage of\noxygen in expired air, indicating that more oxygen was removed from the air by the lungs\nduring nasal breathing. ...",
+          "wordCount": 198,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The 22% reduction in\nventilation meant that breathing required less effort and the muscles of the\nrespiratory system didn’t have to work as hard. Achieving the same intensity\nwith 22% less breathing r...",
-          "wordCount": 190,
-          "sentenceCount": 10,
+          "content": "To limit air hunger during physical exercise, work to achieve a higher\nBOLT score and breathe light, slow, and deep (LSD):\n• Light: Only breathe the volume of air that you need (don’t overbreathe).",
+          "wordCount": 34,
+          "sentenceCount": 1,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "If the air hunger is so strong that you need to\nopen your mouth, simply slow down and allow your breathing to calm. By\nbreathing nasally throughout, you should finish your workout feeling relaxed\nand ...",
-          "wordCount": 43,
-          "sentenceCount": 2,
+          "content": "• Slow: Reduce your respiratory rate. • Deep: Breathe with greater amplitudes of diaphragm movement.\nIf you are healthy and exercising at the appropriate level to improve your\naerobic fitness, you sho...",
+          "wordCount": 90,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -6559,8 +7377,15 @@
         {
           "type": "paragraph",
           "content": "It is best for competitive athletes to alternate nasal breathing with mouth\nbreathing. High-intensity training helps prevent muscle deconditioning and will\nrequire an athlete to periodically breathe t...",
-          "wordCount": 172,
-          "sentenceCount": 12,
+          "wordCount": 108,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• During competition, there is no need to intentionally take bigger breaths. Instead, achieve\na higher BOLT score and apply the OA precompetition preparation. (You can find this in\nChapter Two.) • Nas...",
+          "wordCount": 64,
+          "sentenceCount": 6,
           "linkCount": 1
         },
         {
@@ -6603,8 +7428,8 @@
     {
       "chapterNumber": 10,
       "title": "The Vagus Nerve and the Heart-Breath-Brain Connection",
-      "chunkCount": 85,
-      "paragraphCount": 68,
+      "chunkCount": 86,
+      "paragraphCount": 69,
       "headerCount": 17,
       "chunks": [
         {
@@ -7156,22 +7981,29 @@
         {
           "type": "paragraph",
           "content": "HRVB gives\nyou the tools to take back control, to change gear when you need to. One of the\ntechniques used for this is breathwork. Dr. Wiles explained that while the HRVB studies discussed earlier got...",
-          "wordCount": 190,
-          "sentenceCount": 8,
+          "wordCount": 110,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Simply switching to nasal breathing will\ninfluence HRV, whether or not you engage in diaphragm breathing or work to\nslow the cadence of your breath. To illustrate this, Dr. Wiles described how free\ndi...",
-          "wordCount": 199,
-          "sentenceCount": 11,
+          "content": "• Deep breathing\nIn fact, even without biofeedback, by using the exercises in this book, you are\nalready training your HRV. Biofeedback tools come in useful when you want to\nsee exactly what is happen...",
+          "wordCount": 195,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The connection\nbetween CO 2 , HRV, and vagal tone is the reason you feel relaxed when you\nengage in light, slow breathing. From a biochemical perspective, light, slow\nbreathing, and hypercapnia also r...",
-          "wordCount": 191,
-          "sentenceCount": 8,
+          "content": "This is because the body perceives stress\nand responds accordingly. As you practice, the body will adapt. Interestingly,\nwhat often happens after the practice is that, even when HRV has dipped, when\ny...",
+          "wordCount": 182,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "If you have\nthe opportunity to do so, it can be immensely valuable to work with a\nprofessional breathing instructor who can demonstrate how HRV changes as you\nalter the biochemistry, biomechanics, and...",
+          "wordCount": 93,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -7587,8 +8419,8 @@
     {
       "chapterNumber": 12,
       "title": "When Breathing Makes You Hurt",
-      "chunkCount": 40,
-      "paragraphCount": 33,
+      "chunkCount": 41,
+      "paragraphCount": 34,
       "headerCount": 7,
       "chunks": [
         {
@@ -7846,29 +8678,36 @@
         {
           "type": "paragraph",
           "content": "Problems in the three dimensions of breathing can lead to a variety of painful\npostural adaptations. In 1992, Yale University Professor Emeritus Manohar\nPanjabi suggested another way to understand spi...",
-          "wordCount": 196,
-          "sentenceCount": 10,
+          "wordCount": 79,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "In this instance, the neural subsystem works to\nalter recruitment of muscles to temporarily “supercharge” spinal stability. Significant evidence indicates how altered breathing patterns can negatively...",
-          "wordCount": 198,
+          "content": "3. The neural subsystem—the nerves and central nervous system, which assesses what is\nneeded for spinal stability by monitoring signals and directs the active subsystem to\nprovide that stability 51\nDy...",
+          "wordCount": 195,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "This\ndisrupts the way the brain receives and processes information and can impact\npostural control. Remember, diaphragm function is a key aspect of spinal\nstability through the creation of IAP. The di...",
-          "wordCount": 199,
-          "sentenceCount": 12,
+          "content": "This triggers changes in the nervous system\nand the way it moderates input from the eyes and ears, and negatively impacts\npostural control. 52 Breathing exercises that normalize levels of blood CO 2 h...",
+          "wordCount": 192,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "An overactive stress response makes the\nbody more sensitive to touch and increases perception of pain. 55 Also, when\nbreathing is predominantly into the upper chest, as it is when the diaphragm is\nnot...",
-          "wordCount": 167,
-          "sentenceCount": 8,
+          "content": "By practicing diaphragm breathing through the nose, you will increase\noxygenation and gain better postural support of the spine and pelvis. Cadence: A paper from 2020 reported that paced diaphragm bre...",
+          "wordCount": 197,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "When treating musculoskeletal pain, it is important to look at the problem\nholistically. Trigger points can be deactivated with manual therapy. Pain in the\nspine and joints can be viewed in terms of m...",
+          "wordCount": 97,
+          "sentenceCount": 5,
           "linkCount": 0
         }
       ]
@@ -7876,8 +8715,8 @@
     {
       "chapterNumber": 13,
       "title": "Sleep-Disordered Breathing",
-      "chunkCount": 71,
-      "paragraphCount": 57,
+      "chunkCount": 76,
+      "paragraphCount": 62,
       "headerCount": 14,
       "chunks": [
         {
@@ -7897,15 +8736,22 @@
         {
           "type": "paragraph",
           "content": "This all\nchanged after I learned to decongest and breathe through my nose and to slow\ndown my breathing. Two days after switching to nasal breathing during sleep, I\nexperienced what it was like to wak...",
-          "wordCount": 186,
-          "sentenceCount": 6,
+          "wordCount": 109,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "A low BOLT score corresponds with strenuous, upper chest breathing and\nwill result in many of the symptoms listed above. If you would like to sleep better and wake up feeling energized and\nrefreshed, ...",
-          "wordCount": 95,
+          "content": "• Nighttime asthma symptoms (usually around 3 a.m. to 5 a.m.) • Needing to use the bathroom during the night • Bed-wetting in children • Fatigue first thing in the morning",
+          "wordCount": 31,
           "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Dry mouth • Symptoms upon waking, such as wheezing, coughing, breathlessness, or a stuffy nose\nIf you or your child commonly experiences one or more of these, it is likely that\nyou already know how ...",
+          "wordCount": 141,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -7988,50 +8834,50 @@
         {
           "type": "paragraph",
           "content": "25,26 This means that people with sleep apnea may be at\nhigher risk of depression because of the comorbid insomnia symptoms. It makes\nsense, then, that some patients with a primary diagnosis of depres...",
-          "wordCount": 187,
+          "wordCount": 145,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• If the emotions are high, you may have difficulty falling asleep or suffer from insomnia, and\nbreathing will be fast, in the upper chest and effortful. Poor breathing is closely linked with stress a...",
+          "wordCount": 197,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "27 This\ncontrasts with the practice of slow, conscious, controlled breathing, which is\nknown to promote relaxation via the PNS and is effective in treating stress\ndisorders. 27\nThis would seem to tie ...",
+          "wordCount": 186,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "The good news is that disturbed or inadequate sleep is frequently\nconnected to the way you breathe at night, and that is something I can help you\nchange. DOES COUNTING SHEEP HELP? Insomnia can manifes...",
+          "wordCount": 186,
+          "sentenceCount": 11,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "The\nmind is sufficiently alert to wander, but too groggy to get you out of bed. You\ncan end up lying there for hours, worrying about how tired you will be when you\neventually have to get up in the mor...",
+          "wordCount": 194,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "33 They were asked to spend\ntwo minutes picturing this scene in as much detail as possible. It was found that\nthis task helped people fall asleep more quickly. If counting sheep works for you, great, ...",
+          "wordCount": 193,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "This is one reason why people with asthma are also more likely to\nexperience higher levels of anxiety and fatigue. Another factor that contributes to insomnia is fast breathing during\nwakefulness. 27 ...",
-          "wordCount": 182,
-          "sentenceCount": 7,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "27\nThis would seem to tie in with the theory that insomnia may be caused by\nhyperarousal during wakefulness, and that an overactive sympathetic nervous\nsystem may contribute to the problem. An earlier...",
-          "wordCount": 191,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Insomnia can manifest in two different ways: difficulty falling asleep and\nwaking suddenly after four or five hours’ sleep. If you struggle to get to sleep, practice Breathe Light exercises during the...",
-          "wordCount": 195,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "In both types of insomnia, the practice of “counting sheep” has historically\nbeen considered helpful. The idea is to count one imaginary sheep after another\nas they jump across a fence in your mind’s ...",
-          "wordCount": 182,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "If counting sheep works for you, great, but if you struggle with visual\nimagery, cognitive tasks such as complex mental arithmetic problems also\nimprove sleep latency by preventing the brain from enga...",
-          "wordCount": 187,
-          "sentenceCount": 11,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "As you go about your day, make\nit a habit to bring attention to your breathing for short periods. It is more\nImportant to do this regularly throughout the day, than it is to be able to sustain\nthe att...",
-          "wordCount": 44,
-          "sentenceCount": 2,
+          "content": "It is normal for the mind to wander. When it does, quietly bring your attention to\nyour breath. This becomes easier with practice. As you go about your day, make\nit a habit to bring attention to your ...",
+          "wordCount": 67,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -8058,36 +8904,36 @@
         {
           "type": "paragraph",
           "content": "If you wake up with a dry mouth in the morning, indicating that you have\nbeen breathing through an open mouth, a support such as MyoTape can be very\neffective for maintaining lip closure during sleep....",
-          "wordCount": 143,
-          "sentenceCount": 6,
+          "wordCount": 189,
+          "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "36 Aside\nfrom the apneas themselves, symptoms that indicate OSA may include:\n• Daytime tiredness\n• Limited ability to concentrate\n• Sudden awakening, sometimes with a racing heart or feeling of breath...",
+          "content": "• Waking with a headache • Impotence and erectile dysfunction in men 36,37\nWhen we inhale, air is drawn into the lungs, producing negative suction\npressure in the upper airways. During the day, our up...",
+          "wordCount": 121,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The epiglottis may close the airway 39\nTo really visualize how breathing stops during sleep, I find it helpful to use\nthe analogy of a paper straw. If you place one end of a straw into your mouth an...",
+          "wordCount": 183,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "As the diaphragm contracts to draw air into the lungs, this\nfurther increase in negative pressure reinforces the inability to breathe. Eventually, the oxygen saturation of the blood becomes low enough...",
           "wordCount": 195,
-          "sentenceCount": 4,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "If you place one end of a straw into your mouth and\nsuck air forcefully through it, the walls of the straw will collapse. If you then\ncontinue trying to inhale through the straw once it has collapsed,...",
-          "wordCount": 176,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Eventually, the oxygen saturation of the blood becomes low enough to partially\nwake the brain, and the sleeper starts breathing again with a loud gasp, followed\nby a series of heavy and intense breath...",
-          "wordCount": 188,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Bearing in mind the percentage of road traffic accidents that are related to\ndriver fatigue, sleep studies should not be a deterrent to drivers getting help. The\nresults of a 2020 study suggested that...",
-          "wordCount": 177,
-          "sentenceCount": 9,
+          "content": "Upon hearing this, he naturally turned around and walked\nstraight back out the door. Bearing in mind the percentage of road traffic accidents that are related to\ndriver fatigue, sleep studies should n...",
+          "wordCount": 191,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -8114,29 +8960,29 @@
         {
           "type": "paragraph",
           "content": "Polysomnography involves monitoring both sleep and respiration, with the\nprimary measure being the number of apneas and hypopneas per hour of sleep. An apnea is categorized as a total collapse of the ...",
-          "wordCount": 191,
+          "wordCount": 146,
           "sentenceCount": 5,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "48 Apneas and hypopneas\nhave fundamentally different effects on the individual, but the index does not\ndifferentiate between the two. It could be argued that an apnea, which involves\ncomplete collapse...",
-          "wordCount": 194,
-          "sentenceCount": 8,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "Newer procedures involve widening the airways, either with the\nuse of oral appliances or by bringing the lower jaw forward with surgery—a\nprocedure called mandibular advancement. More recently, hypogl...",
-          "wordCount": 189,
+          "content": "• Severe sleep apnea: more than 30 respiratory events per hour\nWhile the apnea hypopnea index (AHI) is the measurement of choice for\nmost sleep clinics, it is not without its limitations and should, a...",
+          "wordCount": 199,
           "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "54 People with sleep\napnea spend more time breathing orally and oronasally than people who snore. A\nstrong relationship exists between the AHI (which indicates the severity of sleep\napnea) and time sp...",
-          "wordCount": 71,
-          "sentenceCount": 4,
+          "content": "Finally, the AHI correlates poorly with the key causes and\nconsequences of the disease. 49,50\nTraditional treatment of OSA normally focuses on the use of a CPAP\nmachine (continuous positive airway pre...",
+          "wordCount": 168,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Over the years, I have\nseen many individuals reduce their AHI to near normal levels simply by\napplying the breathing exercises in this book, practicing nasal breathing day and\nnight, maintaining a cor...",
+          "wordCount": 132,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
@@ -8211,9 +9057,16 @@
         },
         {
           "type": "paragraph",
-          "content": "You can do this while watching some light television or relaxing in bed.\n• Place one hand on your chest and one hand on your abdomen.\n• Gently soften and slow down your breathing to create a slight hu...",
-          "wordCount": 70,
-          "sentenceCount": 6,
+          "content": "You can do this while watching some light television or relaxing in bed. • Place one hand on your chest and one hand on your abdomen.",
+          "wordCount": 26,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Gently soften and slow down your breathing to create a slight hunger for air. • Continue the practice for approximately 15 minutes.\nThis is an excellent way to help with SDB. It also promotes relaxa...",
+          "wordCount": 44,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -8352,15 +9205,36 @@
         {
           "type": "paragraph",
           "content": "This is in addition to the stringent rules and regulations\nemployed by the industry, which ensure that our rosters are compiled and\nmanaged safely. Since discovering breathwork, and its convincing ben...",
-          "wordCount": 193,
-          "sentenceCount": 10,
+          "wordCount": 144,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Trying to be as consistent as I can and staying on a fixed “home time-zone” as best as\npossible. My real-time breathwork practices during flights include:\n• Box breathing using small breath holds af...",
-          "wordCount": 155,
-          "sentenceCount": 8,
+          "content": "• A sleep hygiene routine consisting of a dark room, eye shades, and ear plugs. • Presleep breathing exercises or meditation, to relax and activate the parasympathetic\nresponse. These include long dee...",
+          "wordCount": 44,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Keeping hydrated before bed. • Trying to be as consistent as I can and staying on a fixed “home time-zone” as best as\npossible.\nMy real-time breathwork practices during flights include:\n• Box breath...",
+          "wordCount": 51,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Long slow and deep cycles of breathing, using the diaphragm, which is pretty much a\nhabit now anyway. • Consistent nose breathing to ensure maximum oxygen uptake.",
+          "wordCount": 28,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• These techniques are essential during flights because we operate in a low oxygen\nenvironment of poor quality recirculated air. The exercises have obvious benefits not\nonly for the operating crew, bu...",
+          "wordCount": 81,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -8372,7 +9246,7 @@
         },
         {
           "type": "paragraph",
-          "content": "• Any breathwork I feel like doing that emphasizes nasal and diaphragmatic breathing. I\nespecially like to practice this before bed.\n• Focusing on parasympathetic recovery and lowering my arousal leve...",
+          "content": "• Any breathwork I feel like doing that emphasizes nasal and diaphragmatic breathing. I\nespecially like to practice this before bed. • Focusing on parasympathetic recovery and lowering my arousal leve...",
           "wordCount": 158,
           "sentenceCount": 11,
           "linkCount": 0
@@ -8382,8 +9256,8 @@
     {
       "chapterNumber": 14,
       "title": "Developing Healthy Airways in Children",
-      "chunkCount": 73,
-      "paragraphCount": 61,
+      "chunkCount": 75,
+      "paragraphCount": 63,
       "headerCount": 12,
       "chunks": [
         {
@@ -8837,22 +9711,36 @@
         {
           "type": "paragraph",
           "content": "It is important to monitor your child for signs of mouth breathing. Take the\nopportunity to observe the breathing when your child is concentrating on\nhomework, watching TV, or sleeping. It can be help...",
-          "wordCount": 199,
+          "wordCount": 178,
           "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• Does your child hold his or her breath during sleep? • Does your child have a stuffy nose on waking, or complain about his or her mouth being\ndry? • Do you hear your child snoring? • Does your child...",
-          "wordCount": 189,
-          "sentenceCount": 11,
+          "content": "• Does your child wake up with tangled sheets in the morning after a night of twisting and\nturning during sleep? • Does your child hold his or her breath during sleep?",
+          "wordCount": 32,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Enlarged adenoids\nor any other restriction of the airways causes the child to switch to mouth\nbreathing because of the difficulty in getting enough air through the nose. While\nit may seem counterintui...",
-          "wordCount": 55,
-          "sentenceCount": 3,
+          "content": "• Does your child have a stuffy nose on waking, or complain about his or her mouth being\ndry? • Do you hear your child snoring?",
+          "wordCount": 26,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Does your child experience disrupted sleep? • Does your child have nightmares, wet the bed during sleep, or wake up needing to use the\nbathroom?",
+          "wordCount": 26,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Is your child’s breathing audible during sleep? • Is your child tired on waking, or fatigued and struggling to concentrate during the day?\nWe have looked in detail at the many factors that lead to b...",
+          "wordCount": 181,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
@@ -8902,8 +9790,8 @@
     {
       "chapterNumber": 15,
       "title": "The Breathing Secret for Healthy Blood Pressure",
-      "chunkCount": 31,
-      "paragraphCount": 25,
+      "chunkCount": 34,
+      "paragraphCount": 28,
       "headerCount": 6,
       "chunks": [
         {
@@ -8958,14 +9846,14 @@
         {
           "type": "paragraph",
           "content": "Ultimately, when circulation to any part\nOf the heart is cut off, the lack of oxygen causes cells in the heart to die, and this\ncan result in a heart attack. If there is insufficient blood flow to the...",
-          "wordCount": 147,
-          "sentenceCount": 7,
+          "wordCount": 176,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "These include:\n• Eating a nutritious, healthy diet\n• Avoiding foods known to increase blood pressure\n• Taking adequate exercise\n• Quitting smoking\n• Addressing snoring and sleep apnea\n• Managing stres...",
-          "wordCount": 61,
+          "content": "• Managing stress • Practicing slow breathing\nEven with a family history of hypertension, the exercises in this book can\nhelp you avoid high blood pressure, often without the need for medication.",
+          "wordCount": 32,
           "sentenceCount": 1,
           "linkCount": 0
         },
@@ -8999,16 +9887,23 @@
         },
         {
           "type": "paragraph",
-          "content": "Nowadays, anyone can measure their own blood pressure by purchasing a good\nquality blood pressure monitor or using a blood pressure cuff with a smartphone. Some people may find this provides more accu...",
-          "wordCount": 199,
-          "sentenceCount": 11,
+          "content": "Nowadays, anyone can measure their own blood pressure by purchasing a good\nquality blood pressure monitor or using a blood pressure cuff with a smartphone.\nSome people may find this provides more accu...",
+          "wordCount": 103,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Readings that differ by more than 10 points\nbetween the left and right arm may signify a buildup of fatty deposits in the arteries. 7\nTo improve the accuracy of self-monitoring, it is important to bea...",
-          "wordCount": 135,
-          "sentenceCount": 9,
+          "content": "• Secure the blood pressure cuff over the bare skin of your upper arm and measure\nyour blood pressure according to instructions. After the first reading, leave the cuff in\nplace. Take a break of one m...",
+          "wordCount": 178,
+          "sentenceCount": 12,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "2. Avoid coffee: It’s best not to drink coffee for at least two hours before measuring, as\ncaffeine can cause a temporary but dramatic increase in blood pressure. 3. Wait 30 minutes after exercise: Vi...",
+          "wordCount": 53,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -9098,29 +9993,43 @@
         {
           "type": "paragraph",
           "content": "This can add tension and stress\nto the experience, which is not necessary and can be avoided by beginning the\npractice very gently. For the first week, Denise’s program was as follows:\n• Practice Brea...",
-          "wordCount": 191,
-          "sentenceCount": 12,
+          "wordCount": 59,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Denise also practiced\ngentle, light, slow, deep breathing for 10 minutes every hour to continue her\nprogress throughout the day. If you have high blood pressure, it’s important to go slowly and gently...",
-          "wordCount": 190,
-          "sentenceCount": 10,
+          "content": "• If Denise sighed, she was to hold her breath for 5 to 10 seconds following the sigh. • Tape her mouth at night using MyoTape or 3M Micropore tape.",
+          "wordCount": 30,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Denise’s ongoing routine is as follows:\n• She practices 10 minutes of light, slow, and deep breathing exercises four times each day,\nwith one session just before bed and one just after waking. • She t...",
-          "wordCount": 200,
-          "sentenceCount": 10,
+          "content": "• Avoid taking large breaths before speaking. One week later, Denise’s BOLT score had increased to 10 seconds, and she\nwas already feeling much more in control of her breathing. She no longer felt\ntha...",
+          "wordCount": 195,
+          "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "This means that better HRV leads to better-regulated blood\npressure. Low HRV is a feature in adults 20 and children 21 with hypertension. Autonomic dysregulation is present in the early stages of hype...",
-          "wordCount": 81,
+          "content": "If you\nare currently taking medication to control high blood pressure, it’s important to\nconsult a medical professional when your BOLT score reaches 20 seconds so\nthat your medication can be adjusted ...",
+          "wordCount": 130,
           "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• She tapes her mouth closed during sleep to ensure nasal breathing at night. • She practices Breathing Recovery whenever she feels anxious or stressed.",
+          "wordCount": 25,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• She walks, with her mouth closed, for half an hour daily. • She observes her breathing periodically throughout the day and avoids taking big breaths\nthrough her mouth.\nThe benefits of slow breathing...",
+          "wordCount": 223,
+          "sentenceCount": 12,
           "linkCount": 0
         }
       ]
@@ -9128,8 +10037,8 @@
     {
       "chapterNumber": 16,
       "title": "Freedom From Respiratory Discomfort",
-      "chunkCount": 60,
-      "paragraphCount": 46,
+      "chunkCount": 71,
+      "paragraphCount": 57,
       "headerCount": 14,
       "chunks": [
         {
@@ -9142,15 +10051,22 @@
         {
           "type": "paragraph",
           "content": "The Canadian physician, Sir William Osler, who is sometimes credited as the\nfather of modern medicine, wrote about asthma in his 1892 textbook. 5 He\ndescribed the symptoms of the disease as:\n• Spasmin...",
-          "wordCount": 185,
-          "sentenceCount": 5,
+          "wordCount": 51,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "However, although the primary characteristic of\nasthma—blocked or narrow airways—was well recognized and easy to diagnose,\nthe causal mechanisms were still not fully understood. While current thought ...",
-          "wordCount": 100,
-          "sentenceCount": 6,
+          "content": "• Resembling hay fever, and being sensitive to atmosphere, climate, and allergens • Running in families, often beginning in childhood and lasting a lifetime",
+          "wordCount": 24,
+          "sentenceCount": 0,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Sometimes triggered by fright, strong emotion, overeating, or particular foods\n[[IMG id=image-254-1 index=0 alt=\"Figure 54\"]]\nAsthma was treated predominantly by managing exacerbations with the use\n...",
+          "wordCount": 210,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -9296,22 +10212,36 @@
         {
           "type": "paragraph",
           "content": "There are several techniques you can try that can greatly improve\nasthma control and sleep quality:\n1. Pay attention to your asthma symptoms before you go to bed. If you are wheezy or have\nnoticeable ...",
-          "wordCount": 189,
-          "sentenceCount": 15,
+          "wordCount": 110,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The Buteyko belt is a specially\ndesigned tool that imposes a resistance to the breathing muscles, lowering the risk of\nhyperventilation during sleep. I often wear the belt during sleep and find that i...",
-          "wordCount": 166,
-          "sentenceCount": 17,
+          "content": "2. Practice light, slow, and deep breathing to achieve a tolerable air hunger for 15 minutes\nbefore sleep. 3. Avoid sleeping on your back. This is the worst position for overbreathing. As there is ver...",
+          "wordCount": 69,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Once you have begun to normalize your breathing volume, addressed\nunderlying breathing pattern disorders, and increased your BOLT score, you will\nfind you enjoy better sleep, and this will have a posi...",
-          "wordCount": 41,
-          "sentenceCount": 1,
+          "content": "4. Wear the Buteyko belt over your nightshirt during sleep. The Buteyko belt is a specially\ndesigned tool that imposes a resistance to the breathing muscles, lowering the risk of\nhyperventilation duri...",
+          "wordCount": 79,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "6. Only breathe through the nose while asleep. Wearing MyoTape will help bring the lips\ntogether to ensure nasal breathing. If the nose is very stuffy, wear a nasal dilator such as\nMute Snoring. MyoTa...",
+          "wordCount": 58,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "8. Achieve a higher BOLT score. Every 5-second improvement to your BOLT score will result\nin more light, slow, and deep breathing. Ideally, to improve asthma control and sleep\nquality, the BOLT score ...",
+          "wordCount": 80,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
@@ -9351,9 +10281,23 @@
         },
         {
           "type": "paragraph",
-          "content": "• Take a normal quiet breath in and let it out.\n• Following an exhalation, hold the breath for between 3 and 5 seconds.\n• Do not try to hold your breath for longer than this. It will only increase you...",
-          "wordCount": 113,
-          "sentenceCount": 8,
+          "content": "• Take a normal quiet breath in and let it out. • Following an exhalation, hold the breath for between 3 and 5 seconds.",
+          "wordCount": 24,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Do not try to hold your breath for longer than this. It will only increase your breathing and\nexacerbate the asthma attack. • Maximum breath-hold time should be no greater than half your BOLT score ...",
+          "wordCount": 41,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Leave 10 seconds between each breath hold, and don’t try to interfere with your breathing\nduring this time. • Repeat the small breath hold, followed by a rest of 10 seconds, during which you should\n...",
+          "wordCount": 48,
+          "sentenceCount": 3,
           "linkCount": 0
         },
         {
@@ -9365,9 +10309,16 @@
         },
         {
           "type": "paragraph",
-          "content": "Instruction:\n• Exhale through your nose.\n• Pinch your nose with your fingers to hold your breath, and walk for 5 to 10 paces, holding\nyour breath.\n• Stop walking.\n• Breathe in through your nose, and r...",
-          "wordCount": 194,
-          "sentenceCount": 12,
+          "content": "Instruction:\n• Exhale through your nose. • Pinch your nose with your fingers to hold your breath, and walk for 5 to 10 paces, holding\nyour breath. • Stop walking. • Breathe in through your nose, and r...",
+          "wordCount": 45,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat up to 10 times.\nIf you are practicing at home, you can repeat this exercise 6 times, five times\nper day. Holding the breath for up to 10 paces is very suitable for anyone with\nsevere asthma, ...",
+          "wordCount": 149,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -9379,9 +10330,23 @@
         },
         {
           "type": "paragraph",
-          "content": "• Breathe in gently and hold your breath for half a second.\n• Concentrate on relaxing the chest, shoulders, and abdomen.\n• Slowly exhale through your nose. Do not force your breath out in any way. Gen...",
-          "wordCount": 144,
-          "sentenceCount": 11,
+          "content": "• Breathe in gently and hold your breath for half a second. • Concentrate on relaxing the chest, shoulders, and abdomen.",
+          "wordCount": 21,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Slowly exhale through your nose. Do not force your breath out in any way. Gently breathe\nout, slowly and completely. The natural elasticity of your diaphragm, lungs, and ribs will\nreturn the breathi...",
+          "wordCount": 50,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat the exercise several times over the course of 10 minutes or until the attack has\npassed.\nThis exercise can be used at any time, whether you are suffering from\nbreathing difficulties or not. I...",
+          "wordCount": 73,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -9401,15 +10366,22 @@
         {
           "type": "paragraph",
           "content": "When you cough, you take in a deep breath followed by a\nforced expiration of air. This action causes cooling and drying of the airways and\nA loss of CO 2 , which inevitably leads to another cough and ...",
-          "wordCount": 200,
-          "sentenceCount": 13,
+          "wordCount": 103,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "It is important to note that breathing exercises will only help alleviate a\ncoughing fit when applied during the early stages of an attack. If symptoms have\nbeen occurring for more than five minutes, ...",
-          "wordCount": 96,
-          "sentenceCount": 5,
+          "content": "• Don’t try to force out mucus. Instead, reduce your breathing, and allow the mucus to come\nup naturally. It can then be swallowed to dissolve harmlessly in the acid of the stomach or\nbe spat out if t...",
+          "wordCount": 50,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Perform Breathing Recovery, Sitting of between 3 and 5 seconds until your cough has\npassed.\nThe main point to remember is that the deep breathing and forced exhalations\nthat occur during coughing wi...",
+          "wordCount": 143,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -9422,8 +10394,15 @@
         {
           "type": "paragraph",
           "content": "Another common symptom of asthma is a blocked nose. If you are prone to\nnasal stuffiness, you will continue to experience symptoms until your BOLT\nscore is at least 25 seconds. The normal reaction to ...",
-          "wordCount": 149,
-          "sentenceCount": 8,
+          "wordCount": 121,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• If you must blow your nose, do so gently. • Spend five minutes reducing your breathing or practicing the nose unblocking exercise\n(see Chapters Two and Three).",
+          "wordCount": 28,
+          "sentenceCount": 2,
           "linkCount": 1
         },
         {
@@ -9450,8 +10429,15 @@
         {
           "type": "paragraph",
           "content": "A 2020 study summarizes the main underlying mechanisms that link allergic\nrhinitis and altered sleep patterns as follows:\n• Inflammatory cytokines related to allergic rhinitis cause feelings of fatigu...",
-          "wordCount": 102,
-          "sentenceCount": 5,
+          "wordCount": 29,
+          "sentenceCount": 1,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The symptoms and underlying physiological changes that occur in AR indirectly affect\nsleep. • Sleep can be negatively impacted by dysfunction of the autonomic nervous system. 43\nNasal congestion is ...",
+          "wordCount": 73,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -9557,8 +10543,8 @@
     {
       "chapterNumber": 17,
       "title": "Sex and Breath, an Intimate Connection",
-      "chunkCount": 84,
-      "paragraphCount": 73,
+      "chunkCount": 92,
+      "paragraphCount": 81,
       "headerCount": 11,
       "chunks": [
         {
@@ -9998,22 +10984,22 @@
         {
           "type": "paragraph",
           "content": "Yoga improves\nnervous system function and hormonal balance and reduces age-related\ndecreases in testosterone. It eases stress, suppresses the sympathetic nervous\nSystem, and promotes parasympathetic a...",
-          "wordCount": 194,
-          "sentenceCount": 9,
+          "wordCount": 211,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Poor control of the\npelvic floor muscles is implicated in premature ejaculation, urinary incontinence, and\nerectile dysfunction. • Inverted postures improve the circulation to veins in the pelvis and ...",
-          "wordCount": 200,
-          "sentenceCount": 9,
+          "content": "• Inverted postures improve the circulation to veins in the pelvis and perineum, enhancing\nthe flow of blood to the sexual organs. (Recall that one value of nitric oxide is in increasing\nblood flow to...",
+          "wordCount": 111,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Many treatment options are available for men who are confident enough to\napproach their doctor about premature ejaculation. Unfortunately, those\ntreatments can cause side effects and affect sexual sat...",
-          "wordCount": 162,
-          "sentenceCount": 8,
+          "content": "• A yogic cleansing practice called a Kriya , which is done by exhaling forcefully and inhaling\npassively, both through the nose, may help delay ejaculation. A similar Tantric breathing\ntechnique, inv...",
+          "wordCount": 234,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -10131,22 +11117,78 @@
         {
           "type": "paragraph",
           "content": "According to\nCourtney Avery, creator of the San Diego sexual-health-based yoga business\nIntimate Health, LLC, “the more you practice meditation, the more you train\nyour brain to come into an orgasmic ...",
-          "wordCount": 178,
+          "wordCount": 76,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Sit comfortably in an upright posture and breathe normally. • On your next inhalation, purse your lips as if you were sipping through a straw.",
+          "wordCount": 26,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Breathe in through your pursed lips and engage your pelvic floor muscles. Keep your\nbuttocks relaxed and your muscles engaged. • Continue to breathe in as if you are sipping, while being aware of th...",
+          "wordCount": 46,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Pull in your lower abdominal muscles and tuck in your belly button. • Relax and widen your chest and shoulders.",
+          "wordCount": 21,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Lengthen your neck and tuck in your chin. • When you feel “full up” with air, seal your lips and hold your breath, engaging all the\nmuscles along the length of your spine.",
+          "wordCount": 34,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• When you are ready to release, slightly open your mouth. Visualize the energy pouring\nfrom the top of your head down the front of your body, gently softening your muscles as it\nflows down. • Relax y...",
+          "wordCount": 44,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Finally, release the pelvic floor muscles and surrender. • When you have finished, relax, and breathe normally for a few breaths, remaining in a\nstate of calm relaxation.",
+          "wordCount": 29,
+          "sentenceCount": 2,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat the exercise up to 13 times.\nThe key lies in practice. By beginning to explore the breath by yourself, you\ncan prepare to share new experiences with your partner. Try practicing nasal\nbreathi...",
+          "wordCount": 114,
           "sentenceCount": 10,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• When you feel “full up” with air, seal your lips and hold your breath, engaging all the\nmuscles along the length of your spine. • When you are ready to release, slightly open your mouth. Visualize t...",
-          "wordCount": 199,
-          "sentenceCount": 15,
+          "content": "• Slowly inhale together, breathing from the diaphragm. • Pause together at the top of the breath, feeling full of life-giving energy.",
+          "wordCount": 22,
+          "sentenceCount": 2,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Again, the practice uses gentle breath retention:\n• Exhale all the way out. • Slowly inhale together, breathing from the diaphragm. • Pause together at the top of the breath, feeling full of life-givi...",
-          "wordCount": 128,
-          "sentenceCount": 10,
+          "content": "• Gently exhale together, all the way out. • Pause again at the bottom of the exhalation, feeling safe and empty. • Slowly inhale. • As you breathe, imagine the breath carrying energy throughout your ...",
+          "wordCount": 36,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Repeat the exercise as many times as you like.\nThis exercise simply involves mindful breathing, exhaling and inhaling\nthrough the nose, breathing from the diaphragm, and gently bringing your breath\n...",
+          "wordCount": 57,
+          "sentenceCount": 3,
           "linkCount": 0
         }
       ]
@@ -10154,8 +11196,8 @@
     {
       "chapterNumber": 18,
       "title": "Yes, Breathing Is Different for Women",
-      "chunkCount": 58,
-      "paragraphCount": 47,
+      "chunkCount": 59,
+      "paragraphCount": 48,
       "headerCount": 11,
       "chunks": [
         {
@@ -10189,15 +11231,22 @@
         {
           "type": "paragraph",
           "content": "There are several “phases” to the menstrual cycle, which are important to\nrecognize in understanding the issues surrounding breathing in women. Some\nare familiar, but the changes through the month are...",
-          "wordCount": 189,
-          "sentenceCount": 12,
+          "wordCount": 118,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "This is the phase most associated with\nhyperventilation as progesterone levels fluctuate. • The secretory phase: The lining of the uterus produces chemicals that will either support\nan early pregnancy...",
-          "wordCount": 43,
-          "sentenceCount": 2,
+          "content": "• The proliferative phase: The lining of your uterus builds up again after your period. • Ovulation: The egg is released from your ovary midcycle. Estrogen levels peak just before\nthis happens and dro...",
+          "wordCount": 36,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• The luteal phase: This is the time between ovulation and the start of menstruation.\nBecause this is the stage when the body prepares for a potential pregnancy, progesterone\nis produced, peaks, and t...",
+          "wordCount": 78,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -10569,8 +11618,8 @@
     {
       "chapterNumber": 19,
       "title": "Female Sex Hormones and the Breath",
-      "chunkCount": 62,
-      "paragraphCount": 52,
+      "chunkCount": 63,
+      "paragraphCount": 53,
       "headerCount": 10,
       "chunks": [
         {
@@ -10631,23 +11680,30 @@
         },
         {
           "type": "paragraph",
-          "content": "Emma learned that hormonal\ncontraceptives deplete the body of key nutrients such as B vitamins 10 —something she\nwished her doctor had told her. • She made the switch to nasal breathing. While Emma wa...",
-          "wordCount": 200,
-          "sentenceCount": 12,
+          "content": "Emma learned that hormonal\ncontraceptives deplete the body of key nutrients such as B vitamins 10 —something she\nwished her doctor had told her.",
+          "wordCount": 24,
+          "sentenceCount": 1,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "Her\nPMS lows became much easier to deal with, and she felt better able to pull herself out of\nthe “PMS hole” she found herself in on a monthly basis. Her concentration became\nsharper, and she began ex...",
-          "wordCount": 196,
+          "content": "• She made the switch to nasal breathing. While Emma was not a habitual mouth breather,\nshe did always breathe through her mouth during exercise. She worked to ensure that she\nbreathed only through he...",
+          "wordCount": 143,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• Emma began practicing meditation. She found that stopping for 15 to 20 minutes a day to\n“reset and reenter” had a profound effect on her PMS symptoms and on her daily life. Her\nPMS lows became much ...",
+          "wordCount": 181,
           "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "For women who suffer from PMS, the connection to hyperventilation is big\nnews. It means that many symptoms previously believed to be hormonal and\nunavoidable are actually the result of a hormone-drive...",
-          "wordCount": 103,
-          "sentenceCount": 6,
+          "content": "She has lost the extra two kilos\nshe was carrying, she no longer has dramatic mood swings or brain fog, and her\nbloating is much less extreme. Her quality of life has improved because, in her\nwords, s...",
+          "wordCount": 151,
+          "sentenceCount": 8,
           "linkCount": 0
         },
         {
@@ -11012,8 +12068,8 @@
     {
       "chapterNumber": 20,
       "title": "Sugar, Sugar",
-      "chunkCount": 58,
-      "paragraphCount": 41,
+      "chunkCount": 59,
+      "paragraphCount": 42,
       "headerCount": 17,
       "chunks": [
         {
@@ -11159,8 +12215,15 @@
         {
           "type": "paragraph",
           "content": "However, his research led him\nto understand that breath holds, or intermittent hypoxia , were a key component\nof his increased diabetes control too. The positive results Nick experienced can\nbe explai...",
-          "wordCount": 169,
-          "sentenceCount": 13,
+          "wordCount": 45,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "2. Hypoxia strengthens the innate function of the immune system. 46 3. Hypoxia increases insulin sensitivity. 47\nImportant: It is never advisable to practice breath holds while in the water.\nIf you ta...",
+          "wordCount": 124,
+          "sentenceCount": 10,
           "linkCount": 0
         },
         {
@@ -11427,8 +12490,8 @@
     {
       "chapterNumber": 21,
       "title": "Seizure Control and the Breath",
-      "chunkCount": 82,
-      "paragraphCount": 72,
+      "chunkCount": 89,
+      "paragraphCount": 79,
       "headerCount": 10,
       "chunks": [
         {
@@ -11588,36 +12651,43 @@
         {
           "type": "paragraph",
           "content": "42\nThere have been attempts to determine whether the degree of hypocapnia\ncorrelates with an increased frequency of petit mal or absence seizures and if\nthere is a critical concentration of CO 2 at wh...",
-          "wordCount": 173,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The study\nconcluded that it would be helpful to discover whether sensitivity to blood CO 2\ncould help predict the likely response to antiepileptic drugs, and that more\nresearch was needed into the pos...",
-          "wordCount": 191,
+          "wordCount": 97,
           "sentenceCount": 7,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "48 It’s worth noting that\naround 10% of seizures in children with epilepsy are absence seizures, otherwise\ncalled petit mal seizures. 49 These seizures have a significant impact on quality of\nlife. 50...",
-          "wordCount": 177,
+          "content": "4. A gas containing 4% CO 2 and 96% oxygen\nWhen the children were breathing quietly, a reduction in EEG spikes was\nseen when the breathing gas contained extra CO 2 (3 and 4), but a higher\nconcentratio...",
+          "wordCount": 188,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "45 This\nfinding was repeated in a 2009 study, which observed myoclonic absence\nseizures in three patients which were triggered by hyperventilation. 45\nResearchers concluded that “hyperventilation is m...",
+          "wordCount": 196,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "53 A pilot study of seven people demonstrated a “rapid\ntermination of electrographic seizures” even though the 5% CO 2 was applied\nafter the seizure had begun. The researchers concluded that inhaled C...",
-          "wordCount": 200,
-          "sentenceCount": 5,
+          "content": "Experimental research indicates that\nthese childhood seizures may increase the risk of epilepsy developing later in\nlife. The study suggested that CO 2 therapy could also be effective in stopping\nothe...",
+          "wordCount": 123,
+          "sentenceCount": 6,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "The paper describes the use\nOf hyperventilation to quickly diagnose patients with absence epilepsy as\n“commonplace.” While scientists are still unclear whether a single mechanism\nexists to prompt abse...",
-          "wordCount": 120,
-          "sentenceCount": 5,
+          "content": "51 While more work is needed\nto ensure safety and efficacy—for instance, it is important that hypercapnia does\nnot progress to acidosis during a prolonged seizure—the review suggests that\nthis is a wo...",
+          "wordCount": 183,
+          "sentenceCount": 3,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "55\nIn the 2014 study, 12 participants who had hyperventilation-induced absence\nseizures were examined while breathing either room air, 5% CO 2 , or 100%\noxygen. Compared to hyperventilation in normal ...",
+          "wordCount": 74,
+          "sentenceCount": 4,
           "linkCount": 0
         },
         {
@@ -11931,57 +13001,64 @@
         {
           "type": "paragraph",
           "content": "Instead, her training should\nhave begun with awareness, then suppressing sighs, then full time nasal\nBreathing, and moved slowly on to posture and diaphragm breathing. Only once\nher BOLT score was abo...",
-          "wordCount": 191,
+          "wordCount": 135,
+          "sentenceCount": 7,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• She changed her posture overnight and again experienced pain. Sitting was\nuncomfortable, and she preferred to stand. • She stopped sighing and tried to breathe through her nose at all times. She tri...",
+          "wordCount": 73,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "• She experimented with her breathing, counted her breaths, and tried all sorts of things to\nno avail. By lying down and reducing her breathing she could get her breathing rate down\nto four or five br...",
+          "wordCount": 198,
+          "sentenceCount": 9,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "100 The instructions in the book\nenabled Nicky to finally let go of control and start to breathe easily again. Four months later, the improvements in Nicky’s health were extraordinary. She lost six ki...",
+          "wordCount": 189,
           "sentenceCount": 11,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "• She tried to do the breathing exercises as taught but the reduced breathing destabilized\nher respiration. • She experimented with her breathing, counted her breaths, and tried all sorts of things to...",
-          "wordCount": 174,
+          "content": "She had the time, energy, motivation, and commitment to do\nthe work, but her breathing instructor’s advice was just to relax and not focus on\nher BOLT score. At this point, her breathwork consisted of...",
+          "wordCount": 177,
           "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "She finally had a breakthrough when,\none morning, in desperation and with a panic attack imminent, she began to read\nthe chapter Nine Healthy Breathing Habits in Five Days , from Tess Graham’s\nbook Re...",
-          "wordCount": 200,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "She wanted to achieve the level of super health that she knew\nwas available with a BOLT score over 40. To teach, she also needed to improve\nher BOLT score. She had the time, energy, motivation, and co...",
-          "wordCount": 197,
-          "sentenceCount": 10,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "The tension problem resolved immediately, and it\nhas not returned. In September 2016, without consulting her doctor or specialist, Nicky started\nto come off Lamotrigine at a rate of 25 mg every few we...",
-          "wordCount": 173,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "She lost confidence in the future\nand in her breathing practice, and she was nervous about having come off her\nmedication with a BOLT score of only 16. Nicky realized that with such a low BOLT score, ...",
-          "wordCount": 199,
-          "sentenceCount": 9,
-          "linkCount": 0
-        },
-        {
-          "type": "paragraph",
-          "content": "She also had a phobia of public speaking. Nicky’s ambition was still to become a breathing educator, but she wasn’t\nsure how this would work. She consulted speech therapist Hadas Golan, who\nidentified...",
+          "content": "In September 2016, without consulting her doctor or specialist, Nicky started\nto come off Lamotrigine at a rate of 25 mg every few weeks. This process took\nfive months. She felt safe reducing the dose...",
           "wordCount": 191,
-          "sentenceCount": 11,
+          "sentenceCount": 9,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "She is planning to train as an\ninstructor in New Zealand and works to raise awareness of breathwork. One of\nher goals is for breathing dysfunction to be screened for in general practice, and\nshe is ta...",
-          "wordCount": 41,
-          "sentenceCount": 2,
+          "content": "Nicky realized that with such a low BOLT score, her breathing was still too\nunstable for her epilepsy to be under good control. She needed to make some\nprogress, and it seemed that by practicing stron...",
+          "wordCount": 196,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "She consulted speech therapist Hadas Golan, who\nidentified the problem: Nicky was speaking for too long without taking a breath,\nexhaling too much air, bringing it below the resting expiratory level, ...",
+          "wordCount": 184,
+          "sentenceCount": 10,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "One of\nher goals is for breathing dysfunction to be screened for in general practice, and\nshe is taking steps to promote this.",
+          "wordCount": 23,
+          "sentenceCount": 1,
           "linkCount": 0
         },
         {
@@ -11994,15 +13071,50 @@
         {
           "type": "paragraph",
           "content": "1. Before training as a breathing instructor, it is important to do a course yourself to ensure\nthat your own breathing health is sufficient. 2. A client can be quite sick while appearing to be normal...",
-          "wordCount": 199,
-          "sentenceCount": 25,
+          "wordCount": 51,
+          "sentenceCount": 5,
           "linkCount": 0
         },
         {
           "type": "paragraph",
-          "content": "If you have had a dysfunctional breathing pattern for a long time, there are likely to be\nbiomechanical issues. It may benefit you to seek help from a physical therapist. 11. Even though breathing is ...",
-          "wordCount": 110,
-          "sentenceCount": 9,
+          "content": "3. For anyone with a serious health condition, breathing retraining cannot be undertaken in a\nfive-day course. Ongoing, long-term support is likely to be necessary. 4. People with epilepsy must learn ...",
+          "wordCount": 39,
+          "sentenceCount": 6,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "5. If you have anxiety or control tendencies, the work should be taken very slowly, especially\nif you also have a serious health condition. 6. Long breath holds must not be practiced by anyone with ep...",
+          "wordCount": 36,
+          "sentenceCount": 4,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "7. Chronic hyperventilators may not be able to relax the breathing muscles. When muscles\nare underoxygenated, they become “jumpy.” This may also affect the diaphragm. 8. The body compensates for anemi...",
+          "wordCount": 64,
+          "sentenceCount": 8,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "9. Overbreathers tend to run low in macronutrients. 10. If you have had a dysfunctional breathing pattern for a long time, there are likely to be\nbiomechanical issues. It may benefit you to seek help ...",
+          "wordCount": 39,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "11. Even though breathing is something we all do, it is easy to misunderstand instructions. If\nthere is anything that feels wrong or seems to cause physical or mental stress, stop the\npractice, and se...",
+          "wordCount": 55,
+          "sentenceCount": 5,
+          "linkCount": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "13. Never underestimate the power of this work and the changes in the mind and body that\ncan result from a few simple breathing exercises.",
+          "wordCount": 25,
+          "sentenceCount": 2,
           "linkCount": 0
         }
       ]

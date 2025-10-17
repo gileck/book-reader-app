@@ -3,8 +3,8 @@
     "totalImages": 54,
     "totalExtractedImages": 71,
     "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/The Breathing Cure/output/images",
-    "processingTime": 24619,
-    "extractionTime": "2025-10-14T09:24:56.804Z",
+    "processingTime": 10370,
+    "extractionTime": "2025-10-17T07:21:38.088Z",
     "note": "Image extraction and mapping to pages"
   },
   "extractedImages": [
