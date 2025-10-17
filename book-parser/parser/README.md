@@ -525,7 +525,7 @@ Notes:
 
 ### 🎯 RECENT MAJOR IMPROVEMENTS
 
-#### **Numbered List & Bullet Point Separation Fix ✅** (Latest - October 2025)
+#### **Numbered List & Bullet Point Separation Fix ✅** (October 2025)
 **Critical UX Improvement**: Fixed parser incorrectly merging numbered list items and bullet points with previous sentences when they appeared after newlines.
 
 **Problem Identified**:
@@ -592,6 +592,93 @@ if ((startsWithNumberedListItem || startsWithBulletPoint) && currentParagraph.tr
   "chunkId": "7_30", 
   "content": "2. The breath hold strengthens the breathing muscles.",
   "type": "text"
+}
+```
+
+#### **Chunk Optimization Duplication Bug Fix ✅** (Latest - October 2025)
+**Critical Bug Fix**: Fixed paragraph duplication in `optimizeChunkSizes` function where small paragraphs were incorrectly merged, creating duplicate content in the final output.
+
+**Problem Identified**:
+- In "The Oxygen Advantage" book, the intro text "T he following BOLT measurement and exercises..." appeared in TWO separate chunks
+- Chunk 18_2: Just the intro text (standalone)
+- Chunk 18_3: Intro text + list items merged together
+- The header "Body Oxygen Level Test (BOLT)" that should have been between them was being replaced by the merged content
+- Root cause: `tryMergeWithPreviousParagraph` would search backwards across headers to find a paragraph, but then the caller would blindly replace `secondPassOptimized[secondPassOptimized.length - 1]` (the last chunk), which could be a header added AFTER the paragraph being merged
+
+**Solution Implemented**:
+1. **Return Index with Merge Result**:
+   - Modified `tryMergeWithPreviousParagraph` to return `{ merged, indexToReplace }` instead of just the merged chunk
+   - `indexToReplace` points to the actual paragraph that was merged (not the last chunk)
+2. **Update All Callers**:
+   - First pass in `optimizeChunkSizes`: Replace `optimized[mergeResult.indexToReplace]` instead of `optimized[optimized.length - 1]`
+   - Second pass in `optimizeChunkSizes`: Replace `secondPassOptimized[mergeResult.indexToReplace]` instead of `secondPassOptimized[secondPassOptimized.length - 1]`
+3. **Preserved Behavior**:
+   - Headers between paragraphs remain intact
+   - Merge logic continues to skip headers and images to find paragraphs
+   - All existing validation continues to pass
+
+**Technical Implementation**:
+```javascript
+// In 04-paragraph-detection.js, tryMergeWithPreviousParagraph now returns:
+function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
+    for (let i = optimizedChunks.length - 1; i >= 0; i--) {
+        const previousChunk = optimizedChunks[i];
+        
+        if (previousChunk.type === 'header') continue; // Skip headers
+        if (previousChunk.type === 'image') continue;  // Skip images
+        
+        if (previousChunk.type === 'paragraph') {
+            // ... merge logic ...
+            return {
+                merged: { /* merged chunk */ },
+                indexToReplace: i  // Return the INDEX we're merging with
+            };
+        }
+        break;
+    }
+    return null;
+}
+
+// Callers now use the returned index:
+const mergeResult = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
+if (mergeResult) {
+    // Replace the CORRECT chunk, not the last one
+    secondPassOptimized[mergeResult.indexToReplace] = mergeResult.merged;
+}
+```
+
+**Results**:
+- ✅ No more duplicate content in optimized chunks
+- ✅ Headers between paragraphs are preserved correctly
+- ✅ Small paragraphs merge with the correct previous paragraph
+- ✅ All existing validation continues to pass
+- ✅ Example fix: "The Oxygen Advantage" chapter 18 now has correct structure with no duplication
+
+**Before**:
+```json
+{
+  "chunkId": "18_2",
+  "content": "T he following BOLT measurement and exercises are explained in detail in earlier chapters.",
+  "type": "paragraph"
+},
+{
+  "chunkId": "18_3",
+  "content": "T he following BOLT measurement and exercises are explained in detail in earlier chapters. 1. Nose Unblocking Exercise...",
+  "type": "paragraph"
+}
+```
+
+**After**:
+```json
+{
+  "chunkId": "18_2",
+  "content": "T he following BOLT measurement and exercises are explained in detail in earlier chapters. 1. Nose Unblocking Exercise 2. Breathe Light to Breathe Right...",
+  "type": "paragraph"
+},
+{
+  "chunkId": "18_3",
+  "content": "Body Oxygen Level Test (BOLT)",
+  "type": "header"
 }
 ```
 
@@ -1147,4 +1234,4 @@ The pipeline was optimized by combining related steps:
 
 **Last Updated**: October 2025
 **Implementation Progress**: 12/12 steps completed (100%)
-**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, shared text processing utilities eliminating code duplication, enhanced image marker system with reverse-order processing bug fix, supporting both embedded and standalone markers with correct formatting for consecutive page images, smart constraint relaxation preventing orphan chunks, Unicode-aware validation supporting international characters, comprehensive abbreviation handling (60+ patterns), chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection, sentence-level optimization with standalone image marker detection, precise image chunk positioning with enhanced validation, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 
+**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, shared text processing utilities eliminating code duplication, enhanced image marker system with reverse-order processing bug fix, supporting both embedded and standalone markers with correct formatting for consecutive page images, smart constraint relaxation preventing orphan chunks, Unicode-aware validation supporting international characters, comprehensive abbreviation handling (60+ patterns), chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection with smart list separation and chunk optimization duplication fix, sentence-level optimization with standalone image marker detection, precise image chunk positioning with enhanced validation, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 

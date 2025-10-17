@@ -71,14 +71,16 @@ Features:
   - Creates output folder with parsed content and extracted images
 
 Options:
-  --help, -h            Show this help message
-  --force-reparse, -f   Force re-extraction from PDF (ignore cached .txt file)
+  --help, -h                    Show this help message
+  --force-reparse, -f           Force re-extraction from PDF (ignore cached .txt file)
+  --mode=<mode>                 Operation mode (skip interactive mode selection)
 
-Modes:
-  - Parser only: Only parse the book, don't upload
-  - Parse + Upload: Parse the book and upload to database (without images)
-  - Parse + Upload + Images: Parse the book and upload with images to Vercel Blob
-  - Upload only: Use existing output file to upload (skip parsing)
+Modes (use with --mode flag):
+  parse-only                    Only parse the book, don't upload
+  parse-upload                  Parse and upload to database (without images)
+  parse-upload-images           Parse and upload with images to Vercel Blob
+  upload-only                   Use existing output file to upload (without images)
+  upload-only-images            Use existing output file and upload with images
 
 Text File Caching:
   - First run: Extracts text from PDF and saves to <book-name>.txt
@@ -86,10 +88,23 @@ Text File Caching:
   - Use --force-reparse to regenerate .txt from PDF
 
 Examples:
+  # Interactive mode - select folder and mode
   node run-parser-and-upload.js
+  
+  # Interactive mode with specific folder
   node run-parser-and-upload.js ./my-book-folder
-  node run-parser-and-upload.js --force-reparse ./my-book-folder
-  node run-parser-and-upload.js /path/to/book/folder
+  
+  # Non-interactive mode with all options specified
+  node run-parser-and-upload.js ./my-book-folder --mode=parse-upload
+  node run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload-images
+  node run-parser-and-upload.js ./my-book-folder --mode=upload-only
+  
+  # With force reparse
+  node run-parser-and-upload.js ./my-book-folder --force-reparse --mode=parse-only
+
+Note: When running in interactive mode, the script will show the equivalent 
+      non-interactive command BEFORE starting operations, making it easy to 
+      copy for future re-runs with the same options.
 `);
 }
 
@@ -202,12 +217,40 @@ async function runUpload(outputPath, uploadImages) {
     console.log('\n✅ Upload completed successfully!');
 }
 
+function parseModeFlag(args) {
+    const modeArg = args.find(a => a.startsWith('--mode='));
+    if (modeArg) {
+        const mode = modeArg.split('=')[1];
+        const validModes = ['parse-only', 'parse-upload', 'parse-upload-images', 'upload-only', 'upload-only-images'];
+        if (!validModes.includes(mode)) {
+            throw new Error(`Invalid mode: ${mode}. Valid modes: ${validModes.join(', ')}`);
+        }
+        return mode;
+    }
+    return null;
+}
+
+function buildRerunCommand(folderName, mode, forceReparse, scriptDir) {
+    // Determine the script path relative to current working directory
+    const cwd = process.cwd();
+    const scriptPath = path.relative(cwd, path.join(scriptDir, 'run-parser-and-upload.js'));
+    
+    let cmd = `node ${scriptPath || 'run-parser-and-upload.js'}`;
+    cmd += ` "${folderName}"`;
+    cmd += ` --mode=${mode}`;
+    if (forceReparse) {
+        cmd += ' --force-reparse';
+    }
+    return cmd;
+}
+
 async function main() {
     try {
         const args = process.argv.slice(2);
         const flags = new Set(args.filter(a => a.startsWith('-')));
         const positionals = args.filter(a => !a.startsWith('-'));
         const forceReparse = flags.has('--force-reparse') || flags.has('-f');
+        const modeFlag = parseModeFlag(args);
 
         // Show help if requested
         if (flags.has('--help') || flags.has('-h')) {
@@ -217,13 +260,19 @@ async function main() {
 
         // Get folder path from command line argument or prompt user
         let targetDir;
+        let folderName;
         const folderPath = positionals[0];
+        let usedInteractiveFolderSelection = false;
 
         if (!folderPath) {
             console.log('📂 No folder path provided. Select from available folders:\n');
             targetDir = await selectFolder();
+            usedInteractiveFolderSelection = true;
+            // Get the folder name relative to current working directory
+            folderName = path.relative(process.cwd(), targetDir);
         } else {
             targetDir = path.resolve(folderPath);
+            folderName = folderPath; // Keep original input for command display
         }
 
         console.log(`\n📁 Selected folder: ${targetDir}`);
@@ -236,9 +285,30 @@ async function main() {
             console.log('✓ Found existing output folder');
         }
 
-        // Select operation mode
-        const mode = await selectMode(hasExistingOutput);
-        console.log(`\n🎯 Mode: ${mode}\n`);
+        // Select operation mode (from flag or interactively)
+        let mode;
+        let usedInteractiveModeSelection = false;
+
+        if (modeFlag) {
+            mode = modeFlag;
+            console.log(`\n🎯 Mode: ${mode} (from --mode flag)\n`);
+
+            // Validate upload-only modes require existing output
+            if ((mode === 'upload-only' || mode === 'upload-only-images') && !hasExistingOutput) {
+                throw new Error('Upload-only mode requires an existing output folder. Run parser first or choose a different mode.');
+            }
+        } else {
+            mode = await selectMode(hasExistingOutput);
+            usedInteractiveModeSelection = true;
+            console.log(`\n🎯 Mode: ${mode}\n`);
+        }
+
+        // Show rerun command upfront if interactive selections were made
+        if (usedInteractiveFolderSelection || usedInteractiveModeSelection) {
+            const rerunCmd = buildRerunCommand(folderName, mode, forceReparse, __dirname);
+            console.log('💡 To re-run with the same options without prompts:');
+            console.log(`   ${rerunCmd}\n`);
+        }
 
         // Handle upload-only modes
         if (mode === 'upload-only' || mode === 'upload-only-images') {

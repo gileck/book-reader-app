@@ -528,7 +528,7 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             if ((startsWithNumberedListItem || startsWithBulletPoint) && currentParagraph.trim()) {
                 // Check if the current paragraph ends with a colon (introducing the list)
                 const currentParagraphEndsWithColon = /:\s*$/.test(currentParagraph.trim());
-                
+
                 // Only flush if the paragraph does NOT end with a colon
                 if (!currentParagraphEndsWithColon) {
                     // Flush the current paragraph
@@ -542,6 +542,7 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
             if (currentParagraph) {
                 currentParagraph += '\n' + line;
             } else {
+
                 // If we captured an orphan leading letter like "I" or "U" and
                 // the first line of the paragraph starts with lowercase, restore the capital.
                 if (orphanLeadingLetter && /^[a-z]/.test(line)) {
@@ -779,9 +780,20 @@ function isHeader(line, lineIndex, allLines) {
     // Rule 4: Line Structure - Appears as standalone line (already handled by line splitting)
 
     // Rule 5: Context - Previous - Previous line ends with sentence-ending punctuation
+    // EXCEPTION: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
     const prevLine = findPreviousNonEmptyLine(allLines, lineIndex - 1);
     if (prevLine !== null && !sharedEndsWithSentenceTerminator(prevLine)) {
-        return false;
+        // Check if the previous line looks like a header itself (short, no punctuation, capitalized)
+        const prevWords = prevLine.trim().split(/\s+/);
+        const prevIsShort = prevWords.length >= 1 && prevWords.length <= 5;
+        const prevNoPunct = !/[.!?]$/.test(prevLine.trim());
+        const prevCapitalized = /^[A-Z]/.test(prevLine.trim());
+        const prevLooksLikeHeader = prevIsShort && prevNoPunct && prevCapitalized;
+
+        // If previous line doesn't look like a header, reject current line as header
+        if (!prevLooksLikeHeader) {
+            return false;
+        }
     }
 
     // Rule 6: Context - Next - Next line starts with a capital letter
@@ -924,13 +936,12 @@ function optimizeChunkSizes(chunks) {
                 i = mergedChunk.nextIndex; // Skip to the merged paragraph
             } else {
                 // Try merging with previous paragraph if next merge failed
-                const mergedWithPrevious = tryMergeWithPreviousParagraph(optimized, chunk);
-                if (mergedWithPrevious) {
-                    // Replace the last optimized chunk with the merged version
-                    optimized[optimized.length - 1] = mergedWithPrevious;
+                const mergeResult = tryMergeWithPreviousParagraph(optimized, chunk);
+                if (mergeResult) {
+                    // Replace the specific paragraph we merged with (not necessarily the last chunk)
+                    optimized[mergeResult.indexToReplace] = mergeResult.merged;
 
                 } else {
-
                     optimized.push(chunk);
                 }
             }
@@ -974,10 +985,10 @@ function optimizeChunkSizes(chunks) {
 
         if (chunk.type === 'paragraph' && chunk.wordCount < 20) {
             // Try to merge with previous paragraph
-            const mergedWithPrevious = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
-            if (mergedWithPrevious) {
-                // Replace the last optimized chunk with the merged version
-                secondPassOptimized[secondPassOptimized.length - 1] = mergedWithPrevious;
+            const mergeResult = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
+            if (mergeResult) {
+                // Replace the specific paragraph we merged with (not necessarily the last chunk)
+                secondPassOptimized[mergeResult.indexToReplace] = mergeResult.merged;
             } else {
                 // Try to merge with next paragraph
                 const mergedWithNext = tryMergeWithNextParagraph(optimized, i);
@@ -1080,13 +1091,16 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
                 const validLinks = allPotentialLinks.filter(link => isSourceTextInContent(link.text, mergedContent));
 
                 return {
-                    chunkId: previousChunk.chunkId, // Keep original chunkId
-                    type: 'paragraph',
-                    content: mergedContent,
-                    pageNumber: previousChunk.pageNumber,
-                    wordCount: combinedWordCount,
-                    sentenceCount: previousChunk.sentenceCount + currentChunk.sentenceCount,
-                    links: removeDuplicateLinks(validLinks)
+                    merged: {
+                        chunkId: previousChunk.chunkId, // Keep original chunkId
+                        type: 'paragraph',
+                        content: mergedContent,
+                        pageNumber: previousChunk.pageNumber,
+                        wordCount: combinedWordCount,
+                        sentenceCount: previousChunk.sentenceCount + currentChunk.sentenceCount,
+                        links: removeDuplicateLinks(validLinks)
+                    },
+                    indexToReplace: i // IMPORTANT: Return the index of the paragraph we're merging with
                 };
             }
         }
