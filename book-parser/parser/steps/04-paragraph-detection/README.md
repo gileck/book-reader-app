@@ -39,7 +39,7 @@ The step uses **advanced paragraph optimization** with intelligent header detect
 All rules must be satisfied for header classification:
 
 1. **Length**: 2-5 words only (Numbered headers allow 2–12 words)
-2. **No Punctuation**: Does not end with sentence punctuation (., !, ?)
+2. **No Punctuation**: Does not end with sentence punctuation (., !, ?) or colons (:) - colons typically introduce lists or content
 3. **Capitalization**: Starts with a capital letter
 4. **Line Structure**: Appears as standalone line
 5. **Context - Previous**: Previous line ends with sentence-ending punctuation

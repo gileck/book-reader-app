@@ -340,6 +340,11 @@ function splitIntoSentences(text) {
     // Protect numbered list items
     let processedText = protectedText.replace(/(\d+)\.\s+/g, '$1<LISTNUM> ');
 
+    // Protect single capital letter list markers (A., B., C., etc.)
+    // These are common in options, lists, and multiple choice questions
+    // Pattern: word boundary + single capital letter + period (+ optional space)
+    processedText = processedText.replace(/\b([A-Z])\.\s*/g, '$1<LETTERLIST> ');
+
     // Protect ellipses (". . .", "...", "…")
     const ellipsisReplacements = [];
     processedText = processedText.replace(/(?:\.\s*\.\s*\.|\.{3}|…)/g, (match) => {
@@ -356,6 +361,16 @@ function splitIntoSentences(text) {
         return token;
     });
 
+    // Protect punctuation inside parentheses and brackets
+    // This prevents splitting on questions/statements that are parenthetical
+    // e.g., "The question (should I invest?) was difficult" should not split
+    const parentheticalReplacements = [];
+    processedText = processedText.replace(/([(\[])([^()\[\]]*[.!?]+[^()\[\]]*)([\])])/g, (match, open, content, close) => {
+        const token = `<PAREN_${parentheticalReplacements.length}>`;
+        parentheticalReplacements.push(match);
+        return token;
+    });
+
     // Normalize whitespace (collapse layout newlines) and split on EOS punctuation
     processedText = processedText.replace(/[\t\r\n]+/g, ' ').replace(/\s{2,}/g, ' ');
     processedText = processedText.replace(/([.!?]+)(["'""')\]]*)\s+/g, '$1$2\n');
@@ -364,9 +379,11 @@ function splitIntoSentences(text) {
 
     // Restore tokens
     const restored = parts.map(s => {
-        let out = s.replace(/<DEC_(\d+)>/g, (_, idx) => decimalReplacements[Number(idx)] || '');
+        let out = s.replace(/<PAREN_(\d+)>/g, (_, idx) => parentheticalReplacements[Number(idx)] || '');
+        out = out.replace(/<DEC_(\d+)>/g, (_, idx) => decimalReplacements[Number(idx)] || '');
         out = out.replace(/<ELLIPSIS_(\d+)>/g, (_, idx) => ellipsisReplacements[Number(idx)] || '…');
         out = out.replace(/(\d+)<LISTNUM>/g, '$1.');
+        out = out.replace(/([A-Z])<LETTERLIST>/g, '$1.');
         out = restoreAbbreviations(out, protectionMap);
         return out;
     });

@@ -111,7 +111,7 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 ## Validation Success Criteria
 
 ✅ **All chunks have valid types** (text, header, image)  
-✅ **Text chunks meet word count requirements** (50-200 words)  
+✅ **Text chunks meet minimum requirements** (≥ 1 word; ultra-short < 10 words merged)  
 ✅ **Paragraph indexes are sequential** starting from 1  
 ✅ **Headers and images have null paragraph index**  
 ✅ **Content is clean** (no newlines, proper formatting)  

@@ -36,28 +36,37 @@ The step uses **pdfjs-dist** library for PDF processing with a custom page-by-pa
 3. **Text Item Extraction**: Extract individual text items from each page
 4. **Smart Text Joining**: Apply improved spacing logic to prevent word concatenation
 5. **Quality Validation**: Perform word length analysis to detect text quality issues
+6. **Text Caching**: Saves extracted text to `.txt` file for future runs to avoid re-parsing
 
 ### Key Features
 
+- **Text File Caching**: Automatically saves extracted text to a `.txt` file (same name as PDF) and uses cached version in subsequent runs
+- **Force Reparse Option**: Set `config.FORCE_REPARSE = true` to force re-extraction from PDF even if `.txt` file exists
 - **Simplified Spacing Logic**: Adds spaces after each text item unless it already ends with space/newline
 - **Paragraph Break Preservation**: Treats empty items with `hasEOL: true` as explicit blank lines, preserving paragraph boundaries and list breaks
 - **Word Boundary Preservation**: Prevents common PDF extraction issues like "forTransformer" → "for Transformer"
+- **Standalone Page Number Removal**: Removes standalone page numbers from the beginning of each page
 - **Complete Content Coverage**: Ensures no sections or chapters are missing
-- **Robust Error Handling**: Graceful fallback mechanisms for different PDF structures
+- **Robust Error Handling**: Graceful fallback mechanisms for different PDF structures and missing dependencies
 
 ### Processing Steps
 
 ```javascript
-1. Load PDF document from configured path
-2. For each page:
+1. Check if .txt file exists (same name as PDF but with .txt extension)
+   - If exists and FORCE_REPARSE is false, load cached text and return
+   - If FORCE_REPARSE is true, delete existing .txt file and proceed
+2. Load PDF document from configured path
+3. For each page:
    - Extract text items array
    - For each item:
      - If `item.str` is empty (`""`) and `item.hasEOL === true`, append a newline to preserve a blank line (paragraph break)
      - Otherwise, append the text and add either a newline (when `hasEOL` is true) or a space (for flow)
+   - Remove standalone page numbers from the beginning of each page
    - Accumulate page text with proper boundaries
-3. Generate extraction metadata
-4. Validate text quality using word length analysis
-5. Save debug information for troubleshooting
+4. Generate extraction metadata
+5. Validate text quality using word length analysis
+6. Save extracted text to .txt file for future use
+7. Save debug information for troubleshooting
 ```
 
 ## Validation
@@ -118,7 +127,8 @@ const isValid = textExtraction.validate(result);
 const config = {
     INPUT_PDF: '/path/to/book.pdf',
     OUTPUT_DIR: '/path/to/output',
-    DEBUG_DIR: '/path/to/debug'
+    DEBUG_DIR: '/path/to/debug',
+    FORCE_REPARSE: false  // Set to true to force re-extraction from PDF
 };
 ```
 
@@ -126,16 +136,20 @@ const config = {
 ```javascript
 {
     rawText: "Complete extracted text content...",
+    rawTextContentItems: [...],  // Raw PDF.js textContent.items for debugging
     metadata: {
         textExtraction: {
             characterCount: 743700,
             pageCount: 317,
+            lineCount: 12345,
+            wordCount: 85000,
+            literalNewlineCount: 234,
             extractionTime: "2024-01-15T10:30:00Z",
-            wordAnalysis: {
-                totalWords: 85000,
-                averageWordLength: 5.2,
-                suspiciousWords: []
-            }
+            averageWordsPerPage: 268,
+            extractionMethod: "page_by_page_fixed",  // or "cached-txt-file" or "text-file-load"
+            source: "cached-txt-file",  // Only present when using cached .txt file
+            txtFilePath: "/path/to/book.txt",  // Only present when using cached .txt file
+            totalTextContentItems: 15678
         }
     }
 }

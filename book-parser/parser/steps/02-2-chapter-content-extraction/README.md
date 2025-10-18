@@ -27,54 +27,64 @@ This step extracts the actual content for each chapter identified in Step 2.1. I
 
 ### Technical Approach
 
-The step processes each chapter sequentially using position-based text extraction:
+The step processes each chapter sequentially using page-based text extraction:
 
 #### 1. Content Boundary Calculation
-- Uses chapter position metadata from Step 2.1
-- Calculates start and end positions in the raw text
-- Handles the last chapter (extends to end of document)
+- Uses chapter `startingPage` from Step 2.1
+- Calculates `pageNumberEnd` based on next chapter start or document end
+- Handles the last chapter (extends to last page in document)
 
 #### 2. Text Extraction
-- Extracts content between calculated boundaries
-- Preserves original text formatting and structure
+- Extracts content between page markers (`--- PAGE X ---` and `--- END PAGE Y ---`)
+- Preserves original text formatting and structure including page markers
 - Maintains character-level accuracy
 
-#### 3. Content Processing
+#### 3. Content Filtering
+- Filters out chapters with less than 10,000 characters (likely not real chapters, e.g., preface, acknowledgments)
+- Ensures only substantial chapters are included
+
+#### 4. Content Processing
 - Trims whitespace from extracted content
 - Calculates accurate word counts
 - Validates content quality and length
 
-#### 4. Metadata Generation
+#### 5. Metadata Generation
 - Creates chapter objects with content and metadata
-- Preserves original chapter information
+- Adds page range information (`pageNumberStart`, `pageNumberEnd`)
 - Adds processing statistics
 
 ### Processing Steps
 
 ```javascript
-1. For each chapter in chapterMetadata:
-   - Calculate content start position
-   - Determine content end position (next chapter start or document end)
-   - Extract text content between boundaries
+1. Sort chapters by starting page number
+2. For each chapter in chapterMetadata:
+   - Get pageNumberStart from chapter metadata (startingPage)
+   - Calculate pageNumberEnd (next chapter's startingPage - 1, or last page in document)
+   - Extract text content between page markers
    
-2. Process extracted content:
+3. Filter chapters:
+   - Remove chapters with less than 10,000 characters
+   - These are typically non-chapter sections (preface, acknowledgments, etc.)
+   
+4. Process extracted content:
    - Trim unnecessary whitespace
    - Calculate word count using proper word boundary detection
    - Validate content meets minimum requirements
    
-3. Create chapter objects:
+5. Create chapter objects:
    - Combine original metadata with extracted content
+   - Add page range (pageNumberStart, pageNumberEnd)
    - Add word count and content length statistics
-   - Preserve chapter numbering and titles
 ```
 
 ### Key Features
 
-- **Position-Based Extraction**: Uses precise text positions for accurate boundaries
+- **Page-Based Extraction**: Uses page markers for accurate chapter boundaries
 - **Flexible Boundary Handling**: Properly handles first, middle, and last chapters
+- **Chapter Filtering**: Removes short chapters (< 10,000 characters) that are likely not real content chapters
 - **Content Quality Assurance**: Validates extracted content meets standards
 - **Word Count Accuracy**: Uses robust word counting algorithms
-- **Metadata Preservation**: Maintains all original chapter information
+- **Metadata Preservation**: Maintains all original chapter information and adds page ranges
 
 ## Validation
 
@@ -91,8 +101,9 @@ The validation module (`02-2-chapter-content-extraction-validation.js`) implemen
 - **Purpose**: Verify successful content extraction for all chapters
 
 #### 3. Content Length Validation
-- **Rule**: Each chapter must have at least 100 characters
+- **Rule**: Each chapter must have at least 100 characters (after 10,000 character pre-filtering)
 - **Purpose**: Ensure substantial content was extracted (not just headers/metadata)
+- **Note**: The step pre-filters chapters with < 10,000 characters before validation
 
 #### 4. Word Count Validation
 - **Rule**: Each chapter must have at least 10 words with valid word count
@@ -118,12 +129,13 @@ const isValid = chapterContentExtraction.validate(result);
 ### Expected Input Structure
 ```javascript
 {
-    rawText: "Complete document text...",
+    rawText: "Complete document text with page markers...",
     chapterMetadata: [
         {
             title: "Introduction",
-            chapterNumber: 1,
-            position: 12450
+            chapterNumber: 0,
+            startingPage: 15,
+            endPage: 42
         }
         // ... more chapters
     ]
@@ -136,22 +148,32 @@ const isValid = chapterContentExtraction.validate(result);
     chapters: [
         {
             title: "Introduction",
-            chapterNumber: 1,
-            content: "This chapter introduces the main concepts...",
-            wordCount: 2450,
-            startingPage: 15,
-            endPage: 42
+            chapterNumber: 0,
+            pageNumberStart: 15,
+            pageNumberEnd: 42,
+            content: "--- PAGE 15 ---\nThis chapter introduces the main concepts...\n--- END PAGE 42 ---",
+            wordCount: 2450
         },
         {
             title: "The Science of Transformation", 
-            chapterNumber: 2,
-            content: "In this chapter, we explore the scientific basis...",
-            wordCount: 3200,
-            startingPage: 43,
-            endPage: 78
+            chapterNumber: 1,
+            pageNumberStart: 43,
+            pageNumberEnd: 78,
+            content: "--- PAGE 43 ---\nIn this chapter, we explore the scientific basis...\n--- END PAGE 78 ---",
+            wordCount: 3200
         }
-        // ... more chapters
-    ]
+        // ... more chapters (only chapters with ≥10,000 characters)
+    ],
+    metadata: {
+        chapterContentExtraction: {
+            totalChapters: 15,
+            originalChapterCount: 18,
+            filteredChapterCount: 3,
+            totalPages: 297,
+            averagePagesPerChapter: 19.8,
+            extractionMethod: "page_based_content_extraction_with_filtering"
+        }
+    }
 }
 ```
 
@@ -163,9 +185,15 @@ const isValid = chapterContentExtraction.validate(result);
 ## Content Extraction Strategy
 
 ### Boundary Detection
-- **Start Position**: Uses chapter position from metadata
-- **End Position**: Next chapter start or document end
+- **Start Page**: Uses `startingPage` from chapter metadata
+- **End Page**: Next chapter's `startingPage - 1`, or last page in document
+- **Page Markers**: Uses `--- PAGE X ---` and `--- END PAGE Y ---` markers
 - **Overlap Handling**: Ensures no content gaps or overlaps
+
+### Chapter Filtering
+- **Minimum Length**: 10,000 characters
+- **Purpose**: Removes short sections like preface, acknowledgments, dedication, etc.
+- **Timing**: Applied after extraction, before validation
 
 ### Word Counting Algorithm
 - **Pattern**: `/\s+/` split with empty string filtering

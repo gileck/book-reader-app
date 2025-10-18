@@ -6,14 +6,22 @@ The Metadata Extraction step analyzes the parsed book content to extract compreh
 
 ## Process
 
+### 0. Metadata Override (Highest Priority)
+- **Override File**: Looks for `metadata.json` in the same directory as the input PDF
+- **Format**: `{ "title": "Book Title", "author": "Author Name" }`
+- **Priority**: Overrides all other extraction methods when present
+- **Use Case**: Manual correction of incorrectly detected metadata
+
 ### 1. Title Extraction
-- **Title Page Patterns**: Searches for all-caps titles and title-author combinations
+- **PDF Metadata**: Extracts title from PDF document metadata (2nd priority)
+- **Title Page Patterns**: Searches for all-caps titles and title-author combinations (3rd priority)
 - **Copyright Page Analysis**: Extracts titles from copyright notices
 - **Chapter Analysis**: Falls back to first chapter title if it looks like a book title
 - **Confidence Scoring**: Ranks title candidates by extraction confidence
 
 ### 2. Author Extraction  
-- **"By Author" Patterns**: Searches for explicit author attributions
+- **PDF Metadata**: Extracts author from PDF document metadata (2nd priority)
+- **"By Author" Patterns**: Searches for explicit author attributions (3rd priority)
 - **Copyright Analysis**: Extracts author names from copyright notices
 - **Name Validation**: Filters out non-name patterns and validates proper names
 
@@ -94,6 +102,26 @@ The Metadata Extraction step analyzes the parsed book content to extract compreh
     extractedAt: "2024-01-01T12:00:00.000Z",
     parserVersion: 2
   }
+}
+```
+
+## Metadata Resolution Priority
+
+The step uses a priority system for metadata resolution:
+
+1. **Override File** (`metadata.json`) - Highest priority
+2. **PDF Metadata** - Embedded PDF document metadata
+3. **Text Pattern Matching** - Pattern-based extraction from content
+4. **Fallback Values** - "Unknown Title" / "Unknown Author"
+
+### Override File Format
+
+Create a `metadata.json` file in the same directory as the input PDF:
+
+```json
+{
+  "title": "Correct Book Title",
+  "author": "Correct Author Name"
 }
 ```
 

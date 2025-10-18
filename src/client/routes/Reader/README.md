@@ -16,6 +16,8 @@ The Reader is a sentence-based audio book player with real-time highlighting, su
 8. [Key Features](#key-features)
 9. [Usage Examples](#usage-examples)
 10. [Performance Optimizations](#performance-optimizations)
+11. [Troubleshooting](#troubleshooting)
+12. [Migration from Old System](#migration-from-old-system)
 
 ## Core Principles
 
@@ -228,6 +230,7 @@ export function useSentenceAudioController(
 **Key Features:**
 - Manages audio state (playing, current index, loading state)
 - Generates TTS on-demand with caching
+- Applies word timing offset for highlight synchronization
 - Tracks word timing for word-level highlighting
 - Handles auto-advance at sentence end
 - Pre-loads adjacent sentences with priority loading
@@ -912,27 +915,41 @@ The word timing offset allows users to adjust when word/line highlighting occurs
 - **Negative offset** (e.g., -100ms): Highlights advance 100ms later than the audio
 - Applied in `handleTimeUpdate` by adjusting `audio.currentTime` before comparing with timepoints
 - Works for both **word** and **line** highlighting modes in Full and Focus readers
+- **Reactive**: Changes apply immediately during playback without needing to restart
 
 ```typescript
 // In useSentenceAudioController
-const handleTimeUpdate = () => {
-    const currentTime = audio.currentTime;
-    // Apply offset (convert ms to seconds)
-    const adjustedTime = currentTime + (wordTimingOffset / 1000);
+useEffect(() => {
+    const audio = audioRef.current;
     
-    // Find current word based on adjusted time
-    let newWordIndex = 0;
-    for (let i = 0; i < timepoints.length; i++) {
-        if (adjustedTime >= timepoints[i].time) {
-            newWordIndex = timepoints[i].wordIndex;
-        } else {
-            break;
+    const handleTimeUpdate = () => {
+        const currentTime = audio.currentTime;
+        // Apply offset (convert ms to seconds)
+        // Positive = highlight earlier, negative = highlight later
+        const adjustedTime = currentTime + (wordTimingOffset / 1000);
+        
+        // Find current word based on adjusted time
+        let newWordIndex = 0;
+        for (let i = 0; i < timepoints.length; i++) {
+            if (adjustedTime >= timepoints[i].time) {
+                newWordIndex = timepoints[i].wordIndex;
+            } else {
+                break;
+            }
         }
-    }
-    // Update state triggers both word and line highlights
-    setState(prev => ({ ...prev, currentWordIndex: newWordIndex }));
-};
+        // Update state triggers both word and line highlights
+        setState(prev => ({ ...prev, currentWordIndex: newWordIndex }));
+    };
+    
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
+    
+    // IMPORTANT: wordTimingOffset in dependency array ensures
+    // the event listener updates when offset changes
+}, [wordTimingOffset, ...otherDeps]);
 ```
+
+**Implementation Note:** The `wordTimingOffset` parameter must be included in the `useEffect` dependency array to ensure the event listener is recreated when the offset changes, preventing stale closure issues.
 
 ### 7. Smart Audio Navigation
 
@@ -1168,6 +1185,75 @@ useEffect(() => { stateRef.current = state; }, [state]);
 
 // Use in async callbacks
 const currentState = stateRef.current;
+```
+
+---
+
+## Troubleshooting
+
+### Word Timing Offset Not Working
+
+**Symptom:** Changing the Word Timing Adjustment slider doesn't affect highlight timing.
+
+**Cause:** Missing dependency in `useEffect` causes stale closure - event listener uses old offset value.
+
+**Solution:** Ensure `wordTimingOffset` is in the dependency array:
+```typescript
+useEffect(() => {
+    // ... handleTimeUpdate uses wordTimingOffset
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
+}, [sentences.length, goToSentence, play, wordTimingOffset]); // ← Must include wordTimingOffset
+```
+
+**Expected Behavior:** Offset changes apply immediately during playback without restart.
+
+### Highlights Out of Sync with Audio
+
+**Possible Causes:**
+1. **TTS provider timing issues** - Different providers have different timing accuracy
+2. **Playback speed** - Higher speeds may amplify timing inaccuracies
+3. **Word boundary detection** - Some words may have incorrect timing from TTS
+
+**Solution:** Use Word Timing Adjustment to manually calibrate:
+- If highlights lag behind: Use positive offset (+50ms to +200ms)
+- If highlights jump ahead: Use negative offset (-50ms to -200ms)
+- Adjust in 25ms increments while playing to find optimal value
+
+### Line Highlighting Position Not Updating
+
+**Symptom:** In Focus Mode with line highlighting, the highlight bar doesn't move or moves to wrong position.
+
+**Cause:** The line position calculation in `FocusReader` depends on `currentWordIndex` from `useSentenceAudioController`.
+
+**Check:**
+1. Verify `ttsEnabled` is true (line highlighting disabled when TTS off)
+2. Ensure `highlightMode === 'line'`
+3. Check that words have `data-word-index` attributes
+4. Verify `currentWordIndex` is updating (check React DevTools)
+
+**Debug:**
+```typescript
+// In FocusReader.tsx, add console log to track updates
+useEffect(() => {
+    console.log('Line position update:', { currentWordIndex, linePos });
+}, [currentWordIndex, linePos]);
+```
+
+### Audio Not Playing After Navigation
+
+**Symptom:** Audio stops after using Next/Prev buttons and doesn't resume.
+
+**Cause:** The `intendedPlay` flag may not be set correctly.
+
+**Expected Behavior:**
+- If audio was playing: Next/Prev should stop current audio and start playing new chunk
+- If audio was paused: Next/Prev should navigate but stay paused
+
+**Debug:**
+```typescript
+// In useSentenceAudioController.ts
+console.log('Navigation:', { intendedPlay, currentSentenceIndex });
 ```
 
 ---

@@ -14,7 +14,7 @@
  * 
  * Header Detection Rules (ALL must be satisfied):
  * 1. Length: 2-5 words only
- * 2. No Punctuation: Does not end with sentence punctuation (., !, ?)
+ * 2. No Punctuation: Does not end with sentence punctuation (., !, ?) or colons (:)
  * 3. Capitalization: Starts with a capital letter
  * 4. Line Structure: Appears as standalone line
  * 5. Context - Previous: Previous line ends with sentence-ending punctuation
@@ -767,8 +767,9 @@ function isHeader(line, lineIndex, allLines) {
         return false;
     }
 
-    // Rule 2: No Punctuation - Does not end with sentence punctuation
-    if (/[.!?]$/.test(tline)) {
+    // Rule 2: No Punctuation - Does not end with sentence punctuation or colons
+    // Colons typically introduce lists or content, not standalone headers
+    if (/[.!?:]$/.test(tline)) {
         return false;
     }
 

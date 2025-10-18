@@ -20,7 +20,7 @@ Each step is implemented as a separate module in its own folder within the `step
 6. **`03-1-link-detection/`** - Extract and resolve PDF internal links using chapter-relative text position selectors ✅
 7. **`03-2-image-extraction/`** - Extract images and insert `[[IMG...]]` markers into chapter content ✅
 8. **`04-paragraph-detection/`** - Detect paragraph boundaries and headers, preserving image markers; intelligently separates numbered lists and bullet points after newlines while keeping colon-introduced lists together ✅
-9. **`05-sentence-detection/`** - Split paragraphs into single-sentence text chunks for granular audio playback; only merges ultra-short sentences (<12 words) backward within the same paragraph; protects abbreviations, decimals, and ellipses ✅
+9. **`05-sentence-detection/`** - Split paragraphs into single-sentence text chunks for granular audio playback; only merges ultra-short sentences (<12 words) backward within the same paragraph; protects abbreviations, decimals, ellipses, letter list markers (A., B., C., etc.), and parenthetical punctuation (e.g., "(should I invest?)") ✅
 10. **`05-1-image-markers-to-chunks/`** - Convert `[[IMG...]]` markers (embedded and standalone) to image chunks ✅
 11. **`05-2-link-chunk-references/`** - Resolve link references to chunk IDs ✅
 12. **`06-metadata-extraction/`** - Extract comprehensive book metadata and statistics ✅
@@ -182,7 +182,7 @@ module.exports = { validate, /* helper functions */ };
 - A structured summary of validation pass/fail per step is also saved to `validation.json` in the output directory.
 - This ensures CI logs and terminal output stay readable, with full details available in files for inspection.
 
-Note: Sentence termination deliberately ignores spaced ellipses (". . .") so they are not treated as end-of-sentence markers during splitting or validation.
+Note: Sentence termination deliberately ignores spaced ellipses (". . ."), single capital letter list markers (A., B., C., etc.), and numbered list markers (1., 2., 3., etc.) so they are not treated as end-of-sentence markers during splitting or validation.
 
 Main step files import validation functions from the same directory:
 
@@ -281,6 +281,31 @@ const COMMON_ABBREVIATIONS = [
     // And many more...
 ];
 ```
+
+### Sentence Splitting with Protection
+The `splitIntoSentences` function provides comprehensive protection for non-sentence-ending periods:
+
+```javascript
+// Protects against incorrect sentence splitting:
+// ✅ Abbreviations: "Dr. Smith said..." → ONE sentence
+// ✅ Decimals: "The value is 3.14 units" → ONE sentence  
+// ✅ Numbered lists: "Step 1. Do this" → ONE sentence
+// ✅ Letter list markers: "Option A. First choice" → ONE sentence
+// ✅ Ellipses: "He paused... then spoke" → ONE sentence
+// ✅ Parenthetical punctuation: "The question (should I invest?) was difficult" → ONE sentence
+
+const sentences = splitIntoSentences(text);
+```
+
+**Protection Mechanisms**:
+1. **Abbreviation tokens**: Replace known abbreviations (Mr., Dr., Ph.D., etc.) with temporary tokens
+2. **Letter list markers**: Protect single capital letters followed by periods (A., B., C., etc.) - common in multiple choice questions and options
+3. **Numbered list markers**: Protect numbered items (1., 2., 3., etc.)
+4. **Ellipsis protection**: Handle all ellipsis formats (". . .", "...", "…")
+5. **Decimal protection**: Preserve numeric decimals (3.14, 2.5, etc.)
+6. **Parenthetical protection**: Protect punctuation inside parentheses and brackets to prevent splitting on parenthetical questions/statements like "(should I invest?)" or "[what happened?]"
+
+After splitting on true sentence terminators, all protected patterns are restored to their original form.
 
 ### Unicode Support
 Enhanced validation functions properly handle international characters:
@@ -885,6 +910,39 @@ if (endsWithInitials(content) && !endsWithAbbreviation(content) && !endsWithComm
 - ✅ Enhanced abbreviation list with 60+ entries covering academic, organizational, publishing, and geographic terms
 - ✅ Pipeline runs successfully with zero validation errors after consolidation
 
+#### **Letter List Marker Protection ✅** (October 2025)
+**Critical Fix**: Added protection for single capital letter list markers (A., B., C., etc.) to prevent incorrect sentence splitting.
+
+**Problem Identified**:
+- Text like "What would it be like to own them? A. one chance in a million to win $1 million B." was being split incorrectly
+- Parser treated "A.", "B.", "C." as sentence endings, creating invalid chunks
+- Common in multiple-choice questions, options, and lettered lists
+- Caused "paragraph should not end with initials" validation errors
+
+**Solution Implemented**:
+1. **Enhanced Sentence Splitting Protection**:
+   - Added letter list marker protection to `splitIntoSentences` function in `text-processing-utils.js`
+   - Pattern: `\b([A-Z])\.\s*` replaced with tokens before splitting
+   - Tokens restored after splitting on true sentence terminators
+   - Follows same protection pattern as numbered lists (1., 2., 3., etc.)
+
+**Technical Implementation**:
+```javascript
+// In splitIntoSentences function:
+// Protect single capital letter list markers (A., B., C., etc.)
+processedText = processedText.replace(/\b([A-Z])\.\s*/g, '$1<LETTERLIST> ');
+
+// After splitting...
+// Restore letter list markers
+out = out.replace(/([A-Z])<LETTERLIST>/g, '$1.');
+```
+
+**Results**:
+- ✅ Fixed incorrect sentence splitting for multiple-choice questions and options
+- ✅ Eliminated "paragraph should not end with initials" validation errors for letter list markers
+- ✅ Maintains proper sentence boundaries while protecting common list formats
+- ✅ Consistent with existing protection for numbered lists and abbreviations
+
 #### **Smart Constraint Relaxation for Small Chunks ✅** (January 2025)
 **Major Logic Enhancement**: Resolved merging constraint conflict that created orphan small chunks failing validation.
 
@@ -960,7 +1018,7 @@ if (newWordCount > maxWords && !isVerySmallChunk) break;
 1. **Single-Sentence Output**: Step 5 now produces predominantly single-sentence text chunks for maximum audio playback granularity
 2. **Ultra-Short Merging**: Only merges sentences with <12 words backward into the previous sentence within the same paragraph
 3. **Shared Splitting Logic**: Moved `splitIntoSentences` to `text-processing-utils.js` so parser and validation use identical logic
-4. **Abbreviation Protection**: Comprehensive protection for abbreviations (Mr., Dr., etc.), ellipses (..., …), decimals (3.14), and numbered lists
+4. **Abbreviation Protection**: Comprehensive protection for abbreviations (Mr., Dr., etc.), ellipses (..., …), decimals (3.14), numbered lists (1., 2., 3., etc.), and letter list markers (A., B., C., etc.)
 5. **Consistent Validation**: Validation uses the same `splitIntoSentences` function, ensuring accurate error detection
 
 **Reader Changes**:
@@ -1239,7 +1297,7 @@ The pipeline was optimized by combining related steps:
 - Step 3-1: Link Detection ✅ **[WITH CHAPTER-RELATIVE POSITIONING + NO-PAGE MODEL]**
 - Step 3-2: Image Extraction ✅ **[WITH IMAGE MARKER SYSTEM + ENHANCED PAGE NUMBER REMOVAL]**
 - Step 4: Paragraph Detection ✅ **[WITH SMART LIST SEPARATION + IMAGE MARKER PRESERVATION + CHAPTER CONTENT CLEANUP]**
-- Step 5: Sentence Detection ✅ **[SINGLE-SENTENCE CHUNKS FOR AUDIO PLAYBACK + ULTRA-SHORT SENTENCE MERGING (<12 WORDS) + SHARED splitIntoSentences + ABBREVIATION/ELLIPSIS PROTECTION + STANDALONE IMAGE MARKER DETECTION]**
+- Step 5: Sentence Detection ✅ **[SINGLE-SENTENCE CHUNKS FOR AUDIO PLAYBACK + ULTRA-SHORT SENTENCE MERGING (<12 WORDS) + SHARED splitIntoSentences + ABBREVIATION/ELLIPSIS/LIST-MARKER PROTECTION + STANDALONE IMAGE MARKER DETECTION]**
 - Step 5-1: Image Markers to Chunks ✅ **[WITH EMBEDDED & STANDALONE MARKER PROCESSING + VALIDATION]**
 - Step 5-2: Link Chunk References ✅ **[WITH BIDIRECTIONAL LINK RESOLUTION + VALIDATION]**
 - Step 6: Metadata Extraction ✅ **[WITH COMPREHENSIVE STATISTICS + VALIDATION]**

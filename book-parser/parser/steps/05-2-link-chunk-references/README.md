@@ -3,8 +3,8 @@
 ## Overview
 
 Step 5.2 enhances links by adding chunk references based on their roles using selector-based anchoring (no pages):
-- For "source" role links: adds `targetChunkId` (the chunk containing the target text)
-- For "target" role links: adds `sourceChunkId` (the chunk containing the source text)
+- For "source" role links: adds `targetChunkIndex` (the array index of the chunk containing the target text)
+- For "target" role links: adds `sourceChunkIndex` (the array index of the chunk containing the source text)
 
 This enables bidirectional navigation between linked content in the rendered book.
 
@@ -17,8 +17,8 @@ This enables bidirectional navigation between linked content in the rendered boo
 
 ### Output
 - Same structure as input with enhanced links
-- Source links gain `targetChunkId` field pointing to target chunk
-- Target links gain `sourceChunkId` field pointing to source chunk
+- Source links gain `targetChunkIndex` field (array index) pointing to target chunk
+- Target links gain `sourceChunkIndex` field (array index) pointing to source chunk
 - All existing link data is preserved
 
 ## Technical Approach
@@ -52,8 +52,8 @@ This enables bidirectional navigation between linked content in the rendered boo
 ## Key Features
 
 ### Bidirectional References
-- Source links point to target chunks via `targetChunkId`
-- Target links point back to source chunks via `sourceChunkId`
+- Source links point to target chunks via `targetChunkIndex` (array index)
+- Target links point back to source chunks via `sourceChunkIndex` (array index)
 - Enables navigation in both directions
 
 ### Smart Text Matching
@@ -70,9 +70,9 @@ This enables bidirectional navigation between linked content in the rendered boo
 
 ### Link Enhancement Requirements
 - All original link fields must be preserved
-- `targetChunkId` added to source links when target found
-- `sourceChunkId` added to target links when source found
-- Chunk references must point to existing chunks
+- `targetChunkIndex` added to source links when target found
+- `sourceChunkIndex` added to target links when source found
+- Chunk references must point to valid array indexes
 
 ### Quality Metrics
 - At least 50% of links should have chunk references resolved
@@ -81,8 +81,8 @@ This enables bidirectional navigation between linked content in the rendered boo
 
 ### Statistics Tracking
 - Total links processed
-- Number of successful target chunk ID assignments
-- Number of successful source chunk ID assignments
+- Number of successful target chunk index assignments
+- Number of successful source chunk index assignments
 - Number of unresolved references
 
 ## Usage
@@ -95,8 +95,8 @@ const result = step52.execute(pipelineState);
 
 // Output: enhanced links with chunk references
 const enhancedLink = result.chapters[0].chunks[0].links[0];
-console.log(enhancedLink.targetChunkId); // For source links
-console.log(enhancedLink.sourceChunkId); // For target links
+console.log(enhancedLink.targetChunkIndex); // For source links (array index)
+console.log(enhancedLink.sourceChunkIndex); // For target links (array index)
 ```
 
 ## Example Output Structure
@@ -111,7 +111,7 @@ console.log(enhancedLink.sourceChunkId); // For target links
     "chapterId": 0,
     "selector": { "start": 1205, "end": 1206 }
   },
-  "targetChunkId": "0_120"
+  "targetChunkIndex": 120
 }
 ```
 
@@ -125,7 +125,7 @@ console.log(enhancedLink.sourceChunkId); // For target links
     "chapterId": 0,
     "selector": { "start": 10452, "end": 10480 }
   },
-  "sourceChunkId": "0_14"
+  "sourceChunkIndex": 14
 }
 ```
 

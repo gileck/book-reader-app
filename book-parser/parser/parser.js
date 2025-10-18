@@ -299,6 +299,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                         );
 
                                         let shouldSkip = false;
+                                        let filteredValidationOutput = validationOutput;
 
                                         // Check chunk-level skipping with wildcard support
                                         if (allSkippedPatterns.length > 0) {
@@ -314,6 +315,37 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                             const chunksToSkip = chunkIds.filter(shouldSkipChunk);
 
                                             if (chunksToSkip.length > 0) {
+                                                // Filter out errors from skipped chunks from validation output
+                                                const errorLines = validationOutput.split('\n');
+                                                const filteredLines = [];
+                                                let skipCurrentError = false;
+
+                                                for (const line of errorLines) {
+                                                    // Check if this line starts a new error (e.g., "  1. Text chunk 41_6...")
+                                                    const errorMatch = line.match(/^\s*\d+\.\s+(Text chunk|Paragraph chunk|Header|Sentence chunk)\s+(\d+_\d+)/);
+                                                    if (errorMatch) {
+                                                        const chunkId = errorMatch[2];
+                                                        skipCurrentError = shouldSkipChunk(chunkId);
+                                                    }
+
+                                                    // Keep the line if we're not skipping the current error
+                                                    if (!skipCurrentError) {
+                                                        filteredLines.push(line);
+                                                    }
+                                                }
+
+                                                filteredValidationOutput = filteredLines.join('\n');
+
+                                                // Renumber errors sequentially in filtered output
+                                                let errorNumber = 1;
+                                                filteredValidationOutput = filteredValidationOutput.replace(/^\s*\d+\./gm, (match) => {
+                                                    const spaces = match.match(/^\s*/)[0];
+                                                    return `${spaces}${errorNumber++}.`;
+                                                });
+
+                                                // Recalculate error count from filtered output
+                                                const filteredErrorCount = (filteredValidationOutput.match(/^\s*\d+\./gm) || []).length;
+
                                                 // If all error chunks should be skipped, skip the entire validation
                                                 if (chunkIds.every(shouldSkipChunk)) {
                                                     shouldSkip = true;
@@ -323,8 +355,19 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                                     if (skipRatio >= 0.8) {
                                                         shouldSkip = true;
                                                     } else {
-                                                        // Keep console clean: summarize only
-                                                        console.log(`⏭️  Partial skip in ${stepName}: ${chunksToSkip.length} / ${chunkIds.length} chunks match skip patterns.Details: ${validationOutputPath}`);
+                                                        // Update validation output to show only non-skipped errors
+                                                        if (filteredErrorCount > 0) {
+                                                            // Update the header to reflect filtered count
+                                                            filteredValidationOutput = filteredValidationOutput.replace(
+                                                                /validation failed with \d+ error\(s\):/,
+                                                                `validation failed with ${filteredErrorCount} error(s) (${chunksToSkip.length} skipped):`
+                                                            );
+                                                            // Keep console clean: summarize only
+                                                            console.log(`⏭️  Partial skip in ${stepName}: ${chunksToSkip.length} error(s) filtered out, ${filteredErrorCount} remaining. Details: ${validationOutputPath}`);
+                                                        } else {
+                                                            // All errors were filtered out
+                                                            shouldSkip = true;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -358,19 +401,26 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                             }
                                         } else if (!isValid) {
                                             // Not skipped and invalid: print only summary
-                                            if (errorCount > 0) {
-                                                console.log(`❗ Validation failed in ${stepName}: ${errorCount} error(s).Details: ${validationOutputPath}`);
+                                            // Recalculate error count from filtered output
+                                            const filteredErrorCount = (filteredValidationOutput.match(/^\s*\d+\./gm) || []).length || (filteredValidationOutput.trim() ? 1 : 0);
+
+                                            if (filteredErrorCount > 0) {
+                                                console.log(`❗ Validation failed in ${stepName}: ${filteredErrorCount} error(s). Details: ${validationOutputPath}`);
                                                 if (Array.isArray(chapterErrorSummary) && chapterErrorSummary.length > 0) {
                                                     console.log('   Error breakdown by chapter:');
                                                     for (const line of chapterErrorSummary) {
                                                         console.log(`   ${line}`);
                                                     }
                                                 }
-                                                // Only write detailed output when NOT skipped
-                                                if (validationOutput.trim()) {
+                                                // Only write detailed output when NOT skipped - use filtered output
+                                                if (filteredValidationOutput.trim()) {
                                                     const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
-                                                    fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
+                                                    fs.appendFileSync(validationOutputPath, header + filteredValidationOutput + '\n');
                                                 }
+                                            } else {
+                                                // All errors were filtered out, validation passes
+                                                isValid = true;
+                                                console.log(`⏭️  Validation skipped in ${stepName}: all errors were from skipped chunks.`);
                                             }
                                         }
 
