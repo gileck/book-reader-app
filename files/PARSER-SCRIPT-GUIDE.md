@@ -36,11 +36,15 @@ node run-parser-and-upload.js "./The Breathing Cure" --force-reparse
 🎯 Mode: parse-upload-images
 
 💡 To re-run with the same options without prompts:
-   node run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload-images
+   node files/run-parser-and-upload.js "files/The Breathing Cure" --mode=parse-upload-images
 
 📚 Starting book parser...
    [parsing operations begin here]
 ```
+
+**Note**: The paths shown are relative to your current working directory. If you run the script from different locations, it will adjust the paths accordingly:
+- From project root: `node files/run-parser-and-upload.js "files/The Breathing Cure" --mode=...`
+- From files directory: `node run-parser-and-upload.js "The Breathing Cure" --mode=...`
 
 ### Non-Interactive Mode Examples
 
@@ -78,23 +82,36 @@ node run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload --force-r
 
 ### First Time Processing a Book
 
-1. **Run interactively** to see options and verify everything works:
+1. **Navigate to the desired directory** (project root or files directory)
+
+2. **Run interactively** to see options and verify everything works:
    ```bash
+   # From project root
+   node files/run-parser-and-upload.js
+   
+   # OR from files directory
+   cd files
    node run-parser-and-upload.js
    ```
 
-2. **Select your folder** from the list (shows which have existing output)
+3. **Select your folder** from the list (shows which have existing output)
 
-3. **Choose mode** based on your needs:
+4. **Choose mode** based on your needs:
    - Testing? → `parse-only`
    - Production upload? → `parse-upload-images`
 
-4. **Copy the suggested command** shown upfront (before operations start) for future reruns
+5. **Copy the suggested command** shown upfront (before operations start) for future reruns
+   - The command will have correct paths based on your current directory
 
 ### Reprocessing a Book
 
-Use the non-interactive command from your first run:
+Use the non-interactive command from your first run (paths will be relative to where you ran it):
+
 ```bash
+# Example command (generated based on your working directory)
+node files/run-parser-and-upload.js "files/The Breathing Cure" --mode=parse-upload-images
+
+# OR if you ran from files directory
 node run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload-images
 ```
 
@@ -122,6 +139,33 @@ When uploading, the script will:
 
 This prevents accidental duplicate books and allows flexible book management.
 
+## Smart Path Handling
+
+The script automatically generates commands with correct paths based on your current working directory:
+
+### Running from Project Root
+```bash
+# Interactive
+node files/run-parser-and-upload.js
+
+# Generated command will be:
+node files/run-parser-and-upload.js "files/The Breathing Cure" --mode=parse-upload
+```
+
+### Running from Files Directory
+```bash
+# Interactive (from files directory)
+node run-parser-and-upload.js
+
+# Generated command will be:
+node run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload
+```
+
+**Benefits:**
+- ✅ Copy/paste commands work from where you ran them
+- ✅ No manual path adjustments needed
+- ✅ Works whether you're in project root or files directory
+
 ## Command-Line Flags
 
 | Flag | Short | Description |
@@ -143,6 +187,9 @@ The parser caches extracted text to speed up subsequent runs:
 
 ### Development & Testing
 ```bash
+# From files directory
+cd files
+
 # Parse only, check output manually
 node run-parser-and-upload.js "My Book" --mode=parse-only
 
@@ -152,19 +199,24 @@ node run-parser-and-upload.js "My Book" --mode=upload-only
 
 ### Production Upload (With Images)
 ```bash
-# One command to parse and upload everything
+# From project root
+node files/run-parser-and-upload.js "files/My Book" --mode=parse-upload-images
+
+# OR from files directory
+cd files
 node run-parser-and-upload.js "My Book" --mode=parse-upload-images
 ```
 
 ### Fixing Parser Issues
 ```bash
-# Force reparse from PDF and upload
+# Force reparse from PDF and upload (from files directory)
 node run-parser-and-upload.js "My Book" --mode=parse-upload --force-reparse
 ```
 
 ### Batch Processing
 ```bash
-# Use a simple shell loop
+# From files directory - use a simple shell loop
+cd files
 for book in "Book1" "Book2" "Book3"; do
   node run-parser-and-upload.js "$book" --mode=parse-upload-images
 done
@@ -192,10 +244,12 @@ done
 
 1. **Use interactive mode first** to understand the workflow
 2. **Copy the suggested command upfront** (shown before operations start) for future runs
-3. **Start with parse-only** when testing parser changes
-4. **Use upload-only** when you just need to re-upload existing output
-5. **Force reparse sparingly** - cached text files are faster and allow manual fixes
-6. **Command appears early** - You can copy it immediately after making selections, even if parsing takes a long time
+3. **Paths are automatic** - The command will work from where you ran it (no path adjustments needed)
+4. **Start with parse-only** when testing parser changes
+5. **Use upload-only** when you just need to re-upload existing output
+6. **Force reparse sparingly** - cached text files are faster and allow manual fixes
+7. **Command appears early** - You can copy it immediately after making selections, even if parsing takes a long time
+8. **Recommended location** - Run from `files/` directory for shorter paths in commands
 
 ## Environment Variables
 

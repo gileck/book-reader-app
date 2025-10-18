@@ -25,6 +25,7 @@ interface ReaderContentProps {
     textColor: string;
     highlightColor: string;
     sentenceHighlightColor: string;
+    ttsEnabled?: boolean;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -42,7 +43,8 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     fontFamily,
     textColor,
     highlightColor,
-    sentenceHighlightColor
+    sentenceHighlightColor,
+    ttsEnabled = true
 }) => {
     const readerContentRef = useRef<HTMLDivElement>(null);
     const [cssVarsApplied, setCssVarsApplied] = useState(false);
@@ -134,6 +136,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 handleLinkClick={handleLinkNavigation}
                 currentChunkIndex={currentChunkIndex}
                 onChunkDoubleClick={onNavigateToChunk}
+                ttsEnabled={ttsEnabled}
             />
         </Box>
     );

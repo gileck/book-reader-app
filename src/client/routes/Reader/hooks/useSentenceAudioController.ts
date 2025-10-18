@@ -11,6 +11,7 @@ export interface SentenceAudioState {
     intendedPlay: boolean;
     ttsError: string | null;
     ttsServiceAvailable: boolean;
+    isCurrentSentenceLoading: boolean;
 }
 
 export interface SentenceAudioApi {
@@ -18,6 +19,7 @@ export interface SentenceAudioApi {
     currentSentenceIndex: number;
     currentWordIndex: number;
     isPlaying: boolean;
+    isCurrentSentenceLoading: boolean;
     play: () => void;
     pause: () => void;
     nextSentence: () => void;
@@ -36,7 +38,8 @@ const getDefaultState = (): SentenceAudioState => ({
     isPlaying: false,
     intendedPlay: false,
     ttsError: null,
-    ttsServiceAvailable: true
+    ttsServiceAvailable: true,
+    isCurrentSentenceLoading: false
 });
 
 export function useSentenceAudioController(
@@ -47,7 +50,8 @@ export function useSentenceAudioController(
     ttsEnabled: boolean,
     initialSentenceIndex: number | null,
     initialWordIndex: number | null,
-    highlightMode: 'word' | 'line' | 'off' = 'word'
+    highlightMode: 'word' | 'line' | 'off' = 'word',
+    wordTimingOffset: number = 0
 ): SentenceAudioApi {
     const [state, setState] = useState<SentenceAudioState>(getDefaultState());
     const stateRef = useRef(state);
@@ -74,14 +78,28 @@ export function useSentenceAudioController(
 
     const update = useCallback((patch: Partial<SentenceAudioState>) => setState(prev => ({ ...prev, ...patch })), []);
 
-    const loadSentence = useCallback(async (index: number) => {
+    const loadSentence = useCallback(async (index: number, isCurrentSentence: boolean = false) => {
         if (!ttsEnabled || !chapter) return;
-        if (cacheRef.current[index]) return;
+
+        // Check if already cached
+        if (cacheRef.current[index]) {
+            // If this is the current sentence and it's already cached, clear loading state
+            if (isCurrentSentence) {
+                update({ isCurrentSentenceLoading: false });
+            }
+            return;
+        }
+
         const chunk = sentences[index];
         if (!chunk) return;
 
         // Skip TTS for images only - play both text and headers
         if (chunk.type === 'image' || !chunk.text?.trim()) return;
+
+        // Mark as loading if this is the current sentence
+        if (isCurrentSentence) {
+            update({ isCurrentSentenceLoading: true });
+        }
 
         try {
             const result = await generateTts({
@@ -100,6 +118,11 @@ export function useSentenceAudioController(
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : 'TTS error';
             update({ ttsError: errorMessage });
+        } finally {
+            // Clear loading state if this was the current sentence
+            if (isCurrentSentence) {
+                update({ isCurrentSentenceLoading: false });
+            }
         }
     }, [chapter, selectedProvider, selectedVoice, sentences, ttsEnabled, update]);
 
@@ -223,21 +246,41 @@ export function useSentenceAudioController(
 
     // Preload current sentence and next 3 sentences for smooth playback
     const hasInitiallyLoadedRef = useRef(false);
+    const prevTtsEnabledRef = useRef(ttsEnabled);
+
     useEffect(() => {
         const { currentSentenceIndex } = stateRef.current;
 
-        if (!hasInitiallyLoadedRef.current && sentences.length > 0) {
-            // On initial load: preload current + next 3 sentences
-            const initialIndexes = [
-                currentSentenceIndex,
-                currentSentenceIndex + 1,
-                currentSentenceIndex + 2,
-                currentSentenceIndex + 3
-            ].filter(i => i >= 0 && i < sentences.length);
-            initialIndexes.forEach(i => void loadSentence(i));
+        // Reset flag when TTS is toggled on (from false to true)
+        if (ttsEnabled && !prevTtsEnabledRef.current) {
+            hasInitiallyLoadedRef.current = false;
+        }
+        prevTtsEnabledRef.current = ttsEnabled;
+
+        if (!hasInitiallyLoadedRef.current && sentences.length > 0 && ttsEnabled) {
+            // On initial load: First load current + next sentence (priority)
+            const currentLoad = loadSentence(currentSentenceIndex, true);
+            const nextLoad = currentSentenceIndex + 1 < sentences.length
+                ? loadSentence(currentSentenceIndex + 1)
+                : Promise.resolve();
             hasInitiallyLoadedRef.current = true;
-        } else {
-            // When moving between sentences: preload the next sentence
+
+            // Then background prefetch sentences +2 and +3 after priority loads are done
+            void Promise.all([currentLoad, nextLoad]).then(() => {
+                const furtherIndexes = [
+                    currentSentenceIndex + 2,
+                    currentSentenceIndex + 3
+                ].filter(i => i >= 0 && i < sentences.length);
+                furtherIndexes.forEach(i => void loadSentence(i));
+            });
+        } else if (hasInitiallyLoadedRef.current && ttsEnabled) {
+            // When moving to a new sentence: check if it's cached, if not mark as loading
+            const isCached = !!cacheRef.current[currentSentenceIndex];
+            if (!isCached) {
+                void loadSentence(currentSentenceIndex, true);
+            }
+
+            // Preload the next sentence (rolling window)
             // (the 2 after should already be prefetched from previous moves)
             const nextIndex = currentSentenceIndex + 3;
             if (nextIndex >= 0 && nextIndex < sentences.length) {
@@ -250,7 +293,7 @@ export function useSentenceAudioController(
                 void loadSentence(prevIndex);
             }
         }
-    }, [state.currentSentenceIndex, sentences.length, loadSentence]);
+    }, [state.currentSentenceIndex, sentences.length, loadSentence, ttsEnabled]);
 
     // Reset initial load flag when chapter changes
     useEffect(() => {
@@ -266,7 +309,17 @@ export function useSentenceAudioController(
 
     // Handle word highlighting when word index changes
     useEffect(() => {
-        // Only apply word highlighting when highlightMode is 'word'
+        // Clear highlights when TTS is disabled
+        if (!ttsEnabled) {
+            const previous = previousHighlightRef.current;
+            if (previous) {
+                WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
+                previousHighlightRef.current = null;
+            }
+            return;
+        }
+
+        // Only apply word highlighting when highlightMode is 'word' and TTS is enabled
         if (highlightMode !== 'word') return;
         if (!state.isPlaying) return;
 
@@ -292,7 +345,7 @@ export function useSentenceAudioController(
                 );
             }
         };
-    }, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex, highlightMode]);
+    }, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex, highlightMode, ttsEnabled]);
 
     // Setup audio element and event listeners
     useEffect(() => {
@@ -308,10 +361,14 @@ export function useSentenceAudioController(
             const timepoints = timepointsRef.current;
             if (timepoints.length === 0) return;
 
+            // Apply word timing offset (convert ms to seconds)
+            // Positive offset = highlight earlier, negative = highlight later
+            const adjustedTime = currentTime + (wordTimingOffset / 1000);
+
             // Find the current word index based on timepoints
             let newWordIndex = 0;
             for (let i = 0; i < timepoints.length; i++) {
-                if (currentTime >= timepoints[i].time) {
+                if (adjustedTime >= timepoints[i].time) {
                     newWordIndex = timepoints[i].wordIndex;
                 } else {
                     break;
@@ -347,13 +404,14 @@ export function useSentenceAudioController(
             audio.removeEventListener('timeupdate', handleTimeUpdate);
             audio.removeEventListener('ended', handleEnded);
         };
-    }, [sentences.length, goToSentence, play]);
+    }, [sentences.length, goToSentence, play, wordTimingOffset]);
 
     return {
         sentences,
         currentSentenceIndex: state.currentSentenceIndex,
         currentWordIndex: state.currentWordIndex,
         isPlaying: state.isPlaying,
+        isCurrentSentenceLoading: state.isCurrentSentenceLoading,
         play,
         pause,
         nextSentence,

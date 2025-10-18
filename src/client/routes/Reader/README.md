@@ -220,27 +220,48 @@ export function useSentenceAudioController(
     ttsEnabled: boolean,
     initialSentenceIndex: number | null,
     initialWordIndex: number | null,
-    highlightMode: 'word' | 'line' | 'off'
+    highlightMode: 'word' | 'line' | 'off',
+    wordTimingOffset: number = 0
 ): SentenceAudioApi
 ```
 
 **Key Features:**
-- Manages audio state (playing, current index, etc.)
+- Manages audio state (playing, current index, loading state)
 - Generates TTS on-demand with caching
 - Tracks word timing for word-level highlighting
 - Handles auto-advance at sentence end
-- Pre-loads adjacent sentences for smooth playback
+- Pre-loads adjacent sentences with priority loading
+- Provides visual feedback when loading current sentence
 
 ### Audio State
 
 ```typescript
 interface SentenceAudioState {
-    currentSentenceIndex: number;  // Current chunk index (sentence index = chunk index!)
-    currentWordIndex: number;       // Current word within sentence
-    isPlaying: boolean;             // Playback state
-    intendedPlay: boolean;          // User wants continuous play
-    ttsError: string | null;        // Error message
-    ttsServiceAvailable: boolean;   // TTS service status
+    currentSentenceIndex: number;       // Current chunk index (sentence index = chunk index!)
+    currentWordIndex: number;           // Current word within sentence
+    isPlaying: boolean;                 // Playback state
+    intendedPlay: boolean;              // User wants continuous play
+    isCurrentSentenceLoading: boolean;  // Loading state for current sentence only
+    ttsError: string | null;            // Error message
+    ttsServiceAvailable: boolean;       // TTS service status
+}
+
+interface SentenceAudioApi {
+    sentences: TextChunkClient[];
+    currentSentenceIndex: number;
+    currentWordIndex: number;
+    isPlaying: boolean;
+    isCurrentSentenceLoading: boolean;  // Exposed for UI loading indicators
+    play: () => void;
+    pause: () => void;
+    nextSentence: () => void;
+    prevSentence: () => void;
+    goToSentence: (index: number) => void;
+    handleWordClick: (sentenceIndex: number, wordIndex: number) => void;
+    preload: (sentenceIndex: number) => void | Promise<void>;
+    retryFailed: (sentenceIndex: number) => void;
+    ttsError: string | null;
+    ttsServiceAvailable: boolean;
 }
 ```
 
@@ -253,28 +274,46 @@ const cacheRef = useRef<Record<number, {
     timepoints: Array<{ time: number; wordIndex: number }>;
 }>>({});
 
-const loadSentence = async (index: number) => {
-    // Skip if already cached
-    if (cacheRef.current[index]) return;
+const loadSentence = async (index: number, isCurrentSentence: boolean = false) => {
+    // Check if already cached
+    if (cacheRef.current[index]) {
+        // Clear loading state if this is current sentence
+        if (isCurrentSentence) {
+            update({ isCurrentSentenceLoading: false });
+        }
+        return;
+    }
     
-    // Skip non-text chunks
-    if (chunk.type !== 'text') return;
+    // Skip non-playable chunks
+    if (chunk.type === 'image' || !chunk.text?.trim()) return;
     
-    // Generate TTS with word timing
-    const result = await generateTts({
-        text: chunk.text,
-        provider: selectedProvider,
-        voiceId: selectedVoice
-    });
+    // Mark as loading if this is the current sentence
+    if (isCurrentSentence) {
+        update({ isCurrentSentenceLoading: true });
+    }
     
-    // Cache audio + word timings
-    cacheRef.current[index] = {
-        src: `data:audio/mp3;base64,${result.audioContent}`,
-        timepoints: result.timepoints.map((tp, i) => ({
-            time: tp.timeSeconds,
-            wordIndex: i
-        }))
-    };
+    try {
+        // Generate TTS with word timing
+        const result = await generateTts({
+            text: chunk.text,
+            provider: selectedProvider,
+            voiceId: selectedVoice
+        });
+        
+        // Cache audio + word timings
+        cacheRef.current[index] = {
+            src: `data:audio/mp3;base64,${result.audioContent}`,
+            timepoints: result.timepoints.map((tp, i) => ({
+                time: tp.timeSeconds,
+                wordIndex: i
+            }))
+        };
+    } finally {
+        // Clear loading state if this was the current sentence
+        if (isCurrentSentence) {
+            update({ isCurrentSentenceLoading: false });
+        }
+    }
 };
 ```
 
@@ -484,7 +523,8 @@ export const useReader = () => {
         userSettings.ttsEnabled,
         state.currentChunkIndex ?? 0,
         0,
-        userSettings.highlightMode
+        userSettings.highlightMode,
+        userSettings.wordSpeedOffset
     );
     
     // Create audio playback adapter
@@ -864,7 +904,35 @@ const handleHighlightModeChange = async (mode: 'word' | 'line' | 'off') => {
 - Playback speed (0.5x - 2.0x)
 - Voice selection (multiple providers)
 - TTS provider selection
-- Word timing offset adjustment
+- **Word timing offset adjustment** (-500ms to +500ms)
+
+**Word Timing Offset:**
+The word timing offset allows users to adjust when word/line highlighting occurs relative to the audio:
+- **Positive offset** (e.g., +100ms): Highlights advance 100ms earlier than the audio
+- **Negative offset** (e.g., -100ms): Highlights advance 100ms later than the audio
+- Applied in `handleTimeUpdate` by adjusting `audio.currentTime` before comparing with timepoints
+- Works for both **word** and **line** highlighting modes in Full and Focus readers
+
+```typescript
+// In useSentenceAudioController
+const handleTimeUpdate = () => {
+    const currentTime = audio.currentTime;
+    // Apply offset (convert ms to seconds)
+    const adjustedTime = currentTime + (wordTimingOffset / 1000);
+    
+    // Find current word based on adjusted time
+    let newWordIndex = 0;
+    for (let i = 0; i < timepoints.length; i++) {
+        if (adjustedTime >= timepoints[i].time) {
+            newWordIndex = timepoints[i].wordIndex;
+        } else {
+            break;
+        }
+    }
+    // Update state triggers both word and line highlights
+    setState(prev => ({ ...prev, currentWordIndex: newWordIndex }));
+};
+```
 
 ### 7. Smart Audio Navigation
 
@@ -957,52 +1025,125 @@ if (cacheRef.current[index]) {
 }
 ```
 
-### 2. Aggressive TTS Pre-fetching
+### 2. Smart TTS Pre-fetching with Priority Loading
 
-**Initial Load Strategy:**
+**TTS Toggle Handling:**
 ```typescript
-// On page load: prefetch current + next 3 sentences
+// Detect when TTS is toggled from OFF to ON
+const prevTtsEnabledRef = useRef(ttsEnabled);
+
 useEffect(() => {
-    if (!hasInitiallyLoadedRef.current && sentences.length > 0) {
-        const initialIndexes = [
-            currentSentenceIndex,      // Current
-            currentSentenceIndex + 1,  // Next
-            currentSentenceIndex + 2,  // Next +2
-            currentSentenceIndex + 3   // Next +3
-        ].filter(i => i >= 0 && i < sentences.length);
-        
-        initialIndexes.forEach(i => void loadSentence(i));
-        hasInitiallyLoadedRef.current = true;
+    // Reset flag when TTS is toggled on (from false to true)
+    if (ttsEnabled && !prevTtsEnabledRef.current) {
+        hasInitiallyLoadedRef.current = false;
     }
-}, [state.currentSentenceIndex, sentences.length, loadSentence]);
+    prevTtsEnabledRef.current = ttsEnabled;
+    
+    // ... prefetching logic runs with reset flag
+}, [ttsEnabled, state.currentSentenceIndex]);
+```
+
+**Priority Loading Strategy:**
+```typescript
+// When TTS is enabled or page loads: Priority + Background approach
+if (!hasInitiallyLoadedRef.current && sentences.length > 0 && ttsEnabled) {
+    // PRIORITY: Load current + next sentence first (parallel)
+    const currentLoad = loadSentence(currentSentenceIndex, true);
+    const nextLoad = currentSentenceIndex + 1 < sentences.length 
+        ? loadSentence(currentSentenceIndex + 1) 
+        : Promise.resolve();
+    
+    hasInitiallyLoadedRef.current = true;
+    
+    // BACKGROUND: After priority loads complete, prefetch +2 and +3
+    void Promise.all([currentLoad, nextLoad]).then(() => {
+        const furtherIndexes = [
+            currentSentenceIndex + 2,
+            currentSentenceIndex + 3
+        ].filter(i => i >= 0 && i < sentences.length);
+        furtherIndexes.forEach(i => void loadSentence(i));
+    });
+}
 ```
 
 **Rolling Window Strategy:**
 ```typescript
 // When moving between sentences: maintain 3-sentence lookahead
-useEffect(() => {
-    if (hasInitiallyLoadedRef.current) {
-        // Prefetch +3 ahead (rolling window)
-        // The next 2 are already cached from previous moves
-        const nextIndex = currentSentenceIndex + 3;
-        if (nextIndex < sentences.length) {
-            void loadSentence(nextIndex);
+else if (hasInitiallyLoadedRef.current && ttsEnabled) {
+    // Load current if not cached (with loading state)
+    const isCached = !!cacheRef.current[currentSentenceIndex];
+    if (!isCached) {
+        void loadSentence(currentSentenceIndex, true);
+    }
+    
+    // Prefetch +3 ahead (rolling window)
+    const nextIndex = currentSentenceIndex + 3;
+    if (nextIndex < sentences.length) {
+        void loadSentence(nextIndex);
+    }
+    
+    // Also prefetch previous for backward navigation
+    const prevIndex = currentSentenceIndex - 1;
+    if (prevIndex >= 0) {
+        void loadSentence(prevIndex);
+    }
+}
+```
+
+**Loading State Tracking:**
+```typescript
+const loadSentence = async (index: number, isCurrentSentence: boolean = false) => {
+    // Check if already cached
+    if (cacheRef.current[index]) {
+        if (isCurrentSentence) {
+            update({ isCurrentSentenceLoading: false });
         }
-        
-        // Also prefetch previous for backward navigation
-        const prevIndex = currentSentenceIndex - 1;
-        if (prevIndex >= 0) {
-            void loadSentence(prevIndex);
+        return;
+    }
+    
+    // Mark as loading if this is the current sentence
+    if (isCurrentSentence) {
+        update({ isCurrentSentenceLoading: true });
+    }
+    
+    try {
+        // Generate TTS...
+        const result = await generateTts({ text, provider, voiceId });
+        cacheRef.current[index] = { src, timepoints };
+    } finally {
+        // Clear loading state
+        if (isCurrentSentence) {
+            update({ isCurrentSentenceLoading: false });
         }
     }
-}, [state.currentSentenceIndex]);
+};
+```
+
+**Visual Loading Indicator:**
+The AudioControls component displays a circular progress spinner around the play button when loading:
+```typescript
+// In AudioControls.tsx
+{isCurrentChunkLoading && (
+    <CircularProgress
+        size={72}
+        thickness={2}
+        sx={{
+            color: '#4caf50',
+            position: 'absolute',
+            // Centered over play button
+        }}
+    />
+)}
 ```
 
 **Benefits:**
-- ✅ **Instant playback** - current sentence always ready
-- ✅ **3-sentence buffer** - next 3 sentences pre-cached
-- ✅ **Efficient** - only loads 1 new sentence per move
-- ✅ **Smooth transitions** - no waiting between sentences
+- ⚡ **Fastest time-to-play** - current sentence loads first (priority)
+- 🎯 **Smart prioritization** - most critical audio loads before others
+- 🔄 **Background prefetching** - next sentences load seamlessly after
+- 📊 **Loading feedback** - visual spinner shows when current sentence is loading
+- ✅ **TTS toggle aware** - prefetches immediately when TTS is enabled
+- 🎵 **Smooth playback** - 3-sentence buffer maintains seamless transitions
+- 🔀 **Navigation ready** - uncached sentences load with visual feedback
 
 ### 3. DOM-Based Word Highlighting
 ```typescript

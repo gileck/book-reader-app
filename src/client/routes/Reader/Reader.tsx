@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { Box, Typography, CircularProgress, Paper, Alert, Snackbar, Fab, ToggleButtonGroup, ToggleButton, Tooltip } from '@mui/material';
+import { Box, Typography, CircularProgress, Paper, Alert, Snackbar, Fab, Tabs, Tab } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { useRouter } from '../../router';
 import { useReader } from './hooks/useReader';
@@ -14,8 +14,10 @@ import { ThemeModal } from '../../components/ThemeModal';
 import { UserThemeProvider } from '../../components/UserThemeProvider';
 import { ReaderHeader } from './components/ReaderHeader';
 import { ReaderContent } from './components/ReaderContent';
-import { BookQAPanel } from './components/BookQAPanel';
 import { BookQAChatSettings } from './components/BookQAPanel/BookQAChatSettings';
+import { ChatContent } from './components/BookQAPanel/ChatContent';
+import { ChatInput } from './components/BookQAPanel/ChatInput';
+import { PanelHeader } from './components/BookQAPanel/PanelHeader';
 import { CostApprovalDialog } from './components/CostApprovalDialog';
 import { ChapterSelector } from './components/ChapterSelector';
 import { FocusReader } from './FocusReader';
@@ -53,6 +55,11 @@ export const Reader = () => {
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
+    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa'>('full');
+
+    // QA Chat state
+    const [qaQuestion, setQaQuestion] = useState('');
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     // Initialize bookQA hook first with temporary context functions
     const bookQA = useBookQA({
@@ -73,17 +80,20 @@ export const Reader = () => {
 
     // Sync reading mode from URL param on load/change
     useEffect(() => {
-        const urlMode = (queryParams.mode as 'full' | 'focus' | undefined) || undefined;
-        if (urlMode && urlMode !== appSettings.readingMode) {
-            updateSettings({ readingMode: urlMode });
+        const urlMode = (queryParams.mode as 'full' | 'focus' | 'qa' | undefined) || undefined;
+        if (urlMode) {
+            setActiveTab(urlMode);
+            if (urlMode !== 'qa' && urlMode !== appSettings.readingMode) {
+                updateSettings({ readingMode: urlMode });
+            }
+        } else {
+            // Default to current reading mode setting
+            setActiveTab(appSettings.readingMode || 'full');
         }
     }, [queryParams.mode, appSettings.readingMode, updateSettings]);
 
     // Initialize content context hook with bookQA context lines
     const contentContext = useContentContext(chapter, audio, bookQA);
-
-    // Determine mode (unified sentence controller used for both full and focus)
-    const isFocusMode = (appSettings.readingMode || 'full') === 'focus';
 
     // Initialize scroll handling hook
     const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
@@ -105,7 +115,7 @@ export const Reader = () => {
 
     // Show a floating button when current chunk is outside of the scroll container's viewport (full mode only)
     useEffect(() => {
-        if (appSettings.readingMode === 'focus') {
+        if (activeTab !== 'full') {
             setShowScrollToCurrent(false);
             return;
         }
@@ -158,21 +168,69 @@ export const Reader = () => {
             if (retryTimeout) clearTimeout(retryTimeout);
             cancelAnimationFrame(raf);
         };
-    }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length, appSettings.readingMode]);
+    }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length, activeTab]);
 
-    const handleModeChange = useCallback((_: unknown, nextMode: 'full' | 'focus' | null) => {
-        const mode = nextMode || 'full';
-        if (mode !== appSettings.readingMode) {
-            updateSettings({ readingMode: mode });
+    const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa') => {
+        setActiveTab(newTab);
+        // Update reading mode setting for focus/full tabs
+        if (newTab !== 'qa' && newTab !== appSettings.readingMode) {
+            updateSettings({ readingMode: newTab });
         }
         // Sync URL param
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
-            if (mode === 'full') params.delete('mode'); else params.set('mode', mode);
+            if (newTab === 'full') params.delete('mode'); else params.set('mode', newTab);
             const path = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
             navigate(path);
         }
     }, [appSettings.readingMode, updateSettings, navigate]);
+
+    const handleOpenQAChat = useCallback(() => {
+        setActiveTab('qa');
+        // Sync URL param
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            params.set('mode', 'qa');
+            const path = `${window.location.pathname}?${params.toString()}`;
+            navigate(path);
+        }
+    }, [navigate]);
+
+    // QA Chat handlers
+    const handleQaSubmit = useCallback((e: React.FormEvent) => {
+        e.preventDefault();
+        if (qaQuestion.trim() && !bookQA.isLoading) {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
+            setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'instant' }), 0);
+            bookQA.submitQuestion(qaQuestion.trim());
+            setQaQuestion('');
+        }
+    }, [qaQuestion, bookQA]);
+
+    const handleQaKeyPress = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleQaSubmit(e);
+        }
+    }, [handleQaSubmit]);
+
+    const handleQaReply = useCallback((messageIndex: number, messageContent: string) => {
+        bookQA.setReplyContext(messageIndex, messageContent);
+        setQaQuestion(`Reply to: "${messageContent.slice(0, 50)}${messageContent.length > 50 ? '...' : ''}" - `);
+    }, [bookQA]);
+
+    const handleTextSelection = useCallback((selectedText: string) => {
+        if (selectedText.trim()) {
+            setQaQuestion(selectedText.trim());
+        }
+    }, []);
+
+    // Scroll QA messages to bottom when they change
+    useEffect(() => {
+        if (activeTab === 'qa' && bookQA.messages.length > 0) {
+            setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'instant' }), 100);
+        }
+    }, [activeTab, bookQA.messages, bookQA.isLoading]);
 
     if ((loading && !chapterTransitionLoading) || !settings.settingsLoaded) {
         return (
@@ -215,23 +273,126 @@ export const Reader = () => {
             textColor={settings.textColor}
         >
             <Box>
-                {/* Mode Toggle */}
-                <Box sx={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', justifyContent: 'flex-end', maxWidth: 800, mx: 'auto', px: 1, pt: 1 }}>
-                    <Tooltip title="Reading Mode">
-                        <ToggleButtonGroup
-                            value={isFocusMode ? 'focus' : 'full'}
-                            exclusive
-                            size="small"
-                            onChange={handleModeChange}
-                        >
-                            <ToggleButton value="full">Full</ToggleButton>
-                            <ToggleButton value="focus">Focus</ToggleButton>
-                        </ToggleButtonGroup>
-                    </Tooltip>
+                {/* Tab Menu */}
+                <Box sx={{
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 10,
+                    borderBottom: 1,
+                    borderColor: 'divider',
+                    backdropFilter: 'blur(10px)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                    '@media (prefers-color-scheme: dark)': {
+                        backgroundColor: 'rgba(18, 18, 18, 0.95)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                    }
+                }}>
+                    <Tabs
+                        value={activeTab}
+                        onChange={handleTabChange}
+                        centered
+                        sx={{
+                            maxWidth: 800,
+                            mx: 'auto',
+                            '& .MuiTabs-indicator': {
+                                height: 3,
+                                borderRadius: '3px 3px 0 0'
+                            },
+                            '& .MuiTab-root': {
+                                color: 'text.primary',
+                                fontWeight: 500,
+                                fontSize: '0.95rem',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em',
+                                minHeight: 56,
+                                '@media (prefers-color-scheme: dark)': {
+                                    color: 'rgba(255, 255, 255, 0.7)'
+                                }
+                            },
+                            '& .MuiTab-root.Mui-selected': {
+                                color: 'primary.main',
+                                fontWeight: 600,
+                                '@media (prefers-color-scheme: dark)': {
+                                    color: 'primary.light'
+                                }
+                            }
+                        }}
+                    >
+                        <Tab label="Full" value="full" />
+                        <Tab label="Focus" value="focus" />
+                        <Tab label="QA Chat" value="qa" />
+                    </Tabs>
                 </Box>
 
-                {isFocusMode ? (
-                    <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} />
+                {activeTab === 'focus' ? (
+                    <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} ttsEnabled={settings.ttsEnabled} />
+                ) : activeTab === 'qa' ? (
+                    <Box sx={{
+                        maxWidth: 800,
+                        mx: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 'calc(100vh - 200px)',
+                        backgroundColor: 'background.default'
+                    }}>
+                        {/* QA Chat Header */}
+                        <Box sx={{
+                            px: 2,
+                            py: 1.5,
+                            borderBottom: 1,
+                            borderColor: 'divider',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'flex-end',
+                            minHeight: 56,
+                            backgroundColor: 'background.paper'
+                        }}>
+                            <PanelHeader
+                                onClose={() => setActiveTab('full')}
+                                onToggleFullScreen={() => { }}
+                                onClearHistory={bookQA.clearHistory}
+                                onOpenSettings={bookQA.openSettings}
+                                fullScreen={false}
+                            />
+                        </Box>
+
+                        {/* Chat Content */}
+                        <ChatContent
+                            messages={bookQA.messages}
+                            messagesEndRef={messagesEndRef}
+                            currentChapterNumber={chapter?.chapterNumber || 1}
+                            currentChapterTitle={chapter?.title || ''}
+                            fullScreen={true}
+                            currentSentence={contentContext.getCurrentSentence()}
+                            loading={bookQA.isLoading}
+                            onTextSelection={handleTextSelection}
+                            onReply={handleQaReply}
+                        />
+
+                        {/* Chat Input */}
+                        <ChatInput
+                            question={qaQuestion}
+                            loading={bookQA.isLoading}
+                            onQuestionChange={setQaQuestion}
+                            onSubmit={handleQaSubmit}
+                            onKeyPress={handleQaKeyPress}
+                            fullScreen={true}
+                            contextLines={bookQA.contextLines}
+                            onContextLinesChange={bookQA.handleContextLinesChange}
+                            selectedModelId={bookQA.selectedModelId}
+                            onModelChange={bookQA.handleModelChange}
+                            currentBookTitle={book?.title || ''}
+                            currentChapterTitle={chapter?.title || ''}
+                            currentChapterNumber={chapter?.chapterNumber || 1}
+                            currentSentence={contentContext.getCurrentSentence()}
+                            messages={bookQA.messages}
+                            getLastSentences={() => contentContext.getLastSentences}
+                            answerLength={bookQA.answerLength}
+                            answerLevel={bookQA.answerLevel}
+                            answerStyle={bookQA.answerStyle}
+                        />
+                    </Box>
                 ) : (
                     <Paper
                         ref={scrollContainerRef}
@@ -264,11 +425,12 @@ export const Reader = () => {
                             textColor={settings.textColor}
                             highlightColor={settings.highlightColor}
                             sentenceHighlightColor={settings.sentenceHighlightColor}
+                            ttsEnabled={settings.ttsEnabled}
                         />
                     </Paper>
                 )}
 
-                {!isFocusMode && showScrollToCurrent && (
+                {activeTab === 'full' && showScrollToCurrent && (
                     <Fab
                         color="primary"
                         size="medium"
@@ -294,10 +456,10 @@ export const Reader = () => {
                     onBookmark={bookmarks.handleBookmark}
                     onSettings={settings.handleSettings}
                     onSpeedSettings={settings.handleSpeedSettings}
-                    onAskAI={bookQA.togglePanel}
+                    onAskAI={handleOpenQAChat}
                     isPlaying={sentenceAudio.controller.isPlaying}
                     ttsEnabled={settings.ttsEnabled}
-                    isCurrentChunkLoading={false}
+                    isCurrentChunkLoading={sentenceAudio.controller.isCurrentSentenceLoading}
                     isBookmarked={bookmarks.isBookmarked}
                     progress={(sentenceAudio.controller.currentSentenceIndex / Math.max(sentenceAudio.sentences.length - 1, 1)) * 100}
                     playbackSpeed={settings.playbackSpeed}
@@ -357,31 +519,7 @@ export const Reader = () => {
                     onResetToDefaults={settings.handleResetToDefaults}
                 />
 
-                {/* Book Q&A Panel */}
-                <BookQAPanel
-                    open={bookQA.isOpen}
-                    fullScreen={bookQA.isFullScreen}
-                    loading={bookQA.isLoading}
-                    messages={bookQA.messages}
-                    onClose={bookQA.closePanel}
-                    onToggleFullScreen={bookQA.toggleFullScreen}
-                    onSubmitQuestion={bookQA.submitQuestion}
-                    onClearHistory={bookQA.clearHistory}
-                    onOpenSettings={bookQA.openSettings}
-                    currentBookTitle={book?.title || ''}
-                    currentChapterTitle={chapter?.title || ''}
-                    currentChapterNumber={chapter?.chapterNumber || 1}
-                    currentSentence={contentContext.getCurrentSentence()}
-                    contextLines={bookQA.contextLines}
-                    onContextLinesChange={bookQA.handleContextLinesChange}
-                    selectedModelId={bookQA.selectedModelId}
-                    onModelChange={bookQA.handleModelChange}
-                    onSetReplyContext={bookQA.setReplyContext}
-                    getLastSentences={() => contentContext.getLastSentences}
-                    answerLength={bookQA.answerLength}
-                    answerLevel={bookQA.answerLevel}
-                    answerStyle={bookQA.answerStyle}
-                />
+                {/* Book Q&A Panel - Now integrated as a tab, no separate panel needed */}
 
                 {/* Book Q&A Chat Settings */}
                 <BookQAChatSettings

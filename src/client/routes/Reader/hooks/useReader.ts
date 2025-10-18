@@ -316,7 +316,8 @@ export const useReader = () => {
         userSettings.ttsEnabled,
         state.currentChunkIndex ?? 0,
         0,
-        userSettings.highlightMode
+        userSettings.highlightMode,
+        userSettings.wordSpeedOffset
     );
 
     // Sync state.currentChunkIndex with sentenceAudio.currentSentenceIndex
@@ -334,7 +335,7 @@ export const useReader = () => {
         currentChunkIndex: sentenceAudio.currentSentenceIndex,
         currentWordIndex: sentenceAudio.currentWordIndex,
         isPlaying: sentenceAudio.isPlaying,
-        isCurrentChunkLoading: false,
+        isCurrentChunkLoading: sentenceAudio.isCurrentSentenceLoading,
         textChunks: sentenceAudio.sentences,
         handlePlay: sentenceAudio.play,
         handlePause: sentenceAudio.pause,

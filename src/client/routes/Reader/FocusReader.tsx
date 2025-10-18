@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import type { SentenceAudioApi } from './hooks/useSentenceAudioController';
 import type { TextChunkClient } from '@/apis/chapters/types';
 import { useUserTheme } from '@/client/components/UserThemeProvider';
 
-export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode?: 'word' | 'line' | 'off' }> = ({ controller, highlightMode = 'word' }) => {
+export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode?: 'word' | 'line' | 'off'; ttsEnabled?: boolean }> = ({ controller, highlightMode = 'word', ttsEnabled = true }) => {
     const sentences = controller.sentences;
     const currentSentenceIndex = controller.currentSentenceIndex;
     const isPlaying = controller.isPlaying;
     const currentWordIndex = controller.currentWordIndex;
     const { textColor, highlightColor, fontSize, lineHeight, fontFamily } = useUserTheme();
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
 
     const handleNext = useCallback(() => {
         controller.nextSentence();
@@ -63,6 +65,16 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
     const containerRef = useRef<HTMLDivElement>(null);
     // Line highlight overlay position (for straight background across the whole line)
     const [linePos, setLinePos] = useState<{ top: number; height: number } | null>(null);
+
+    // Clear all highlights when TTS is disabled
+    useEffect(() => {
+        if (!ttsEnabled) {
+            // Clear any existing word highlights from the DOM
+            const highlightedWords = document.querySelectorAll('.highlight-word');
+            highlightedWords.forEach(word => word.classList.remove('highlight-word'));
+        }
+    }, [ttsEnabled]);
+
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
@@ -77,6 +89,12 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
 
     // Compute current visual line (top/height) and which word indexes are on that line
     useEffect(() => {
+        // Clear line position when TTS is disabled
+        if (!ttsEnabled) {
+            setLinePos(null);
+            return;
+        }
+
         const updateLinePos = () => {
             const container = containerRef.current;
             if (!container) return;
@@ -92,7 +110,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
         updateLinePos();
         window.addEventListener('resize', updateLinePos);
         return () => window.removeEventListener('resize', updateLinePos);
-    }, [currentWordIndex, currentWords.length]);
+    }, [currentWordIndex, currentWords.length, ttsEnabled]);
 
     return (
         <Box
@@ -107,7 +125,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                 flexDirection: 'column',
                 justifyContent: 'center',
                 gap: 2,
-                background: 'var(--color-system-bg)',
+                backgroundColor: 'background.default',
                 color: textColor,
                 fontSize: `${fontSize}rem`,
                 lineHeight: lineHeight,
@@ -132,14 +150,9 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                         mx: -2,
                         px: 2,
                         py: 1.5,
-                        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-                        backgroundColor: 'rgba(211, 211, 211, 0.6)',
-                        '@media (prefers-color-scheme: dark)': {
-                            backgroundColor: 'rgba(51, 51, 51, 0.6)',
-                            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                            borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-                        }
+                        borderTop: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+                        borderBottom: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+                        backgroundColor: isDarkMode ? 'rgba(51, 51, 51, 0.6)' : 'rgba(211, 211, 211, 0.6)'
                     })
                 }}
                 onClick={(e) => {
@@ -179,28 +192,22 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                         py: 2,
                         px: 2,
                         mx: -2,
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
                         borderRadius: '12px',
-                        '@media (prefers-color-scheme: dark)': {
+                        ...(isDarkMode && {
                             backgroundColor: 'rgba(0, 0, 0, 0.6)'
-                        }
+                        })
                     }),
                     ...(isHeader && {
                         mx: -2,
                         px: 2,
                         py: 3,
-                        backgroundColor: '#d3d3d3',
-                        borderTop: '2px solid rgba(0, 0, 0, 0.1)',
-                        borderBottom: '2px solid rgba(0, 0, 0, 0.1)',
-                        '@media (prefers-color-scheme: dark)': {
-                            backgroundColor: '#333333',
-                            borderTop: '2px solid rgba(255, 255, 255, 0.1)',
-                            borderBottom: '2px solid rgba(255, 255, 255, 0.1)'
-                        }
+                        backgroundColor: isDarkMode ? '#333333' : 'rgba(211, 211, 211, 0.3)',
+                        borderTop: isDarkMode ? '2px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)',
+                        borderBottom: isDarkMode ? '2px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)'
                     })
                 }}
             >
-                {highlightMode === 'line' && linePos && !isHeader && (
+                {ttsEnabled && highlightMode === 'line' && linePos !== null && !isHeader && (
                     <Box
                         sx={{
                             position: 'absolute',
@@ -242,6 +249,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                                 {startsWithBullet && i > 0 && <br />}
                                 <span
                                     className={(() => {
+                                        if (!ttsEnabled) return '';
                                         if (highlightMode === 'off') return '';
                                         if (highlightMode === 'word') return (isPlaying && i === currentWordIndex) ? 'highlight-word' : '';
                                         // line mode uses overlay bar; no per-word class to keep line straight
@@ -266,14 +274,9 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                         mx: -2,
                         px: 2,
                         py: 1.5,
-                        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-                        backgroundColor: 'rgba(211, 211, 211, 0.6)',
-                        '@media (prefers-color-scheme: dark)': {
-                            backgroundColor: 'rgba(51, 51, 51, 0.6)',
-                            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                            borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-                        }
+                        borderTop: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+                        borderBottom: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+                        backgroundColor: isDarkMode ? 'rgba(51, 51, 51, 0.6)' : 'rgba(211, 211, 211, 0.6)'
                     })
                 }}
             >

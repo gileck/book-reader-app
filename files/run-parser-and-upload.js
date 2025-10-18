@@ -234,7 +234,7 @@ function buildRerunCommand(folderName, mode, forceReparse, scriptDir) {
     // Determine the script path relative to current working directory
     const cwd = process.cwd();
     const scriptPath = path.relative(cwd, path.join(scriptDir, 'run-parser-and-upload.js'));
-    
+
     let cmd = `node ${scriptPath || 'run-parser-and-upload.js'}`;
     cmd += ` "${folderName}"`;
     cmd += ` --mode=${mode}`;

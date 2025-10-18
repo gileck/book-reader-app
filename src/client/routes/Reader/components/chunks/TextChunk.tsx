@@ -8,6 +8,7 @@ interface TextChunkProps {
     currentChunkIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
     onChunkDoubleClick?: (chunkIndex: number) => void;
+    ttsEnabled?: boolean;
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({
@@ -15,9 +16,10 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     chunkIndex,
     currentChunkIndex,
     handleLinkClick,
-    onChunkDoubleClick
+    onChunkDoubleClick,
+    ttsEnabled = true
 }) => {
-    const isHighlighted = currentChunkIndex === chunkIndex;
+    const isHighlighted = ttsEnabled && currentChunkIndex === chunkIndex;
 
     return (
         <div

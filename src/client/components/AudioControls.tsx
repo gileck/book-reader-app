@@ -11,7 +11,8 @@ import {
     DialogContent,
     DialogActions,
     Button,
-    TextField
+    TextField,
+    CircularProgress
 } from '@mui/material';
 import {
     PlayArrow,
@@ -400,47 +401,65 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         <SkipPrevious />
                     </IconButton>
 
-                    {/* Play/Pause Button */}
-                    <IconButton
-                        onClick={isPlaying ? onPause : onPlay}
-                        disabled={isCurrentChunkLoading || hasError || ttsDisabled}
-                        title={
-                            ttsDisabled
-                                ? 'Text-to-Speech is disabled'
-                                : hasError
-                                    ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
-                                    : isCurrentChunkLoading
-                                        ? 'Loading current audio...'
-                                        : isPlaying
-                                            ? 'Pause'
-                                            : 'Play'
-                        }
-                        sx={{
-                            backgroundColor: (hasError || ttsDisabled)
-                                ? '#9e9e9e' // Gray when disabled due to error or TTS is off
-                                : isPlaying ? '#f44336' : '#4caf50',
-                            color: 'white',
-                            '&:hover': {
+                    {/* Play/Pause Button with Loading Indicator */}
+                    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                        <IconButton
+                            onClick={isPlaying ? onPause : onPlay}
+                            disabled={isCurrentChunkLoading || hasError || ttsDisabled}
+                            title={
+                                ttsDisabled
+                                    ? 'Text-to-Speech is disabled'
+                                    : hasError
+                                        ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
+                                        : isCurrentChunkLoading
+                                            ? 'Loading current audio...'
+                                            : isPlaying
+                                                ? 'Pause'
+                                                : 'Play'
+                            }
+                            sx={{
                                 backgroundColor: (hasError || ttsDisabled)
-                                    ? '#757575' // Darker gray on hover when disabled
-                                    : isPlaying ? '#d32f2f' : '#388e3c'
-                            },
-                            '&:disabled': {
-                                backgroundColor: '#9e9e9e', // Keep gray when disabled
-                                color: 'white'
-                            },
-                            width: 64,
-                            height: 64,
-                            mx: 1
-                        }}
-                        size="large"
-                    >
-                        {isPlaying ? (
-                            <Pause sx={{ fontSize: 32 }} />
-                        ) : (
-                            <PlayArrow sx={{ fontSize: 32 }} />
+                                    ? '#9e9e9e' // Gray when disabled due to error or TTS is off
+                                    : isPlaying ? '#f44336' : '#4caf50',
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: (hasError || ttsDisabled)
+                                        ? '#757575' // Darker gray on hover when disabled
+                                        : isPlaying ? '#d32f2f' : '#388e3c'
+                                },
+                                '&:disabled': {
+                                    backgroundColor: '#9e9e9e', // Keep gray when disabled
+                                    color: 'white'
+                                },
+                                width: 64,
+                                height: 64,
+                                mx: 1
+                            }}
+                            size="large"
+                        >
+                            {isPlaying ? (
+                                <Pause sx={{ fontSize: 32 }} />
+                            ) : (
+                                <PlayArrow sx={{ fontSize: 32 }} />
+                            )}
+                        </IconButton>
+                        {/* Loading Spinner Overlay */}
+                        {isCurrentChunkLoading && (
+                            <CircularProgress
+                                size={72}
+                                thickness={2}
+                                sx={{
+                                    color: '#4caf50',
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    marginTop: '-36px',
+                                    marginLeft: '-36px',
+                                    zIndex: 1
+                                }}
+                            />
                         )}
-                    </IconButton>
+                    </Box>
 
                     {/* Next Chunk Button */}
                     <IconButton

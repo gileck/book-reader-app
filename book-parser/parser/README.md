@@ -595,7 +595,89 @@ if ((startsWithNumberedListItem || startsWithBulletPoint) && currentParagraph.tr
 }
 ```
 
-#### **Chunk Optimization Duplication Bug Fix ✅** (Latest - October 2025)
+#### **Consecutive Header Detection Fix ✅** (Latest - October 2025)
+**Critical Bug Fix**: Fixed header detection failing when headers appeared consecutively (e.g., "PART I" followed by "The Secret of Breath"), causing section headers to be incorrectly merged with previous paragraphs.
+
+**Problem Identified**:
+- In "The Oxygen Advantage" book, "The Secret of Breath" appeared after "PART I" but was not detected as a header
+- Instead, it was merged with the previous paragraph, creating a validation error: paragraph ending with "...living —with less effort? The Secret of Breath"
+- Root cause: Header detection Rule 5 required the previous line to end with sentence punctuation (. ! ?), but "PART I" doesn't end with punctuation
+- This caused legitimate section headers to be misclassified as paragraphs
+
+**Solution Implemented**:
+1. **Enhanced Previous Line Check**:
+   - Modified `isHeader` function to allow consecutive headers
+   - If previous line doesn't end with sentence punctuation, check if it looks like a header itself
+   - Previous line "looks like a header" if: 1-5 words, no punctuation, capitalized
+2. **Exception Logic**:
+   - If previous line looks like a header → allow current line to be a header
+   - If previous line is regular text → require sentence punctuation (original behavior)
+3. **Preserved Behavior**:
+   - All other header detection rules remain unchanged
+   - Headers still require 2-5 words, no punctuation, capitalization, etc.
+   - All existing validation continues to pass
+
+**Technical Implementation**:
+```javascript
+// In 04-paragraph-detection.js, isHeader function:
+// Rule 5: Context - Previous - Previous line ends with sentence-ending punctuation
+// EXCEPTION: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
+const prevLine = findPreviousNonEmptyLine(allLines, lineIndex - 1);
+if (prevLine !== null && !sharedEndsWithSentenceTerminator(prevLine)) {
+    // Check if the previous line looks like a header itself
+    const prevWords = prevLine.trim().split(/\s+/);
+    const prevIsShort = prevWords.length >= 1 && prevWords.length <= 5;
+    const prevNoPunct = !/[.!?]$/.test(prevLine.trim());
+    const prevCapitalized = /^[A-Z]/.test(prevLine.trim());
+    const prevLooksLikeHeader = prevIsShort && prevNoPunct && prevCapitalized;
+    
+    // If previous line doesn't look like a header, reject current line as header
+    if (!prevLooksLikeHeader) {
+        return false;
+    }
+}
+```
+
+**Results**:
+- ✅ Consecutive headers now correctly detected (e.g., "PART I" → "The Secret of Breath")
+- ✅ Section headers no longer merged with paragraphs
+- ✅ Validation errors for "paragraph should end with sentence terminator" resolved
+- ✅ All existing header detection rules still work correctly
+
+**Before**:
+```json
+{
+  "chunkId": "1_36",
+  "content": "...living —with less effort? The Secret of Breath",
+  "type": "paragraph"
+},
+{
+  "chunkId": "1_37",
+  "content": "PART I",
+  "type": "header"
+}
+```
+
+**After**:
+```json
+{
+  "chunkId": "1_36",
+  "content": "...living —with less effort?",
+  "type": "paragraph"
+},
+{
+  "chunkId": "1_37",
+  "content": "PART I",
+  "type": "header"
+},
+{
+  "chunkId": "1_38",
+  "content": "The Secret of Breath",
+  "type": "header"
+}
+```
+
+#### **Chunk Optimization Duplication Bug Fix ✅** (October 2025)
 **Critical Bug Fix**: Fixed paragraph duplication in `optimizeChunkSizes` function where small paragraphs were incorrectly merged, creating duplicate content in the final output.
 
 **Problem Identified**:
@@ -1234,4 +1316,4 @@ The pipeline was optimized by combining related steps:
 
 **Last Updated**: October 2025
 **Implementation Progress**: 12/12 steps completed (100%)
-**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, shared text processing utilities eliminating code duplication, enhanced image marker system with reverse-order processing bug fix, supporting both embedded and standalone markers with correct formatting for consecutive page images, smart constraint relaxation preventing orphan chunks, Unicode-aware validation supporting international characters, comprehensive abbreviation handling (60+ patterns), chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection with smart list separation and chunk optimization duplication fix, sentence-level optimization with standalone image marker detection, precise image chunk positioning with enhanced validation, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 
+**Status**: 🚀 PRODUCTION-READY - Complete book parsing pipeline with no-page model architecture, shared text processing utilities eliminating code duplication, enhanced image marker system with reverse-order processing bug fix, supporting both embedded and standalone markers with correct formatting for consecutive page images, smart constraint relaxation preventing orphan chunks, Unicode-aware validation supporting international characters, comprehensive abbreviation handling (60+ patterns), chapter-relative positioning, enhanced page number removal, professional-grade text extraction, advanced paragraph detection with smart list separation and consecutive header detection fix, chunk optimization with duplication fix ensuring proper header preservation, sentence-level optimization with standalone image marker detection, precise image chunk positioning with enhanced validation, bidirectional link resolution, comprehensive metadata extraction, validation skipping mechanism, and streamlined output generation 
