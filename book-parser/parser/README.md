@@ -1044,8 +1044,10 @@ if (newWordCount > maxWords && !isVerySmallChunk) break;
    - Links now use `TextPositionSelector: { start: number, end: number }` for chapter-relative positioning
    - More accurate link positioning independent of page boundaries
 2. **Image Marker System**: 
-   - Step 3-2 inserts `[[IMG id=image-xxx index=N alt="..."]]` markers directly into chapter content
-   - Markers preserve exact image positions in text flow
+   - Step 3-2 uses `pdfimages -list` to get accurate page numbers for each image
+   - Implements caption-anchored placement: images placed after standalone "Figure N" captions
+   - Falls back to bottom-of-page placement if no caption found
+   - Inserts `[[IMG id=image-xxx index=N alt="..."]]` markers at correct positions
    - Step 5-1 converts markers to image chunks positioned precisely after containing text chunks
 3. **Enhanced Page Number Removal**: 
    - Aggressive removal of page number artifacts from content (e.g., "9 down to..." → "Down to...")

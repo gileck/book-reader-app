@@ -72,14 +72,43 @@ async function execute(pipelineState, config) {
             for (let i = chapterImages.length - 1; i >= 0; i--) {
                 const info = chapterImages[i];
                 const pageStart = pageOffsets.get(info.pageNumber);
+                const pageEnd = pageOffsets.get(info.pageNumber + 1) || chapterContent.length;
+
+                // Get page content for caption detection
+                const targetPage = chapter.pages.find(p => p.pageNumber === info.pageNumber);
+                const pageContent = targetPage?.content || '';
 
                 const id = info.imageName.replace(/\.[^.]+$/, '');
                 const alt = info.imageAlt || id;
                 const marker = `[[IMG id=${id} index=${info.chapterIndex} alt="${alt}"]]`;
 
-                // Simple positioning: always at BOTTOM of page
-                const pageEnd = pageOffsets.get(info.pageNumber + 1) || chapterContent.length;
-                const insertAt = pageEnd; // Always insert at the end of the page content
+                // Try to find caption as standalone line (not in middle of sentence)
+                // Use the page content directly (not from chapter concatenation)
+                let insertAt = pageEnd; // Default: bottom of page
+                let captionFound = false;
+
+                if (pageContent) {
+                    const lines = pageContent.split('\n');
+                    let currentPos = pageStart; // Start from the beginning of this page in chapter content
+
+                    for (let lineIdx = 0; lineIdx < lines.length; lineIdx++) {
+                        const line = lines[lineIdx];
+                        const trimmedLine = line.trim();
+
+                        // Check if this line is ONLY a figure caption (e.g., "Figure 1")
+                        const figureMatch = trimmedLine.match(/^Figure\s+\d+$/i);
+
+                        if (figureMatch) {
+                            // Found a standalone caption line
+                            // Insert marker right after this line
+                            insertAt = currentPos + line.length + 1; // +1 for the newline
+                            captionFound = true;
+                            break;
+                        }
+
+                        currentPos += line.length + 1; // +1 for newline character
+                    }
+                }
 
                 // Insert marker with proper line separation
                 const needsNewlineBefore = insertAt > 0 && chapterContent.charAt(insertAt - 1) !== '\n';
@@ -91,18 +120,17 @@ async function execute(pipelineState, config) {
                 chapterContent = chapterContent.slice(0, insertAt) + prefix + marker + suffix + chapterContent.slice(insertAt);
 
                 // Also insert into the individual page content for downstream processing
-                const targetPage = chapter.pages.find(p => p.pageNumber === info.pageNumber);
                 if (targetPage && typeof targetPage.content === 'string') {
-                    const pageContent = targetPage.content;
-                    const pageInsertAt = pageContent.length; // Always at the end
-                    const prefix = '\n'; // Always add newline before
-                    targetPage.content = pageContent + prefix + marker;
+                    const pageContentForInsertion = targetPage.content;
+                    const pageInsertAt = pageContentForInsertion.length; // Always at the end
+                    const prefixForPage = '\n'; // Always add newline before
+                    targetPage.content = pageContentForInsertion + prefixForPage + marker;
                 }
                 if (targetPage && typeof targetPage.rawContent === 'string') {
                     const rawContent = targetPage.rawContent;
                     const rawInsertAt = rawContent.length; // Always at the end
-                    const prefix = '\n'; // Always add newline before
-                    targetPage.rawContent = rawContent + prefix + marker;
+                    const prefixForRaw = '\n'; // Always add newline before
+                    targetPage.rawContent = rawContent + prefixForRaw + marker;
                 }
                 totalImagesAdded += 1;
             }
@@ -209,7 +237,31 @@ async function extractImages(pdfPath, config) {
     }
 
     try {
-        // Step 2: Extract actual images using pdfimages
+        // Step 2: Get image page numbers from pdfimages -list
+        const listOutput = execSync(`pdfimages -list "${pdfPath}"`, { encoding: 'utf-8' });
+        const imagePageNumbers = [];
+        const lines = listOutput.split('\n');
+
+        for (let i = 2; i < lines.length; i++) { // Skip header lines
+            const line = lines[i].trim();
+            if (!line) continue;
+
+            const parts = line.split(/\s+/);
+            if (parts.length >= 2) {
+                const pageNum = parseInt(parts[0]);
+                const imageNum = parseInt(parts[1]);
+                if (!isNaN(pageNum) && !isNaN(imageNum)) {
+                    imagePageNumbers.push({
+                        imageIndex: imageNum,
+                        pageNumber: pageNum - 1 // Convert to 0-based
+                    });
+                }
+            }
+        }
+
+        console.log(`📄 pdfimages detected ${imagePageNumbers.length} images with accurate page numbers`);
+
+        // Step 3: Extract actual images using pdfimages
         const tempDir = path.join(__dirname, '../../temp/pdfimages-temp');
         if (!fs.existsSync(tempDir)) {
             fs.mkdirSync(tempDir, { recursive: true });
@@ -223,49 +275,41 @@ async function extractImages(pdfPath, config) {
             file.startsWith('image') && /\.(jpg|jpeg|png|ppm|pbm)$/i.test(file)
         );
 
-        // Step 3: Correlate extracted images with page locations and spatial data
-        if (extractedFiles.length === totalImagesDetected) {
-            let imageFileIndex = 0;
-            let globalImageCounter = 1;
+        // Step 4: Use pdfimages page numbers (more accurate than PDF.js detection)
+        for (let i = 0; i < extractedFiles.length && i < imagePageNumbers.length; i++) {
+            const file = extractedFiles[i];
+            const pageInfo = imagePageNumbers[i];
+            const tempFilePath = path.join(tempDir, file);
 
-            // Go through pages in order and assign extracted images with spatial data
-            for (const pageInfo of pageImageMap) {
-                for (let pageImageIndex = 0; pageImageIndex < pageInfo.imageCount; pageImageIndex++) {
-                    if (imageFileIndex < extractedFiles.length) {
-                        const file = extractedFiles[imageFileIndex];
-                        const tempFilePath = path.join(tempDir, file);
-                        const finalFileName = `image-${String(pageInfo.pageNumber + 1).padStart(3, '0')}-${pageImageIndex + 1}.jpg`;
-                        const finalFilePath = path.join(imagesDir, finalFileName);
+            // Use actual page number from pdfimages
+            const actualPageNumber = pageInfo.pageNumber;
+            const finalFileName = `image-${String(actualPageNumber + 1).padStart(3, '0')}-${i + 1}.jpg`;
+            const finalFilePath = path.join(imagesDir, finalFileName);
 
-                        // Copy file to final location
-                        fs.copyFileSync(tempFilePath, finalFilePath);
+            // Copy file to final location
+            fs.copyFileSync(tempFilePath, finalFilePath);
 
-                        // Get spatial data for this image
-                        const spatialData = pageInfo.images && pageInfo.images[pageImageIndex] || {};
+            // Use page number in alt text
+            const imageAlt = `Image from page ${actualPageNumber + 1}`;
 
-                        images.push({
-                            pageNumber: pageInfo.pageNumber,
-                            imageName: finalFileName,
-                            imageAlt: `Figure ${globalImageCounter}`,
-                            originalName: file,
-                            extracted: true,
-                            // Enhanced spatial information
-                            position: spatialData.position || 'MID',
-                            relativeY: Math.min(1.0, spatialData.relativeY || 0.5), // Clamp to valid range
-                            normalizedY: spatialData.normalizedY || (spatialData.pageHeight || 842) * 0.5,
-                            pageHeight: spatialData.pageHeight || 842,
-                            textBefore: spatialData.textBefore || '',
-                            textAfter: spatialData.textAfter || '',
-                            nearestText: spatialData.nearestText || '',
-                            spatialData: spatialData
-                        });
+            images.push({
+                pageNumber: actualPageNumber,
+                imageName: finalFileName,
+                imageAlt: imageAlt,
+                originalName: file,
+                extracted: true,
+                position: 'MID',
+                relativeY: 0.5,
+                normalizedY: 421,
+                pageHeight: 842,
+                textBefore: '',
+                textAfter: '',
+                nearestText: ''
+            });
+        }
 
-                        imageFileIndex++;
-                        globalImageCounter++;
-                    }
-                }
-            }
-        } else {
+        // Fallback: if extraction count doesn't match, use old logic
+        if (false) {
             // Fallback: distribute extracted images across detected pages proportionally
             let imageFileIndex = 0;
             let globalImageCounter = 1;
@@ -287,7 +331,7 @@ async function extractImages(pdfPath, config) {
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: finalFileName,
-                            imageAlt: `Figure ${globalImageCounter}`,
+                            imageAlt: `Image from page ${pageInfo.pageNumber + 1}`,
                             originalName: file,
                             extracted: true,
                             // Enhanced spatial information (fallback)
@@ -309,7 +353,7 @@ async function extractImages(pdfPath, config) {
                         images.push({
                             pageNumber: pageInfo.pageNumber,
                             imageName: `image-${pageInfo.pageNumber + 1}-${pageImageIndex + 1}.placeholder`,
-                            imageAlt: `Figure ${globalImageCounter} - Not extracted`,
+                            imageAlt: `Image from page ${pageInfo.pageNumber + 1} - Not extracted`,
                             placeholder: true,
                             position: spatialData.position || 'MID',
                             relativeY: Math.min(1.0, spatialData.relativeY || 0.5), // Clamp to valid range
@@ -336,10 +380,9 @@ async function extractImages(pdfPath, config) {
                 images.push({
                     pageNumber: pageInfo.pageNumber,
                     imageName: `image-${pageInfo.pageNumber + 1}-${pageImageIndex + 1}.placeholder`,
-                    imageAlt: `Figure ${globalImageCounter} - Detection only`,
+                    imageAlt: `Image from page ${pageInfo.pageNumber + 1} - Detection only`,
                     placeholder: true
                 });
-                globalImageCounter++;
             }
         }
     }

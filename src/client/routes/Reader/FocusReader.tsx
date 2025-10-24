@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme, CircularProgress, Alert, Dialog, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import type { SentenceAudioApi } from './hooks/useSentenceAudioController';
 import type { TextChunkClient } from '@/apis/chapters/types';
+import type { BookClient } from '@/apis/books/types';
 import { useUserTheme } from '@/client/components/UserThemeProvider';
+import { VERCEL_BLOB_IMAGES_BASE_PATH } from '@/common/constants';
 
-export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode?: 'word' | 'line' | 'off'; ttsEnabled?: boolean }> = ({ controller, highlightMode = 'word', ttsEnabled = true }) => {
+export const FocusReader: React.FC<{
+    controller: SentenceAudioApi;
+    highlightMode?: 'word' | 'line' | 'off';
+    ttsEnabled?: boolean;
+    book?: BookClient;
+}> = ({ controller, highlightMode = 'word', ttsEnabled = true, book }) => {
     const sentences = controller.sentences;
     const currentSentenceIndex = controller.currentSentenceIndex;
     const isPlaying = controller.isPlaying;
@@ -13,25 +21,22 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
 
-    const handleNext = useCallback(() => {
-        controller.nextSentence();
-    }, [controller]);
-
-    const handlePrev = useCallback(() => {
-        controller.prevSentence();
-    }, [controller]);
-
-    // Get chunks including headers - skip only images
-    const getPlayableChunk = useCallback((fromIndex: number, direction: 'prev' | 'current' | 'next'): TextChunkClient | null => {
+    // Helper: find index of next/prev/current displayable (text/header/image)
+    const getDisplayableIndex = useCallback((fromIndex: number, direction: 'prev' | 'current' | 'next'): number | null => {
         if (direction === 'current') {
             const chunk = sentences[fromIndex];
-            return (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) ? chunk : null;
+            if (!chunk) return null;
+            if (chunk.type === 'image') return fromIndex;
+            if ((chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return fromIndex;
+            return null;
         }
 
         if (direction === 'next') {
             for (let i = fromIndex + 1; i < sentences.length; i++) {
                 const chunk = sentences[i];
-                if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return chunk;
+                if (!chunk) continue;
+                if (chunk.type === 'image') return i;
+                if ((chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return i;
             }
             return null;
         }
@@ -39,14 +44,41 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
         // prev
         for (let i = fromIndex - 1; i >= 0; i--) {
             const chunk = sentences[i];
-            if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return chunk;
+            if (!chunk) continue;
+            if (chunk.type === 'image') return i;
+            if ((chunk.type === 'text' || chunk.type === 'header') && chunk?.text?.trim()) return i;
         }
         return null;
     }, [sentences]);
 
-    const prevChunk = getPlayableChunk(currentSentenceIndex, 'prev');
-    const currChunk = getPlayableChunk(currentSentenceIndex, 'current');
-    const nextChunk = getPlayableChunk(currentSentenceIndex, 'next');
+    const handleNext = useCallback(() => {
+        const nextIdx = getDisplayableIndex(currentSentenceIndex, 'next');
+        if (nextIdx !== null) {
+            controller.goToSentence(nextIdx);
+        }
+    }, [controller, currentSentenceIndex, getDisplayableIndex]);
+
+    const handlePrev = useCallback(() => {
+        const prevIdx = getDisplayableIndex(currentSentenceIndex, 'prev');
+        if (prevIdx !== null) {
+            controller.goToSentence(prevIdx);
+        }
+    }, [controller, currentSentenceIndex, getDisplayableIndex]);
+
+    // Image modal state
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const handleOpenImageModal = () => setIsImageModalOpen(true);
+    const handleCloseImageModal = () => setIsImageModalOpen(false);
+
+    // Get chunks including headers and images
+    const getDisplayableChunk = useCallback((fromIndex: number, direction: 'prev' | 'current' | 'next'): TextChunkClient | null => {
+        const idx = getDisplayableIndex(fromIndex, direction);
+        return idx !== null ? sentences[idx] : null;
+    }, [getDisplayableIndex, sentences]);
+
+    const prevChunk = getDisplayableChunk(currentSentenceIndex, 'prev');
+    const currChunk = getDisplayableChunk(currentSentenceIndex, 'current');
+    const nextChunk = getDisplayableChunk(currentSentenceIndex, 'next');
 
     const prevText = prevChunk?.text ?? '';
     const currText = currChunk?.text ?? '';
@@ -55,6 +87,26 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
     const isHeader = currChunk?.type === 'header';
     const isPrevHeader = prevChunk?.type === 'header';
     const isNextHeader = nextChunk?.type === 'header';
+    const isImage = currChunk?.type === 'image';
+    const isPrevImage = prevChunk?.type === 'image';
+    const isNextImage = nextChunk?.type === 'image';
+
+    // Image loading states
+    const [imageLoading, setImageLoading] = useState(false);
+    const [imageError, setImageError] = useState(false);
+
+    // Construct image URL for current chunk
+    const imageUrl = isImage && currChunk?.imageName && book?.imageBaseURL
+        ? `${VERCEL_BLOB_IMAGES_BASE_PATH}${book.imageBaseURL}${currChunk.imageName}`
+        : null;
+
+    // Reset image states when current chunk changes
+    useEffect(() => {
+        if (isImage && imageUrl) {
+            setImageLoading(true);
+            setImageError(false);
+        }
+    }, [currentSentenceIndex, isImage, imageUrl]);
 
     const currentWords = useMemo(() => {
         // Split into words preserving order; spaces will be inserted during render
@@ -145,7 +197,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
             <Box
                 sx={{
                     minHeight: 44,
-                    cursor: prevText ? 'pointer' : 'default',
+                    cursor: (prevText || isPrevImage) ? 'pointer' : 'default',
                     ...(isPrevHeader && {
                         mx: -2,
                         px: 2,
@@ -156,26 +208,41 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                     })
                 }}
                 onClick={(e) => {
-                    if (prevText) {
+                    if (prevText || isPrevImage) {
                         e.stopPropagation();
                         handlePrev();
                     }
                 }}
             >
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: textColor,
-                        textAlign: 'center',
-                        opacity: isPrevHeader ? 0.8 : 0.6,
-                        fontWeight: isPrevHeader ? 700 : 400,
-                        fontSize: isPrevHeader ? '0.95rem' : 'inherit',
-                        textTransform: isPrevHeader ? 'uppercase' : 'none',
-                        letterSpacing: isPrevHeader ? '0.05em' : 'normal'
-                    }}
-                >
-                    {prevText}
-                </Typography>
+                {isPrevImage ? (
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            color: textColor,
+                            textAlign: 'center',
+                            opacity: 0.5,
+                            fontStyle: 'italic',
+                            display: 'block'
+                        }}
+                    >
+                        [Previous Image]
+                    </Typography>
+                ) : (
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            color: textColor,
+                            textAlign: 'center',
+                            opacity: isPrevHeader ? 0.8 : 0.6,
+                            fontWeight: isPrevHeader ? 700 : 400,
+                            fontSize: isPrevHeader ? '0.95rem' : 'inherit',
+                            textTransform: isPrevHeader ? 'uppercase' : 'none',
+                            letterSpacing: isPrevHeader ? '0.05em' : 'normal'
+                        }}
+                    >
+                        {prevText}
+                    </Typography>
+                )}
                 {/* CSS for line bolding; no layout shift */}
                 <style>{`
                     .line-bold { font-weight: 700; }
@@ -188,7 +255,7 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                 sx={{
                     position: 'relative',
                     ['--word-highlight-color' as unknown as string]: highlightColor,
-                    ...(!isHeader && {
+                    ...(!isHeader && !isImage && {
                         py: 2,
                         px: 2,
                         mx: -2,
@@ -204,66 +271,132 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                         backgroundColor: isDarkMode ? '#333333' : 'rgba(211, 211, 211, 0.3)',
                         borderTop: isDarkMode ? '2px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)',
                         borderBottom: isDarkMode ? '2px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)'
+                    }),
+                    ...(isImage && {
+                        my: 3,
+                        textAlign: 'center'
                     })
                 }}
             >
-                {ttsEnabled && highlightMode === 'line' && linePos !== null && !isHeader && (
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            zIndex: 0,
-                            left: 0,
-                            right: 0,
-                            top: `${linePos.top}px`,
-                            height: `${linePos.height}px`,
-                            backgroundColor: highlightColor,
-                            borderRadius: '6px',
-                            pointerEvents: 'none',
-                            transition: 'top 220ms cubic-bezier(0.22, 1, 0.36, 1)'
-                        }}
-                    />
+                {isImage ? (
+                    // Image display
+                    <>
+                        {imageLoading && (
+                            <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                                <CircularProgress size={40} />
+                            </Box>
+                        )}
+
+                        {imageError && imageUrl ? (
+                            <Alert severity="warning" sx={{ mb: 2 }}>
+                                Failed to load image
+                            </Alert>
+                        ) : imageUrl ? (
+                            <>
+                                <img
+                                    src={imageUrl}
+                                    alt={currChunk?.imageAlt || 'Book image'}
+                                    style={{
+                                        maxWidth: '100%',
+                                        maxHeight: '60vh',
+                                        objectFit: 'contain',
+                                        backgroundColor: 'white',
+                                        padding: '20px',
+                                        borderRadius: '12px',
+                                        display: imageLoading ? 'none' : 'block',
+                                        cursor: 'zoom-in',
+                                        margin: '0 auto'
+                                    }}
+                                    onLoad={() => {
+                                        setImageLoading(false);
+                                        setImageError(false);
+                                    }}
+                                    onError={() => {
+                                        setImageLoading(false);
+                                        setImageError(true);
+                                    }}
+                                    onClick={(e) => { e.stopPropagation(); handleOpenImageModal(); }}
+                                    onDoubleClick={(e) => { e.stopPropagation(); handleOpenImageModal(); }}
+                                />
+                                {currChunk?.imageAlt && (
+                                    <Typography
+                                        variant="caption"
+                                        sx={{
+                                            mt: 2,
+                                            display: 'block',
+                                            fontStyle: 'italic',
+                                            color: textColor,
+                                            opacity: 0.8
+                                        }}
+                                    >
+                                        {currChunk.imageAlt}
+                                    </Typography>
+                                )}
+                            </>
+                        ) : null}
+                    </>
+                ) : (
+                    // Text/Header display
+                    <>
+                        {ttsEnabled && highlightMode === 'line' && linePos !== null && !isHeader && (
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    zIndex: 0,
+                                    left: 0,
+                                    right: 0,
+                                    top: `${linePos.top}px`,
+                                    height: `${linePos.height}px`,
+                                    backgroundColor: highlightColor,
+                                    borderRadius: '6px',
+                                    pointerEvents: 'none',
+                                    transition: 'top 220ms cubic-bezier(0.22, 1, 0.36, 1)'
+                                }}
+                            />
+                        )}
+                        <Typography
+                            variant={isHeader ? "h2" : "h4"}
+                            sx={{
+                                fontSize: isHeader ? `${fontSize * 2}rem` : `${fontSize * 1.5}rem`,
+                                lineHeight: isHeader ? 1.3 : lineHeight,
+                                fontWeight: isHeader ? 800 : 700,
+                                textAlign: 'center',
+                                color: textColor,
+                                fontFamily: fontFamily,
+                                whiteSpace: 'pre-wrap',
+                                wordBreak: 'break-word',
+                                position: 'relative',
+                                zIndex: 1,
+                                letterSpacing: isHeader ? '-0.01em' : 'normal',
+                                textTransform: isHeader ? 'uppercase' : 'none',
+                                mb: 0
+                            }}
+                        >
+                            {currentWords.map((w, i) => {
+                                // Check if this word starts with a bullet character
+                                const startsWithBullet = /^[*•]/.test(w);
+                                return (
+                                    <React.Fragment key={`w-${i}`}>
+                                        {startsWithBullet && i > 0 && <br />}
+                                        <span
+                                            className={(() => {
+                                                if (!ttsEnabled) return '';
+                                                if (highlightMode === 'off') return '';
+                                                if (highlightMode === 'word') return (isPlaying && i === currentWordIndex) ? 'highlight-word' : '';
+                                                // line mode uses overlay bar; no per-word class to keep line straight
+                                                return '';
+                                            })()}
+                                            data-word-index={i}
+                                        >
+                                            {w}
+                                            {i < currentWords.length - 1 ? ' ' : ''}
+                                        </span>
+                                    </React.Fragment>
+                                );
+                            })}
+                        </Typography>
+                    </>
                 )}
-                <Typography
-                    variant={isHeader ? "h2" : "h4"}
-                    sx={{
-                        fontSize: isHeader ? `${fontSize * 2}rem` : `${fontSize * 1.5}rem`,
-                        lineHeight: isHeader ? 1.3 : lineHeight,
-                        fontWeight: isHeader ? 800 : 700,
-                        textAlign: 'center',
-                        color: textColor,
-                        fontFamily: fontFamily,
-                        whiteSpace: 'pre-wrap',
-                        wordBreak: 'break-word',
-                        position: 'relative',
-                        zIndex: 1,
-                        letterSpacing: isHeader ? '-0.01em' : 'normal',
-                        textTransform: isHeader ? 'uppercase' : 'none',
-                        mb: 0
-                    }}
-                >
-                    {currentWords.map((w, i) => {
-                        // Check if this word starts with a bullet character
-                        const startsWithBullet = /^[*•]/.test(w);
-                        return (
-                            <React.Fragment key={`w-${i}`}>
-                                {startsWithBullet && i > 0 && <br />}
-                                <span
-                                    className={(() => {
-                                        if (!ttsEnabled) return '';
-                                        if (highlightMode === 'off') return '';
-                                        if (highlightMode === 'word') return (isPlaying && i === currentWordIndex) ? 'highlight-word' : '';
-                                        // line mode uses overlay bar; no per-word class to keep line straight
-                                        return '';
-                                    })()}
-                                    data-word-index={i}
-                                >
-                                    {w}
-                                    {i < currentWords.length - 1 ? ' ' : ''}
-                                </span>
-                            </React.Fragment>
-                        );
-                    })}
-                </Typography>
             </Box>
 
             {/* Next (smaller, subdued, under) */}
@@ -280,21 +413,86 @@ export const FocusReader: React.FC<{ controller: SentenceAudioApi; highlightMode
                     })
                 }}
             >
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: textColor,
-                        textAlign: 'center',
-                        opacity: isNextHeader ? 0.8 : 0.6,
-                        fontWeight: isNextHeader ? 700 : 400,
-                        fontSize: isNextHeader ? '0.95rem' : 'inherit',
-                        textTransform: isNextHeader ? 'uppercase' : 'none',
-                        letterSpacing: isNextHeader ? '0.05em' : 'normal'
+                {isNextImage ? (
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            color: textColor,
+                            textAlign: 'center',
+                            opacity: 0.5,
+                            fontStyle: 'italic',
+                            display: 'block'
+                        }}
+                    >
+                        [Next Image]
+                    </Typography>
+                ) : (
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            color: textColor,
+                            textAlign: 'center',
+                            opacity: isNextHeader ? 0.8 : 0.6,
+                            fontWeight: isNextHeader ? 700 : 400,
+                            fontSize: isNextHeader ? '0.95rem' : 'inherit',
+                            textTransform: isNextHeader ? 'uppercase' : 'none',
+                            letterSpacing: isNextHeader ? '0.05em' : 'normal'
+                        }}
+                    >
+                        {nextText}
+                    </Typography>
+                )}
+            </Box>
+
+            {/* Full-Screen Image Modal */}
+            {isImage && imageUrl && (
+                <Dialog
+                    fullScreen
+                    open={isImageModalOpen}
+                    onClose={handleCloseImageModal}
+                    PaperProps={{
+                        sx: {
+                            backgroundColor: 'rgba(0,0,0,0.95)'
+                        }
                     }}
                 >
-                    {nextText}
-                </Typography>
-            </Box>
+                    <Box sx={{ position: 'fixed', top: 8, right: 8, zIndex: 1 }}>
+                        <IconButton
+                            aria-label="Close"
+                            onClick={handleCloseImageModal}
+                            sx={{ color: 'white' }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
+                    <Box
+                        onClick={handleCloseImageModal}
+                        onDoubleClick={handleCloseImageModal}
+                        sx={{
+                            width: '100vw',
+                            height: '100vh',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            p: 2
+                        }}
+                    >
+                        <img
+                            src={imageUrl}
+                            alt={currChunk?.imageAlt || 'Full size image'}
+                            style={{
+                                width: '100vw',
+                                height: '100vh',
+                                objectFit: 'contain',
+                                backgroundColor: 'white',
+                                padding: 0,
+                                borderRadius: 0,
+                                cursor: 'zoom-out'
+                            }}
+                        />
+                    </Box>
+                </Dialog>
+            )}
         </Box>
     );
 };

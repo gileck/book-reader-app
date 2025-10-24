@@ -232,6 +232,44 @@ export const Reader = () => {
         }
     }, [activeTab, bookQA.messages, bookQA.isLoading]);
 
+    // Focus mode navigation that includes images (scan chapter content chunks)
+    const getDisplayableIndex = useCallback((fromIndex: number, direction: 'prev' | 'next'): number => {
+        const chunks = chapter?.content?.chunks || [];
+        if (direction === 'next') {
+            for (let i = fromIndex + 1; i < chunks.length; i++) {
+                const c = chunks[i];
+                if (!c) continue;
+                if (c.type === 'image') return i;
+                if ((c.type === 'text' || c.type === 'header') && c.text?.trim()) return i;
+            }
+            return fromIndex;
+        }
+        // prev
+        for (let i = fromIndex - 1; i >= 0; i--) {
+            const c = chunks[i];
+            if (!c) continue;
+            if (c.type === 'image') return i;
+            if ((c.type === 'text' || c.type === 'header') && c.text?.trim()) return i;
+        }
+        return fromIndex;
+    }, [chapter?.content?.chunks]);
+
+    const handleFocusNext = useCallback(() => {
+        const current = sentenceAudio.controller.currentSentenceIndex;
+        const next = getDisplayableIndex(current, 'next');
+        if (next !== current) {
+            sentenceAudio.controller.goToSentence(next);
+        }
+    }, [getDisplayableIndex, sentenceAudio.controller]);
+
+    const handleFocusPrev = useCallback(() => {
+        const current = sentenceAudio.controller.currentSentenceIndex;
+        const prev = getDisplayableIndex(current, 'prev');
+        if (prev !== current) {
+            sentenceAudio.controller.goToSentence(prev);
+        }
+    }, [getDisplayableIndex, sentenceAudio.controller]);
+
     if ((loading && !chapterTransitionLoading) || !settings.settingsLoaded) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
@@ -326,7 +364,7 @@ export const Reader = () => {
                 </Box>
 
                 {activeTab === 'focus' ? (
-                    <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} ttsEnabled={settings.ttsEnabled} />
+                    <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} ttsEnabled={settings.ttsEnabled} book={book} />
                 ) : activeTab === 'qa' ? (
                     <Box sx={{
                         maxWidth: 800,
@@ -449,8 +487,8 @@ export const Reader = () => {
                     totalChunks={sentenceAudio.sentences.length}
                     onPlay={sentenceAudio.controller.play}
                     onPause={sentenceAudio.controller.pause}
-                    onPreviousChunk={sentenceAudio.controller.prevSentence}
-                    onNextChunk={sentenceAudio.controller.nextSentence}
+                    onPreviousChunk={activeTab === 'focus' ? handleFocusPrev : sentenceAudio.controller.prevSentence}
+                    onNextChunk={activeTab === 'focus' ? handleFocusNext : sentenceAudio.controller.nextSentence}
                     onPreviousChapter={navigation.handlePreviousChapter}
                     onNextChapter={navigation.handleNextChapter}
                     onBookmark={bookmarks.handleBookmark}

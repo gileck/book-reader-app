@@ -11,9 +11,14 @@ This step extracts embedded images from the PDF file and emits inline image mark
 
 ## Process
 
-1. **Image Detection**: Uses PDF.js to detect which regions contain images
-2. **Image Extraction**: Uses the `pdfimages` command-line tool to extract actual image files from the PDF
-3. **Flow Positioning**: Determines nearest text position in chapter flow for each detected image
+1. **Page Number Detection**: Uses `pdfimages -list` to get accurate page numbers for each image in the PDF
+   - This provides the authoritative source for which page each image belongs to
+   - More reliable than PDF.js detection order, which can misalign images across pages
+2. **Image Extraction**: Uses `pdfimages -all` to extract actual image files from the PDF
+3. **Caption-Anchored Positioning**: For each image, searches its page for standalone figure captions
+   - Looks for lines containing only "Figure N" (not embedded in sentences)
+   - If found, places the image marker immediately after the caption line
+   - If not found, falls back to placing at the bottom of the page
 4. **Marker Insertion**: Inserts inline markers into chapter content to mark image positions
    - **Critical**: Images are processed in **reverse order** (last page first) to prevent offset corruption
    - When inserting text at position N, all positions > N shift, but positions < N remain valid
@@ -28,21 +33,26 @@ This step extracts embedded images from the PDF file and emits inline image mark
   - `index`: flow order index within the chapter (stable ordering fallback)
   - `alt`: optional alt/caption text when available
 - Marker insertion rules:
-  - Placed immediately before or after the nearest text line according to PDF layout
-  - If no nearby text, insert by flow order between adjacent textual regions
-- Extracted images are saved to disk as before
+  - **Primary**: Placed immediately after standalone figure captions (e.g., "Figure 1" on its own line)
+  - **Fallback**: Placed at the bottom of the page if no caption is found
+  - Uses accurate page numbers from `pdfimages -list` output
+- Extracted images are saved to disk with filenames reflecting their actual page numbers
 
 ## Image Storage
 
 - Images are saved to `{OUTPUT_DIR}/images/` directory
-- Image filenames follow the pattern: `image-<id>.jpg` or a deterministic mapping from extraction
+- Image filenames follow the pattern: `image-<pageNum>-<imageIndex>.jpg`
+  - Example: `image-022-9.jpg` = 9th image extracted, from page 22 (1-indexed)
+  - Page numbers are 1-indexed in filenames for human readability
+  - Internally, page numbers are 0-indexed for consistency with PDF.js
 
 ## Dependencies
 
-- **pdfjs-dist**: For PDF analysis and image detection
-- **pdfimages**: Command-line tool from poppler-utils package
+- **pdfimages**: Command-line tool from poppler-utils package (primary dependency)
+  - Used for both page number detection (`-list`) and image extraction (`-all`)
   - Install on macOS: `brew install poppler`
   - Install on Ubuntu: `sudo apt-get install poppler-utils`
+- **pdfjs-dist**: For PDF text content extraction (used for caption detection)
 
 ## Error Handling
 
@@ -81,6 +91,35 @@ The validation checks:
 ```
 
 ## Technical Notes
+
+### Image Page Number Mismatch Bug Fix (October 2025)
+
+**Issue**: Images were appearing far from their original locations in the book, sometimes in completely different chapters. For example, the "angry woman" image (Figure 1) from Chapter 1 was appearing in Chapter 3.
+
+**Root Cause**: The original implementation used PDF.js to detect images and assumed they would be in the same order as `pdfimages` extraction. However, PDFs can store images on different pages than where they're visually displayed, causing a mismatch:
+- PDF.js detected an image on page 34
+- `pdfimages` extracted that same image from page 22
+- The code incorrectly assigned it to page 34
+
+**Solution**: Use `pdfimages -list` as the authoritative source for page numbers:
+```javascript
+// Get accurate page numbers from pdfimages
+const listOutput = execSync(`pdfimages -list "${pdfPath}"`, { encoding: 'utf-8' });
+const imagePageNumbers = parseListOutput(listOutput);
+
+// Use these page numbers directly (not PDF.js detection order)
+for (let i = 0; i < extractedFiles.length; i++) {
+    const actualPageNumber = imagePageNumbers[i].pageNumber;
+    // ... use actualPageNumber for placement
+}
+```
+
+**Additional Improvement**: Caption-anchored placement
+- Scans each page for standalone figure captions (e.g., "Figure 1" on its own line)
+- Places image markers immediately after captions when found
+- Falls back to bottom-of-page placement if no caption exists
+
+**Result**: Images now appear in their correct chapters, near their original captions.
 
 ### Reverse-Order Processing Bug Fix (October 2025)
 

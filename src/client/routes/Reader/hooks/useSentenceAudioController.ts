@@ -295,10 +295,32 @@ export function useSentenceAudioController(
         }
     }, [state.currentSentenceIndex, sentences.length, loadSentence, ttsEnabled]);
 
-    // Reset initial load flag when chapter changes
+    // Reset and cleanup when chapter changes
     useEffect(() => {
         hasInitiallyLoadedRef.current = false;
-    }, [chapter?.chapterNumber]);
+
+        // Stop any playing audio from previous chapter
+        const audio = audioRef.current;
+        if (audio) {
+            audio.pause();
+            audio.src = '';
+            audio.currentTime = 0;
+        }
+
+        // Reset playback state - note: currentSentenceIndex will be set by initialSentenceIndex effect
+        update({ isPlaying: false, intendedPlay: false, currentWordIndex: 0, currentSentenceIndex: 0 });
+
+        // Clear audio cache for previous chapter
+        cacheRef.current = {};
+        timepointsRef.current = [];
+
+        // Clear any word highlights
+        const previous = previousHighlightRef.current;
+        if (previous) {
+            WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
+            previousHighlightRef.current = null;
+        }
+    }, [chapter?.chapterNumber, update]);
 
     // Update playback speed when it changes
     useEffect(() => {
@@ -406,9 +428,12 @@ export function useSentenceAudioController(
         };
     }, [sentences.length, goToSentence, play, wordTimingOffset]);
 
+    // Always clamp currentSentenceIndex to valid bounds before returning
+    const clampedCurrentSentenceIndex = Math.max(0, Math.min(sentences.length - 1, state.currentSentenceIndex));
+
     return {
         sentences,
-        currentSentenceIndex: state.currentSentenceIndex,
+        currentSentenceIndex: clampedCurrentSentenceIndex,
         currentWordIndex: state.currentWordIndex,
         isPlaying: state.isPlaying,
         isCurrentSentenceLoading: state.isCurrentSentenceLoading,
