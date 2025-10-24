@@ -9,8 +9,8 @@ The `run-parser-and-upload.js` script provides both interactive and non-interact
 ### 1. **Interactive Mode** (Recommended for first-time use)
 When you run the script without specifying all options, it will guide you through:
 - 📂 Folder selection (if not provided)
-- 🧹 Cache clearing options (clear all or from specific step)
 - 🎯 Operation mode selection
+- 🧹 Cache clearing options (only if parsing mode selected)
 - ✅ Shows the exact command to rerun with same options **BEFORE starting operations**
 
 ### 2. **Non-Interactive Mode** (For repeated operations)
@@ -36,6 +36,12 @@ node run-parser-and-upload.js "./The Breathing Cure" --force-reparse
 ```
 📂 Select a book folder: The Breathing Cure
 
+✓ Found existing output folder
+
+? Select operation mode: Parse + Upload + Images
+
+🎯 Mode: parse-upload-images
+
 📄 Found PDF: the-breathing-cure.pdf
 
 ? Do you want to clear cached steps before running? (Y/n) Y
@@ -48,14 +54,14 @@ node run-parser-and-upload.js "./The Breathing Cure" --force-reparse
   From step-4 onwards - Detect paragraph boundaries
   ...
 
-🎯 Mode: parse-upload-images
-
 💡 To re-run with the same options without prompts:
    node files/run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload-images --clear-cache-from=step-4
 
 📚 Starting book parser...
    [parsing operations begin here]
 ```
+
+**Note**: The cache clearing prompt only appears when you select a parsing mode (parse-only, parse-upload, parse-upload-images). It is skipped for upload-only modes since they don't run the parser.
 
 **Note**: The paths shown are relative to your current working directory. If you run the script from different locations, it will adjust the paths accordingly:
 - From project root: `node files/run-parser-and-upload.js "files/The Breathing Cure" --mode=...`

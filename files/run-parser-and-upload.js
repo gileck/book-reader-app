@@ -392,28 +392,6 @@ async function main() {
             console.log('✓ Found existing output folder');
         }
 
-        // For interactive mode without cache flags, offer cache clearing option
-        let interactiveCacheSelection = false;
-        let pdfPath = null; // Will be found when needed
-        
-        if (usedInteractiveFolderSelection && !clearCache && !clearCacheFrom && !noCache) {
-            // Find PDF path early for cache clearing prompt
-            console.log(`📁 Looking for PDF file in: ${targetDir}`);
-            pdfPath = findPdfFile(targetDir);
-            const pdfName = path.basename(pdfPath);
-            console.log(`📄 Found PDF: ${pdfName}\n`);
-            
-            const cacheOptions = await selectCacheClearOption(pdfPath);
-            
-            if (cacheOptions.clearCache) {
-                clearCache = true;
-                interactiveCacheSelection = true;
-            } else if (cacheOptions.clearCacheFrom) {
-                clearCacheFrom = cacheOptions.clearCacheFrom;
-                interactiveCacheSelection = true;
-            }
-        }
-
         // Select operation mode (from flag or interactively)
         let mode;
         let usedInteractiveModeSelection = false;
@@ -430,6 +408,31 @@ async function main() {
             mode = await selectMode(hasExistingOutput);
             usedInteractiveModeSelection = true;
             console.log(`\n🎯 Mode: ${mode}\n`);
+        }
+
+        // Check if mode involves parsing (not upload-only modes)
+        const isParsing = !mode.startsWith('upload-only');
+        
+        // For interactive mode with parsing, offer cache clearing option
+        let interactiveCacheSelection = false;
+        let pdfPath = null; // Will be found when needed
+        
+        if (usedInteractiveFolderSelection && isParsing && !clearCache && !clearCacheFrom && !noCache) {
+            // Find PDF path for cache clearing prompt
+            console.log(`📁 Looking for PDF file in: ${targetDir}`);
+            pdfPath = findPdfFile(targetDir);
+            const pdfName = path.basename(pdfPath);
+            console.log(`📄 Found PDF: ${pdfName}\n`);
+            
+            const cacheOptions = await selectCacheClearOption(pdfPath);
+            
+            if (cacheOptions.clearCache) {
+                clearCache = true;
+                interactiveCacheSelection = true;
+            } else if (cacheOptions.clearCacheFrom) {
+                clearCacheFrom = cacheOptions.clearCacheFrom;
+                interactiveCacheSelection = true;
+            }
         }
 
         // Show rerun command upfront if interactive selections were made
