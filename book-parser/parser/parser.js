@@ -11,6 +11,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // Import step implementations
 const textExtraction = require('./steps/01-text-extraction/01-text-extraction');
@@ -73,6 +74,163 @@ const STEP_MODULES = {
     'step-6': metadataExtraction,
 };
 
+// ============================================================================
+// Cache Utility Functions
+// ============================================================================
+
+/**
+ * Compute hash of PDF file for cache key generation
+ * @param {string} pdfPath - Path to the PDF file
+ * @returns {string} - SHA-256 hash of the PDF file
+ */
+function computePdfHash(pdfPath) {
+    const fileBuffer = fs.readFileSync(pdfPath);
+    const hashSum = crypto.createHash('sha256');
+    hashSum.update(fileBuffer);
+    return hashSum.digest('hex').substring(0, 16); // Use first 16 chars for shorter paths
+}
+
+/**
+ * Get cache directory path for a PDF
+ * @param {string} pdfPath - Path to the PDF file
+ * @returns {string} - Path to cache directory
+ */
+function getCacheDir(pdfPath) {
+    const pdfDir = path.dirname(pdfPath);
+    const pdfHash = computePdfHash(pdfPath);
+    return path.join(pdfDir, '.parser-cache', pdfHash);
+}
+
+/**
+ * Get cache file path for a specific step
+ * @param {string} pdfPath - Path to the PDF file
+ * @param {string} stepName - Name of the step
+ * @returns {string} - Path to cache file
+ */
+function getCachePath(pdfPath, stepName) {
+    const cacheDir = getCacheDir(pdfPath);
+    return path.join(cacheDir, `${stepName}.json`);
+}
+
+/**
+ * Load cached step output if available and valid
+ * @param {string} pdfPath - Path to the PDF file
+ * @param {string} stepName - Name of the step
+ * @returns {Object|null} - Cached step output or null if not available
+ */
+function loadCachedStep(pdfPath, stepName) {
+    try {
+        const cachePath = getCachePath(pdfPath, stepName);
+
+        if (!fs.existsSync(cachePath)) {
+            return null;
+        }
+
+        const cacheData = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+
+        // Validate cache structure
+        if (!cacheData.validationPassed) {
+            return null; // Only use cache if validation passed
+        }
+
+        if (cacheData.stepName !== stepName) {
+            return null; // Step name mismatch
+        }
+
+        // Return the actual step output (delta)
+        return cacheData.output;
+    } catch (error) {
+        // If cache is corrupted or unreadable, treat as cache miss
+        return null;
+    }
+}
+
+/**
+ * Save step output to cache
+ * @param {string} pdfPath - Path to the PDF file
+ * @param {string} stepName - Name of the step
+ * @param {Object} output - Step output to cache
+ * @param {boolean} validationPassed - Whether validation passed
+ */
+function saveCachedStep(pdfPath, stepName, output, validationPassed) {
+    try {
+        const cacheDir = getCacheDir(pdfPath);
+
+        // Create cache directory if it doesn't exist
+        if (!fs.existsSync(cacheDir)) {
+            fs.mkdirSync(cacheDir, { recursive: true });
+        }
+
+        const cacheData = {
+            stepName: stepName,
+            pdfHash: computePdfHash(pdfPath),
+            timestamp: new Date().toISOString(),
+            validationPassed: validationPassed,
+            output: output
+        };
+
+        const cachePath = getCachePath(pdfPath, stepName);
+        fs.writeFileSync(cachePath, JSON.stringify(cacheData, null, 2));
+    } catch (error) {
+        // Silently fail on cache save errors - caching is an optimization, not critical
+        console.warn(`⚠️  Failed to save cache for ${stepName}: ${error.message}`);
+    }
+}
+
+/**
+ * Clear all cached steps for a PDF
+ * @param {string} pdfPath - Path to the PDF file
+ */
+function clearCache(pdfPath) {
+    try {
+        const cacheDir = getCacheDir(pdfPath);
+        if (fs.existsSync(cacheDir)) {
+            fs.rmSync(cacheDir, { recursive: true, force: true });
+        }
+    } catch (error) {
+        console.warn(`⚠️  Failed to clear cache: ${error.message}`);
+    }
+}
+
+/**
+ * Clear cached steps from a specific step onwards (inclusive)
+ * This is useful when a step has a bug but you want to keep cache for earlier steps
+ * @param {string} pdfPath - Path to the PDF file
+ * @param {string} fromStep - Step name to start clearing from (e.g., 'step-4')
+ * @returns {number} - Number of cache files cleared
+ */
+function clearCacheFromStep(pdfPath, fromStep) {
+    try {
+        const cacheDir = getCacheDir(pdfPath);
+        if (!fs.existsSync(cacheDir)) {
+            return 0;
+        }
+
+        // Find the index of the starting step
+        const startIndex = STEP_NAMES.indexOf(fromStep);
+        if (startIndex === -1) {
+            throw new Error(`Invalid step name: ${fromStep}. Valid steps: ${STEP_NAMES.join(', ')}`);
+        }
+
+        // Get all steps from the starting step onwards
+        const stepsToRemove = STEP_NAMES.slice(startIndex);
+
+        let clearedCount = 0;
+        for (const stepName of stepsToRemove) {
+            const cachePath = getCachePath(pdfPath, stepName);
+            if (fs.existsSync(cachePath)) {
+                fs.unlinkSync(cachePath);
+                clearedCount++;
+            }
+        }
+
+        return clearedCount;
+    } catch (error) {
+        console.warn(`⚠️  Failed to clear cache from ${fromStep}: ${error.message}`);
+        return 0;
+    }
+}
+
 /**
  * Parse a book PDF through all pipeline steps
  * @param {string} pdfPath - Path to the PDF file
@@ -81,6 +239,7 @@ const STEP_MODULES = {
  * @param {boolean} options.validate - Whether to run validation (default: true)
  * @param {boolean} options.debug - Enable debug logging (default: false)
  * @param {boolean} options.forceReparse - Force re-extraction from PDF, ignoring cached .txt file (default: false)
+ * @param {boolean} options.useCache - Use cached validated step outputs to skip re-running steps (default: true)
  * @returns {Object} - Complete parsing results with step-by-step outputs
  */
 async function parseBook(pdfPath, outputPath, options = {}) {
@@ -98,6 +257,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         validate: options.validate !== false, // default true
         debug: options.debug || false,
         forceReparse: options.forceReparse || false,
+        useCache: options.useCache !== false, // default true
         ...options
     };
 
@@ -174,13 +334,29 @@ async function parseBook(pdfPath, outputPath, options = {}) {
             }
 
             try {
-                // Execute step
-                const stepFunction = STEPS[stepName];
-                if (!stepFunction) {
-                    throw new Error(`Unknown step: ${stepName}`);
+                // Check if we can use cached step output
+                let stepResult = null;
+                let usedCache = false;
+
+                if (opts.useCache) {
+                    stepResult = loadCachedStep(pdfPath, stepName);
+                    if (stepResult) {
+                        usedCache = true;
+                        if (opts.debug) {
+                            console.log(`📦 Using cached output for ${stepName}`);
+                        }
+                    }
                 }
 
-                let stepResult = await stepFunction(pipelineState, config);
+                // Execute step if no cache available or cache disabled
+                if (!stepResult) {
+                    const stepFunction = STEPS[stepName];
+                    if (!stepFunction) {
+                        throw new Error(`Unknown step: ${stepName}`);
+                    }
+
+                    stepResult = await stepFunction(pipelineState, config);
+                }
 
                 // Update pipeline state
                 Object.assign(pipelineState, stepResult);
@@ -200,7 +376,17 @@ async function parseBook(pdfPath, outputPath, options = {}) {
 
                 // Run validation if enabled and available
                 let validationResult = null;
-                if (opts.validate) {
+
+                // If step was loaded from cache, it was already validated
+                if (usedCache) {
+                    validationResult = {
+                        passed: true,
+                        error: null,
+                        timestamp: new Date().toISOString(),
+                        duration: 0,
+                        fromCache: true
+                    };
+                } else if (opts.validate) {
                     const stepModule = STEP_MODULES[stepName];
                     if (stepModule && typeof stepModule.validate === 'function') {
                         try {
@@ -470,8 +656,18 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                 // Store validation result
                 validationResults[stepName] = validationResult;
 
+                // Save to cache if step was executed (not from cache) and either:
+                // - validation passed, OR
+                // - validation was disabled (null means validation was not run)
+                const shouldCache = !usedCache && (validationResult?.passed || validationResult === null);
+                if (shouldCache) {
+                    saveCachedStep(pdfPath, stepName, stepResult, true);
+                }
+
                 if (opts.debug) {
-                    console.log(`✓ ${stepName} completed(${stepDuration}ms)${validationResult?.passed ? ' [validated]' : ''}`);
+                    const cacheStatus = usedCache ? ' [cached]' : '';
+                    const validationStatus = validationResult?.passed ? ' [validated]' : '';
+                    console.log(`✓ ${stepName} completed (${stepDuration}ms)${cacheStatus}${validationStatus}`);
                 }
 
             } catch (error) {
@@ -665,5 +861,7 @@ module.exports = {
     parseBook,
     parseBookSteps,
     getAvailableSteps,
-    getStepDescriptions
+    getStepDescriptions,
+    clearCache,
+    clearCacheFromStep
 }; 

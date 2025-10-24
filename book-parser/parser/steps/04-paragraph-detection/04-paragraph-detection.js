@@ -781,8 +781,13 @@ function isHeader(line, lineIndex, allLines) {
     // Rule 4: Line Structure - Appears as standalone line (already handled by line splitting)
 
     // Rule 5: Context - Previous - Previous line ends with sentence-ending punctuation
-    // EXCEPTION: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
+    // EXCEPTION 1: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
+    // EXCEPTION 2: Allow when there is an immediate blank line above (visual separation)
+    // EXCEPTION 3: Allow at the start of page/chapter (prevLine === null)
     const prevLine = findPreviousNonEmptyLine(allLines, lineIndex - 1);
+    const immediateBlankAbove = (lineIndex - 1) >= 0 && ((allLines[lineIndex - 1] || '').trim().length === 0);
+
+    // If prevLine is null, we're at the start of the page/chapter - allow header
     if (prevLine !== null && !sharedEndsWithSentenceTerminator(prevLine)) {
         // Check if the previous line looks like a header itself (short, no punctuation, capitalized)
         const prevWords = prevLine.trim().split(/\s+/);
@@ -791,8 +796,9 @@ function isHeader(line, lineIndex, allLines) {
         const prevCapitalized = /^[A-Z]/.test(prevLine.trim());
         const prevLooksLikeHeader = prevIsShort && prevNoPunct && prevCapitalized;
 
-        // If previous line doesn't look like a header, reject current line as header
-        if (!prevLooksLikeHeader) {
+        // If previous line doesn't look like a header and there is no immediate blank line above,
+        // reject current line as header. A blank line provides sufficient visual separation.
+        if (!prevLooksLikeHeader && !immediateBlankAbove) {
             return false;
         }
     }
@@ -814,7 +820,23 @@ function isHeader(line, lineIndex, allLines) {
 }
 
 /**
- * Find the previous non-empty line
+ * Find the previous non-empty line (excluding page numbers)
+ * 
+ * This function is critical for header detection at page/chapter boundaries.
+ * When a header appears at the start of a page, it may be preceded by:
+ * - Empty lines
+ * - Page numbers (e.g., "2", "34", "181")
+ * - No previous content at all
+ * 
+ * By skipping page-number-only lines, we ensure that headers at page starts
+ * correctly return null (no previous content), allowing Rule 5 to pass.
+ * 
+ * Example:
+ * --- PAGE 34 ---
+ * 2                           <- skipped (page number)
+ * Attention and Effort        <- header detection: prevLine = null ✓
+ * In the unlikely event...
+ * 
  * @param {Array} lines - All lines
  * @param {number} startIndex - Index to start searching backwards from
  * @returns {string|null} - Previous non-empty line or null if none found
@@ -823,6 +845,12 @@ function findPreviousNonEmptyLine(lines, startIndex) {
     for (let i = startIndex; i >= 0; i--) {
         const line = lines[i].trim();
         if (line) {
+            // Skip page-number-only lines (same logic as main loop)
+            // This is essential for header detection at page boundaries
+            const numericOnly = line.replace(/\s+/g, '');
+            if (/^\d{1,4}$/.test(numericOnly)) {
+                continue;
+            }
             return line;
         }
     }

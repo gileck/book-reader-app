@@ -43,6 +43,9 @@ All rules must be satisfied for header classification:
 3. **Capitalization**: Starts with a capital letter
 4. **Line Structure**: Appears as standalone line
 5. **Context - Previous**: Previous line ends with sentence-ending punctuation
+   - **Exception 1**: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
+   - **Exception 2**: Allow when there is an immediate blank line above (visual separation)
+   - **Exception 3**: Allow at the start of page/chapter (no previous content)
 6. **Context - Next**: Next line starts with a capital letter (or starts a list: bullet "•" or numbered "1. ")
 
 ALL-CAPS headers are supported:
@@ -268,6 +271,27 @@ const isValid = paragraphDetection.validate(result);
 - **6-Rule System**: Comprehensive validation prevents false header detection
 - **Context Analysis**: Uses surrounding content for accurate classification
 - **Edge Case Handling**: Properly handles cross-page headers and special formatting
+- **Page Number Handling**: `findPreviousNonEmptyLine` skips page-number-only lines (e.g., "2", "34") to correctly identify headers at page/chapter starts
+
+#### Header Detection at Page Boundaries
+When a header appears at the start of a page or chapter, it may be preceded by:
+- Empty lines
+- Page numbers (e.g., "2", "34", "181")
+- No previous content at all
+
+The detection system handles this by:
+1. Skipping page-number-only lines when searching for previous context
+2. Treating `prevLine === null` (no previous content) as valid for Rule 5
+3. Allowing headers with immediate blank lines above (visual separation)
+
+**Example:**
+```
+--- PAGE 34 ---
+2 
+Attention and Effort 
+In the unlikely event...
+```
+Result: "Attention and Effort" is correctly detected as a header (not merged with following text)
 
 ## Debug Output
 

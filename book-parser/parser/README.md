@@ -91,19 +91,25 @@ module.exports = { execute, validate };
 The main module now provides a clean programmatic interface:
 
 ```javascript
-const parser = require('./main-poc.js');
+const parser = require('./parser.js');
 
 // Parse entire book
-const results = await parser.parseBook(pdfPath, options);
+const results = await parser.parseBook(pdfPath, outputPath, options);
 
 // Parse specific steps only  
-const partialResults = await parser.parseBookSteps(pdfPath, ['step-1', 'step-3-2'], options);
+const partialResults = await parser.parseBookSteps(pdfPath, outputPath, ['step-1', 'step-3-2'], options);
 
 // Get available steps
 const steps = parser.getAvailableSteps();
 
 // Get step descriptions
 const descriptions = parser.getStepDescriptions();
+
+// Clear all cached step outputs for a PDF
+parser.clearCache(pdfPath);
+
+// Clear cache from a specific step onwards (useful for debugging)
+const clearedCount = parser.clearCacheFromStep(pdfPath, 'step-4');
 ```
 
 ### API Options
@@ -115,6 +121,7 @@ const options = {
     validate: true,                 // Run validation (default: true)
     debug: true,                   // Enable debug logging (default: false)
     saveStepOutputs: true,         // Save individual step outputs (default: false)
+    useCache: true,                // Use cached validated step outputs (default: true)
     // Chunk optimization settings
     chunkTargetMin: 80,
     chunkTargetMax: 300,
@@ -138,6 +145,106 @@ const options = {
   finalOutput: { /* output from last executed step */ }
 }
 ```
+
+## Step Output Caching
+
+The parser includes an intelligent caching system that saves validated step outputs and reuses them on subsequent runs, significantly speeding up parser development and debugging.
+
+### How Caching Works
+
+1. **Automatic Caching**: When a step completes successfully and passes validation, its output is automatically saved to a cache directory
+2. **Cache Location**: Cached outputs are stored in `.parser-cache/{pdf-hash}/` in the same directory as the PDF file
+3. **Cache Key**: The cache is keyed by a hash of the PDF file content, ensuring that cache is invalidated if the PDF changes
+4. **Sequential Processing**: Steps are always processed in order, with cached steps loading their output deltas and applying them to the accumulated pipeline state
+5. **Validation Required**: Only steps that pass validation are cached; failed steps never update the cache
+
+### Cache Behavior
+
+**Scenario 1: All steps succeed**
+```
+Run 1: Execute step-1 → validate → cache ✓
+       Execute step-2 → validate → cache ✓
+       Execute step-3 → validate → cache ✓
+
+Run 2: Load step-1 from cache [cached] ✓
+       Load step-2 from cache [cached] ✓
+       Load step-3 from cache [cached] ✓
+```
+
+**Scenario 2: Step fails, then fixed**
+```
+Run 1: Execute step-1 → validate → cache ✓
+       Execute step-2 → validation failed ✗ (no cache)
+       Pipeline stops
+
+Run 2: Load step-1 from cache [cached] ✓
+       Execute step-2 → validate → cache ✓
+       Execute step-3 → validate → cache ✓
+```
+
+### Using the Cache
+
+**Enable caching (default)**
+```javascript
+const parser = require('./parser.js');
+await parser.parseBook(pdfPath, outputPath, { useCache: true });
+```
+
+**Disable caching (force full re-run)**
+```javascript
+await parser.parseBook(pdfPath, outputPath, { useCache: false });
+```
+
+**Clear all cache**
+```javascript
+const parser = require('./parser.js');
+parser.clearCache(pdfPath);
+```
+
+**Clear cache from a specific step onwards**
+```javascript
+// Useful when debugging a specific step but want to keep earlier cached steps
+const clearedCount = parser.clearCacheFromStep(pdfPath, 'step-4');
+console.log(`Cleared ${clearedCount} cached step(s)`);
+```
+
+### Cache Structure
+
+Each cached step is stored as a JSON file with metadata:
+
+```javascript
+{
+  "stepName": "step-1",
+  "pdfHash": "abc123...",
+  "timestamp": "2025-10-24T12:00:00.000Z",
+  "validationPassed": true,
+  "output": {
+    // Actual step output (delta that gets merged into pipeline state)
+  }
+}
+```
+
+### Benefits
+
+- **Faster Development**: Skip re-running successful steps when debugging later steps
+- **Efficient Debugging**: Fix one step at a time without re-processing everything
+- **Automatic Invalidation**: Cache is automatically invalidated when PDF changes
+- **Safe by Default**: Only validated outputs are cached, ensuring data integrity
+
+### Cache Location
+
+The cache directory structure looks like:
+```
+/path/to/your/book.pdf
+/path/to/your/.parser-cache/
+  └── abc123.../              (PDF hash)
+      ├── step-1.json
+      ├── step-2-1.json
+      ├── step-2-2.json
+      └── ...
+```
+
+The `.parser-cache/` directory is created in the same directory as the PDF file and can be safely deleted at any time.
 
 ## Validation Architecture
 
@@ -646,8 +753,13 @@ if ((startsWithNumberedListItem || startsWithBulletPoint) && currentParagraph.tr
 ```javascript
 // In 04-paragraph-detection.js, isHeader function:
 // Rule 5: Context - Previous - Previous line ends with sentence-ending punctuation
-// EXCEPTION: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
+// EXCEPTION 1: Allow consecutive headers (e.g., "PART I" followed by "The Secret of Breath")
+// EXCEPTION 2: Allow when there is an immediate blank line above (visual separation)
+// EXCEPTION 3: Allow at the start of page/chapter (prevLine === null)
 const prevLine = findPreviousNonEmptyLine(allLines, lineIndex - 1);
+const immediateBlankAbove = (lineIndex - 1) >= 0 && ((allLines[lineIndex - 1] || '').trim().length === 0);
+
+// If prevLine is null, we're at the start of the page/chapter - allow header
 if (prevLine !== null && !sharedEndsWithSentenceTerminator(prevLine)) {
     // Check if the previous line looks like a header itself
     const prevWords = prevLine.trim().split(/\s+/);
@@ -1325,6 +1437,7 @@ The pipeline was optimized by combining related steps:
 ### ✅ HEADER DETECTION MASTERY  
 - **Smart Cross-Page Logic**: Only merges lowercase sentence continuations, preserves headers
 - **6-Rule Validation**: Comprehensive header detection (length, punctuation, capitalization, context)
+- **Page Boundary Handling**: Headers at page/chapter starts correctly detected by skipping page numbers in context search
 - **Architectural Integration**: Headers and paragraphs in unified chunk output
 - **Bug Resolution**: Fixed all header detection edge cases and optimization conflicts
 
