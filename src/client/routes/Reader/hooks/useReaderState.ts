@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import { getChapterByNumber } from '../../../../apis/chapters/client';
 import { offlineDB } from '../../../offline/offlineDB';
 import type { BookClient } from '../../../../apis/books/types';
@@ -133,16 +133,15 @@ export const useReaderState = ({
     // Build sentence map
     const sentenceMap = state.chapter ? buildSentenceMap(state.chapter) : { sentences: [], paragraphGroups: [], chunkToSentenceIndexMap: new Map() };
 
-    // Initialize sentence audio controller with initial position
-    // IMPORTANT: Use initialChunkIndex (from props) NOT state.currentChunkIndex
-    // to prevent re-initialization when state changes
+    // Initialize sentence audio controller with CURRENT state position (not initial)
+    // This makes the controller a "controlled component" that always reflects state
     const sentenceAudio = useSentenceAudioController(
         state.chapter,
         userSettings.selectedVoice,
         userSettings.selectedProvider as TtsProvider,
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
-        initialChunkIndex,  // ← Use prop, not state!
+        state.currentChunkIndex ?? 0,  // ← Use current state, not initial prop!
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset
@@ -151,41 +150,16 @@ export const useReaderState = ({
     console.log('🟢 [useReaderState] After audio controller init:', {
         stateCurrentChunkIndex: state.currentChunkIndex,
         controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
-        passedInitialSentenceIndex: initialChunkIndex  // ← Log the prop value
+        passedSentenceIndex: state.currentChunkIndex ?? 0
     });
 
-    // Sync: controller → state (runtime only)
-    // IMPORTANT: Don't sync during initialization to prevent overwriting the loaded position
-    const isMounted = useRef(false);
-    const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
-
-    useEffect(() => {
-        // Skip sync on first render (initialization phase)
-        if (!isMounted.current) {
-            isMounted.current = true;
-            prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
-            console.log('✅ [useReaderState] Initialization complete, skipping first sync');
-            return;
-        }
-
-        console.log('🟡 [useReaderState] Sync effect triggered:', {
-            stateCurrentChunkIndex: state.currentChunkIndex,
-            controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
-            prevSentenceIndexRef: prevSentenceIndexRef.current
-        });
-
-        // Sync controller changes to state (only when user navigates)
-        if (sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
-            console.log('🔄 [useReaderState] Syncing controller → state:', {
-                from: prevSentenceIndexRef.current,
-                to: sentenceAudio.currentSentenceIndex
-            });
-            prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
-            setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
-        }
-    }, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex]);
+    // NO SYNC EFFECT NEEDED!
+    // The controller is now "controlled" by state, similar to controlled form inputs
+    // When state changes → controller updates automatically
+    // When user navigates → we update state directly via callbacks
 
     // Legacy audio adapter
+    // Wrap controller methods to update state when user navigates
     const audioPlayback = {
         currentChunkIndex: state.currentChunkIndex ?? 0,
         currentWordIndex: sentenceAudio.currentWordIndex,
@@ -195,10 +169,18 @@ export const useReaderState = ({
         handlePlay: sentenceAudio.play,
         handlePause: sentenceAudio.pause,
         handleWordClick: sentenceAudio.handleWordClick,
-        handlePreviousChunk: sentenceAudio.prevSentence,
-        handleNextChunk: sentenceAudio.nextSentence,
+        handlePreviousChunk: () => {
+            // Update state first, then let controller follow
+            const newIndex = Math.max(0, (state.currentChunkIndex ?? 0) - 1);
+            setCurrentChunkIndex(newIndex);
+        },
+        handleNextChunk: () => {
+            // Update state first, then let controller follow
+            const newIndex = Math.min(sentenceAudio.sentences.length - 1, (state.currentChunkIndex ?? 0) + 1);
+            setCurrentChunkIndex(newIndex);
+        },
         setCurrentChunkIndex: (index: number) => {
-            sentenceAudio.goToSentence(index);
+            // Update state, controller will follow
             setCurrentChunkIndex(index);
         },
         preloadChunk: sentenceAudio.preload,
