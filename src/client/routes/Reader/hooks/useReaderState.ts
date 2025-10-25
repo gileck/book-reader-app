@@ -48,6 +48,11 @@ export const useReaderState = ({
         error: null
     });
 
+    console.log('🔵 [useReaderState] Initial state:', {
+        initialChunkIndex,
+        stateCurrentChunkIndex: state.currentChunkIndex
+    });
+
     // Helpers for offline loading
     const buildChapterFromLocal = useCallback((localRec: OfflineChapterRecord): ChapterClient => {
         return {
@@ -141,25 +146,45 @@ export const useReaderState = ({
         userSettings.wordSpeedOffset
     );
 
+    console.log('🟢 [useReaderState] After audio controller init:', {
+        stateCurrentChunkIndex: state.currentChunkIndex,
+        controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
+        passedInitialSentenceIndex: state.currentChunkIndex ?? 0
+    });
+
     // Sync: controller → state (only after initialization)
     // Track if we've initialized to prevent overwriting the loaded position
     const hasInitialized = useRef(false);
     const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
 
     useEffect(() => {
+        console.log('🟡 [useReaderState] Sync effect triggered:', {
+            hasInitialized: hasInitialized.current,
+            stateCurrentChunkIndex: state.currentChunkIndex,
+            controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
+            prevSentenceIndexRef: prevSentenceIndexRef.current
+        });
+
         // Wait for controller to initialize with the correct position
         if (!hasInitialized.current && state.currentChunkIndex !== null) {
             // Check if controller has caught up to initial position
-            if (sentenceAudio.currentSentenceIndex === state.currentChunkIndex || 
+            if (sentenceAudio.currentSentenceIndex === state.currentChunkIndex ||
                 sentenceAudio.currentSentenceIndex !== 0) {
+                console.log('✅ [useReaderState] Marking as initialized');
                 hasInitialized.current = true;
                 prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
+            } else {
+                console.log('⏳ [useReaderState] Waiting for controller to initialize...');
             }
             return; // Don't sync yet
         }
 
         // After initialization, sync controller changes to state
         if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+            console.log('🔄 [useReaderState] Syncing controller → state:', {
+                from: prevSentenceIndexRef.current,
+                to: sentenceAudio.currentSentenceIndex
+            });
             prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
             setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
         }

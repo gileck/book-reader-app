@@ -69,8 +69,21 @@ export function useSentenceAudioController(
     }, [chapter]);
 
     useEffect(() => {
+        console.log('🎵 [AudioController] Init effect triggered:', {
+            initialSentenceIndex,
+            initialWordIndex,
+            sentencesLength: sentences.length,
+            currentStateIndex: state.currentSentenceIndex
+        });
+
         if (initialSentenceIndex !== null && Number.isFinite(initialSentenceIndex)) {
-            setState(prev => ({ ...prev, currentSentenceIndex: Math.max(0, Math.min(sentences.length - 1, initialSentenceIndex as number)) }));
+            const clampedIndex = Math.max(0, Math.min(sentences.length - 1, initialSentenceIndex as number));
+            console.log('🎵 [AudioController] Setting currentSentenceIndex:', {
+                from: state.currentSentenceIndex,
+                to: clampedIndex,
+                original: initialSentenceIndex
+            });
+            setState(prev => ({ ...prev, currentSentenceIndex: clampedIndex }));
         }
         if (initialWordIndex !== null && Number.isFinite(initialWordIndex)) {
             setState(prev => ({ ...prev, currentWordIndex: Math.max(0, initialWordIndex as number) }));
