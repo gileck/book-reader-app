@@ -70,28 +70,25 @@ export const useReader = () => {
         bookIdParam: string,
         chapterNumber: number
     ): Promise<{ chapter: ChapterClient | null; fromLocal: boolean }> => {
-        // Try local first
+        // When online, always fetch fresh data from network
+        if (isOnline()) {
+            const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
+            return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+        }
+
+        // When offline, use cached chapter
         const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
         if (localRec) {
             return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
         }
-        // No local copy → fetch from network
-        const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
-        return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+
+        // Offline but no cached chapter available
+        return { chapter: null, fromLocal: false };
     }, [buildChapterFromLocal]);
 
-    const refreshChapterInBackground = useCallback(async (bookIdParam: string, chapterNumber: number) => {
-        if (!isOnline()) return;
-        try {
-            const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
-            if (chapterResult.data?.chapter) {
-                setState(prev => ({ ...prev, chapter: chapterResult.data!.chapter }));
-            }
-        } catch { /* silently ignore background failures */ }
-    }, []);
 
     // Get current book ID from user.activeBookId only
-    const getCurrentBookId = async (): Promise<string | null> => {
+    const getCurrentBookId = useCallback(async (): Promise<string | null> => {
         try {
             const activeBookIdFromUser = user?.activeBookId;
             return activeBookIdFromUser || null;
@@ -99,7 +96,7 @@ export const useReader = () => {
             console.error('Error getting current book ID:', error);
             return null;
         }
-    };
+    }, [user?.activeBookId]);
 
     // Handle Active Book concept
     useEffect(() => {
@@ -131,7 +128,7 @@ export const useReader = () => {
         };
 
         resolveBookId();
-    }, [queryBookId, isInitialLoading, user?.activeBookId, navigate]);
+    }, [queryBookId, isInitialLoading, user?.activeBookId, user?.id, navigate, getCurrentBookId]);
 
     // Sequential loading flow
     useEffect(() => {
@@ -211,13 +208,20 @@ export const useReader = () => {
                     }
                 }
 
-                // Step 4: Load the determined chapter (prefer offline when available; fall back to network)
+                // Step 4: Load the determined chapter
                 if (bookId) {
                     const { chapter: resolvedChapter, fromLocal } = await loadChapterPreferOffline(bookId, currentChapter);
                     if (!resolvedChapter) {
-                        setState(prev => ({ ...prev, error: 'Chapter not found', loading: false }));
+                        setState(prev => ({
+                            ...prev,
+                            error: fromLocal
+                                ? 'Chapter not available offline. Please connect to the internet.'
+                                : 'Chapter not found',
+                            loading: false
+                        }));
                         return;
                     }
+
                     setState({
                         book,
                         chapter: resolvedChapter,
@@ -227,9 +231,6 @@ export const useReader = () => {
                         chapterTransitionLoading: false,
                         error: null
                     });
-                    if (fromLocal) {
-                        refreshChapterInBackground(bookId, currentChapter);
-                    }
                 } else {
                     setState(prev => ({
                         ...prev,
@@ -250,7 +251,7 @@ export const useReader = () => {
         };
 
         loadReaderData();
-    }, [bookId, bookIdResolved, queryChapter, queryChunk]);
+    }, [bookId, bookIdResolved, queryChapter, queryChunk, user?.id, loadChapterPreferOffline]);
 
     // Function to change chapter (for navigation)
     const setCurrentChapterNumber = useCallback(async (chapterNumber: number) => {
@@ -260,7 +261,7 @@ export const useReader = () => {
             setState(prev => ({ ...prev, chapterTransitionLoading: true }));
 
             if (bookId && chapterNumber !== undefined) {
-                const { chapter: resolvedChapter, fromLocal } = await loadChapterPreferOffline(bookId, chapterNumber);
+                const { chapter: resolvedChapter } = await loadChapterPreferOffline(bookId, chapterNumber);
                 if (resolvedChapter) {
                     setState(prev => ({
                         ...prev,
@@ -269,9 +270,6 @@ export const useReader = () => {
                         currentChunkIndex: 0,
                         chapterTransitionLoading: false
                     }));
-                    if (fromLocal) {
-                        refreshChapterInBackground(bookId, chapterNumber);
-                    }
                 } else {
                     setState(prev => ({
                         ...prev,
@@ -294,7 +292,7 @@ export const useReader = () => {
                 chapterTransitionLoading: false
             }));
         }
-    }, [bookId, state.currentChapterNumber, loadChapterPreferOffline, refreshChapterInBackground]);
+    }, [bookId, state.currentChapterNumber, loadChapterPreferOffline]);
 
     // Initialize hooks only after we have the data
     const userSettings = useUserSettings(user?.id || '');
@@ -321,18 +319,32 @@ export const useReader = () => {
     );
 
     // Sync state.currentChunkIndex with sentenceAudio.currentSentenceIndex
+    // Prevent controller from overwriting initial loaded position
+    const hasInitialized = useRef(false);
     const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
+
     useEffect(() => {
-        // Only update if sentence index actually changed (avoid infinite loop)
-        if (sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+        // On first load, initialize controller with loaded position
+        if (!hasInitialized.current && state.currentChunkIndex !== null && !state.loading) {
+            hasInitialized.current = true;
+            if (state.currentChunkIndex !== 0 && state.currentChunkIndex !== sentenceAudio.currentSentenceIndex) {
+                sentenceAudio.goToSentence(state.currentChunkIndex);
+            }
+            prevSentenceIndexRef.current = state.currentChunkIndex;
+            return;
+        }
+
+        // After initialization, sync controller changes back to state
+        if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
             prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
             setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
         }
-    }, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex]);
+    }, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex, state.currentChunkIndex, state.loading, sentenceAudio]);
 
     // Legacy audio adapter: sentence index IS chunk index (simplified!)
+    // Use state as source of truth for position
     const audioPlayback = {
-        currentChunkIndex: sentenceAudio.currentSentenceIndex,
+        currentChunkIndex: state.currentChunkIndex ?? 0,
         currentWordIndex: sentenceAudio.currentWordIndex,
         isPlaying: sentenceAudio.isPlaying,
         isCurrentChunkLoading: sentenceAudio.isCurrentSentenceLoading,
@@ -449,7 +461,7 @@ export const useReader = () => {
             handleWordClick: audioPlayback.handleWordClick,
             handlePreviousChunk: audioPlayback.handlePreviousChunk,
             handleNextChunk: audioPlayback.handleNextChunk,
-            setCurrentChunkIndex: setCurrentChunkIndex,
+            setCurrentChunkIndex: audioPlayback.setCurrentChunkIndex, // This one calls controller + setState
             preloadChunk: audioPlayback.preloadChunk,
             ttsError: audioPlayback.ttsError,
             ttsServiceAvailable: audioPlayback.ttsServiceAvailable,

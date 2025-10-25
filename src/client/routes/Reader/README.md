@@ -880,20 +880,41 @@ graph LR
 - **Syncs on every sentence change** - Both modes track progress
 - Tracks reading time and sessions
 - Syncs with server (debounced)
-- Restores position on reload
+- **Restores position on reload** - Always starts at saved position
+- **Position initialization fix** - Controller sync prevents race conditions
 
 **Implementation:**
 ```typescript
 // Sync state.currentChunkIndex with audio controller
+// Prevent controller from overwriting initial loaded position
+const hasInitialized = useRef(false);
+
 useEffect(() => {
-    if (sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+    // On first load, initialize controller with loaded position
+    if (!hasInitialized.current && state.currentChunkIndex !== null && !state.loading) {
+        hasInitialized.current = true;
+        if (state.currentChunkIndex !== 0 && state.currentChunkIndex !== sentenceAudio.currentSentenceIndex) {
+            sentenceAudio.goToSentence(state.currentChunkIndex);
+        }
+        prevSentenceIndexRef.current = state.currentChunkIndex;
+        return;
+    }
+    
+    // After initialization, sync controller changes back to state
+    if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
         prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
         setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
     }
-}, [sentenceAudio.currentSentenceIndex]);
+}, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex, state.currentChunkIndex, state.loading, sentenceAudio]);
 
 // useReadingProgress tracks currentChunkIndex and saves automatically
 ```
+
+**Position Restoration Fix (v2.1):**
+- ✅ **Race condition eliminated** - One-time initialization prevents controller from resetting position
+- ✅ **Bidirectional sync** - State → Controller on load, Controller → State during playback
+- ✅ **No infinite loops** - Proper guards with `hasInitialized` ref
+- ✅ **Works in both modes** - Full and Focus modes restore correctly
 
 ### 4. Reading Session Logging
 
@@ -951,7 +972,48 @@ const logChunk = async (chunkIndex: number) => {
 - Persists across sessions
 - Chapter + chunk index stored
 
-### 5. Theme Customization
+### 6. Offline Support
+
+**Online-First Strategy:**
+- When **online**: Always fetches fresh data from network (no stale cache issues)
+- When **offline**: Falls back to cached chapters (offline reading)
+- Cache is only used when network is unavailable
+
+**Implementation:**
+```typescript
+const loadChapterPreferOffline = useCallback(async (
+    bookIdParam: string,
+    chapterNumber: number
+): Promise<{ chapter: ChapterClient | null; fromLocal: boolean }> => {
+    // When online, always fetch fresh data from network
+    if (isOnline()) {
+        const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
+        return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+    }
+    
+    // When offline, use cached chapter
+    const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
+    if (localRec) {
+        return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
+    }
+    
+    // Offline but no cached chapter available
+    return { chapter: null, fromLocal: false };
+}, [buildChapterFromLocal]);
+```
+
+**Offline Management:**
+- Download chapters for offline reading via download UI
+- Clear offline data: `await window.indexedDB.deleteDatabase('offline-reader-db')`
+- Better error messages distinguish between offline unavailable vs not found
+
+**Benefits:**
+- ✅ **Always fresh when online** - No stale cache issues
+- ✅ **Works offline** - Can read downloaded chapters without internet
+- ✅ **Correct position restoration** - No conflicts between cached and server data
+- ✅ **Clear error messages** - Users know when they need internet vs cached chapter is missing
+
+### 7. Theme Customization
 
 - Font size, family, line height
 - Text color (per-mode: light/dark)
@@ -978,7 +1040,7 @@ const handleHighlightModeChange = async (mode: 'word' | 'line' | 'off') => {
 };
 ```
 
-### 6. Speed Control
+### 8. Speed Control
 
 - Playback speed (0.5x - 2.0x)
 - Voice selection (multiple providers)
@@ -1027,7 +1089,7 @@ useEffect(() => {
 
 **Implementation Note:** The `wordTimingOffset` parameter must be included in the `useEffect` dependency array to ensure the event listener is recreated when the offset changes, preventing stale closure issues.
 
-### 7. Smart Audio Navigation
+### 9. Smart Audio Navigation
 
 **Next/Prev Button Behavior:**
 - **Stops current audio** immediately
@@ -1298,6 +1360,66 @@ const currentState = stateRef.current;
 ---
 
 ## Troubleshooting
+
+### Reader Not Starting at Saved Position
+
+**Symptom:** Reader always starts at beginning of chapter instead of last reading position (both Full and Focus modes).
+
+**Root Causes Fixed in v2.1:**
+
+1. **Race Condition**: Audio controller initialized at index 0, then overwrote the loaded position
+2. **Stale Offline Cache**: Cached chapter had fewer chunks than server, causing position to be clamped incorrectly
+
+**Solutions Applied:**
+
+**Fix 1: Position Initialization (Lines 321-342 in `useReader.ts`)**
+```typescript
+const hasInitialized = useRef(false);
+
+useEffect(() => {
+    // One-time initialization: Set controller to loaded position
+    if (!hasInitialized.current && state.currentChunkIndex !== null && !state.loading) {
+        hasInitialized.current = true;
+        if (state.currentChunkIndex !== 0) {
+            sentenceAudio.goToSentence(state.currentChunkIndex);
+        }
+        prevSentenceIndexRef.current = state.currentChunkIndex;
+        return; // Prevent sync on first run
+    }
+    
+    // After initialization: Sync controller changes to state
+    if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+        prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
+        setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
+    }
+}, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex, state.currentChunkIndex, state.loading]);
+```
+
+**Fix 2: Online-First Data Loading (Lines 69-87 in `useReader.ts`)**
+```typescript
+// When online, always fetch fresh data (no stale cache)
+if (isOnline()) {
+    const chapterResult = await getChapterByNumber({ bookId, chapterNumber });
+    return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+}
+
+// Only use offline cache when actually offline
+const localRec = await offlineDB.getChapterByBookAndNumber(bookId, chapterNumber);
+if (localRec) {
+    return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
+}
+```
+
+**Expected Behavior:**
+- ✅ Reader loads data → Initializes controller at saved position → Displays UI
+- ✅ No "jump" from 0 to saved position
+- ✅ Works in both Full and Focus modes
+- ✅ Fresh data when online prevents stale cache issues
+
+**If Still Not Working:**
+1. Clear offline data: `await window.indexedDB.deleteDatabase('offline-reader-db')`
+2. Check console for loading logs
+3. Verify reading progress is being saved (check Network tab for API calls)
 
 ### Audio Error Handling
 

@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 
 export const useScrollHandling = (
@@ -48,7 +48,7 @@ export const useScrollHandling = (
     // Handle scrolling to current chunk with enhanced precision
     const handleScrollToCurrentChunk = useCallback(() => {
         if (currentChunkIndex === null) return;
-        
+
         // Try enhanced sentence-level scrolling first
         const paragraphIndex = getCurrentParagraphIndex(currentChunkIndex);
         const scrolled = scrollToSentenceChunk(currentChunkIndex, paragraphIndex);
@@ -81,18 +81,6 @@ export const useScrollHandling = (
         }
         return false;
     }, []);
-
-    // Handle scrolling to chunk when loaded from URL parameters
-    useEffect(() => {
-        if (!loading && chapter && currentChunkIndex !== null && currentChunkIndex > 0) {
-            // Small delay to ensure the component has rendered and DOM elements are available
-            const timeoutId = setTimeout(() => {
-                handleScrollToCurrentChunk();
-            }, 500);
-
-            return () => clearTimeout(timeoutId);
-        }
-    }, [loading, chapter, currentChunkIndex, handleScrollToCurrentChunk]);
 
     return {
         handleScrollToCurrentChunk,

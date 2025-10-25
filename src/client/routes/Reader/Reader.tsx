@@ -43,15 +43,6 @@ export const Reader = () => {
     // Initialize all hooks
     const chapterDialog = useChapterDialog();
 
-    // Navigate to book library if no books found
-    useEffect(() => {
-        if (!loading && error === 'No books found') {
-            navigate('/book-library');
-        }
-    }, [loading, error, navigate]);
-
-
-
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
@@ -98,20 +89,40 @@ export const Reader = () => {
     // Initialize scroll handling hook
     const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
 
-    // When switching chapters without a specific current index, scroll container to top
+    // Track if initial position has been scrolled to (full mode only)
+    const hasScrolledToInitialPosition = useRef(false);
+    const initialChapterNumber = useRef<number | null>(null);
+
+    // Auto-scroll to saved reading position on initial load (full mode only)
     useEffect(() => {
-        if (loading || !chapter) return;
-        // If there's no specific position (index 0), ensure we reset to top
-        if (audio.currentChunkIndex === 0) {
-            const container = scrollContainerRef.current;
-            if (container) {
-                // Use requestAnimationFrame to wait until content is laid out
-                requestAnimationFrame(() => {
-                    container.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-                });
-            }
+        if (loading || !chapter || activeTab !== 'full') return;
+
+        // Track chapter changes to reset scroll flag
+        if (initialChapterNumber.current !== chapter.chapterNumber) {
+            initialChapterNumber.current = chapter.chapterNumber;
+            hasScrolledToInitialPosition.current = false;
         }
-    }, [loading, chapter?.chapterNumber, audio.currentChunkIndex]);
+
+        // Only auto-scroll once per chapter load
+        if (hasScrolledToInitialPosition.current) return;
+
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        // Wait for content to be fully rendered
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                if (audio.currentChunkIndex === 0) {
+                    // Scroll to top for chapter start
+                    container.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+                } else {
+                    // Scroll to saved reading position
+                    handleScrollToCurrentChunk();
+                }
+                hasScrolledToInitialPosition.current = true;
+            }, 300); // Give time for DOM elements to render
+        });
+    }, [loading, chapter, audio.currentChunkIndex, activeTab, handleScrollToCurrentChunk]);
 
     // Show a floating button when current chunk is outside of the scroll container's viewport (full mode only)
     useEffect(() => {
@@ -290,10 +301,8 @@ export const Reader = () => {
 
     if (!book || !chapter) {
         return (
-            <Box textAlign="center" mt={4}>
-                <Typography variant="h6">
-                    Book or chapter not found
-                </Typography>
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+                <CircularProgress />
             </Box>
         );
     }
