@@ -134,13 +134,15 @@ export const useReaderState = ({
     const sentenceMap = state.chapter ? buildSentenceMap(state.chapter) : { sentences: [], paragraphGroups: [], chunkToSentenceIndexMap: new Map() };
 
     // Initialize sentence audio controller with initial position
+    // IMPORTANT: Use initialChunkIndex (from props) NOT state.currentChunkIndex
+    // to prevent re-initialization when state changes
     const sentenceAudio = useSentenceAudioController(
         state.chapter,
         userSettings.selectedVoice,
         userSettings.selectedProvider as TtsProvider,
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
-        state.currentChunkIndex ?? 0,
+        initialChunkIndex,  // ← Use prop, not state!
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset
@@ -149,7 +151,7 @@ export const useReaderState = ({
     console.log('🟢 [useReaderState] After audio controller init:', {
         stateCurrentChunkIndex: state.currentChunkIndex,
         controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
-        passedInitialSentenceIndex: state.currentChunkIndex ?? 0
+        passedInitialSentenceIndex: initialChunkIndex  // ← Log the prop value
     });
 
     // Sync: controller → state (runtime only)
