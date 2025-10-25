@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { getChapterByNumber } from '../../../../apis/chapters/client';
 import { offlineDB } from '../../../offline/offlineDB';
 import type { BookClient } from '../../../../apis/books/types';
@@ -141,10 +141,26 @@ export const useReaderState = ({
         userSettings.wordSpeedOffset
     );
 
-    // Simplified sync: only runtime sync (controller → state)
-    // No initialization sync needed since data loader handles initial position
+    // Sync: controller → state (only after initialization)
+    // Track if we've initialized to prevent overwriting the loaded position
+    const hasInitialized = useRef(false);
+    const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
+
     useEffect(() => {
-        if (sentenceAudio.currentSentenceIndex !== state.currentChunkIndex) {
+        // Wait for controller to initialize with the correct position
+        if (!hasInitialized.current && state.currentChunkIndex !== null) {
+            // Check if controller has caught up to initial position
+            if (sentenceAudio.currentSentenceIndex === state.currentChunkIndex || 
+                sentenceAudio.currentSentenceIndex !== 0) {
+                hasInitialized.current = true;
+                prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
+            }
+            return; // Don't sync yet
+        }
+
+        // After initialization, sync controller changes to state
+        if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+            prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
             setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
         }
     }, [sentenceAudio.currentSentenceIndex, state.currentChunkIndex, setCurrentChunkIndex]);

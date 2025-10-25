@@ -39,7 +39,7 @@ export const ReaderUI = ({
 }: ReaderUIProps) => {
     const { navigate, queryParams } = useRouter();
     const { settings: appSettings, updateSettings } = useSettings();
-    
+
     // Use ReaderState hook with initial data
     const {
         book,
