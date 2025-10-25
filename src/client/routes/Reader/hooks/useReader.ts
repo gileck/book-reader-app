@@ -349,7 +349,7 @@ export const useReader = () => {
         preloadChunk: sentenceAudio.preload,
         ttsError: sentenceAudio.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.ttsError, timestamp: new Date().toISOString() } : null,
         ttsServiceAvailable: sentenceAudio.ttsServiceAvailable,
-        clearTtsError: () => { },
+        clearTtsError: sentenceAudio.clearError,
         retryFailedChunk: sentenceAudio.retryFailed,
         isChunkFailed: () => false
     };
@@ -369,7 +369,7 @@ export const useReader = () => {
         userId: user?.id || '',
         bookId,
         chapter: state.chapter,
-        currentChunkIndex: state.currentChunkIndex,
+        currentChunkIndex: sentenceAudio.currentSentenceIndex,
         isPlaying: audioPlayback.isPlaying
     });
 

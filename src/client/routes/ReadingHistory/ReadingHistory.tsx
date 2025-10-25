@@ -23,8 +23,7 @@ import {
 import { getReadingSessions } from '@/apis/readingLogs/client';
 import { ReadingSessionClient } from '@/apis/readingLogs/types';
 import { useRouter } from '../../router';
-
-const userId = '675e8c84f891e8b9da2b8c28'; // Hard-coded for now
+import { useAuth } from '../../context/AuthContext';
 
 export const ReadingHistory: React.FC = () => {
     const [sessions, setSessions] = useState<ReadingSessionClient[]>([]);
@@ -32,19 +31,26 @@ export const ReadingHistory: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [expandedSession, setExpandedSession] = useState<string | null>(null);
     const { navigate } = useRouter();
+    const { user } = useAuth();
     const theme = useTheme();
 
     useEffect(() => {
         loadReadingSessions();
-    }, []);
+    }, [user?.id]);
 
     const loadReadingSessions = async () => {
+        if (!user?.id) {
+            setError('Please log in to view reading sessions');
+            setLoading(false);
+            return;
+        }
+
         try {
             setLoading(true);
             setError(null);
 
             const result = await getReadingSessions({
-                userId,
+                userId: user.id,
                 limit: 50
             });
 

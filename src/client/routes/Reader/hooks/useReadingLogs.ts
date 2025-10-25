@@ -28,13 +28,16 @@ export const useReadingLogs = ({
     const logChunk = useCallback(async (chunkIndex: number) => {
         if (!bookId || !chapter || chunkIndex < 0) return;
 
-        // Get the text chunks (filter out non-text chunks)
-        const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
+        // Get all chunks (chunkIndex refers to position in full array)
+        const allChunks = chapter.content.chunks;
 
-        if (chunkIndex >= textChunks.length) return;
+        if (chunkIndex >= allChunks.length) return;
 
-        const chunk = textChunks[chunkIndex];
-        if (!chunk || chunk.type !== 'text') return;
+        const chunk = allChunks[chunkIndex];
+        if (!chunk) return;
+
+        // Only log text and header chunks (skip images and empty chunks)
+        if (chunk.type === 'image' || !chunk.text?.trim()) return;
 
         try {
             await createReadingLog({

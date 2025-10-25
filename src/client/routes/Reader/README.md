@@ -66,27 +66,31 @@ graph TB
     B --> D[useUserSettings]
     B --> E[useBookmarks]
     B --> F[useReadingProgress]
+    B --> G[useReadingLogs]
     
-    C --> G[Audio Playback]
-    C --> H[Word Highlighting]
+    C --> H[Audio Playback]
+    C --> I[Word Highlighting]
     
-    A --> I{Mode?}
-    I -->|Full| J[ReaderContent]
-    I -->|Focus| K[FocusReader]
+    G --> J[Reading Sessions DB]
     
-    J --> L[ChunkRenderer]
-    L --> M[TextChunk]
-    L --> N[HeaderChunk]
-    L --> O[ImageChunk]
+    A --> K{Mode?}
+    K -->|Full| L[ReaderContent]
+    K -->|Focus| M[FocusReader]
     
-    M --> P[EnhancedText]
-    P --> Q[Word Elements with data-attributes]
+    L --> N[ChunkRenderer]
+    N --> O[TextChunk]
+    N --> P[HeaderChunk]
+    N --> Q[ImageChunk]
     
-    H --> Q
+    O --> R[EnhancedText]
+    R --> S[Word Elements with data-attributes]
+    
+    I --> S
     
     style C fill:#90EE90
-    style H fill:#FFD700
-    style M fill:#87CEEB
+    style I fill:#FFD700
+    style O fill:#87CEEB
+    style G fill:#FFA07A
 ```
 
 ## Simplified Index System
@@ -167,10 +171,40 @@ const play = async () => {
 
 **Navigation:**
 ```typescript
+/**
+ * Core navigation helper that handles audio state transitions consistently.
+ * Stops current audio, navigates to new index, and resumes playback if needed.
+ */
+const navigateToSentenceIndex = (newIndex: number) => {
+    const { intendedPlay } = stateRef.current;
+    const clamped = Math.max(0, Math.min(sentences.length - 1, newIndex));
+
+    // Stop current audio if playing
+    const audio = audioRef.current;
+    if (audio) {
+        audio.pause();
+        update({ isPlaying: false });
+    }
+
+    // Update to new sentence
+    const newState = { currentSentenceIndex: clamped, currentWordIndex: 0 };
+    update(newState);
+
+    // CRITICAL: Update stateRef immediately so play() sees the new index
+    stateRef.current = { ...stateRef.current, ...newState };
+
+    // If audio was playing, start playing the new chunk
+    if (intendedPlay) {
+        setTimeout(() => void play(), 50);
+    }
+};
+
+const goToSentence = (index: number) => {
+    navigateToSentenceIndex(index);
+};
+
 const nextSentence = () => {
-    // Stop current audio
-    audioRef.current?.pause();
-    
+    const { currentSentenceIndex } = stateRef.current;
     // Find next playable chunk (text or header)
     const nextPlayableIndex = sentences.findIndex(
         (c, i) => i > currentSentenceIndex && 
@@ -178,31 +212,24 @@ const nextSentence = () => {
         c.text?.trim()
     );
     if (nextPlayableIndex !== -1) {
-        goToSentence(nextPlayableIndex);
-        
-        // Resume playback if audio was playing
-        if (intendedPlay) {
-            setTimeout(() => play(), 50);
-        }
+        navigateToSentenceIndex(nextPlayableIndex);
     }
 };
 
 const prevSentence = () => {
-    // Stop current audio
-    audioRef.current?.pause();
-    
+    const { currentSentenceIndex } = stateRef.current;
     // Find previous playable chunk (text or header)
+    let foundIndex = -1;
     for (let i = currentSentenceIndex - 1; i >= 0; i--) {
         const chunk = sentences[i];
         if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk.text?.trim()) {
-            goToSentence(i);
-            
-            // Resume playback if audio was playing
-            if (intendedPlay) {
-                setTimeout(() => play(), 50);
-            }
+            foundIndex = i;
             break;
         }
+    }
+    
+    if (foundIndex !== -1) {
+        navigateToSentenceIndex(foundIndex);
     }
 };
 ```
@@ -868,7 +895,56 @@ useEffect(() => {
 // useReadingProgress tracks currentChunkIndex and saves automatically
 ```
 
-### 4. Bookmarks
+### 4. Reading Session Logging
+
+The `useReadingLogs` hook automatically tracks and logs every chunk played during a reading session:
+
+**Key Features:**
+- **Automatic logging** - Logs each text/header chunk when audio plays
+- **User-specific** - Uses authenticated user ID from `useAuth()`
+- **Direct index mapping** - Uses `sentenceAudio.currentSentenceIndex` directly (no filtering)
+- **Smart filtering** - Only logs text and header chunks, skips images
+- **Session grouping** - Server groups logs into reading sessions (5-minute gaps)
+
+**Implementation:**
+```typescript
+// In useReader hook
+useReadingLogs({
+    userId: user?.id || '',
+    bookId,
+    chapter: state.chapter,
+    currentChunkIndex: sentenceAudio.currentSentenceIndex,  // Direct from audio controller
+    isPlaying: audioPlayback.isPlaying
+});
+
+// In useReadingLogs hook
+const logChunk = async (chunkIndex: number) => {
+    // Get all chunks (chunkIndex refers to position in full array)
+    const allChunks = chapter.content.chunks;
+    const chunk = allChunks[chunkIndex];
+    
+    // Only log text and header chunks (skip images and empty chunks)
+    if (chunk.type === 'image' || !chunk.text?.trim()) return;
+    
+    await createReadingLog({
+        userId,
+        bookId,
+        chapterNumber: chapter.chapterNumber,
+        chunkIndex,
+        chunkText: chunk.text
+    });
+};
+```
+
+**Reading History:**
+- View all reading sessions at `/reading-history`
+- Sessions grouped by date
+- Shows book, chapter, duration, and chunks read
+- Click to resume from any logged position
+
+**Important:** The hook uses the actual playing position (`sentenceAudio.currentSentenceIndex`) to avoid render cycle delays and index mismatches.
+
+### 5. Bookmarks
 
 - Quick-add with audio controls
 - Jump to bookmarked position
@@ -959,23 +1035,55 @@ useEffect(() => {
 - **Auto-resumes playback** if audio was playing before navigation
 - **Maintains state** if audio was paused
 
+**Refactored Architecture (v2.0):**
+All navigation methods (`goToSentence`, `nextSentence`, `prevSentence`) now use a shared helper function to ensure consistent behavior and eliminate code duplication.
+
 ```typescript
-const nextSentence = () => {
+/**
+ * Core navigation helper that handles all audio state transitions.
+ * Prevents race conditions by immediately updating stateRef.
+ */
+const navigateToSentenceIndex = (newIndex: number) => {
     const { intendedPlay } = stateRef.current;
     
     // Stop current audio
-    audioRef.current?.pause();
-    update({ isPlaying: false });
+    const audio = audioRef.current;
+    if (audio) {
+        audio.pause();
+        update({ isPlaying: false });
+    }
     
-    // Navigate to next chunk
-    update({ currentSentenceIndex: nextIndex, currentWordIndex: 0 });
+    // Update state
+    const newState = { currentSentenceIndex: newIndex, currentWordIndex: 0 };
+    update(newState);
+    
+    // CRITICAL: Update stateRef immediately to prevent race conditions
+    stateRef.current = { ...stateRef.current, ...newState };
     
     // Resume if was playing
     if (intendedPlay) {
         setTimeout(() => play(), 50);
     }
 };
+
+// All navigation methods delegate to the shared helper
+const goToSentence = (index: number) => navigateToSentenceIndex(index);
+const nextSentence = () => {
+    const nextIndex = findNextPlayableChunk();
+    if (nextIndex !== -1) navigateToSentenceIndex(nextIndex);
+};
+const prevSentence = () => {
+    const prevIndex = findPreviousPlayableChunk();
+    if (prevIndex !== -1) navigateToSentenceIndex(prevIndex);
+};
 ```
+
+**Benefits of Refactoring:**
+- ✅ **Single source of truth** - One function handles all audio transitions
+- ✅ **Race condition fix** - Immediate `stateRef` update prevents stale reads
+- ✅ **Consistency** - All navigation methods behave identically
+- ✅ **Maintainability** - Changes to navigation logic only need to be made once
+- ✅ **Reduced code** - Eliminated ~80 lines of duplicate code
 
 ## Usage Examples
 
@@ -1191,6 +1299,58 @@ const currentState = stateRef.current;
 
 ## Troubleshooting
 
+### Audio Error Handling
+
+**How Error Handling Works:**
+
+The audio system implements smart error filtering and recovery:
+
+1. **Expected Browser Errors (Filtered):**
+   - "interrupted" errors when changing audio source
+   - "AbortError" when rapidly switching between chunks
+   - These are logged to console.debug but NOT shown to users
+
+2. **Real TTS Errors (Displayed):**
+   - TTS generation failures
+   - Network errors
+   - Service unavailability
+   - Invalid voice/provider configuration
+
+**Error UX Behavior:**
+```typescript
+// In useSentenceAudioController.ts
+try {
+    await audio.play();
+    // Auto-clear errors on successful playback
+    update({ isPlaying: true, intendedPlay: true, ttsError: null });
+} catch (e) {
+    const errorMessage = e instanceof Error ? e.message : 'Playback failed';
+    
+    // Filter expected browser errors
+    const isExpectedBrowserError = errorMessage.includes('interrupted') || 
+                                    errorMessage.includes('AbortError');
+    
+    if (!isExpectedBrowserError) {
+        // Only report unexpected errors to the user
+        update({ ttsError: errorMessage, isPlaying: false });
+    }
+}
+```
+
+**User Control During Errors:**
+- ✅ **Pause button is NEVER disabled** - users can always stop playing audio
+- ✅ **Play button is only disabled for real errors** - not for expected browser events
+- ✅ **Errors are dismissible** - users can click X to clear error messages
+- ✅ **Errors auto-clear** - successful playback automatically clears previous errors
+
+**Common Error Messages:**
+
+| Error | Cause | User Action |
+|-------|-------|-------------|
+| "Audio service is currently unavailable" | TTS provider down or API key invalid | Check settings, verify provider configuration |
+| "Audio unavailable: TTS failed" | TTS generation error | Retry, check network connection |
+| No error shown | Expected browser interruption (filtered) | None needed - audio continues normally |
+
 ### Word Timing Offset Not Working
 
 **Symptom:** Changing the Word Timing Adjustment slider doesn't affect highlight timing.
@@ -1242,9 +1402,28 @@ useEffect(() => {
 
 ### Audio Not Playing After Navigation
 
-**Symptom:** Audio stops after using Next/Prev buttons and doesn't resume.
+**Symptom:** Audio stops after using Next/Prev buttons and doesn't resume, or continues playing the old sentence.
 
-**Cause:** The `intendedPlay` flag may not be set correctly.
+**Common Causes:**
+
+1. **Race Condition (Fixed in v2.0):** The `stateRef.current` was not updated immediately, causing `play()` to read stale index values.
+
+**Solution:** Use the refactored navigation system that immediately updates `stateRef`:
+```typescript
+const navigateToSentenceIndex = (newIndex: number) => {
+    // ... pause audio, update state ...
+    
+    // CRITICAL: Update stateRef immediately
+    stateRef.current = { ...stateRef.current, ...newState };
+    
+    // Now play() will see the correct index
+    if (intendedPlay) {
+        setTimeout(() => void play(), 50);
+    }
+};
+```
+
+2. **`intendedPlay` flag not set correctly:** 
 
 **Expected Behavior:**
 - If audio was playing: Next/Prev should stop current audio and start playing new chunk
@@ -1253,8 +1432,14 @@ useEffect(() => {
 **Debug:**
 ```typescript
 // In useSentenceAudioController.ts
-console.log('Navigation:', { intendedPlay, currentSentenceIndex });
+console.log('Navigation:', { 
+    intendedPlay: stateRef.current.intendedPlay,
+    currentSentenceIndex: stateRef.current.currentSentenceIndex,
+    newIndex 
+});
 ```
+
+**Note:** As of v2.0, all navigation methods use the shared `navigateToSentenceIndex` helper which properly handles audio state transitions and prevents race conditions.
 
 ---
 
@@ -1299,4 +1484,5 @@ const chunkIndex = sentenceIndex;  // They're the same!
 - `AudioControls.tsx` - Playback controls UI
 - `ThemeModal.tsx` - Theme customization
 - `SpeedControlModal.tsx` - Speed and voice settings
+
 
