@@ -1649,19 +1649,37 @@ The audio system implements smart error filtering and recovery:
    - "AbortError" when rapidly switching between chunks
    - These are logged to console.debug but NOT shown to users
 
-2. **Real TTS Errors (Displayed):**
-   - TTS generation failures
-   - Network errors
-   - Service unavailability
+2. **Preloading Errors (Silent):**
+   - Background preloading errors for future sentences are tracked but not displayed
+   - System continues retrying failed preloads on navigation
+   - Only errors for the CURRENT sentence are shown to users
+
+3. **Real TTS Errors (Displayed):**
+   - TTS generation failures for the current sentence
+   - Network errors when playing current audio
+   - Service unavailability when attempting playback
    - Invalid voice/provider configuration
 
 **Error UX Behavior:**
 ```typescript
+// Error state includes sentence context
+ttsError: { message: string; sentenceIndex: number } | null
+
+// Only show errors for current sentence (not preloading errors)
+const shouldShowError = 
+    ttsError && 
+    ttsError.sentenceIndex === currentSentenceIndex;
+
 // In useSentenceAudioController.ts
 try {
     await audio.play();
-    // Auto-clear errors on successful playback
-    update({ isPlaying: true, intendedPlay: true, ttsError: null });
+    if (userInitiated) {
+        // User-initiated play clears errors
+        update({ isPlaying: true, intendedPlay: true, ttsError: null });
+    } else {
+        // Auto-advance preserves errors for visibility
+        update({ isPlaying: true, intendedPlay: true });
+    }
 } catch (e) {
     const errorMessage = e instanceof Error ? e.message : 'Playback failed';
     
@@ -1670,8 +1688,8 @@ try {
                                     errorMessage.includes('AbortError');
     
     if (!isExpectedBrowserError) {
-        // Only report unexpected errors to the user
-        update({ ttsError: errorMessage, isPlaying: false });
+        // Track which sentence failed
+        update({ ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex }, isPlaying: false });
     }
 }
 ```
@@ -1680,15 +1698,16 @@ try {
 - ✅ **Pause button is NEVER disabled** - users can always stop playing audio
 - ✅ **Play button is only disabled for real errors** - not for expected browser events
 - ✅ **Errors are dismissible** - users can click X to clear error messages
-- ✅ **Errors auto-clear** - successful playback automatically clears previous errors
+- ✅ **Silent preloading** - background load failures don't interrupt playback
+- ✅ **Context-aware errors** - only current sentence errors are shown
 
 **Common Error Messages:**
 
 | Error | Cause | User Action |
 |-------|-------|-------------|
 | "Audio service is currently unavailable" | TTS provider down or API key invalid | Check settings, verify provider configuration |
-| "Audio unavailable: TTS failed" | TTS generation error | Retry, check network connection |
-| No error shown | Expected browser interruption (filtered) | None needed - audio continues normally |
+| "Audio unavailable: TTS failed" | TTS generation error for current sentence | Retry, check network connection |
+| No error shown | Preloading error (background) or expected browser interruption | None needed - audio continues normally |
 
 ### Word Timing Offset Not Working
 

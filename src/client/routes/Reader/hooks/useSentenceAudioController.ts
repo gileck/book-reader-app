@@ -9,7 +9,7 @@ export interface SentenceAudioState {
     currentWordIndex: number;
     isPlaying: boolean;
     intendedPlay: boolean;
-    ttsError: string | null;
+    ttsError: { message: string; sentenceIndex: number } | null;
     ttsServiceAvailable: boolean;
     isCurrentSentenceLoading: boolean;
 }
@@ -29,7 +29,7 @@ export interface SentenceAudioApi {
     preload: (sentenceIndex: number) => void | Promise<void>;
     retryFailed: (sentenceIndex: number) => void;
     clearError: () => void;
-    ttsError: string | null;
+    ttsError: { message: string; sentenceIndex: number } | null;
     ttsServiceAvailable: boolean;
 }
 
@@ -117,7 +117,8 @@ export function useSentenceAudioController(
             };
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : 'TTS error';
-            update({ ttsError: errorMessage });
+            // Track which sentence this error is for - only show errors for current sentence
+            update({ ttsError: { message: errorMessage, sentenceIndex: index } });
         } finally {
             // Clear loading state if this was the current sentence
             if (isCurrentSentence) {
@@ -169,7 +170,7 @@ export function useSentenceAudioController(
 
             if (!isExpectedBrowserError) {
                 // Only report unexpected errors to the user
-                update({ ttsError: errorMessage, isPlaying: false });
+                update({ ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex }, isPlaying: false });
             }
             // For expected errors, just log them for debugging but don't show to user
             if (isExpectedBrowserError) {

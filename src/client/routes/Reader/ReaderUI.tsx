@@ -491,7 +491,17 @@ export const ReaderUI = ({
                     onChapters={chapterDialog.openDialog}
                     minChapterNumber={book?.chapterStartNumber ?? 1}
                     ttsServiceAvailable={sentenceAudio.controller.ttsServiceAvailable}
-                    ttsError={sentenceAudio.controller.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.controller.ttsError, timestamp: new Date().toISOString() } : null}
+                    ttsError={
+                        // Only show errors for the current sentence (not preloading errors)
+                        sentenceAudio.controller.ttsError &&
+                            sentenceAudio.controller.ttsError.sentenceIndex === sentenceAudio.controller.currentSentenceIndex
+                            ? {
+                                code: 'TTS_ERROR',
+                                message: sentenceAudio.controller.ttsError.message,
+                                timestamp: new Date().toISOString()
+                            }
+                            : null
+                    }
                     onDismissError={sentenceAudio.controller.clearError}
                     chapterTransitionLoading={chapterTransitionLoading}
                     unitLabelOverride="sentences"
