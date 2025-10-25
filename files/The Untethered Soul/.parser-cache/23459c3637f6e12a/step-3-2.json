@@ -1,7 +1,7 @@
 {
   "stepName": "step-3-2",
   "pdfHash": "23459c3637f6e12a",
-  "timestamp": "2025-10-25T18:10:43.790Z",
+  "timestamp": "2025-10-25T18:47:52.348Z",
   "validationPassed": true,
   "output": {
     "chapters": [
@@ -1427,8 +1427,8 @@
         "totalImages": 5,
         "totalExtractedImages": 7,
         "imagesFolderPath": "/Users/gil/Projects/book-reader-app/files/The Untethered Soul/output/images",
-        "processingTime": 1834,
-        "extractionTime": "2025-10-25T18:10:43.767Z"
+        "processingTime": 2280,
+        "extractionTime": "2025-10-25T18:47:52.303Z"
       }
     }
   }
