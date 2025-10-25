@@ -32,6 +32,11 @@ export const ReaderDataLoader = () => {
     }
 
     // Render UI with loaded data
+    console.log('📦 [ReaderDataLoader] Passing data to ReaderUI:', {
+        currentChunkIndex: data.currentChunkIndex,
+        currentChapterNumber: data.currentChapterNumber
+    });
+    
     return (
         <ReaderUI
             initialBook={data.book}
