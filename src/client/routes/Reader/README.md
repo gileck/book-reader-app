@@ -966,40 +966,55 @@ graph LR
 - Tracks reading time and sessions
 - Syncs with server (debounced)
 - **Restores position on reload** - Always starts at saved position
-- **Position initialization fix** - Controller sync prevents race conditions
+- **Controlled component architecture** - State drives controller, controller tracks progress
 
-**Implementation:**
+**Implementation (v3.1 - Controlled Component):**
 ```typescript
-// Sync state.currentChunkIndex with audio controller
-// Prevent controller from overwriting initial loaded position
-const hasInitialized = useRef(false);
+// Audio controller is a "controlled component" driven by state
+const sentenceAudio = useSentenceAudioController(
+    state.chapter,
+    userSettings.selectedVoice,
+    userSettings.selectedProvider as TtsProvider,
+    userSettings.playbackSpeed,
+    userSettings.ttsEnabled,
+    state.currentChunkIndex ?? 0,  // ← Controlled by state
+    0,
+    userSettings.highlightMode,
+    userSettings.wordSpeedOffset
+);
 
-useEffect(() => {
-    // On first load, initialize controller with loaded position
-    if (!hasInitialized.current && state.currentChunkIndex !== null && !state.loading) {
-        hasInitialized.current = true;
-        if (state.currentChunkIndex !== 0 && state.currentChunkIndex !== sentenceAudio.currentSentenceIndex) {
-            sentenceAudio.goToSentence(state.currentChunkIndex);
-        }
-        prevSentenceIndexRef.current = state.currentChunkIndex;
-        return;
-    }
-    
-    // After initialization, sync controller changes back to state
-    if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
-        prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
-        setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
-    }
-}, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex, state.currentChunkIndex, state.loading, sentenceAudio]);
+// Reading progress tracks controller's real-time position
+const readingProgress = useReadingProgress({
+    userId: user?.id || '',
+    bookId,
+    currentChapterNumber: state.currentChapterNumber,
+    currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Real-time position
+    isPlaying: audioPlayback.isPlaying,
+    isInitialLoadComplete: true
+});
 
-// useReadingProgress tracks currentChunkIndex and saves automatically
+// User navigation updates state first, controller follows
+const audioPlayback = {
+    handleNextChunk: () => {
+        const newIndex = Math.min(sentenceAudio.sentences.length - 1, (state.currentChunkIndex ?? 0) + 1);
+        setCurrentChunkIndex(newIndex); // Update state, controller follows
+    },
+    // ...
+};
 ```
 
-**Position Restoration Fix (v2.1):**
-- ✅ **Race condition eliminated** - One-time initialization prevents controller from resetting position
-- ✅ **Bidirectional sync** - State → Controller on load, Controller → State during playback
-- ✅ **No infinite loops** - Proper guards with `hasInitialized` ref
+**Position Restoration Fix (v3.1):**
+- ✅ **Data loader pattern** - All data loads before UI renders (no race conditions)
+- ✅ **Lazy initialization** - Controller initializes at correct position from the start
+- ✅ **Initial mount guard** - Chapter change effect skips reset on first render
+- ✅ **Controlled component** - State drives controller, eliminates sync complexity
+- ✅ **Real-time progress** - Tracks actual playback position, not stale state
 - ✅ **Works in both modes** - Full and Focus modes restore correctly
+
+**Bug Fixes Applied:**
+1. **Reading progress not saving** - Now uses `sentenceAudio.currentSentenceIndex` (real-time position)
+2. **Position reset to 0 on load** - Chapter change effect now skips reset on initial mount
+3. **Race conditions eliminated** - Data loader pattern ensures correct initialization order
 
 ### 4. Reading Session Logging
 
@@ -1450,61 +1465,81 @@ const currentState = stateRef.current;
 
 **Symptom:** Reader always starts at beginning of chapter instead of last reading position (both Full and Focus modes).
 
-**Root Causes Fixed in v2.1:**
+**Root Causes Fixed in v3.1:**
 
-1. **Race Condition**: Audio controller initialized at index 0, then overwrote the loaded position
-2. **Stale Offline Cache**: Cached chapter had fewer chunks than server, causing position to be clamped incorrectly
+1. **Reading Progress Not Saving**: `useReadingProgress` was tracking stale `state.currentChunkIndex` instead of real-time controller position
+2. **Position Reset on Mount**: Audio controller's chapter change effect ran on initial mount, resetting position to 0
+3. **Race Conditions**: Complex initialization order caused loaded position to be overwritten
 
 **Solutions Applied:**
 
-**Fix 1: Position Initialization (Lines 321-342 in `useReader.ts`)**
+**Fix 1: Track Real-Time Position (in `useReaderState.ts`)**
 ```typescript
-const hasInitialized = useRef(false);
-
-useEffect(() => {
-    // One-time initialization: Set controller to loaded position
-    if (!hasInitialized.current && state.currentChunkIndex !== null && !state.loading) {
-        hasInitialized.current = true;
-        if (state.currentChunkIndex !== 0) {
-            sentenceAudio.goToSentence(state.currentChunkIndex);
-        }
-        prevSentenceIndexRef.current = state.currentChunkIndex;
-        return; // Prevent sync on first run
-    }
-    
-    // After initialization: Sync controller changes to state
-    if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
-        prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
-        setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
-    }
-}, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex, state.currentChunkIndex, state.loading]);
+// Reading progress now tracks controller's actual position
+const readingProgress = useReadingProgress({
+    userId: user?.id || '',
+    bookId,
+    currentChapterNumber: state.currentChapterNumber,
+    currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Real-time, not stale state
+    isPlaying: audioPlayback.isPlaying,
+    isInitialLoadComplete: true
+});
 ```
 
-**Fix 2: Online-First Data Loading (Lines 69-87 in `useReader.ts`)**
+**Fix 2: Prevent Reset on Initial Mount (in `useSentenceAudioController.ts`)**
 ```typescript
-// When online, always fetch fresh data (no stale cache)
-if (isOnline()) {
-    const chapterResult = await getChapterByNumber({ bookId, chapterNumber });
-    return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
-}
+// Skip reset effect on initial mount - lazy initialization already set correct position
+const isInitialMount = useRef(true);
+const prevChapterNumber = useRef(chapter?.chapterNumber);
 
-// Only use offline cache when actually offline
-const localRec = await offlineDB.getChapterByBookAndNumber(bookId, chapterNumber);
-if (localRec) {
-    return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
-}
+useEffect(() => {
+    const currentChapterNumber = chapter?.chapterNumber;
+    
+    // Skip reset on initial mount
+    if (isInitialMount.current) {
+        isInitialMount.current = false;
+        prevChapterNumber.current = currentChapterNumber;
+        return; // Don't reset position
+    }
+    
+    // Only reset when chapter actually changes (user navigation)
+    if (currentChapterNumber !== prevChapterNumber.current) {
+        hasInitiallyLoadedRef.current = false;
+        // ... reset audio state to 0 for new chapter
+        prevChapterNumber.current = currentChapterNumber;
+    }
+}, [chapter?.chapterNumber, update]);
+```
+
+**Fix 3: Data Loader Pattern (in `ReaderDataLoader.tsx`)**
+```typescript
+// Loads all data (book, chapter, progress) BEFORE rendering UI
+const { data, loading, error } = useReaderData();
+
+if (loading) return <LoadingSpinner />;
+if (error) return <ErrorDisplay />;
+
+// Only render when data is ready
+return <ReaderUI 
+    initialChunkIndex={data.currentChunkIndex}  // ← Already determined
+    {...data}
+/>;
 ```
 
 **Expected Behavior:**
-- ✅ Reader loads data → Initializes controller at saved position → Displays UI
-- ✅ No "jump" from 0 to saved position
+- ✅ Data loads with saved position (e.g., chunk 98)
+- ✅ Controller initializes at chunk 98 via lazy initialization
+- ✅ Chapter change effect skips reset (initial mount detected)
+- ✅ Reader displays starting at chunk 98
+- ✅ Reading progress saves updates as user reads
+- ✅ Position persists across page refreshes
 - ✅ Works in both Full and Focus modes
-- ✅ Fresh data when online prevents stale cache issues
 
 **If Still Not Working:**
-1. Clear offline data: `await window.indexedDB.deleteDatabase('offline-reader-db')`
-2. Check console for loading logs
-3. Verify reading progress is being saved (check Network tab for API calls)
+1. Check browser console for error logs
+2. Verify reading progress is being saved (Network tab → watch for `updateReadingPosition` API calls)
+3. Clear browser cache and reload
+4. Check that user is logged in (progress requires authentication)
 
 ### Audio Error Handling
 

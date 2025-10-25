@@ -315,17 +315,17 @@ export function useSentenceAudioController(
     // Reset and cleanup when chapter changes (but not on initial mount)
     const isInitialMount = useRef(true);
     const prevChapterNumber = useRef(chapter?.chapterNumber);
-    
+
     useEffect(() => {
         const currentChapterNumber = chapter?.chapterNumber;
-        
+
         // Skip reset on initial mount - lazy initialization already set correct position
         if (isInitialMount.current) {
             isInitialMount.current = false;
             prevChapterNumber.current = currentChapterNumber;
             return;
         }
-        
+
         // Only reset if chapter actually changed
         if (currentChapterNumber !== prevChapterNumber.current) {
             hasInitiallyLoadedRef.current = false;
@@ -351,7 +351,7 @@ export function useSentenceAudioController(
                 WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
                 previousHighlightRef.current = null;
             }
-            
+
             prevChapterNumber.current = currentChapterNumber;
         }
     }, [chapter?.chapterNumber, update]);
