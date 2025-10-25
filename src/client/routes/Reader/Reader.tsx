@@ -512,7 +512,7 @@ export const Reader = () => {
                     minChapterNumber={book?.chapterStartNumber ?? 1}
                     ttsServiceAvailable={sentenceAudio.controller.ttsServiceAvailable}
                     ttsError={sentenceAudio.controller.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.controller.ttsError, timestamp: new Date().toISOString() } : null}
-                    onDismissError={() => { }}
+                    onDismissError={sentenceAudio.controller.clearError}
                     chapterTransitionLoading={chapterTransitionLoading}
                     unitLabelOverride="sentences"
                 />

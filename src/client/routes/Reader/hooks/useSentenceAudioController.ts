@@ -28,6 +28,7 @@ export interface SentenceAudioApi {
     handleWordClick: (sentenceIndex: number, wordIndex: number) => void;
     preload: (sentenceIndex: number) => void | Promise<void>;
     retryFailed: (sentenceIndex: number) => void;
+    clearError: () => void;
     ttsError: string | null;
     ttsServiceAvailable: boolean;
 }
@@ -153,10 +154,24 @@ export function useSentenceAudioController(
         timepointsRef.current = entry.timepoints;
         try {
             await audio.play();
-            update({ isPlaying: true, intendedPlay: true });
+            // Clear any previous errors on successful playback
+            update({ isPlaying: true, intendedPlay: true, ttsError: null });
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : 'Playback failed';
-            update({ ttsError: errorMessage, isPlaying: false });
+
+            // Filter expected browser errors that occur when changing audio source
+            // These are normal and don't indicate a problem with TTS
+            const isExpectedBrowserError = errorMessage.includes('interrupted') ||
+                errorMessage.includes('AbortError');
+
+            if (!isExpectedBrowserError) {
+                // Only report unexpected errors to the user
+                update({ ttsError: errorMessage, isPlaying: false });
+            }
+            // For expected errors, just log them for debugging but don't show to user
+            if (isExpectedBrowserError) {
+                console.debug('Expected browser audio interruption:', errorMessage);
+            }
         }
     }, [loadSentence, playbackSpeed, update, sentences]);
 
@@ -167,39 +182,53 @@ export function useSentenceAudioController(
         update({ isPlaying: false, intendedPlay: false });
     }, [update]);
 
+    /**
+     * Core navigation helper that handles audio state transitions consistently.
+     * Stops current audio, navigates to new index, and resumes playback if needed.
+     */
+    const navigateToSentenceIndex = useCallback((newIndex: number) => {
+        const { intendedPlay } = stateRef.current;
+        const clamped = Math.max(0, Math.min(sentences.length - 1, newIndex));
+
+        // Stop current audio if playing
+        const audio = audioRef.current;
+        if (audio) {
+            audio.pause();
+            update({ isPlaying: false });
+        }
+
+        // Update to new sentence
+        const newState = { currentSentenceIndex: clamped, currentWordIndex: 0 };
+        update(newState);
+
+        // CRITICAL: Update stateRef immediately so play() sees the new index
+        stateRef.current = { ...stateRef.current, ...newState };
+
+        // If audio was playing, start playing the new chunk
+        if (intendedPlay) {
+            setTimeout(() => {
+                void play();
+            }, 50);
+        }
+    }, [sentences.length, update, play]);
+
     const goToSentence = useCallback((index: number) => {
-        const clamped = Math.max(0, Math.min(sentences.length - 1, index));
-        update({ currentSentenceIndex: clamped, currentWordIndex: 0 });
-    }, [sentences.length, update]);
+        navigateToSentenceIndex(index);
+    }, [navigateToSentenceIndex]);
 
     const nextSentence = useCallback(() => {
-        const { currentSentenceIndex, intendedPlay } = stateRef.current;
+        const { currentSentenceIndex } = stateRef.current;
         // Find next playable chunk (text or header)
         const nextPlayableIndex = sentences.findIndex((c, i) =>
             i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
         );
         if (nextPlayableIndex !== -1) {
-            // Stop current audio if playing
-            const audio = audioRef.current;
-            if (audio) {
-                audio.pause();
-                update({ isPlaying: false });
-            }
-
-            // Update to new sentence
-            update({ currentSentenceIndex: nextPlayableIndex, currentWordIndex: 0 });
-
-            // If audio was playing, start playing the new chunk
-            if (intendedPlay) {
-                setTimeout(() => {
-                    void play();
-                }, 50);
-            }
+            navigateToSentenceIndex(nextPlayableIndex);
         }
-    }, [sentences, play, update]);
+    }, [sentences, navigateToSentenceIndex]);
 
     const prevSentence = useCallback(() => {
-        const { currentSentenceIndex, intendedPlay } = stateRef.current;
+        const { currentSentenceIndex } = stateRef.current;
         // Find previous playable chunk (text or header)
         let foundIndex = -1;
         for (let i = currentSentenceIndex - 1; i >= 0; i--) {
@@ -211,24 +240,9 @@ export function useSentenceAudioController(
         }
 
         if (foundIndex !== -1) {
-            // Stop current audio if playing
-            const audio = audioRef.current;
-            if (audio) {
-                audio.pause();
-                update({ isPlaying: false });
-            }
-
-            // Update to new sentence
-            update({ currentSentenceIndex: foundIndex, currentWordIndex: 0 });
-
-            // If audio was playing, start playing the new chunk
-            if (intendedPlay) {
-                setTimeout(() => {
-                    void play();
-                }, 50);
-            }
+            navigateToSentenceIndex(foundIndex);
         }
-    }, [sentences, play, update]);
+    }, [sentences, navigateToSentenceIndex]);
 
     const handleWordClick = useCallback((sentenceIndex: number, wordIndex: number) => {
         goToSentence(sentenceIndex);
@@ -243,6 +257,10 @@ export function useSentenceAudioController(
         delete cacheRef.current[sentenceIndex];
         void loadSentence(sentenceIndex);
     }, [loadSentence]);
+
+    const clearError = useCallback(() => {
+        update({ ttsError: null });
+    }, [update]);
 
     // Preload current sentence and next 3 sentences for smooth playback
     const hasInitiallyLoadedRef = useRef(false);
@@ -445,6 +463,7 @@ export function useSentenceAudioController(
         handleWordClick,
         preload,
         retryFailed,
+        clearError,
         ttsError: state.ttsError,
         ttsServiceAvailable: state.ttsServiceAvailable
     };

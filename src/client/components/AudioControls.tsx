@@ -405,27 +405,37 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
                         <IconButton
                             onClick={isPlaying ? onPause : onPlay}
-                            disabled={isCurrentChunkLoading || hasError || ttsDisabled}
+                            disabled={
+                                isPlaying
+                                    ? false // Never disable pause - users should always be able to stop audio
+                                    : (isCurrentChunkLoading || hasError || ttsDisabled) // Only disable play if there's an issue
+                            }
                             title={
-                                ttsDisabled
-                                    ? 'Text-to-Speech is disabled'
-                                    : hasError
-                                        ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
-                                        : isCurrentChunkLoading
-                                            ? 'Loading current audio...'
-                                            : isPlaying
-                                                ? 'Pause'
+                                isPlaying
+                                    ? 'Pause'
+                                    : ttsDisabled
+                                        ? 'Text-to-Speech is disabled'
+                                        : hasError
+                                            ? `Audio unavailable: ${ttsError?.message || 'Check TTS configuration'}`
+                                            : isCurrentChunkLoading
+                                                ? 'Loading current audio...'
                                                 : 'Play'
                             }
                             sx={{
-                                backgroundColor: (hasError || ttsDisabled)
-                                    ? '#9e9e9e' // Gray when disabled due to error or TTS is off
-                                    : isPlaying ? '#f44336' : '#4caf50',
+                                backgroundColor:
+                                    isPlaying
+                                        ? '#f44336' // Red for pause (always enabled)
+                                        : (hasError || ttsDisabled)
+                                            ? '#9e9e9e' // Gray when disabled due to error or TTS is off
+                                            : '#4caf50', // Green for play
                                 color: 'white',
                                 '&:hover': {
-                                    backgroundColor: (hasError || ttsDisabled)
-                                        ? '#757575' // Darker gray on hover when disabled
-                                        : isPlaying ? '#d32f2f' : '#388e3c'
+                                    backgroundColor:
+                                        isPlaying
+                                            ? '#d32f2f' // Darker red on hover for pause
+                                            : (hasError || ttsDisabled)
+                                                ? '#757575' // Darker gray on hover when disabled
+                                                : '#388e3c' // Darker green for play
                                 },
                                 '&:disabled': {
                                     backgroundColor: '#9e9e9e', // Keep gray when disabled
