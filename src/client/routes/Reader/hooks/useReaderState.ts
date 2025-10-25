@@ -48,11 +48,6 @@ export const useReaderState = ({
         error: null
     });
 
-    console.log('🔵 [useReaderState] Initial state:', {
-        initialChunkIndex,
-        stateCurrentChunkIndex: state.currentChunkIndex
-    });
-
     // Helpers for offline loading
     const buildChapterFromLocal = useCallback((localRec: OfflineChapterRecord): ChapterClient => {
         return {
@@ -147,12 +142,6 @@ export const useReaderState = ({
         userSettings.wordSpeedOffset
     );
 
-    console.log('🟢 [useReaderState] After audio controller init:', {
-        stateCurrentChunkIndex: state.currentChunkIndex,
-        controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
-        passedSentenceIndex: state.currentChunkIndex ?? 0
-    });
-
     // NO SYNC EFFECT NEEDED!
     // The controller is now "controlled" by state, similar to controlled form inputs
     // When state changes → controller updates automatically
@@ -191,12 +180,12 @@ export const useReaderState = ({
         isChunkFailed: () => false
     };
 
-    // Reading progress hook
+    // Reading progress hook - use audio controller's position as source of truth
     const readingProgress = useReadingProgress({
         userId: user?.id || '',
         bookId,
         currentChapterNumber: state.currentChapterNumber,
-        currentChunkIndex: state.currentChunkIndex,
+        currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Use controller's position, not state
         isPlaying: audioPlayback.isPlaying,
         isInitialLoadComplete: true // Always true since data is pre-loaded
     });
