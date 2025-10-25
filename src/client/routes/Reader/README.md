@@ -1697,6 +1697,55 @@ try {
 **Cause:** Missing dependency in `useEffect` causes stale closure - event listener uses old offset value.
 
 **Solution:** Ensure `wordTimingOffset` is in the dependency array:
+
+---
+
+### Incorrect Sentence Counter (Fixed in v3.3 - October 2025)
+
+**Symptom:** Audio player displays incorrect sentence count, showing numbers like "118 of 116" or current position exceeding total (e.g., "279 of 277").
+
+**Root Cause Fixed:**
+The `sentenceAudio.sentences` array was incorrectly sourced from a **filtered** `sentenceMap.sentences` (containing only text chunks) instead of the controller's **unfiltered** array (containing all chunks: text, headers, and images).
+
+**Code Issue:**
+```typescript
+// ❌ BEFORE (Incorrect - filtered array)
+sentenceAudio: {
+    controller: sentenceAudio,
+    sentences: sentenceMap.sentences,  // Only text chunks (277)
+    paragraphGroups: sentenceMap.paragraphGroups
+}
+
+// ✅ AFTER (Correct - all chunks)
+sentenceAudio: {
+    controller: sentenceAudio,
+    sentences: sentenceAudio.sentences,  // All chunks (279)
+    paragraphGroups: sentenceMap.paragraphGroups
+}
+```
+
+**Why This Caused Issues:**
+1. `useSentenceAudioController` manages ALL chunks (279 = text + headers + images)
+2. `buildSentenceMap` filters to ONLY text chunks (277 = text only)
+3. When `currentSentenceIndex` pointed to a header/image chunk (e.g., 278), it exceeded the filtered array length (277)
+4. Result: "279 of 277 sentences" displayed in UI
+
+**Solution Applied:**
+Changed `useReaderState.ts` line 350 to use `sentenceAudio.sentences` (from controller) instead of `sentenceMap.sentences` (filtered).
+
+**Impact:**
+- ✅ Sentence counter now accurately shows all chunks (e.g., "279 of 279")
+- ✅ Current position never exceeds total
+- ✅ Headers and images are included in the count as intended
+- ✅ No more mismatches between controller state and UI display
+
+**Files Changed:**
+- `src/client/routes/Reader/hooks/useReaderState.ts`
+- `src/client/routes/Reader/ReaderUI.tsx` (removed unused props)
+
+---
+
+### Word Timing Offset Not Working (Documented Previously)
 ```typescript
 useEffect(() => {
     // ... handleTimeUpdate uses wordTimingOffset

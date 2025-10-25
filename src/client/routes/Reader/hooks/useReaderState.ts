@@ -347,7 +347,7 @@ export const useReaderState = ({
         // Sentence-level audio and data
         sentenceAudio: {
             controller: sentenceAudio,
-            sentences: sentenceMap.sentences,
+            sentences: sentenceAudio.sentences,
             paragraphGroups: sentenceMap.paragraphGroups
         }
     };
