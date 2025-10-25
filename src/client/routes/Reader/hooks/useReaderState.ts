@@ -155,10 +155,19 @@ export const useReaderState = ({
     });
 
     // Sync: controller → state (runtime only)
-    // Controller is now initialized correctly via lazy initialization, so we only need runtime sync
+    // IMPORTANT: Don't sync during initialization to prevent overwriting the loaded position
+    const isMounted = useRef(false);
     const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
 
     useEffect(() => {
+        // Skip sync on first render (initialization phase)
+        if (!isMounted.current) {
+            isMounted.current = true;
+            prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
+            console.log('✅ [useReaderState] Initialization complete, skipping first sync');
+            return;
+        }
+
         console.log('🟡 [useReaderState] Sync effect triggered:', {
             stateCurrentChunkIndex: state.currentChunkIndex,
             controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
