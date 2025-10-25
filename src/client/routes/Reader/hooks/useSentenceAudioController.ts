@@ -312,30 +312,47 @@ export function useSentenceAudioController(
         }
     }, [state.currentSentenceIndex, sentences.length, loadSentence, ttsEnabled]);
 
-    // Reset and cleanup when chapter changes
+    // Reset and cleanup when chapter changes (but not on initial mount)
+    const isInitialMount = useRef(true);
+    const prevChapterNumber = useRef(chapter?.chapterNumber);
+    
     useEffect(() => {
-        hasInitiallyLoadedRef.current = false;
-
-        // Stop any playing audio from previous chapter
-        const audio = audioRef.current;
-        if (audio) {
-            audio.pause();
-            audio.src = '';
-            audio.currentTime = 0;
+        const currentChapterNumber = chapter?.chapterNumber;
+        
+        // Skip reset on initial mount - lazy initialization already set correct position
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            prevChapterNumber.current = currentChapterNumber;
+            return;
         }
+        
+        // Only reset if chapter actually changed
+        if (currentChapterNumber !== prevChapterNumber.current) {
+            hasInitiallyLoadedRef.current = false;
 
-        // Reset playback state - note: currentSentenceIndex will be set by initialSentenceIndex effect
-        update({ isPlaying: false, intendedPlay: false, currentWordIndex: 0, currentSentenceIndex: 0 });
+            // Stop any playing audio from previous chapter
+            const audio = audioRef.current;
+            if (audio) {
+                audio.pause();
+                audio.src = '';
+                audio.currentTime = 0;
+            }
 
-        // Clear audio cache for previous chapter
-        cacheRef.current = {};
-        timepointsRef.current = [];
+            // Reset playback state to beginning of new chapter
+            update({ isPlaying: false, intendedPlay: false, currentWordIndex: 0, currentSentenceIndex: 0 });
 
-        // Clear any word highlights
-        const previous = previousHighlightRef.current;
-        if (previous) {
-            WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
-            previousHighlightRef.current = null;
+            // Clear audio cache for previous chapter
+            cacheRef.current = {};
+            timepointsRef.current = [];
+
+            // Clear any word highlights
+            const previous = previousHighlightRef.current;
+            if (previous) {
+                WordHighlightingAPI.unhighlightWord(previous.sentenceIndex, previous.wordIndex);
+                previousHighlightRef.current = null;
+            }
+            
+            prevChapterNumber.current = currentChapterNumber;
         }
     }, [chapter?.chapterNumber, update]);
 
