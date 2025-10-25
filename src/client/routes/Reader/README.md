@@ -1541,6 +1541,103 @@ return <ReaderUI
 3. Clear browser cache and reload
 4. Check that user is logged in (progress requires authentication)
 
+---
+
+### Focus/Full Mode Sync Issues (Fixed in v3.2)
+
+**Symptom:** Position changes when switching between Focus and Full modes.
+
+**Root Cause Fixed:**
+- Focus mode used custom navigation handlers (`handleFocusNext`, `handleFocusPrev`) that operated independently from the audio controller
+- This created two separate navigation systems that didn't stay in sync
+
+**Solution Applied:**
+```typescript
+// BEFORE (Bug): Custom handlers for Focus mode
+<AudioControls
+    onPreviousChunk={activeTab === 'focus' ? handleFocusPrev : controller.prevSentence}
+    onNextChunk={activeTab === 'focus' ? handleFocusNext : controller.nextSentence}
+/>
+
+// AFTER (Fixed): Unified navigation for all modes
+<AudioControls
+    onPreviousChunk={controller.prevSentence}
+    onNextChunk={controller.nextSentence}
+/>
+```
+
+**Result:** Both modes now share the same navigation handlers and maintain perfect sync.
+
+---
+
+### QA Chat Using Wrong Context (Fixed in v3.2)
+
+**Symptom:** AI responses reference incorrect sentences or positions.
+
+**Root Cause Fixed:**
+- QA chat was using `audio.currentChunkIndex` (stale state value) instead of real-time controller position
+- State was not updating as user navigated
+
+**Solution Applied:**
+```typescript
+// BEFORE (Bug): Using stale state
+const bookQA = useBookQA({
+    currentSentence: audio.textChunks[audio.currentChunkIndex].text,
+    getLastSentences: () => {
+        const startIndex = audio.currentChunkIndex - contextCount;
+        return audio.textChunks.slice(startIndex, audio.currentChunkIndex);
+    }
+});
+
+// AFTER (Fixed): Using real-time controller position
+const bookQA = useBookQA({
+    currentSentence: audio.textChunks[sentenceAudio.controller.currentSentenceIndex].text,
+    getLastSentences: () => {
+        const startIndex = sentenceAudio.controller.currentSentenceIndex - contextCount;
+        return audio.textChunks.slice(startIndex, sentenceAudio.controller.currentSentenceIndex);
+    }
+});
+```
+
+**Result:** QA chat now always references the actual current reading position.
+
+---
+
+### TTS Error Flashing on Auto-Advance (Fixed in v3.2)
+
+**Symptom:** Error messages appear briefly then disappear when audio auto-advances to next sentence.
+
+**Root Cause Fixed:**
+- Auto-advance called `play()` which cleared all errors, even if the error was still relevant
+- User never had time to see or acknowledge the error
+
+**Solution Applied:**
+```typescript
+// Added userInitiated parameter to distinguish user actions from auto-advance
+const play = useCallback(async (userInitiated: boolean = false) => {
+    // ... load and play audio ...
+    
+    // Only clear errors on user-initiated play
+    if (userInitiated) {
+        update({ isPlaying: true, intendedPlay: true, ttsError: null });
+    } else {
+        update({ isPlaying: true, intendedPlay: true }); // Keep error
+    }
+}, [/* deps */]);
+
+// In ReaderUI
+const handleUserPlay = useCallback(() => {
+    void sentenceAudio.controller.play(true); // User clicked play
+}, [sentenceAudio.controller]);
+```
+
+**Result:** 
+- Errors persist across auto-advance sentences
+- Errors only clear when user explicitly clicks play or dismiss
+- Users have time to read and acknowledge errors
+
+---
+
 ### Audio Error Handling
 
 **How Error Handling Works:**
