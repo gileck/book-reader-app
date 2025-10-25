@@ -54,7 +54,15 @@ export function useSentenceAudioController(
     highlightMode: 'word' | 'line' | 'off' = 'word',
     wordTimingOffset: number = 0
 ): SentenceAudioApi {
-    const [state, setState] = useState<SentenceAudioState>(getDefaultState());
+    // Use lazy initialization to set correct state from the start
+    const [state, setState] = useState<SentenceAudioState>(() => {
+        const defaultState = getDefaultState();
+        return {
+            ...defaultState,
+            currentSentenceIndex: initialSentenceIndex ?? 0,
+            currentWordIndex: initialWordIndex ?? 0
+        };
+    });
     const stateRef = useRef(state);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const timepointsRef = useRef<Array<{ time: number; wordIndex: number }>>([]);
@@ -67,28 +75,6 @@ export function useSentenceAudioController(
     const sentences: TextChunkClient[] = useMemo(() => {
         return chapter?.content?.chunks || [];
     }, [chapter]);
-
-    useEffect(() => {
-        console.log('🎵 [AudioController] Init effect triggered:', {
-            initialSentenceIndex,
-            initialWordIndex,
-            sentencesLength: sentences.length,
-            currentStateIndex: state.currentSentenceIndex
-        });
-
-        if (initialSentenceIndex !== null && Number.isFinite(initialSentenceIndex)) {
-            const clampedIndex = Math.max(0, Math.min(sentences.length - 1, initialSentenceIndex as number));
-            console.log('🎵 [AudioController] Setting currentSentenceIndex:', {
-                from: state.currentSentenceIndex,
-                to: clampedIndex,
-                original: initialSentenceIndex
-            });
-            setState(prev => ({ ...prev, currentSentenceIndex: clampedIndex }));
-        }
-        if (initialWordIndex !== null && Number.isFinite(initialWordIndex)) {
-            setState(prev => ({ ...prev, currentWordIndex: Math.max(0, initialWordIndex as number) }));
-        }
-    }, [initialSentenceIndex, initialWordIndex, sentences.length]);
 
     const update = useCallback((patch: Partial<SentenceAudioState>) => setState(prev => ({ ...prev, ...patch })), []);
 

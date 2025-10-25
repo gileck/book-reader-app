@@ -152,35 +152,19 @@ export const useReaderState = ({
         passedInitialSentenceIndex: state.currentChunkIndex ?? 0
     });
 
-    // Sync: controller → state (only after initialization)
-    // Track if we've initialized to prevent overwriting the loaded position
-    const hasInitialized = useRef(false);
+    // Sync: controller → state (runtime only)
+    // Controller is now initialized correctly via lazy initialization, so we only need runtime sync
     const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
 
     useEffect(() => {
         console.log('🟡 [useReaderState] Sync effect triggered:', {
-            hasInitialized: hasInitialized.current,
             stateCurrentChunkIndex: state.currentChunkIndex,
             controllerCurrentSentenceIndex: sentenceAudio.currentSentenceIndex,
             prevSentenceIndexRef: prevSentenceIndexRef.current
         });
 
-        // Wait for controller to initialize with the correct position
-        if (!hasInitialized.current && state.currentChunkIndex !== null) {
-            // Check if controller has caught up to initial position
-            if (sentenceAudio.currentSentenceIndex === state.currentChunkIndex ||
-                sentenceAudio.currentSentenceIndex !== 0) {
-                console.log('✅ [useReaderState] Marking as initialized');
-                hasInitialized.current = true;
-                prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
-            } else {
-                console.log('⏳ [useReaderState] Waiting for controller to initialize...');
-            }
-            return; // Don't sync yet
-        }
-
-        // After initialization, sync controller changes to state
-        if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
+        // Sync controller changes to state (only when user navigates)
+        if (sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
             console.log('🔄 [useReaderState] Syncing controller → state:', {
                 from: prevSentenceIndexRef.current,
                 to: sentenceAudio.currentSentenceIndex
@@ -188,7 +172,7 @@ export const useReaderState = ({
             prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
             setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
         }
-    }, [sentenceAudio.currentSentenceIndex, state.currentChunkIndex, setCurrentChunkIndex]);
+    }, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex]);
 
     // Legacy audio adapter
     const audioPlayback = {
