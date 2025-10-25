@@ -78,12 +78,12 @@ export const ReaderUI = ({
         bookTitle: book?.title || '',
         chapterNumber: chapter?.chapterNumber || 1,
         chapterTitle: chapter?.title || '',
-        currentSentence: chapter && audio.textChunks[audio.currentChunkIndex] ? audio.textChunks[audio.currentChunkIndex].text : '',
+        currentSentence: chapter && audio.textChunks[sentenceAudio.controller.currentSentenceIndex] ? audio.textChunks[sentenceAudio.controller.currentSentenceIndex].text : '',
         getLastSentences: () => {
             if (!chapter || audio.textChunks.length === 0) return '';
             const contextCount = 3; // Default value, will be updated by bookQA
-            const startIndex = Math.max(0, audio.currentChunkIndex - contextCount);
-            const endIndex = Math.max(0, audio.currentChunkIndex);
+            const startIndex = Math.max(0, sentenceAudio.controller.currentSentenceIndex - contextCount);
+            const endIndex = Math.max(0, sentenceAudio.controller.currentSentenceIndex);
             if (startIndex >= endIndex) return '';
             return audio.textChunks.slice(startIndex, endIndex).map(chunk => chunk.text).join(' ');
         }
@@ -263,43 +263,10 @@ export const ReaderUI = ({
         }
     }, [activeTab, bookQA.messages, bookQA.isLoading]);
 
-    // Focus mode navigation that includes images (scan chapter content chunks)
-    const getDisplayableIndex = useCallback((fromIndex: number, direction: 'prev' | 'next'): number => {
-        const chunks = chapter?.content?.chunks || [];
-        if (direction === 'next') {
-            for (let i = fromIndex + 1; i < chunks.length; i++) {
-                const c = chunks[i];
-                if (!c) continue;
-                if (c.type === 'image') return i;
-                if ((c.type === 'text' || c.type === 'header') && c.text?.trim()) return i;
-            }
-            return fromIndex;
-        }
-        // prev
-        for (let i = fromIndex - 1; i >= 0; i--) {
-            const c = chunks[i];
-            if (!c) continue;
-            if (c.type === 'image') return i;
-            if ((c.type === 'text' || c.type === 'header') && c.text?.trim()) return i;
-        }
-        return fromIndex;
-    }, [chapter?.content?.chunks]);
-
-    const handleFocusNext = useCallback(() => {
-        const current = sentenceAudio.controller.currentSentenceIndex;
-        const next = getDisplayableIndex(current, 'next');
-        if (next !== current) {
-            sentenceAudio.controller.goToSentence(next);
-        }
-    }, [getDisplayableIndex, sentenceAudio.controller]);
-
-    const handleFocusPrev = useCallback(() => {
-        const current = sentenceAudio.controller.currentSentenceIndex;
-        const prev = getDisplayableIndex(current, 'prev');
-        if (prev !== current) {
-            sentenceAudio.controller.goToSentence(prev);
-        }
-    }, [getDisplayableIndex, sentenceAudio.controller]);
+    // Wrap play function to mark it as user-initiated
+    const handleUserPlay = useCallback(() => {
+        void sentenceAudio.controller.play(true); // User clicked play button
+    }, [sentenceAudio.controller]);
 
     if (!settings.settingsLoaded) {
         return null; // Settings not loaded yet
@@ -500,10 +467,10 @@ export const ReaderUI = ({
                     chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
                     currentChunk={sentenceAudio.controller.currentSentenceIndex + 1}
                     totalChunks={sentenceAudio.sentences.length}
-                    onPlay={sentenceAudio.controller.play}
+                    onPlay={handleUserPlay}
                     onPause={sentenceAudio.controller.pause}
-                    onPreviousChunk={activeTab === 'focus' ? handleFocusPrev : sentenceAudio.controller.prevSentence}
-                    onNextChunk={activeTab === 'focus' ? handleFocusNext : sentenceAudio.controller.nextSentence}
+                    onPreviousChunk={sentenceAudio.controller.prevSentence}
+                    onNextChunk={sentenceAudio.controller.nextSentence}
                     onPreviousChapter={navigation.handlePreviousChapter}
                     onNextChapter={navigation.handleNextChapter}
                     onBookmark={bookmarks.handleBookmark}

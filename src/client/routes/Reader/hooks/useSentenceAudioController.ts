@@ -20,7 +20,7 @@ export interface SentenceAudioApi {
     currentWordIndex: number;
     isPlaying: boolean;
     isCurrentSentenceLoading: boolean;
-    play: () => void;
+    play: (userInitiated?: boolean) => void;
     pause: () => void;
     nextSentence: () => void;
     prevSentence: () => void;
@@ -126,7 +126,7 @@ export function useSentenceAudioController(
         }
     }, [chapter, selectedProvider, selectedVoice, sentences, ttsEnabled, update]);
 
-    const play = useCallback(async () => {
+    const play = useCallback(async (userInitiated: boolean = false) => {
         const { currentSentenceIndex } = stateRef.current;
         const chunk = sentences[currentSentenceIndex];
 
@@ -138,8 +138,8 @@ export function useSentenceAudioController(
             );
             if (nextPlayableIndex !== -1) {
                 update({ currentSentenceIndex: nextPlayableIndex });
-                // Retry play with new index
-                setTimeout(() => void play(), 50);
+                // Retry play with new index (preserve userInitiated flag)
+                setTimeout(() => void play(userInitiated), 50);
             }
             return;
         }
@@ -153,8 +153,12 @@ export function useSentenceAudioController(
         timepointsRef.current = entry.timepoints;
         try {
             await audio.play();
-            // Clear any previous errors on successful playback
-            update({ isPlaying: true, intendedPlay: true, ttsError: null });
+            // Only clear errors on user-initiated play (not on auto-advance)
+            if (userInitiated) {
+                update({ isPlaying: true, intendedPlay: true, ttsError: null });
+            } else {
+                update({ isPlaying: true, intendedPlay: true });
+            }
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : 'Playback failed';
 
