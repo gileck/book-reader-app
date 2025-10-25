@@ -117,14 +117,14 @@ node run-parser-and-upload.js "The Breathing Cure" --mode=parse-upload --force-r
 
 3. **Select your folder** from the list (shows which have existing output)
 
-4. **Clear cache if needed** (optional):
-   - Prompted only in interactive mode
-   - Choose "Clear ALL" or "From step-X onwards"
-   - Useful when debugging specific steps
-
-5. **Choose mode** based on your needs:
+4. **Choose mode** based on your needs:
    - Testing? → `parse-only`
    - Production upload? → `parse-upload-images`
+
+5. **Clear cache if needed** (optional - only shown for parsing modes):
+   - Prompted only when you select a parsing mode
+   - Choose "Clear ALL" or "From step-X onwards"
+   - Useful when debugging specific steps
 
 6. **Copy the suggested command** shown upfront (before operations start) for future reruns
    - The command will have correct paths based on your current directory

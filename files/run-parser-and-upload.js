@@ -65,8 +65,8 @@ Requirements:
 
 Features:
   - Interactive folder selection from /files directory if no path provided
-  - Interactive cache clearing menu (clear all or from specific step)
   - Interactive mode selection (parse only, parse + upload, or upload only)
+  - Interactive cache clearing menu (only for parsing modes)
   - Automatically finds the PDF file in the specified folder
   - Runs the complete book parsing pipeline with validation
   - Creates output folder with parsed content and extracted images
@@ -184,7 +184,7 @@ async function selectCacheClearOption(pdfPath) {
 
     const availableSteps = parser.getAvailableSteps();
     const stepDescriptions = parser.getStepDescriptions();
-    
+
     for (const step of availableSteps) {
         const desc = stepDescriptions[step] || step;
         stepChoices.push({
@@ -412,20 +412,20 @@ async function main() {
 
         // Check if mode involves parsing (not upload-only modes)
         const isParsing = !mode.startsWith('upload-only');
-        
+
         // For interactive mode with parsing, offer cache clearing option
         let interactiveCacheSelection = false;
         let pdfPath = null; // Will be found when needed
-        
+
         if (usedInteractiveFolderSelection && isParsing && !clearCache && !clearCacheFrom && !noCache) {
             // Find PDF path for cache clearing prompt
             console.log(`📁 Looking for PDF file in: ${targetDir}`);
             pdfPath = findPdfFile(targetDir);
             const pdfName = path.basename(pdfPath);
             console.log(`📄 Found PDF: ${pdfName}\n`);
-            
+
             const cacheOptions = await selectCacheClearOption(pdfPath);
-            
+
             if (cacheOptions.clearCache) {
                 clearCache = true;
                 interactiveCacheSelection = true;
