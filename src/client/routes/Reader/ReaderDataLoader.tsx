@@ -36,7 +36,7 @@ export const ReaderDataLoader = () => {
         currentChunkIndex: data.currentChunkIndex,
         currentChapterNumber: data.currentChapterNumber
     });
-    
+
     return (
         <ReaderUI
             initialBook={data.book}

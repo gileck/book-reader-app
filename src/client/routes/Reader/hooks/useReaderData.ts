@@ -149,20 +149,38 @@ export const useReaderData = (): UseReaderDataResult => {
                 let currentChapter: number;
                 let currentChunk: number;
 
+                console.log('🔍 [useReaderData] Progress data:', {
+                    hasProgressResult: !!progressResult.data,
+                    success: progressResult.data?.success,
+                    hasReadingProgress: !!progressResult.data?.readingProgress,
+                    readingProgress: progressResult.data?.readingProgress,
+                    queryChapter,
+                    queryChunk
+                });
+
                 // First check URL parameters (highest priority)
                 if (queryChapter && queryChunk) {
                     currentChapter = parseInt(queryChapter, 10);
                     currentChunk = parseInt(queryChunk, 10);
+                    console.log('✅ [useReaderData] Using URL params:', { currentChapter, currentChunk });
                 } else {
                     // Use reading progress data
                     if (progressResult.data?.success && progressResult.data.readingProgress) {
                         const savedChapter = progressResult.data.readingProgress.currentChapter;
+                        const savedChunk = progressResult.data.readingProgress.currentChunk;
                         const bookStartChapter = book.chapterStartNumber ?? 1;
+
+                        console.log('📖 [useReaderData] Reading progress found:', {
+                            savedChapter,
+                            savedChunk,
+                            bookStartChapter
+                        });
 
                         // Validate saved chapter is valid for this book
                         if (savedChapter >= bookStartChapter) {
                             currentChapter = savedChapter;
-                            currentChunk = progressResult.data.readingProgress.currentChunk;
+                            currentChunk = savedChunk;
+                            console.log('✅ [useReaderData] Using saved progress:', { currentChapter, currentChunk });
                         } else {
                             console.warn(`Invalid saved chapter ${savedChapter} for book starting at chapter ${bookStartChapter}, resetting to start`);
                             currentChapter = bookStartChapter;
@@ -172,6 +190,7 @@ export const useReaderData = (): UseReaderDataResult => {
                         // No progress found, start from book's chapterStartNumber
                         currentChapter = book.chapterStartNumber ?? 1;
                         currentChunk = 0;
+                        console.log('⚠️ [useReaderData] No progress found, starting from beginning:', { currentChapter, currentChunk });
                     }
                 }
 
