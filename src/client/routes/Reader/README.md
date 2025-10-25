@@ -59,38 +59,123 @@ Word-level highlighting uses direct DOM manipulation for performance, while sent
 
 ## Architecture Overview
 
+### Data Loader Pattern (v3.0)
+
+The Reader uses a **data loader pattern** that separates data fetching from UI rendering, eliminating race conditions and ensuring the audio controller starts at the correct position.
+
 ```mermaid
 graph TB
-    A[Reader.tsx] --> B[useReader Hook]
-    B --> C[useSentenceAudioController]
-    B --> D[useUserSettings]
-    B --> E[useBookmarks]
-    B --> F[useReadingProgress]
-    B --> G[useReadingLogs]
+    A[Reader.tsx<br/>Orchestrator] --> B[ReaderDataLoader.tsx<br/>Data Layer]
+    B --> C[useReaderData Hook]
+    C --> D[Parallel Fetch:<br/>Book + Progress]
+    D --> E[Sequential Fetch:<br/>Chapter]
+    E --> F{Data Ready?}
+    F -->|Loading| G[Loading Spinner]
+    F -->|Error| H[Error Display]
+    F -->|Success| I[ReaderUI.tsx<br/>Pure UI + Audio]
     
-    C --> H[Audio Playback]
-    C --> I[Word Highlighting]
+    I --> J[useReaderState Hook]
+    J --> K[useSentenceAudioController<br/>initialized with position]
+    J --> L[useUserSettings]
+    J --> M[useBookmarks]
+    J --> N[useReadingProgress]
+    J --> O[useReadingLogs]
     
-    G --> J[Reading Sessions DB]
+    I --> P{Mode?}
+    P -->|Full| Q[ReaderContent]
+    P -->|Focus| R[FocusReader]
+    P -->|QA| S[BookQA Panel]
     
-    A --> K{Mode?}
-    K -->|Full| L[ReaderContent]
-    K -->|Focus| M[FocusReader]
+    style B fill:#90EE90
+    style C fill:#FFD700
+    style I fill:#87CEEB
+    style J fill:#FFA07A
+```
+
+**Key Components:**
+
+1. **Reader.tsx** - Simple orchestrator that renders `ReaderDataLoader`
+2. **ReaderDataLoader.tsx** - Manages loading states and delegates to `ReaderUI`
+3. **useReaderData.ts** - Fetches all initial data (book, chapter, reading progress) in parallel
+4. **ReaderUI.tsx** - Pure UI component that receives pre-loaded data as props
+5. **useReaderState.ts** - Manages runtime state (navigation, audio, settings) with pre-loaded data
+
+**Benefits:**
+
+- ✅ No race conditions - Data loads before UI renders
+- ✅ Audio controller initialized with correct position immediately
+- ✅ Faster initial load - Parallel fetching of book + progress
+- ✅ Cleaner separation - Data layer vs UI layer
+- ✅ Easier testing - Can test data loading and UI independently
+- ✅ No complex sync effects - Single direction data flow
+
+**Data Flow:**
+
+```typescript
+// 1. Data Loader fetches everything
+useReaderData() → { book, chapter, currentChapterNumber, currentChunkIndex }
+
+// 2. ReaderUI receives loaded data
+<ReaderUI 
+  initialBook={book}
+  initialChapter={chapter}
+  initialChapterNumber={chapterNumber}
+  initialChunkIndex={chunkIndex}  // ← Position already determined
+/>
+
+// 3. Audio controller starts at correct position
+useSentenceAudioController(
+  chapter,
+  voice,
+  provider,
+  speed,
+  ttsEnabled,
+  initialChunkIndex,  // ← No sync needed!
+  ...
+)
+```
+
+### Legacy Architecture (Deprecated)
+
+The old `useReader` hook combined data fetching and runtime state, leading to complex sync effects. It has been split into `useReaderData` and `useReaderState` for better separation of concerns.
+
+### Component Hierarchy
+
+```mermaid
+graph TB
+    A[Reader.tsx] --> B[ReaderDataLoader.tsx]
+    B --> C[useReaderData Hook]
+    B --> D[ReaderUI.tsx]
+    D --> E[useReaderState Hook]
+    E --> F[useSentenceAudioController]
+    E --> G[useUserSettings]
+    E --> H[useBookmarks]
+    E --> I[useReadingProgress]
+    E --> J[useReadingLogs]
     
-    L --> N[ChunkRenderer]
-    N --> O[TextChunk]
-    N --> P[HeaderChunk]
-    N --> Q[ImageChunk]
+    F --> K[Audio Playback]
+    F --> L[Word Highlighting]
     
-    O --> R[EnhancedText]
-    R --> S[Word Elements with data-attributes]
+    J --> M[Reading Sessions DB]
     
-    I --> S
+    D --> N{Mode?}
+    N -->|Full| O[ReaderContent]
+    N -->|Focus| P[FocusReader]
     
-    style C fill:#90EE90
-    style I fill:#FFD700
-    style O fill:#87CEEB
-    style G fill:#FFA07A
+    O --> Q[ChunkRenderer]
+    Q --> R[TextChunk]
+    Q --> S[HeaderChunk]
+    Q --> T[ImageChunk]
+    
+    R --> U[EnhancedText]
+    U --> V[Word Elements with data-attributes]
+    
+    L --> V
+    
+    style F fill:#90EE90
+    style L fill:#FFD700
+    style R fill:#87CEEB
+    style J fill:#FFA07A
 ```
 
 ## Simplified Index System
