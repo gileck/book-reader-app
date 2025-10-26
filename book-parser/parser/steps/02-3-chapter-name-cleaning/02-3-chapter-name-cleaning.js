@@ -173,37 +173,35 @@ function createCleaningPatterns(title, chapterNumber) {
     // Normalize title for pattern matching
     const normalizedTitle = title.replace(/[^a-zA-Z0-9\s]/g, '').toUpperCase();
     
-    // Handle special case for "Introduction" - match any text after it
+    // Handle special case for "Introduction" - be more conservative
     if (title.toLowerCase().includes('introduction')) {
         patterns.push({
-            description: 'Introduction pattern (generic)',
-            regex: /^I\s*NTRODUCTION\s*\n\s*[A-Z\s]+\s*\n/
+            description: 'Introduction pattern (conservative)',
+            // Only match the word INTRODUCTION itself, not what follows
+            regex: /^I\s*NTRODUCTION\s*\n/
         });
     }
     
     // Handle numbered chapters with title
     if (chapterNumber && chapterNumber > 0) {
         // Pattern: "1 \nDISCOVERING THE NANOCOSM \n" - but make title part generic
+        // Match: chapter number, newline, short title line (max 50 chars of letters/spaces), newline
+        // Don't use 'i' flag to avoid matching actual content
         patterns.push({
             description: `Numbered chapter pattern (${chapterNumber})`,
-            regex: new RegExp(`^${chapterNumber}\\s*\\n\\s*[A-Z\\s]+\\s*\\n`, 'i')
+            regex: new RegExp(`^${chapterNumber}\\s*\\n\\s*[a-z\\s]{3,50}\\s*\\n`)
         });
     }
     
-    // Generic pattern for any uppercase title (but be more specific to avoid false positives)
-    if (normalizedTitle) {
-        // Match titles that are all uppercase with reasonable length
-        patterns.push({
-            description: 'Generic uppercase title pattern',
-            regex: /^[A-Z\s]{3,50}\s*\n/
-        });
-    }
+    // REMOVED: Generic uppercase title pattern - too dangerous!
+    // This could match legitimate content like "THE PROBLEM WITH..." or "A NEW APPROACH"
     
-    // Generic pattern for appendix titles
+    // Generic pattern for appendix titles - be more conservative
     if (title.toLowerCase().includes('appendix')) {
         patterns.push({
-            description: 'Generic appendix pattern',
-            regex: /^A\s*PPENDIX\s*\d*\s*\n\s*[A-Z\s]+\s*\n/
+            description: 'Conservative appendix pattern',
+            // Only match "APPENDIX" or "APPENDIX 1" etc, not what follows
+            regex: /^A\s*PPENDIX\s*\d*\s*\n/
         });
     }
     

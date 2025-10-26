@@ -41,6 +41,7 @@ The step processes each chapter sequentially using page-based text extraction:
 
 #### 3. Content Filtering
 - Filters out chapters with less than 10,000 characters (likely not real chapters, e.g., preface, acknowledgments)
+- **Exception**: Introduction chapters are always included regardless of length
 - Ensures only substantial chapters are included
 
 #### 4. Content Processing
@@ -64,6 +65,7 @@ The step processes each chapter sequentially using page-based text extraction:
    
 3. Filter chapters:
    - Remove chapters with less than 10,000 characters
+   - Exception: Introduction chapters are always kept regardless of length
    - These are typically non-chapter sections (preface, acknowledgments, etc.)
    
 4. Process extracted content:
@@ -81,7 +83,7 @@ The step processes each chapter sequentially using page-based text extraction:
 
 - **Page-Based Extraction**: Uses page markers for accurate chapter boundaries
 - **Flexible Boundary Handling**: Properly handles first, middle, and last chapters
-- **Chapter Filtering**: Removes short chapters (< 10,000 characters) that are likely not real content chapters
+- **Smart Chapter Filtering**: Removes short chapters (< 10,000 characters) that are likely not real content chapters, with exception for introduction chapters
 - **Content Quality Assurance**: Validates extracted content meets standards
 - **Word Count Accuracy**: Uses robust word counting algorithms
 - **Metadata Preservation**: Maintains all original chapter information and adds page ranges

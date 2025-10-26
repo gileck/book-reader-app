@@ -34,12 +34,12 @@ The step applies generic pattern-based cleaning to remove common title formats:
 - Uses case-insensitive matching for flexibility
 - Handles various formatting styles and numbering systems
 
-#### 2. Generic Cleaning Patterns
+#### 2. Conservative Cleaning Patterns
 The cleaning process removes these patterns from content start:
-- **Introduction patterns**: `INTRODUCTION`, `I NTRODUCTION`
-- **Numeric patterns**: Standalone numbers (chapter numbers)
-- **Appendix patterns**: `APPENDIX`, `A PPENDIX`
-- **All-caps headers**: Long sequences of capital letters and spaces
+- **Introduction patterns**: `INTRODUCTION` word only (not what follows)
+- **Numbered chapter patterns**: Chapter number followed by lowercase title (max 50 chars)
+- **Appendix patterns**: `APPENDIX` word/number only (not what follows)
+- **Safety**: Removed generic uppercase pattern to prevent false positives
 
 #### 3. Content Validation
 - Ensures cleaning doesn't remove too much content
@@ -69,12 +69,14 @@ The cleaning process removes these patterns from content start:
 ### Cleaning Patterns
 
 ```javascript
-const suspiciousPatterns = [
-    /^I\s*NTRODUCTION\s*\n/,     // Introduction variants
-    /^\d+\s*\n/,                 // Standalone numbers
-    /^A\s*PPENDIX/,              // Appendix variants  
-    /^[A-Z\s]{10,}\s*\n/         // Long capitalized sequences
+// Conservative patterns that avoid false positives
+const patterns = [
+    /^I\s*NTRODUCTION\s*\n/,                          // Introduction word only
+    /^\d+\s*\n\s*[a-z\s]{3,50}\s*\n/,                // Chapter number + lowercase title (max 50 chars)
+    /^A\s*PPENDIX\s*\d*\s*\n/                         // Appendix word/number only
 ];
+
+// REMOVED for safety: /^[A-Z\s]{3,50}\s*\n/ - Too dangerous, could match legitimate content
 ```
 
 ### Key Features
@@ -202,6 +204,28 @@ The step provides quality assurance feedback:
 - **Fast Processing**: Simple string operations for efficient cleaning
 - **Memory Efficient**: In-place content modification where possible
 - **Scalable**: Handles books with many chapters efficiently
+
+## Safety Improvements (v2.0)
+
+### Critical Bug Fixes
+
+**Issue**: Previous version had greedy regex patterns that could remove actual chapter content:
+- `[A-Z\s]+` with case-insensitive flag matched multiple lines of content
+- Generic uppercase pattern `[A-Z\s]{3,50}` matched legitimate content like "THE PROBLEM WITH..."
+
+**Solution**: 
+- Removed case-insensitive (`i`) flag from numbered chapter pattern
+- Changed to lowercase-specific pattern: `[a-z\s]{3,50}`
+- Limited pattern length to 50 characters maximum
+- Removed dangerous generic uppercase pattern entirely
+- Added conservative approach that only removes known title formats
+
+### Pattern Safety Features
+
+- **Length Limits**: All patterns have maximum character limits
+- **Specific Matching**: Patterns target specific title formats, not generic text
+- **Conservative Design**: When in doubt, preserve content rather than remove it
+- **Case-Specific**: No case-insensitive flags that could cause false matches
 
 ## Limitations
 

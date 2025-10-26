@@ -434,11 +434,53 @@ function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
     // The book's page number is pageNumber - 1
     const bookPageNumber = pageNumber - 1;
 
-    // Remove page numbers at start of page (first few lines)
+    // Remove page numbers and chapter numbers at start of page (first few lines)
     if (lineIndex < 3) {
         // Pattern: Just a page number by itself
         if (line.match(/^\d+$/) && parseInt(line) === bookPageNumber) {
             return true;
+        }
+        
+        // Pattern: Just a single or double digit by itself (likely chapter number)
+        // This catches chapter numbers like "2" or "15" at the start of pages
+        // SAFETY: Only remove if it's JUST the number, nothing else on that line
+        if (line.match(/^\d{1,2}$/) && lineIndex <= 1) {
+            const trimmed = line.trim();
+            // Extra safety: make sure it's really just a number
+            if (trimmed.length <= 2 && /^\d+$/.test(trimmed)) {
+                return true;
+            }
+        }
+        
+        // Pattern: Lowercase chapter title (e.g., "your inner roommate")
+        // These appear right after chapter numbers and should be removed
+        // Check line indices 1-2 (may have empty line before chapter number)
+        // SAFETY: Be very conservative - only remove if it looks like a title, not content
+        if (lineIndex >= 1 && lineIndex <= 2) {
+            const trimmed = line.trim();
+            // Check if it's a short line (< 50 chars) of mostly lowercase text with few punctuation marks
+            // Must not end with sentence continuation (no trailing preposition or incomplete sentence)
+            // ADDED SAFETY: Must not have common sentence words that indicate this is content
+            const contentWords = ['when', 'where', 'what', 'why', 'how', 'who', 'which', 'that', 'this', 'these', 'those'];
+            const startsWithContentWord = contentWords.some(word => trimmed.toLowerCase().startsWith(word + ' '));
+            
+            if (!startsWithContentWord && // SAFETY: Don't remove if starts with common sentence words
+                trimmed.length > 3 && trimmed.length < 50 && 
+                /^[a-z]/.test(trimmed) && // starts with lowercase
+                (trimmed.match(/[.!?]/g) || []).length === 0 && // no sentence-ending punctuation
+                !trimmed.endsWith(' the') && // doesn't end mid-sentence
+                !trimmed.endsWith(' a') &&
+                !trimmed.endsWith(' an') &&
+                !trimmed.endsWith(' to') &&
+                !trimmed.endsWith(' of') &&
+                !trimmed.endsWith(' and') &&
+                !trimmed.endsWith(' or')) {
+                // Additional check: mostly lowercase letters and spaces
+                const lowercaseRatio = (trimmed.match(/[a-z\s]/g) || []).length / trimmed.length;
+                if (lowercaseRatio > 0.85) {
+                    return true;
+                }
+            }
         }
 
         // Pattern: Spaced-out page number like "1 1" instead of "11" or "1 0" instead of "10"

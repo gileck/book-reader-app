@@ -77,9 +77,11 @@ async function execute(pipelineState, config) {
         }
         
         // Filter out chapters with content under 10,000 characters (likely not real chapters)
+        // Exception: Allow introduction chapters regardless of length
         const originalChapterCount = chapters.length;
         const filteredChapters = chapters.filter(ch => {
-            const isRealChapter = ch.content.length >= 10000;
+            const isIntroduction = ch.title.toLowerCase().includes('introduction');
+            const isRealChapter = ch.content.length >= 10000 || isIntroduction;
             if (!isRealChapter) {
                 // console.log(`📝 Filtering out short chapter: "${ch.title}" (${ch.content.length} characters)`);
             }

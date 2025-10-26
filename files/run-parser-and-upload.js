@@ -344,7 +344,7 @@ async function main() {
         const positionals = args.filter(a => !a.startsWith('-'));
         const forceReparse = flags.has('--force-reparse') || flags.has('-f');
         const noCache = flags.has('--no-cache');
-        const clearCache = flags.has('--clear-cache');
+        let clearCache = flags.has('--clear-cache');
         const modeFlag = parseModeFlag(args);
 
         // Parse --clear-cache-from flag
