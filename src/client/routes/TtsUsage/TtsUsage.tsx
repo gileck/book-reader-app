@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getTtsUsageSummary, getTtsUsageRecords, getTtsErrorSummary } from '../../../apis/ttsUsage/client';
 import type { TtsUsageSummary, TtsUsageRecord, TtsErrorSummary, TtsRangeDays } from '../../../apis/ttsUsage/types';
+import { FREE_TIER_LIMITS } from '../../../common/tts/ttsPricing';
 import styles from './TtsUsage.module.css';
 
 export function TtsUsage() {
@@ -55,22 +56,6 @@ export function TtsUsage() {
     }
   };
 
-  // Free tier limits (characters per month)
-  const POLLY_FREE_TIER_LIMITS = {
-    standard: 5000000, // 5 million characters
-    neural: 1000000,   // 1 million characters
-    longform: 500000   // 500 thousand characters
-  };
-
-  const GOOGLE_FREE_TIER_LIMITS = {
-    standard: 4000000,  // 4 million characters
-    neural2: 1000000    // 1 million characters (Neural2 voices)
-  };
-
-  const ELEVENLABS_FREE_TIER_LIMITS = {
-    total: 20000  // 20,000 characters (10,000 credits)
-  };
-
   // Use server-provided calendar-month aggregate for Free Tier usage
   const currentMonthUsage = summary?.freeTierMonthUsage || {
     polly: { standard: 0, neural: 0, longform: 0 },
@@ -101,9 +86,9 @@ export function TtsUsage() {
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           let freeLimit = 0;
           switch (voiceType) {
-            case 'standard': freeLimit = POLLY_FREE_TIER_LIMITS.standard; break;
-            case 'neural': freeLimit = POLLY_FREE_TIER_LIMITS.neural; break;
-            case 'long-form': freeLimit = POLLY_FREE_TIER_LIMITS.longform; break;
+            case 'standard': freeLimit = FREE_TIER_LIMITS.polly.standard; break;
+            case 'neural': freeLimit = FREE_TIER_LIMITS.polly.neural; break;
+            case 'long-form': freeLimit = FREE_TIER_LIMITS.polly.longform; break;
             default: freeLimit = 0;
           }
 
@@ -123,9 +108,9 @@ export function TtsUsage() {
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           let freeLimit = 0;
           if (voiceType === 'standard') {
-            freeLimit = GOOGLE_FREE_TIER_LIMITS.standard;
+            freeLimit = FREE_TIER_LIMITS.google.standard;
           } else {
-            freeLimit = GOOGLE_FREE_TIER_LIMITS.neural2; // Neural2/WaveNet voices
+            freeLimit = FREE_TIER_LIMITS.google.neural2; // Neural2/WaveNet voices
           }
 
           const monthlyUsage = voiceType === 'standard'
@@ -144,7 +129,7 @@ export function TtsUsage() {
       } else if (provider === 'elevenlabs') {
         // ElevenLabs free tier calculation
         const monthlyUsage = currentMonthUsage.elevenlabs.total;
-        const exceededUsage = Math.max(0, monthlyUsage - ELEVENLABS_FREE_TIER_LIMITS.total);
+        const exceededUsage = Math.max(0, monthlyUsage - FREE_TIER_LIMITS.elevenlabs.total);
 
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
@@ -317,15 +302,15 @@ export function TtsUsage() {
                       <div className={styles.progressBar}>
                         <div
                           className={styles.progressFill}
-                          style={{ width: `${formatPercentage(currentMonthUsage.polly.standard, POLLY_FREE_TIER_LIMITS.standard)}%` }}
+                          style={{ width: `${formatPercentage(currentMonthUsage.polly.standard, FREE_TIER_LIMITS.polly.standard)}%` }}
                         ></div>
                       </div>
                       <div className={styles.progressText}>
                         <span className={styles.usageText}>
-                          {formatNumber(currentMonthUsage.polly.standard)} / {formatNumber(POLLY_FREE_TIER_LIMITS.standard)} chars
+                          {formatNumber(currentMonthUsage.polly.standard)} / {formatNumber(FREE_TIER_LIMITS.polly.standard)} chars
                         </span>
                         <span className={styles.percentageText}>
-                          {formatPercentage(currentMonthUsage.polly.standard, POLLY_FREE_TIER_LIMITS.standard).toFixed(1)}%
+                          {formatPercentage(currentMonthUsage.polly.standard, FREE_TIER_LIMITS.polly.standard).toFixed(1)}%
                         </span>
                       </div>
                     </div>
@@ -340,15 +325,15 @@ export function TtsUsage() {
                       <div className={styles.progressBar}>
                         <div
                           className={styles.progressFill}
-                          style={{ width: `${formatPercentage(currentMonthUsage.polly.neural, POLLY_FREE_TIER_LIMITS.neural)}%` }}
+                          style={{ width: `${formatPercentage(currentMonthUsage.polly.neural, FREE_TIER_LIMITS.polly.neural)}%` }}
                         ></div>
                       </div>
                       <div className={styles.progressText}>
                         <span className={styles.usageText}>
-                          {formatNumber(currentMonthUsage.polly.neural)} / {formatNumber(POLLY_FREE_TIER_LIMITS.neural)} chars
+                          {formatNumber(currentMonthUsage.polly.neural)} / {formatNumber(FREE_TIER_LIMITS.polly.neural)} chars
                         </span>
                         <span className={styles.percentageText}>
-                          {formatPercentage(currentMonthUsage.polly.neural, POLLY_FREE_TIER_LIMITS.neural).toFixed(1)}%
+                          {formatPercentage(currentMonthUsage.polly.neural, FREE_TIER_LIMITS.polly.neural).toFixed(1)}%
                         </span>
                       </div>
                     </div>
@@ -363,15 +348,15 @@ export function TtsUsage() {
                       <div className={styles.progressBar}>
                         <div
                           className={styles.progressFill}
-                          style={{ width: `${formatPercentage(currentMonthUsage.polly.longform, POLLY_FREE_TIER_LIMITS.longform)}%` }}
+                          style={{ width: `${formatPercentage(currentMonthUsage.polly.longform, FREE_TIER_LIMITS.polly.longform)}%` }}
                         ></div>
                       </div>
                       <div className={styles.progressText}>
                         <span className={styles.usageText}>
-                          {formatNumber(currentMonthUsage.polly.longform)} / {formatNumber(POLLY_FREE_TIER_LIMITS.longform)} chars
+                          {formatNumber(currentMonthUsage.polly.longform)} / {formatNumber(FREE_TIER_LIMITS.polly.longform)} chars
                         </span>
                         <span className={styles.percentageText}>
-                          {formatPercentage(currentMonthUsage.polly.longform, POLLY_FREE_TIER_LIMITS.longform).toFixed(1)}%
+                          {formatPercentage(currentMonthUsage.polly.longform, FREE_TIER_LIMITS.polly.longform).toFixed(1)}%
                         </span>
                       </div>
                     </div>
@@ -389,15 +374,15 @@ export function TtsUsage() {
                       <div className={styles.progressBar}>
                         <div
                           className={styles.progressFill}
-                          style={{ width: `${formatPercentage(currentMonthUsage.google.standard, GOOGLE_FREE_TIER_LIMITS.standard)}%` }}
+                          style={{ width: `${formatPercentage(currentMonthUsage.google.standard, FREE_TIER_LIMITS.google.standard)}%` }}
                         ></div>
                       </div>
                       <div className={styles.progressText}>
                         <span className={styles.usageText}>
-                          {formatNumber(currentMonthUsage.google.standard)} / {formatNumber(GOOGLE_FREE_TIER_LIMITS.standard)} chars
+                          {formatNumber(currentMonthUsage.google.standard)} / {formatNumber(FREE_TIER_LIMITS.google.standard)} chars
                         </span>
                         <span className={styles.percentageText}>
-                          {formatPercentage(currentMonthUsage.google.standard, GOOGLE_FREE_TIER_LIMITS.standard).toFixed(1)}%
+                          {formatPercentage(currentMonthUsage.google.standard, FREE_TIER_LIMITS.google.standard).toFixed(1)}%
                         </span>
                       </div>
                     </div>
@@ -412,15 +397,15 @@ export function TtsUsage() {
                       <div className={styles.progressBar}>
                         <div
                           className={styles.progressFill}
-                          style={{ width: `${formatPercentage(currentMonthUsage.google.neural2, GOOGLE_FREE_TIER_LIMITS.neural2)}%` }}
+                          style={{ width: `${formatPercentage(currentMonthUsage.google.neural2, FREE_TIER_LIMITS.google.neural2)}%` }}
                         ></div>
                       </div>
                       <div className={styles.progressText}>
                         <span className={styles.usageText}>
-                          {formatNumber(currentMonthUsage.google.neural2)} / {formatNumber(GOOGLE_FREE_TIER_LIMITS.neural2)} chars
+                          {formatNumber(currentMonthUsage.google.neural2)} / {formatNumber(FREE_TIER_LIMITS.google.neural2)} chars
                         </span>
                         <span className={styles.percentageText}>
-                          {formatPercentage(currentMonthUsage.google.neural2, GOOGLE_FREE_TIER_LIMITS.neural2).toFixed(1)}%
+                          {formatPercentage(currentMonthUsage.google.neural2, FREE_TIER_LIMITS.google.neural2).toFixed(1)}%
                         </span>
                       </div>
                     </div>
@@ -438,15 +423,15 @@ export function TtsUsage() {
                       <div className={styles.progressBar}>
                         <div
                           className={styles.progressFill}
-                          style={{ width: `${formatPercentage(currentMonthUsage.elevenlabs.total, ELEVENLABS_FREE_TIER_LIMITS.total)}%` }}
+                          style={{ width: `${formatPercentage(currentMonthUsage.elevenlabs.total, FREE_TIER_LIMITS.elevenlabs.total)}%` }}
                         ></div>
                       </div>
                       <div className={styles.progressText}>
                         <span className={styles.usageText}>
-                          {formatNumber(currentMonthUsage.elevenlabs.total)} / {formatNumber(ELEVENLABS_FREE_TIER_LIMITS.total)} chars
+                          {formatNumber(currentMonthUsage.elevenlabs.total)} / {formatNumber(FREE_TIER_LIMITS.elevenlabs.total)} chars
                         </span>
                         <span className={styles.percentageText}>
-                          {formatPercentage(currentMonthUsage.elevenlabs.total, ELEVENLABS_FREE_TIER_LIMITS.total).toFixed(1)}%
+                          {formatPercentage(currentMonthUsage.elevenlabs.total, FREE_TIER_LIMITS.elevenlabs.total).toFixed(1)}%
                         </span>
                       </div>
                     </div>

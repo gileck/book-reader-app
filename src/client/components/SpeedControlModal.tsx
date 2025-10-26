@@ -16,10 +16,15 @@ import {
     Box,
     Divider,
     IconButton,
-    ButtonGroup
+    ButtonGroup,
+    LinearProgress,
+    Alert,
+    CircularProgress
 } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
-import { VOICE_MAPPINGS, type Voice, type TtsProvider } from '../../common/tts/ttsUtils';
+import { VOICE_MAPPINGS, type Voice, type TtsProvider, getVoiceTier } from '../../common/tts/ttsUtils';
+import { useTtsUsage } from '../hooks/useTtsUsage';
+import { getVoiceTypeUsage, getTotalCostBeyondFreeTier } from '../../common/tts/ttsUsageCalculator';
 
 interface SpeedControlModalProps {
     open: boolean;
@@ -58,6 +63,9 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     const [selectedProvider, setSelectedProvider] = useState<TtsProvider>(currentProvider as TtsProvider || 'google');
     const [availableVoices, setAvailableVoices] = useState<Voice[]>(VOICE_MAPPINGS[currentProvider as TtsProvider] || VOICE_MAPPINGS.google);
     const [localTtsEnabled, setLocalTtsEnabled] = useState<boolean>(ttsEnabled);
+
+    // Fetch TTS usage when modal opens
+    const { summary, loading: usageLoading, error: usageError } = useTtsUsage(open);
 
     useEffect(() => {
         setLocalSpeed(currentSpeed);
@@ -145,6 +153,84 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
         { value: 0, label: '0ms' },
         { value: 500, label: '+500ms' }
     ];
+
+    // Helper function to get current voice tier
+    const getCurrentVoiceTier = (): string => {
+        return getVoiceTier(selectedProvider, localVoice);
+    };
+
+    // Helper function to format usage display
+    const formatUsageDisplay = () => {
+        if (usageLoading) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
+                    <CircularProgress size={16} />
+                    <Typography variant="body2" color="text.secondary">
+                        Loading usage data...
+                    </Typography>
+                </Box>
+            );
+        }
+
+        if (usageError) {
+            return (
+                <Alert severity="warning" sx={{ mt: 2 }}>
+                    Unable to load usage data
+                </Alert>
+            );
+        }
+
+        if (!summary?.freeTierMonthUsage) {
+            return null;
+        }
+
+        const currentTier = getCurrentVoiceTier();
+        const usageInfo = getVoiceTypeUsage(selectedProvider, currentTier, summary.freeTierMonthUsage);
+
+        const formatNumber = (num: number) => num.toLocaleString();
+
+        if (usageInfo.isInFreeTier) {
+            // Still in free tier - show percentage
+            return (
+                <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'divider' }}>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Free Tier Usage ({currentTier})
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                        <LinearProgress
+                            variant="determinate"
+                            value={usageInfo.percentageUsed}
+                            sx={{ flex: 1, height: 8, borderRadius: 1 }}
+                            color={usageInfo.percentageUsed > 80 ? 'warning' : 'primary'}
+                        />
+                        <Typography variant="body2" fontWeight="medium">
+                            {usageInfo.percentageUsed.toFixed(1)}%
+                        </Typography>
+                    </Box>
+                    <Typography variant="caption" color="text.secondary">
+                        {formatNumber(usageInfo.usedCharacters)} / {formatNumber(usageInfo.freeLimit)} characters used this month
+                    </Typography>
+                </Box>
+            );
+        } else {
+            // Beyond free tier - show total cost
+            const totalCost = getTotalCostBeyondFreeTier(summary.freeTierMonthUsage);
+            return (
+                <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'warning.main' }}>
+                    <Typography variant="body2" color="warning.main" gutterBottom fontWeight="medium">
+                        Beyond Free Tier
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Current voice type ({currentTier}): {formatNumber(usageInfo.exceededCharacters)} characters beyond free tier
+                    </Typography>
+                    <Divider sx={{ my: 1 }} />
+                    <Typography variant="body2" fontWeight="medium">
+                        Total cost beyond free tier (all providers): ${totalCost.toFixed(2)}
+                    </Typography>
+                </Box>
+            );
+        }
+    };
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
@@ -269,6 +355,9 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                     >
                         Preview Voice
                     </Button>
+
+                    {/* Usage Display */}
+                    {formatUsageDisplay()}
 
                     <Divider sx={{ my: 3 }} />
 

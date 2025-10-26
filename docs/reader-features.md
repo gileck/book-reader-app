@@ -26,6 +26,10 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **TTS Provider Selection**: Choose between different TTS providers
 - ✅ **Voice Selection**: Select from available voices for each provider
 - ✅ **Playback Speed Control**: Real-time speed adjustment (applied to currently playing audio)
+- ✅ **TTS Usage Display**: Real-time display of free tier usage and costs in Playback Settings modal
+  - Shows percentage and character usage for selected voice type when in free tier
+  - Shows total cost across all providers when beyond free tier
+  - Dynamically loaded when opening settings (doesn't slow down reader initialization)
 
 ### 3. Text Highlighting
 
@@ -114,13 +118,24 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Reading Progress**: Current chapter and sentence automatically saved
 - ✅ **Cross-Device Sync**: Settings and progress sync across devices
 
-### 9. Offline Support
+### 9. TTS Usage Monitoring
+
+- ✅ **Free Tier Tracking**: Monitors usage against free tier limits for all TTS providers
+- ✅ **Real-time Usage Display**: Shows current usage in Playback Settings modal
+- ✅ **Cost Calculation**: Automatically calculates costs beyond free tier
+- ✅ **Provider-Specific Limits**: Tracks usage separately for different voice types
+  - Amazon Polly: Standard (5M), Neural (1M), Long-form (500K) characters/month
+  - Google TTS: Standard (4M), Neural2 (1M) characters/month
+  - ElevenLabs: 20K characters/month
+- ✅ **Centralized Pricing**: Single source of truth for pricing constants
+
+### 10. Offline Support
 
 - ✅ **Offline Reading**: Downloaded chapters readable without internet
 - ✅ **Chapter Downloads**: Users can download chapters for offline access
 - ✅ **Offline Indicator**: Clear indication when reading offline content
 
-### 10. AI Features
+### 11. AI Features
 
 - ✅ **Ask AI Panel**: Chat with AI about the book content
 - ✅ **Context-Aware**: AI has access to current chapter and sentence
@@ -152,10 +167,11 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ## Implementation Status
 
-### ✅ Completed Features (35/37)
+### ✅ Completed Features (38/40)
 - All core reading modes
 - Audio playback with auto-advance
 - Playback speed control
+- TTS usage monitoring in Playback Settings
 - Word highlighting (full & focus)
 - Sentence highlighting
 - Line highlighting (focus mode)
@@ -174,8 +190,9 @@ This document provides a comprehensive list of all features supported in the Boo
 ### ✅ Recently Verified
 - ✅ **Focus Mode Theme Integration**: All theme settings (font size, line height, font family, text color) now apply to focus mode (October 2025)
 - ✅ **Focus Mode Navigation**: Click interactions for previous/next sentence navigation (October 2025)
+- ✅ **TTS Usage Display**: Real-time free tier usage and cost display in Playback Settings modal (October 2025)
 
-### ⚠️ To Be Verified (2/36)
+### ⚠️ To Be Verified (2/40)
 - Sentence background highlighting (verify styling)
 - TTS voice selection (verify voice is applied)
 
@@ -199,12 +216,19 @@ This document provides a comprehensive list of all features supported in the Boo
 - `src/client/routes/Reader/FocusReader.tsx` - Focus mode UI
 - `src/client/routes/Reader/components/ReaderContent.tsx` - Full mode content renderer
 - `src/client/routes/Reader/components/AudioControls.tsx` - Playback controls
+- `src/client/components/SpeedControlModal.tsx` - Playback settings with TTS usage display
 
 ### Hooks
 - `src/client/routes/Reader/hooks/useReader.ts` - Main reader orchestration
 - `src/client/routes/Reader/hooks/useUserSettings.ts` - Theme & settings management
 - `src/client/routes/Reader/hooks/useBookmarks.ts` - Bookmark CRUD operations
 - `src/client/routes/Reader/hooks/useReadingProgress.ts` - Progress tracking & auto-save
+- `src/client/hooks/useTtsUsage.ts` - TTS usage data fetching for Playback Settings
+
+### TTS System
+- `src/common/tts/ttsPricing.ts` - TTS pricing constants (free tier limits)
+- `src/common/tts/ttsUsageCalculator.ts` - Usage calculation utilities
+- `src/server/tts-usage-monitoring/index.ts` - TTS usage tracking on server
 
 ### Styling
 - `src/client/styles/globals.css` - Global styles including `.highlight-word`
@@ -306,8 +330,8 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ---
 
-**Last Updated**: October 17, 2025  
-**Implementation Status**: ✅ 35/37 features complete (95%)  
+**Last Updated**: October 26, 2025  
+**Implementation Status**: ✅ 38/40 features complete (95%)  
 **Next Steps**: Verify remaining 2 features, then proceed with Phase 6 optimizations
 
 ## Recent Updates
@@ -317,6 +341,13 @@ This document provides a comprehensive list of all features supported in the Boo
   
 ### October 26, 2025
 - ✅ **TTS Usage Dashboard**: Added 30/60/90-day range selector. API returns only in-range data. Free Tier Usage is based on current calendar month and exposed as `freeTierMonthUsage` in the summary response. Recent records list returns only the last 24 hours for a compact UI.
+- ✅ **TTS Usage in Playback Settings**: Added real-time TTS usage display in the Playback Settings modal
+  - Shows free tier usage percentage and character counts for selected voice type
+  - Displays total cost across all providers when beyond free tier
+  - Dynamically loads when modal opens (doesn't impact reader initialization)
+  - Created centralized pricing constants in `src/common/tts/ttsPricing.ts`
+  - Created usage calculation utilities in `src/common/tts/ttsUsageCalculator.ts`
+  - Added `useTtsUsage` hook for fetching usage data in modal
   - Detects `•` and `*` characters as bullet markers
   - Inserts `<br/>` elements before each bullet for proper line breaks
   - Works in both full reading mode and focus mode
