@@ -1,7 +1,7 @@
 {
   "stepName": "step-2-1",
   "pdfHash": "23459c3637f6e12a",
-  "timestamp": "2025-10-25T18:10:41.163Z",
+  "timestamp": "2025-10-26T16:41:22.870Z",
   "validationPassed": true,
   "output": {
     "chapterMetadata": [
@@ -175,7 +175,7 @@
       }
     ],
     "metadata": {
-      "processingStartTime": "2025-10-25T18:10:39.180Z",
+      "processingStartTime": "2025-10-26T16:41:22.329Z",
       "processingEndTime": null,
       "stepResults": {},
       "textExtraction": {
@@ -184,10 +184,10 @@
         "lineCount": 5746,
         "wordCount": 64660,
         "literalNewlineCount": 0,
-        "extractionTime": "2025-10-25T18:10:40.055Z",
-        "averageWordsPerPage": 407,
-        "extractionMethod": "page_by_page_fixed",
-        "totalTextContentItems": 8159
+        "extractionTime": "2025-10-26T16:41:22.344Z",
+        "source": "cached-txt-file",
+        "txtFilePath": "/Users/gileck/projects/temp1/files/The Untethered Soul/_OceanofPDF.com_The_Untethered_Soul_-_Jefferson_A_Singer.txt",
+        "extractionMethod": "text-file-load"
       },
       "chapterDetection": {
         "chaptersDetected": 21,
@@ -196,7 +196,7 @@
         "patternMatches": 20,
         "averageDetectionConfidence": 1,
         "pageOffset": 0,
-        "processingTime": 935,
+        "processingTime": 513,
         "detectionMethod": "hybrid_v1_toc_detection"
       }
     }

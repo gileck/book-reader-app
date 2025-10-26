@@ -91,6 +91,21 @@ export const FocusReader: React.FC<{
     const isPrevImage = prevChunk?.type === 'image';
     const isNextImage = nextChunk?.type === 'image';
 
+    // Check if current chunk is in a different paragraph than prev
+    const isPrevDifferentParagraph = prevChunk && currChunk && 
+        prevChunk.paragraphIndex !== undefined && 
+        currChunk.paragraphIndex !== undefined && 
+        prevChunk.paragraphIndex !== currChunk.paragraphIndex;
+    
+    // Check if next chunk is in a different paragraph than current (or no next chunk)
+    const isNextDifferentParagraph = nextChunk && currChunk && 
+        nextChunk.paragraphIndex !== undefined && 
+        currChunk.paragraphIndex !== undefined && 
+        nextChunk.paragraphIndex !== currChunk.paragraphIndex;
+    
+    // Check if current chunk is the last sentence of its paragraph
+    const isLastSentenceOfParagraph = isNextDifferentParagraph || (!nextChunk && currChunk?.paragraphIndex !== undefined);
+
     // Image loading states
     const [imageLoading, setImageLoading] = useState(false);
     const [imageError, setImageError] = useState(false);
@@ -193,6 +208,54 @@ export const FocusReader: React.FC<{
             tabIndex={0}
         >
             {/* Use same global class as full reader: .highlight-word; set CSS var for color */}
+            
+            {/* Paragraph delimiter above previous chunk (when entering a new paragraph) */}
+            {isPrevDifferentParagraph && !isPrevHeader && !isPrevImage && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        mb: 2,
+                        mt: 1,
+                        opacity: 0.4
+                    }}
+                >
+                    <Box
+                        sx={{
+                            flex: 1,
+                            height: '3px',
+                            background: isDarkMode 
+                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
+                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
+                            borderRadius: '2px'
+                        }}
+                    />
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            color: textColor,
+                            fontSize: '0.7rem',
+                            opacity: 0.6,
+                            fontStyle: 'italic',
+                            whiteSpace: 'nowrap'
+                        }}
+                    >
+                        New Paragraph
+                    </Typography>
+                    <Box
+                        sx={{
+                            flex: 1,
+                            height: '3px',
+                            background: isDarkMode 
+                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
+                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
+                            borderRadius: '2px'
+                        }}
+                    />
+                </Box>
+            )}
+
             {/* Previous (smaller, subdued, under) */}
             <Box
                 sx={{
@@ -399,50 +462,157 @@ export const FocusReader: React.FC<{
                 )}
             </Box>
 
-            {/* Next (smaller, subdued, under) */}
-            <Box
-                sx={{
-                    minHeight: 44,
-                    ...(isNextHeader && {
-                        mx: -2,
-                        px: 2,
-                        py: 1.5,
-                        borderTop: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
-                        borderBottom: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
-                        backgroundColor: isDarkMode ? 'rgba(51, 51, 51, 0.6)' : 'rgba(211, 211, 211, 0.6)'
-                    })
-                }}
-            >
-                {isNextImage ? (
+            {/* Next (smaller, subdued, under) OR End of Paragraph indicator */}
+            {isLastSentenceOfParagraph && !isHeader && !isImage ? (
+                // Show "End of Paragraph" indicator instead of next sentence
+                <Box
+                    sx={{
+                        minHeight: 44,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1.5,
+                        py: 2
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            width: '100%'
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                flex: 1,
+                                height: '3px',
+                                background: isDarkMode 
+                                    ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
+                                    : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
+                                borderRadius: '2px'
+                            }}
+                        />
+                        <Typography
+                            variant="caption"
+                            sx={{
+                                color: textColor,
+                                fontSize: '0.75rem',
+                                opacity: 0.5,
+                                fontStyle: 'italic',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                whiteSpace: 'nowrap'
+                            }}
+                        >
+                            End of Paragraph
+                        </Typography>
+                        <Box
+                            sx={{
+                                flex: 1,
+                                height: '3px',
+                                background: isDarkMode 
+                                    ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
+                                    : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
+                                borderRadius: '2px'
+                            }}
+                        />
+                    </Box>
+                </Box>
+            ) : (
+                // Show next sentence as normal
+                <Box
+                    sx={{
+                        minHeight: 44,
+                        ...(isNextHeader && {
+                            mx: -2,
+                            px: 2,
+                            py: 1.5,
+                            borderTop: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+                            borderBottom: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
+                            backgroundColor: isDarkMode ? 'rgba(51, 51, 51, 0.6)' : 'rgba(211, 211, 211, 0.6)'
+                        })
+                    }}
+                >
+                    {isNextImage ? (
+                        <Typography
+                            variant="caption"
+                            sx={{
+                                color: textColor,
+                                textAlign: 'center',
+                                opacity: 0.5,
+                                fontStyle: 'italic',
+                                display: 'block'
+                            }}
+                        >
+                            [Next Image]
+                        </Typography>
+                    ) : (
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: textColor,
+                                textAlign: 'center',
+                                opacity: isNextHeader ? 0.8 : 0.6,
+                                fontWeight: isNextHeader ? 700 : 400,
+                                fontSize: isNextHeader ? '0.95rem' : 'inherit',
+                                textTransform: isNextHeader ? 'uppercase' : 'none',
+                                letterSpacing: isNextHeader ? '0.05em' : 'normal'
+                            }}
+                        >
+                            {nextText}
+                        </Typography>
+                    )}
+                </Box>
+            )}
+
+            {/* Paragraph delimiter below next chunk (when entering a new paragraph and not last sentence) */}
+            {!isLastSentenceOfParagraph && isNextDifferentParagraph && !isNextHeader && !isNextImage && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        mt: 2,
+                        mb: 1,
+                        opacity: 0.4
+                    }}
+                >
+                    <Box
+                        sx={{
+                            flex: 1,
+                            height: '3px',
+                            background: isDarkMode 
+                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
+                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
+                            borderRadius: '2px'
+                        }}
+                    />
                     <Typography
                         variant="caption"
                         sx={{
                             color: textColor,
-                            textAlign: 'center',
-                            opacity: 0.5,
+                            fontSize: '0.7rem',
+                            opacity: 0.6,
                             fontStyle: 'italic',
-                            display: 'block'
+                            whiteSpace: 'nowrap'
                         }}
                     >
-                        [Next Image]
+                        New Paragraph
                     </Typography>
-                ) : (
-                    <Typography
-                        variant="body2"
+                    <Box
                         sx={{
-                            color: textColor,
-                            textAlign: 'center',
-                            opacity: isNextHeader ? 0.8 : 0.6,
-                            fontWeight: isNextHeader ? 700 : 400,
-                            fontSize: isNextHeader ? '0.95rem' : 'inherit',
-                            textTransform: isNextHeader ? 'uppercase' : 'none',
-                            letterSpacing: isNextHeader ? '0.05em' : 'normal'
+                            flex: 1,
+                            height: '3px',
+                            background: isDarkMode 
+                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
+                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
+                            borderRadius: '2px'
                         }}
-                    >
-                        {nextText}
-                    </Typography>
-                )}
-            </Box>
+                    />
+                </Box>
+            )}
 
             {/* Full-Screen Image Modal */}
             {isImage && imageUrl && (

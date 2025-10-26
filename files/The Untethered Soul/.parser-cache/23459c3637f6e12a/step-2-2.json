@@ -1,10 +1,18 @@
 {
   "stepName": "step-2-2",
   "pdfHash": "23459c3637f6e12a",
-  "timestamp": "2025-10-25T18:10:41.191Z",
+  "timestamp": "2025-10-26T16:41:22.880Z",
   "validationPassed": true,
   "output": {
     "chapters": [
+      {
+        "title": "introduction",
+        "chapterNumber": 0,
+        "pageNumberStart": 8,
+        "pageNumberEnd": 9,
+        "content": "--- PAGE 8 ---\nintroduction \n“This above all: to thine own self be true, and it must\nfollow, as the night the day, thou canst not then be false to\nany man.” —William Shakespeare\nShakespeare’s age-honored words, spoken by Polonius to his son Laertes\nin Act I of Hamlet, sound so clear and unambiguous. They tell us that to\nmaintain honest relations with others we must first be true to ourselves.\nYet if Laertes were to be totally honest with himself, he would realize\nthat his father may as well have told him to catch the wind. After all, to\nwhich “self” are we to be true? Is it the one that shows up when we’re in\na bad mood, or the one that is present when we feel humbled by our\nmistakes? Is it the one who speaks from the dark recesses of the heart\nwhen we’re depressed or upset, or the one that appears during those\nfleeting moments when life seems so fanciful and light?\nFrom these questions we see that the concept of “self” may turn out\nto be a bit more elusive than initially presumed. Perhaps if Laertes could\nhave turned to traditional psychology, it would have shed some light on\nthe subject. Freud (1927), the father of psychology, divided the psyche\ninto three parts: the id, the ego, and the superego. He saw the id as our\nprimal, animal nature; the superego as the judgment system that society\nhas instilled within us; and the ego as our representative to the outside\nworld that struggles to maintain a balance between the other two\npowerful forces. But this certainly would not have helped young Laertes.\nAfter all, to which of these conflicting forces are we to be true?\nAgain we see that things are not always as simple as they seem. If we\ndare to look past the surface of the term “self,” questions arise that many\npeople would rather not ask: “Are the many aspects of my being all\nequally part of my ‘self,’ or is there only one of me—and if so, which,\nwhere, how, and why?”\nIn the following chapters, we will undertake a journey of exploration\nof “self.” But we will not do so in a traditional manner. We will neither\ncall upon the experts in psychology, nor upon the great philosophers. We\nwill not argue and choose between time-honored religious views, or\nresort to statistically supported surveys of people’s opinions. We will,\ninstead, turn to a single source that has phenomenal direct knowledge on\nthe subject. We will turn to one expert who, for every moment of every\n--- END PAGE 8 ---\n\n--- PAGE 9 ---\nday of their life, has been collecting the data necessary to finally put this\ngreat inquiry to rest. And that expert is you.\nBut before you get too excited, or decide that you’re not up to the\ntask, first be clear that we’re not after your views or opinions on the\nsubject. Neither are we interested in what books you have read, classes\nyou have taken, nor seminars you have attended. We are only interested\nin your intuitive experience of what it is like to be you. We are not\nlooking for your knowledge; we are seeking your direct experience. You\nsee, you can’t fail at this because your “self” is what you are, at all times\nand in all places. We simply need to sort it out. After all, it can get quite\nconfusing in there.\nThe chapters of this book are nothing but mirrors for seeing your\n“self” from different angles. And though the journey we are about to\nembark on is an inner one, it will draw upon every aspect of your life.\nThe only requirement asked of you is the willingness to honestly look at\nyourself in the most natural, intuitive manner. Remember, if we are\nseeking the root of “self,” what we are actually seeking is you.\nAs you read through these pages, you will find that you know much\nmore than you thought you did about some very deep subjects. The fact\nis, you already know how to find yourself; you have just gotten\ndistracted and disoriented. Once refocused, you will realize that you not\nonly have the ability to find yourself, you have the ability to free\nyourself. Whether you choose to do so or not is entirely up to you. But\nupon completion of your journey through these chapters, there will be no\nmore confusion, no more lack of empowerment, and no more blaming\nothers. You will know exactly what must be done. And should you\nchoose to devote yourself to the ongoing journey of self-realization, you\nwill develop a tremendous sense of respect for who you really are. It is\nonly then that you will come to appreciate the full depth of meaning in\nthe advice: “This above all: to thine own self be true.”\n--- END PAGE 9 ---",
+        "wordCount": 824
+      },
       {
         "title": "the voice inside your head",
         "chapterNumber": 1,
@@ -159,7 +167,7 @@
       }
     ],
     "metadata": {
-      "processingStartTime": "2025-10-25T18:10:39.180Z",
+      "processingStartTime": "2025-10-26T16:41:22.329Z",
       "processingEndTime": null,
       "stepResults": {},
       "textExtraction": {
@@ -168,10 +176,10 @@
         "lineCount": 5746,
         "wordCount": 64660,
         "literalNewlineCount": 0,
-        "extractionTime": "2025-10-25T18:10:40.055Z",
-        "averageWordsPerPage": 407,
-        "extractionMethod": "page_by_page_fixed",
-        "totalTextContentItems": 8159
+        "extractionTime": "2025-10-26T16:41:22.344Z",
+        "source": "cached-txt-file",
+        "txtFilePath": "/Users/gileck/projects/temp1/files/The Untethered Soul/_OceanofPDF.com_The_Untethered_Soul_-_Jefferson_A_Singer.txt",
+        "extractionMethod": "text-file-load"
       },
       "chapterDetection": {
         "chaptersDetected": 21,
@@ -180,18 +188,18 @@
         "patternMatches": 20,
         "averageDetectionConfidence": 1,
         "pageOffset": 0,
-        "processingTime": 935,
+        "processingTime": 513,
         "detectionMethod": "hybrid_v1_toc_detection"
       },
       "chapterContentExtraction": {
-        "totalChapters": 19,
+        "totalChapters": 20,
         "originalChapterCount": 21,
-        "filteredChapterCount": 2,
-        "totalPages": 146,
-        "averagePagesPerChapter": 7.684210526315789,
-        "totalCharacters": 341486,
-        "averageCharactersPerChapter": 17972.947368421053,
-        "processingTime": 8,
+        "filteredChapterCount": 1,
+        "totalPages": 148,
+        "averagePagesPerChapter": 7.4,
+        "totalCharacters": 345969,
+        "averageCharactersPerChapter": 17298.45,
+        "processingTime": 5,
         "extractionMethod": "page_based_content_extraction_with_filtering"
       }
     }
