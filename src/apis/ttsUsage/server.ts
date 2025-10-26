@@ -1,10 +1,10 @@
 import { API_GET_TTS_USAGE_SUMMARY, API_GET_TTS_USAGE_RECORDS, API_GET_TTS_ERROR_SUMMARY, API_GET_TTS_ERROR_RECORDS } from './index';
-import { getTtsUsageSummary, getAllTtsUsageRecords, getTtsErrorSummary, getAllTtsErrorRecords } from '../../server/tts-usage-monitoring';
-import type { GetTtsUsageSummaryResponse, GetTtsUsageRecordsResponse, GetTtsErrorSummaryResponse, GetTtsErrorRecordsResponse, TtsUsageRecord, TtsErrorRecord } from './types';
+import { getTtsUsageSummary, getRecentTtsUsageRecords, getTtsErrorSummary } from '../../server/tts-usage-monitoring';
+import type { GetTtsUsageSummaryResponse, GetTtsUsageRecordsResponse, GetTtsErrorSummaryResponse, GetTtsErrorRecordsResponse, TtsUsageRecord, TtsErrorRecord, TtsUsageRangeParams, TtsErrorRangeParams, TtsRecordsParams } from './types';
 
-export async function getTtsUsageSummaryHandler(): Promise<GetTtsUsageSummaryResponse> {
+export async function getTtsUsageSummaryHandler(params?: TtsUsageRangeParams): Promise<GetTtsUsageSummaryResponse> {
   try {
-    const summary = await getTtsUsageSummary();
+    const summary = await getTtsUsageSummary(params);
     return {
       success: true,
       summary
@@ -18,9 +18,9 @@ export async function getTtsUsageSummaryHandler(): Promise<GetTtsUsageSummaryRes
   }
 }
 
-export async function getTtsUsageRecordsHandler(): Promise<GetTtsUsageRecordsResponse> {
+export async function getTtsUsageRecordsHandler(params?: TtsRecordsParams): Promise<GetTtsUsageRecordsResponse> {
   try {
-    const mongoRecords = await getAllTtsUsageRecords();
+    const mongoRecords = await getRecentTtsUsageRecords(params);
 
     // Convert MongoDB records to API format (Date -> string)
     const records: TtsUsageRecord[] = mongoRecords.map(record => ({
@@ -48,9 +48,9 @@ export async function getTtsUsageRecordsHandler(): Promise<GetTtsUsageRecordsRes
   }
 }
 
-export async function getTtsErrorSummaryHandler(): Promise<GetTtsErrorSummaryResponse> {
+export async function getTtsErrorSummaryHandler(params?: TtsErrorRangeParams): Promise<GetTtsErrorSummaryResponse> {
   try {
-    const summary = await getTtsErrorSummary();
+    const summary = await getTtsErrorSummary(params);
     return {
       success: true,
       summary
@@ -66,6 +66,8 @@ export async function getTtsErrorSummaryHandler(): Promise<GetTtsErrorSummaryRes
 
 export async function getTtsErrorRecordsHandler(): Promise<GetTtsErrorRecordsResponse> {
   try {
+    // We no longer expose a heavy error-records list unless needed; keep current behavior minimal
+    const { getAllTtsErrorRecords } = await import('../../server/tts-usage-monitoring');
     const mongoRecords = await getAllTtsErrorRecords();
 
     // Convert MongoDB records to API format (Date -> string)
@@ -96,8 +98,8 @@ export async function getTtsErrorRecordsHandler(): Promise<GetTtsErrorRecordsRes
 }
 
 export const ttsUsageApiHandlers = {
-  [API_GET_TTS_USAGE_SUMMARY]: { process: async () => await getTtsUsageSummaryHandler() },
-  [API_GET_TTS_USAGE_RECORDS]: { process: async () => await getTtsUsageRecordsHandler() },
-  [API_GET_TTS_ERROR_SUMMARY]: { process: async () => await getTtsErrorSummaryHandler() },
+  [API_GET_TTS_USAGE_SUMMARY]: { process: async (params: TtsUsageRangeParams) => await getTtsUsageSummaryHandler(params) },
+  [API_GET_TTS_USAGE_RECORDS]: { process: async (params: TtsRecordsParams) => await getTtsUsageRecordsHandler(params) },
+  [API_GET_TTS_ERROR_SUMMARY]: { process: async (params: TtsErrorRangeParams) => await getTtsErrorSummaryHandler(params) },
   [API_GET_TTS_ERROR_RECORDS]: { process: async () => await getTtsErrorRecordsHandler() }
 }; 

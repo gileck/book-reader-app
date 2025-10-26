@@ -19,8 +19,8 @@ const restrictApiRoutesRule = {
     // Check if the file is under /src/pages/api/ but not process.ts
     if (
       filename.includes('/src/pages/api/') &&
-      !filename.endsWith('/src/pages/api/process.ts') &&
-      !filename.endsWith('\\src\\pages\\api\\process.ts') // For Windows paths
+      !filename.includes('/src/pages/api/process/') &&
+      !filename.includes('\\src\\pages\\api\\process\\')
     ) {
       // Report an error for any file that's not process.ts in the /src/pages/api/ directory
       context.report({

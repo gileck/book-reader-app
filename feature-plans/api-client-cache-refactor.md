@@ -120,10 +120,14 @@ export const apiClient = {
       if (settings?.offlineMode) {
         throw new Error('OFFLINE_MODE_NETWORK_BLOCKED');
       }
-      const response = await fetch('/api/process', {
+      const urlName = name.replace(/\//g, '_');
+      const response = await fetch(`/api/process/${urlName}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, params, options: { ...options, disableCache: false } }),
+        body: JSON.stringify({
+          params,
+          options: { ...options, disableCache: false }
+        }),
       });
       if (response.status !== 200) {
         throw new Error(`Failed to call ${name}: HTTP ${response.status} ${response.statusText}`);

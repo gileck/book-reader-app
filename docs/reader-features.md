@@ -314,6 +314,9 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ### October 17, 2025
 - ✅ **Bullet List Rendering**: Implemented automatic detection and rendering of bullet lists
+  
+### October 26, 2025
+- ✅ **TTS Usage Dashboard**: Added 30/60/90-day range selector. API returns only in-range data. Free Tier Usage is based on current calendar month and exposed as `freeTierMonthUsage` in the summary response. Recent records list returns only the last 24 hours for a compact UI.
   - Detects `•` and `*` characters as bullet markers
   - Inserts `<br/>` elements before each bullet for proper line breaks
   - Works in both full reading mode and focus mode

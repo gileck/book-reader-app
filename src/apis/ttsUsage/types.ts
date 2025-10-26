@@ -44,6 +44,8 @@ export interface TtsUsageSummary {
     totalCost: number;
     totalCalls: number;
   }>;
+  // Aggregated usage just for the current calendar month, used for Free Tier display/calculation
+  freeTierMonthUsage: FreeTierMonthUsage;
 }
 
 export interface TtsErrorSummary {
@@ -85,3 +87,34 @@ export interface GetTtsErrorRecordsResponse {
   records?: TtsErrorRecord[];
   error?: string;
 } 
+
+// Request params
+export type TtsRangeDays = 30 | 60 | 90;
+
+export interface TtsUsageRangeParams {
+  rangeDays?: TtsRangeDays;
+}
+
+export interface TtsRecordsParams {
+  lastHours?: number; // default 24
+}
+
+export interface TtsErrorRangeParams {
+  rangeDays?: TtsRangeDays;
+}
+
+// Free tier monthly usage structure
+export interface FreeTierMonthUsage {
+  polly: {
+    standard: number;
+    neural: number;
+    longform: number;
+  };
+  google: {
+    standard: number;
+    neural2: number;
+  };
+  elevenlabs: {
+    total: number;
+  };
+}

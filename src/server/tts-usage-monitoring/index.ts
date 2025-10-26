@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ttsUsage, ttsErrors } from '../database/collections';
-import type { TtsUsageSummary, TtsErrorSummary } from '../../apis/ttsUsage/types';
+import type { TtsUsageSummary, TtsErrorSummary, TtsUsageRangeParams, TtsErrorRangeParams, FreeTierMonthUsage, TtsRecordsParams } from '../../apis/ttsUsage/types';
 import { type TtsProvider } from '../../common/tts/ttsUtils';
 
 // Helper function to determine voice type from voiceId
@@ -111,8 +111,57 @@ export const getAllTtsErrorRecords = async (): Promise<ttsErrors.TtsErrorRecord[
   }
 };
 
-export const getTtsUsageSummary = async (): Promise<TtsUsageSummary> => {
-  const records = await getAllTtsUsageRecords();
+function getDateRangeForDays(rangeDays: 30 | 60 | 90): { start: Date; end: Date } {
+  const end = new Date();
+  const start = new Date(end.getTime() - rangeDays * 24 * 60 * 60 * 1000);
+  return { start, end };
+}
+
+async function getUsageRecordsForRange(rangeDays: 30 | 60 | 90): Promise<ttsUsage.TtsUsageRecord[]> {
+  const { start, end } = getDateRangeForDays(rangeDays);
+  return await ttsUsage.getTtsUsageRecordsByDateRange(start, end);
+}
+
+async function getErrorRecordsForRange(rangeDays: 30 | 60 | 90): Promise<ttsErrors.TtsErrorRecord[]> {
+  const { start, end } = getDateRangeForDays(rangeDays);
+  return await ttsErrors.getTtsErrorRecordsByDateRange(start, end);
+}
+
+function getCurrentMonthBounds(): { start: Date; end: Date; monthKey: string } {
+  const now = new Date();
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0));
+  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0, 23, 59, 59, 999));
+  const monthKey = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+  return { start, end, monthKey };
+}
+
+async function getFreeTierMonthUsage(): Promise<FreeTierMonthUsage> {
+  const { start, end } = getCurrentMonthBounds();
+  const monthRecords = await ttsUsage.getTtsUsageRecordsByDateRange(start, end);
+
+  const polly = { standard: 0, neural: 0, longform: 0 };
+  const google = { standard: 0, neural2: 0 };
+  const elevenlabs = { total: 0 };
+
+  monthRecords.forEach((record) => {
+    if (record.provider === 'polly') {
+      if (record.voiceType === 'neural') polly.neural += record.textLength;
+      else if (record.voiceType === 'long-form') polly.longform += record.textLength;
+      else polly.standard += record.textLength;
+    } else if (record.provider === 'google') {
+      if (record.voiceType === 'standard') google.standard += record.textLength;
+      else google.neural2 += record.textLength;
+    } else if (record.provider === 'elevenlabs') {
+      elevenlabs.total += record.textLength;
+    }
+  });
+
+  return { polly, google, elevenlabs };
+}
+
+export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<TtsUsageSummary> => {
+  const rangeDays = (params?.rangeDays ?? 30) as 30 | 60 | 90;
+  const records = await getUsageRecordsForRange(rangeDays);
 
   const summary: TtsUsageSummary = {
     totalCost: 0,
@@ -120,7 +169,8 @@ export const getTtsUsageSummary = async (): Promise<TtsUsageSummary> => {
     totalTextLength: 0,
     totalAudioLength: 0,
     usageByProvider: {},
-    usageByDay: {}
+    usageByDay: {},
+    freeTierMonthUsage: { polly: { standard: 0, neural: 0, longform: 0 }, google: { standard: 0, neural2: 0 }, elevenlabs: { total: 0 } }
   };
 
   records.forEach(record => {
@@ -170,11 +220,15 @@ export const getTtsUsageSummary = async (): Promise<TtsUsageSummary> => {
     summary.usageByDay[day].totalCalls += 1;
   });
 
+  // Attach monthly free-tier usage (calendar month only)
+  summary.freeTierMonthUsage = await getFreeTierMonthUsage();
+
   return summary;
 };
 
-export const getTtsErrorSummary = async (): Promise<TtsErrorSummary> => {
-  const records = await getAllTtsErrorRecords();
+export const getTtsErrorSummary = async (params?: TtsErrorRangeParams): Promise<TtsErrorSummary> => {
+  const rangeDays = (params?.rangeDays ?? 30) as 30 | 60 | 90;
+  const records = await getErrorRecordsForRange(rangeDays);
 
   const summary: TtsErrorSummary = {
     totalErrors: records.length,
@@ -233,3 +287,10 @@ export const getTtsErrorSummary = async (): Promise<TtsErrorSummary> => {
 
   return summary;
 }; 
+
+export const getRecentTtsUsageRecords = async (params?: TtsRecordsParams): Promise<ttsUsage.TtsUsageRecord[]> => {
+  const lastHours = params?.lastHours ?? 24;
+  const end = new Date();
+  const start = new Date(end.getTime() - lastHours * 60 * 60 * 1000);
+  return await ttsUsage.getTtsUsageRecordsByDateRange(start, end);
+};

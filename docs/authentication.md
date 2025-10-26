@@ -216,12 +216,12 @@ const LoginForm: React.FC = () => {
 
 ### Authentication API Endpoints
 
-The server exposes several authentication endpoints through a unified API layer:
+The server exposes several authentication endpoints through a unified API layer. Each API name maps to an underscore-delimited URL at `/api/process/[name]`:
 
-1. `auth/register`: Creates a new user account
-2. `auth/login`: Authenticates a user and issues a JWT token
-3. `auth/me`: Gets the current authenticated user
-4. `auth/logout`: Logs the user out by clearing the auth token
+1. `auth/register` → `POST /api/process/auth_register`: Creates a new user account
+2. `auth/login` → `POST /api/process/auth_login`: Authenticates a user and issues a JWT token
+3. `auth/me` → `POST /api/process/auth_me`: Gets the current authenticated user
+4. `auth/logout` → `POST /api/process/auth_logout`: Logs the user out by clearing the auth token
 
 ### API Implementation
 
@@ -340,14 +340,14 @@ export const processApiCall = async (
 
 1. **Initial Load**:
    - `AuthProvider` mounts and calls `checkAuthStatus()`
-   - Sends request to `auth/me` endpoint
+   - Sends request to `POST /api/process/auth_me`
    - If a valid token exists in cookies, server returns user data
    - `AuthProvider` updates context with user data
 
 2. **Login Flow**:
    - User submits credentials in `LoginForm`
    - `login()` method from `AuthContext` is called
-   - API request to `auth/login` endpoint
+   - API request to `POST /api/process/auth_login`
    - Server validates credentials and sets JWT cookie
    - Response returns user data
    - `AuthProvider` updates context with user data

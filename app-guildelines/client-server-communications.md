@@ -296,8 +296,13 @@ const handleSubmit = async () => {
 
 1. **Single API Endpoint**:
    - **NEVER add new Next.js API routes to the /src/pages/api folder**
-   - All API requests go through the single /api/process endpoint
-   - The central processApiCall.ts handles routing to the correct API handler
+   - All API requests go through the single `/api/process/[name]` endpoint
+   - API names are encoded in the URL using underscores. For example:
+     - `auth/me` → `/api/process/auth_me`
+     - `auth/login` → `/api/process/auth_login`
+     - `todos/getTodos` → `/api/process/todos_getTodos`
+   - The central `processApiCall.ts` handles routing to the correct API handler and translates underscores back to slashes
+   - See `docs/api-endpoint-format.md` for full naming rules and migration notes
 
 2. **API Registration and Naming Flow**:
    - **ALWAYS register new APIs in apis.ts by importing directly from server.ts**

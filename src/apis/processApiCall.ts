@@ -17,7 +17,8 @@ export const processApiCall = async (
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<CacheResult<unknown>> => {
-  const name = req.body.name as keyof typeof apiHandlers;
+  const nameParam = req.query.name as string;
+  const name = nameParam.replace(/_/g, "/") as keyof typeof apiHandlers;
   const params = req.body.params;
   const options = req.body.options as ApiOptions;
   const apiHandler = apiHandlers[name];

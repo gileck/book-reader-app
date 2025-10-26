@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getTtsUsageSummary, getTtsUsageRecords, getTtsErrorSummary } from '../../../apis/ttsUsage/client';
-import type { TtsUsageSummary, TtsUsageRecord, TtsErrorSummary } from '../../../apis/ttsUsage/types';
+import type { TtsUsageSummary, TtsUsageRecord, TtsErrorSummary, TtsRangeDays } from '../../../apis/ttsUsage/types';
 import styles from './TtsUsage.module.css';
 
 export function TtsUsage() {
@@ -10,18 +10,19 @@ export function TtsUsage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRecordsExpanded, setIsRecordsExpanded] = useState(false);
+  const [rangeDays, setRangeDays] = useState<TtsRangeDays>(30);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [rangeDays]);
 
   const loadData = async () => {
     try {
       setLoading(true);
       const [summaryResult, recordsResult, errorSummaryResult] = await Promise.all([
-        getTtsUsageSummary(),
-        getTtsUsageRecords(),
-        getTtsErrorSummary()
+        getTtsUsageSummary({ rangeDays }),
+        getTtsUsageRecords({ lastHours: 24 }),
+        getTtsErrorSummary({ rangeDays })
       ]);
 
       if (summaryResult.data?.success && summaryResult.data.summary) {
@@ -70,72 +71,12 @@ export function TtsUsage() {
     total: 20000  // 20,000 characters (10,000 credits)
   };
 
-  // Calculate current month's usage for free tier tracking
-  const getCurrentMonthUsage = () => {
-    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
-
-    // Polly usage
-    const pollyRecords = records.filter(record =>
-      record.provider === 'polly' &&
-      record.timestamp.startsWith(currentMonth)
-    );
-
-    const pollyUsage = {
-      standard: 0,
-      neural: 0,
-      longform: 0
-    };
-
-    pollyRecords.forEach(record => {
-      const voiceType = record.voiceType;
-      if (voiceType === 'neural') {
-        pollyUsage.neural += record.textLength;
-      } else if (voiceType === 'long-form') {
-        pollyUsage.longform += record.textLength;
-      } else if (voiceType === 'standard') {
-        pollyUsage.standard += record.textLength;
-      }
-    });
-
-    // Google usage
-    const googleRecords = records.filter(record =>
-      record.provider === 'google' &&
-      record.timestamp.startsWith(currentMonth)
-    );
-
-    const googleUsage = {
-      standard: 0,
-      neural2: 0
-    };
-
-    googleRecords.forEach(record => {
-      const voiceType = record.voiceType;
-      if (voiceType === 'standard') {
-        googleUsage.standard += record.textLength;
-      } else {
-        // Default to neural2 for Google Neural2 voices
-        googleUsage.neural2 += record.textLength;
-      }
-    });
-
-    // ElevenLabs usage
-    const elevenLabsRecords = records.filter(record =>
-      record.provider === 'elevenlabs' &&
-      record.timestamp.startsWith(currentMonth)
-    );
-
-    const elevenLabsUsage = {
-      total: 0
-    };
-
-    elevenLabsRecords.forEach(record => {
-      elevenLabsUsage.total += record.textLength;
-    });
-
-    return { polly: pollyUsage, google: googleUsage, elevenlabs: elevenLabsUsage };
+  // Use server-provided calendar-month aggregate for Free Tier usage
+  const currentMonthUsage = summary?.freeTierMonthUsage || {
+    polly: { standard: 0, neural: 0, longform: 0 },
+    google: { standard: 0, neural2: 0 },
+    elevenlabs: { total: 0 }
   };
-
-  const currentMonthUsage = getCurrentMonthUsage();
   const formatNumber = (num: number) => num.toLocaleString();
   const formatPercentage = (used: number, limit: number) => Math.min((used / limit) * 100, 100);
 
@@ -226,14 +167,8 @@ export function TtsUsage() {
 
   const freeTierAdjustedCosts = calculateFreeTierAdjustedCosts();
 
-  // Get records from last 24 hours
-  const getLast24HoursRecords = () => {
-    const now = new Date();
-    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-    return records.filter(record => new Date(record.timestamp) >= twentyFourHoursAgo);
-  };
-
-  const last24HoursRecords = getLast24HoursRecords();
+  // Records API already returns last 24 hours only
+  const last24HoursRecords = records;
 
   if (loading) {
     return (
@@ -255,6 +190,19 @@ export function TtsUsage() {
     <div className={styles.ttsUsageContainer}>
       <header className={styles.pageHeader}>
         <h1 className={styles.pageTitle}>TTS Usage Dashboard</h1>
+        <div style={{ marginTop: 12 }}>
+          <label htmlFor="range" style={{ fontSize: 14, color: '#6E6E73', marginRight: 8 }}>Range:</label>
+          <select
+            id="range"
+            value={rangeDays}
+            onChange={(e) => setRangeDays(Number(e.target.value) as TtsRangeDays)}
+            style={{ minHeight: 32, borderRadius: 8, padding: '4px 8px' }}
+          >
+            <option value={30}>Last 30 days</option>
+            <option value={60}>Last 60 days</option>
+            <option value={90}>Last 90 days</option>
+          </select>
+        </div>
       </header>
 
       {summary && (
@@ -314,11 +262,10 @@ export function TtsUsage() {
               </div>
 
               <div className={styles.detailCard}>
-                <h3 className={styles.cardTitle}>Recent Daily Usage (7 Days)</h3>
+                <h3 className={styles.cardTitle}>Recent Daily Usage</h3>
                 <div className={styles.dailyUsageChart}>
                   {Object.entries(summary.usageByDay)
                     .sort(([a], [b]) => a.localeCompare(b))
-                    .slice(-7)
                     .map(([day, stats]) => {
                       const maxCost = Math.max(...Object.values(summary.usageByDay).map(d => d.totalCost), 0.001);
                       const height = Math.max(5, (stats.totalCost / maxCost) * 100);
