@@ -73,6 +73,7 @@ interface AudioControlsProps {
         sessionsCount: number;
     };
     unitLabelOverride?: string;
+    estimatedTimeRemaining?: string;
 }
 
 export const AudioControls: React.FC<AudioControlsProps> = ({
@@ -107,7 +108,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     ttsError,
     onDismissError,
     chapterTransitionLoading = false,
-    unitLabelOverride
+    unitLabelOverride,
+    estimatedTimeRemaining
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
     const displayProgress = progress;
@@ -322,6 +324,18 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     }}
                 >
                     {currentChunk} of {totalChunks} {unitLabelOverride || 'sentences'}
+                    {estimatedTimeRemaining && (
+                        <Box
+                            component="span"
+                            sx={{
+                                ml: 1,
+                                color: '#4285f4',
+                                fontWeight: 500
+                            }}
+                        >
+                            ({estimatedTimeRemaining})
+                        </Box>
+                    )}
                 </Typography>
 
                 {/* Navigate to Sentence Button */}

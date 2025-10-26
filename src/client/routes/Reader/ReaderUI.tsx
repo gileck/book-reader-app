@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { Box, Typography, Paper, Alert, Snackbar, Fab, Tabs, Tab } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { useRouter } from '../../router';
@@ -23,6 +23,7 @@ import { CostApprovalDialog } from './components/CostApprovalDialog';
 import { ChapterSelector } from './components/ChapterSelector';
 import { FocusReader } from './FocusReader';
 import { useSettings } from '../../settings/SettingsContext';
+import { getFormattedTimeRemaining } from './utils/timeEstimation';
 
 interface ReaderUIProps {
     initialBook: BookClient;
@@ -268,6 +269,15 @@ export const ReaderUI = ({
         void sentenceAudio.controller.play(true); // User clicked play button
     }, [sentenceAudio.controller]);
 
+    // Calculate estimated time remaining to read the chapter
+    const estimatedTimeRemaining = useMemo(() => {
+        return getFormattedTimeRemaining(
+            sentenceAudio.sentences,
+            sentenceAudio.controller.currentSentenceIndex,
+            settings.playbackSpeed
+        );
+    }, [sentenceAudio.sentences, sentenceAudio.controller.currentSentenceIndex, settings.playbackSpeed]);
+
     if (!settings.settingsLoaded) {
         return null; // Settings not loaded yet
     }
@@ -505,6 +515,7 @@ export const ReaderUI = ({
                     onDismissError={sentenceAudio.controller.clearError}
                     chapterTransitionLoading={chapterTransitionLoading}
                     unitLabelOverride="sentences"
+                    estimatedTimeRemaining={estimatedTimeRemaining}
                 />
 
                 {/* Speed Control Modal */}
