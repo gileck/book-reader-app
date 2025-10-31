@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Paper,
     Dialog,
@@ -16,6 +16,25 @@ import { ChatContent } from './ChatContent';
 import { ChatInput } from './ChatInput';
 import { PanelHeader } from './PanelHeader';
 
+/**
+ * BookQAPanel Component
+ * 
+ * WRAPPER COMPONENT: This component is primarily a layout/container wrapper.
+ * 
+ * Architecture:
+ * - Provides two rendering modes: floating panel and fullscreen dialog
+ * - Manages local UI state (question input, text selection)
+ * - Delegates actual message rendering to ChatContent component
+ * - Delegates input handling to ChatInput component
+ * 
+ * IMPORTANT: ChatContent is the SHARED component used by:
+ * 1. This BookQAPanel (both panel and fullscreen modes)
+ * 2. QA Chat Tab in ReaderUI.tsx
+ * 
+ * For bugs related to message display or scrolling:
+ * - Check ChatContent.tsx FIRST
+ * - This component should only handle layout and state management
+ */
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement;

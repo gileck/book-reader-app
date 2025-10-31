@@ -4,6 +4,26 @@ import { ChatContentProps } from './types';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
 
+/**
+ * ChatContent Component
+ * 
+ * IMPORTANT: This component is SHARED across multiple contexts:
+ * 1. QA Chat Tab (ReaderUI.tsx) - Rendered directly in the tab view
+ * 2. BookQAPanel - Floating panel mode
+ * 3. BookQAPanel - Fullscreen dialog mode
+ * 
+ * Any changes to this component will affect ALL three contexts.
+ * 
+ * Core Responsibilities:
+ * - Renders the list of chat messages
+ * - Handles auto-scrolling behavior (scrolls to top of AI messages, bottom for user messages)
+ * - Displays empty state when no messages exist
+ * - Shows typing indicator during AI response generation
+ * 
+ * When fixing bugs related to message display or scrolling:
+ * - Check this component FIRST before modifying parent wrappers
+ * - Test changes in all three contexts (QA Tab, Panel, Fullscreen)
+ */
 export const ChatContent: React.FC<ChatContentProps> = ({
     messages,
     messagesEndRef,

@@ -358,6 +358,10 @@ export const ReaderUI = ({
                 {activeTab === 'focus' ? (
                     <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} ttsEnabled={settings.ttsEnabled} book={book} />
                 ) : activeTab === 'qa' ? (
+                    // QA Chat Tab - WRAPPER for ChatContent component
+                    // IMPORTANT: This tab uses the SHARED ChatContent component from BookQAPanel/ChatContent.tsx
+                    // ChatContent is also used by BookQAPanel (floating panel and fullscreen modes)
+                    // For bugs related to message display or scrolling, check ChatContent.tsx FIRST
                     <Box sx={{
                         maxWidth: 800,
                         mx: 'auto',

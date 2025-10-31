@@ -32,6 +32,25 @@ This library follows the container/presentation pattern:
 - **Presentation Components**: Focus on UI rendering based on props
   - `ChatContent`, `ChatInput`, `MessageBubble`, `PanelHeader`, `TypingIndicator`
 
+### Important: Shared Component Usage
+
+**`ChatContent` is a SHARED component** used in multiple contexts:
+
+1. **QA Chat Tab** (in `ReaderUI.tsx`) - Rendered directly as a full tab view
+2. **BookQAPanel** - Floating panel mode (small popup window)
+3. **BookQAPanel** - Fullscreen dialog mode (expanded view)
+
+This means:
+- Any changes to `ChatContent.tsx` will affect ALL three rendering contexts
+- Bug fixes related to message display or scrolling should be made in `ChatContent.tsx`, not in the parent wrappers
+- Always test changes in all three contexts to ensure consistent behavior
+
+**Parent components are primarily wrappers** that:
+- Provide layout and positioning
+- Manage local UI state (e.g., question input)
+- Pass props to the shared components
+- Should NOT contain message rendering or scrolling logic
+
 ## Usage
 
 ```typescript
