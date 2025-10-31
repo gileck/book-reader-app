@@ -14,15 +14,15 @@ export interface AIModelDefinition {
 // Gemini models with pricing information
 export const GEMINI_MODELS: AIModelDefinition[] = [
   {
-    id: 'gemini-2.0-flash-lite',
-    name: 'Gemini 2.0 Flash Lite',
+    id: 'gemini-2.5-flash-lite',
+    name: 'Gemini 2.5 Flash Lite',
     provider: 'gemini',
     maxTokens: 1048576,
     capabilities: ['summarization', 'question-answering', 'content-generation']
   },
   {
-    id: 'gemini-2.0-flash',
-    name: 'Gemini 2.0 Flash',
+    id: 'gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash',
     provider: 'gemini',
     maxTokens: 1048576,
     capabilities: ['summarization', 'question-answering', 'content-generation', 'reasoning']

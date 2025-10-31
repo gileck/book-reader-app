@@ -44,14 +44,14 @@ export const pricing: PricingModel[] = [
         "output_cost_per_1k_tokens": 0.015
       },
       {
-        "model_name": "Gemini 2.0 Flash Lite",
-        "model_id": "gemini-2.0-flash-lite",
+        "model_name": "Gemini 2.5 Flash Lite",
+        "model_id": "gemini-2.5-flash-lite",
         "input_cost_per_1k_tokens": 0.0001,
         "output_cost_per_1k_tokens": 0.0004
       },
       {
-        "model_name": "Gemini 2.0 Flash",
-        "model_id": "gemini-2.0-flash",
+        "model_name": "Gemini 2.5 Flash",
+        "model_id": "gemini-2.5-flash",
         "input_cost_per_1k_tokens": 0.0003,
         "output_cost_per_1k_tokens": 0.0025
       },

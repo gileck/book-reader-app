@@ -1,9 +1,15 @@
-import { EnhancedGenerateContentResponse, GenerationConfig, GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
+import GoogleGenerativeAI from '@google/genai';
 import {
   AIModel,
   AIModelResponse,
   Usage
 } from '../types';
+
+type GenAIUsageMetadata = {
+  promptTokenCount?: number;
+  candidatesTokenCount?: number;
+  totalTokenCount?: number;
+};
 
 export class GeminiAdapter implements AIModel {
   static provider = 'gemini';
@@ -20,8 +26,8 @@ export class GeminiAdapter implements AIModel {
     this.genAI = new GoogleGenerativeAI(apiKey);
   }
 
-  private calcUsage(response: EnhancedGenerateContentResponse): Usage {
-    // Get token usage from the usage_metadata in the response
+  private calcUsage(response: { usageMetadata?: GenAIUsageMetadata }): Usage {
+    // Normalize usage metadata across SDK versions
     const usageMetadata = response.usageMetadata;
     
     return {
@@ -31,14 +37,11 @@ export class GeminiAdapter implements AIModel {
     };
   }
 
-  private getModel(modelId: string, generationConfig?: Partial<GenerationConfig>): GenerativeModel {
-    return this.genAI.getGenerativeModel({
+  // New SDK primarily uses ai.models.generateContent; keep a thin helper if needed later.
+  private async generateContent(modelId: string, contents: string) {
+    return await this.genAI.models.generateContent({
       model: modelId,
-      generationConfig: {
-        maxOutputTokens: 1000,
-        temperature: 0.7,
-        ...generationConfig
-      }
+      contents
     });
   }
   
@@ -47,11 +50,9 @@ export class GeminiAdapter implements AIModel {
     prompt: string,
     modelId: string,
   ): Promise<AIModelResponse<string>> {
-    const model = this.getModel(modelId)
     try {
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      const responseText = response.text();
+      const response = await this.generateContent(modelId, prompt);
+      const responseText = (response as unknown as { text?: string }).text || '';
       return {
         result: responseText,
         usage: this.calcUsage(response),
@@ -67,14 +68,9 @@ export class GeminiAdapter implements AIModel {
     prompt: string,
     modelId: string,
   ): Promise<AIModelResponse<T>> {
-    const model = this.getModel(modelId, {
-      responseMimeType: 'application/json', // Always set for JSON responses
-    })
     try {
-      // Make the API call
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      const responseText = response.text();
+      const response = await this.generateContent(modelId, prompt);
+      const responseText = (response as unknown as { text?: string }).text || '';
       // Parse JSON
       let json: T;
       try {
