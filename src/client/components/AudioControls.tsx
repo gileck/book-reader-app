@@ -74,6 +74,7 @@ interface AudioControlsProps {
     };
     unitLabelOverride?: string;
     estimatedTimeRemaining?: string;
+    hideChapterInfo?: boolean; // Hide chapter title and progress bar
 }
 
 export const AudioControls: React.FC<AudioControlsProps> = ({
@@ -109,7 +110,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onDismissError,
     chapterTransitionLoading = false,
     unitLabelOverride,
-    estimatedTimeRemaining
+    estimatedTimeRemaining,
+    hideChapterInfo = false
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
     const displayProgress = progress;
@@ -202,159 +204,163 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             )}
 
             {/* Chapter Title and Navigation */}
-            <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                mb: 1
-            }}>
-                <IconButton
-                    onClick={onPreviousChapter}
-                    disabled={currentChapterNumber <= minChapterNumber}
-                    sx={{
-                        color: 'white',
-                        '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                        '&:disabled': { color: 'rgba(255,255,255,0.3)' },
-                        p: 1
-                    }}
-                    size="medium"
-                >
-                    <ChevronLeft sx={{ fontSize: 24 }} />
-                </IconButton>
-
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    flex: 1,
-                    justifyContent: 'center',
-                    gap: 1
-                }}>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: 500,
-                            color: '#e0e0e0',
-                            fontSize: '1rem'
-                        }}
-                    >
-                        {chapterTitle}
-                    </Typography>
-                    {onChapters && (
+            {!hideChapterInfo && (
+                <>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: 1
+                    }}>
                         <IconButton
-                            onClick={onChapters}
+                            onClick={onPreviousChapter}
+                            disabled={currentChapterNumber <= minChapterNumber}
                             sx={{
                                 color: 'white',
                                 '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                                p: 0.5
+                                '&:disabled': { color: 'rgba(255,255,255,0.3)' },
+                                p: 1
                             }}
-                            size="small"
+                            size="medium"
                         >
-                            <List sx={{ fontSize: 18 }} />
+                            <ChevronLeft sx={{ fontSize: 24 }} />
                         </IconButton>
-                    )}
-                </Box>
 
-                <IconButton
-                    onClick={onNextChapter}
-                    disabled={totalChapters ? currentChapterNumber >= totalChapters : false}
-                    sx={{
-                        color: 'white',
-                        '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                        '&:disabled': { color: 'rgba(255,255,255,0.3)' },
-                        p: 1
-                    }}
-                    size="medium"
-                >
-                    <ChevronRight sx={{ fontSize: 24 }} />
-                </IconButton>
-            </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            flex: 1,
+                            justifyContent: 'center',
+                            gap: 1
+                        }}>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    textAlign: 'center',
+                                    fontWeight: 500,
+                                    color: '#e0e0e0',
+                                    fontSize: '1rem'
+                                }}
+                            >
+                                {chapterTitle}
+                            </Typography>
+                            {onChapters && (
+                                <IconButton
+                                    onClick={onChapters}
+                                    sx={{
+                                        color: 'white',
+                                        '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
+                                        p: 0.5
+                                    }}
+                                    size="small"
+                                >
+                                    <List sx={{ fontSize: 18 }} />
+                                </IconButton>
+                            )}
+                        </Box>
 
-            {/* Enhanced Progress Bar */}
-            <Box sx={{ mb: 1 }}>
-                <LinearProgress
-                    variant="determinate"
-                    value={displayProgress}
-                    sx={{
-                        height: 4,
-                        borderRadius: 2,
-                        backgroundColor: '#404040',
-                        '& .MuiLinearProgress-bar': {
-                            backgroundColor: '#4285f4',
-                            borderRadius: 2
-                        }
-                    }}
-                />
-            </Box>
-
-            {/* Reading Stats and Sentence Counter */}
-            <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                mb: 2,
-                minHeight: 24,
-                gap: 1
-            }}>
-                {/* Go to Top Button */}
-                <IconButton
-                    onClick={() => onNavigateToChunk?.(0)}
-                    size="small"
-                    sx={{
-                        color: '#b0b0b0',
-                        padding: '4px',
-                        '&:hover': {
-                            color: '#e0e0e0',
-                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                        }
-                    }}
-                    title="Go to first sentence"
-                >
-                    <VerticalAlignTop sx={{ fontSize: 18 }} />
-                </IconButton>
-
-                {/* Sentence Counter (centered) */}
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: '#b0b0b0',
-                        fontWeight: 400,
-                        fontSize: '0.875rem',
-                        whiteSpace: 'nowrap'
-                    }}
-                >
-                    {currentChunk} of {totalChunks} {unitLabelOverride || 'sentences'}
-                    {estimatedTimeRemaining && (
-                        <Box
-                            component="span"
+                        <IconButton
+                            onClick={onNextChapter}
+                            disabled={totalChapters ? currentChapterNumber >= totalChapters : false}
                             sx={{
-                                ml: 1,
-                                color: '#4285f4',
-                                fontWeight: 500
+                                color: 'white',
+                                '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
+                                '&:disabled': { color: 'rgba(255,255,255,0.3)' },
+                                p: 1
+                            }}
+                            size="medium"
+                        >
+                            <ChevronRight sx={{ fontSize: 24 }} />
+                        </IconButton>
+                    </Box>
+
+                    {/* Enhanced Progress Bar */}
+                    <Box sx={{ mb: 1 }}>
+                        <LinearProgress
+                            variant="determinate"
+                            value={displayProgress}
+                            sx={{
+                                height: 4,
+                                borderRadius: 2,
+                                backgroundColor: '#404040',
+                                '& .MuiLinearProgress-bar': {
+                                    backgroundColor: '#4285f4',
+                                    borderRadius: 2
+                                }
+                            }}
+                        />
+                    </Box>
+
+                    {/* Reading Stats and Sentence Counter */}
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mb: 2,
+                        minHeight: 24,
+                        gap: 1
+                    }}>
+                        {/* Go to Top Button */}
+                        <IconButton
+                            onClick={() => onNavigateToChunk?.(0)}
+                            size="small"
+                            sx={{
+                                color: '#b0b0b0',
+                                padding: '4px',
+                                '&:hover': {
+                                    color: '#e0e0e0',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                }
+                            }}
+                            title="Go to first sentence"
+                        >
+                            <VerticalAlignTop sx={{ fontSize: 18 }} />
+                        </IconButton>
+
+                        {/* Sentence Counter (centered) */}
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: '#b0b0b0',
+                                fontWeight: 400,
+                                fontSize: '0.875rem',
+                                whiteSpace: 'nowrap'
                             }}
                         >
-                            ({estimatedTimeRemaining})
-                        </Box>
-                    )}
-                </Typography>
+                            {currentChunk} of {totalChunks} {unitLabelOverride || 'sentences'}
+                            {estimatedTimeRemaining && (
+                                <Box
+                                    component="span"
+                                    sx={{
+                                        ml: 1,
+                                        color: '#4285f4',
+                                        fontWeight: 500
+                                    }}
+                                >
+                                    ({estimatedTimeRemaining})
+                                </Box>
+                            )}
+                        </Typography>
 
-                {/* Navigate to Sentence Button */}
-                <IconButton
-                    onClick={() => setNavigationDialogOpen(true)}
-                    size="small"
-                    sx={{
-                        color: '#b0b0b0',
-                        padding: '4px',
-                        '&:hover': {
-                            color: '#e0e0e0',
-                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                        }
-                    }}
-                    title="Go to sentence..."
-                >
-                    <Menu sx={{ fontSize: 18 }} />
-                </IconButton>
-            </Box>
+                        {/* Navigate to Sentence Button */}
+                        <IconButton
+                            onClick={() => setNavigationDialogOpen(true)}
+                            size="small"
+                            sx={{
+                                color: '#b0b0b0',
+                                padding: '4px',
+                                '&:hover': {
+                                    color: '#e0e0e0',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                }
+                            }}
+                            title="Go to sentence..."
+                        >
+                            <Menu sx={{ fontSize: 18 }} />
+                        </IconButton>
+                    </Box>
+                </>
+            )}
 
             {/* Main Controls */}
             <Box sx={{

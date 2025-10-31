@@ -363,8 +363,9 @@ export const ReaderUI = ({
                         mx: 'auto',
                         display: 'flex',
                         flexDirection: 'column',
-                        height: 'calc(100vh - 200px)',
-                        backgroundColor: 'background.default'
+                        height: 'calc(100vh - 56px - 120px)', // Tab bar (56px) + compact audio player (120px)
+                        backgroundColor: 'background.default',
+                        pb: 2 // Add padding at the bottom for spacing from audio player
                     }}>
                         {/* QA Chat Header */}
                         <Box sx={{
@@ -516,6 +517,7 @@ export const ReaderUI = ({
                     chapterTransitionLoading={chapterTransitionLoading}
                     unitLabelOverride="sentences"
                     estimatedTimeRemaining={estimatedTimeRemaining}
+                    hideChapterInfo={activeTab === 'qa'}
                 />
 
                 {/* Speed Control Modal */}

@@ -36,7 +36,7 @@ interface UseBookQAState {
     answerStyle: AnswerStyle;
 }
 
-const DEFAULT_MODEL_ID = 'gemini-1.5-flash-8b'; // Default model
+const DEFAULT_MODEL_ID = 'gemini-2.0-flash-lite'; // Default model
 
 export const useBookQA = ({
     bookId,

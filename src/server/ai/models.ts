@@ -14,17 +14,17 @@ export interface AIModelDefinition {
 // Gemini models with pricing information
 export const GEMINI_MODELS: AIModelDefinition[] = [
   {
-    id: 'gemini-1.5-flash-8b',
-    name: 'Gemini 1.5 Flash-8B',
+    id: 'gemini-2.0-flash-lite',
+    name: 'Gemini 2.0 Flash Lite',
     provider: 'gemini',
     maxTokens: 1048576,
     capabilities: ['summarization', 'question-answering', 'content-generation']
   },
   {
-    id: 'gemini-1.5-pro',
-    name: 'Gemini 1.5 Pro',
+    id: 'gemini-2.0-flash',
+    name: 'Gemini 2.0 Flash',
     provider: 'gemini',
-    maxTokens: 32768,
+    maxTokens: 1048576,
     capabilities: ['summarization', 'question-answering', 'content-generation', 'reasoning']
   }
 ];
@@ -33,16 +33,23 @@ export const GEMINI_MODELS: AIModelDefinition[] = [
 export const OPENAI_MODELS: AIModelDefinition[] = [
   {
     id: 'gpt-4o-mini',
-    name: 'GPT-4O Mini',
+    name: 'GPT-4o Mini',
     provider: 'openai',
-    maxTokens: 8192,
+    maxTokens: 16384,
     capabilities: ['summarization', 'question-answering', 'content-generation', 'reasoning']
   },
   {
     id: 'gpt-4o',
-    name: 'GPT-4O',
+    name: 'GPT-4o',
     provider: 'openai',
-    maxTokens: 8192,
+    maxTokens: 16384,
+    capabilities: ['summarization', 'question-answering', 'content-generation', 'reasoning']
+  },
+  {
+    id: 'gpt-4-turbo',
+    name: 'GPT-4 Turbo',
+    provider: 'openai',
+    maxTokens: 4096,
     capabilities: ['summarization', 'question-answering', 'content-generation', 'reasoning']
   }
 ];
