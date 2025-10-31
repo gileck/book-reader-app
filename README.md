@@ -40,6 +40,39 @@ MONGODB_URI=mongodb://localhost:27017
 DATABASE_NAME=book_reader
 ```
 
+### AI models (Gemini & OpenAI)
+
+This app uses Google's Gen AI SDK (`@google/genai`) for Gemini and the OpenAI SDK for GPT models.
+
+Environment variables:
+
+```bash
+# Needed for Gemini (Gen AI SDK)
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Default model (used by QA chat): `gemini-2.5-flash-lite`
+
+Supported Gemini IDs in this app:
+- `gemini-2.5-flash-lite`
+- `gemini-2.5-flash`
+
+Example (server-side):
+
+```ts
+import { GoogleGenAI } from '@google/genai';
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+
+export async function summarize(text: string) {
+  const res = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: `Summarize in 3 bullets:\n\n${text}`,
+  });
+  return res.text;
+}
+```
+
 4. Start MongoDB (if running locally):
 ```bash
 # On macOS with Homebrew:
