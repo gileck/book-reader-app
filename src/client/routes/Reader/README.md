@@ -1646,7 +1646,10 @@ The audio system implements smart error filtering and recovery:
 
 1. **Expected Browser Errors (Filtered):**
    - "interrupted" errors when changing audio source
-   - "AbortError" when rapidly switching between chunks
+   - "abort" / "aborted" / "AbortError" when rapidly switching between chunks
+   - "The operation was aborted" on iOS Safari (even during successful playback)
+   - "NotAllowedError" for autoplay policy restrictions
+   - HTMLAudioElement `MEDIA_ERR_ABORTED` (code 1) on iOS Safari
    - These are logged to console.debug but NOT shown to users
 
 2. **Preloading Errors (Silent):**
@@ -1671,6 +1674,8 @@ const shouldShowError =
     ttsError.sentenceIndex === currentSentenceIndex;
 
 // In useSentenceAudioController.ts
+
+// Promise-based error handling (from audio.play())
 try {
     await audio.play();
     if (userInitiated) {
@@ -1683,15 +1688,35 @@ try {
 } catch (e) {
     const errorMessage = e instanceof Error ? e.message : 'Playback failed';
     
-    // Filter expected browser errors
-    const isExpectedBrowserError = errorMessage.includes('interrupted') || 
-                                    errorMessage.includes('AbortError');
+    // Filter expected browser errors (case-insensitive)
+    // iOS Safari commonly throws "The operation was aborted" even when playback succeeds
+    const lowerMessage = errorMessage.toLowerCase();
+    const isExpectedBrowserError = 
+        lowerMessage.includes('interrupted') ||
+        lowerMessage.includes('abort') ||  // Catches "aborted", "AbortError", etc.
+        lowerMessage.includes('notallowederror'); // Autoplay policy errors
     
     if (!isExpectedBrowserError) {
         // Track which sentence failed
         update({ ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex }, isPlaying: false });
     }
 }
+
+// Event-based error handling (from HTMLAudioElement)
+audio.addEventListener('error', (event) => {
+    const error = (event.target as HTMLAudioElement).error;
+    
+    // iOS Safari often fires MEDIA_ERR_ABORTED (code 1) even when playback succeeds
+    if (error?.code === 1) { // MEDIA_ERR_ABORTED
+        console.debug('iOS Safari audio error (benign):', error.message);
+        return;
+    }
+    
+    // Only report real errors: MEDIA_ERR_NETWORK (2), MEDIA_ERR_DECODE (3), MEDIA_ERR_SRC_NOT_SUPPORTED (4)
+    if (error && error.code >= 2) {
+        update({ ttsError: { message: error.message, sentenceIndex: currentSentenceIndex }, isPlaying: false });
+    }
+});
 ```
 
 **User Control During Errors:**
@@ -1708,6 +1733,25 @@ try {
 | "Audio service is currently unavailable" | TTS provider down or API key invalid | Check settings, verify provider configuration |
 | "Audio unavailable: TTS failed" | TTS generation error for current sentence | Retry, check network connection |
 | No error shown | Preloading error (background) or expected browser interruption | None needed - audio continues normally |
+
+**iOS Safari Specific Handling:**
+
+iOS Safari has several audio API quirks that require special handling:
+
+1. **"The operation was aborted" false positives:**
+   - iOS Safari throws this error during source changes even when playback succeeds
+   - Fixed with case-insensitive error message filtering
+   - Error is logged to console but not shown to users
+
+2. **MEDIA_ERR_ABORTED (code 1) events:**
+   - HTMLAudioElement fires error events with code 1 during autoplay and source changes
+   - These don't actually affect playback
+   - Filtered at the event listener level
+
+3. **Implementation details:**
+   - Two-layer error filtering: Promise-based (audio.play()) and Event-based (addEventListener)
+   - Case-insensitive matching prevents missing variants ("aborted" vs "AbortError")
+   - Only codes 2-4 (network, decode, unsupported) are surfaced as real errors
 
 ### Word Timing Offset Not Working
 
