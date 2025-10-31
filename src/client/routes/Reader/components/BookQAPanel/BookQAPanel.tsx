@@ -54,32 +54,6 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
-
-    useEffect(() => {
-        if (!loading && messages.length > 0) {
-            setTimeout(scrollToBottom, 100);
-        }
-    }, [loading, messages.length]);
-
-    useEffect(() => {
-        if (open) {
-            setTimeout(scrollToBottom, 200);
-        }
-    }, [open]);
-
-    useEffect(() => {
-        if (fullScreen) {
-            setTimeout(scrollToBottom, 200);
-        }
-    }, [fullScreen]);
-
     const handleTextSelection = (selectedText: string) => {
         if (selectedText.trim()) {
             setQuestion(selectedText.trim());
@@ -89,8 +63,6 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (question.trim() && !loading) {
-            messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
-            setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'instant' }), 0);
             onSubmitQuestion(question.trim());
             setQuestion('');
         }

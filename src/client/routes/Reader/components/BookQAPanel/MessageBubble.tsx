@@ -14,6 +14,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
     return (
         <Box
+            data-message-index={index}
             sx={{
                 display: 'flex',
                 flexDirection: 'column',

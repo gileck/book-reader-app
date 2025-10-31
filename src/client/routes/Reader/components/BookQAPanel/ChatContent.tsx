@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, alpha, useTheme } from '@mui/material';
 import { ChatContentProps } from './types';
 import { MessageBubble } from './MessageBubble';
@@ -13,6 +13,29 @@ export const ChatContent: React.FC<ChatContentProps> = ({
     onReply
 }) => {
     const theme = useTheme();
+
+    // Scroll to assistant message top when it arrives
+    useEffect(() => {
+        if (messages.length === 0 || loading) return;
+
+        const lastMessage = messages[messages.length - 1];
+        
+        if (lastMessage.role === 'assistant') {
+            // AI just responded - scroll to TOP of the message
+            const lastIndex = messages.length - 1;
+            setTimeout(() => {
+                const el = document.querySelector(`[data-message-index="${lastIndex}"]`) as HTMLElement | null;
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 150);
+        } else {
+            // User message - scroll to bottom
+            setTimeout(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+    }, [messages, loading, messagesEndRef]);
 
     if (messages.length === 0) {
         return (
