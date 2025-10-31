@@ -1,4 +1,4 @@
-import GoogleGenerativeAI from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 import {
   AIModel,
   AIModelResponse,
@@ -13,7 +13,7 @@ type GenAIUsageMetadata = {
 
 export class GeminiAdapter implements AIModel {
   static provider = 'gemini';
-  private genAI: GoogleGenerativeAI;
+  private genAI: GoogleGenAI;
 
   constructor() {
     // Get API key from environment variable
@@ -23,7 +23,7 @@ export class GeminiAdapter implements AIModel {
       throw new Error('Gemini API key not found in environment variables');
     }
 
-    this.genAI = new GoogleGenerativeAI(apiKey);
+    this.genAI = new GoogleGenAI({ apiKey });
   }
 
   private calcUsage(response: { usageMetadata?: GenAIUsageMetadata }): Usage {
