@@ -72,6 +72,7 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [inputCollapsed, setInputCollapsed] = useState(false);
 
     const handleTextSelection = (selectedText: string) => {
         if (selectedText.trim()) {
@@ -155,28 +156,33 @@ export const BookQAPanel: React.FC<BookQAPanelProps> = ({
                         loading={loading}
                         onTextSelection={handleTextSelection}
                         onReply={handleReply}
+                        showExpandButton={inputCollapsed}
+                        onExpandInput={() => setInputCollapsed(false)}
                     />
-                    <ChatInput
-                        question={question}
-                        loading={loading}
-                        onQuestionChange={setQuestion}
-                        onSubmit={handleSubmit}
-                        onKeyPress={handleKeyPress}
-                        fullScreen={true}
-                        contextLines={contextLines}
-                        onContextLinesChange={onContextLinesChange}
-                        selectedModelId={selectedModelId}
-                        onModelChange={onModelChange}
-                        currentBookTitle={currentBookTitle}
-                        currentChapterTitle={currentChapterTitle}
-                        currentChapterNumber={currentChapterNumber}
-                        currentSentence={currentSentence}
-                        messages={messages}
-                        getLastSentences={getLastSentences}
-                        answerLength={answerLength}
-                        answerLevel={answerLevel}
-                        answerStyle={answerStyle}
-                    />
+                    {!inputCollapsed && (
+                        <ChatInput
+                            question={question}
+                            loading={loading}
+                            onQuestionChange={setQuestion}
+                            onSubmit={handleSubmit}
+                            onKeyPress={handleKeyPress}
+                            fullScreen={true}
+                            contextLines={contextLines}
+                            onContextLinesChange={onContextLinesChange}
+                            selectedModelId={selectedModelId}
+                            onModelChange={onModelChange}
+                            currentBookTitle={currentBookTitle}
+                            currentChapterTitle={currentChapterTitle}
+                            currentChapterNumber={currentChapterNumber}
+                            currentSentence={currentSentence}
+                            messages={messages}
+                            getLastSentences={getLastSentences}
+                            answerLength={answerLength}
+                            answerLevel={answerLevel}
+                            answerStyle={answerStyle}
+                            onCollapseInput={() => setInputCollapsed(true)}
+                        />
+                    )}
                 </Box>
             </Dialog>
         );

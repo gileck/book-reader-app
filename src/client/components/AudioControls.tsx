@@ -46,6 +46,7 @@ interface AudioControlsProps {
     onSettings: () => void;
     onSpeedSettings: () => void;
     onAskAI: () => void;
+    onQuickPrompts?: () => void;
     onChapters?: () => void;
     isPlaying: boolean;
     ttsEnabled?: boolean;
@@ -91,6 +92,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     onSettings,
     onSpeedSettings,
     onAskAI,
+    onQuickPrompts,
     onChapters,
     isPlaying,
     ttsEnabled = true,
@@ -370,9 +372,9 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             }}>
                 {/* Left Controls */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 100 }}>
-                    {/* Ask AI Button */}
+                    {/* Quick Prompts Button */}
                     <IconButton
-                        onClick={onAskAI}
+                        onClick={onQuickPrompts || onAskAI}
                         sx={{
                             color: 'white',
                             '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },

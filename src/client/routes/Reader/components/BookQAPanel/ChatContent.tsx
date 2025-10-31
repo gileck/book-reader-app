@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Box, Typography, alpha, useTheme } from '@mui/material';
+import { Box, Typography, alpha, useTheme, Tooltip } from '@mui/material';
+import { KeyboardArrowUp } from '@mui/icons-material';
 import { ChatContentProps } from './types';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
@@ -30,7 +31,9 @@ export const ChatContent: React.FC<ChatContentProps> = ({
     fullScreen,
     loading,
     onTextSelection,
-    onReply
+    onReply,
+    showExpandButton = false,
+    onExpandInput
 }) => {
     const theme = useTheme();
 
@@ -103,7 +106,8 @@ export const ChatContent: React.FC<ChatContentProps> = ({
                 py: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 3
+                gap: 3,
+                position: 'relative'
             }}
         >
             {messages.map((message, index) => (
@@ -120,6 +124,53 @@ export const ChatContent: React.FC<ChatContentProps> = ({
             {loading && <TypingIndicator fullScreen={fullScreen} />}
 
             <div ref={messagesEndRef} />
+
+            {/* Expand Input Button - shown when input is collapsed */}
+            {showExpandButton && onExpandInput && (
+                <Box
+                    sx={{
+                        position: 'sticky',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        py: 1,
+                        background: `linear-gradient(to top, ${theme.palette.background.default} 60%, transparent)`,
+                        backdropFilter: 'blur(8px)',
+                        WebkitBackdropFilter: 'blur(8px)'
+                    }}
+                >
+                    <Tooltip title="Show input">
+                        <Box
+                            onClick={onExpandInput}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                minWidth: 80,
+                                height: 28,
+                                px: 2,
+                                backgroundColor: theme.palette.primary.main,
+                                color: 'white',
+                                borderRadius: '14px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                '&:hover': {
+                                    backgroundColor: theme.palette.primary.dark,
+                                    transform: 'translateY(-1px)'
+                                },
+                                '&:active': {
+                                    transform: 'translateY(0)'
+                                },
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                            }}
+                        >
+                            <KeyboardArrowUp sx={{ fontSize: 18 }} />
+                        </Box>
+                    </Tooltip>
+                </Box>
+            )}
         </Box>
     );
 }; 

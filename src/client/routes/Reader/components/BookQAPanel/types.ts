@@ -36,6 +36,8 @@ export interface ChatContentProps {
     loading: boolean;
     onTextSelection: (selectedText: string) => void;
     onReply: (messageIndex: number, messageContent: string) => void;
+    showExpandButton?: boolean;
+    onExpandInput?: () => void;
 }
 
 export interface ChatInputProps {
@@ -58,6 +60,7 @@ export interface ChatInputProps {
     answerLength: AnswerLength;
     answerLevel: AnswerLevel;
     answerStyle: AnswerStyle;
+    onCollapseInput?: () => void;
 }
 
 export interface MessageBubbleProps {

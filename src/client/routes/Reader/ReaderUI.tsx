@@ -24,6 +24,7 @@ import { ChapterSelector } from './components/ChapterSelector';
 import { FocusReader } from './FocusReader';
 import { useSettings } from '../../settings/SettingsContext';
 import { getFormattedTimeRemaining } from './utils/timeEstimation';
+import { QuickPromptsDialog } from '../../components/QuickPromptsDialog';
 
 interface ReaderUIProps {
     initialBook: BookClient;
@@ -73,7 +74,16 @@ export const ReaderUI = ({
     const [qaQuestion, setQaQuestion] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    // Initialize bookQA hook first with temporary context functions
+    // Quick Prompts dialog state
+    const [quickPromptsOpen, setQuickPromptsOpen] = useState(false);
+
+    // Chat input collapse state
+    const [chatInputCollapsed, setChatInputCollapsed] = useState(false);
+
+    // Create a ref to store the contextLines accessor
+    const getContextLines = useRef<() => number>(() => 3);
+
+    // Initialize bookQA hook with dynamic context function
     const bookQA = useBookQA({
         bookId: book?._id || '',
         bookTitle: book?.title || '',
@@ -82,13 +92,18 @@ export const ReaderUI = ({
         currentSentence: chapter && audio.textChunks[sentenceAudio.controller.currentSentenceIndex] ? audio.textChunks[sentenceAudio.controller.currentSentenceIndex].text : '',
         getLastSentences: () => {
             if (!chapter || audio.textChunks.length === 0) return '';
-            const contextCount = 3; // Default value, will be updated by bookQA
+            const contextCount = getContextLines.current();
             const startIndex = Math.max(0, sentenceAudio.controller.currentSentenceIndex - contextCount);
             const endIndex = Math.max(0, sentenceAudio.controller.currentSentenceIndex);
             if (startIndex >= endIndex) return '';
             return audio.textChunks.slice(startIndex, endIndex).map(chunk => chunk.text).join(' ');
         }
     });
+
+    // Update the ref to return bookQA's contextLines
+    useEffect(() => {
+        getContextLines.current = () => bookQA.contextLines;
+    }, [bookQA.contextLines]);
 
     // Sync reading mode from URL param on load/change
     useEffect(() => {
@@ -227,6 +242,29 @@ export const ReaderUI = ({
             navigate(path);
         }
     }, [navigate]);
+
+    const handleOpenQuickPrompts = useCallback(() => {
+        setQuickPromptsOpen(true);
+    }, []);
+
+    const handleCloseQuickPrompts = useCallback(() => {
+        setQuickPromptsOpen(false);
+    }, []);
+
+    const handleSelectPrompt = useCallback((promptContent: string) => {
+        // Set the question
+        setQaQuestion(promptContent);
+        // Switch to QA tab
+        handleOpenQAChat();
+    }, [handleOpenQAChat]);
+
+    const handleCollapseInput = useCallback(() => {
+        setChatInputCollapsed(true);
+    }, []);
+
+    const handleExpandInput = useCallback(() => {
+        setChatInputCollapsed(false);
+    }, []);
 
     // QA Chat handlers
     const handleQaSubmit = useCallback((e: React.FormEvent) => {
@@ -403,30 +441,35 @@ export const ReaderUI = ({
                             loading={bookQA.isLoading}
                             onTextSelection={handleTextSelection}
                             onReply={handleQaReply}
+                            showExpandButton={chatInputCollapsed}
+                            onExpandInput={handleExpandInput}
                         />
 
                         {/* Chat Input */}
-                        <ChatInput
-                            question={qaQuestion}
-                            loading={bookQA.isLoading}
-                            onQuestionChange={setQaQuestion}
-                            onSubmit={handleQaSubmit}
-                            onKeyPress={handleQaKeyPress}
-                            fullScreen={true}
-                            contextLines={bookQA.contextLines}
-                            onContextLinesChange={bookQA.handleContextLinesChange}
-                            selectedModelId={bookQA.selectedModelId}
-                            onModelChange={bookQA.handleModelChange}
-                            currentBookTitle={book?.title || ''}
-                            currentChapterTitle={chapter?.title || ''}
-                            currentChapterNumber={chapter?.chapterNumber || 1}
-                            currentSentence={contentContext.getCurrentSentence()}
-                            messages={bookQA.messages}
-                            getLastSentences={() => contentContext.getLastSentences}
-                            answerLength={bookQA.answerLength}
-                            answerLevel={bookQA.answerLevel}
-                            answerStyle={bookQA.answerStyle}
-                        />
+                        {!chatInputCollapsed && (
+                            <ChatInput
+                                question={qaQuestion}
+                                loading={bookQA.isLoading}
+                                onQuestionChange={setQaQuestion}
+                                onSubmit={handleQaSubmit}
+                                onKeyPress={handleQaKeyPress}
+                                fullScreen={true}
+                                contextLines={bookQA.contextLines}
+                                onContextLinesChange={bookQA.handleContextLinesChange}
+                                selectedModelId={bookQA.selectedModelId}
+                                onModelChange={bookQA.handleModelChange}
+                                currentBookTitle={book?.title || ''}
+                                currentChapterTitle={chapter?.title || ''}
+                                currentChapterNumber={chapter?.chapterNumber || 1}
+                                currentSentence={contentContext.getCurrentSentence()}
+                                messages={bookQA.messages}
+                                getLastSentences={() => contentContext.getLastSentences}
+                                answerLength={bookQA.answerLength}
+                                answerLevel={bookQA.answerLevel}
+                                answerStyle={bookQA.answerStyle}
+                                onCollapseInput={handleCollapseInput}
+                            />
+                        )}
                     </Box>
                 ) : (
                     <Paper
@@ -490,6 +533,7 @@ export const ReaderUI = ({
                     onSettings={settings.handleSettings}
                     onSpeedSettings={settings.handleSpeedSettings}
                     onAskAI={handleOpenQAChat}
+                    onQuickPrompts={handleOpenQuickPrompts}
                     isPlaying={sentenceAudio.controller.isPlaying}
                     ttsEnabled={settings.ttsEnabled}
                     isCurrentChunkLoading={sentenceAudio.controller.isCurrentSentenceLoading}
@@ -597,6 +641,14 @@ export const ReaderUI = ({
                     open={chapterDialog.isOpen}
                     onClose={chapterDialog.closeDialog}
                     onChapterSelect={navigation.setCurrentChapterNumber}
+                />
+
+                {/* Quick Prompts Dialog */}
+                <QuickPromptsDialog
+                    open={quickPromptsOpen}
+                    onClose={handleCloseQuickPrompts}
+                    onSelectPrompt={handleSelectPrompt}
+                    onOpenSettings={bookQA.openSettings}
                 />
 
                 {/* Reading Progress Error Alert */}

@@ -17,7 +17,7 @@ import {
     ListItemText,
     Tooltip
 } from '@mui/material';
-import { Send, Clear, OpenInNew, Bolt } from '@mui/icons-material';
+import { Send, Clear, OpenInNew, Bolt, KeyboardArrowDown } from '@mui/icons-material';
 import { ChatInputProps } from './types';
 import { getAllModels } from '../../../../../server/ai/models';
 import { buildContextPrompt } from '../../../../../apis/bookContentChat/utils';
@@ -43,7 +43,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     getLastSentences,
     answerLength,
     answerLevel,
-    answerStyle
+    answerStyle,
+    onCollapseInput
 }) => {
     const theme = useTheme();
     const [presets, setPresets] = React.useState<PromptPresetClient[]>([]);
@@ -147,9 +148,36 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 borderTop: fullScreen ? `1px solid ${alpha(theme.palette.divider, 0.08)}` : 'none',
                 backgroundColor: alpha(theme.palette.background.paper, 0.8),
                 backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)'
+                WebkitBackdropFilter: 'blur(20px)',
+                position: 'relative'
             }}
         >
+            {/* Collapse Button */}
+            {onCollapseInput && (
+                <Box sx={{
+                    position: 'absolute',
+                    top: fullScreen ? 8 : 4,
+                    right: fullScreen ? 12 : 8,
+                    zIndex: 1
+                }}>
+                    <Tooltip title="Hide input">
+                        <IconButton
+                            onClick={onCollapseInput}
+                            size="small"
+                            sx={{
+                                color: alpha(theme.palette.text.secondary, 0.6),
+                                '&:hover': {
+                                    color: theme.palette.text.primary,
+                                    backgroundColor: alpha(theme.palette.action.hover, 0.5)
+                                }
+                            }}
+                        >
+                            <KeyboardArrowDown fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
+            )}
+
             {/* Main Input Row */}
             <Box
                 component="form"
@@ -465,11 +493,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                                 }
                             }}
                         >
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                                <MenuItem key={num} value={num} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>
-                                    {num}
-                                </MenuItem>
-                            ))}
+                            <MenuItem value={1} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>1</MenuItem>
+                            <MenuItem value={5} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>5</MenuItem>
+                            <MenuItem value={10} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>10</MenuItem>
+                            <MenuItem value={20} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>20</MenuItem>
+                            <MenuItem value={50} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>50</MenuItem>
+                            <MenuItem value={999} sx={{ fontSize: fullScreen ? '0.75rem' : '0.6875rem' }}>ALL</MenuItem>
                         </Select>
                     </FormControl>
                     <Typography
