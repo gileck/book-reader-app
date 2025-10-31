@@ -458,14 +458,40 @@ export function useSentenceAudioController(
             }
         };
 
+        // Handle audio element errors (especially iOS Safari quirks)
+        const handleError = (event: Event) => {
+            const target = event.target as HTMLAudioElement;
+            const error = target.error;
+            
+            // iOS Safari often fires MEDIA_ERR_ABORTED (code 1) even when playback succeeds
+            // This happens during source changes or autoplay scenarios - filter these out
+            if (error?.code === 1) { // MEDIA_ERR_ABORTED
+                console.debug('iOS Safari audio error (benign):', error.message);
+                return;
+            }
+            
+            // Only report real errors that affect playback
+            // MEDIA_ERR_NETWORK (2), MEDIA_ERR_DECODE (3), MEDIA_ERR_SRC_NOT_SUPPORTED (4)
+            if (error && error.code >= 2) {
+                const errorMessage = error.message || `Media error (code ${error.code})`;
+                const { currentSentenceIndex } = stateRef.current;
+                update({ 
+                    ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex }, 
+                    isPlaying: false 
+                });
+            }
+        };
+
         audio.addEventListener('timeupdate', handleTimeUpdate);
         audio.addEventListener('ended', handleEnded);
+        audio.addEventListener('error', handleError);
 
         return () => {
             audio.removeEventListener('timeupdate', handleTimeUpdate);
             audio.removeEventListener('ended', handleEnded);
+            audio.removeEventListener('error', handleError);
         };
-    }, [sentences.length, goToSentence, play, wordTimingOffset]);
+    }, [sentences.length, goToSentence, play, wordTimingOffset, update]);
 
     // Always clamp currentSentenceIndex to valid bounds before returning
     const clampedCurrentSentenceIndex = Math.max(0, Math.min(sentences.length - 1, state.currentSentenceIndex));
