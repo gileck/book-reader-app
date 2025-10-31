@@ -163,10 +163,13 @@ export function useSentenceAudioController(
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : 'Playback failed';
 
-            // Filter expected browser errors that occur when changing audio source
-            // These are normal and don't indicate a problem with TTS
-            const isExpectedBrowserError = errorMessage.includes('interrupted') ||
-                errorMessage.includes('AbortError');
+            // Filter expected browser errors that occur when changing audio source or autoplay
+            // iOS Safari commonly throws "The operation was aborted" even when playback succeeds
+            const lowerMessage = errorMessage.toLowerCase();
+            const isExpectedBrowserError = 
+                lowerMessage.includes('interrupted') ||
+                lowerMessage.includes('abort') ||  // Catches "aborted", "AbortError", etc.
+                lowerMessage.includes('notallowederror'); // Autoplay policy errors
 
             if (!isExpectedBrowserError) {
                 // Only report unexpected errors to the user
