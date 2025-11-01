@@ -71,7 +71,13 @@ export const ReaderUI = ({
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
-    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview'>('full');
+    
+    // Initialize activeTab with user's saved reading mode preference (default to 'focus' for performance)
+    // URL param takes priority, then saved preference, then default to 'focus'
+    const initialMode = (queryParams.mode as 'focus' | 'full' | 'qa' | 'overview' | undefined) 
+        || appSettings.readingMode 
+        || 'focus';
+    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview'>(initialMode);
 
     // QA Chat state
     const [qaQuestion, setQaQuestion] = useState('');

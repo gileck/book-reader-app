@@ -57,7 +57,7 @@ export const defaultSettings: Settings = {
     theme: 'light',
     offlineMode: false,
     staleWhileRevalidate: false,
-    readingMode: 'full',
+    readingMode: 'focus', // Default to focus mode for better performance
 };
 
 // Default user settings
