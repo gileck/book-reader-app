@@ -43,7 +43,7 @@ export const ReaderUI = ({
     initialChunkIndex
 }: ReaderUIProps) => {
     const { navigate, queryParams } = useRouter();
-    const { settings: appSettings, updateSettings } = useSettings();
+    const { settings: appSettings, updateSettings, userSettings, updateUserSettings } = useSettings();
 
     // Use ReaderState hook with initial data
     const {
@@ -71,11 +71,12 @@ export const ReaderUI = ({
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
-    
-    // Initialize activeTab with user's saved reading mode preference (default to 'focus' for performance)
-    // URL param takes priority, then saved preference, then default to 'focus'
-    const initialMode = (queryParams.mode as 'focus' | 'full' | 'qa' | 'overview' | undefined) 
-        || appSettings.readingMode 
+
+    // Initialize activeTab with user's reading mode from database (already loaded)
+    // Priority: URL param > user settings (database) > app settings (localStorage) > default ('focus')
+    const initialMode = (queryParams.mode as 'focus' | 'full' | 'qa' | 'overview' | undefined)
+        || userSettings?.readingMode
+        || appSettings.readingMode
         || 'focus';
     const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview'>(initialMode);
 
@@ -242,10 +243,19 @@ export const ReaderUI = ({
 
     const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview') => {
         setActiveTab(newTab);
+
         // Update reading mode setting for focus/full tabs
-        if (newTab !== 'qa' && newTab !== 'overview' && newTab !== appSettings.readingMode) {
-            updateSettings({ readingMode: newTab });
+        if (newTab !== 'qa' && newTab !== 'overview') {
+            // Save to user settings (database) for persistence across devices
+            if (newTab !== userSettings?.readingMode) {
+                void updateUserSettings({ readingMode: newTab });
+            }
+            // Also update local app settings for immediate use
+            if (newTab !== appSettings.readingMode) {
+                updateSettings({ readingMode: newTab });
+            }
         }
+
         // Sync URL param
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
@@ -253,7 +263,7 @@ export const ReaderUI = ({
             const path = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
             navigate(path);
         }
-    }, [appSettings.readingMode, updateSettings, navigate]);
+    }, [appSettings.readingMode, userSettings?.readingMode, updateSettings, updateUserSettings, navigate]);
 
     const handleOpenQAChat = useCallback(() => {
         setActiveTab('qa');

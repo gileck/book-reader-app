@@ -18,6 +18,8 @@ export interface UserSettings {
     // Focus mode preferences
     wordHighlightingEnabled?: boolean; // legacy toggle
     highlightMode?: 'word' | 'line' | 'off';
+    // Reading mode preference
+    readingMode?: 'focus' | 'full';
     // Per-mode color storage
     highlightColorLight?: string;
     highlightColorDark?: string;
@@ -67,6 +69,9 @@ export interface UpdateUserSettingsPayload {
     // Focus Mode
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
+
+    // Reading Mode Preference
+    readingMode?: 'focus' | 'full';
 
     // Reading Preferences
     autoAdvance?: boolean;

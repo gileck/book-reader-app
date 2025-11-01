@@ -28,6 +28,9 @@ export interface UserSettings {
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
 
+    // Reading Mode Preference
+    readingMode?: 'focus' | 'full';
+
     // Reading Preferences
     autoAdvance: boolean;
     chunkSize: number;
@@ -66,6 +69,7 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     textColorDark: '#ffffff',
     wordHighlightingEnabled: true,
     highlightMode: 'word',
+    readingMode: 'focus', // Default to focus for better performance
     autoAdvance: true,
     chunkSize: 10
 }; 

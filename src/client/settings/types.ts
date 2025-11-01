@@ -33,6 +33,8 @@ export interface UserSettings {
     // Focus mode preferences
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
+    // Reading mode preference (focus vs full)
+    readingMode?: 'focus' | 'full';
 }
 
 // Define the settings context type
@@ -81,5 +83,6 @@ export const defaultUserSettings: UserSettings = {
     textColorLight: '#000000',
     textColorDark: '#ffffff',
     wordHighlightingEnabled: true,
-    highlightMode: 'word'
+    highlightMode: 'word',
+    readingMode: 'focus' // Default to focus for better performance
 }; 
