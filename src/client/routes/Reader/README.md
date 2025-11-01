@@ -453,6 +453,199 @@ graph TB
     L --> B
 ```
 
+## TTS Caching with IndexedDB
+
+### Overview
+
+The Reader implements **transparent TTS caching** using IndexedDB to provide instant audio playback when users return to the app. The last 10 TTS responses are cached using a FIFO (First In, First Out) eviction strategy.
+
+### Architecture
+
+```
+useSentenceAudioController
+         ↓
+generateTtsWithCache() (Transparent wrapper)
+         ↓
+    ┌────┴────┐
+    ↓         ↓
+IndexedDB   TTS API
+(instant)   (200-500ms)
+```
+
+**Key Files:**
+- `src/client/tts/ttsCache.ts` - Transparent caching wrapper
+- `src/client/offline/offlineDB.ts` - Business logic layer
+- `src/client/offline/indexedDBManager.ts` - Generic database manager
+
+### How It Works
+
+1. **Audio Controller calls `generateTtsWithCache()`** instead of direct API
+2. **Check IndexedDB cache first** (instant lookup)
+3. **On cache hit**: Return audio immediately (0ms delay)
+4. **On cache miss**: Call TTS API, save response to cache
+5. **Auto-eviction**: When 11th entry added, oldest is automatically deleted
+
+### Implementation Details
+
+**Cache Key Generation:**
+```typescript
+const cacheKey = hash(text + voiceId + provider);
+```
+
+**Cache Record Structure:**
+```typescript
+interface TtsCacheRecord {
+    cacheKey: string;              // hash(text + voiceId + provider)
+    audioContent: string;          // base64 audio
+    timepoints: TTSTimepoint[];    // word timing data
+    createdAt: number;             // for FIFO ordering
+}
+```
+
+**Wrapper Function (in `ttsCache.ts`):**
+```typescript
+export async function generateTtsWithCache(
+    payload: GenerateTtsPayload
+): Promise<CacheResult<GenerateTtsResponse>> {
+    // 1. Try IndexedDB cache
+    const cached = await offlineDB.getTtsCache(cacheKey);
+    if (cached) {
+        return { data: { ...cached, isFromCache: true }, isFromCache: true };
+    }
+    
+    // 2. Call API on cache miss
+    const result = await generateTts(payload);
+    
+    // 3. Save to cache (fire-and-forget)
+    if (result.data?.success) {
+        void offlineDB.putTtsCache({ cacheKey, ...result.data });
+    }
+    
+    return result;
+}
+```
+
+### Preloading and Caching
+
+The audio controller automatically preloads the current + next 3 sentences, and **all preloaded audio is automatically cached**:
+
+```typescript
+// On initial load
+loadSentence(currentIndex);      // Cached
+loadSentence(currentIndex + 1);   // Cached
+loadSentence(currentIndex + 2);   // Cached
+loadSentence(currentIndex + 3);   // Cached
+
+// On page refresh
+loadSentence(currentIndex);       // Cache hit! (instant)
+```
+
+### Cache Management
+
+Users can monitor and clear the cache in **Settings**:
+
+**Stats Displayed:**
+- Number of cached files (e.g., "7 of 10")
+- Total cache size in MB (e.g., "0.5 MB")
+
+**Actions:**
+- "Clear Audio Cache" button
+- Auto-refresh stats after clearing
+
+**Implementation:**
+```typescript
+// Get cache statistics
+const stats = await offlineDB.getTtsCacheStats();
+console.log(`${stats.count} files, ${stats.sizeBytes} bytes`);
+
+// Clear cache
+await offlineDB.clearTtsCache();
+```
+
+### Performance Benefits
+
+**Before Caching:**
+- Every sentence load: 200-500ms API call
+- 4 preloaded sentences: 800-2000ms total
+- Page refresh: All sentences reload from API
+
+**After Caching:**
+- Cached sentence: 0ms (instant)
+- Cache miss: 200-500ms (same as before)
+- Page refresh with cache: 0ms for recent sentences ✨
+
+**Typical User Experience:**
+```
+Day 1, First Visit:
+  Sentence 1: 300ms (cache miss) → Cached
+  Sentence 2: 250ms (cache miss) → Cached
+  Sentence 3: 280ms (cache miss) → Cached
+  
+Day 1, Page Refresh:
+  Sentence 1: 0ms (cache hit) ✨
+  Sentence 2: 0ms (cache hit) ✨
+  Sentence 3: 0ms (cache hit) ✨
+```
+
+### Error Handling
+
+The caching wrapper implements **graceful degradation**:
+
+```typescript
+try {
+    const cached = await offlineDB.getTtsCache(key);
+    if (cached) return cached;
+} catch (err) {
+    console.error('Cache failed, continuing without it');
+    // Falls through to API call
+}
+```
+
+**Failure modes:**
+- IndexedDB unavailable (private browsing): Falls back to API
+- Quota exceeded: Falls back to API
+- Cache read error: Falls back to API
+
+**Audio playback never breaks** due to cache failures.
+
+### Generic IndexedDB API
+
+The TTS cache uses the app's **generic IndexedDB manager** for all database operations. This provides a consistent, type-safe API that can be reused for other features.
+
+**See:** [IndexedDB API Documentation](../../../docs/indexeddb-api.md) for complete details.
+
+**Example usage:**
+```typescript
+// Generic operations
+await dbManager.get('tts-cache', cacheKey);
+await dbManager.put('tts-cache', record);
+await dbManager.getAll('tts-cache');
+await dbManager.clear('tts-cache');
+
+// Business logic wrapper
+await offlineDB.getTtsCache(cacheKey);
+await offlineDB.putTtsCache(record);
+await offlineDB.getTtsCacheStats();
+await offlineDB.clearTtsCache();
+```
+
+### Troubleshooting
+
+**Cache not working:**
+1. Check DevTools → Application → IndexedDB → `offline-reader-db`
+2. Look for `tts-cache` store
+3. Verify records exist with correct structure
+
+**Cache not clearing:**
+1. Check Settings UI shows correct stats
+2. Try manual clear: `indexedDB.deleteDatabase('offline-reader-db')`
+3. Reload page to recreate database
+
+**Audio still slow:**
+1. Check console for "TTS cache hit" messages
+2. Verify cache key generation (same text/voice/provider = same key)
+3. Check if cache was cleared (only last 10 entries kept)
+
 ## Highlighting Systems
 
 ### Two Independent Systems

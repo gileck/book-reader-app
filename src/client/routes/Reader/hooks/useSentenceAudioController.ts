@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChapterClient, TextChunkClient } from '../../../../../src/apis/chapters/types';
-import { generateTts } from '../../../../../src/apis/tts/client';
+import { generateTtsWithCache as generateTts } from '../../../tts/ttsCache';
 import type { TtsProvider } from '../../../../../src/common/tts/ttsUtils';
 import { WordHighlightingAPI } from '../utils/WordHighlightingAPI';
 

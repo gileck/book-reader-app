@@ -10,6 +10,12 @@
   - Performance optimization opportunities
   - Troubleshooting guide
 
+- **[IndexedDB API](./indexeddb-api.md)** - Generic IndexedDB manager for client-side storage
+  - Generic CRUD operations
+  - Store configuration
+  - Usage examples (TTS cache, offline reading)
+  - Adding new stores
+
 ### Settings System
 - **[Settings Architecture](../src/client/settings/README.md)** - Centralized settings management
   - App settings (localStorage) vs User settings (database)
@@ -21,7 +27,7 @@
 - **[Reader Component](../src/client/routes/Reader/README.md)** - Book reader implementation
   - Audio error handling
   - Voice change detection
-  - TTS integration
+  - TTS integration with IndexedDB caching
   - Bug fixes and known issues
 
 ## 🚀 Quick Start
@@ -86,6 +92,8 @@ if (!userSettingsLoaded) {
 | Audio errors | [Reader Component](../src/client/routes/Reader/README.md) |
 | Settings not persisting | [Settings Architecture](../src/client/settings/README.md) → Troubleshooting |
 | "useAuth must be used within AuthProvider" | [Application Loading Flow](./APP_LOADING_FLOW.md) → Provider Hierarchy |
+| Adding client-side storage | [IndexedDB API](./indexeddb-api.md) |
+| TTS audio not caching | [IndexedDB API](./indexeddb-api.md) + [Reader Component](../src/client/routes/Reader/README.md) |
 
 ## 📊 Flow Diagrams
 
@@ -119,7 +127,27 @@ Both Complete?
     Yes ↓                    No → Show Loading
 ReaderUI Renders
     ↓
-TTS Preloads (uses correct voice) ✓
+TTS Preloads
+    ├─ Check IndexedDB Cache (instant)
+    ├─ On cache miss: API call (~200-500ms)
+    └─ Save to IndexedDB (background) ✓
+```
+
+### TTS Caching Flow (NEW)
+
+```
+User Plays Audio
+    ↓
+generateTtsWithCache()
+    ↓
+Check IndexedDB Cache
+    ├─ Cache Hit → Return Audio (instant) ✓
+    └─ Cache Miss ↓
+         Call TTS API (~200-500ms)
+              ↓
+         Save to IndexedDB (FIFO, limit 10)
+              ↓
+         Return Audio ✓
 ```
 
 ## 🔧 Development Guidelines

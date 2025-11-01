@@ -1,5 +1,9 @@
 ## Offline Reading Mode (Per-Chapter) — Feature Plan
 
+> **Note:** This app now uses a **generic IndexedDB manager** (`indexedDBManager.ts`) that provides
+> type-safe CRUD operations for all IndexedDB stores. The implementation described below should
+> use this generic API. See [IndexedDB API Documentation](../docs/indexeddb-api.md) for details.
+
 ### Goal
 Enable users to download and read individual chapters offline (no TTS) while ensuring the app reliably loads and functions without network connectivity.
 
@@ -13,13 +17,20 @@ Enable users to download and read individual chapters offline (no TTS) while ens
 - Reader route:
   - If chapter is downloaded or device is offline → load from local storage immediately.
   - If online and not downloaded → fetch via network; fallback to local copy if available.
-  - Show a small “Offline” badge when rendering a local copy; “Update available” when server version is newer.
+  - Show a small "Offline" badge when rendering a local copy; "Update available" when server version is newer.
 - Global setting: total storage usage, clear all downloads.
 
 ### Architecture Overview
 **Storage choice**
-- Use IndexedDB for chapter content and metadata.
+- Use IndexedDB for chapter content and metadata (**Generic manager already implemented**).
 - Use Service Worker Cache Storage for assets (images/fonts/css) and app shell resources.
+
+**Generic IndexedDB Manager (Already Implemented)**
+- All IndexedDB operations use the generic `indexedDBManager.ts` API
+- Store configuration is centralized in `offlineDB.ts`
+- Business logic separated from database operations
+- Type-safe CRUD operations for all stores
+- See [IndexedDB API docs](../docs/indexeddb-api.md) for usage examples
 
 **Service Worker (Workbox recommended)**
 - Precache app shell (HTML, JS bundles, CSS, fonts, icons) so the app opens offline.

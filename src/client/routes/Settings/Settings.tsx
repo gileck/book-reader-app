@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Container,
@@ -15,12 +15,14 @@ import {
   CircularProgress,
   TextField,
   FormControlLabel,
-  Switch
+  Switch,
+  Box
 } from '@mui/material';
 import { getAllModels } from '@/server/ai';
 import { AIModelDefinition } from '@/server/ai/models';
 import { useSettings } from '@/client/settings/SettingsContext';
 import { localStorageCacheProvider } from '@/client/utils/localStorageCache';
+import { offlineDB } from '@/client/offline/offlineDB';
 
 interface SnackbarState {
   open: boolean;
@@ -32,11 +34,27 @@ export function Settings() {
   const { settings, updateSettings, clearCache } = useSettings();
   const [models] = useState<AIModelDefinition[]>(getAllModels());
   const [isClearing, setIsClearing] = useState(false);
+  const [isClearingTtsCache, setIsClearingTtsCache] = useState(false);
+  const [ttsCacheStats, setTtsCacheStats] = useState<{ count: number; sizeBytes: number }>({ count: 0, sizeBytes: 0 });
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     open: false,
     message: '',
     severity: 'info'
   });
+
+  // Load TTS cache stats on mount and when clearing
+  useEffect(() => {
+    loadTtsCacheStats();
+  }, []);
+
+  const loadTtsCacheStats = async () => {
+    try {
+      const stats = await offlineDB.getTtsCacheStats();
+      setTtsCacheStats(stats);
+    } catch (error) {
+      console.error('Failed to load TTS cache stats:', error);
+    }
+  };
 
   const handleModelChange = (event: SelectChangeEvent) => {
     updateSettings({ aiModel: event.target.value });
@@ -92,6 +110,27 @@ export function Settings() {
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const handleClearTtsCache = async () => {
+    setIsClearingTtsCache(true);
+    try {
+      await offlineDB.clearTtsCache();
+      await loadTtsCacheStats(); // Refresh stats
+      setSnackbar({
+        open: true,
+        message: 'Audio cache cleared successfully',
+        severity: 'success'
+      });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: error instanceof Error ? error.message : 'Failed to clear audio cache',
+        severity: 'error'
+      });
+    } finally {
+      setIsClearingTtsCache(false);
+    }
+  };
+
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -113,6 +152,32 @@ export function Settings() {
           startIcon={isClearing ? <CircularProgress size={20} color="inherit" /> : null}
         >
           {isClearing ? 'Clearing...' : 'Clear Cache'}
+        </Button>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h6" gutterBottom>
+          Audio Cache (TTS)
+        </Typography>
+        <Typography variant="body2" color="text.secondary" paragraph>
+          Cached audio files for faster playback. The app stores the last 10 text-to-speech audio files to provide instant playback when you return.
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary">
+            <strong>Cached Files:</strong> {ttsCacheStats.count} of 10
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <strong>Cache Size:</strong> {(ttsCacheStats.sizeBytes / (1024 * 1024)).toFixed(2)} MB
+          </Typography>
+        </Box>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={handleClearTtsCache}
+          disabled={isClearingTtsCache || ttsCacheStats.count === 0}
+          startIcon={isClearingTtsCache ? <CircularProgress size={20} color="inherit" /> : null}
+        >
+          {isClearingTtsCache ? 'Clearing...' : 'Clear Audio Cache'}
         </Button>
 
         <Divider sx={{ my: 3 }} />

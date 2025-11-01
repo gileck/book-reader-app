@@ -469,16 +469,18 @@ This is the most complex loading sequence in the app:
 └───────────────┬─────────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────────────────────────┐
-│ Stage 5: TTS Preloading (Background)                    │
-│   - Current sentence TTS generated                      │
-│   - Next 2-3 sentences preloaded                        │
+│ Stage 5: TTS Preloading (Background with IndexedDB Cache) │
+│   - Check IndexedDB cache first (instant)               │
+│   - Current sentence TTS generated (cache miss = API)   │
+│   - Next 2-3 sentences preloaded (with caching)         │
 │   - Uses userSettings.selectedVoice (MUST be loaded!)   │
+│   - All responses saved to IndexedDB (FIFO, limit 5)    │
 └───────────────┬─────────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────────────────────────┐
 │ Stage 6: Interactive UI Ready                           │
 │   - User can scroll, highlight, navigate               │
-│   - Audio can be played                                 │
+│   - Audio can be played (instant if cached)            │
 │   - Settings can be changed                             │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -659,6 +661,34 @@ Already implemented - service worker caches:
 - Static assets (JS, CSS)
 - API responses (with cache-first strategy)
 - Chapter content for offline reading
+
+#### 4. IndexedDB TTS Caching (Implemented)
+
+**Status:** ✅ Fully implemented
+
+The app now caches TTS audio responses in IndexedDB for instant playback:
+
+```typescript
+// Transparent caching wrapper
+await generateTtsWithCache(payload);
+  ↓
+Check IndexedDB → Cache hit? (instant) : API call → Save to cache
+```
+
+**Benefits:**
+- **Instant audio playback** for recently played sentences (0ms vs 200-500ms)
+- **Reduced API costs** (fewer TTS API calls)
+- **Better UX** on page refresh (immediate audio availability)
+- **Automatic cache warming** via preloading
+
+**Implementation:**
+- Last 10 TTS responses cached (FIFO eviction)
+- Cache key: `hash(text + voiceId + provider)`
+- Transparent wrapper: `src/client/tts/ttsCache.ts`
+- Generic IndexedDB manager: `src/client/offline/indexedDBManager.ts`
+- Settings UI for monitoring/clearing cache
+
+**See:** [IndexedDB API Documentation](./indexeddb-api.md) for complete details.
 
 ### Measured Timings (Typical)
 

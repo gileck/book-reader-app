@@ -1,5 +1,8 @@
-// Lightweight IndexedDB wrapper for offline chapters/books
-// We avoid external deps; simple versioning and typed helpers.
+// Business logic layer for offline reading and TTS cache
+// Uses the generic IndexedDB manager for data operations
+
+import type { TTSTimepoint } from '../../apis/tts/types';
+import { createIndexedDBManager, IndexedDBManager } from './indexedDBManager';
 
 export interface OfflineChapterRecord {
     chapterId: string;
@@ -19,57 +22,68 @@ export interface OfflineBookRecord {
     downloadedChapterIds: string[];
 }
 
-const DB_NAME = 'offline-reader-db';
-const DB_VERSION = 1;
+export interface TtsCacheRecord {
+    cacheKey: string;              // hash(text + voiceId + provider)
+    audioContent: string;          // base64 audio
+    timepoints: TTSTimepoint[];    // word timing data
+    createdAt: number;             // timestamp for FIFO ordering
+}
+
+// Store names
 const STORE_CHAPTERS = 'chapters';
 const STORE_BOOKS = 'books';
+const STORE_TTS_CACHE = 'tts-cache';
+const TTS_CACHE_LIMIT = 10;
 
-function openDB(): Promise<IDBDatabase> {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onupgradeneeded = () => {
-            const db = request.result;
-            if (!db.objectStoreNames.contains(STORE_CHAPTERS)) {
-                const store = db.createObjectStore(STORE_CHAPTERS, { keyPath: 'chapterId' });
-                store.createIndex('byBook', 'bookId', { unique: false });
-            }
-            if (!db.objectStoreNames.contains(STORE_BOOKS)) {
-                db.createObjectStore(STORE_BOOKS, { keyPath: 'bookId' });
-            }
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
+// Create the IndexedDB manager
+const dbManager: IndexedDBManager = createIndexedDBManager({
+    dbName: 'offline-reader-db',
+    version: 2,
+    stores: [
+        {
+            name: STORE_CHAPTERS,
+            keyPath: 'chapterId',
+            indexes: [
+                { name: 'byBook', keyPath: 'bookId', unique: false }
+            ]
+        },
+        {
+            name: STORE_BOOKS,
+            keyPath: 'bookId'
+        },
+        {
+            name: STORE_TTS_CACHE,
+            keyPath: 'cacheKey'
+        }
+    ]
+});
 
-async function withStore<T>(storeName: string, mode: IDBTransactionMode, fn: (store: IDBObjectStore) => Promise<T> | T): Promise<T> {
-    const db = await openDB();
-    return new Promise<T>((resolve, reject) => {
-        const tx = db.transaction(storeName, mode);
-        const store = tx.objectStore(storeName);
-        Promise.resolve(fn(store))
-            .then((result) => {
-                tx.oncomplete = () => resolve(result);
-                tx.onerror = () => reject(tx.error);
-                tx.onabort = () => reject(tx.error);
-            })
-            .catch(reject);
-    });
-}
-
+/**
+ * Offline database API with business logic
+ * Wraps the generic IndexedDB manager with type-safe, domain-specific operations
+ */
 export const offlineDB = {
+    // ========================================
+    // Chapter Operations
+    // ========================================
+    
     async putChapter(record: OfflineChapterRecord): Promise<void> {
-        await withStore<void>(STORE_CHAPTERS, 'readwrite', (store) => {
-            store.put(record);
-            return Promise.resolve();
-        });
+        await dbManager.put(STORE_CHAPTERS, record);
+        
         // Also update the book entry
-        await withStore<void>(STORE_BOOKS, 'readwrite', async (store) => {
+        await dbManager.transaction<void>(STORE_BOOKS, 'readwrite', async (store) => {
             const getReq = store.get(record.bookId);
             const book: OfflineBookRecord = await new Promise((resolve) => {
-                getReq.onsuccess = () => resolve(getReq.result || { bookId: record.bookId, downloadedChapterIds: [] });
-                getReq.onerror = () => resolve({ bookId: record.bookId, downloadedChapterIds: [] });
+                getReq.onsuccess = () => resolve(getReq.result || { 
+                    bookId: record.bookId, 
+                    downloadedChapterIds: [] 
+                });
+                getReq.onerror = () => resolve({ 
+                    bookId: record.bookId, 
+                    downloadedChapterIds: [] 
+                });
             });
+            
             if (!book.downloadedChapterIds.includes(record.chapterId)) {
                 book.downloadedChapterIds.push(record.chapterId);
             }
@@ -79,55 +93,48 @@ export const offlineDB = {
     },
 
     async getChapter(chapterId: string): Promise<OfflineChapterRecord | undefined> {
-        return withStore<OfflineChapterRecord | undefined>(STORE_CHAPTERS, 'readonly', (store) => {
-            const req = store.get(chapterId);
-            return new Promise((resolve) => {
-                req.onsuccess = () => resolve(req.result || undefined);
-                req.onerror = () => resolve(undefined);
-            });
-        });
+        return dbManager.get<OfflineChapterRecord>(STORE_CHAPTERS, chapterId);
     },
 
-    async getChapterByBookAndNumber(bookId: string, chapterNumber: number): Promise<OfflineChapterRecord | undefined> {
-        return withStore<OfflineChapterRecord | undefined>(STORE_CHAPTERS, 'readonly', (store) => {
-            const req = store.index('byBook').getAll(bookId);
-            return new Promise((resolve) => {
-                req.onsuccess = () => {
-                    const list = (req.result as OfflineChapterRecord[]) || [];
-                    resolve(list.find((r) => r.chapterNumber === chapterNumber));
-                };
-                req.onerror = () => resolve(undefined);
-            });
-        });
+    async getChapterByBookAndNumber(
+        bookId: string, 
+        chapterNumber: number
+    ): Promise<OfflineChapterRecord | undefined> {
+        const chapters = await dbManager.getByIndex<OfflineChapterRecord>(
+            STORE_CHAPTERS,
+            'byBook',
+            bookId
+        );
+        return chapters.find((r) => r.chapterNumber === chapterNumber);
     },
 
     async deleteChapter(bookId: string, chapterId: string): Promise<void> {
-        await withStore<void>(STORE_CHAPTERS, 'readwrite', (store) => {
-            store.delete(chapterId);
-            return Promise.resolve();
-        });
-        await withStore<void>(STORE_BOOKS, 'readwrite', async (store) => {
+        await dbManager.delete(STORE_CHAPTERS, chapterId);
+        
+        // Update the book entry
+        await dbManager.transaction<void>(STORE_BOOKS, 'readwrite', async (store) => {
             const getReq = store.get(bookId);
             const book: OfflineBookRecord | undefined = await new Promise((resolve) => {
                 getReq.onsuccess = () => resolve(getReq.result || undefined);
                 getReq.onerror = () => resolve(undefined);
             });
+            
             if (book) {
-                book.downloadedChapterIds = book.downloadedChapterIds.filter((id) => id !== chapterId);
+                book.downloadedChapterIds = book.downloadedChapterIds.filter(
+                    (id) => id !== chapterId
+                );
                 store.put(book);
             }
             return Promise.resolve();
         });
     },
 
+    // ========================================
+    // Book Operations
+    // ========================================
+
     async getBook(bookId: string): Promise<OfflineBookRecord | undefined> {
-        return withStore<OfflineBookRecord | undefined>(STORE_BOOKS, 'readonly', (store) => {
-            const req = store.get(bookId);
-            return new Promise((resolve) => {
-                req.onsuccess = () => resolve(req.result || undefined);
-                req.onerror = () => resolve(undefined);
-            });
-        });
+        return dbManager.get<OfflineBookRecord>(STORE_BOOKS, bookId);
     },
 
     async listDownloadedChapters(bookId: string): Promise<string[]> {
@@ -136,15 +143,52 @@ export const offlineDB = {
     },
 
     async clearAll(): Promise<void> {
-        await withStore<void>(STORE_CHAPTERS, 'readwrite', (store) => {
-            store.clear();
+        await dbManager.clear(STORE_CHAPTERS);
+        await dbManager.clear(STORE_BOOKS);
+    },
+
+    // ========================================
+    // TTS Cache Operations
+    // ========================================
+
+    async getTtsCache(cacheKey: string): Promise<TtsCacheRecord | undefined> {
+        return dbManager.get<TtsCacheRecord>(STORE_TTS_CACHE, cacheKey);
+    },
+
+    async putTtsCache(record: TtsCacheRecord): Promise<void> {
+        await dbManager.transaction<void>(STORE_TTS_CACHE, 'readwrite', async (store) => {
+            // Put the new record
+            store.put(record);
+
+            // Get all entries to check count
+            const getAllReq = store.getAll();
+            const allEntries: TtsCacheRecord[] = await new Promise((resolve) => {
+                getAllReq.onsuccess = () => resolve(getAllReq.result || []);
+                getAllReq.onerror = () => resolve([]);
+            });
+
+            // If we have more than the limit, delete the oldest
+            if (allEntries.length > TTS_CACHE_LIMIT) {
+                // Sort by createdAt (oldest first)
+                const sorted = allEntries.sort((a, b) => a.createdAt - b.createdAt);
+                // Delete excess entries
+                const toDelete = sorted.slice(0, allEntries.length - TTS_CACHE_LIMIT);
+                toDelete.forEach(entry => store.delete(entry.cacheKey));
+            }
+
             return Promise.resolve();
         });
-        await withStore<void>(STORE_BOOKS, 'readwrite', (store) => {
-            store.clear();
-            return Promise.resolve();
-        });
+    },
+
+    async getTtsCacheStats(): Promise<{ count: number; sizeBytes: number }> {
+        const entries = await dbManager.getAll<TtsCacheRecord>(STORE_TTS_CACHE);
+        const count = entries.length;
+        // Estimate size by stringifying all entries
+        const sizeBytes = JSON.stringify(entries).length;
+        return { count, sizeBytes };
+    },
+
+    async clearTtsCache(): Promise<void> {
+        await dbManager.clear(STORE_TTS_CACHE);
     }
 };
-
-
