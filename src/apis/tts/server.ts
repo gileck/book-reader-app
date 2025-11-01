@@ -12,7 +12,7 @@ import {
     setTtsProvider,
     getCurrentTtsProvider
 } from '../../server/tts/ttsService';
-import { addTtsErrorRecord } from '../../server/tts-usage-monitoring';
+import { addTtsErrorRecord, addTtsUsageRecord } from '../../server/tts-usage-monitoring';
 import type {
     GenerateTtsPayload,
     GenerateTtsResponse,
@@ -152,6 +152,25 @@ export async function generateTts(payload: GenerateTtsPayload): Promise<Generate
 
         const cached = await readCache<{ audioContent: string; timepoints: TTSTimepoint[] }>(cacheKey, SEVEN_DAYS_MS);
         if (cached?.data?.audioContent && cached?.data?.timepoints) {
+            // Track cache hit (cost is 0 for cached responses)
+            const currentProvider = (provider || getCurrentTtsProvider()) as 'google' | 'polly' | 'elevenlabs';
+            const audioLength = cached.data.timepoints.length > 0
+                ? cached.data.timepoints[cached.data.timepoints.length - 1].timeSeconds
+                : 0;
+
+            // Track usage with fromCache=true and cost=0
+            addTtsUsageRecord(
+                currentProvider,
+                voiceId,
+                text.length,
+                audioLength,
+                0, // cost is 0 for cache hits
+                'tts-api',
+                undefined, // voiceType will be inferred
+                undefined, // userId
+                true // fromCache
+            ).catch(err => console.error('Error tracking TTS cache hit:', err));
+
             return {
                 isFromCache: true,
                 success: true,

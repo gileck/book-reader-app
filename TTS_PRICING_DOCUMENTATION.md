@@ -149,8 +149,19 @@ private calculateCost(textLength: number, audioLength: number): number {
 
 All adapters track usage with accurate character counts:
 ```javascript
-addTtsUsageRecord(provider, voiceId, billableCharCount, audioLength, cost, 'tts-api', voiceTier)
+addTtsUsageRecord(provider, voiceId, billableCharCount, audioLength, cost, 'tts-api', voiceTier, userId, fromCache)
 ```
+
+**Cache Tracking**: The application tracks whether each TTS request was served from cache or required a fresh API call:
+- `fromCache: true` - Response served from S3 cache (no API cost)
+- `fromCache: false` - Fresh API call (billed normally)
+- `fromCache: undefined` - Old records before cache tracking was implemented
+
+This enables the TTS Usage Dashboard to display:
+- Cache hit ratio (percentage of requests served from cache)
+- Cost savings from caching (estimated based on average cost per character)
+- Breakdown of cached vs. fresh requests per provider
+- Daily and weekly cache performance trends
 
 ## Free Tier Monitoring
 
@@ -179,6 +190,7 @@ The application includes free tier usage tracking in the TTS Usage Dashboard:
 4. **Monthly resets** - Free tier usage resets at the beginning of each month
 5. **Cost estimates** - All pricing is approximate and based on current published rates
 6. **ElevenLabs credits** - Uses credit-based system where 1 character = 0.5 credits
+7. **Cache tracking** - S3 cache responses are tracked separately with zero cost, enabling accurate cost savings calculations
 
 ## References
 

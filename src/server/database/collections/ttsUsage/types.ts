@@ -12,6 +12,7 @@ export interface TtsUsageRecord {
     cost: number;
     endpoint: string;
     userId?: string;
+    fromCache?: boolean; // Whether this request was served from cache (undefined for old records)
     createdAt: Date;
     updatedAt: Date;
 }

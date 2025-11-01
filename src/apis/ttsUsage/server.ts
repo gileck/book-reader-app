@@ -32,7 +32,8 @@ export async function getTtsUsageRecordsHandler(params?: TtsRecordsParams): Prom
       textLength: record.textLength,
       audioLength: record.audioLength,
       cost: record.cost,
-      endpoint: record.endpoint
+      endpoint: record.endpoint,
+      fromCache: record.fromCache
     }));
 
     return {

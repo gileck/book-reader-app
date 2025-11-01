@@ -8,6 +8,7 @@ export interface TtsUsageRecord {
   audioLength: number;
   cost: number;
   endpoint: string;
+  fromCache?: boolean; // undefined for old records, true/false for new records
 }
 
 export interface TtsErrorRecord {
@@ -28,11 +29,18 @@ export interface TtsUsageSummary {
   totalCalls: number;
   totalTextLength: number;
   totalAudioLength: number;
+  // Cache statistics
+  totalCacheHits: number;
+  totalCacheMisses: number;
+  cacheHitRatio: number; // Percentage (0-100)
+  costSavingsFromCache: number; // Cost that would have been incurred without cache
   usageByProvider: Record<string, {
     totalCost: number;
     totalCalls: number;
     totalTextLength: number;
     totalAudioLength: number;
+    cacheHits: number;
+    cacheMisses: number;
     usageByVoiceType: Record<string, {
       totalCost: number;
       totalCalls: number;
@@ -43,6 +51,8 @@ export interface TtsUsageSummary {
   usageByDay: Record<string, {
     totalCost: number;
     totalCalls: number;
+    cacheHits: number;
+    cacheMisses: number;
   }>;
   // Aggregated usage just for the current calendar month, used for Free Tier display/calculation
   freeTierMonthUsage: FreeTierMonthUsage;
@@ -86,7 +96,7 @@ export interface GetTtsErrorRecordsResponse {
   success: boolean;
   records?: TtsErrorRecord[];
   error?: string;
-} 
+}
 
 // Request params
 export type TtsRangeDays = 30 | 60 | 90;

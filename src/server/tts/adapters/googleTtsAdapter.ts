@@ -9,7 +9,7 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
 
     private getClient() {
         if (this.client) return this.client;
-        
+
         try {
             const keyBase64 = process.env.GOOGLE_APPLICATION_CREDENTIALS;
             if (!keyBase64) {
@@ -69,14 +69,14 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
 
             // Track usage async (don't await)
             const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
-            
+
             // Google billing counts all characters in SSML except <mark> tags
             // Remove all <mark> tags from SSML for accurate billing count
             const billableText = ssmlText.replace(/<mark[^>]*\/>/g, '');
             const billableCharCount = billableText.length;
-            
+
             const cost = this.calculateCost(billableCharCount, audioLength, config.voiceTier || 'standard');
-            addTtsUsageRecord('google', config.voiceId, billableCharCount, audioLength, cost, 'tts-api', config.voiceTier)
+            addTtsUsageRecord('google', config.voiceId, billableCharCount, audioLength, cost, 'tts-api', config.voiceTier, undefined, false)
                 .catch(error => console.error('Error tracking TTS usage:', error));
 
             return result;

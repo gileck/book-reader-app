@@ -29,7 +29,8 @@ export const addTtsUsageRecord = async (
   cost: number,
   endpoint: string = 'unknown',
   voiceType?: 'standard' | 'neural' | 'long-form' | 'generative',
-  userId?: string
+  userId?: string,
+  fromCache?: boolean
 ): Promise<ttsUsage.TtsUsageRecord> => {
   try {
     const recordData: ttsUsage.TtsUsageRecordCreate = {
@@ -42,11 +43,12 @@ export const addTtsUsageRecord = async (
       audioLength,
       cost,
       endpoint,
-      userId
+      userId,
+      fromCache
     };
 
     const record = await ttsUsage.createTtsUsageRecord(recordData);
-    console.log(`TTS usage record saved: ${record.id}`);
+    console.log(`TTS usage record saved: ${record.id} (fromCache: ${fromCache ?? 'undefined'})`);
     return record;
   } catch (error) {
     console.error('Error saving TTS usage record:', error);
@@ -168,6 +170,10 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     totalCalls: 0,
     totalTextLength: 0,
     totalAudioLength: 0,
+    totalCacheHits: 0,
+    totalCacheMisses: 0,
+    cacheHitRatio: 0,
+    costSavingsFromCache: 0,
     usageByProvider: {},
     usageByDay: {},
     freeTierMonthUsage: { polly: { standard: 0, neural: 0, longform: 0 }, google: { standard: 0, neural2: 0 }, elevenlabs: { total: 0 } }
@@ -179,12 +185,22 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     summary.totalTextLength += record.textLength;
     summary.totalAudioLength += record.audioLength;
 
+    // Track cache hits/misses - ONLY for records with explicit fromCache value
+    if (record.fromCache === true) {
+      summary.totalCacheHits += 1;
+    } else if (record.fromCache === false) {
+      summary.totalCacheMisses += 1;
+    }
+    // If fromCache is undefined, don't count it in cache statistics
+
     if (!summary.usageByProvider[record.provider]) {
       summary.usageByProvider[record.provider] = {
         totalCost: 0,
         totalCalls: 0,
         totalTextLength: 0,
         totalAudioLength: 0,
+        cacheHits: 0,
+        cacheMisses: 0,
         usageByVoiceType: {}
       };
     }
@@ -193,6 +209,13 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     providerStats.totalCalls += 1;
     providerStats.totalTextLength += record.textLength;
     providerStats.totalAudioLength += record.audioLength;
+
+    // Only count cache stats for records with explicit fromCache value
+    if (record.fromCache === true) {
+      providerStats.cacheHits += 1;
+    } else if (record.fromCache === false) {
+      providerStats.cacheMisses += 1;
+    }
 
     // Track usage by voice type within provider
     if (!providerStats.usageByVoiceType[record.voiceType]) {
@@ -213,12 +236,43 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     if (!summary.usageByDay[day]) {
       summary.usageByDay[day] = {
         totalCost: 0,
-        totalCalls: 0
+        totalCalls: 0,
+        cacheHits: 0,
+        cacheMisses: 0
       };
     }
     summary.usageByDay[day].totalCost += record.cost;
     summary.usageByDay[day].totalCalls += 1;
+
+    // Only count cache stats for records with explicit fromCache value
+    if (record.fromCache === true) {
+      summary.usageByDay[day].cacheHits += 1;
+    } else if (record.fromCache === false) {
+      summary.usageByDay[day].cacheMisses += 1;
+    }
   });
+
+  // Calculate cache hit ratio - ONLY from records with explicit fromCache values
+  const recordsWithCacheInfo = summary.totalCacheHits + summary.totalCacheMisses;
+  if (recordsWithCacheInfo > 0) {
+    summary.cacheHitRatio = (summary.totalCacheHits / recordsWithCacheInfo) * 100;
+  }
+
+  // Calculate cost savings from cache by looking at cached records and estimating their cost
+  // We use the average cost per character from non-cached requests
+  const cachedRecords = records.filter(r => r.fromCache === true);
+  const nonCachedRecords = records.filter(r => r.fromCache === false);
+
+  if (nonCachedRecords.length > 0 && cachedRecords.length > 0) {
+    const totalNonCachedCost = nonCachedRecords.reduce((sum, r) => sum + r.cost, 0);
+    const totalNonCachedChars = nonCachedRecords.reduce((sum, r) => sum + r.textLength, 0);
+
+    if (totalNonCachedChars > 0) {
+      const avgCostPerChar = totalNonCachedCost / totalNonCachedChars;
+      const cachedChars = cachedRecords.reduce((sum, r) => sum + r.textLength, 0);
+      summary.costSavingsFromCache = cachedChars * avgCostPerChar;
+    }
+  }
 
   // Attach monthly free-tier usage (calendar month only)
   summary.freeTierMonthUsage = await getFreeTierMonthUsage();
@@ -286,7 +340,7 @@ export const getTtsErrorSummary = async (params?: TtsErrorRangeParams): Promise<
   });
 
   return summary;
-}; 
+};
 
 export const getRecentTtsUsageRecords = async (params?: TtsRecordsParams): Promise<ttsUsage.TtsUsageRecord[]> => {
   const lastHours = params?.lastHours ?? 24;

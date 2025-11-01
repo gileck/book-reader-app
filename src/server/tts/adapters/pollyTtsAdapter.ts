@@ -9,12 +9,12 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
 
     private getClient() {
         if (this.client) return this.client;
-        
+
         try {
             if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
                 throw new Error('AWS credentials not found');
             }
-            
+
             this.client = new PollyClient({
                 region: process.env.AWS_REGION || 'us-east-1',
                 credentials: {
@@ -68,13 +68,13 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             });
 
             const speechMarksResponse = await client.send(speechMarksCommand);
-            
+
             // Parse speech marks to get timepoints
             const timepoints: TTSTimepoint[] = [];
             if (speechMarksResponse.AudioStream) {
                 const speechMarksText = await this.streamToString(speechMarksResponse.AudioStream);
                 const lines = speechMarksText.trim().split('\n');
-                
+
                 for (const line of lines) {
                     try {
                         const mark = JSON.parse(line);
@@ -101,7 +101,7 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             });
 
             const audioResponse = await client.send(audioCommand);
-            
+
             if (!audioResponse.AudioStream) {
                 return null;
             }
@@ -116,14 +116,14 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
 
             // Track usage async (don't await)
             const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
-            
+
             // Amazon Polly billing: "SSML tags are not counted as billed characters"
             // Remove all SSML tags from text for accurate billing count
             const billableText = ssmlText.replace(/<[^>]*>/g, '');
             const billableCharCount = billableText.length;
-            
+
             const cost = this.calculateCost(billableCharCount, audioLength, config.voiceTier || 'standard');
-            addTtsUsageRecord('polly', config.voiceId, billableCharCount, audioLength, cost, 'tts-api', config.voiceTier)
+            addTtsUsageRecord('polly', config.voiceId, billableCharCount, audioLength, cost, 'tts-api', config.voiceTier, undefined, false)
                 .catch(error => console.error('Error tracking TTS usage:', error));
 
             return result;
@@ -133,9 +133,9 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             const ssmlTextLength = ssmlText.length;
             const billableText = ssmlText.replace(/<[^>]*>/g, '');
             const billableCharCount = billableText.length;
-            
+
             const textLengthInfo = `How long was the provided text: ${originalTextLength} characters (original), ${ssmlTextLength} characters (with SSML markup), ${billableCharCount} characters (billable)`;
-            
+
             console.error(`Polly TTS synthesis error: ${textLengthInfo}`, {
                 error: error,
                 textMetrics: {
@@ -151,7 +151,7 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
                     engine: getEngine(config.voiceTier)
                 }
             });
-            
+
             // Specific handling for text length exceeded errors
             if (error && typeof error === 'object' && 'name' in error && error.name === 'TextLengthExceededException') {
                 console.error(`❌ AWS Polly Text Length Exceeded - ${textLengthInfo}`, {
@@ -161,12 +161,12 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
                         'long-form': '100,000 characters (plain text), 200,000 characters (SSML)',
                         'generative': '3000 characters (SSML)'
                     },
-                    recommendation: originalTextLength > 2000 
+                    recommendation: originalTextLength > 2000
                         ? 'Consider splitting the text into smaller chunks or using long-form voice tier'
                         : 'The SSML markup is adding significant overhead. Consider reducing mark density.'
                 });
             }
-            
+
             return null;
         }
     }

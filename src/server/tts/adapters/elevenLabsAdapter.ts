@@ -9,13 +9,13 @@ export class ElevenLabsAdapter extends BaseTtsAdapter {
 
     private getClient() {
         if (this.client) return this.client;
-        
+
         try {
             const apiKey = process.env.ELEVEN_LABS_KEY;
             if (!apiKey) {
                 throw new Error('ELEVEN_LABS_KEY not found');
             }
-            
+
             this.client = new ElevenLabsClient({
                 apiKey: apiKey
             });
@@ -38,7 +38,7 @@ export class ElevenLabsAdapter extends BaseTtsAdapter {
 
         try {
             const words = text.split(' ').filter(word => word.length > 0);
-            
+
             // Use direct fetch for timestamps endpoint since SDK doesn't support it yet
             const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${config.voiceId}/with-timestamps`, {
                 method: 'POST',
@@ -70,15 +70,15 @@ export class ElevenLabsAdapter extends BaseTtsAdapter {
 
             // Convert ElevenLabs alignment to our timepoint format
             const timepoints: TTSTimepoint[] = [];
-            
+
             // ElevenLabs returns character-level alignment, we need to convert to word-level
             let currentWordIndex = 0;
             let currentWordStart = 0;
-            
+
             for (let i = 0; i < data.alignment.character_start_times_seconds.length; i++) {
                 const char = data.alignment.characters[i];
                 const charStartTime = data.alignment.character_start_times_seconds[i];
-                
+
                 // If we hit a space or end of text, we've finished a word
                 if (char === ' ' || i === data.alignment.characters.length - 1) {
                     if (currentWordIndex < words.length) {
@@ -104,8 +104,8 @@ export class ElevenLabsAdapter extends BaseTtsAdapter {
             // Track usage async (don't await)
             const characterCount = text.length;
             const cost = this.calculateCost(characterCount, timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0);
-            
-            addTtsUsageRecord('elevenlabs', config.voiceId, characterCount, timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0, cost, 'tts-api', 'neural')
+
+            addTtsUsageRecord('elevenlabs', config.voiceId, characterCount, timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0, cost, 'tts-api', 'neural', undefined, false)
                 .catch(error => console.error('Error tracking TTS usage:', error));
 
             return result;

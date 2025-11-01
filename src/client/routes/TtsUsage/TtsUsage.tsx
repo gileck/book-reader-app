@@ -46,6 +46,7 @@ export function TtsUsage() {
 
   const formatCost = (cost: number) => `$${cost.toFixed(4)}`;
   const formatDailyCost = (cost: number) => `$${cost.toFixed(1)}`;
+  const formatWeeklyCost = (cost: number) => `$${cost.toFixed(2)}`;
   const formatDuration = (seconds: number) => `${Math.round(seconds)}s`;
   const formatProvider = (provider: string) => {
     switch (provider) {
@@ -55,6 +56,75 @@ export function TtsUsage() {
       default: return provider;
     }
   };
+
+  // Aggregate daily usage into weekly buckets
+  const aggregateWeeklyUsage = () => {
+    if (!summary) return {};
+
+    const weeklyData: Record<string, { totalCost: number; totalCalls: number; cacheHits: number; cacheMisses: number; weekStart: string; weekEnd: string }> = {};
+
+    Object.entries(summary.usageByDay)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([day, stats]) => {
+        const date = new Date(day);
+        // Get Monday of the week (ISO week starts on Monday)
+        const dayOfWeek = date.getDay();
+        const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+        const monday = new Date(date.setDate(diff));
+        const weekStart = monday.toISOString().split('T')[0];
+
+        // Calculate week end (Sunday)
+        const sunday = new Date(monday);
+        sunday.setDate(monday.getDate() + 6);
+        const weekEnd = sunday.toISOString().split('T')[0];
+
+        if (!weeklyData[weekStart]) {
+          weeklyData[weekStart] = {
+            totalCost: 0,
+            totalCalls: 0,
+            cacheHits: 0,
+            cacheMisses: 0,
+            weekStart,
+            weekEnd
+          };
+        }
+
+        weeklyData[weekStart].totalCost += stats.totalCost;
+        weeklyData[weekStart].totalCalls += stats.totalCalls;
+        weeklyData[weekStart].cacheHits += stats.cacheHits;
+        weeklyData[weekStart].cacheMisses += stats.cacheMisses;
+      });
+
+    return weeklyData;
+  };
+
+  // Get last 7 days of daily usage (always show all 7 days)
+  const getLast7Days = () => {
+    if (!summary) return {};
+
+    const last7Days: Record<string, typeof summary.usageByDay[string]> = {};
+    const today = new Date();
+
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
+
+      // Include the day even if there's no data (with zero values)
+      last7Days[dateStr] = summary.usageByDay[dateStr] || {
+        totalCost: 0,
+        totalCalls: 0,
+        cacheHits: 0,
+        cacheMisses: 0
+      };
+    }
+
+    return last7Days;
+  };
+
+  const last7DaysData = getLast7Days();
+  const weeklyUsageData = aggregateWeeklyUsage();
+  const numberOfWeeks = Math.ceil(rangeDays / 7);
 
   // Use server-provided calendar-month aggregate for Free Tier usage
   const currentMonthUsage = summary?.freeTierMonthUsage || {
@@ -219,6 +289,39 @@ export function TtsUsage() {
             </div>
           </section>
 
+          {/* Cache Performance Section */}
+          <section className={styles.summarySection}>
+            <h3 className={styles.sectionTitle}>Cache Performance</h3>
+            <div className={styles.statsGrid}>
+              <div className={styles.statCard}>
+                <div className={styles.statLabel}>Cache Hit Ratio</div>
+                <div className={styles.statValue}>{summary.cacheHitRatio.toFixed(1)}%</div>
+                <div className={styles.statNote}>
+                  {summary.totalCacheHits} hits / {summary.totalCacheMisses} misses
+                </div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statLabel}>Cost Savings</div>
+                <div className={styles.statValue}>{formatCost(summary.costSavingsFromCache)}</div>
+                <div className={styles.statNote}>From {summary.totalCacheHits} cached responses</div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statLabel}>Total Requests</div>
+                <div className={styles.statValue}>{summary.totalCalls.toLocaleString()}</div>
+                <div className={styles.statNote}>
+                  {summary.totalCacheHits} cached • {summary.totalCacheMisses} fresh
+                </div>
+              </div>
+              <div className={styles.statCard}>
+                <div className={styles.statLabel}>Actual API Calls</div>
+                <div className={styles.statValue}>{summary.totalCacheMisses.toLocaleString()}</div>
+                <div className={styles.statNote}>
+                  {summary.totalCacheMisses > 0 ? ((summary.totalCacheMisses / summary.totalCalls) * 100).toFixed(1) : 0}% of total
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section className={styles.detailsSection}>
             <div className={styles.detailsGrid}>
               <div className={styles.detailCard}>
@@ -240,6 +343,14 @@ export function TtsUsage() {
                       </div>
                       <div className={styles.barStats}>
                         {stats.totalCalls} calls • {stats.totalTextLength.toLocaleString()} chars
+                        {summary.usageByProvider[provider] && (
+                          <>
+                            {' • '}
+                            <span style={{ color: '#34C759' }}>{summary.usageByProvider[provider].cacheHits} cached</span>
+                            {' / '}
+                            <span style={{ color: '#FF9500' }}>{summary.usageByProvider[provider].cacheMisses} fresh</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -247,12 +358,12 @@ export function TtsUsage() {
               </div>
 
               <div className={styles.detailCard}>
-                <h3 className={styles.cardTitle}>Recent Daily Usage</h3>
+                <h3 className={styles.cardTitle}>Recent Daily Usage (Last 7 Days)</h3>
                 <div className={styles.dailyUsageChart}>
-                  {Object.entries(summary.usageByDay)
+                  {Object.entries(last7DaysData)
                     .sort(([a], [b]) => a.localeCompare(b))
                     .map(([day, stats]) => {
-                      const maxCost = Math.max(...Object.values(summary.usageByDay).map(d => d.totalCost), 0.001);
+                      const maxCost = Math.max(...Object.values(last7DaysData).map(d => d.totalCost), 0.001);
                       const height = Math.max(5, (stats.totalCost / maxCost) * 100);
                       return (
                         <div key={day} className={styles.dailyUsageBar}>
@@ -260,11 +371,11 @@ export function TtsUsage() {
                             <div
                               className={styles.costBar}
                               style={{ height: `${height}%` }}
-                              title={`${new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}: ${formatDailyCost(stats.totalCost)} (${stats.totalCalls} calls)`}
+                              title={`${new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}: ${formatDailyCost(stats.totalCost)} (${stats.totalCalls} calls, ${stats.cacheHits} cached)`}
                             ></div>
                           </div>
                           <div className={styles.barLabel}>
-                            <span className={styles.dateLabel}>{new Date(day).toLocaleDateString('en-US', { day: 'numeric' })}</span>
+                            <span className={styles.dateLabel}>{new Date(day).toLocaleDateString('en-US', { weekday: 'short' })}</span>
                           </div>
                           <div className={styles.costLabel}>
                             {formatDailyCost(stats.totalCost)}
@@ -275,6 +386,48 @@ export function TtsUsage() {
                 </div>
                 <div className={styles.chartLegend}>
                   <span className={styles.legendLabel}>Daily Total Cost</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Weekly Usage Section */}
+          <section className={styles.detailsSection}>
+            <div className={styles.detailsGrid}>
+              <div className={styles.detailCard} style={{ gridColumn: '1 / -1' }}>
+                <h3 className={styles.cardTitle}>Recent Weekly Usage (Last {numberOfWeeks} Weeks)</h3>
+                <div className={styles.dailyUsageChart}>
+                  {Object.entries(weeklyUsageData)
+                    .sort(([a], [b]) => a.localeCompare(b))
+                    .map(([weekStart, stats]) => {
+                      const maxCost = Math.max(...Object.values(weeklyUsageData).map(w => w.totalCost), 0.001);
+                      const height = Math.max(5, (stats.totalCost / maxCost) * 100);
+                      const weekLabel = `${new Date(stats.weekStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${new Date(stats.weekEnd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+                      return (
+                        <div key={weekStart} className={styles.dailyUsageBar}>
+                          <div className={styles.barContainer}>
+                            <div
+                              className={styles.costBar}
+                              style={{ height: `${height}%` }}
+                              title={`${weekLabel}: ${formatWeeklyCost(stats.totalCost)} (${stats.totalCalls} calls, ${stats.cacheHits} cached / ${stats.cacheMisses} fresh)`}
+                            ></div>
+                          </div>
+                          <div className={styles.barLabel}>
+                            <span className={styles.dateLabel}>
+                              {new Date(stats.weekStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                              {' - '}
+                              {new Date(stats.weekEnd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </span>
+                          </div>
+                          <div className={styles.costLabel}>
+                            {formatWeeklyCost(stats.totalCost)}
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+                <div className={styles.chartLegend}>
+                  <span className={styles.legendLabel}>Weekly Total Cost</span>
                 </div>
               </div>
             </div>
