@@ -166,7 +166,7 @@ export function useSentenceAudioController(
             // Filter expected browser errors that occur when changing audio source or autoplay
             // iOS Safari commonly throws "The operation was aborted" even when playback succeeds
             const lowerMessage = errorMessage.toLowerCase();
-            const isExpectedBrowserError = 
+            const isExpectedBrowserError =
                 lowerMessage.includes('interrupted') ||
                 lowerMessage.includes('abort') ||  // Catches "aborted", "AbortError", etc.
                 lowerMessage.includes('notallowederror'); // Autoplay policy errors
@@ -371,6 +371,62 @@ export function useSentenceAudioController(
         }
     }, [playbackSpeed]);
 
+    // Clear audio cache when voice or provider changes
+    // This ensures new voice settings take effect immediately
+    const prevVoiceRef = useRef<string | undefined>(undefined);
+    const prevProviderRef = useRef<TtsProvider | undefined>(undefined);
+
+    useEffect(() => {
+        // On first render with actual values, just store them
+        if (prevVoiceRef.current === undefined && prevProviderRef.current === undefined) {
+            prevVoiceRef.current = selectedVoice;
+            prevProviderRef.current = selectedProvider;
+            return;
+        }
+
+        // Voice or provider changed - clear all cached audio
+        const hasChanged = prevVoiceRef.current !== selectedVoice || prevProviderRef.current !== selectedProvider;
+
+        if (hasChanged) {
+            const audio = audioRef.current;
+            const wasPlaying = state.isPlaying;
+            const { currentSentenceIndex } = stateRef.current;
+
+            // Stop current audio if playing
+            if (audio && wasPlaying) {
+                audio.pause();
+                audio.src = '';
+                audio.currentTime = 0;
+            }
+
+            // Clear the entire audio cache
+            cacheRef.current = {};
+            timepointsRef.current = [];
+
+            // Reset preloading flag to trigger fresh load
+            hasInitiallyLoadedRef.current = false;
+
+            // Update state - stop playback but preserve intendedPlay for auto-resume
+            update({ isPlaying: false });
+
+            // If audio was playing, reload and resume with new voice
+            if (wasPlaying) {
+                // Small delay to ensure cache is cleared
+                setTimeout(() => {
+                    void loadSentence(currentSentenceIndex, true).then(() => {
+                        // Resume playback with new voice if user intended continuous play
+                        if (stateRef.current.intendedPlay) {
+                            void play();
+                        }
+                    });
+                }, 50);
+            }
+
+            prevVoiceRef.current = selectedVoice;
+            prevProviderRef.current = selectedProvider;
+        }
+    }, [selectedVoice, selectedProvider, state.isPlaying, loadSentence, play, update]);
+
     // Handle word highlighting when word index changes
     useEffect(() => {
         // Clear highlights when TTS is disabled
@@ -465,22 +521,29 @@ export function useSentenceAudioController(
         const handleError = (event: Event) => {
             const target = event.target as HTMLAudioElement;
             const error = target.error;
-            
+
             // iOS Safari often fires MEDIA_ERR_ABORTED (code 1) even when playback succeeds
             // This happens during source changes or autoplay scenarios - filter these out
             if (error?.code === 1) { // MEDIA_ERR_ABORTED
                 console.debug('iOS Safari audio error (benign):', error.message);
                 return;
             }
-            
+
+            // Filter out empty src errors - these happen during chapter transitions when we cleanup
+            // An empty src will trigger MEDIA_ERR_SRC_NOT_SUPPORTED which is expected during cleanup
+            if (audio.src === '' || audio.src === window.location.href) {
+                console.debug('Audio error during cleanup (benign):', error?.message);
+                return;
+            }
+
             // Only report real errors that affect playback
             // MEDIA_ERR_NETWORK (2), MEDIA_ERR_DECODE (3), MEDIA_ERR_SRC_NOT_SUPPORTED (4)
             if (error && error.code >= 2) {
                 const errorMessage = error.message || `Media error (code ${error.code})`;
                 const { currentSentenceIndex } = stateRef.current;
-                update({ 
-                    ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex }, 
-                    isPlaying: false 
+                update({
+                    ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex },
+                    isPlaying: false
                 });
             }
         };

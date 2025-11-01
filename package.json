@@ -14,7 +14,8 @@
     "upload-sample-book": "node scripts/upload-sample-book.js",
     "parse-pdf": "node scripts/parse-pdf-book.js",
     "test-polly": "node scripts/test-polly-timestamps.js",
-    "test-poc-pipeline": "cd book-parser/parser-v2/lib/poc-integrated-pipeline && node test-poc-script.js"
+    "test-poc-pipeline": "cd book-parser/parser-v2/lib/poc-integrated-pipeline && node test-poc-script.js",
+    "create-indexes": "npx tsx scripts/createIndexes.ts"
   },
   "dependencies": {
     "@aws-sdk/client-polly": "^3.830.0",

@@ -305,7 +305,7 @@ export const useReader = () => {
     }, [bookId, state.currentChapterNumber, loadChapterPreferOffline]);
 
     // Initialize hooks only after we have the data
-    const userSettings = useUserSettings(user?.id || '');
+    const userSettings = useUserSettings();
 
     // Unified function to update chunk index (single source of truth in reader)
     const setCurrentChunkIndex = useCallback((chunkIndex: number) => {

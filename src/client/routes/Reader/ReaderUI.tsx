@@ -65,7 +65,7 @@ export const ReaderUI = ({
         initialChunkIndex
     });
 
-    // Initialize all hooks
+    // Initialize all hooks (must be before any conditional returns)
     const chapterDialog = useChapterDialog();
 
     // Initialize content context hook (needs to be after bookQA is initialized)
@@ -333,9 +333,7 @@ export const ReaderUI = ({
         );
     }, [sentenceAudio.sentences, sentenceAudio.controller.currentSentenceIndex, settings.playbackSpeed]);
 
-    if (!settings.settingsLoaded) {
-        return null; // Settings not loaded yet
-    }
+    // Settings are guaranteed to be loaded by ReaderDataLoader, so no need to check again
 
     if (error) {
         return (

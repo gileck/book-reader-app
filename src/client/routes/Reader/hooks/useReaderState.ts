@@ -117,8 +117,8 @@ export const useReaderState = ({
         }
     }, [bookId, state.currentChapterNumber, loadChapterPreferOffline]);
 
-    // Initialize hooks
-    const userSettings = useUserSettings(user?.id || '');
+    // Get user settings from Reader-specific hook (wraps centralized Context)
+    const userSettings = useUserSettings();
 
     // Unified function to update chunk index
     const setCurrentChunkIndex = useCallback((chunkIndex: number) => {

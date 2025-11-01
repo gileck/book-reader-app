@@ -1,16 +1,22 @@
 import React from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useReaderData } from './hooks/useReaderData';
+import { useSettings } from '../../settings/SettingsContext';
 import { ReaderUI } from './ReaderUI';
 
 export const ReaderDataLoader = () => {
     const { data, loading, error } = useReaderData();
+    const { userSettingsLoaded } = useSettings();
 
-    // Loading state
-    if (loading) {
+    // CRITICAL: Wait for BOTH book data AND user settings before rendering
+    // This prevents TTS preloading with undefined/wrong voice values
+    if (loading || !userSettingsLoaded) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="100vh" gap={2}>
                 <CircularProgress />
+                <Typography variant="body2" color="text.secondary">
+                    {loading ? 'Loading book...' : 'Loading settings...'}
+                </Typography>
             </Box>
         );
     }
@@ -31,7 +37,7 @@ export const ReaderDataLoader = () => {
         return null;
     }
 
-    // Render UI with loaded data
+    // Both data and settings are loaded - safe to render
     return (
         <ReaderUI
             initialBook={data.book}
@@ -41,4 +47,3 @@ export const ReaderDataLoader = () => {
         />
     );
 };
-

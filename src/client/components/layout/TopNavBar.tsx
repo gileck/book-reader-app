@@ -10,7 +10,7 @@ import { useState, useEffect, useRef } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { getUserSettings, updateUserSettings } from '../../../apis/userSettings/client';
+import { updateUserSettings } from '../../../apis/userSettings/client';
 
 interface TopNavBarProps {
   navItems: NavItem[];
@@ -52,49 +52,23 @@ export const TopNavBar = ({ navItems, isStandalone, onDrawerToggle }: TopNavBarP
     await logout();
   };
 
-  // Load user theme when user is authenticated
+  // Sync userTheme with global settings (which may be loaded from Reader's useUserSettings)
   useEffect(() => {
-    const loadUserTheme = async () => {
-      if (isAuthenticated && user?.id && !hasLoadedUserTheme.current) {
-        try {
-          const settingsResult = await getUserSettings({ userId: user.id });
-          if (settingsResult.data?.success && settingsResult.data.userSettings) {
-            const theme = settingsResult.data.userSettings.theme;
-            setUserTheme(theme);
-            // Sync with global settings only if different
-            if (settings.theme !== theme) {
-              updateSettings({ theme });
-            }
-            hasLoadedUserTheme.current = true;
-          }
-        } catch (error) {
-          console.error('Error loading user theme:', error);
-        }
-      }
-    };
-
-    loadUserTheme();
-  }, [isAuthenticated, user?.id, settings.theme, updateSettings]);
+    setUserTheme(settings.theme);
+  }, [settings.theme]);
 
   // Reset theme loading flag when user changes
   useEffect(() => {
     hasLoadedUserTheme.current = false;
   }, [user?.id]);
 
-  // Sync userTheme with global settings when not authenticated
-  useEffect(() => {
-    if (!isAuthenticated) {
-      setUserTheme(settings.theme);
-    }
-  }, [isAuthenticated, settings.theme]);
-
   const handleThemeToggle = async () => {
     const newTheme = userTheme === 'light' ? 'dark' : 'light';
     setUserTheme(newTheme);
-    
+
     // Update global settings immediately for app-wide theme
     updateSettings({ theme: newTheme });
-    
+
     // Update user-specific settings in database if authenticated
     if (isAuthenticated && user?.id) {
       try {

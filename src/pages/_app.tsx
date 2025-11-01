@@ -23,18 +23,18 @@ export default function App({ }: AppProps) {
   }, []);
 
   return (
-    <SettingsProvider>
-      <ApiClientInitializer />
-      <AppThemeProvider>
-        <AuthProvider>
+    <AuthProvider>
+      <SettingsProvider>
+        <ApiClientInitializer />
+        <AppThemeProvider>
           <AuthWrapper>
             <RouterProvider routes={routes}>
               {RouteComponent => <Layout><RouteComponent /></Layout>}
             </RouterProvider>
           </AuthWrapper>
-        </AuthProvider>
-      </AppThemeProvider>
-    </SettingsProvider>
+        </AppThemeProvider>
+      </SettingsProvider>
+    </AuthProvider>
   );
 }
 

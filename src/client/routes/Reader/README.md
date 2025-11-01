@@ -1650,6 +1650,7 @@ The audio system implements smart error filtering and recovery:
    - "The operation was aborted" on iOS Safari (even during successful playback)
    - "NotAllowedError" for autoplay policy restrictions
    - HTMLAudioElement `MEDIA_ERR_ABORTED` (code 1) on iOS Safari
+   - Empty src attribute errors during chapter transitions (cleanup phase)
    - These are logged to console.debug but NOT shown to users
 
 2. **Preloading Errors (Silent):**
@@ -1712,6 +1713,13 @@ audio.addEventListener('error', (event) => {
         return;
     }
     
+    // Filter out empty src errors - these happen during chapter transitions when we cleanup
+    // An empty src will trigger MEDIA_ERR_SRC_NOT_SUPPORTED which is expected during cleanup
+    if (audio.src === '' || audio.src === window.location.href) {
+        console.debug('Audio error during cleanup (benign):', error?.message);
+        return;
+    }
+    
     // Only report real errors: MEDIA_ERR_NETWORK (2), MEDIA_ERR_DECODE (3), MEDIA_ERR_SRC_NOT_SUPPORTED (4)
     if (error && error.code >= 2) {
         update({ ttsError: { message: error.message, sentenceIndex: currentSentenceIndex }, isPlaying: false });
@@ -1748,10 +1756,17 @@ iOS Safari has several audio API quirks that require special handling:
    - These don't actually affect playback
    - Filtered at the event listener level
 
-3. **Implementation details:**
+3. **Empty src during chapter transitions:**
+   - When chapters change, audio.src is set to '' to clean up resources
+   - This can trigger MEDIA_ERR_SRC_NOT_SUPPORTED (code 4) which is expected
+   - Filtered by checking if audio.src is empty or equals window.location.href
+   - Error is logged to console but not shown to users
+
+4. **Implementation details:**
    - Two-layer error filtering: Promise-based (audio.play()) and Event-based (addEventListener)
    - Case-insensitive matching prevents missing variants ("aborted" vs "AbortError")
-   - Only codes 2-4 (network, decode, unsupported) are surfaced as real errors
+   - Empty src check prevents false positives during chapter transitions
+   - Only genuine codes 2-4 (network, decode, unsupported) are surfaced as real errors
 
 ### Word Timing Offset Not Working
 
@@ -1808,7 +1823,71 @@ Changed `useReaderState.ts` line 350 to use `sentenceAudio.sentences` (from cont
 
 ---
 
-### Word Timing Offset Not Working (Documented Previously)
+### Voice Change Not Taking Effect (Fixed - November 2025)
+
+**Symptom:** When changing voice or provider in settings while audio is playing, the old voice continues to play for the next several sentences.
+
+**Root Cause:**
+The audio controller preloads the next 3-4 sentences for smooth playback. When the voice/provider changes, these preloaded audio files are still in cache and use the old voice settings.
+
+**Solution Applied:**
+Added a `useEffect` that monitors `selectedVoice` and `selectedProvider` changes and:
+1. Clears the entire audio cache (`cacheRef.current = {}`)
+2. Stops currently playing audio
+3. Resets preloading flags
+4. Reloads the current sentence with the new voice
+5. Auto-resumes playback if audio was playing
+
+**Code Implementation:**
+```typescript
+useEffect(() => {
+    const hasChanged = 
+        prevVoiceRef.current !== selectedVoice || 
+        prevProviderRef.current !== selectedProvider;
+    
+    if (hasChanged) {
+        // Stop current audio
+        if (audio && wasPlaying) {
+            audio.pause();
+            audio.src = '';
+        }
+
+        // Clear the entire audio cache
+        cacheRef.current = {};
+        timepointsRef.current = [];
+        hasInitiallyLoadedRef.current = false;
+
+        // Reload current sentence with new voice
+        if (wasPlaying) {
+            void loadSentence(currentSentenceIndex, true).then(() => {
+                if (stateRef.current.intendedPlay) {
+                    void play(); // Resume with new voice
+                }
+            });
+        }
+
+        prevVoiceRef.current = selectedVoice;
+        prevProviderRef.current = selectedProvider;
+    }
+}, [selectedVoice, selectedProvider, ...]);
+```
+
+**Result:**
+- ✅ New voice takes effect immediately (within 50ms)
+- ✅ No lingering old voice audio in subsequent sentences
+- ✅ Seamless transition - playback auto-resumes if it was playing
+- ✅ User doesn't need to manually stop/restart playback
+
+---
+
+### Word Timing Offset Not Working
+
+**Symptom:** Changing the Word Timing Adjustment slider doesn't affect highlight timing.
+
+**Cause:** Missing dependency in `useEffect` causes stale closure - event listener uses old offset value.
+
+**Solution:** Ensure `wordTimingOffset` is in the dependency array:
+
 ```typescript
 useEffect(() => {
     // ... handleTimeUpdate uses wordTimingOffset

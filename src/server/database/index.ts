@@ -1,24 +1,29 @@
 import { MongoClient, Db } from 'mongodb';
 import { appConfig } from '@/app.config';
-// --- Configuration ---
-// Read connection string and DB name from environment variables
-// Fallback to defaults for local development if needed
-const MONGO_URI = process.env.MONGO_URI;
+
+// Getter function for MONGO_URI to allow lazy evaluation
+function getMongoUri(): string {
+    const MONGO_URI = process.env.MONGO_URI;
+    if (!MONGO_URI) {
+        throw new Error('MONGO_URI environment variable is not set.');
+    }
+    return MONGO_URI;
+}
+
 const DB_NAME = appConfig.dbName;
 
 // --- Connection Management (Singleton Pattern) ---
 let client: MongoClient | null = null;
 let dbInstance: Db | null = null;
 let clientPromise: Promise<MongoClient> | null = null;
+let indexesInitialized = false;
 
 // Internal function returning the client
 async function connectClient(): Promise<MongoClient> {
     if (client) {
         return client;
     }
-    if (!MONGO_URI) {
-        throw new Error('MONGO_URI environment variable is not set.');
-    }
+    const MONGO_URI = getMongoUri();
     client = new MongoClient(MONGO_URI);
     console.log('Connecting client to MongoDB...');
     try {
@@ -30,12 +35,14 @@ async function connectClient(): Promise<MongoClient> {
             client = null;
             dbInstance = null;
             clientPromise = null; // Allow reconnection attempt
+            indexesInitialized = false; // Reset indexes flag
         });
         client.on('error', (err) => {
             console.error('MongoDB connection error:', err);
             client = null;
             dbInstance = null;
             clientPromise = null;
+            indexesInitialized = false; // Reset indexes flag
         });
         return client;
     } catch (error) {
@@ -66,6 +73,23 @@ export async function getDb(): Promise<Db> {
     // Ensure client is connected first
     const connectedClient = await getClient();
     dbInstance = connectedClient.db(DB_NAME);
+
+    // Initialize indexes on first connection
+    if (!indexesInitialized) {
+        indexesInitialized = true;
+        // Import and call initializeIndexes asynchronously
+        // Don't await to avoid blocking the first request
+        (async () => {
+            try {
+                const { initializeIndexes } = await import('./initIndexes');
+                await initializeIndexes();
+            } catch (error) {
+                console.error('Failed to initialize indexes:', error);
+                indexesInitialized = false; // Allow retry on next connection
+            }
+        })();
+    }
+
     return dbInstance;
 }
 
@@ -90,4 +114,7 @@ export async function closeDbConnection(): Promise<void> {
 }
 
 // Export all collections
-export * from './collections'; 
+export * from './collections';
+
+// Export index initialization
+export * from './initIndexes'; 
