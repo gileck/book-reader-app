@@ -222,21 +222,15 @@ export const readingProgressApis = {
                 currentChunk = 0;
             }
 
-            // Calculate enhanced progress information
-            const { bookProgress, chapterProgress } = await calculateBookProgress(
-                new ObjectId(bookId),
-                currentChapter,
-                currentChunk
-            );
-
+            // OPTIMIZED: Return only position data without expensive progress calculations
+            // For progress percentages, use getReadingStats API instead
             const readingProgress: ReadingProgressClient = {
                 userId: result.userId.toString(),
                 bookId: result.bookId.toString(),
                 currentChapter: currentChapter,
                 currentChunk: currentChunk,
                 lastReadAt: result.lastReadAt,
-                chapterProgress,
-                bookProgress,
+                // bookProgress and chapterProgress are NOT included - use getReadingStats for that
                 totalReadingTime: result.totalReadingTimeMinutes || 0,
                 currentSessionTime: 0, // Will be calculated in frontend
                 sessionsCount: result.sessionHistory?.length || 0
@@ -287,9 +281,19 @@ export const readingProgressApis = {
                 };
             }
 
+            // Get reading progress for lastReadAt and currentChapter
+            const progress = await findReadingProgressByUserAndBook(
+                new ObjectId(userId),
+                new ObjectId(bookId)
+            );
+
             return {
                 success: true,
-                stats
+                stats: {
+                    ...stats,
+                    currentChapter: progress?.currentChapter || 1,
+                    lastReadAt: progress?.lastReadAt
+                }
             };
         } catch (error) {
             console.error('Error getting reading stats:', error);

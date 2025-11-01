@@ -2,7 +2,6 @@ import { Collection, ObjectId } from 'mongodb';
 import { getDb } from '@/server/database';
 import { ReadingProgress, ReadingProgressCreate, ReadingProgressUpdate, ReadingSession } from './types';
 import { findBookById } from '../books';
-import { findChaptersByBook } from '../chapters';
 
 const getCollection = async (): Promise<Collection<ReadingProgress>> => {
     const db = await getDb();
@@ -159,6 +158,7 @@ export const deleteReadingProgressByBook = async (bookId: ObjectId | string): Pr
 
 /**
  * Calculate book-wide progress based on current reading position
+ * OPTIMIZED: Only fetches minimal data needed for calculations
  */
 export const calculateBookProgress = async (
     bookId: ObjectId | string,
@@ -167,9 +167,23 @@ export const calculateBookProgress = async (
 ): Promise<{ bookProgress: number; chapterProgress: number; chaptersCompleted: number }> => {
     try {
         const bookObjectId = typeof bookId === 'string' ? new ObjectId(bookId) : bookId;
+        const chaptersCollection = (await getDb()).collection('chapters');
 
-        // Get all chapters for this book
-        const chapters = await findChaptersByBook(bookObjectId);
+        // OPTIMIZATION: Only fetch chapter numbers and word counts, not full content
+        const chapters = await chaptersCollection
+            .find(
+                { bookId: bookObjectId },
+                {
+                    projection: {
+                        chapterNumber: 1,
+                        wordCount: 1,
+                        'content.chunks.wordCount': 1  // Only chunk word counts, not text
+                    }
+                }
+            )
+            .sort({ chapterNumber: 1 })
+            .toArray();
+
         if (chapters.length === 0) {
             return { bookProgress: 0, chapterProgress: 0, chaptersCompleted: 0 };
         }
@@ -181,7 +195,7 @@ export const calculateBookProgress = async (
         }
 
         // Calculate chapter progress
-        const totalChunksInChapter = currentChapterData.content.chunks.length;
+        const totalChunksInChapter = currentChapterData.content?.chunks?.length || 0;
         const chapterProgress = totalChunksInChapter > 0
             ? Math.round((currentChunk / totalChunksInChapter) * 100)
             : 0;
@@ -195,14 +209,15 @@ export const calculateBookProgress = async (
                 totalWordsRead += chapter.wordCount;
             } else if (chapter.chapterNumber === currentChapter) {
                 // Add words from completed chunks in current chapter
-                for (let i = 0; i < currentChunk && i < chapter.content.chunks.length; i++) {
-                    totalWordsRead += chapter.content.chunks[i].wordCount;
+                const chunks = chapter.content?.chunks || [];
+                for (let i = 0; i < currentChunk && i < chunks.length; i++) {
+                    totalWordsRead += chunks[i].wordCount || 0;
                 }
             }
         }
 
         // Calculate total words in book
-        const totalWordsInBook = chapters.reduce((sum, chapter) => sum + chapter.wordCount, 0);
+        const totalWordsInBook = chapters.reduce((sum, chapter) => sum + (chapter.wordCount || 0), 0);
 
         // Calculate book progress
         const bookProgress = totalWordsInBook > 0

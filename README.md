@@ -102,6 +102,7 @@ yarn dev
 - `yarn ts` - Run TypeScript compiler check
 - `yarn checks` - Run both TypeScript and ESLint checks
 - `yarn upload-sample-book` - Upload sample book data to database
+- `yarn create-indexes` - Create database indexes for optimal performance
 
 ## Database Setup
 
@@ -112,6 +113,20 @@ The application uses MongoDB with the following collections:
 - `bookmarks` - User bookmarks and reading positions
 - `readingProgress` - User reading progress tracking
 - `userSettings` - User preferences and settings
+
+### Database Indexes
+
+For optimal performance, database indexes are automatically created on first connection. To manually create or verify indexes:
+
+```bash
+yarn create-indexes
+```
+
+This creates indexes on all collections for efficient querying:
+- `readingProgress`: compound index on `userId + bookId` for fast progress lookups
+- `chapters`: compound index on `bookId + chapterNumber`
+- `bookmarks`: compound index on `userId + bookId`
+- Additional indexes on frequently queried fields
 
 ### Sample Data
 

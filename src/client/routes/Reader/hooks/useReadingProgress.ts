@@ -22,11 +22,11 @@ export const useReadingProgress = ({
     const sessionStartTime = useRef<number>(Date.now());
     const lastActiveTime = useRef<number>(Date.now());
     const accumulatedSessionTime = useRef<number>(0);
-    
+
     // Use refs to always access current values without dependency cycles
     const currentChapterRef = useRef(currentChapterNumber);
     const currentChunkRef = useRef(currentChunkIndex);
-    
+
     // Update refs when values change
     useEffect(() => {
         currentChapterRef.current = currentChapterNumber;
@@ -101,7 +101,7 @@ export const useReadingProgress = ({
         // Get current values from refs (always fresh, no stale closure)
         const chapterToSave = currentChapterRef.current;
         const chunkToSave = currentChunkRef.current;
-        
+
         // Don't save if we don't have valid values
         if (chapterToSave === null || chunkToSave === null) return;
 
@@ -130,8 +130,8 @@ export const useReadingProgress = ({
             if (result.data?.success && result.data.readingProgress) {
                 const progress = result.data.readingProgress;
                 setProgressData({
-                    chapterProgress: progress.chapterProgress,
-                    bookProgress: progress.bookProgress,
+                    chapterProgress: progress.chapterProgress ?? 0,
+                    bookProgress: progress.bookProgress ?? 0,
                     totalReadingTime: progress.totalReadingTime,
                     sessionsCount: progress.sessionsCount
                 });

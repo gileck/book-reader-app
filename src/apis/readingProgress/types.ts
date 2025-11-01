@@ -4,9 +4,9 @@ export interface ReadingProgressClient {
     currentChapter: number;
     currentChunk: number;
     lastReadAt: Date;
-    // Enhanced progress info
-    chapterProgress: number; // 0-100 percentage within current chapter
-    bookProgress: number; // 0-100 percentage of entire book
+    // Optional progress info (only calculated when explicitly requested via getReadingStats)
+    chapterProgress?: number; // 0-100 percentage within current chapter
+    bookProgress?: number; // 0-100 percentage of entire book
     totalReadingTime: number; // Total reading time in minutes
     currentSessionTime: number; // Current session time in minutes
     sessionsCount: number; // Number of reading sessions
@@ -21,6 +21,8 @@ export interface ReadingProgressStats {
     chaptersCompleted: number; // Number of chapters fully read
     totalChapters: number; // Total chapters in book
     estimatedTimeRemaining: number; // Estimated time to complete book in minutes
+    currentChapter: number; // Current chapter number
+    lastReadAt?: Date; // Last time the book was read
 }
 
 export interface UpdateReadingPositionRequest {

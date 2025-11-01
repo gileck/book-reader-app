@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from '../../router';
 import { getBooks, deleteBook, updateBook, uploadCoverImage } from '../../../apis/books/client';
-import { getReadingProgress } from '../../../apis/readingProgress/client';
+import { getReadingStats } from '../../../apis/readingProgress/client';
 import { BookClient } from '../../../apis/books/types';
-import { ReadingProgressClient } from '../../../apis/readingProgress/types';
+import { ReadingProgressStats } from '../../../apis/readingProgress/types';
 import { getChaptersByBook } from '../../../apis/chapters/client';
 import { ChapterClient } from '../../../apis/chapters/types';
 import styles from './BookLibrary.module.css';
@@ -16,7 +16,7 @@ import { offlineManager } from '../../offline/offlineManager';
 import { apiUpdateProfile } from '@/apis/auth/client';
 
 interface BookWithProgress extends BookClient {
-    progress?: ReadingProgressClient;
+    progress?: ReadingProgressStats;
     isActive?: boolean;
 }
 
@@ -82,7 +82,8 @@ export const BookLibrary = () => {
                         return;
                     }
 
-                    const progressResult = await getReadingProgress({
+                    // Use getReadingStats instead of getReadingProgress for progress percentages
+                    const statsResult = await getReadingStats({
                         userId: user.id,
                         bookId: book._id
                     });
@@ -91,7 +92,7 @@ export const BookLibrary = () => {
                     setBooks(prevBooks =>
                         prevBooks.map(prevBook =>
                             prevBook._id === book._id
-                                ? { ...prevBook, progress: progressResult.data?.readingProgress || undefined }
+                                ? { ...prevBook, progress: statsResult.data?.stats || undefined }
                                 : prevBook
                         )
                     );
@@ -322,11 +323,11 @@ export const BookLibrary = () => {
         }
     };
 
-    const getProgressPercentage = (progress?: ReadingProgressClient): number => {
+    const getProgressPercentage = (progress?: ReadingProgressStats): number => {
         return progress?.bookProgress || 0;
     };
 
-    const getReadingStatus = (progress?: ReadingProgressClient): string => {
+    const getReadingStatus = (progress?: ReadingProgressStats): string => {
         if (!progress) return 'Not Started';
         if (progress.bookProgress >= 100) return 'Completed';
         if (progress.bookProgress > 0) return 'Reading';
@@ -339,8 +340,8 @@ export const BookLibrary = () => {
                 return getProgressPercentage(b.progress) - getProgressPercentage(a.progress);
             case 'lastRead':
                 if (!a.progress && !b.progress) return 0;
-                if (!a.progress) return 1;
-                if (!b.progress) return -1;
+                if (!a.progress || !a.progress.lastReadAt) return 1;
+                if (!b.progress || !b.progress.lastReadAt) return -1;
                 return new Date(b.progress.lastReadAt).getTime() - new Date(a.progress.lastReadAt).getTime();
             default:
                 return a.title.localeCompare(b.title);
