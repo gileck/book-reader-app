@@ -14,6 +14,7 @@ import * as bookContentChat from "./bookContentChat/server";
 import { API_BOOK_CONTENT_CHAT, API_BOOK_CONTENT_CHAT_ESTIMATE_COST } from "./bookContentChat/index";
 import { ttsUsageApiHandlers } from './ttsUsage/server';
 import { promptPresetsApiHandlers } from './promptPresets/server';
+import { chapterOverviewApiHandlers } from './chapterOverview/server';
 
 // Convert API handlers to typed format
 const typedBooksApiHandlers = Object.entries(booksApiHandlers).reduce(
@@ -86,6 +87,16 @@ const typedTtsUsageApiHandlers = Object.entries(ttsUsageApiHandlers).reduce(
   {} as ApiHandlers
 );
 
+const typedChapterOverviewApiHandlers = Object.entries(chapterOverviewApiHandlers).reduce(
+  (acc, [key, handler]) => {
+    acc[key] = {
+      process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
+    };
+    return acc;
+  },
+  {} as ApiHandlers
+);
+
 export const apiHandlers: ApiHandlers = {
   [chat.name]: { process: chat.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [clearCache.name]: { process: clearCache.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
@@ -105,6 +116,7 @@ export const apiHandlers: ApiHandlers = {
   ...typedReadingProgressApiHandlers,
   ...typedReadingLogsApiHandlers,
   ...typedTtsUsageApiHandlers,
+  ...typedChapterOverviewApiHandlers,
   ...Object.entries(promptPresetsApiHandlers).reduce((acc, [key, handler]) => {
     acc[key] = {
       process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,

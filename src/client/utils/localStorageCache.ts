@@ -142,20 +142,28 @@ const createHash = (data: string): string => {
 
 /**
  * Sorts object keys recursively to ensure consistent serialization
+ * Handles circular references by tracking visited objects
  */
-const sortObjectKeys = (obj: Record<string, unknown>): Record<string, unknown> => {
+const sortObjectKeys = (obj: Record<string, unknown>, visited = new WeakSet()): Record<string, unknown> => {
     if (typeof obj !== 'object' || obj === null) {
         return obj;
     }
 
+    // Check for circular reference
+    if (visited.has(obj)) {
+        return '[Circular]' as unknown as Record<string, unknown>;
+    }
+
+    visited.add(obj);
+
     if (Array.isArray(obj)) {
-        return obj.map(sortObjectKeys) as unknown as Record<string, unknown>;
+        return obj.map(item => sortObjectKeys(item as Record<string, unknown>, visited)) as unknown as Record<string, unknown>;
     }
 
     return Object.keys(obj)
         .sort()
         .reduce((result, key) => {
-            result[key] = sortObjectKeys(obj[key] as Record<string, unknown>);
+            result[key] = sortObjectKeys(obj[key] as Record<string, unknown>, visited);
             return result;
         }, {} as Record<string, unknown>);
 };

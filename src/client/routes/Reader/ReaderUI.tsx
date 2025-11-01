@@ -9,6 +9,7 @@ import { useBookQA } from './hooks/useBookQA';
 import { useChapterDialog } from './hooks/useChapterDialog';
 import { useContentContext } from './hooks/useContentContext';
 import { useScrollHandling } from './hooks/useScrollHandling';
+import { useChapterOverview } from './hooks/useChapterOverview';
 import { AudioControls } from '../../components/AudioControls';
 import { SpeedControlModal } from '../../components/SpeedControlModal';
 import { ThemeModal } from '../../components/ThemeModal';
@@ -25,6 +26,8 @@ import { FocusReader } from './FocusReader';
 import { useSettings } from '../../settings/SettingsContext';
 import { getFormattedTimeRemaining } from './utils/timeEstimation';
 import { QuickPromptsDialog } from '../../components/QuickPromptsDialog';
+import { BookOverviewPanel } from './components/BookOverviewPanel';
+import { extractChapterTextContent } from './utils/chapterUtils';
 
 interface ReaderUIProps {
     initialBook: BookClient;
@@ -68,7 +71,7 @@ export const ReaderUI = ({
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
-    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa'>('full');
+    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview'>('full');
 
     // QA Chat state
     const [qaQuestion, setQaQuestion] = useState('');
@@ -105,12 +108,26 @@ export const ReaderUI = ({
         getContextLines.current = () => bookQA.contextLines;
     }, [bookQA.contextLines]);
 
+    // Memoize chapter content extraction to prevent recalculation and circular reference issues
+    const chapterContent = useMemo(() => {
+        return chapter ? extractChapterTextContent(chapter) : '';
+    }, [chapter]);
+
+    // Initialize chapter overview hook
+    const chapterOverview = useChapterOverview({
+        bookId: book?._id || '',
+        bookTitle: book?.title || '',
+        chapterNumber: chapter?.chapterNumber || 1,
+        chapterTitle: chapter?.title || '',
+        chapterContent
+    });
+
     // Sync reading mode from URL param on load/change
     useEffect(() => {
-        const urlMode = (queryParams.mode as 'full' | 'focus' | 'qa' | undefined) || undefined;
+        const urlMode = (queryParams.mode as 'full' | 'focus' | 'qa' | 'overview' | undefined) || undefined;
         if (urlMode) {
             setActiveTab(urlMode);
-            if (urlMode !== 'qa' && urlMode !== appSettings.readingMode) {
+            if (urlMode !== 'qa' && urlMode !== 'overview' && urlMode !== appSettings.readingMode) {
                 updateSettings({ readingMode: urlMode });
             }
         } else {
@@ -217,10 +234,10 @@ export const ReaderUI = ({
         };
     }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length, activeTab]);
 
-    const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa') => {
+    const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview') => {
         setActiveTab(newTab);
         // Update reading mode setting for focus/full tabs
-        if (newTab !== 'qa' && newTab !== appSettings.readingMode) {
+        if (newTab !== 'qa' && newTab !== 'overview' && newTab !== appSettings.readingMode) {
             updateSettings({ readingMode: newTab });
         }
         // Sync URL param
@@ -390,6 +407,7 @@ export const ReaderUI = ({
                         <Tab label="Full" value="full" />
                         <Tab label="Focus" value="focus" />
                         <Tab label="QA Chat" value="qa" />
+                        <Tab label="Overview" value="overview" />
                     </Tabs>
                 </Box>
 
@@ -471,6 +489,27 @@ export const ReaderUI = ({
                             />
                         )}
                     </Box>
+                ) : activeTab === 'overview' ? (
+                    // Overview Tab
+                    <BookOverviewPanel
+                        isGenerating={chapterOverview.isGenerating}
+                        overviews={chapterOverview.overviews}
+                        selectedOverviewId={chapterOverview.selectedOverviewId}
+                        selectedOverview={chapterOverview.selectedOverview}
+                        selectedModelId={chapterOverview.selectedModelId}
+                        selectedFormat={chapterOverview.selectedFormat}
+                        selectedLength={chapterOverview.selectedLength}
+                        selectedLevel={chapterOverview.selectedLevel}
+                        error={chapterOverview.error}
+                        onModelChange={chapterOverview.handleModelChange}
+                        onFormatChange={chapterOverview.handleFormatChange}
+                        onLengthChange={chapterOverview.handleLengthChange}
+                        onLevelChange={chapterOverview.handleLevelChange}
+                        onSelectOverview={chapterOverview.selectOverview}
+                        onDeleteOverview={chapterOverview.deleteOverview}
+                        onGenerateOverview={chapterOverview.generateOverview}
+                        onClearError={chapterOverview.clearError}
+                    />
                 ) : (
                     <Paper
                         ref={scrollContainerRef}
@@ -565,7 +604,7 @@ export const ReaderUI = ({
                     chapterTransitionLoading={chapterTransitionLoading}
                     unitLabelOverride="sentences"
                     estimatedTimeRemaining={estimatedTimeRemaining}
-                    hideChapterInfo={activeTab === 'qa'}
+                    hideChapterInfo={activeTab === 'qa' || activeTab === 'overview'}
                 />
 
                 {/* Speed Control Modal */}
@@ -632,6 +671,14 @@ export const ReaderUI = ({
                     estimatedCost={bookQA.estimatedCost || 0}
                     onApprove={() => bookQA.handleCostApproval(true)}
                     onCancel={() => bookQA.handleCostApproval(false)}
+                />
+
+                {/* Chapter Overview Cost Approval Dialog */}
+                <CostApprovalDialog
+                    open={chapterOverview.showCostApprovalDialog}
+                    estimatedCost={chapterOverview.estimatedCost || 0}
+                    onApprove={() => chapterOverview.handleCostApproval(true)}
+                    onCancel={() => chapterOverview.handleCostApproval(false)}
                 />
 
                 {/* Chapter Selector Dialog */}
