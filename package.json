@@ -15,9 +15,13 @@
     "parse-pdf": "node scripts/parse-pdf-book.js",
     "test-polly": "node scripts/test-polly-timestamps.js",
     "test-poc-pipeline": "cd book-parser/parser-v2/lib/poc-integrated-pipeline && node test-poc-script.js",
-    "create-indexes": "npx tsx scripts/createIndexes.ts"
+    "create-indexes": "npx tsx scripts/createIndexes.ts",
+    "debug-tts": "node debug-tts-discrepancy.js",
+    "debug-tts-7d": "node debug-tts-discrepancy.js 7",
+    "debug-tts-30d": "node debug-tts-discrepancy.js 30"
   },
   "dependencies": {
+    "@aws-sdk/client-cost-explorer": "^3.922.0",
     "@aws-sdk/client-polly": "^3.830.0",
     "@aws-sdk/client-s3": "^3.777.0",
     "@aws-sdk/s3-request-presigner": "^3.777.0",
@@ -33,7 +37,7 @@
     "bcryptjs": "^3.0.2",
     "canvas": "^3.1.0",
     "cookie": "^1.0.2",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "inquirer": "^8.2.7",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",

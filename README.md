@@ -138,6 +138,52 @@ yarn upload-sample-book
 
 This creates a sample book "The Adventures of Programming" with 3 chapters containing text suitable for testing the TTS and highlighting features.
 
+## Text-to-Speech (TTS)
+
+The app supports multiple TTS providers with accurate usage tracking and billing:
+
+### Supported Providers
+- **Amazon Polly** (Standard, Neural, Long-Form voices)
+- **Google Cloud TTS** (Standard, Neural2 voices)
+- **ElevenLabs** (Premium AI voices)
+
+### Environment Variables
+```bash
+# Amazon Polly
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=us-east-1
+
+# Google TTS
+GOOGLE_APPLICATION_CREDENTIALS=base64_encoded_service_account_key
+```
+
+### Important Documentation
+All TTS documentation is located in `docs/tts/`:
+- **`docs/tts/TTS_PRICING_DOCUMENTATION.md`** - Pricing structure and character counting rules for all providers
+- **`docs/tts/AWS_POLLY_BILLING_CRITICAL_FINDINGS.md`** - Critical billing discovery (68% discrepancy for Long-Form voices)
+- **`docs/tts/TTS_BILLING_VERIFICATION.md`** - Verification of character counting across all providers
+- **`docs/tts/AWS_COST_EXPLORER_INTEGRATION.md`** - Real AWS billing validation via Cost Explorer API
+- **`docs/tts/TTS_ADAPTER_GUIDE.md`** - Technical implementation guide for TTS adapters
+
+### Testing
+Run the character counting verification script:
+```bash
+node docs/tts/verify-tts-character-counting.js
+```
+
+This validates our billing calculations against expected behavior for all providers.
+
+### Usage Tracking
+The app includes a comprehensive TTS Usage Dashboard that displays:
+- Real-time usage across all providers
+- AWS Cost Explorer data for Polly (actual billing)
+- Free-tier usage monitoring with progress bars
+- Cache hit ratio and cost savings
+- Monthly usage trends
+
+⚠️ **Critical Note**: Amazon Polly Long-Form voices have special billing rules that count SSML mark attribute names. See `AWS_POLLY_BILLING_CRITICAL_FINDINGS.md` for details.
+
 ## Development
 
 ### Project Structure

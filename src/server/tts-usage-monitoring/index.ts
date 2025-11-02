@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ttsUsage, ttsErrors } from '../database/collections';
 import type { TtsUsageSummary, TtsErrorSummary, TtsUsageRangeParams, TtsErrorRangeParams, FreeTierMonthUsage, TtsRecordsParams } from '../../apis/ttsUsage/types';
 import { type TtsProvider } from '../../common/tts/ttsUtils';
+import { awsCostExplorer } from '../aws-cost-explorer';
 
 // Helper function to determine voice type from voiceId
 function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'neural' | 'long-form' | 'generative' {
@@ -13,6 +14,9 @@ function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'neu
     if (longFormVoices.includes(voiceId)) return 'long-form';
     if (neuralVoices.includes(voiceId)) return 'neural';
     if (standardVoices.includes(voiceId)) return 'standard';
+    
+    // Log unknown voice to help identify classification issues
+    console.warn(`⚠️ Unknown Polly voice: "${voiceId}" - defaulting to 'standard'. This may cause discrepancy with AWS billing.`);
   } else if (provider === 'google') {
     // Google voices - all Neural2 voices are neural tier
     if (voiceId.includes('Neural2')) return 'neural';
@@ -113,18 +117,30 @@ export const getAllTtsErrorRecords = async (): Promise<ttsErrors.TtsErrorRecord[
   }
 };
 
-function getDateRangeForDays(rangeDays: 30 | 60 | 90): { start: Date; end: Date } {
-  const end = new Date();
-  const start = new Date(end.getTime() - rangeDays * 24 * 60 * 60 * 1000);
-  return { start, end };
+function getDateRangeForDays(rangeDays: 30 | 60 | 90 | 'current-month' | 'previous-month'): { start: Date; end: Date } {
+  if (rangeDays === 'current-month') {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date();
+    return { start, end };
+  } else if (rangeDays === 'previous-month') {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const end = new Date(now.getFullYear(), now.getMonth(), 1);
+    return { start, end };
+  } else {
+    const end = new Date();
+    const start = new Date(end.getTime() - rangeDays * 24 * 60 * 60 * 1000);
+    return { start, end };
+  }
 }
 
-async function getUsageRecordsForRange(rangeDays: 30 | 60 | 90): Promise<ttsUsage.TtsUsageRecord[]> {
+async function getUsageRecordsForRange(rangeDays: 30 | 60 | 90 | 'current-month' | 'previous-month'): Promise<ttsUsage.TtsUsageRecord[]> {
   const { start, end } = getDateRangeForDays(rangeDays);
   return await ttsUsage.getTtsUsageRecordsByDateRange(start, end);
 }
 
-async function getErrorRecordsForRange(rangeDays: 30 | 60 | 90): Promise<ttsErrors.TtsErrorRecord[]> {
+async function getErrorRecordsForRange(rangeDays: 30 | 60 | 90 | 'current-month' | 'previous-month'): Promise<ttsErrors.TtsErrorRecord[]> {
   const { start, end } = getDateRangeForDays(rangeDays);
   return await ttsErrors.getTtsErrorRecordsByDateRange(start, end);
 }
@@ -137,8 +153,28 @@ function getCurrentMonthBounds(): { start: Date; end: Date; monthKey: string } {
   return { start, end, monthKey };
 }
 
-async function getFreeTierMonthUsage(): Promise<FreeTierMonthUsage> {
-  const { start, end } = getCurrentMonthBounds();
+async function getFreeTierMonthUsage(rangeDays: 30 | 60 | 90 | 'current-month' | 'previous-month'): Promise<FreeTierMonthUsage> {
+  // Determine which month to show based on range
+  let start: Date;
+  let end: Date;
+  
+  if (rangeDays === 'current-month') {
+    // Current month from 1st to today
+    const now = new Date();
+    start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0));
+    end = new Date();
+  } else if (rangeDays === 'previous-month') {
+    // Previous month from 1st to last day
+    const now = new Date();
+    start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1, 0, 0, 0));
+    end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0));
+  } else {
+    // For day-based ranges, show current month for comparison
+    const bounds = getCurrentMonthBounds();
+    start = bounds.start;
+    end = bounds.end;
+  }
+  
   const monthRecords = await ttsUsage.getTtsUsageRecordsByDateRange(start, end);
 
   const polly = { standard: 0, neural: 0, longform: 0 };
@@ -162,7 +198,33 @@ async function getFreeTierMonthUsage(): Promise<FreeTierMonthUsage> {
 }
 
 export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<TtsUsageSummary> => {
-  const rangeDays = (params?.rangeDays ?? 30) as 30 | 60 | 90;
+  const rangeDays = (params?.rangeDays ?? 30);
+  
+  // Calculate date range based on the range type
+  let startDate: Date;
+  let endDate: Date;
+  let numDaysForAws: number;
+  
+  if (rangeDays === 'current-month') {
+    // Current month from 1st to today
+    const now = new Date();
+    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+    endDate = new Date();
+    numDaysForAws = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  } else if (rangeDays === 'previous-month') {
+    // Previous month from 1st to last day
+    const now = new Date();
+    startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    endDate = new Date(now.getFullYear(), now.getMonth(), 1);
+    numDaysForAws = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  } else {
+    // Number of days from today
+    endDate = new Date();
+    startDate = new Date();
+    startDate.setDate(startDate.getDate() - (rangeDays as number));
+    numDaysForAws = rangeDays as number;
+  }
+  
   const records = await getUsageRecordsForRange(rangeDays);
 
   const summary: TtsUsageSummary = {
@@ -274,8 +336,52 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     }
   }
 
-  // Attach monthly free-tier usage (calendar month only)
-  summary.freeTierMonthUsage = await getFreeTierMonthUsage();
+  // Attach monthly free-tier usage (based on selected range)
+  summary.freeTierMonthUsage = await getFreeTierMonthUsage(rangeDays);
+
+  // Fetch AWS Cost Explorer data (real AWS billing data for Polly ONLY)
+  // Note: Google TTS and ElevenLabs data is NOT available from AWS Cost Explorer
+  // and must continue to use our internal tracking system
+  try {
+    // For month-based ranges, fetch that specific month's data
+    // For day-based ranges, fetch current month for free-tier comparison
+    const shouldFetchCurrentMonth = typeof rangeDays === 'number';
+    
+    const [rangeData, freeTierMonthData] = await Promise.all([
+      // Fetch range data based on selection
+      rangeDays === 'current-month' || rangeDays === 'previous-month'
+        ? awsCostExplorer.getPollyUsage(startDate, endDate)
+        : awsCostExplorer.getPollyUsageForLastDays(numDaysForAws),
+      // Fetch appropriate month for free-tier:
+      // - If viewing specific month, use range data's free-tier
+      // - If viewing days range, fetch current month for comparison
+      shouldFetchCurrentMonth 
+        ? awsCostExplorer.getPollyUsageForCurrentMonth()
+        : Promise.resolve(null) // Will use rangeData's free-tier instead
+    ]);
+    
+    // Use range data and determine which free-tier to show
+    summary.awsData = {
+      ...rangeData,
+      // For month ranges, use the range's own free-tier data
+      // For day ranges, use current month's free-tier
+      currentMonthFreeTier: shouldFetchCurrentMonth 
+        ? freeTierMonthData?.currentMonthFreeTier 
+        : rangeData.currentMonthFreeTier
+    };
+  } catch (error) {
+    console.error('Error fetching AWS Cost Explorer data:', error);
+    // Don't fail the entire request if AWS data is unavailable
+    summary.awsData = {
+      totalCharacters: 0,
+      totalCost: 0,
+      usageByDay: {},
+      periodStart: startDate.toISOString().split('T')[0],
+      periodEnd: endDate.toISOString().split('T')[0],
+      dataAvailable: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
 
   return summary;
 };

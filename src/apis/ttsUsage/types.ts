@@ -24,6 +24,29 @@ export interface TtsErrorRecord {
   endpoint: string;
 }
 
+export interface AwsTtsData {
+  totalCharacters: number;
+  totalCost: number;
+  usageByDay: Record<string, {
+    characters: number;
+    cost: number;
+    usageTypes: Record<string, {
+      characters: number;
+      cost: number;
+    }>;
+  }>;
+  periodStart: string;
+  periodEnd: string;
+  dataAvailable: boolean;
+  error?: string;
+  // Current month free-tier breakdown (if this is current month data)
+  currentMonthFreeTier?: {
+    standard: number;
+    neural: number;
+    longform: number;
+  };
+}
+
 export interface TtsUsageSummary {
   totalCost: number;
   totalCalls: number;
@@ -56,6 +79,8 @@ export interface TtsUsageSummary {
   }>;
   // Aggregated usage just for the current calendar month, used for Free Tier display/calculation
   freeTierMonthUsage: FreeTierMonthUsage;
+  // AWS Cost Explorer data (real AWS billing data)
+  awsData?: AwsTtsData;
 }
 
 export interface TtsErrorSummary {
@@ -99,7 +124,7 @@ export interface GetTtsErrorRecordsResponse {
 }
 
 // Request params
-export type TtsRangeDays = 30 | 60 | 90;
+export type TtsRangeDays = 30 | 60 | 90 | 'current-month' | 'previous-month';
 
 export interface TtsUsageRangeParams {
   rangeDays?: TtsRangeDays;

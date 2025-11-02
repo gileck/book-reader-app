@@ -117,24 +117,64 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             // Track usage async (don't await)
             const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
 
-            // Amazon Polly billing: "SSML tags are not counted as billed characters"
-            // Remove all SSML tags from text for accurate billing count
-            const billableText = ssmlText.replace(/<[^>]*>/g, '');
-            const billableCharCount = billableText.length;
+            // Amazon Polly billing for Long-Form voices:
+            // AWS counts the original text PLUS the character count of mark attribute names
+            // Example: "Hello world" with marks "Hello-0" and "world-1"
+            //   Text: 11 chars + Mark attrs: 14 chars = 25 billable chars
+            const words = text.split(' ').filter(w => w.length > 0);
+            const textChars = text.length;
+            const markAttributeChars = words.reduce((sum, word, i) => {
+                return sum + `${word}-${i}`.length;
+            }, 0);
+            const billableCharCount = textChars + markAttributeChars;
+
+            console.log('🟢 [POLLY TTS] Request completed:', {
+                voiceId: config.voiceId,
+                voiceTier: config.voiceTier,
+                engine: engine,
+                originalTextChars: textChars,
+                markAttributeChars: markAttributeChars,
+                billableChars: billableCharCount,
+                ssmlLength: ssmlText.length,
+                audioLength: audioLength.toFixed(2) + 's',
+                timestamp: new Date().toISOString()
+            });
 
             const cost = this.calculateCost(billableCharCount, audioLength, config.voiceTier || 'standard');
+            
+            console.log('🟡 [POLLY TTS] About to track usage...');
             addTtsUsageRecord('polly', config.voiceId, billableCharCount, audioLength, cost, 'tts-api', config.voiceTier, undefined, false)
-                .catch(error => console.error('Error tracking TTS usage:', error));
+                .then(() => {
+                    console.log('✅ [POLLY TTS] Tracking SUCCESS:', {
+                        voiceId: config.voiceId,
+                        chars: billableCharCount,
+                        cost: cost.toFixed(6)
+                    });
+                })
+                .catch(error => {
+                    console.error('❌ [POLLY TTS] Tracking FAILED:', {
+                        voiceId: config.voiceId,
+                        chars: billableCharCount,
+                        error: error.message,
+                        stack: error.stack
+                    });
+                });
 
             return result;
         } catch (error) {
             // Enhanced error logging with text length information
             const originalTextLength = text.length;
             const ssmlTextLength = ssmlText.length;
-            const billableText = ssmlText.replace(/<[^>]*>/g, '');
-            const billableCharCount = billableText.length;
+            
+            // Calculate billable chars the same way as success case
+            const words = text.split(' ').filter(w => w.length > 0);
+            const textChars = text.length;
+            const markAttributeChars = words.reduce((sum, word, i) => {
+                return sum + `${word}-${i}`.length;
+            }, 0);
+            const billableCharCount = textChars + markAttributeChars;
 
-            const textLengthInfo = `How long was the provided text: ${originalTextLength} characters (original), ${ssmlTextLength} characters (with SSML markup), ${billableCharCount} characters (billable)`;
+            const textLengthInfo = `How long was the provided text: ${originalTextLength} characters (original), ${ssmlTextLength} characters (with SSML markup), ${billableCharCount} characters (billable with mark attributes)`;
 
             console.error(`Polly TTS synthesis error: ${textLengthInfo}`, {
                 error: error,
@@ -142,6 +182,7 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
                     originalTextLength,
                     ssmlTextLength,
                     billableCharCount,
+                    markAttributeChars,
                     ssmlOverhead: ssmlTextLength - originalTextLength,
                     compressionRatio: (ssmlTextLength / originalTextLength).toFixed(2)
                 },

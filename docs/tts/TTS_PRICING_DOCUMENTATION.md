@@ -24,15 +24,38 @@ Our application supports three TTS providers with different pricing models and c
 - **Generative Voices**: 100,000 characters/month
 \
 ### Character Counting Rules
-According to Amazon Polly documentation:
-> "The size of the input text can be up to 3000 billed characters (6000 total characters). **SSML tags are not counted as billed characters.**"
 
-**Implementation**: We remove ALL SSML tags before counting characters for billing.
+⚠️ **CRITICAL**: AWS Polly has **different billing rules for Long-Form voices** vs Standard/Neural voices.
+
+#### Standard & Neural Voices
+According to Amazon Polly documentation:
+> "SSML tags are not counted as billed characters"
+
+**Implementation**: Remove ALL SSML tags before counting.
 ```javascript
-// Amazon Polly billing: "SSML tags are not counted as billed characters"
+// Standard/Neural voices: Strip all SSML
 const billableText = ssmlText.replace(/<[^>]*>/g, '');
 const billableCharCount = billableText.length;
 ```
+
+#### Long-Form Voices (Danielle, Gregory, Burrow) - **SPECIAL CASE**
+**CRITICAL FINDING**: AWS counts the original text **PLUS** the character count of SSML `<mark>` attribute names.
+
+**Implementation**: Count text characters + mark attribute name lengths.
+```javascript
+// Long-Form voices: Text + mark attribute lengths
+// Example: "Hello world" with marks "Hello-0" and "world-1"
+//   Text: 11 chars + Mark attrs: 14 chars = 25 billable chars
+const words = text.split(' ').filter(w => w.length > 0);
+const textChars = text.length;
+const markAttributeChars = words.reduce((sum, word, i) => {
+    return sum + `${word}-${i}`.length;
+}, 0);
+const billableCharCount = textChars + markAttributeChars;
+```
+
+**Real-World Impact**: This caused a 68% discrepancy between our tracking and AWS billing.  
+See [AWS_POLLY_BILLING_CRITICAL_FINDINGS.md](./AWS_POLLY_BILLING_CRITICAL_FINDINGS.md) for detailed analysis.
 
 ## Google Cloud Text-to-Speech Pricing
 
@@ -95,10 +118,16 @@ Our application generates SSML with timing marks for audio synchronization:
 
 For the text "Hello world" (11 characters):
 
-**Amazon Polly Billing**:
-- SSML: `<speak> <mark name="word1-0"/> Hello <mark name="word2-1"/> world</speak>`
-- Billable text: ` Hello  world` (13 characters - includes spaces)
-- Billed: 13 characters
+**Amazon Polly Billing (Standard/Neural)**:
+- SSML: `<speak> <mark name="Hello-0"/> Hello <mark name="world-1"/> world</speak>`
+- Billable text: ` Hello  world` (strips all SSML)
+- Billed: ~13 characters (text + spaces only)
+
+**Amazon Polly Billing (Long-Form)** ⚠️:
+- SSML: `<speak> <mark name="Hello-0"/> Hello <mark name="world-1"/> world</speak>`
+- Text: "Hello world" = 11 characters
+- Mark attributes: "Hello-0" (7) + "world-1" (7) = 14 characters
+- **Billed: 25 characters** (11 text + 14 mark attributes)
 
 **Google TTS Billing**:
 - SSML: `<speak> <mark name="word1-0"/> Hello <mark name="word2-1"/> world</speak>`
@@ -184,21 +213,31 @@ The application includes free tier usage tracking in the TTS Usage Dashboard:
 
 ## Important Notes
 
-1. **Character counting differs between providers** - Amazon excludes all SSML, Google excludes only `<mark>` tags, ElevenLabs counts all characters
-2. **Free tier limits are separate** - Each voice type has independent monthly allowances
-3. **Billing accuracy** - Our implementation follows each provider's official documentation
-4. **Monthly resets** - Free tier usage resets at the beginning of each month
-5. **Cost estimates** - All pricing is approximate and based on current published rates
-6. **ElevenLabs credits** - Uses credit-based system where 1 character = 0.5 credits
-7. **Cache tracking** - S3 cache responses are tracked separately with zero cost, enabling accurate cost savings calculations
+1. **⚠️ CRITICAL: Amazon Polly Long-Form voices have special billing** - They count text + SSML mark attribute names, unlike Standard/Neural voices
+2. **Character counting differs between providers** - Amazon varies by voice type, Google excludes only `<mark>` tags, ElevenLabs counts all characters
+3. **Free tier limits are separate** - Each voice type has independent monthly allowances
+4. **Billing accuracy validated with AWS Cost Explorer** - We use AWS Cost Explorer API to validate internal tracking against actual billing
+5. **Monthly resets** - Free tier usage resets at the beginning of each month
+6. **Cost estimates** - All pricing is approximate and based on current published rates
+7. **ElevenLabs credits** - Uses credit-based system where 1 character = 0.5 credits
+8. **Cache tracking** - S3 cache responses are tracked separately with zero cost, enabling accurate cost savings calculations
+9. **68% discrepancy discovered** - Initial implementation undercounted Long-Form usage by 68%, see [AWS_POLLY_BILLING_CRITICAL_FINDINGS.md](./AWS_POLLY_BILLING_CRITICAL_FINDINGS.md)
 
 ## References
 
+### External Documentation
 - [Amazon Polly Pricing](https://aws.amazon.com/polly/pricing/)
-- [Amazon Polly Quotas Documentation](https://docs.aws.amazon.com/polly/latest/dg/limits.html)
+- [Amazon Polly Quotas Documentation](https://docs.aws.amazon.com/polly/latest/dg/limits.html) ⚠️ Incomplete for Long-Form billing
 - [Google Cloud Text-to-Speech Pricing](https://cloud.google.com/text-to-speech/pricing)
 - [ElevenLabs Pricing](https://elevenlabs.io/pricing)
 
+### Internal Documentation
+- [AWS_POLLY_BILLING_CRITICAL_FINDINGS.md](./AWS_POLLY_BILLING_CRITICAL_FINDINGS.md) - Detailed analysis of Long-Form voice billing discovery
+- [AWS_COST_EXPLORER_INTEGRATION.md](./AWS_COST_EXPLORER_INTEGRATION.md) - AWS Cost Explorer API integration for billing validation
+- [TTS_BILLING_VERIFICATION.md](./TTS_BILLING_VERIFICATION.md) - Verification of character counting across all providers
+- `../../src/server/tts/adapters/pollyTtsAdapter.ts` - Implementation with correct billing logic
+
 ---
 
-*Last updated: January 2025* 
+*Last updated: November 2025*  
+*Critical billing fix applied: November 2025* 

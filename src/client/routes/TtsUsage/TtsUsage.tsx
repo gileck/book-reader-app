@@ -11,7 +11,18 @@ export function TtsUsage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRecordsExpanded, setIsRecordsExpanded] = useState(false);
-  const [rangeDays, setRangeDays] = useState<TtsRangeDays>(30);
+  const [rangeDays, setRangeDays] = useState<TtsRangeDays>('current-month');
+
+  // Get current and previous month names
+  const getCurrentMonthName = () => {
+    return new Date().toLocaleString('en-US', { month: 'long' });
+  };
+
+  const getPreviousMonthName = () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    return date.toLocaleString('en-US', { month: 'long' });
+  };
 
   useEffect(() => {
     loadData();
@@ -124,7 +135,23 @@ export function TtsUsage() {
 
   const last7DaysData = getLast7Days();
   const weeklyUsageData = aggregateWeeklyUsage();
-  const numberOfWeeks = Math.ceil(rangeDays / 7);
+  
+  // Calculate number of weeks based on range type
+  const numberOfWeeks = (() => {
+    if (rangeDays === 'current-month') {
+      const now = new Date();
+      const daysInMonth = Math.ceil((now.getTime() - new Date(now.getFullYear(), now.getMonth(), 1).getTime()) / (1000 * 60 * 60 * 24));
+      return Math.ceil(daysInMonth / 7);
+    } else if (rangeDays === 'previous-month') {
+      const now = new Date();
+      const prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const prevMonthEnd = new Date(now.getFullYear(), now.getMonth(), 1);
+      const daysInPrevMonth = Math.ceil((prevMonthEnd.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24));
+      return Math.ceil(daysInPrevMonth / 7);
+    } else {
+      return Math.ceil((rangeDays as number) / 7);
+    }
+  })();
 
   // Use server-provided calendar-month aggregate for Free Tier usage
   const currentMonthUsage = summary?.freeTierMonthUsage || {
@@ -250,9 +277,11 @@ export function TtsUsage() {
           <select
             id="range"
             value={rangeDays}
-            onChange={(e) => setRangeDays(Number(e.target.value) as TtsRangeDays)}
+            onChange={(e) => setRangeDays(e.target.value as TtsRangeDays)}
             style={{ minHeight: 32, borderRadius: 8, padding: '4px 8px' }}
           >
+            <option value="current-month">Current Month ({getCurrentMonthName()})</option>
+            <option value="previous-month">Previous Month ({getPreviousMonthName()})</option>
             <option value={30}>Last 30 days</option>
             <option value={60}>Last 60 days</option>
             <option value={90}>Last 90 days</option>
@@ -288,6 +317,218 @@ export function TtsUsage() {
               </div>
             </div>
           </section>
+
+          {/* AWS Cost Explorer Section - Real AWS Billing Data for Amazon Polly ONLY */}
+          {summary.awsData && summary.usageByProvider['polly'] && (
+            <section className={styles.awsSection}>
+              <div className={styles.awsSectionHeader}>
+                <div>
+                  <h3 className={`${styles.sectionTitle} ${styles.awsSectionTitle}`}>
+                    AWS Cost Explorer - Amazon Polly
+                  </h3>
+                  <p className={styles.awsSectionSubtitle}>
+                    Real AWS billing data (24-48h delay) • Google TTS & ElevenLabs use internal tracking
+                  </p>
+                </div>
+                {!summary.awsData.dataAvailable && (
+                  <span className={`${styles.awsStatusBadge} ${styles.unavailable}`}>
+                    {summary.awsData.error || 'Data not available'}
+                  </span>
+                )}
+                {summary.awsData.dataAvailable && (
+                  <span className={`${styles.awsStatusBadge} ${styles.available}`}>
+                    ✓ Live AWS Data
+                  </span>
+                )}
+              </div>
+              {summary.awsData.dataAvailable ? (
+                <>
+                  <div className={styles.statsGrid}>
+                    <div className={`${styles.awsStatCard} ${styles.gradient} ${styles.purpleGradient}`}>
+                      <div className={styles.statLabel}>AWS Polly Cost</div>
+                      <div className={styles.statValue}>${summary.awsData.totalCost.toFixed(2)}</div>
+                      <div className={styles.statNote}>Actual AWS billing</div>
+                    </div>
+                    <div className={`${styles.awsStatCard} ${styles.gradient} ${styles.pinkGradient}`}>
+                      <div className={styles.statLabel}>AWS Characters Used</div>
+                      <div className={styles.statValue}>{summary.awsData.totalCharacters.toLocaleString()}</div>
+                      <div className={styles.statUnit}>chars</div>
+                    </div>
+                    <div className={styles.statCard}>
+                      <div className={styles.statLabel}>Internal Polly Cost</div>
+                      <div className={styles.statValue}>
+                        ${summary.usageByProvider['polly']?.totalCost.toFixed(2) || '0.00'}
+                      </div>
+                      <div className={styles.statNote}>
+                        {summary.usageByProvider['polly']?.totalCalls.toLocaleString() || '0'} tracked calls
+                      </div>
+                    </div>
+                    <div className={styles.statCard}>
+                      <div className={styles.statLabel}>Tracking Accuracy</div>
+                      <div className={styles.statValue}>
+                        {summary.usageByProvider['polly'] && summary.awsData.totalCost > 0
+                          ? Math.abs(((summary.usageByProvider['polly'].totalCost - summary.awsData.totalCost) / summary.awsData.totalCost) * 100).toFixed(1)
+                          : '0.0'}%
+                      </div>
+                      <div className={styles.statNote}>
+                        {summary.usageByProvider['polly'] && summary.usageByProvider['polly'].totalCost > summary.awsData.totalCost 
+                          ? 'Over-estimated' 
+                          : 'Under-estimated'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`${styles.detailCard} ${styles.awsDailyUsage}`}>
+                    <h4 className={styles.awsDailyTitle}>
+                      AWS Daily Polly Usage (Last 10 Days)
+                    </h4>
+                    <div className={styles.awsDailyScroll}>
+                      {Object.entries(summary.awsData.usageByDay)
+                        .sort(([a], [b]) => b.localeCompare(a))
+                        .slice(0, 10)
+                        .reverse()
+                        .map(([date, data]) => (
+                          <div key={date} className={styles.awsDayCard}>
+                            <div className={styles.awsDayDate}>
+                              {new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </div>
+                            <div className={styles.awsDayCost}>
+                              ${data.cost.toFixed(2)}
+                            </div>
+                            <div className={styles.awsDayChars}>
+                              {data.characters.toLocaleString()} chars
+                            </div>
+                            {Object.entries(data.usageTypes).length > 0 && (
+                              <div className={styles.awsDayTypes}>
+                                {Object.keys(data.usageTypes).map(type => 
+                                  type.includes('LongForm') ? 'LongForm' : 
+                                  type.includes('Neural') ? 'Neural' : 'Standard'
+                                ).join(', ')}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                  {/* AWS Free-Tier Usage for Current Month */}
+                  {summary.awsData.currentMonthFreeTier && (
+                    <div className={`${styles.detailCard} ${styles.awsFreeTierCard}`}>
+                      <h4 className={styles.awsFreeTierTitle}>
+                        AWS Free Tier Usage (
+                        {rangeDays === 'current-month' 
+                          ? `${getCurrentMonthName()}`
+                          : rangeDays === 'previous-month'
+                          ? `${getPreviousMonthName()}`
+                          : `${getCurrentMonthName()}`})
+                      </h4>
+                      <div className={styles.awsVoiceTypeGrid}>
+                        {/* Standard Voice */}
+                        {summary.awsData.currentMonthFreeTier.standard > 0 && (
+                          <div className={styles.awsVoiceTypeItem}>
+                            <div className={styles.awsVoiceTypeHeader}>
+                              <span className={styles.awsVoiceTypeName}>Standard</span>
+                              <span className={styles.awsVoiceTypeBadge}>Free</span>
+                            </div>
+                            <div className={styles.awsProgressContainer}>
+                              <div className={styles.awsProgressBar}>
+                                <div
+                                  className={`${styles.awsProgressFill} ${styles[
+                                    summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.9 ? 'danger' :
+                                    summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.7 ? 'warning' : 'safe'
+                                  ]}`}
+                                  style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard) * 100)}%` }}
+                                ></div>
+                              </div>
+                              <div className={styles.awsProgressText}>
+                                <span className={styles.awsUsageText}>
+                                  {formatNumber(Math.round(summary.awsData.currentMonthFreeTier.standard))} / {formatNumber(FREE_TIER_LIMITS.polly.standard)} chars
+                                </span>
+                                <span className={`${styles.awsPercentageText} ${styles[
+                                  summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.9 ? 'danger' :
+                                  summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.7 ? 'warning' : 'safe'
+                                ]}`}>
+                                  {formatPercentage(summary.awsData.currentMonthFreeTier.standard, FREE_TIER_LIMITS.polly.standard).toFixed(1)}%
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Neural Voice */}
+                        {summary.awsData.currentMonthFreeTier.neural > 0 && (
+                          <div className={styles.awsVoiceTypeItem}>
+                            <div className={styles.awsVoiceTypeHeader}>
+                              <span className={styles.awsVoiceTypeName}>Neural</span>
+                              <span className={styles.awsVoiceTypeBadge}>Free</span>
+                            </div>
+                            <div className={styles.awsProgressContainer}>
+                              <div className={styles.awsProgressBar}>
+                                <div
+                                  className={`${styles.awsProgressFill} ${styles[
+                                    summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.9 ? 'danger' :
+                                    summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.7 ? 'warning' : 'safe'
+                                  ]}`}
+                                  style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural) * 100)}%` }}
+                                ></div>
+                              </div>
+                              <div className={styles.awsProgressText}>
+                                <span className={styles.awsUsageText}>
+                                  {formatNumber(Math.round(summary.awsData.currentMonthFreeTier.neural))} / {formatNumber(FREE_TIER_LIMITS.polly.neural)} chars
+                                </span>
+                                <span className={`${styles.awsPercentageText} ${styles[
+                                  summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.9 ? 'danger' :
+                                  summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.7 ? 'warning' : 'safe'
+                                ]}`}>
+                                  {formatPercentage(summary.awsData.currentMonthFreeTier.neural, FREE_TIER_LIMITS.polly.neural).toFixed(1)}%
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Long-Form Voice */}
+                        {summary.awsData.currentMonthFreeTier.longform > 0 && (
+                          <div className={styles.awsVoiceTypeItem}>
+                            <div className={styles.awsVoiceTypeHeader}>
+                              <span className={styles.awsVoiceTypeName}>Long-Form</span>
+                              <span className={styles.awsVoiceTypeBadge}>Free</span>
+                            </div>
+                            <div className={styles.awsProgressContainer}>
+                              <div className={styles.awsProgressBar}>
+                                <div
+                                  className={`${styles.awsProgressFill} ${styles[
+                                    summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.9 ? 'danger' :
+                                    summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.7 ? 'warning' : 'safe'
+                                  ]}`}
+                                  style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform) * 100)}%` }}
+                                ></div>
+                              </div>
+                              <div className={styles.awsProgressText}>
+                                <span className={styles.awsUsageText}>
+                                  {formatNumber(Math.round(summary.awsData.currentMonthFreeTier.longform))} / {formatNumber(FREE_TIER_LIMITS.polly.longform)} chars
+                                </span>
+                                <span className={`${styles.awsPercentageText} ${styles[
+                                  summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.9 ? 'danger' :
+                                  summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.7 ? 'warning' : 'safe'
+                                ]}`}>
+                                  {formatPercentage(summary.awsData.currentMonthFreeTier.longform, FREE_TIER_LIMITS.polly.longform).toFixed(1)}%
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className={styles.awsEmptyState}>
+                  <div className={styles.awsEmptyIcon}>⏳</div>
+                  <div className={styles.awsEmptyTitle}>AWS Cost Explorer data not available</div>
+                  <div className={styles.awsEmptyMessage}>
+                    AWS billing data has a 24-48 hour delay. Check back later for Polly usage data.
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
 
           {/* Cache Performance Section */}
           <section className={styles.summarySection}>
@@ -437,7 +678,11 @@ export function TtsUsage() {
           <section className={styles.freeTierSection}>
             <div className={styles.freeTierCard}>
               <h3 className={styles.cardTitle}>
-                Free Tier Usage - {new Date().toLocaleDateString('en-US', { month: 'long' })}
+                Free Tier Usage - {rangeDays === 'current-month' 
+                  ? getCurrentMonthName()
+                  : rangeDays === 'previous-month'
+                  ? getPreviousMonthName()
+                  : getCurrentMonthName()}
               </h3>
               <div className={styles.freeTierInfo}>
                 <p className={styles.freeTierDescription}>
@@ -467,6 +712,22 @@ export function TtsUsage() {
                         </span>
                       </div>
                     </div>
+                    {summary.awsData?.currentMonthFreeTier && (
+                      <div className={styles.usageComparison}>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>Internal Tracking:</span>
+                          <span className={styles.usageComparisonValue}>
+                            {formatNumber(currentMonthUsage.polly.standard)} chars
+                          </span>
+                        </div>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>AWS Billing:</span>
+                          <span className={`${styles.usageComparisonValue} ${styles.aws}`}>
+                            {formatNumber(summary.awsData.currentMonthFreeTier.standard)} chars
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.voiceTypeItem}>
@@ -490,6 +751,22 @@ export function TtsUsage() {
                         </span>
                       </div>
                     </div>
+                    {summary.awsData?.currentMonthFreeTier && (
+                      <div className={styles.usageComparison}>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>Internal Tracking:</span>
+                          <span className={styles.usageComparisonValue}>
+                            {formatNumber(currentMonthUsage.polly.neural)} chars
+                          </span>
+                        </div>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>AWS Billing:</span>
+                          <span className={`${styles.usageComparisonValue} ${styles.aws}`}>
+                            {formatNumber(summary.awsData.currentMonthFreeTier.neural)} chars
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.voiceTypeItem}>
@@ -513,6 +790,22 @@ export function TtsUsage() {
                         </span>
                       </div>
                     </div>
+                    {summary.awsData?.currentMonthFreeTier && (
+                      <div className={styles.usageComparison}>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>Internal Tracking:</span>
+                          <span className={styles.usageComparisonValue}>
+                            {formatNumber(currentMonthUsage.polly.longform)} chars
+                          </span>
+                        </div>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>AWS Billing:</span>
+                          <span className={`${styles.usageComparisonValue} ${styles.aws}`}>
+                            {formatNumber(summary.awsData.currentMonthFreeTier.longform)} chars
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

@@ -1479,3 +1479,530 @@
   color: #AF52DE;
   border: 1px solid rgba(175, 82, 222, 0.2);
 }
+
+/* AWS Cost Explorer Section - Mobile First */
+.awsSection {
+  margin-bottom: 32px;
+}
+
+.awsSectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .awsSectionHeader {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.awsSectionTitle {
+  margin: 0;
+}
+
+.awsSectionSubtitle {
+  font-size: 12px;
+  color: #6E6E73;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsSectionSubtitle {
+    color: #A1A1A6;
+  }
+}
+
+.awsStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  align-self: flex-start;
+}
+
+@media (min-width: 768px) {
+  .awsStatusBadge {
+    align-self: auto;
+  }
+}
+
+.awsStatusBadge.available {
+  color: #34C759;
+  background: #E8F5E9;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsStatusBadge.available {
+    background: rgba(52, 199, 89, 0.15);
+  }
+}
+
+.awsStatusBadge.unavailable {
+  color: #FF9500;
+  background: #FFF3E0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsStatusBadge.unavailable {
+    background: rgba(255, 149, 0, 0.15);
+  }
+}
+
+.awsStatCard {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  color: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsStatCard {
+    background: #2C2C2E;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.awsStatCard.gradient {
+  color: white;
+}
+
+.awsStatCard.gradient .statLabel {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.awsStatCard.gradient .statNote {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.awsStatCard.gradient .statUnit {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.awsStatCard.purpleGradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.awsStatCard.pinkGradient {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.awsDailyUsage {
+  margin-top: 16px;
+}
+
+.awsDailyTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: #6E6E73;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDailyTitle {
+    color: #A1A1A6;
+  }
+}
+
+.awsDailyScroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.awsDailyScroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.awsDailyScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.awsDailyScroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDailyScroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@media (max-width: 767px) {
+  .awsDailyScroll {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 6px;
+  }
+}
+
+.awsDayCard {
+  min-width: 90px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 12px;
+  background: #F6F7F8;
+  border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDayCard {
+    background: #1C1C1E;
+  }
+}
+
+@media (min-width: 768px) {
+  .awsDayCard {
+    min-width: 100px;
+    padding: 14px;
+  }
+}
+
+.awsDayDate {
+  font-size: 11px;
+  color: #6E6E73;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDayDate {
+    color: #A1A1A6;
+  }
+}
+
+.awsDayCost {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDayCost {
+    color: #FFFFFF;
+  }
+}
+
+@media (min-width: 768px) {
+  .awsDayCost {
+    font-size: 15px;
+  }
+}
+
+.awsDayChars {
+  font-size: 10px;
+  color: #9CA3AF;
+  line-height: 1.2;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDayChars {
+    color: #6E6E73;
+  }
+}
+
+.awsDayTypes {
+  font-size: 9px;
+  color: #9CA3AF;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsDayTypes {
+    color: #6E6E73;
+  }
+}
+
+.awsEmptyState {
+  padding: 24px;
+  text-align: center;
+  color: #6E6E73;
+  background: #F6F7F8;
+  border-radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsEmptyState {
+    background: #1C1C1E;
+    color: #A1A1A6;
+  }
+}
+
+@media (min-width: 768px) {
+  .awsEmptyState {
+    padding: 32px;
+  }
+}
+
+.awsEmptyIcon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+  .awsEmptyIcon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+}
+
+.awsEmptyTitle {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+@media (min-width: 768px) {
+  .awsEmptyTitle {
+    font-size: 15px;
+  }
+}
+
+.awsEmptyMessage {
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .awsEmptyMessage {
+    font-size: 13px;
+  }
+}
+
+/* AWS Free Tier Section */
+.awsFreeTierCard {
+  margin-top: 16px;
+}
+
+.awsFreeTierTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #6E6E73;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsFreeTierTitle {
+    color: #A1A1A6;
+  }
+}
+
+.awsVoiceTypeGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .awsVoiceTypeGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.awsVoiceTypeItem {
+  padding: 16px;
+  background: #F8F9FA;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsVoiceTypeItem {
+    background: #1C1C1E;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.awsVoiceTypeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.awsVoiceTypeName {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1D1D1F;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsVoiceTypeName {
+    color: #FFFFFF;
+  }
+}
+
+@media (min-width: 768px) {
+  .awsVoiceTypeName {
+    font-size: 15px;
+  }
+}
+
+.awsVoiceTypeBadge {
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.awsProgressContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.awsProgressBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsProgressBar {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.awsProgressFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 300ms ease-in-out;
+}
+
+.awsProgressFill.safe {
+  background: linear-gradient(90deg, #34C759, #007AFF);
+}
+
+.awsProgressFill.warning {
+  background: linear-gradient(90deg, #FF9500, #FF6B35);
+}
+
+.awsProgressFill.danger {
+  background: linear-gradient(90deg, #FF3B30, #C7375E);
+}
+
+.awsProgressText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+@media (max-width: 767px) {
+  .awsProgressText {
+    font-size: 12px;
+  }
+}
+
+.awsUsageText {
+  color: #6E6E73;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .awsUsageText {
+    color: #A1A1A6;
+  }
+}
+
+.awsPercentageText {
+  font-weight: 600;
+}
+
+.awsPercentageText.safe {
+  color: #34C759;
+}
+
+.awsPercentageText.warning {
+  color: #FF9500;
+}
+
+.awsPercentageText.danger {
+  color: #FF3B30;
+}
+
+/* Free Tier Usage Comparison */
+.usageComparison {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .usageComparison {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.usageComparisonRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+@media (max-width: 767px) {
+  .usageComparisonRow {
+    font-size: 11px;
+  }
+}
+
+.usageComparisonLabel {
+  color: #6E6E73;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .usageComparisonLabel {
+    color: #A1A1A6;
+  }
+}
+
+.usageComparisonValue {
+  color: #1D1D1F;
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .usageComparisonValue {
+    color: #FFFFFF;
+  }
+}
+
+.usageComparisonValue.aws {
+  color: #007AFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  .usageComparisonValue.aws {
+    color: #5AC8FA;
+  }
+}
