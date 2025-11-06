@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { Box, Typography, Paper, Alert, Snackbar, Fab, Tabs, Tab } from '@mui/material';
+import { Box, Paper, Alert, Snackbar, Fab, Tabs, Tab } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { useRouter } from '../../router';
 import type { BookClient } from '../../../apis/books/types';
@@ -51,7 +51,8 @@ export const ReaderUI = ({
         chapter,
         loading,
         chapterTransitionLoading,
-        error,
+        navigationError,
+        clearNavigationError,
         audio,
         settings,
         bookmarks,
@@ -350,16 +351,8 @@ export const ReaderUI = ({
     }, [sentenceAudio.sentences, sentenceAudio.controller.currentSentenceIndex, settings.playbackSpeed]);
 
     // Settings are guaranteed to be loaded by ReaderDataLoader, so no need to check again
-
-    if (error) {
-        return (
-            <Box textAlign="center" mt={4}>
-                <Typography color="error" variant="h6">
-                    {error}
-                </Typography>
-            </Box>
-        );
-    }
+    // Note: Initial load errors are handled by ReaderDataLoader, not here
+    // Chapter navigation errors are shown as Snackbars (see navigationError below)
 
     return (
         <UserThemeProvider
@@ -725,6 +718,22 @@ export const ReaderUI = ({
                         sx={{ width: '100%' }}
                     >
                         {progress.alert.message}
+                    </Alert>
+                </Snackbar>
+
+                {/* Chapter Navigation Error Alert */}
+                <Snackbar
+                    open={!!navigationError}
+                    autoHideDuration={6000}
+                    onClose={clearNavigationError}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert
+                        onClose={clearNavigationError}
+                        severity="error"
+                        sx={{ width: '100%' }}
+                    >
+                        {navigationError}
                     </Alert>
                 </Snackbar>
             </Box>

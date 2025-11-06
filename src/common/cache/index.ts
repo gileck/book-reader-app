@@ -132,31 +132,40 @@ export const createCache = (provider: CacheProvider) => {
         }
 
         // Execute the callback to get fresh data
-        const result = await callback();
+        try {
+            const result = await callback();
 
-        // Check if data is valid for caching
-        const isDataValid = opts.isDataValidForCache ? opts.isDataValidForCache(result) : true;
-        
-        if (!isDataValid) {
-            // Delete existing cache if data is not valid
-            await provider.deleteCache(cacheKey);
-            return { data: result, isFromCache: false };
-        }
+            // Check if data is valid for caching
+            const isDataValid = opts.isDataValidForCache ? opts.isDataValidForCache(result) : true;
+            
+            if (!isDataValid) {
+                // Delete existing cache if data is not valid
+                await provider.deleteCache(cacheKey);
+                return { data: result, isFromCache: false };
+            }
 
-        // Only cache successful results (no error property)
-        if (!hasErrorProperty(result)) {
-            const metadata = await provider.writeCache(cacheKey, result);
+            // Only cache successful results (no error property)
+            if (!hasErrorProperty(result)) {
+                const metadata = await provider.writeCache(cacheKey, result);
+                return {
+                    data: result,
+                    isFromCache: false,
+                    metadata,
+                };
+            }
+
             return {
                 data: result,
                 isFromCache: false,
-                metadata,
             };
+        } catch (error) {
+            // If in offline mode and we get a network blocked error, provide a helpful message
+            if (opts.staleWhileRevalidate && error instanceof Error && error.message === 'OFFLINE_MODE_NETWORK_BLOCKED') {
+                throw new Error('Content not available offline. Please connect to the internet or download this content for offline access.');
+            }
+            // Re-throw other errors
+            throw error;
         }
-
-        return {
-            data: result,
-            isFromCache: false,
-        };
     };
 
     /**

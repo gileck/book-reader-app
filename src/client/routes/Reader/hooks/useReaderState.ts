@@ -19,7 +19,7 @@ interface RuntimeState {
     currentChapterNumber: number;
     currentChunkIndex: number;
     chapterTransitionLoading: boolean;
-    error: string | null;
+    navigationError: string | null; // Temporary error for failed navigation attempts
 }
 
 interface UseReaderStateProps {
@@ -45,7 +45,7 @@ export const useReaderState = ({
         currentChapterNumber: initialChapterNumber,
         currentChunkIndex: initialChunkIndex,
         chapterTransitionLoading: false,
-        error: null
+        navigationError: null
     });
 
     // Helpers for offline loading
@@ -62,26 +62,34 @@ export const useReaderState = ({
         };
     }, []);
 
-    const isOnline = () => (typeof navigator === 'undefined' ? true : navigator.onLine !== false);
-
     const loadChapterPreferOffline = useCallback(async (
         bookIdParam: string,
         chapterNumber: number
     ): Promise<{ chapter: ChapterClient | null; fromLocal: boolean }> => {
-        // When online, always fetch fresh data from network
-        if (isOnline()) {
+        // Always call the API - it handles caching automatically:
+        // - When online: fetches from network and caches the response
+        // - When offline: returns cached response or throws error
+        try {
             const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
-            return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+            
+            // Check if this came from cache
+            const fromCache = chapterResult.isFromCache || false;
+            
+            return { 
+                chapter: chapterResult.data?.chapter || null, 
+                fromLocal: fromCache 
+            };
+        } catch (error) {
+            // If API call fails (offline with no cache), try IndexedDB as last resort
+            console.warn('API call failed, checking IndexedDB:', error);
+            const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
+            if (localRec) {
+                return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
+            }
+            
+            // No cached version available anywhere
+            throw error;
         }
-
-        // When offline, use cached chapter
-        const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
-        if (localRec) {
-            return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
-        }
-
-        // Offline but no cached chapter available
-        return { chapter: null, fromLocal: false };
     }, [buildChapterFromLocal]);
 
     // Function to change chapter (for navigation)
@@ -89,33 +97,61 @@ export const useReaderState = ({
         if (!bookId || chapterNumber === state.currentChapterNumber) return;
 
         try {
-            setState(prev => ({ ...prev, chapterTransitionLoading: true }));
+            // Clear navigation error and show loading state
+            setState(prev => ({ 
+                ...prev, 
+                navigationError: null, 
+                chapterTransitionLoading: true 
+            }));
 
             const { chapter: resolvedChapter } = await loadChapterPreferOffline(bookId, chapterNumber);
             if (resolvedChapter) {
+                // SUCCESS: Navigate to new chapter
                 setState(prev => ({
                     ...prev,
                     chapter: resolvedChapter,
                     currentChapterNumber: chapterNumber,
                     currentChunkIndex: 0,
-                    chapterTransitionLoading: false
+                    chapterTransitionLoading: false,
+                    navigationError: null
                 }));
             } else {
+                // FAILED: Stay on current chapter, show error notification
                 setState(prev => ({
                     ...prev,
-                    error: 'Chapter not found',
+                    navigationError: `Chapter ${chapterNumber} is not available. Please try a different chapter.`,
                     chapterTransitionLoading: false
                 }));
             }
         } catch (error) {
             console.error('Error loading chapter:', error);
+            
+            // Extract user-friendly error message
+            let errorMessage = `Failed to load chapter ${chapterNumber}.`;
+            if (error instanceof Error) {
+                // Use the specific error message if it's user-friendly
+                if (error.message.includes('not available offline')) {
+                    errorMessage = `Chapter ${chapterNumber} is not available offline. Please connect to the internet or stay on this chapter.`;
+                } else if (error.message.includes('connect to the internet')) {
+                    errorMessage = `Chapter ${chapterNumber} requires an internet connection. Please connect or stay on this chapter.`;
+                } else if (error.message.includes('Chapter not found')) {
+                    errorMessage = `Chapter ${chapterNumber} could not be found. It may not exist in this book.`;
+                }
+            }
+            
+            // FAILED: Stay on current chapter, show error notification
             setState(prev => ({
                 ...prev,
-                error: 'Failed to load chapter',
+                navigationError: errorMessage,
                 chapterTransitionLoading: false
             }));
         }
     }, [bookId, state.currentChapterNumber, loadChapterPreferOffline]);
+    
+    // Function to clear navigation error
+    const clearNavigationError = useCallback(() => {
+        setState(prev => ({ ...prev, navigationError: null }));
+    }, []);
 
     // Get user settings from Reader-specific hook (wraps centralized Context)
     const userSettings = useUserSettings();
@@ -247,7 +283,8 @@ export const useReaderState = ({
         chapter: state.chapter,
         loading: false, // Never loading for initial data
         chapterTransitionLoading: state.chapterTransitionLoading,
-        error: state.error,
+        navigationError: state.navigationError,
+        clearNavigationError,
         currentChapterNumber: state.currentChapterNumber || 1,
 
         // Progress tracking

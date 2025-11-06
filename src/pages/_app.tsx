@@ -6,11 +6,11 @@ import { SettingsProvider } from "@/client/settings/SettingsContext";
 import { useSettings } from "@/client/settings/SettingsContext";
 import { initializeApiClient } from "@/client/utils/apiClient";
 import { AppThemeProvider } from "@/client/components/ThemeProvider";
-import AuthWrapper from "@/client/components/auth/AuthWrapper";
 import dynamic from 'next/dynamic';
 import { routes } from '@/client/routes';
 import { Layout } from '@/client/components/Layout';
 
+const AuthWrapper = dynamic(() => import('@/client/components/auth/AuthWrapper'), { ssr: false });
 const RouterProvider = dynamic(() => import('@/client/router/index').then(module => module.RouterProvider), { ssr: false });
 
 export default function App({ }: AppProps) {

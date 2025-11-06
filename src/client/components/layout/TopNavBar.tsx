@@ -1,7 +1,8 @@
-import { AppBar, Toolbar, IconButton, Box, Button, Avatar, Menu, MenuItem, Typography, Divider } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Box, Button, Avatar, Menu, MenuItem, Typography, Divider, Chip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import CloudOffIcon from '@mui/icons-material/CloudOff';
 import { useRouter } from '../../router';
 import { NavItem } from '../../components/layout/types';
 import { useAuth } from '../../context/AuthContext';
@@ -21,7 +22,7 @@ interface TopNavBarProps {
 export const TopNavBar = ({ navItems, isStandalone, onDrawerToggle }: TopNavBarProps) => {
   const { currentPath, navigate } = useRouter();
   const { user, isAuthenticated, logout } = useAuth();
-  const { settings, updateSettings } = useSettings();
+  const { settings, updateSettings, effectiveOffline } = useSettings();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [userTheme, setUserTheme] = useState<'light' | 'dark'>('light');
   const hasLoadedUserTheme = useRef(false);
@@ -133,6 +134,44 @@ export const TopNavBar = ({ navItems, isStandalone, onDrawerToggle }: TopNavBarP
             ))}
           </Box>
         </Box>
+
+        {/* Offline Mode Indicator - Desktop */}
+        {effectiveOffline && (
+          <Chip
+            icon={<CloudOffIcon />}
+            label="Offline Mode"
+            size="small"
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              color: '#fff',
+              fontWeight: 600,
+              '& .MuiChip-icon': {
+                color: '#fff'
+              },
+              display: { xs: 'none', sm: 'flex' }
+            }}
+          />
+        )}
+
+        {/* Offline Mode Indicator - Mobile (icon only) */}
+        {effectiveOffline && (
+          <Box
+            sx={{
+              display: { xs: 'flex', sm: 'none' },
+              alignItems: 'center',
+              gap: 0.5,
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              borderRadius: '12px',
+              px: 1,
+              py: 0.5
+            }}
+          >
+            <CloudOffIcon sx={{ fontSize: 16, color: '#fff' }} />
+            <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: '0.7rem' }}>
+              Offline
+            </Typography>
+          </Box>
+        )}
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <IconButton

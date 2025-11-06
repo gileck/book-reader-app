@@ -48,26 +48,34 @@ export const useReaderData = (): UseReaderDataResult => {
         };
     }, []);
 
-    const isOnline = () => (typeof navigator === 'undefined' ? true : navigator.onLine !== false);
-
     const loadChapterPreferOffline = useCallback(async (
         bookIdParam: string,
         chapterNumber: number
     ): Promise<{ chapter: ChapterClient | null; fromLocal: boolean }> => {
-        // When online, always fetch fresh data from network
-        if (isOnline()) {
+        // Always call the API - it handles caching automatically:
+        // - When online: fetches from network and caches the response
+        // - When offline: returns cached response or throws error
+        try {
             const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
-            return { chapter: chapterResult.data?.chapter || null, fromLocal: false };
+            
+            // Check if this came from cache
+            const fromCache = chapterResult.isFromCache || false;
+            
+            return { 
+                chapter: chapterResult.data?.chapter || null, 
+                fromLocal: fromCache 
+            };
+        } catch (error) {
+            // If API call fails (offline with no cache), try IndexedDB as last resort
+            console.warn('API call failed, checking IndexedDB:', error);
+            const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
+            if (localRec) {
+                return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
+            }
+            
+            // No cached version available anywhere
+            throw error;
         }
-
-        // When offline, use cached chapter
-        const localRec = await offlineDB.getChapterByBookAndNumber(bookIdParam, chapterNumber);
-        if (localRec) {
-            return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
-        }
-
-        // Offline but no cached chapter available
-        return { chapter: null, fromLocal: false };
     }, [buildChapterFromLocal]);
 
     // Get current book ID from user.activeBookId
@@ -180,8 +188,8 @@ export const useReaderData = (): UseReaderDataResult => {
                 const { chapter: resolvedChapter, fromLocal } = await loadChapterPreferOffline(bookId, currentChapter);
                 if (!resolvedChapter) {
                     setError(fromLocal
-                        ? 'Chapter not available offline. Please connect to the internet.'
-                        : 'Chapter not found');
+                        ? 'This chapter is not available offline. Please connect to the internet or go back to a previously loaded chapter.'
+                        : 'Chapter not found. This chapter may not exist in the book.');
                     setLoading(false);
                     return;
                 }
@@ -205,7 +213,25 @@ export const useReaderData = (): UseReaderDataResult => {
 
             } catch (error) {
                 console.error('Error loading reader data:', error);
-                setError('Failed to load book content');
+                
+                // Extract user-friendly error message
+                let errorMessage = 'Failed to load book content. Please try again.';
+                if (error instanceof Error) {
+                    // Use the specific error message if it's user-friendly
+                    if (error.message.includes('not available offline') || 
+                        error.message.includes('connect to the internet') ||
+                        error.message.includes('download this content')) {
+                        errorMessage = error.message;
+                    } else if (error.message.includes('Chapter not found')) {
+                        errorMessage = 'This chapter could not be found. It may not exist in this book.';
+                    } else if (error.message.includes('Book not found')) {
+                        errorMessage = 'This book could not be found. Please check the book selection.';
+                    } else if (error.message.includes('No books found')) {
+                        errorMessage = 'No books found in your library. Please add a book first.';
+                    }
+                }
+                
+                setError(errorMessage);
                 setLoading(false);
             }
         };
