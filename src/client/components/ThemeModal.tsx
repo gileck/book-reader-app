@@ -135,7 +135,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     };
 
     const handleFontSizeIncrease = () => {
-        const newSize = Math.min(1.5, Math.round((localFontSize + 0.1) * 10) / 10);
+        const newSize = Math.min(2.0, Math.round((localFontSize + 0.1) * 10) / 10);
         setLocalFontSize(newSize);
         onFontSizeChange(newSize);
     };
@@ -204,8 +204,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const fontSizeMarks = [
         { value: 0.8, label: '0.8x' },
         { value: 1.0, label: '1x' },
-        { value: 1.2, label: '1.2x' },
-        { value: 1.5, label: '1.5x' }
+        { value: 1.5, label: '1.5x' },
+        { value: 2.0, label: '2x' }
     ];
 
     const lineHeightMarks = [
@@ -331,7 +331,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                             value={localFontSize}
                             onChange={(_, value) => handleFontSizeChange(value as number)}
                             min={0.8}
-                            max={1.5}
+                            max={2.0}
                             step={0.1}
                             marks={fontSizeMarks}
                             valueLabelDisplay="auto"
@@ -339,7 +339,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                         />
                         <IconButton
                             onClick={handleFontSizeIncrease}
-                            disabled={localFontSize >= 1.5}
+                            disabled={localFontSize >= 2.0}
                             size="small"
                             sx={{ minWidth: 40, height: 40 }}
                         >

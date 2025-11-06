@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { Box, Paper, Alert, Snackbar, Fab, Tabs, Tab } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { useRouter } from '../../router';
 import type { BookClient } from '../../../apis/books/types';
 import type { ChapterClient } from '../../../apis/chapters/types';
@@ -28,6 +29,7 @@ import { getFormattedTimeRemaining } from './utils/timeEstimation';
 import { QuickPromptsDialog } from '../../components/QuickPromptsDialog';
 import { BookOverviewPanel } from './components/BookOverviewPanel';
 import { extractChapterTextContent } from './utils/chapterUtils';
+import { FullscreenTextControls } from './components/FullscreenTextControls';
 
 interface ReaderUIProps {
     initialBook: BookClient;
@@ -80,6 +82,9 @@ export const ReaderUI = ({
         || appSettings.readingMode
         || 'focus';
     const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview'>(initialMode);
+
+    // Fullscreen state
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     // QA Chat state
     const [qaQuestion, setQaQuestion] = useState('');
@@ -244,6 +249,8 @@ export const ReaderUI = ({
 
     const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview') => {
         setActiveTab(newTab);
+        // Exit fullscreen when switching tabs
+        setIsFullscreen(false);
 
         // Update reading mode setting for focus/full tabs
         if (newTab !== 'qa' && newTab !== 'overview') {
@@ -298,6 +305,10 @@ export const ReaderUI = ({
 
     const handleExpandInput = useCallback(() => {
         setChatInputCollapsed(false);
+    }, []);
+
+    const handleToggleFullscreen = useCallback(() => {
+        setIsFullscreen(prev => !prev);
     }, []);
 
     // QA Chat handlers
@@ -365,58 +376,60 @@ export const ReaderUI = ({
             textColor={settings.textColor}
         >
             <Box>
-                {/* Tab Menu */}
-                <Box sx={{
-                    position: 'sticky',
-                    top: 0,
-                    zIndex: 10,
-                    borderBottom: 1,
-                    borderColor: 'divider',
-                    backdropFilter: 'blur(10px)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
-                    '@media (prefers-color-scheme: dark)': {
-                        backgroundColor: 'rgba(18, 18, 18, 0.95)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                    }
-                }}>
-                    <Tabs
-                        value={activeTab}
-                        onChange={handleTabChange}
-                        centered
-                        sx={{
-                            maxWidth: 800,
-                            mx: 'auto',
-                            '& .MuiTabs-indicator': {
-                                height: 3,
-                                borderRadius: '3px 3px 0 0'
-                            },
-                            '& .MuiTab-root': {
-                                color: 'text.primary',
-                                fontWeight: 500,
-                                fontSize: '0.95rem',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.05em',
-                                minHeight: 56,
-                                '@media (prefers-color-scheme: dark)': {
-                                    color: 'rgba(255, 255, 255, 0.7)'
+                {/* Tab Menu - Hidden in fullscreen mode */}
+                {!(isFullscreen && activeTab === 'full') && (
+                    <Box sx={{
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 10,
+                        borderBottom: 1,
+                        borderColor: 'divider',
+                        backdropFilter: 'blur(10px)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: 'rgba(18, 18, 18, 0.95)',
+                            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                        }
+                    }}>
+                        <Tabs
+                            value={activeTab}
+                            onChange={handleTabChange}
+                            centered
+                            sx={{
+                                maxWidth: 800,
+                                mx: 'auto',
+                                '& .MuiTabs-indicator': {
+                                    height: 3,
+                                    borderRadius: '3px 3px 0 0'
+                                },
+                                '& .MuiTab-root': {
+                                    color: 'text.primary',
+                                    fontWeight: 500,
+                                    fontSize: '0.95rem',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.05em',
+                                    minHeight: 56,
+                                    '@media (prefers-color-scheme: dark)': {
+                                        color: 'rgba(255, 255, 255, 0.7)'
+                                    }
+                                },
+                                '& .MuiTab-root.Mui-selected': {
+                                    color: 'primary.main',
+                                    fontWeight: 600,
+                                    '@media (prefers-color-scheme: dark)': {
+                                        color: 'primary.light'
+                                    }
                                 }
-                            },
-                            '& .MuiTab-root.Mui-selected': {
-                                color: 'primary.main',
-                                fontWeight: 600,
-                                '@media (prefers-color-scheme: dark)': {
-                                    color: 'primary.light'
-                                }
-                            }
-                        }}
-                    >
-                        <Tab label="Full" value="full" />
-                        <Tab label="Focus" value="focus" />
-                        <Tab label="QA Chat" value="qa" />
-                        <Tab label="Overview" value="overview" />
-                    </Tabs>
-                </Box>
+                            }}
+                        >
+                            <Tab label="Full" value="full" />
+                            <Tab label="Focus" value="focus" />
+                            <Tab label="QA Chat" value="qa" />
+                            <Tab label="Overview" value="overview" />
+                        </Tabs>
+                    </Box>
+                )}
 
                 {activeTab === 'focus' ? (
                     <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} ttsEnabled={settings.ttsEnabled} book={book} />
@@ -522,16 +535,17 @@ export const ReaderUI = ({
                         ref={scrollContainerRef}
                         elevation={0}
                         sx={{
-                            maxWidth: 800,
+                            maxWidth: isFullscreen ? '100%' : 800,
                             mx: 'auto',
-                            p: 1,
-                            pb: { xs: 20, sm: 16 },
+                            p: isFullscreen ? { xs: 2, sm: 4 } : 1,
+                            pb: isFullscreen ? { xs: 12, sm: 14 } : { xs: 20, sm: 16 },
                             borderRadius: 0,
-                            height: 'calc(100vh - 200px)', // Adjust to account for AudioControls height
+                            height: isFullscreen ? '100vh' : 'calc(100vh - 200px)',
                             overflow: 'auto'
                         }}
                     >
-                        <ReaderHeader book={book} chapter={chapter} />
+                        {/* ReaderHeader - Hidden in fullscreen mode */}
+                        {!isFullscreen && <ReaderHeader book={book} chapter={chapter} />}
 
                         <ReaderContent
                             chapter={chapter}
@@ -552,7 +566,7 @@ export const ReaderUI = ({
                     </Paper>
                 )}
 
-                {activeTab === 'full' && showScrollToCurrent && (
+                {activeTab === 'full' && showScrollToCurrent && !isFullscreen && (
                     <Fab
                         color="primary"
                         size="medium"
@@ -564,8 +578,37 @@ export const ReaderUI = ({
                     </Fab>
                 )}
 
-                {/* Audio Controls - Fixed at bottom (unified sentence controller for both modes) */}
-                <AudioControls
+                {/* Enter Fullscreen Button - Only shown in full mode when not in fullscreen */}
+                {activeTab === 'full' && !isFullscreen && (
+                    <Fab
+                        color="default"
+                        size="medium"
+                        aria-label="Enter fullscreen"
+                        onClick={handleToggleFullscreen}
+                        sx={{ 
+                            position: 'fixed', 
+                            right: 16, 
+                            bottom: showScrollToCurrent ? { xs: 160, sm: 172 } : { xs: 96, sm: 104 }, 
+                            zIndex: 1200 
+                        }}
+                    >
+                        <FullscreenIcon />
+                    </Fab>
+                )}
+
+                {/* Fullscreen Text Controls - Only shown in fullscreen mode */}
+                {activeTab === 'full' && isFullscreen && (
+                    <FullscreenTextControls
+                        fontSize={settings.fontSize}
+                        onFontSizeChange={settings.handleFontSizeChange}
+                        isFullscreen={isFullscreen}
+                        onToggleFullscreen={handleToggleFullscreen}
+                    />
+                )}
+
+                {/* Audio Controls - Fixed at bottom (unified sentence controller for both modes) - Hidden in fullscreen mode */}
+                {!(isFullscreen && activeTab === 'full') && (
+                    <AudioControls
                     chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
                     currentChunk={sentenceAudio.controller.currentSentenceIndex + 1}
                     totalChunks={sentenceAudio.sentences.length}
@@ -613,6 +656,7 @@ export const ReaderUI = ({
                     estimatedTimeRemaining={estimatedTimeRemaining}
                     hideChapterInfo={activeTab === 'qa' || activeTab === 'overview'}
                 />
+                )}
 
                 {/* Speed Control Modal */}
                 <SpeedControlModal

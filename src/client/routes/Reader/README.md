@@ -1132,6 +1132,7 @@ graph LR
 - Scrollable content
 - Sentence highlighting follows audio
 - "Scroll to current" FAB when out of view
+- **Fullscreen mode** - Distraction-free reading with minimal controls (text + font size buttons only)
 
 **Focus Mode:**
 - One sentence at a time
@@ -1308,12 +1309,13 @@ const loadChapterPreferOffline = useCallback(async (
 
 ### 7. Theme Customization
 
-- Font size, family, line height
+- Font size (0.8x - 2.0x), family, line height
 - Text color (per-mode: light/dark)
 - Word highlight color (per-mode: light/dark)
 - Sentence highlight color (per-mode: light/dark)
 - Light/Dark theme
 - **Highlight Mode** (`'word'` | `'line'` | `'off'`) - Persisted per user
+- **Fullscreen Mode** - Available in Full mode for distraction-free reading
 
 **Highlight Mode Persistence:**
 ```typescript
