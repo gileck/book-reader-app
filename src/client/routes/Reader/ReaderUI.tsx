@@ -601,6 +601,8 @@ export const ReaderUI = ({
                     <FullscreenTextControls
                         fontSize={settings.fontSize}
                         onFontSizeChange={settings.handleFontSizeChange}
+                        textColor={settings.textColor}
+                        onTextColorChange={settings.handleTextColorChange}
                         isFullscreen={isFullscreen}
                         onToggleFullscreen={handleToggleFullscreen}
                     />
