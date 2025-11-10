@@ -3,7 +3,7 @@ import { getBookUpload, updateBookUpload } from '@/server/database/collections/b
 import { createBook } from '@/server/database/collections/books/books';
 import { createChapter } from '@/server/database/collections/chapters/chapters';
 import { deleteBook } from '@/server/database/collections/books/books';
-import { getFileAsString, listFiles, uploadFile, getFile, deleteFile } from '@/server/s3/sdk';
+import { getFileAsString, deleteFile } from '@/server/s3/sdk';
 import type { ApiHandlerContext, FinalizeUploadRequest, FinalizeUploadResponse } from '../types';
 
 // TypeScript types for parser output
@@ -208,81 +208,10 @@ export async function finalizeUploadHandler(
                 chaptersToInsert.map(chapter => createChapter(chapter))
             );
 
-            // Move images from uploads/ to books/ folder
-            if (metadata.imageBaseURL) {
-                try {
-                    console.log(`📸 Moving images to book folder...`);
-                    const uploadImagesPrefix = `users/${context.userId}/uploads/${params.uploadId}/images/`;
-                    const bookImagesPrefix = `users/${context.userId}/books/${book._id.toString()}/images/`;
-                    
-                    const imageFiles = await listFiles(uploadImagesPrefix);
-                    
-                    if (imageFiles.length > 0) {
-                        console.log(`   Found ${imageFiles.length} images to move`);
-                        
-                        // Move each image to the book folder (copy + delete)
-                        await Promise.all(
-                            imageFiles.map(async (file) => {
-                                // Extract filename from key
-                                const filename = file.key.split('/').pop() || '';
-                                
-                                // Download from uploads folder
-                                const imageResponse = await getFile(file.key);
-                                if (!imageResponse.Body) {
-                                    throw new Error(`No body in response for ${file.key}`);
-                                }
-                                const imageBuffer = Buffer.from(await imageResponse.Body.transformToByteArray());
-                                
-                                // Determine content type
-                                const ext = filename.split('.').pop()?.toLowerCase() || '';
-                                const contentTypeMap: Record<string, string> = {
-                                    'jpg': 'image/jpeg',
-                                    'jpeg': 'image/jpeg',
-                                    'png': 'image/png',
-                                    'gif': 'image/gif',
-                                    'webp': 'image/webp'
-                                };
-                                const contentType = contentTypeMap[ext] || 'application/octet-stream';
-                                
-                                // Upload to books folder
-                                await uploadFile({
-                                    content: imageBuffer,
-                                    fileName: `${bookImagesPrefix}${filename}`,
-                                    contentType
-                                });
-                                
-                                // Delete from uploads folder
-                                await deleteFile(file.key).catch(err => {
-                                    console.error(`Failed to delete upload image ${file.key}:`, err);
-                                    // Don't fail if deletion fails
-                                });
-                                
-                                console.log(`   ✓ Moved: ${filename}`);
-                            })
-                        );
-                        
-                        // Update book with new imageBaseURL
-                        const newImageBaseURL = `/${bookImagesPrefix}`;
-                        const newCoverImage = coverImage 
-                            ? coverImage.replace(metadata.imageBaseURL, newImageBaseURL)
-                            : undefined;
-                        
-                        // Update book record with new paths
-                        const { updateBook } = await import('@/server/database/collections/books/books');
-                        await updateBook(book._id.toString(), {
-                            imageBaseURL: newImageBaseURL,
-                            coverImage: newCoverImage,
-                            updatedAt: new Date()
-                        });
-                        
-                        console.log(`✅ Moved ${imageFiles.length} images to book folder`);
-                        console.log(`   New imageBaseURL: ${newImageBaseURL}`);
-                    }
-                } catch (imageMoveError) {
-                    console.error('Failed to move images:', imageMoveError);
-                    // Don't fail the entire operation if image move fails
-                }
-            }
+            // Images are already uploaded to Vercel Blob in the correct location
+            // during parsing (productionRunner.ts), so no need to move them.
+            // The imageBaseURL from parser output is already in the correct format.
+            console.log(`📸 Images already uploaded to Vercel Blob: ${metadata.imageBaseURL || 'none'}`);
 
             // Update upload record with book ID
             await updateBookUpload(params.uploadId, {

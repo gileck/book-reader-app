@@ -1,5 +1,5 @@
 import { getBookUpload, deleteBookUpload } from '@/server/database/collections/bookUploads';
-import { deleteFile, listFiles } from '@/server/s3/sdk';
+import { deleteFile } from '@/server/s3/sdk';
 import type { ApiHandlerContext, DeleteUploadRequest, DeleteUploadResponse } from '../types';
 
 export async function deleteUploadHandler(
@@ -44,31 +44,9 @@ export async function deleteUploadHandler(
             );
         }
 
-        // Delete all images in the upload folder
-        try {
-            const imagesPrefix = `users/${context.userId}/uploads/${params.uploadId}/images/`;
-            console.log(`🗑️  Deleting images from: ${imagesPrefix}`);
-            
-            const imageFiles = await listFiles(imagesPrefix);
-            
-            if (imageFiles.length > 0) {
-                console.log(`   Found ${imageFiles.length} images to delete`);
-                
-                // Delete each image
-                const imageDeletePromises = imageFiles.map(file =>
-                    deleteFile(file.key).catch(err => {
-                        console.error(`Failed to delete image ${file.key}:`, err);
-                    })
-                );
-                
-                deletePromises.push(...imageDeletePromises);
-            } else {
-                console.log(`   No images found in ${imagesPrefix}`);
-            }
-        } catch (err) {
-            console.error(`Failed to list/delete images:`, err);
-            // Continue with deletion even if image cleanup fails
-        }
+        // Images are stored in Vercel Blob, not S3, so no need to delete them here
+        // They will remain in Vercel Blob and can be manually cleaned up if needed
+        console.log(`📸 Images are in Vercel Blob (not deleted automatically)`);
 
         // Wait for all S3 deletions to complete (or fail gracefully)
         await Promise.all(deletePromises);

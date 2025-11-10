@@ -1,12 +1,48 @@
 import { NextApiResponse } from 'next/types';
 import { getBookUpload, updateBookUpload } from '../database/collections/bookUploads';
 import { uploadFile } from '../s3/sdk';
+import { put } from '@vercel/blob';
 import * as fs from 'fs';
 import * as path from 'path';
 
 // Import parser (CommonJS module)
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const parser = require('../../../book-parser/parser/parser');
+
+/**
+ * Upload a file to Vercel Blob
+ */
+async function uploadFileToBlob(key: string, content: Buffer, contentType: string): Promise<string> {
+    const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+    
+    if (!BLOB_READ_WRITE_TOKEN) {
+        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    }
+
+    const blob = await put(key, content, {
+        access: 'public',
+        contentType: contentType || 'application/octet-stream',
+        token: BLOB_READ_WRITE_TOKEN,
+        addRandomSuffix: false
+    });
+
+    return blob.url;
+}
+
+/**
+ * Get content type based on file extension
+ */
+function getContentType(filename: string): string {
+    const ext = path.extname(filename).toLowerCase();
+    const types: Record<string, string> = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp'
+    };
+    return types[ext] || 'application/octet-stream';
+}
 
 // TypeScript types for parser output
 interface ParserMetadata {
@@ -282,7 +318,7 @@ export async function runParserWithSSE(
             status: 'parsing'
         });
 
-        // Upload images to S3 if they exist
+        // Upload images to Vercel Blob if they exist
         const imagesDir = path.join(result.outputDir, 'images');
         let imageBaseURL = '';
         
@@ -293,38 +329,33 @@ export async function runParserWithSSE(
             );
             
             if (imageFiles.length > 0) {
-                console.log(`   Found ${imageFiles.length} images to upload`);
+                console.log(`   Found ${imageFiles.length} images to upload to Vercel Blob`);
                 
-                // Upload each image to S3
+                // Get book title from parser output for folder naming
+                const bookTitle = result.finalOutput?.metadata?.title || 'Unknown-Book';
+                const bookFolderName = bookTitle.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+                const blobPrefix = `books/${bookFolderName}/images/`;
+                
+                // Upload each image to Vercel Blob
                 const uploadPromises = imageFiles.map(async (filename) => {
                     const filePath = path.join(imagesDir, filename);
                     const fileContent = fs.readFileSync(filePath);
+                    const contentType = getContentType(filename);
+                    const blobKey = `${blobPrefix}${filename}`;
                     
-                    // Determine content type
-                    const ext = path.extname(filename).toLowerCase();
-                    const contentTypeMap: Record<string, string> = {
-                        '.jpg': 'image/jpeg',
-                        '.jpeg': 'image/jpeg',
-                        '.png': 'image/png',
-                        '.gif': 'image/gif',
-                        '.webp': 'image/webp'
-                    };
-                    const contentType = contentTypeMap[ext] || 'application/octet-stream';
+                    console.log(`   📤 Uploading to Vercel Blob: ${filename}`);
                     
-                    await uploadFile({
-                        content: fileContent,
-                        fileName: `users/${userId}/uploads/${uploadId}/images/${filename}`,
-                        contentType
-                    });
+                    await uploadFileToBlob(blobKey, fileContent, contentType);
                     
                     console.log(`   ✓ Uploaded: ${filename}`);
                 });
                 
                 await Promise.all(uploadPromises);
                 
-                // Set imageBaseURL for the upload (will be moved to books/ when finalized)
-                imageBaseURL = `/users/${userId}/uploads/${uploadId}/images/`;
-                console.log(`✅ Uploaded ${imageFiles.length} images to S3`);
+                // Set imageBaseURL as relative path (Vercel Blob format)
+                imageBaseURL = `/${bookFolderName}/images/`;
+                console.log(`✅ Uploaded ${imageFiles.length} images to Vercel Blob`);
+                console.log(`   Image base URL: ${imageBaseURL}`);
             } else {
                 console.log(`   No image files found in ${imagesDir}`);
             }
