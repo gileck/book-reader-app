@@ -241,7 +241,9 @@ export async function runParserWithSSE(
         const onStepStart = async (stepName: string, stepNumber: number, totalSteps: number) => {
             console.log(`🎬 onStepStart called: ${stepName} (${stepNumber}/${totalSteps})`);
             
-            const progress = Math.round((stepNumber / totalSteps) * 100);
+            // Reserve 15% for post-parser steps (image upload: 5%, S3 save: 5%, finalization: 5%)
+            // So parser steps go from 0% to 85%
+            const progress = Math.round((stepNumber / totalSteps) * 85);
             
             sendSSE(res, {
                 type: 'step-start',
@@ -305,17 +307,17 @@ export async function runParserWithSSE(
 
         console.log(`✅ Parser completed successfully for uploadId: ${uploadId}`);
 
-        // Notify user: Uploading images
+        // Notify user: Uploading images (parser finished at 85%, now continue to 90%)
         sendSSE(res, {
             type: 'finalizing',
             uploadId, // Include uploadId in event
             message: 'Uploading images...',
-            progress: 90
+            progress: 87
         });
 
         await updateBookUpload(uploadId, {
             currentStep: 'Uploading images...',
-            progress: 90,
+            progress: 87,
             status: 'parsing'
         });
 
@@ -368,19 +370,19 @@ export async function runParserWithSSE(
             console.log(`   No images directory found at ${imagesDir}`);
         }
 
-        // Notify user: Saving parser output
-        sendSSE(res, {
-            type: 'finalizing',
-            uploadId, // Include uploadId in event
-            message: 'Saving parser output...',
-            progress: 95
-        });
+            // Notify user: Saving parser output (continue from 87% to 93%)
+            sendSSE(res, {
+                type: 'finalizing',
+                uploadId, // Include uploadId in event
+                message: 'Saving parser output...',
+                progress: 93
+            });
 
-        await updateBookUpload(uploadId, {
-            currentStep: 'Saving parser output...',
-            progress: 95,
-            status: 'parsing'
-        });
+            await updateBookUpload(uploadId, {
+                currentStep: 'Saving parser output...',
+                progress: 93,
+                status: 'parsing'
+            });
 
         // Save parser output to S3 with imageBaseURL
         console.log(`💾 Saving parser output to S3 for uploadId: ${uploadId}`);
@@ -414,14 +416,16 @@ export async function runParserWithSSE(
 
         await updateBookUpload(uploadId, {
             currentStep: 'Finalizing upload...',
-            progress: 98,
+            progress: 97,
             status: 'parsing'
         });
 
-        // Update database with S3 key and success status
+        // Update database with S3 key and success status (100% complete!)
         console.log(`📝 Updating database with success status for uploadId: ${uploadId}`);
         await updateBookUpload(uploadId, {
             parserOutputS3Key: s3Key,
+            currentStep: 'Complete',
+            progress: 100,
             status: 'success'
         });
 

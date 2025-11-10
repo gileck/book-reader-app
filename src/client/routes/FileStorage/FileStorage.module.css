@@ -95,6 +95,46 @@
     color: var(--color-secondary-label, #6b7280);
 }
 
+/* Breadcrumb Navigation */
+.breadcrumbContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 8px);
+    margin-bottom: var(--space-3, 12px);
+    padding: var(--space-2, 8px) var(--space-3, 12px);
+    background: var(--color-secondary-bg, #f6f7f8);
+    border-radius: var(--radius-card, 12px);
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.breadcrumbButton {
+    min-height: 32px;
+    padding: 0 var(--space-2, 8px);
+    border: none;
+    background: transparent;
+    color: var(--color-tint, #007aff);
+    font-size: var(--font-size-body, 17px);
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.16s;
+}
+
+.breadcrumbButton:hover {
+    background: rgba(0, 122, 255, 0.1);
+}
+
+.breadcrumbButton:active {
+    background: rgba(0, 122, 255, 0.2);
+}
+
+.breadcrumbSeparator {
+    color: var(--color-secondary-label, #6b7280);
+    font-size: 18px;
+    user-select: none;
+}
+
 /* Search */
 .searchContainer {
     margin-bottom: var(--space-4, 16px);
@@ -262,6 +302,13 @@
     min-width: 0;
 }
 
+.folderArrow {
+    font-size: 24px;
+    color: var(--color-secondary-label, #6b7280);
+    margin-left: var(--space-2, 8px);
+    user-select: none;
+}
+
 .fileName {
     font-size: var(--font-size-body, 17px);
     color: var(--color-label, #111111);
@@ -352,6 +399,31 @@
         background: rgba(255, 255, 255, 0.1);
         box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
         border-color: rgba(10, 132, 255, 0.5);
+    }
+
+    .breadcrumbContainer {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .breadcrumbButton {
+        color: var(--color-tint, #0a84ff);
+    }
+
+    .breadcrumbButton:hover {
+        background: rgba(10, 132, 255, 0.15);
+    }
+
+    .breadcrumbButton:active {
+        background: rgba(10, 132, 255, 0.25);
+    }
+
+    .breadcrumbSeparator {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .folderArrow {
+        color: var(--color-secondary-label, #9ca3af);
     }
 
     .selectionActions {

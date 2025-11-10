@@ -27,6 +27,7 @@ export interface ListS3FilesResponse {
 
 // List Vercel Files
 export interface ListVercelFilesParams {
+    prefix?: string;
     cursor?: string;
     limit?: number;
 }

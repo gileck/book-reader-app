@@ -66,28 +66,73 @@ export async function listVercelFiles(
 
     const result = await listVercelBlobs({
         token: BLOB_READ_WRITE_TOKEN,
+        prefix: params.prefix,
         cursor: params.cursor,
         limit: params.limit || 1000
     });
 
-    const files = result.blobs.map(blob => ({
-        key: blob.pathname,
-        size: blob.size,
-        lastModified: new Date(blob.uploadedAt),
-        url: blob.url,
-        isFolder: false
-    }));
+    // Group files by folders (similar to S3 CommonPrefixes)
+    const currentPrefix = params.prefix || '';
+    const filesMap = new Map<string, StorageFile>();
+    const foldersMap = new Map<string, { size: number; count: number }>();
+
+    for (const blob of result.blobs) {
+        const relativePath = blob.pathname.replace(currentPrefix, '');
+        
+        // Skip if empty path
+        if (!relativePath) continue;
+
+        const parts = relativePath.split('/');
+
+        // If it's a file at current level (no more slashes)
+        if (parts.length === 1) {
+            filesMap.set(blob.pathname, {
+                key: blob.pathname,
+                size: blob.size,
+                lastModified: new Date(blob.uploadedAt),
+                url: blob.url,
+                isFolder: false
+            });
+        } else {
+            // It's in a subfolder
+            const folderName = parts[0];
+            const folderKey = currentPrefix + folderName + '/';
+            
+            const existing = foldersMap.get(folderKey) || { size: 0, count: 0 };
+            foldersMap.set(folderKey, {
+                size: existing.size + blob.size,
+                count: existing.count + 1
+            });
+        }
+    }
+
+    // Combine folders and files
+    const files: StorageFile[] = [];
+
+    // Add folders first
+    for (const [folderKey, stats] of foldersMap.entries()) {
+        files.push({
+            key: folderKey,
+            size: stats.size,
+            lastModified: new Date(),
+            isFolder: true,
+            fileCount: stats.count
+        });
+    }
+
+    // Add files
+    files.push(...Array.from(filesMap.values()));
 
     // Calculate stats
-    const stats: StorageStats = {
-        totalFiles: files.length,
+    const totalStats: StorageStats = {
+        totalFiles: filesMap.size,
         totalSize: files.reduce((sum, f) => sum + f.size, 0),
-        totalFolders: 0
+        totalFolders: foldersMap.size
     };
 
     return {
         files,
-        stats,
+        stats: totalStats,
         cursor: result.cursor,
         hasMore: result.hasMore
     };

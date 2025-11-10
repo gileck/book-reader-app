@@ -22,10 +22,16 @@ export const FileStorage = () => {
     const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
     const [deleting, setDeleting] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [currentPrefix, setCurrentPrefix] = useState<string>('');
 
-    // Load files when storage type changes
+    // Load files when storage type or prefix changes
     useEffect(() => {
         loadFiles();
+    }, [storageType, currentPrefix]);
+
+    // Reset prefix when switching storage types
+    useEffect(() => {
+        setCurrentPrefix('');
     }, [storageType]);
 
     const loadFiles = async () => {
@@ -35,7 +41,7 @@ export const FileStorage = () => {
 
         try {
             if (storageType === 's3') {
-                const result = await listS3Files({});
+                const result = await listS3Files({ prefix: currentPrefix });
                 if (result.data) {
                     setFiles(result.data.files);
                     setTotalFiles(result.data.stats.totalFiles);
@@ -43,7 +49,7 @@ export const FileStorage = () => {
                     setTotalFolders(result.data.stats.totalFolders);
                 }
             } else {
-                const result = await listVercelFiles({});
+                const result = await listVercelFiles({ prefix: currentPrefix });
                 if (result.data) {
                     setFiles(result.data.files);
                     setTotalFiles(result.data.stats.totalFiles);
@@ -116,6 +122,23 @@ export const FileStorage = () => {
         } else {
             setSelectedFiles(new Set(filteredFiles.map(f => f.key)));
         }
+    };
+
+    const handleFolderClick = (folderKey: string) => {
+        setCurrentPrefix(folderKey);
+        setSearchQuery(''); // Clear search when navigating
+    };
+
+    const handleBreadcrumbClick = (index: number) => {
+        const parts = currentPrefix.split('/').filter(p => p);
+        const newPrefix = parts.slice(0, index + 1).join('/') + (index >= 0 ? '/' : '');
+        setCurrentPrefix(newPrefix);
+        setSearchQuery(''); // Clear search when navigating
+    };
+
+    const getBreadcrumbs = () => {
+        if (!currentPrefix) return [];
+        return currentPrefix.split('/').filter(p => p);
     };
 
     const formatSize = (bytes: number): string => {
@@ -195,6 +218,29 @@ export const FileStorage = () => {
                 </div>
             </div>
 
+            {/* Breadcrumb Navigation */}
+            {currentPrefix && (
+                <div className={styles.breadcrumbContainer}>
+                    <button 
+                        onClick={() => setCurrentPrefix('')}
+                        className={styles.breadcrumbButton}
+                    >
+                        🏠 Root
+                    </button>
+                    {getBreadcrumbs().map((part, index) => (
+                        <React.Fragment key={index}>
+                            <span className={styles.breadcrumbSeparator}>›</span>
+                            <button
+                                onClick={() => handleBreadcrumbClick(index)}
+                                className={styles.breadcrumbButton}
+                            >
+                                {part}
+                            </button>
+                        </React.Fragment>
+                    ))}
+                </div>
+            )}
+
             {/* Search Bar */}
             <div className={styles.searchContainer}>
                 <input
@@ -268,16 +314,19 @@ export const FileStorage = () => {
                         <div
                             key={file.key}
                             className={`${styles.fileItem} ${selectedFiles.has(file.key) ? styles.fileItemSelected : ''}`}
+                            onClick={() => file.isFolder && handleFolderClick(file.key)}
+                            style={{ cursor: file.isFolder ? 'pointer' : 'default' }}
                         >
                             <input
                                 type="checkbox"
                                 checked={selectedFiles.has(file.key)}
                                 onChange={() => handleToggleFile(file.key)}
+                                onClick={(e) => e.stopPropagation()}
                                 className={styles.checkbox}
                             />
                             <div className={styles.fileInfo}>
                                 <div className={styles.fileName}>
-                                    {file.isFolder ? '📁' : '📄'} {file.key}
+                                    {file.isFolder ? '📁' : '📄'} {file.key.split('/').filter(p => p).pop() || file.key}
                                 </div>
                                 <div className={styles.fileDetails}>
                                     <span>{formatSize(file.size)}</span>
@@ -291,6 +340,9 @@ export const FileStorage = () => {
                                     )}
                                 </div>
                             </div>
+                            {file.isFolder && (
+                                <div className={styles.folderArrow}>›</div>
+                            )}
                         </div>
                     ))}
                 </div>
