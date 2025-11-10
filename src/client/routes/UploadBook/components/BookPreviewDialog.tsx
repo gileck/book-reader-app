@@ -230,7 +230,10 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
                                             <span className={styles.imageName}>{image.name}</span>
                                             {image.sizeKB !== undefined && (
                                                 <span className={styles.imageSize}>
-                                                    {image.sizeKB.toLocaleString()} KB
+                                                    {image.sizeKB === 0.05 
+                                                        ? '<0.1 KB' 
+                                                        : `${image.sizeKB.toLocaleString()} KB`
+                                                    }
                                                 </span>
                                             )}
                                             <a 

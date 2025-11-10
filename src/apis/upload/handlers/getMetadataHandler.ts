@@ -1,7 +1,6 @@
 import { getBookUpload } from '@/server/database/collections/bookUploads';
 import { getFileAsString, getSignedFileUrl } from '@/server/s3/sdk';
-import { VERCEL_BLOB_IMAGES_BASE_PATH } from '@/common/constants';
-import { head } from '@vercel/blob';
+import { list } from '@vercel/blob';
 import type { ApiHandlerContext, GetMetadataRequest, GetMetadataResponse } from '../types';
 
 // TypeScript types for parser output
@@ -150,60 +149,80 @@ export async function getMetadataHandler(
             // Continue without the URL if generation fails
         }
 
-        // Extract all images and cover image (first image from all chapters, sorted by filename)
+        // Extract all images and cover image by listing ALL uploaded images from Vercel Blob
+        // This ensures we get ALL images, not just those referenced in chapters
         let coverImageUrl: string | undefined;
         const images: Array<{ name: string; url: string; sizeKB?: number }> = [];
         
         if (metadata.imageBaseURL) {
-            const allImageNames: string[] = [];
+            const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
             
-            // Collect all image names from all chapters
-            for (const chapter of chapters) {
-                if (chapter.chunks && Array.isArray(chapter.chunks)) {
-                    for (const chunk of chapter.chunks) {
-                        if (chunk.type === 'image' && chunk.imageName) {
-                            allImageNames.push(chunk.imageName);
-                        }
-                    }
-                }
-            }
-            
-            if (allImageNames.length > 0) {
-                // Sort by filename (numerically) to match upload-book.js logic
-                allImageNames.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-                
-                // Pick first image as cover
-                const firstImage = allImageNames[0];
-                coverImageUrl = `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${firstImage}`;
-                console.log('[getMetadata] Cover image:', coverImageUrl);
-                
-                // Build full image list with URLs and fetch sizes
-                const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-                
-                for (const imageName of allImageNames) {
-                    const imageUrl = `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${imageName}`;
-                    let sizeKB: number | undefined;
+            if (BLOB_READ_WRITE_TOKEN) {
+                try {
+                    // Extract book folder from imageBaseURL (e.g., "/BookTitle/images/" -> "books/BookTitle/")
+                    const bookFolder = metadata.imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
+                    const blobPrefix = `books/${bookFolder}`;
                     
-                    // Try to get file size from Vercel Blob
-                    if (BLOB_READ_WRITE_TOKEN) {
-                        try {
-                            const blobInfo = await head(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
-                            if (blobInfo && blobInfo.size) {
-                                sizeKB = Math.round(blobInfo.size / 1024); // Convert bytes to KB
-                            }
-                        } catch (err) {
-                            console.warn(`[getMetadata] Failed to get size for ${imageName}:`, err);
-                            // Continue without size info
-                        }
-                    }
+                    console.log(`[getMetadata] Listing all images from Vercel Blob with prefix: ${blobPrefix}`);
                     
-                    images.push({
-                        name: imageName,
-                        url: imageUrl,
-                        sizeKB
+                    // List all blobs with this prefix
+                    const { blobs } = await list({
+                        prefix: blobPrefix,
+                        token: BLOB_READ_WRITE_TOKEN
                     });
+                    
+                    console.log(`[getMetadata] Found ${blobs.length} blobs in Vercel Blob`);
+                    
+                    if (blobs.length > 0) {
+                        // Extract just the filename from each blob URL
+                        const blobsWithNames = blobs.map(blob => {
+                            // Extract filename from pathname (e.g., "books/BookTitle/images/image-001-1.jpg" -> "image-001-1.jpg")
+                            const filename = blob.pathname.split('/').pop() || '';
+                            return {
+                                filename,
+                                url: blob.url,
+                                size: blob.size
+                            };
+                        }).filter(b => b.filename); // Filter out any empty filenames
+                        
+                        // Sort by filename (numerically) to match upload-book.js logic
+                        blobsWithNames.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' }));
+                        
+                        // Pick first image as cover
+                        if (blobsWithNames.length > 0) {
+                            coverImageUrl = blobsWithNames[0].url;
+                            console.log('[getMetadata] Cover image:', coverImageUrl);
+                        }
+                        
+                        // Build full image list with URLs and sizes
+                        for (const blob of blobsWithNames) {
+                            let sizeKB: number | undefined;
+                            if (blob.size) {
+                                const kb = blob.size / 1024;
+                                if (kb < 0.1) {
+                                    sizeKB = 0.05; // Special marker for <0.1 KB
+                                } else if (kb < 1) {
+                                    sizeKB = Math.round(kb * 10) / 10; // Round to 1 decimal place (0.1, 0.2, etc.)
+                                } else {
+                                    sizeKB = Math.round(kb); // Round to nearest integer for >= 1 KB
+                                }
+                            }
+                            
+                            images.push({
+                                name: blob.filename,
+                                url: blob.url,
+                                sizeKB
+                            });
+                        }
+                        
+                        console.log('[getMetadata] Total images collected from Vercel Blob:', images.length);
+                    }
+                } catch (err) {
+                    console.error('[getMetadata] Failed to list images from Vercel Blob:', err);
+                    // Fall back to empty images array
                 }
-                console.log('[getMetadata] Total images collected:', images.length);
+            } else {
+                console.warn('[getMetadata] BLOB_READ_WRITE_TOKEN not set, cannot list images');
             }
         }
 
