@@ -7,4 +7,5 @@ export const APPROVE_ERRORS = 'upload/approveErrors';
 export const FINALIZE_UPLOAD = 'upload/finalizeUpload';
 export const DELETE_UPLOAD = 'upload/deleteUpload';
 export const GET_METADATA = 'upload/getMetadata';
+export const CLEANUP_EXPIRED_UPLOADS = 'upload/cleanupExpiredUploads';
 

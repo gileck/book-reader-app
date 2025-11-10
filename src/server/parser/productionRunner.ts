@@ -401,7 +401,8 @@ export async function runParserWithSSE(
         const s3Key = await uploadFile({
             content: outputJson,
             fileName: fileName,
-            contentType: 'application/json'
+            contentType: 'application/json',
+            autoDelete: true // Tag for S3 lifecycle auto-deletion
         });
         console.log(`✅ Parser output saved to S3: ${s3Key}`);
         console.log(`🔍 S3 key will be stored in database: ${s3Key}`);

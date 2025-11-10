@@ -26,6 +26,7 @@ export async function getUploadStatusHandler(
                 uploadId: upload._id.toString(),
                 status: upload.status,
                 createdAt: upload.createdAt,
+                expiresAt: upload.expiresAt,
                 fileName: upload.fileName,
                 currentStep: upload.currentStep,
                 currentStepNumber: upload.currentStepNumber,

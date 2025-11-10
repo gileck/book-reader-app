@@ -133,11 +133,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             pdfBuffer = Buffer.from(pdfBase64, 'base64');
         }
         
-        // Upload PDF to S3
+        // Upload PDF to S3 with auto-delete tag (will be deleted after 1 day by S3 lifecycle rule)
         const pdfS3Key = await uploadFile({
             content: pdfBuffer,
             fileName: `users/${user._id}/uploads/${uploadId}.pdf`,
-            contentType: 'application/pdf'
+            contentType: 'application/pdf',
+            autoDelete: true // Tag for S3 lifecycle auto-deletion
         });
 
         res.write(`data: ${JSON.stringify({ type: 'upload', progress: 10, message: 'PDF uploaded to S3' })}\n\n`);

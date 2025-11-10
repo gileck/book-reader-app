@@ -51,6 +51,7 @@ export interface S3UploadParams {
   content: string | Buffer;
   fileName: string;
   contentType?: string;
+  autoDelete?: boolean; // Tag for automatic deletion via S3 lifecycle rules
 }
 
 // Create S3 client with configuration
@@ -103,9 +104,12 @@ export const uploadFile = async (
       Key: fileName,
       Body: params.content,
       ContentType: params.contentType || 'application/octet-stream',
+      // Add tagging for auto-deletion via S3 lifecycle rules
+      Tagging: params.autoDelete ? 'auto-delete=true&type=temporary-upload' : undefined,
     });
 
     console.log('[S3] Sending PutObject command to bucket:', bucketName);
+    console.log('[S3] Auto-delete tag:', params.autoDelete ? 'enabled' : 'disabled');
     await client.send(command, {
       abortSignal: abortController.signal
     });

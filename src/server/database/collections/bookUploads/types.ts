@@ -33,11 +33,12 @@ export interface BookUpload {
         timestamp: Date;
     };
     bookId?: ObjectId;
+    expiresAt: Date; // Automatic deletion time (24 hours from creation)
     createdAt: Date;
     updatedAt: Date;
 }
 
-export type BookUploadCreate = Omit<BookUpload, '_id' | 'createdAt' | 'updatedAt'>;
+export type BookUploadCreate = Omit<BookUpload, '_id' | 'createdAt' | 'updatedAt' | 'expiresAt'>;
 
 export type BookUploadUpdate = Partial<Omit<BookUpload, '_id' | 'userId' | 'createdAt'>>;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ParserProgress } from './ParserProgress';
 import type { UploadItem } from '../hooks/useUploadManager';
 import styles from '../UploadBook.module.css';
@@ -15,6 +15,21 @@ interface UploadCardProps {
 }
 
 /**
+ * Format remaining time
+ */
+function formatRemainingTime(ms: number): string {
+    if (ms <= 0) return 'Expired';
+    
+    const hours = Math.floor(ms / (1000 * 60 * 60));
+    const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (hours > 0) {
+        return `${hours}h ${minutes}m remaining`;
+    }
+    return `${minutes}m remaining`;
+}
+
+/**
  * Individual upload card component
  * Displays upload status, progress, and contextual actions
  */
@@ -28,6 +43,30 @@ export const UploadCard: React.FC<UploadCardProps> = ({
     onRestartUpload,
     onStopParsing
 }) => {
+    const [remainingTime, setRemainingTime] = useState<string>('');
+    const [isExpired, setIsExpired] = useState(false);
+
+    // Update countdown timer every minute
+    useEffect(() => {
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const expiresAt = new Date(upload.expiresAt).getTime();
+            const timeLeft = expiresAt - now;
+            
+            if (timeLeft <= 0) {
+                setIsExpired(true);
+                setRemainingTime('Expired');
+            } else {
+                setIsExpired(false);
+                setRemainingTime(formatRemainingTime(timeLeft));
+            }
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 60000); // Update every minute
+
+        return () => clearInterval(interval);
+    }, [upload.expiresAt]);
     const getStatusIcon = (status: UploadItem['status']) => {
         switch (status) {
             case 'uploading': return '⏳';
@@ -52,7 +91,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
 
     return (
         <div 
-            className={`${styles.uploadCard} ${isSelected ? styles.selected : ''}`}
+            className={`${styles.uploadCard} ${isSelected ? styles.selected : ''} ${isExpired ? styles.expired : ''}`}
         >
             <div className={styles.uploadCardHeader}>
                 <div className={`${styles.uploadStatusBadge} ${styles[upload.status.replace('-', '')]}`}>
@@ -66,6 +105,12 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                 <div className={styles.uploadTime}>
                     {new Date(upload.createdAt).toLocaleString()}
                 </div>
+            </div>
+
+            {/* Expiration Timer */}
+            <div className={`${styles.expirationTimer} ${isExpired ? styles.expired : ''}`}>
+                <span className={styles.expirationIcon}>⏰</span>
+                <span className={styles.expirationText}>{remainingTime}</span>
             </div>
 
             {/* File Name and Upload ID */}
@@ -83,8 +128,20 @@ export const UploadCard: React.FC<UploadCardProps> = ({
             </div>
 
             <div className={styles.uploadCardBody}>
+                {/* Expired State */}
+                {isExpired && (
+                    <div className={styles.expiredState}>
+                        <div className={styles.expiredIcon}>⌛</div>
+                        <div className={styles.expiredTitle}>Upload Expired</div>
+                        <div className={styles.expiredMessage}>
+                            This upload has expired and all files have been deleted.
+                            Please upload the PDF again if you still want to add it to your library.
+                        </div>
+                    </div>
+                )}
+
                 {/* Uploading Status */}
-                {upload.status === 'uploading' && (
+                {!isExpired && upload.status === 'uploading' && (
                     <>
                         <div className={styles.uploadProgress}>
                             <ParserProgress
@@ -104,7 +161,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                 )}
 
                 {/* Parsing Status */}
-                {upload.status === 'parsing' && (
+                {!isExpired && upload.status === 'parsing' && (
                     <>
                         {upload.currentStep && (
                             <div className={styles.uploadProgress}>
@@ -135,7 +192,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                 )}
 
                 {/* Failed Status */}
-                {upload.status === 'failed' && upload.error && (
+                {!isExpired && upload.status === 'failed' && upload.error && (
                     <div className={styles.uploadError}>
                         <div className={styles.uploadErrorTitle}>
                             <span>⚠️</span>
@@ -153,7 +210,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                 )}
 
                 {/* Actions for awaiting-approval, success, and failed statuses */}
-                {(upload.status === 'awaiting-approval' || upload.status === 'success' || upload.status === 'failed') && (
+                {!isExpired && (upload.status === 'awaiting-approval' || upload.status === 'success' || upload.status === 'failed') && (
                     <div className={styles.uploadActions}>
                         {/* Awaiting Approval Actions */}
                         {upload.status === 'awaiting-approval' && (

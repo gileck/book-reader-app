@@ -22,7 +22,8 @@ import {
     APPROVE_ERRORS,
     FINALIZE_UPLOAD,
     DELETE_UPLOAD,
-    GET_METADATA
+    GET_METADATA,
+    CLEANUP_EXPIRED_UPLOADS
 } from './upload/index';
 import { fileStorageApiHandlers } from './fileStorage/server';
 
@@ -126,6 +127,7 @@ export const apiHandlers: ApiHandlers = {
   [FINALIZE_UPLOAD]: { process: upload.finalizeUpload as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [DELETE_UPLOAD]: { process: upload.deleteUpload as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [GET_METADATA]: { process: upload.getMetadata as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [CLEANUP_EXPIRED_UPLOADS]: { process: upload.cleanupExpiredUploads as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   ...typedBooksApiHandlers,
   ...typedChaptersApiHandlers,
   ...typedTtsApiHandlers,

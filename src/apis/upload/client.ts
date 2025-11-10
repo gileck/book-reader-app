@@ -5,7 +5,8 @@ import {
     APPROVE_ERRORS,
     FINALIZE_UPLOAD,
     DELETE_UPLOAD,
-    GET_METADATA
+    GET_METADATA,
+    CLEANUP_EXPIRED_UPLOADS
 } from './index';
 
 import apiClient from '@/client/utils/apiClient';
@@ -21,7 +22,9 @@ import type {
     DeleteUploadRequest,
     DeleteUploadResponse,
     GetMetadataRequest,
-    GetMetadataResponse
+    GetMetadataResponse,
+    CleanupExpiredUploadsRequest,
+    CleanupExpiredUploadsResponse
 } from './types';
 
 export function listUploads(params: ListUploadsRequest = {}) {
@@ -46,5 +49,9 @@ export function deleteUpload(params: DeleteUploadRequest) {
 
 export function getMetadata(params: GetMetadataRequest) {
     return apiClient.call<GetMetadataResponse, GetMetadataRequest>(GET_METADATA, params);
+}
+
+export function cleanupExpiredUploads(params: CleanupExpiredUploadsRequest = {}) {
+    return apiClient.call<CleanupExpiredUploadsResponse, CleanupExpiredUploadsRequest>(CLEANUP_EXPIRED_UPLOADS, params);
 }
 

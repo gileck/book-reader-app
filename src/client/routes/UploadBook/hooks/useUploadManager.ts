@@ -10,6 +10,7 @@ export interface UploadItem {
     uploadId: string;
     status: 'uploading' | 'parsing' | 'awaiting-approval' | 'success' | 'failed' | 'timeout';
     createdAt: Date;
+    expiresAt: Date;
     fileName?: string;
     currentStep?: string;
     currentStepNumber?: number;
@@ -58,6 +59,18 @@ export const useUploadManager = (userId: string | undefined) => {
         }
 
         try {
+            // First, cleanup any expired uploads
+            try {
+                const cleanupResult = await uploadApi.cleanupExpiredUploads({});
+                if (cleanupResult.data.deletedCount > 0) {
+                    console.log(`🧹 Cleaned up ${cleanupResult.data.deletedCount} expired uploads`);
+                }
+            } catch (cleanupErr) {
+                console.error('Failed to cleanup expired uploads:', cleanupErr);
+                // Continue loading uploads even if cleanup fails
+            }
+
+            // Load uploads
             const result = await uploadApi.listUploads({});
             if (result.data.error) {
                 console.error('Error loading uploads:', result.data.error);
@@ -121,10 +134,13 @@ export const useUploadManager = (userId: string | undefined) => {
         
         // Get uploadId from first event and replace temp upload
         if (uploadId && tempUploadId) {
+            const now = new Date();
+            const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
             replaceUpload(tempUploadId, {
                 uploadId,
                 status: 'parsing',
-                createdAt: new Date(),
+                createdAt: now,
+                expiresAt: expiresAt,
                 fileName: uploadsRef.current.find(u => u.uploadId === tempUploadId)?.fileName,
                 currentStep: event.message || 'Starting parser...',
                 progress: event.progress || 5

@@ -8,8 +8,9 @@
 5. [API Reference](#api-reference)
 6. [Database Schema](#database-schema)
 7. [S3 Storage Structure](#s3-storage-structure)
-8. [Error Handling](#error-handling)
-9. [Troubleshooting](#troubleshooting)
+8. [Automatic File Expiration (24-Hour Cleanup)](#automatic-file-expiration-24-hour-cleanup)
+9. [Error Handling](#error-handling)
+10. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -26,6 +27,7 @@ The Book Upload feature allows users to upload PDF books to their library. The s
 - ✅ Parser output preview before adding to library
 - ✅ Persistent upload state (survives page reload)
 - ✅ Automatic cleanup after finalization
+- ✅ 24-hour file expiration with countdown timer (NEW)
 
 ---
 
@@ -1302,6 +1304,744 @@ const signedUrl = await getSignedFileUrl(imageUrl);
 
 ---
 
+## Automatic File Expiration (24-Hour Cleanup)
+
+### Overview
+
+To prevent storage bloat from abandoned uploads, the system automatically deletes temporary upload files (PDFs and parser outputs) after **24 hours** if not added to the library. This is implemented using a **dual-layer approach**:
+
+1. **S3 Lifecycle Rules** - AWS S3 automatically deletes tagged files
+2. **Client-Side Cleanup** - Manual cleanup on page load as a backup
+3. **Database Tracking** - `expiresAt` field tracks expiration time
+
+### Why 24 Hours?
+
+- Gives users enough time to review and add books
+- Prevents indefinite storage of abandoned uploads
+- Balances user convenience with storage costs
+- Most users either add immediately or never return
+
+---
+
+### Database Schema Changes
+
+#### BookUpload Collection
+
+**File**: `src/server/database/collections/bookUploads/types.ts`
+
+```typescript
+export interface BookUpload {
+    _id: ObjectId;
+    userId: ObjectId;
+    pdfS3Key: string;
+    fileName?: string;
+    status: BookUploadStatus;
+    parserOutputS3Key?: string;
+    skippedValidationErrors: SkippedValidationError[];
+    validationErrors?: ValidationError[];
+    currentStep?: string;
+    currentStepNumber?: number;
+    totalSteps?: number;
+    progress?: number;
+    error?: {
+        message: string;
+        stack?: string;
+        timestamp: Date;
+    };
+    bookId?: ObjectId;
+    expiresAt: Date;        // ← NEW: Automatic deletion time (24 hours from creation)
+    createdAt: Date;
+    updatedAt: Date;
+}
+```
+
+**When Set**:
+```typescript
+// In createBookUpload()
+const now = new Date();
+const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
+
+const upload: BookUpload = {
+    // ... other fields
+    expiresAt,
+    createdAt: now,
+    updatedAt: now,
+};
+```
+
+---
+
+### S3 Object Tagging (Automatic Deletion)
+
+#### Implementation
+
+**File**: `src/server/s3/sdk.ts`
+
+```typescript
+export interface S3UploadParams {
+  content: string | Buffer;
+  fileName: string;
+  contentType?: string;
+  autoDelete?: boolean; // ← NEW: Tag for automatic deletion via S3 lifecycle rules
+}
+
+export const uploadFile = async (params: S3UploadParams): Promise<string> => {
+    const command = new PutObjectCommand({
+        Bucket: bucketName,
+        Key: fileName,
+        Body: params.content,
+        ContentType: params.contentType || 'application/octet-stream',
+        // Add tagging for auto-deletion via S3 lifecycle rules
+        Tagging: params.autoDelete ? 'auto-delete=true&type=temporary-upload' : undefined,
+    });
+    
+    await client.send(command);
+    return fileName;
+};
+```
+
+#### Usage in Upload Flow
+
+**PDF Upload** (`src/pages/api/upload/parse.ts`):
+```typescript
+const pdfS3Key = await uploadFile({
+    content: pdfBuffer,
+    fileName: `users/${user._id}/uploads/${uploadId}.pdf`,
+    contentType: 'application/pdf',
+    autoDelete: true // ← Files will be auto-deleted after 1 day
+});
+```
+
+**Parser Output** (`src/server/parser/productionRunner.ts`):
+```typescript
+const s3Key = await uploadFile({
+    content: outputJson,
+    fileName: `users/${userId}/parser-output/${uploadId}/output.json`,
+    contentType: 'application/json',
+    autoDelete: true // ← Files will be auto-deleted after 1 day
+});
+```
+
+---
+
+### S3 Lifecycle Rule Configuration
+
+#### AWS Console Setup
+
+1. **Navigate to S3 Bucket**:
+   - Go to AWS Console → S3
+   - Select bucket: `app-template-1252343`
+
+2. **Create Lifecycle Rule**:
+   - Click **"Management"** tab
+   - Click **"Create lifecycle rule"**
+
+3. **Rule Configuration**:
+   - **Name**: `Delete-Temporary-Uploads`
+   - **Scope**: Limit using filters
+   
+4. **Filters**:
+   - **Prefix**: `book-reader/users/`
+   - **Object Tags**:
+     - Key: `auto-delete`
+     - Value: `true`
+
+5. **Actions**:
+   - ✅ Expire current versions of objects
+   - Days after creation: `1`
+
+6. **Result**:
+   - Files with `auto-delete=true` tag in `book-reader/users/` folder
+   - Deleted after 1 day (next midnight UTC)
+   - Runs automatically by AWS
+
+#### Verification
+
+Check if file has the tag:
+```bash
+# In S3 Console
+1. Find uploaded file: book-reader/users/{userId}/uploads/{uploadId}.pdf
+2. Click file → "Tags" tab
+3. Should see: auto-delete = true
+```
+
+---
+
+### User Interface Changes
+
+#### Countdown Timer
+
+**Component**: `src/client/routes/UploadBook/components/UploadCard.tsx`
+
+```typescript
+export const UploadCard: React.FC<UploadCardProps> = ({ upload, ... }) => {
+    const [remainingTime, setRemainingTime] = useState<string>('');
+    const [isExpired, setIsExpired] = useState(false);
+
+    // Update countdown timer every minute
+    useEffect(() => {
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const expiresAt = new Date(upload.expiresAt).getTime();
+            const timeLeft = expiresAt - now;
+            
+            if (timeLeft <= 0) {
+                setIsExpired(true);
+                setRemainingTime('Expired');
+            } else {
+                setIsExpired(false);
+                setRemainingTime(formatRemainingTime(timeLeft));
+            }
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 60000); // Update every minute
+        return () => clearInterval(interval);
+    }, [upload.expiresAt]);
+
+    return (
+        <div className={`uploadCard ${isExpired ? 'expired' : ''}`}>
+            {/* Expiration Timer */}
+            <div className={`expirationTimer ${isExpired ? 'expired' : ''}`}>
+                <span>⏰</span>
+                <span>{remainingTime}</span> {/* e.g., "23h 45m remaining" */}
+            </div>
+            
+            {/* Show expired state */}
+            {isExpired && (
+                <div className="expiredState">
+                    <div>⌛ Upload Expired</div>
+                    <p>
+                        This upload has expired and all files have been deleted.
+                        Please upload the PDF again if you still want to add it to your library.
+                    </p>
+                </div>
+            )}
+        </div>
+    );
+};
+```
+
+#### Visual Design
+
+**Countdown Timer** (Active):
+- Orange/yellow warning colors
+- Shows time remaining: "23h 45m remaining"
+- Updates every minute
+- Visible on all upload cards
+
+**Expired State**:
+- Red warning colors
+- Large "Upload Expired" message
+- Explanation that files are deleted
+- Prompt to re-upload if needed
+- Hides all action buttons
+
+**CSS** (`src/client/routes/UploadBook/UploadBook.module.css`):
+```css
+.expirationTimer {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, rgba(255, 159, 10, 0.15) 0%, rgba(255, 69, 58, 0.15) 100%);
+    border-bottom: 2px solid rgba(255, 159, 10, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.expirationTimer.expired {
+    background: linear-gradient(135deg, rgba(255, 69, 58, 0.2) 0%, rgba(255, 59, 48, 0.2) 100%);
+    border-bottom-color: rgba(255, 69, 58, 0.4);
+}
+
+.expiredState {
+    padding: 32px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 69, 58, 0.1) 0%, rgba(255, 59, 48, 0.1) 100%);
+    border-radius: 16px;
+    border: 2px solid rgba(255, 69, 58, 0.3);
+}
+```
+
+---
+
+### Cleanup API Endpoints
+
+#### 1. Clean Up Expired Uploads
+
+**Endpoint**: `POST /api/upload/cleanupExpiredUploads`
+
+**Handler**: `src/apis/upload/handlers/cleanupExpiredUploadsHandler.ts`
+
+```typescript
+export async function cleanupExpiredUploadsHandler(
+    _params: CleanupExpiredUploadsRequest,
+    context: ApiHandlerContext
+): Promise<CleanupExpiredUploadsResponse> {
+    // Get all expired uploads for this user
+    const expiredUploads = await getExpiredUploadsForUser(context.userId);
+
+    for (const upload of expiredUploads) {
+        // Delete PDF from S3
+        if (upload.pdfS3Key) {
+            await deleteFile(upload.pdfS3Key);
+        }
+
+        // Delete parser output from S3
+        if (upload.parserOutputS3Key) {
+            await deleteFile(upload.parserOutputS3Key);
+        }
+
+        // Delete images from Vercel Blob
+        // (extracts imageBaseURL from parser output and deletes blobs)
+        
+        // Delete database record
+        await deleteBookUpload(upload._id);
+    }
+
+    return { success: true, deletedCount: expiredUploads.length };
+}
+```
+
+**Request**:
+```typescript
+export type CleanupExpiredUploadsRequest = Record<string, never>; // Empty object
+```
+
+**Response**:
+```typescript
+export interface CleanupExpiredUploadsResponse {
+    success?: boolean;
+    deletedCount: number;
+    error?: string;
+}
+```
+
+#### 2. Get Expired Uploads
+
+**Database Query** (`src/server/database/collections/bookUploads/bookUploads.ts`):
+
+```typescript
+export const getExpiredUploads = async (): Promise<BookUpload[]> => {
+    const collection = await getCollection();
+    const now = new Date();
+    
+    return await collection
+        .find({
+            expiresAt: { $lt: now }
+        })
+        .toArray();
+};
+
+export const getExpiredUploadsForUser = async (userId: string | ObjectId): Promise<BookUpload[]> => {
+    const collection = await getCollection();
+    const _userId = typeof userId === 'string' ? new ObjectId(userId) : userId;
+    const now = new Date();
+    
+    return await collection
+        .find({
+            userId: _userId,
+            expiresAt: { $lt: now }
+        })
+        .toArray();
+};
+```
+
+---
+
+### Automatic Cleanup Trigger
+
+#### Client-Side Trigger
+
+**When**: User visits Upload Book page
+
+**Implementation** (`src/client/routes/UploadBook/hooks/useUploadManager.ts`):
+
+```typescript
+const loadUploads = useCallback(async () => {
+    if (!userId) {
+        setIsLoading(false);
+        return;
+    }
+
+    try {
+        // First, cleanup any expired uploads
+        try {
+            const cleanupResult = await uploadApi.cleanupExpiredUploads({});
+            if (cleanupResult.data.deletedCount > 0) {
+                console.log(`🧹 Cleaned up ${cleanupResult.data.deletedCount} expired uploads`);
+            }
+        } catch (cleanupErr) {
+            console.error('Failed to cleanup expired uploads:', cleanupErr);
+            // Continue loading uploads even if cleanup fails
+        }
+
+        // Load uploads
+        const result = await uploadApi.listUploads({});
+        setUploads(result.data.uploads || []);
+        setIsLoading(false);
+    } catch (err) {
+        console.error('Failed to load uploads:', err);
+        setIsLoading(false);
+    }
+}, [userId]);
+```
+
+**Trigger Points**:
+1. Page load (initial mount)
+2. After adding book to library
+3. After deleting an upload
+4. After any refresh
+
+---
+
+### Protection for Library Books
+
+#### Key Insight: Record Deletion = Protection
+
+When a book is added to library, the upload record is **immediately deleted**:
+
+**Finalize Upload Handler** (`src/apis/upload/handlers/finalizeUploadHandler.ts`):
+
+```typescript
+export async function finalizeUploadHandler(params, context) {
+    // 1. Create book in library
+    await createBook({ ... });
+    
+    // 2. Create chapters
+    await createChapter({ ... });
+    
+    // 3. Delete temporary files
+    if (upload.pdfS3Key) {
+        await deleteFile(upload.pdfS3Key);  // ✅ PDF deleted
+    }
+    if (upload.parserOutputS3Key) {
+        await deleteFile(upload.parserOutputS3Key);  // ✅ Parser output deleted
+    }
+    // NOTE: Images are already in Vercel Blob at permanent location
+    
+    // 4. Delete upload record
+    await deleteBookUpload(params.uploadId);  // ✅ Record deleted
+    
+    return { success: true, bookId: book._id };
+}
+```
+
+**Why Images Are Safe**:
+1. Images uploaded **directly** to permanent location: `books/BookTitle/images/`
+2. No `auto-delete` tag on images
+3. Upload record deleted → cleanup can't find it
+4. S3 lifecycle rule only affects files with `auto-delete=true` tag
+5. Library book images don't have this tag
+
+**Safety Flow**:
+```
+User adds book to library:
+  ├─ Create book in library ✅
+  ├─ Create chapters ✅
+  ├─ Delete PDF from S3 ✅
+  ├─ Delete parser output from S3 ✅
+  ├─ Delete upload record from DB ✅  ← Record is gone!
+  └─ Keep images in Vercel Blob ✅ (no auto-delete tag)
+
+User tries to delete the same upload:
+  ├─ Query: getBookUpload(uploadId)
+  ├─ Result: null (record was deleted)
+  └─ Return: "Upload not found" ← Images never touched!
+
+S3 Lifecycle Rule runs:
+  ├─ Looks for files with auto-delete=true tag
+  ├─ PDF: Has tag → Deleted ✅
+  ├─ Parser output: Has tag → Deleted ✅
+  └─ Images: No tag → Safe ✅
+```
+
+---
+
+### Complete Flow Examples
+
+#### Example 1: User Adds Book (Happy Path)
+
+```
+Timeline:
+00:00 - User uploads PDF (10MB)
+        ├─ PDF tagged: auto-delete=true
+        ├─ Stored: book-reader/users/123/uploads/abc.pdf
+        └─ expiresAt: +24 hours
+
+00:05 - Parser extracts images
+        ├─ Images uploaded to: books/MyBook/images/
+        └─ No auto-delete tag (permanent)
+
+00:10 - Parser output saved
+        ├─ JSON tagged: auto-delete=true
+        └─ expiresAt: same as PDF
+
+00:15 - User clicks "ADD TO LIBRARY"
+        ├─ Book created in library ✅
+        ├─ PDF deleted from S3 ✅
+        ├─ JSON deleted from S3 ✅
+        ├─ Upload record deleted ✅
+        └─ Images kept in Vercel Blob ✅
+
+Result: Clean! Only library data remains.
+```
+
+#### Example 2: User Never Adds Book (Abandoned)
+
+```
+Timeline:
+00:00 - User uploads PDF (10MB)
+        ├─ PDF tagged: auto-delete=true
+        ├─ JSON tagged: auto-delete=true
+        └─ expiresAt: +24 hours
+
+23:59 - User never returns
+        └─ Upload status: 'success'
+
+24:00 - Next midnight UTC
+        ├─ S3 Lifecycle Rule runs
+        ├─ Finds files with auto-delete=true tag
+        ├─ Deletes PDF (10MB freed) ✅
+        └─ Deletes JSON ✅
+
+24:01 - User returns to Upload page
+        ├─ Cleanup API triggered
+        ├─ Finds expired upload record (expiresAt < now)
+        ├─ Deletes Vercel Blob images ✅
+        └─ Deletes upload record ✅
+
+Result: All files cleaned up automatically!
+```
+
+#### Example 3: User Visits After Expiration
+
+```
+Timeline:
+00:00 - User uploads PDF
+        └─ expiresAt: +24 hours
+
+25:00 - User returns (1 hour after expiration)
+        ├─ Loads Upload page
+        ├─ Cleanup API runs automatically
+        ├─ Finds expired upload
+        ├─ Deletes S3 files (if not already deleted by lifecycle)
+        ├─ Deletes Vercel Blob images
+        ├─ Deletes database record
+        └─ UI shows: "Upload Expired - Please re-upload"
+
+Result: Clean slate, user prompted to start over.
+```
+
+---
+
+### Testing the Feature
+
+#### 1. Test Upload with Tags
+
+```typescript
+// Upload a test PDF
+const result = await uploadApi.startUpload({ file: pdfFile });
+
+// Check S3 Console
+// 1. Find: book-reader/users/{userId}/uploads/{uploadId}.pdf
+// 2. Click file → "Tags" tab
+// 3. Verify: auto-delete = true ✅
+```
+
+#### 2. Test Countdown Timer
+
+```typescript
+// 1. Upload a PDF
+// 2. View Upload page
+// 3. Verify timer shows: "23h 59m remaining"
+// 4. Wait 1 minute
+// 5. Verify timer updates: "23h 58m remaining"
+```
+
+#### 3. Test Expiration (Fast Forward)
+
+```typescript
+// In MongoDB, manually set expiresAt to past:
+db.bookUploads.updateOne(
+    { _id: ObjectId("...") },
+    { $set: { expiresAt: new Date(Date.now() - 1000) } }
+);
+
+// Reload Upload page
+// Verify:
+// 1. Countdown shows "Expired"
+// 2. Red expired state displayed
+// 3. Action buttons hidden
+```
+
+#### 4. Test Cleanup API
+
+```typescript
+// Manually trigger cleanup
+const result = await uploadApi.cleanupExpiredUploads({});
+
+console.log(`Deleted ${result.data.deletedCount} expired uploads`);
+```
+
+#### 5. Test S3 Lifecycle Rule
+
+```bash
+# Wait 24+ hours after upload
+# Check S3 Console
+# Verify files are deleted automatically
+```
+
+---
+
+### Monitoring & Maintenance
+
+#### Logs to Watch
+
+```typescript
+// Upload with tag
+[S3] Auto-delete tag: enabled
+
+// Cleanup triggered
+🧹 Cleaned up 3 expired uploads
+
+// Individual file deletion
+🗑️ Deleting PDF: users/123/uploads/abc.pdf
+🗑️ Deleting parser output: users/123/parser-output/abc/output.json
+🗑️ Deleting 5 images from Vercel Blob
+✅ Deleted upload abc
+```
+
+#### CloudWatch Metrics (S3)
+
+Monitor these S3 metrics:
+- **Storage**: Should decrease as files are deleted
+- **DeleteRequests**: Should spike at midnight UTC (lifecycle rule runs)
+- **GetRequests**: Should decrease (fewer expired files)
+
+#### Database Queries
+
+```javascript
+// Count expired uploads
+db.bookUploads.count({ expiresAt: { $lt: new Date() } })
+
+// Find old uploads (debugging)
+db.bookUploads.find({ 
+    createdAt: { $lt: new Date(Date.now() - 48 * 60 * 60 * 1000) }
+}).sort({ createdAt: 1 })
+```
+
+---
+
+### Troubleshooting
+
+#### Problem: Files Not Deleted After 24 Hours
+
+**Possible Causes**:
+1. S3 lifecycle rule not enabled
+2. Tags not applied to files
+3. Wrong prefix in lifecycle rule
+
+**Solution**:
+```bash
+# Check S3 Console
+1. Management → Lifecycle rules
+2. Verify rule is "Enabled"
+3. Check rule filters match uploaded file paths
+4. Verify file has auto-delete=true tag
+```
+
+#### Problem: Countdown Timer Not Updating
+
+**Cause**: Component not re-rendering
+
+**Solution**:
+```typescript
+// Verify interval is running
+useEffect(() => {
+    const interval = setInterval(updateTimer, 60000);
+    return () => clearInterval(interval); // ← Cleanup!
+}, [upload.expiresAt]);
+```
+
+#### Problem: Expired Files Still Showing
+
+**Cause**: Cleanup not triggered
+
+**Solution**:
+```typescript
+// Manually trigger cleanup
+await uploadApi.cleanupExpiredUploads({});
+
+// Refresh page
+window.location.reload();
+```
+
+---
+
+### Configuration
+
+#### Change Expiration Duration
+
+**24 hours (default)**:
+```typescript
+// In createBookUpload()
+const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+```
+
+**To change to 48 hours**:
+```typescript
+const expiresAt = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+
+// Also update S3 lifecycle rule:
+// Days after creation: 2
+```
+
+**To change to 12 hours**:
+```typescript
+const expiresAt = new Date(now.getTime() + 12 * 60 * 60 * 1000);
+
+// Note: S3 lifecycle minimum is 1 day
+// Use 1 day as safety net
+```
+
+---
+
+### Summary
+
+The automatic file expiration feature ensures:
+
+✅ **Storage Efficiency**
+- Abandoned uploads don't accumulate
+- Automatic cleanup without manual intervention
+- S3 lifecycle rules handle bulk deletion
+
+✅ **User Experience**
+- Clear countdown timer
+- Warning before expiration
+- Expired state with re-upload prompt
+
+✅ **Safety**
+- Library books protected (no auto-delete tag)
+- Upload record deletion prevents accidental cleanup
+- Images in permanent location (Vercel Blob)
+
+✅ **Reliability**
+- Dual-layer cleanup (S3 + API)
+- Runs automatically on page load
+- Logs and monitoring for debugging
+
+**Files Affected**:
+- `src/server/database/collections/bookUploads/types.ts` - Schema
+- `src/server/s3/sdk.ts` - S3 tagging
+- `src/pages/api/upload/parse.ts` - PDF upload with tag
+- `src/server/parser/productionRunner.ts` - Parser output with tag
+- `src/apis/upload/handlers/cleanupExpiredUploadsHandler.ts` - Cleanup API
+- `src/client/routes/UploadBook/components/UploadCard.tsx` - UI timer
+- `src/client/routes/UploadBook/UploadBook.module.css` - Styling
+- AWS S3 Bucket - Lifecycle rule configuration
+
+---
+
 ## Error Handling
 
 ### 1. Validation Errors (Recoverable)
@@ -1704,7 +2444,7 @@ For scanned PDFs:
 
 ## Conclusion
 
-The Book Upload feature provides a complete, production-ready solution for uploading and parsing PDF books. It handles real-time progress updates, validation error approval, image extraction and storage, and automatic cleanup.
+The Book Upload feature provides a complete, production-ready solution for uploading and parsing PDF books. It handles real-time progress updates, validation error approval, image extraction and storage, automatic cleanup, and 24-hour file expiration.
 
 Key strengths:
 - ✅ Real-time feedback via SSE
@@ -1712,6 +2452,8 @@ Key strengths:
 - ✅ Persistent state (survives page reload)
 - ✅ Clean separation of staging vs. library
 - ✅ Automatic resource cleanup
+- ✅ 24-hour file expiration (S3 lifecycle rules + API cleanup)
+- ✅ Countdown timer and expired state UI
 - ✅ Mobile-first UI
 
 For questions or issues, refer to the troubleshooting section or check the source code in:

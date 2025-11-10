@@ -19,6 +19,7 @@ export interface UploadItem {
     uploadId: string;
     status: 'uploading' | 'parsing' | 'awaiting-approval' | 'success' | 'failed' | 'timeout';
     createdAt: Date;
+    expiresAt: Date;
     fileName?: string;
     currentStep?: string;
     currentStepNumber?: number;
@@ -117,6 +118,15 @@ export interface ParserMetadata {
 
 export interface GetMetadataResponse {
     metadata?: ParserMetadata;
+    error?: string;
+}
+
+// Cleanup Expired Uploads
+export type CleanupExpiredUploadsRequest = Record<string, never>; // Empty object
+
+export interface CleanupExpiredUploadsResponse {
+    success?: boolean;
+    deletedCount: number;
     error?: string;
 }
 

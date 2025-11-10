@@ -14,7 +14,9 @@ import type {
     DeleteUploadRequest,
     DeleteUploadResponse,
     GetMetadataRequest,
-    GetMetadataResponse
+    GetMetadataResponse,
+    CleanupExpiredUploadsRequest,
+    CleanupExpiredUploadsResponse
 } from './types';
 
 import { listUploadsHandler } from './handlers/listUploadsHandler';
@@ -23,6 +25,7 @@ import { approveErrorsHandler } from './handlers/approveErrorsHandler';
 import { finalizeUploadHandler } from './handlers/finalizeUploadHandler';
 import { deleteUploadHandler } from './handlers/deleteUploadHandler';
 import { getMetadataHandler } from './handlers/getMetadataHandler';
+import { cleanupExpiredUploadsHandler } from './handlers/cleanupExpiredUploadsHandler';
 
 export async function listUploads(
     params: ListUploadsRequest,
@@ -64,5 +67,12 @@ export async function getMetadata(
     context: ApiHandlerContext
 ): Promise<GetMetadataResponse> {
     return getMetadataHandler(params, context);
+}
+
+export async function cleanupExpiredUploads(
+    params: CleanupExpiredUploadsRequest,
+    context: ApiHandlerContext
+): Promise<CleanupExpiredUploadsResponse> {
+    return cleanupExpiredUploadsHandler(params, context);
 }
 

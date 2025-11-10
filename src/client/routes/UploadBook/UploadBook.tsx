@@ -57,10 +57,13 @@ export const UploadBook = () => {
 
         // Create optimistic temporary upload item for immediate feedback
         const tempUploadId = `temp-${Date.now()}`;
+        const now = new Date();
+        const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
         uploadManager.actions.addOptimisticUpload({
             uploadId: tempUploadId,
             status: 'uploading',
-            createdAt: new Date(),
+            createdAt: now,
+            expiresAt: expiresAt,
             fileName: uploadForm.getFileName(),
             currentStep: 'Uploading PDF...',
             progress: 0

@@ -10,10 +10,12 @@ const getCollection = async (): Promise<Collection<BookUpload>> => {
 export const createBookUpload = async (uploadData: BookUploadCreate & { _id?: ObjectId }): Promise<BookUpload> => {
     const collection = await getCollection();
     const now = new Date();
+    const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
     
     const upload: BookUpload = {
         _id: uploadData._id || new ObjectId(), // Use provided _id or generate new one
         ...uploadData,
+        expiresAt,
         createdAt: now,
         updatedAt: now,
     };
@@ -110,5 +112,29 @@ export const getRecentUploadsForUser = async (
         // Keep all non-active uploads (success, failed, awaiting-approval)
         return true;
     });
+};
+
+export const getExpiredUploads = async (): Promise<BookUpload[]> => {
+    const collection = await getCollection();
+    const now = new Date();
+    
+    return await collection
+        .find({
+            expiresAt: { $lt: now }
+        })
+        .toArray();
+};
+
+export const getExpiredUploadsForUser = async (userId: string | ObjectId): Promise<BookUpload[]> => {
+    const collection = await getCollection();
+    const _userId = typeof userId === 'string' ? new ObjectId(userId) : userId;
+    const now = new Date();
+    
+    return await collection
+        .find({
+            userId: _userId,
+            expiresAt: { $lt: now }
+        })
+        .toArray();
 };
 
