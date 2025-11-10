@@ -191,7 +191,9 @@ export async function getMetadataHandler(
         };
     } catch (error) {
         console.error('[getMetadata] Error:', error);
-        return { error: 'Failed to get metadata' };
+        console.error('[getMetadata] Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+        console.error('[getMetadata] Error message:', error instanceof Error ? error.message : String(error));
+        return { error: `Failed to get metadata: ${error instanceof Error ? error.message : String(error)}` };
     }
 }
 
