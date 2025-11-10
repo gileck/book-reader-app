@@ -1064,10 +1064,64 @@ Images are uploaded to `books/BookTitle/images/` during parsing (productionRunne
 ```
 
 **Process**:
-1. Delete PDF from S3
-2. Delete parser output from S3
-3. Delete all images from S3
-4. Delete database record
+1. **Check upload record exists** - Fetch upload from database
+2. **Verify ownership** - Ensure user owns the upload
+3. Delete PDF from S3
+4. Delete parser output from S3
+5. Delete all images from Vercel Blob
+6. Delete database record
+
+**Safety Mechanism**:
+
+The delete operation is **fail-safe** and cannot accidentally delete images of library books. Here's how:
+
+```typescript
+// Step 1: Try to get upload record
+const upload = await getBookUpload(params.uploadId);
+
+if (!upload) {
+    return { error: 'Upload not found' };  // ← STOPS HERE if already added to library
+}
+
+// Step 2-6: Only runs if upload record exists
+// Delete PDF, parser output, images, and record
+```
+
+**Why It's Safe**:
+
+| Scenario | Upload Record Exists? | What Happens |
+|----------|----------------------|--------------|
+| Delete **before** adding to library | ✅ Yes | Deletes everything (PDF, parser output, images, DB record) |
+| Delete **after** adding to library | ❌ No | Returns "Upload not found" - **images are protected** |
+
+**Key Insight**: The system uses **"record existence"** as the safety mechanism:
+- When you add a book to the library, the upload record is **immediately deleted** (see finalize flow above)
+- If someone tries to delete an upload that was already added to library, the upload record won't exist
+- Without the upload record, the delete handler returns early and **never reaches the image deletion code**
+- This is an **implicit state management pattern** - no need for an explicit `addedToLibrary` flag
+
+**Example Flow**:
+
+```
+User adds book to library:
+  ├─ Create book in library ✅
+  ├─ Create chapters ✅
+  ├─ Delete PDF from S3 ✅
+  ├─ Delete parser output from S3 ✅
+  ├─ Delete upload record from DB ✅  ← Record is gone!
+  └─ Keep images in Vercel Blob ✅
+
+User tries to delete the same upload:
+  ├─ Query: getBookUpload(uploadId)
+  ├─ Result: null (record was deleted)
+  └─ Return: "Upload not found" ← Images never touched!
+```
+
+This design ensures:
+- ✅ No orphaned images from abandoned uploads
+- ✅ Library book images are always protected
+- ✅ Simple, elegant safety through record lifecycle
+- ✅ No race conditions or complex state management
 
 ---
 
