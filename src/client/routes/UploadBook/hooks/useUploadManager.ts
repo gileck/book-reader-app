@@ -119,9 +119,10 @@ export const useUploadManager = (userId: string | undefined) => {
     const handleSSEEvent = useCallback((event: SSEEvent, tempUploadId?: string) => {
         console.log('📡 SSE Event:', event);
         
+        const uploadId = event.uploadId;
+        
         // Get uploadId from first event and replace temp upload
-        if (event.uploadId && tempUploadId) {
-            const uploadId = event.uploadId;
+        if (uploadId && tempUploadId) {
             replaceUpload(tempUploadId, {
                 uploadId,
                 status: 'parsing',
@@ -130,10 +131,9 @@ export const useUploadManager = (userId: string | undefined) => {
                 currentStep: 'Starting parser...',
                 progress: 5
             });
-            return uploadId;
+            // Don't return early - continue processing this event
         }
         
-        const uploadId = event.uploadId;
         if (!uploadId) return null;
         
         // Update upload status from SSE event data
