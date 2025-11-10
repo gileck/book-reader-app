@@ -488,26 +488,54 @@ const handleStartUpload = async () => {
         currentStep: 'Uploading PDF...',
         progress: 0
     });
+    setSelectedUploadId(tempUploadId);
     
-    // 3. Start SSE upload (async)
-    let realUploadId: string | null = null;
-    
-    await sseUpload.startUpload(
-        { file, pdfUrl, uploadMode, fileName },
-        (event: SSEEvent) => {
-            // 4. On first SSE event with real uploadId, replace temp
-            const uploadId = uploadManager.actions.handleSSEEvent(
-                event, 
-                realUploadId ? undefined : tempUploadId // Only pass temp ID once
-            );
-            
-            if (uploadId && !realUploadId) {
-                realUploadId = uploadId; // Store real ID
+    try {
+        // 3. Start SSE upload (async)
+        let realUploadId: string | null = null;
+        
+        await sseUpload.startUpload(
+            {
+                file: uploadForm.file,
+                pdfUrl: uploadForm.pdfUrl,
+                uploadMode: uploadForm.uploadMode,
+                fileName: uploadForm.getFileName()
+            },
+            (event: SSEEvent) => {
+                // 4. On first SSE event with real uploadId, replace temp
+                const uploadId = uploadManager.actions.handleSSEEvent(
+                    event, 
+                    realUploadId ? undefined : tempUploadId // Only pass temp ID once
+                );
+                
+                if (uploadId && !realUploadId) {
+                    realUploadId = uploadId; // Store real ID
+                    setSelectedUploadId(uploadId); // Update selected ID
+                }
+                
+                // 5. Force immediate UI update on completion
+                if (event.type === 'complete' && realUploadId) {
+                    flushSync(() => {
+                        uploadManager.actions.updateUpload(realUploadId!, {
+                            status: 'success',
+                            currentStep: undefined,
+                            currentStepNumber: undefined,
+                            progress: 100
+                        });
+                    });
+                }
+                
+                return uploadId;
             }
-            
-            return uploadId;
-        }
-    );
+        );
+        
+        uploadForm.reset();
+        
+    } catch (err) {
+        // 6. Remove temporary upload on error
+        uploadManager.actions.removeUpload(tempUploadId);
+        setSelectedUploadId(null);
+    }
 };
 ```
 
