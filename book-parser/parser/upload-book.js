@@ -81,6 +81,9 @@ async function uploadImagesToBlob(book, imagesPath, db) {
         return;
     }
 
+    // Sort image files by filename (numerically) to ensure deterministic cover selection
+    imageFiles.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' }));
+
     console.log(`☁️  Uploading ${imageFiles.length} images to Vercel Blob...`);
 
     // Create folder path for this book

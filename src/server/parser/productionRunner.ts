@@ -329,6 +329,10 @@ export async function runParserWithSSE(
                 /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
             );
             
+            // Sort image files by filename (numerically) to ensure deterministic cover selection
+            // This matches the logic in upload-book.js
+            imageFiles.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+            
             if (imageFiles.length > 0) {
                 console.log(`   Found ${imageFiles.length} images to upload to Vercel Blob`);
                 
