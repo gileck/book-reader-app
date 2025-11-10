@@ -18,6 +18,7 @@ import {
     DeleteVercelFileResponse,
     GetStorageStatsParams,
     GetStorageStatsResponse,
+    StorageFile,
     StorageStats
 } from './types';
 import { listFiles as listS3FilesSDK, deleteFile as deleteS3FileSDK } from '../../server/s3/sdk';

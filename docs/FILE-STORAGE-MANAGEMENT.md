@@ -11,33 +11,53 @@ A comprehensive file storage management system that allows viewing and managing 
    - Toggle between S3 and Vercel Blob storage
    - Segmented control UI for easy switching
 
-2. **File Listing**
+2. **Folder Navigation** 🆕
+   - Browse folders in both S3 and Vercel Blob
+   - Breadcrumb navigation with clickable path
+   - Click folders to navigate into them
+   - Visual folder hierarchy with › arrows
+   - Automatic prefix filtering
+
+3. **File Listing**
    - View all files across all users
    - Support for folders and files
    - Real-time file metadata (size, last modified date)
-   - Folder file counts
+   - Folder file counts and total sizes
+   - Show only current folder contents
 
-3. **Statistics Dashboard**
-   - Total files count
+4. **Statistics Dashboard**
+   - Total files count (at current level)
    - Total storage size (formatted in B/KB/MB/GB/TB)
-   - Total folders count (for S3)
+   - Total folders count
+   - Auto-updates when navigating
 
-4. **Search & Filter**
+5. **Search & Filter**
    - Real-time search by file name/path
    - Case-insensitive search
+   - Search clears when navigating folders
 
-5. **Bulk Operations**
-   - Select all files
-   - Select individual files
+6. **Sorting** 🆕
+   - Sort by Name (alphabetical, natural sort)
+   - Sort by Size (smallest to largest)
+   - Sort by Type (folders first, then by extension)
+   - Sort by Date (oldest to newest)
+   - Click same button to toggle ascending/descending
+   - Visual indicators (↑/↓) show current sort direction
+   - Active sort button highlighted
+
+7. **Bulk Operations**
+   - Select all files/folders at current level
+   - Select individual items
    - Delete multiple files at once
    - Confirmation dialog for deletions
 
-6. **iOS-Style Mobile-First UI**
+8. **iOS-Style Mobile-First UI**
    - Responsive design
    - Native iOS-like styling
    - Safe area support
-   - Dark mode support
+   - Enhanced dark mode with proper contrast
    - Reduced motion support
+   - Smooth folder navigation
 
 ## API Structure
 
@@ -105,10 +125,22 @@ The File Storage page is available in:
 3. Confirm deletion in the dialog
 4. Files are permanently deleted from storage
 
+### Navigate Folders 🆕
+1. Click on any folder (📁) to open it
+2. Use breadcrumb navigation to go back
+3. Click "🏠 Root" to return to top level
+4. Path shows as: Root › folder1 › folder2
+
+### Sort Files 🆕
+1. Click any sort button (Name, Size, Type, Date)
+2. Click again to reverse order (↑ becomes ↓)
+3. Active sort button is highlighted in blue
+4. Folders always appear first when sorting by Type
+
 ### Switch Storage Types
 Use the segmented control at the top to switch between:
 - **S3 Storage**: AWS S3 bucket files
-- **Vercel Blob**: Vercel Blob storage files
+- **Vercel Blob**: Vercel Blob storage files (now with folder support!)
 
 ## Security
 
@@ -121,14 +153,25 @@ Use the segmented control at the top to switch between:
 ## Technical Details
 
 ### Dependencies
-- `@vercel/blob`: For Vercel Blob operations
+- `@vercel/blob`: For Vercel Blob operations (with `prefix` support)
 - `@aws-sdk/client-s3`: Already used for S3 operations
 - `@mui/icons-material/Storage`: Storage icon for navigation
 
+### Folder Support
+Both S3 and Vercel Blob use pathname-based folder organization:
+- **S3**: Uses delimiter `/` and CommonPrefixes for folder listing
+- **Vercel Blob**: Uses `prefix` parameter with pathname matching
+- Both support nested folder structures
+- Folders are virtual (no actual folder objects)
+
 ### State Management
 - React `useState` for local state
+- Current folder path tracked with `currentPrefix`
+- Sorting state with `sortBy` and `sortOrder`
 - Real-time updates after operations
-- Optimistic UI updates
+- Breadcrumb navigation with path parsing
+- Auto-reset prefix when switching storage types
+- `useMemo` for optimized filtering and sorting
 
 ### Error Handling
 - User-friendly error messages
@@ -139,6 +182,8 @@ Use the segmented control at the top to switch between:
 - Pagination support for Vercel Blob (limit: 1000)
 - Efficient S3 folder counting
 - Client-side search filtering
+- Memoized sorting and filtering with `React.useMemo`
+- Natural sorting for filenames (handles numbers correctly)
 
 ## Future Enhancements
 

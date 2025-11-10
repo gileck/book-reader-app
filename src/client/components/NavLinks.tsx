@@ -7,10 +7,12 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import StorageIcon from '@mui/icons-material/Storage';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export const navItems: NavItem[] = [
   { path: '/', label: 'Reader', icon: <MenuBookIcon /> },
   { path: '/book-library', label: 'Book Library', icon: <LibraryBooksIcon /> },
+  { path: '/upload-book', label: 'Book Uploads', icon: <CloudUploadIcon /> },
   { path: '/ai-chat', label: 'AI Chat', icon: <ChatIcon /> },
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
@@ -22,6 +24,7 @@ export const navItems: NavItem[] = [
 export const menuItems: NavItem[] = [
   { path: '/', label: 'Reader', icon: <MenuBookIcon /> },
   { path: '/book-library', label: 'Book Library', icon: <LibraryBooksIcon /> },
+  { path: '/upload-book', label: 'Book Uploads', icon: <CloudUploadIcon /> },
   { path: '/ai-chat', label: 'AI Chat', icon: <ChatIcon /> },
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },

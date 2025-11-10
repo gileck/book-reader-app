@@ -5,6 +5,8 @@ import type { StorageFile } from '../../../apis/fileStorage/types';
 import styles from './FileStorage.module.css';
 
 type StorageType = 's3' | 'vercel';
+type SortBy = 'name' | 'size' | 'type' | 'date';
+type SortOrder = 'asc' | 'desc';
 
 /**
  * File Storage Management Page
@@ -23,6 +25,8 @@ export const FileStorage = () => {
     const [deleting, setDeleting] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPrefix, setCurrentPrefix] = useState<string>('');
+    const [sortBy, setSortBy] = useState<SortBy>('name');
+    const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
     // Load files when storage type or prefix changes
     useEffect(() => {
@@ -117,10 +121,21 @@ export const FileStorage = () => {
     };
 
     const handleSelectAll = () => {
-        if (selectedFiles.size === filteredFiles.length) {
+        if (selectedFiles.size === filteredAndSortedFiles.length) {
             setSelectedFiles(new Set());
         } else {
-            setSelectedFiles(new Set(filteredFiles.map(f => f.key)));
+            setSelectedFiles(new Set(filteredAndSortedFiles.map(f => f.key)));
+        }
+    };
+
+    const handleSortChange = (newSortBy: SortBy) => {
+        if (sortBy === newSortBy) {
+            // Toggle order if clicking same sort
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        } else {
+            // New sort field, default to ascending
+            setSortBy(newSortBy);
+            setSortOrder('asc');
         }
     };
 
@@ -159,10 +174,54 @@ export const FileStorage = () => {
         });
     };
 
-    // Filter files based on search query
-    const filteredFiles = files.filter(file => 
-        file.key.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Filter and sort files
+    const filteredAndSortedFiles = React.useMemo(() => {
+        // First filter by search query
+        const result = files.filter(file => 
+            file.key.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        // Then sort
+        result.sort((a, b) => {
+            // Always put folders first when sorting by type
+            if (sortBy === 'type') {
+                if (a.isFolder !== b.isFolder) {
+                    return a.isFolder ? -1 : 1;
+                }
+            }
+
+            let comparison = 0;
+
+            switch (sortBy) {
+                case 'name':
+                    const aName = a.key.split('/').filter(p => p).pop() || a.key;
+                    const bName = b.key.split('/').filter(p => p).pop() || b.key;
+                    comparison = aName.localeCompare(bName, undefined, { numeric: true, sensitivity: 'base' });
+                    break;
+                
+                case 'size':
+                    comparison = a.size - b.size;
+                    break;
+                
+                case 'type':
+                    // If both are files or both are folders, sort by extension
+                    if (a.isFolder === b.isFolder && !a.isFolder) {
+                        const aExt = a.key.split('.').pop() || '';
+                        const bExt = b.key.split('.').pop() || '';
+                        comparison = aExt.localeCompare(bExt);
+                    }
+                    break;
+                
+                case 'date':
+                    comparison = new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime();
+                    break;
+            }
+
+            return sortOrder === 'asc' ? comparison : -comparison;
+        });
+
+        return result;
+    }, [files, searchQuery, sortBy, sortOrder]);
 
     if (!user) {
         return (
@@ -241,8 +300,8 @@ export const FileStorage = () => {
                 </div>
             )}
 
-            {/* Search Bar */}
-            <div className={styles.searchContainer}>
+            {/* Search and Sort Bar */}
+            <div className={styles.searchSortContainer}>
                 <input
                     type="text"
                     placeholder="Search files..."
@@ -250,6 +309,34 @@ export const FileStorage = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={styles.searchInput}
                 />
+                
+                <div className={styles.sortControls}>
+                    <span className={styles.sortLabel}>Sort by:</span>
+                    <button
+                        onClick={() => handleSortChange('name')}
+                        className={`${styles.sortButton} ${sortBy === 'name' ? styles.sortButtonActive : ''}`}
+                    >
+                        Name {sortBy === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
+                    </button>
+                    <button
+                        onClick={() => handleSortChange('size')}
+                        className={`${styles.sortButton} ${sortBy === 'size' ? styles.sortButtonActive : ''}`}
+                    >
+                        Size {sortBy === 'size' && (sortOrder === 'asc' ? '↑' : '↓')}
+                    </button>
+                    <button
+                        onClick={() => handleSortChange('type')}
+                        className={`${styles.sortButton} ${sortBy === 'type' ? styles.sortButtonActive : ''}`}
+                    >
+                        Type {sortBy === 'type' && (sortOrder === 'asc' ? '↑' : '↓')}
+                    </button>
+                    <button
+                        onClick={() => handleSortChange('date')}
+                        className={`${styles.sortButton} ${sortBy === 'date' ? styles.sortButtonActive : ''}`}
+                    >
+                        Date {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
+                    </button>
+                </div>
             </div>
 
             {/* Selection Actions */}
@@ -293,24 +380,24 @@ export const FileStorage = () => {
                     <div className={styles.listHeader}>
                         <input
                             type="checkbox"
-                            checked={selectedFiles.size === filteredFiles.length && filteredFiles.length > 0}
+                            checked={selectedFiles.size === filteredAndSortedFiles.length && filteredAndSortedFiles.length > 0}
                             onChange={handleSelectAll}
                             className={styles.checkbox}
                         />
                         <span className={styles.headerText}>
-                            {filteredFiles.length} file(s)
+                            {filteredAndSortedFiles.length} file(s)
                         </span>
                     </div>
 
                     {/* Empty State */}
-                    {filteredFiles.length === 0 && (
+                    {filteredAndSortedFiles.length === 0 && (
                         <div className={styles.emptyState}>
                             <p>No files found</p>
                         </div>
                     )}
 
                     {/* File Items */}
-                    {filteredFiles.map((file) => (
+                    {filteredAndSortedFiles.map((file) => (
                         <div
                             key={file.key}
                             className={`${styles.fileItem} ${selectedFiles.has(file.key) ? styles.fileItemSelected : ''}`}
