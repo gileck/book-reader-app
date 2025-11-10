@@ -1,5 +1,6 @@
 import { getBookUpload } from '@/server/database/collections/bookUploads';
 import { getFileAsString, getSignedFileUrl } from '@/server/s3/sdk';
+import { VERCEL_BLOB_IMAGES_BASE_PATH } from '@/common/constants';
 import type { ApiHandlerContext, GetMetadataRequest, GetMetadataResponse } from '../types';
 
 // TypeScript types for parser output
@@ -20,11 +21,20 @@ interface ParserMetadata {
     averageWordsPerParagraph?: number;
 }
 
+interface ParserChunk {
+    type: string;
+    imageName?: string;
+    imageAlt?: string;
+    content?: string;
+    text?: string;
+}
+
 interface ParserChapter {
     chapterNumber: number;
     title: string;
     content: unknown;
     wordCount?: number;
+    chunks?: ParserChunk[];
 }
 
 interface ParserFinalOutput {
@@ -127,6 +137,33 @@ export async function getMetadataHandler(
             // Continue without the URL if generation fails
         }
 
+        // Extract cover image (first image from all chapters, sorted by filename)
+        let coverImageUrl: string | undefined;
+        if (metadata.imageBaseURL) {
+            const allImageNames: string[] = [];
+            
+            // Collect all image names from all chapters
+            for (const chapter of chapters) {
+                if (chapter.chunks && Array.isArray(chapter.chunks)) {
+                    for (const chunk of chapter.chunks) {
+                        if (chunk.type === 'image' && chunk.imageName) {
+                            allImageNames.push(chunk.imageName);
+                        }
+                    }
+                }
+            }
+            
+            if (allImageNames.length > 0) {
+                // Sort by filename (numerically) to match upload-book.js logic
+                allImageNames.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+                
+                // Pick first image as cover
+                const firstImage = allImageNames[0];
+                coverImageUrl = `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${firstImage}`;
+                console.log('[getMetadata] Cover image:', coverImageUrl);
+            }
+        }
+
         return {
             metadata: {
                 title: metadata.title || 'Untitled Book',
@@ -141,6 +178,7 @@ export async function getMetadataHandler(
                 totalLinks: metadata.totalLinks,
                 averageWordsPerChapter: metadata.averageWordsPerChapter,
                 averageWordsPerParagraph: metadata.averageWordsPerParagraph,
+                coverImageUrl, // Include cover image URL
                 chapters: chapters.map(ch => ({
                     number: ch.chapterNumber,
                     title: ch.title

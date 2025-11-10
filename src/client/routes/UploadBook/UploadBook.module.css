@@ -2062,6 +2062,30 @@
     background: var(--color-system-bg);
 }
 
+.coverImageContainer {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-separator);
+}
+
+.coverImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+@media (prefers-color-scheme: dark) {
+    .coverImageContainer {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
 .bookTitle {
     font-size: 22px;
     font-weight: 800;
@@ -2500,6 +2524,17 @@
     background: var(--color-separator);
 }
 
+.previewCancelButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.previewCancelButton:disabled:active {
+    transform: none;
+    background: transparent;
+}
+
 .previewConfirmButton {
     width: 100%;
     padding: 16px 24px;
@@ -2521,6 +2556,16 @@
 
 .previewConfirmButton:active {
     transform: scale(0.98);
+}
+
+.previewConfirmButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.previewConfirmButton:disabled:active {
+    transform: none;
 }
 
 .previewConfirmButton span {

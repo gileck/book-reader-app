@@ -22,6 +22,7 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
 }) => {
     const [metadata, setMetadata] = useState<ParserMetadata | null>(null);
     const [loading, setLoading] = useState(true);
+    const [finalizing, setFinalizing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [showDebugDialog, setShowDebugDialog] = useState(false);
 
@@ -47,6 +48,17 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
         };
         loadData();
     }, [uploadId]); // onLoadingChange is intentionally excluded to avoid infinite loops
+
+    const handleFinalize = async () => {
+        setFinalizing(true);
+        onLoadingChange?.(true);
+        try {
+            await onFinalize();
+        } finally {
+            // Don't reset finalizing state here - parent will unmount this component
+            // after navigation
+        }
+    };
 
     if (loading) {
         return (
@@ -94,6 +106,21 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
                     <div className={styles.previewContent}>
                         {/* Book Info Card */}
                         <div className={styles.bookInfoCard}>
+                            {/* Cover Image */}
+                            {metadata.coverImageUrl && (
+                                <div className={styles.coverImageContainer}>
+                                    <img 
+                                        src={metadata.coverImageUrl} 
+                                        alt={`Cover for ${metadata.title}`}
+                                        className={styles.coverImage}
+                                        onError={(e) => {
+                                            // Hide image if it fails to load
+                                            (e.target as HTMLImageElement).style.display = 'none';
+                                        }}
+                                    />
+                                </div>
+                            )}
+                            
                             <h3 className={styles.bookTitle}>{metadata.title}</h3>
                             {metadata.author && (
                                 <p className={styles.bookAuthor}>by {metadata.author}</p>
@@ -231,11 +258,28 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
                 )}
 
                 <div className={styles.previewActions}>
-                    <button className={styles.previewCancelButton} onClick={onCancel}>
+                    <button 
+                        className={styles.previewCancelButton} 
+                        onClick={onCancel}
+                        disabled={finalizing}
+                    >
                         Cancel
                     </button>
-                    <button className={styles.previewConfirmButton} onClick={onFinalize}>
-                        <span>✓</span> Add to Library
+                    <button 
+                        className={styles.previewConfirmButton} 
+                        onClick={handleFinalize}
+                        disabled={finalizing}
+                    >
+                        {finalizing ? (
+                            <>
+                                <span className={styles.spinner} style={{ width: '16px', height: '16px', borderWidth: '2px' }} />
+                                Adding to Library...
+                            </>
+                        ) : (
+                            <>
+                                <span>✓</span> Add to Library
+                            </>
+                        )}
                     </button>
                 </div>
             </div>
