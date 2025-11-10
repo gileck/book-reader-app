@@ -24,6 +24,7 @@ A comprehensive file storage management system that allows viewing and managing 
    - Real-time file metadata (size, last modified date)
    - Folder file counts and total sizes
    - Show only current folder contents
+   - **Grouped Display**: Folders and files shown in separate sections 🆕
 
 4. **Statistics Dashboard**
    - Total files count (at current level)
@@ -135,7 +136,20 @@ The File Storage page is available in:
 1. Click any sort button (Name, Size, Type, Date)
 2. Click again to reverse order (↑ becomes ↓)
 3. Active sort button is highlighted in blue
-4. Folders always appear first when sorting by Type
+4. Each group (Folders/Files) is sorted independently
+
+### Grouped Display 🆕
+Files are now organized into two distinct sections:
+
+**📁 FOLDERS (count)**
+- All folders at current level
+- Clickable to navigate
+- Shows size and file count
+
+**📄 FILES (count)**
+- All files at current level
+- Separate from folders for clarity
+- Easier to scan and select
 
 ### Switch Storage Types
 Use the segmented control at the top to switch between:
@@ -209,6 +223,8 @@ The UI follows the project's iOS mobile-first design guidelines:
 - Safe area insets
 - Smooth animations (cubic-bezier easing)
 - Accessibility support
+- Sticky group headers for better scrolling
+- Clear visual hierarchy with grouped sections
 
 ## Files Created/Modified
 

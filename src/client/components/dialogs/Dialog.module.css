@@ -1,0 +1,273 @@
+/* Dialog Overlay */
+.dialogOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: var(--space-4, 16px);
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Dialog Container */
+.dialog {
+    background: var(--color-system-bg, #ffffff);
+    border-radius: var(--radius-large, 16px);
+    padding: var(--space-6, 24px);
+    max-width: 400px;
+    width: 100%;
+    box-shadow: var(--shadow-soft, 0 8px 32px rgba(0, 0, 0, 0.2));
+    animation: slideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid var(--color-separator, rgba(60, 60, 67, 0.29));
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .dialog {
+        background: #1C1C1E;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Dialog Icon */
+.dialogIcon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: var(--space-3, 12px);
+}
+
+/* Dialog Title */
+.dialogTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-label, #111111);
+    text-align: center;
+    margin: 0 0 var(--space-3, 12px);
+    letter-spacing: -0.4px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .dialogTitle {
+        color: #ffffff;
+    }
+}
+
+/* Dialog Message */
+.dialogMessage {
+    font-size: 15px;
+    color: var(--color-secondary-label, #6b7280);
+    text-align: center;
+    margin: 0 0 var(--space-6, 24px);
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    .dialogMessage {
+        color: #9ca3af;
+    }
+}
+
+/* Dialog Actions */
+.dialogActions {
+    display: flex;
+    gap: var(--space-3, 12px);
+    justify-content: stretch;
+}
+
+/* Base Button Styles */
+.alertButton,
+.cancelButton,
+.confirmButton {
+    flex: 1;
+    min-height: 44px;
+    padding: 0 var(--space-4, 16px);
+    border-radius: var(--radius-pill, 999px);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.alertButton:active,
+.cancelButton:active,
+.confirmButton:active {
+    transform: scale(0.96);
+}
+
+.alertButton:disabled,
+.cancelButton:disabled,
+.confirmButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Alert Button Variants */
+.alertButton {
+    width: 100%;
+}
+
+.alertButtonSuccess {
+    background: #34C759;
+    color: white;
+}
+
+.alertButtonSuccess:hover {
+    background: #2FB350;
+}
+
+.alertButtonError {
+    background: #FF3B30;
+    color: white;
+}
+
+.alertButtonError:hover {
+    background: #E6342A;
+}
+
+.alertButtonWarning {
+    background: #FF9500;
+    color: white;
+}
+
+.alertButtonWarning:hover {
+    background: #E68600;
+}
+
+.alertButtonInfo {
+    background: var(--color-tint, #007aff);
+    color: white;
+}
+
+.alertButtonInfo:hover {
+    opacity: 0.9;
+}
+
+/* Cancel Button */
+.cancelButton {
+    background: var(--color-secondary-bg, #f6f7f8);
+    color: var(--color-label, #111111);
+    border: 1px solid var(--color-separator, rgba(60, 60, 67, 0.29));
+}
+
+.cancelButton:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+    .cancelButton {
+        background: #2C2C2E;
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .cancelButton:hover {
+        background: #3A3A3C;
+    }
+}
+
+/* Confirm Button Variants */
+.confirmButtonDanger {
+    background: #FF3B30;
+    color: white;
+}
+
+.confirmButtonDanger:hover {
+    background: #E6342A;
+}
+
+.confirmButtonWarning {
+    background: #FF9500;
+    color: white;
+}
+
+.confirmButtonWarning:hover {
+    background: #E68600;
+}
+
+.confirmButtonInfo {
+    background: var(--color-tint, #007aff);
+    color: white;
+}
+
+.confirmButtonInfo:hover {
+    opacity: 0.9;
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 600px) {
+    .dialog {
+        max-width: calc(100vw - 32px);
+        padding: var(--space-4, 16px);
+    }
+
+    .dialogIcon {
+        font-size: 40px;
+    }
+
+    .dialogTitle {
+        font-size: 18px;
+    }
+
+    .dialogMessage {
+        font-size: 14px;
+    }
+
+    .dialogActions {
+        flex-direction: column;
+    }
+
+    .alertButton,
+    .cancelButton,
+    .confirmButton {
+        width: 100%;
+    }
+}
+

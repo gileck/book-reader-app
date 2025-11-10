@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { listS3Files, listVercelFiles, deleteS3File, deleteVercelFile } from '../../../apis/fileStorage/client';
 import type { StorageFile } from '../../../apis/fileStorage/types';
+import { AlertDialog, ConfirmDialog } from '../../components/dialogs';
 import styles from './FileStorage.module.css';
 
 type StorageType = 's3' | 'vercel';
@@ -27,6 +28,10 @@ export const FileStorage = () => {
     const [currentPrefix, setCurrentPrefix] = useState<string>('');
     const [sortBy, setSortBy] = useState<SortBy>('name');
     const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [showResultAlert, setShowResultAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertType, setAlertType] = useState<'success' | 'error'>('success');
 
     // Load files when storage type or prefix changes
     useEffect(() => {
@@ -68,13 +73,13 @@ export const FileStorage = () => {
         }
     };
 
-    const handleDeleteSelected = async () => {
+    const handleDeleteSelected = () => {
         if (selectedFiles.size === 0) return;
-        
-        if (!confirm(`Delete ${selectedFiles.size} selected file(s)?`)) {
-            return;
-        }
+        setShowDeleteConfirm(true);
+    };
 
+    const confirmDelete = async () => {
+        setShowDeleteConfirm(false);
         setDeleting(true);
         let successCount = 0;
         let errorCount = 0;
@@ -100,11 +105,15 @@ export const FileStorage = () => {
             // Reload files after deletion
             await loadFiles();
 
+            // Show result
             if (errorCount === 0) {
-                alert(`Successfully deleted ${successCount} file(s)`);
+                setAlertType('success');
+                setAlertMessage(`Successfully deleted ${successCount} file(s)`);
             } else {
-                alert(`Deleted ${successCount} file(s), ${errorCount} failed`);
+                setAlertType('error');
+                setAlertMessage(`Deleted ${successCount} file(s), ${errorCount} failed`);
             }
+            setShowResultAlert(true);
         } finally {
             setDeleting(false);
         }
@@ -121,10 +130,11 @@ export const FileStorage = () => {
     };
 
     const handleSelectAll = () => {
-        if (selectedFiles.size === filteredAndSortedFiles.length) {
+        const allItems = [...folders, ...regularFiles];
+        if (selectedFiles.size === allItems.length) {
             setSelectedFiles(new Set());
         } else {
-            setSelectedFiles(new Set(filteredAndSortedFiles.map(f => f.key)));
+            setSelectedFiles(new Set(allItems.map(f => f.key)));
         }
     };
 
@@ -174,53 +184,64 @@ export const FileStorage = () => {
         });
     };
 
-    // Filter and sort files
-    const filteredAndSortedFiles = React.useMemo(() => {
+    // Filter and sort files, separated into folders and files
+    const { folders, regularFiles } = React.useMemo(() => {
         // First filter by search query
-        const result = files.filter(file => 
+        const filtered = files.filter(file => 
             file.key.toLowerCase().includes(searchQuery.toLowerCase())
         );
 
-        // Then sort
-        result.sort((a, b) => {
-            // Always put folders first when sorting by type
-            if (sortBy === 'type') {
-                if (a.isFolder !== b.isFolder) {
-                    return a.isFolder ? -1 : 1;
+        // Separate into folders and files
+        const foldersArray: StorageFile[] = [];
+        const filesArray: StorageFile[] = [];
+
+        for (const item of filtered) {
+            if (item.isFolder) {
+                foldersArray.push(item);
+            } else {
+                filesArray.push(item);
+            }
+        }
+
+        // Sort function
+        const sortItems = (items: StorageFile[]) => {
+            items.sort((a, b) => {
+                let comparison = 0;
+
+                switch (sortBy) {
+                    case 'name':
+                        const aName = a.key.split('/').filter(p => p).pop() || a.key;
+                        const bName = b.key.split('/').filter(p => p).pop() || b.key;
+                        comparison = aName.localeCompare(bName, undefined, { numeric: true, sensitivity: 'base' });
+                        break;
+                    
+                    case 'size':
+                        comparison = a.size - b.size;
+                        break;
+                    
+                    case 'type':
+                        // For files, sort by extension
+                        if (!a.isFolder && !b.isFolder) {
+                            const aExt = a.key.split('.').pop() || '';
+                            const bExt = b.key.split('.').pop() || '';
+                            comparison = aExt.localeCompare(bExt);
+                        }
+                        break;
+                    
+                    case 'date':
+                        comparison = new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime();
+                        break;
                 }
-            }
 
-            let comparison = 0;
+                return sortOrder === 'asc' ? comparison : -comparison;
+            });
+        };
 
-            switch (sortBy) {
-                case 'name':
-                    const aName = a.key.split('/').filter(p => p).pop() || a.key;
-                    const bName = b.key.split('/').filter(p => p).pop() || b.key;
-                    comparison = aName.localeCompare(bName, undefined, { numeric: true, sensitivity: 'base' });
-                    break;
-                
-                case 'size':
-                    comparison = a.size - b.size;
-                    break;
-                
-                case 'type':
-                    // If both are files or both are folders, sort by extension
-                    if (a.isFolder === b.isFolder && !a.isFolder) {
-                        const aExt = a.key.split('.').pop() || '';
-                        const bExt = b.key.split('.').pop() || '';
-                        comparison = aExt.localeCompare(bExt);
-                    }
-                    break;
-                
-                case 'date':
-                    comparison = new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime();
-                    break;
-            }
+        // Sort both arrays
+        sortItems(foldersArray);
+        sortItems(filesArray);
 
-            return sortOrder === 'asc' ? comparison : -comparison;
-        });
-
-        return result;
+        return { folders: foldersArray, regularFiles: filesArray };
     }, [files, searchQuery, sortBy, sortOrder]);
 
     if (!user) {
@@ -380,59 +401,124 @@ export const FileStorage = () => {
                     <div className={styles.listHeader}>
                         <input
                             type="checkbox"
-                            checked={selectedFiles.size === filteredAndSortedFiles.length && filteredAndSortedFiles.length > 0}
+                            checked={selectedFiles.size === (folders.length + regularFiles.length) && (folders.length + regularFiles.length) > 0}
                             onChange={handleSelectAll}
                             className={styles.checkbox}
                         />
                         <span className={styles.headerText}>
-                            {filteredAndSortedFiles.length} file(s)
+                            {folders.length + regularFiles.length} item(s)
                         </span>
                     </div>
 
                     {/* Empty State */}
-                    {filteredAndSortedFiles.length === 0 && (
+                    {folders.length === 0 && regularFiles.length === 0 && (
                         <div className={styles.emptyState}>
                             <p>No files found</p>
                         </div>
                     )}
 
-                    {/* File Items */}
-                    {filteredAndSortedFiles.map((file) => (
-                        <div
-                            key={file.key}
-                            className={`${styles.fileItem} ${selectedFiles.has(file.key) ? styles.fileItemSelected : ''}`}
-                            onClick={() => file.isFolder && handleFolderClick(file.key)}
-                            style={{ cursor: file.isFolder ? 'pointer' : 'default' }}
-                        >
-                            <input
-                                type="checkbox"
-                                checked={selectedFiles.has(file.key)}
-                                onChange={() => handleToggleFile(file.key)}
-                                onClick={(e) => e.stopPropagation()}
-                                className={styles.checkbox}
-                            />
-                            <div className={styles.fileInfo}>
-                                <div className={styles.fileName}>
-                                    {file.isFolder ? '📁' : '📄'} {file.key.split('/').filter(p => p).pop() || file.key}
-                                </div>
-                                <div className={styles.fileDetails}>
-                                    <span>{formatSize(file.size)}</span>
-                                    <span className={styles.separator}>•</span>
-                                    <span>{formatDate(file.lastModified)}</span>
-                                    {file.isFolder && file.fileCount !== undefined && (
-                                        <>
-                                            <span className={styles.separator}>•</span>
-                                            <span>{file.fileCount} files</span>
-                                        </>
-                                    )}
-                                </div>
+                    {/* Folders Section */}
+                    {folders.length > 0 && (
+                        <>
+                            <div className={styles.groupHeader}>
+                                <span className={styles.groupIcon}>📁</span>
+                                <span className={styles.groupTitle}>Folders</span>
+                                <span className={styles.groupCount}>({folders.length})</span>
                             </div>
-                            {file.isFolder && (
-                                <div className={styles.folderArrow}>›</div>
-                            )}
-                        </div>
-                    ))}
+                            {folders.map((folder) => (
+                                <div
+                                    key={folder.key}
+                                    className={`${styles.fileItem} ${selectedFiles.has(folder.key) ? styles.fileItemSelected : ''}`}
+                                    onClick={() => handleFolderClick(folder.key)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedFiles.has(folder.key)}
+                                        onChange={() => handleToggleFile(folder.key)}
+                                        onClick={(e) => e.stopPropagation()}
+                                        className={styles.checkbox}
+                                    />
+                                    <div className={styles.fileInfo}>
+                                        <div className={styles.fileName}>
+                                            📁 {folder.key.split('/').filter(p => p).pop() || folder.key}
+                                        </div>
+                                        <div className={styles.fileDetails}>
+                                            <span>{formatSize(folder.size)}</span>
+                                            <span className={styles.separator}>•</span>
+                                            <span>{formatDate(folder.lastModified)}</span>
+                                            {folder.fileCount !== undefined && (
+                                                <>
+                                                    <span className={styles.separator}>•</span>
+                                                    <span>{folder.fileCount} files</span>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className={styles.folderArrow}>›</div>
+                                </div>
+                            ))}
+                        </>
+                    )}
+
+                    {/* Files Section */}
+                    {regularFiles.length > 0 && (
+                        <>
+                            <div className={styles.groupHeader}>
+                                <span className={styles.groupIcon}>📄</span>
+                                <span className={styles.groupTitle}>Files</span>
+                                <span className={styles.groupCount}>({regularFiles.length})</span>
+                            </div>
+                            {regularFiles.map((file) => (
+                                <div
+                                    key={file.key}
+                                    className={`${styles.fileItem} ${selectedFiles.has(file.key) ? styles.fileItemSelected : ''}`}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedFiles.has(file.key)}
+                                        onChange={() => handleToggleFile(file.key)}
+                                        className={styles.checkbox}
+                                    />
+                                    <div className={styles.fileInfo}>
+                                        <div className={styles.fileName}>
+                                            📄 {file.key.split('/').filter(p => p).pop() || file.key}
+                                        </div>
+                                        <div className={styles.fileDetails}>
+                                            <span>{formatSize(file.size)}</span>
+                                            <span className={styles.separator}>•</span>
+                                            <span>{formatDate(file.lastModified)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </>
+                    )}
                 </div>
+            )}
+
+            {/* Delete Confirmation Dialog */}
+            {showDeleteConfirm && (
+                <ConfirmDialog
+                    type="danger"
+                    icon="🗑️"
+                    title="Delete Files?"
+                    message={`Are you sure you want to delete ${selectedFiles.size} selected file(s)? This action cannot be undone.`}
+                    cancelText="Cancel"
+                    confirmText="Delete"
+                    isLoading={deleting}
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowDeleteConfirm(false)}
+                />
+            )}
+
+            {/* Result Alert Dialog */}
+            {showResultAlert && (
+                <AlertDialog
+                    type={alertType}
+                    message={alertMessage}
+                    onClose={() => setShowResultAlert(false)}
+                />
             )}
         </div>
     );

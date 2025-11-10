@@ -14,6 +14,7 @@ import { useSettings } from '../../settings/SettingsContext';
 import { useAuth } from '../../context/AuthContext';
 import { offlineManager } from '../../offline/offlineManager';
 import { apiUpdateProfile } from '@/apis/auth/client';
+import { AlertDialog } from '../../components/dialogs';
 
 interface BookWithProgress extends BookClient {
     progress?: ReadingProgressStats;
@@ -47,6 +48,9 @@ export const BookLibrary = () => {
     const [downloadsError, setDownloadsError] = useState<string | null>(null);
     const [downloadedSet, setDownloadedSet] = useState<Set<string>>(new Set()); // chapterIds for current dialog book
     const [downloadingSet, setDownloadingSet] = useState<Set<string>>(new Set());
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertType, setAlertType] = useState<'success' | 'error' | 'warning' | 'info'>('info');
 
     const loadBooksWithProgress = useCallback(async () => {
         try {
@@ -274,10 +278,14 @@ export const BookLibrary = () => {
                     }
                 }
             }
-            alert('No image found in clipboard');
+            setAlertType('warning');
+            setAlertMessage('No image found in clipboard');
+            setShowAlert(true);
         } catch (error) {
             console.error('Error accessing clipboard:', error);
-            alert('Failed to paste image from clipboard');
+            setAlertType('error');
+            setAlertMessage('Failed to paste image from clipboard');
+            setShowAlert(true);
         }
     };
 
@@ -292,11 +300,15 @@ export const BookLibrary = () => {
                 setEditForm(prev => ({ ...prev, coverImage: result.data!.coverImageUrl }));
             } else {
                 console.error('Failed to upload image');
-                alert('Failed to upload image');
+                setAlertType('error');
+                setAlertMessage('Failed to upload image');
+                setShowAlert(true);
             }
         } catch (error) {
             console.error('Error uploading image:', error);
-            alert('Failed to upload image');
+            setAlertType('error');
+            setAlertMessage('Failed to upload image');
+            setShowAlert(true);
         } finally {
             setUploadingImage(false);
         }
@@ -313,11 +325,15 @@ export const BookLibrary = () => {
                 setEditForm(prev => ({ ...prev, coverImage: result.data!.coverImageUrl }));
             } else {
                 console.error('Failed to upload image from URL');
-                alert('Failed to upload image from URL');
+                setAlertType('error');
+                setAlertMessage('Failed to upload image from URL');
+                setShowAlert(true);
             }
         } catch (error) {
             console.error('Error uploading image from URL:', error);
-            alert('Failed to upload image from URL');
+            setAlertType('error');
+            setAlertMessage('Failed to upload image from URL');
+            setShowAlert(true);
         } finally {
             setUploadingImage(false);
         }
@@ -1267,6 +1283,15 @@ export const BookLibrary = () => {
                     )}
                 </DialogContent>
             </Dialog>
+
+            {/* Alert Dialog */}
+            {showAlert && (
+                <AlertDialog
+                    type={alertType}
+                    message={alertMessage}
+                    onClose={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 }; 
