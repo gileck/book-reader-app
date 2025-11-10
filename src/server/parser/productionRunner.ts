@@ -23,7 +23,8 @@ async function uploadFileToBlob(key: string, content: Buffer, contentType: strin
         access: 'public',
         contentType: contentType || 'application/octet-stream',
         token: BLOB_READ_WRITE_TOKEN,
-        addRandomSuffix: false
+        addRandomSuffix: false,
+        allowOverwrite: true // Allow overwriting existing blobs
     });
 
     return blob.url;
