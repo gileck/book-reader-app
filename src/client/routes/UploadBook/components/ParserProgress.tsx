@@ -4,8 +4,8 @@ import styles from '../UploadBook.module.css';
 interface ParserProgressProps {
     progress: number;
     currentStep: string;
-    totalSteps: number;
-    status: 'uploading' | 'parsing';
+    totalSteps?: number;
+    status?: 'uploading' | 'parsing';
 }
 
 const getStepName = (step: string): string => {
