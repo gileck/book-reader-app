@@ -88,7 +88,19 @@ export async function getMetadataHandler(
         console.log('[getMetadata] Fetching parser output from S3:', upload.parserOutputS3Key);
 
         // Download parser output from S3
-        const parserOutputJson = await getFileAsString(upload.parserOutputS3Key);
+        let parserOutputJson: string;
+        try {
+            parserOutputJson = await getFileAsString(upload.parserOutputS3Key);
+        } catch (error) {
+            if (error && typeof error === 'object' && 'Code' in error && error.Code === 'NoSuchKey') {
+                console.error('[getMetadata] Parser output file not found in S3:', upload.parserOutputS3Key);
+                return { 
+                    error: 'Parser output file not found. The file may have been deleted or the upload did not complete successfully. Please try re-uploading the book.' 
+                };
+            }
+            throw error; // Re-throw other errors
+        }
+        
         const parserOutput: ParserOutput = JSON.parse(parserOutputJson);
 
         console.log('[getMetadata] Parser output structure:', {

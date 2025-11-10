@@ -90,7 +90,8 @@ export const uploadFile = async (
     ? params.fileName
     : `${APP_FOLDER_PREFIX}${params.fileName}`;
 
-  // console.log('Uploading file with key:', fileName);
+  console.log('[S3] Uploading file with full key:', fileName);
+  console.log('[S3] File size:', typeof params.content === 'string' ? `${(params.content.length / 1024).toFixed(2)} KB` : 'Buffer');
 
   // Add timeout using AbortController
   const abortController = new AbortController();
@@ -104,15 +105,19 @@ export const uploadFile = async (
       ContentType: params.contentType || 'application/octet-stream',
     });
 
+    console.log('[S3] Sending PutObject command to bucket:', bucketName);
     await client.send(command, {
       abortSignal: abortController.signal
     });
 
     clearTimeout(timeoutId);
     // Return the key without the APP_FOLDER_PREFIX for consistency
-    return fileName.replace(APP_FOLDER_PREFIX, '');
+    const returnKey = fileName.replace(APP_FOLDER_PREFIX, '');
+    console.log('[S3] Upload successful. Returning key:', returnKey);
+    return returnKey;
   } catch (error) {
     clearTimeout(timeoutId);
+    console.error('[S3] Upload failed:', error);
     throw error;
   }
 };

@@ -386,12 +386,18 @@ export async function runParserWithSSE(
         }
         
         const outputJson = JSON.stringify(result, null, 2);
+        console.log(`📏 Parser output JSON size: ${(outputJson.length / 1024).toFixed(2)} KB`);
+        
+        const fileName = `users/${userId}/parser-output/${uploadId}/output.json`;
+        console.log(`📤 Uploading to S3 with fileName: ${fileName}`);
+        
         const s3Key = await uploadFile({
             content: outputJson,
-            fileName: `users/${userId}/parser-output/${uploadId}/output.json`,
+            fileName: fileName,
             contentType: 'application/json'
         });
         console.log(`✅ Parser output saved to S3: ${s3Key}`);
+        console.log(`🔍 S3 key will be stored in database: ${s3Key}`);
 
         // Notify user: Finalizing
         sendSSE(res, {
