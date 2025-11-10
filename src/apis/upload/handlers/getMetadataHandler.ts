@@ -149,8 +149,10 @@ export async function getMetadataHandler(
             // Continue without the URL if generation fails
         }
 
-        // Extract cover image (first image from all chapters, sorted by filename)
+        // Extract all images and cover image (first image from all chapters, sorted by filename)
         let coverImageUrl: string | undefined;
+        const images: Array<{ name: string; url: string }> = [];
+        
         if (metadata.imageBaseURL) {
             const allImageNames: string[] = [];
             
@@ -173,6 +175,15 @@ export async function getMetadataHandler(
                 const firstImage = allImageNames[0];
                 coverImageUrl = `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${firstImage}`;
                 console.log('[getMetadata] Cover image:', coverImageUrl);
+                
+                // Build full image list with URLs
+                for (const imageName of allImageNames) {
+                    images.push({
+                        name: imageName,
+                        url: `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${imageName}`
+                    });
+                }
+                console.log('[getMetadata] Total images collected:', images.length);
             }
         }
 
@@ -191,6 +202,7 @@ export async function getMetadataHandler(
                 averageWordsPerChapter: metadata.averageWordsPerChapter,
                 averageWordsPerParagraph: metadata.averageWordsPerParagraph,
                 coverImageUrl, // Include cover image URL
+                images: images.length > 0 ? images : undefined, // Include all images sorted by name
                 chapters: chapters.map(ch => ({
                     number: ch.chapterNumber,
                     title: ch.title

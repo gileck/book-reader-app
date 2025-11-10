@@ -216,6 +216,33 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
                             </div>
                         </div>
 
+                        {/* Images List */}
+                        {metadata.images && metadata.images.length > 0 && (
+                            <div className={styles.imagesCard}>
+                                <h4 className={styles.imagesTitle}>
+                                    <span>🖼️</span>
+                                    Extracted Images ({metadata.images.length} images)
+                                </h4>
+                                <div className={styles.imagesList}>
+                                    {metadata.images.map((image, index) => (
+                                        <div key={index} className={styles.imageItem}>
+                                            <span className={styles.imageNumber}>{index + 1}.</span>
+                                            <span className={styles.imageName}>{image.name}</span>
+                                            <a 
+                                                href={image.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={styles.imageLink}
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                🔗 Open
+                                            </a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Debug Info - Show S3 Key */}
                         {metadata.parserOutputS3Key && (
                             <div className={styles.debugCard}>

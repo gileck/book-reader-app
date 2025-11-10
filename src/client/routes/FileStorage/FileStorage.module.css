@@ -321,7 +321,15 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-    * {
+    .container :global(*) {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .refreshButton,
+    .segmentButton,
+    .deleteButton,
+    .spinner {
         transition: none !important;
         animation: none !important;
     }

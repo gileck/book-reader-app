@@ -30,8 +30,8 @@ export async function listS3Files(
     params: ListS3FilesParams,
     context: ApiHandlerContext
 ): Promise<ListS3FilesResponse> {
-    // Only allow admin users
-    if (!context.user) {
+    // Only allow authenticated users
+    if (!context.userId) {
         throw new Error('Authentication required');
     }
 
@@ -54,8 +54,8 @@ export async function listVercelFiles(
     params: ListVercelFilesParams,
     context: ApiHandlerContext
 ): Promise<ListVercelFilesResponse> {
-    // Only allow admin users
-    if (!context.user) {
+    // Only allow authenticated users
+    if (!context.userId) {
         throw new Error('Authentication required');
     }
 
@@ -100,8 +100,8 @@ export async function deleteS3File(
     params: DeleteS3FileParams,
     context: ApiHandlerContext
 ): Promise<DeleteS3FileResponse> {
-    // Only allow admin users
-    if (!context.user) {
+    // Only allow authenticated users
+    if (!context.userId) {
         throw new Error('Authentication required');
     }
 
@@ -117,8 +117,8 @@ export async function deleteVercelFile(
     params: DeleteVercelFileParams,
     context: ApiHandlerContext
 ): Promise<DeleteVercelFileResponse> {
-    // Only allow admin users
-    if (!context.user) {
+    // Only allow authenticated users
+    if (!context.userId) {
         throw new Error('Authentication required');
     }
 
@@ -141,8 +141,8 @@ export async function getStorageStats(
     params: GetStorageStatsParams,
     context: ApiHandlerContext
 ): Promise<GetStorageStatsResponse> {
-    // Only allow admin users
-    if (!context.user) {
+    // Only allow authenticated users
+    if (!context.userId) {
         throw new Error('Authentication required');
     }
 

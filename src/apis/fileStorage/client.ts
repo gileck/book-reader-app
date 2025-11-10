@@ -1,6 +1,6 @@
 // File Storage API Client
-import { CacheResult } from '../../client/api-client/types';
-import { makeApiCall } from '../../client/api-client/makeApiCall';
+import apiClient from '@/client/utils/apiClient';
+import { CacheResult } from '@/common/cache/types';
 import {
     LIST_S3_FILES,
     LIST_VERCEL_FILES,
@@ -27,7 +27,7 @@ import {
 export async function listS3Files(
     params: ListS3FilesParams = {}
 ): Promise<CacheResult<ListS3FilesResponse>> {
-    return makeApiCall<ListS3FilesResponse>(LIST_S3_FILES, params);
+    return apiClient.call(LIST_S3_FILES, params);
 }
 
 /**
@@ -36,7 +36,7 @@ export async function listS3Files(
 export async function listVercelFiles(
     params: ListVercelFilesParams = {}
 ): Promise<CacheResult<ListVercelFilesResponse>> {
-    return makeApiCall<ListVercelFilesResponse>(LIST_VERCEL_FILES, params);
+    return apiClient.call(LIST_VERCEL_FILES, params);
 }
 
 /**
@@ -45,8 +45,8 @@ export async function listVercelFiles(
 export async function deleteS3File(
     params: DeleteS3FileParams
 ): Promise<CacheResult<DeleteS3FileResponse>> {
-    return makeApiCall<DeleteS3FileResponse>(DELETE_S3_FILE, params, {
-        skipCache: true
+    return apiClient.call(DELETE_S3_FILE, params, {
+        disableCache: true
     });
 }
 
@@ -56,8 +56,8 @@ export async function deleteS3File(
 export async function deleteVercelFile(
     params: DeleteVercelFileParams
 ): Promise<CacheResult<DeleteVercelFileResponse>> {
-    return makeApiCall<DeleteVercelFileResponse>(DELETE_VERCEL_FILE, params, {
-        skipCache: true
+    return apiClient.call(DELETE_VERCEL_FILE, params, {
+        disableCache: true
     });
 }
 
@@ -67,6 +67,6 @@ export async function deleteVercelFile(
 export async function getStorageStats(
     params: GetStorageStatsParams
 ): Promise<CacheResult<GetStorageStatsResponse>> {
-    return makeApiCall<GetStorageStatsResponse>(GET_STORAGE_STATS, params);
+    return apiClient.call(GET_STORAGE_STATS, params);
 }
 

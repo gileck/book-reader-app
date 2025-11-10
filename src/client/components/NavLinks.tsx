@@ -6,6 +6,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import StorageIcon from '@mui/icons-material/Storage';
 
 export const navItems: NavItem[] = [
   { path: '/', label: 'Reader', icon: <MenuBookIcon /> },
@@ -14,6 +15,7 @@ export const navItems: NavItem[] = [
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
   { path: '/tts-usage', label: 'TTS Usage', icon: <RecordVoiceOverIcon /> },
+  { path: '/file-storage', label: 'File Storage', icon: <StorageIcon /> },
   { path: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
 
@@ -24,5 +26,6 @@ export const menuItems: NavItem[] = [
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
   { path: '/tts-usage', label: 'TTS Usage', icon: <RecordVoiceOverIcon /> },
+  { path: '/file-storage', label: 'File Storage', icon: <StorageIcon /> },
   { path: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];

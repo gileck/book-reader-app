@@ -9,6 +9,7 @@ import { ReadingHistory } from './ReadingHistory';
 import { BookLibrary } from './BookLibrary';
 import { TtsUsage } from './TtsUsage';
 import { UploadBook } from './UploadBook';
+import { FileStorage } from './FileStorage';
 import { createRoutes } from '../router';
 
 // Define routes
@@ -17,6 +18,7 @@ export const routes = createRoutes({
   '/home': Home,
   '/book-library': BookLibrary,
   '/upload-book': UploadBook,
+  '/file-storage': FileStorage,
   '/ai-chat': AIChat,
   '/bookmarks': Bookmarks,
   '/reading-history': ReadingHistory,

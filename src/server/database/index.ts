@@ -81,8 +81,8 @@ export async function getDb(): Promise<Db> {
         // Don't await to avoid blocking the first request
         (async () => {
             try {
-                const { initializeIndexes } = await import('./initIndexes');
-                await initializeIndexes();
+                // const { initializeIndexes } = await import('./initIndexes');
+                // await initializeIndexes();
             } catch (error) {
                 console.error('Failed to initialize indexes:', error);
                 indexesInitialized = false; // Allow retry on next connection
