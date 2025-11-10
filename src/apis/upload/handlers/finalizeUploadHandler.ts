@@ -4,6 +4,7 @@ import { createBook } from '@/server/database/collections/books/books';
 import { createChapter } from '@/server/database/collections/chapters/chapters';
 import { deleteBook } from '@/server/database/collections/books/books';
 import { getFileAsString, deleteFile } from '@/server/s3/sdk';
+import { list } from '@vercel/blob';
 import type { ApiHandlerContext, FinalizeUploadRequest, FinalizeUploadResponse } from '../types';
 
 // TypeScript types for parser output
@@ -109,29 +110,56 @@ export async function finalizeUploadHandler(
 
         try {
             // Find the first image (sorted by filename) to use as cover
+            // Use Vercel Blob list() to get ALL uploaded images (not just chapter-referenced ones)
             // This matches the logic in upload-book.js and getMetadataHandler.ts
             let coverImage: string | undefined;
             
-            // Collect all image names from all chapters
-            const allImageNames: string[] = [];
-            for (const chapter of chapters) {
-                if (chapter.chunks && Array.isArray(chapter.chunks)) {
-                    for (const chunk of chapter.chunks) {
-                        const c = chunk as { type?: string; imageName?: string };
-                        if (c.type === 'image' && c.imageName) {
-                            allImageNames.push(c.imageName);
+            if (metadata.imageBaseURL) {
+                const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+                
+                if (BLOB_READ_WRITE_TOKEN) {
+                    try {
+                        // Extract book folder from imageBaseURL (e.g., "/BookTitle/images/" -> "books/BookTitle/")
+                        const bookFolder = metadata.imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
+                        const blobPrefix = `books/${bookFolder}`;
+                        
+                        console.log(`[finalizeUpload] Listing all images from Vercel Blob with prefix: ${blobPrefix}`);
+                        
+                        // List all blobs with this prefix
+                        const { blobs } = await list({
+                            prefix: blobPrefix,
+                            token: BLOB_READ_WRITE_TOKEN
+                        });
+                        
+                        console.log(`[finalizeUpload] Found ${blobs.length} blobs in Vercel Blob`);
+                        
+                        if (blobs.length > 0) {
+                            // Extract just the filename from each blob URL
+                            const blobsWithNames = blobs.map(blob => {
+                                // Extract filename from pathname (e.g., "books/BookTitle/images/image-001-1.jpg" -> "image-001-1.jpg")
+                                const filename = blob.pathname.split('/').pop() || '';
+                                return {
+                                    filename,
+                                    url: blob.url
+                                };
+                            }).filter(b => b.filename); // Filter out any empty filenames
+                            
+                            // Sort by filename (numerically) to match upload-book.js logic
+                            blobsWithNames.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' }));
+                            
+                            // Pick first image as cover
+                            if (blobsWithNames.length > 0) {
+                                coverImage = blobsWithNames[0].url;
+                                console.log(`[finalizeUpload] Selected cover image: ${coverImage} (${blobsWithNames[0].filename}, from ${blobsWithNames.length} total images)`);
+                            }
                         }
+                    } catch (err) {
+                        console.error('[finalizeUpload] Failed to list images from Vercel Blob:', err);
+                        // Fall back to no cover image
                     }
+                } else {
+                    console.warn('[finalizeUpload] BLOB_READ_WRITE_TOKEN not set, cannot determine cover image');
                 }
-            }
-            
-            // Sort by filename (numerically) and pick the first one
-            if (allImageNames.length > 0) {
-                allImageNames.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-                const firstImage = allImageNames[0];
-                const baseURL = metadata.imageBaseURL || '';
-                coverImage = baseURL ? `${baseURL}${firstImage}` : undefined;
-                console.log(`[finalizeUpload] Selected cover image: ${coverImage} (from ${allImageNames.length} total images)`);
             }
 
             // Create book
