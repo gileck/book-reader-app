@@ -11,13 +11,15 @@ interface ValidationErrorDialogProps {
     onApprove: () => void;
     onCancel: () => void;
     isFailed?: boolean; // New prop to indicate if this is a failed upload
+    isLoading?: boolean; // Loading state for approve action
 }
 
 export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
     errors,
     onApprove,
     onCancel,
-    isFailed = false
+    isFailed = false,
+    isLoading = false
 }) => {
     return (
         <div className={styles.dialogOverlay}>
@@ -67,11 +69,26 @@ export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
                     ) : (
                         // For awaiting-approval, show cancel and approve buttons
                         <>
-                            <button className={styles.cancelButton} onClick={onCancel}>
+                            <button 
+                                className={styles.cancelButton} 
+                                onClick={onCancel}
+                                disabled={isLoading}
+                            >
                                 Cancel
                             </button>
-                            <button className={styles.approveButton} onClick={onApprove}>
-                                Approve & Continue
+                            <button 
+                                className={styles.approveButton} 
+                                onClick={onApprove}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? (
+                                    <>
+                                        <span className={styles.buttonSpinner} />
+                                        Approving...
+                                    </>
+                                ) : (
+                                    'Approve & Continue'
+                                )}
                             </button>
                         </>
                     )}

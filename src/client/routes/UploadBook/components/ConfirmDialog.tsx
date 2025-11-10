@@ -28,18 +28,20 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             title: 'Stop Parsing?',
             message: 'This will cancel the upload and delete the PDF. You\'ll need to start over if you want to upload this book.',
             cancelText: 'Keep Parsing',
-            confirmText: isLoading ? '⏳ Stopping...' : 'Stop & Delete'
+            confirmText: 'Stop & Delete',
+            loadingText: 'Stopping...'
         },
         delete: {
             icon: '🗑️',
             title: 'Delete Upload?',
             message: 'This will permanently delete this upload and its PDF file. This action cannot be undone.',
             cancelText: 'Cancel',
-            confirmText: isLoading ? '⏳ Deleting...' : 'Delete'
+            confirmText: 'Delete',
+            loadingText: 'Deleting...'
         }
     };
 
-    const { icon, title, message, cancelText, confirmText } = config[type];
+    const { icon, title, message, cancelText, confirmText, loadingText } = config[type];
 
     return (
         <div className={styles.dialogOverlay}>
@@ -60,7 +62,14 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
                         onClick={() => onConfirm(uploadId)}
                         disabled={isLoading}
                     >
-                        {confirmText}
+                        {isLoading ? (
+                            <>
+                                <span className={styles.buttonSpinner} />
+                                {loadingText}
+                            </>
+                        ) : (
+                            confirmText
+                        )}
                     </button>
                 </div>
             </div>

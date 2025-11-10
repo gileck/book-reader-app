@@ -273,6 +273,7 @@ export const UploadBook = () => {
                     onApprove={() => handleApproveErrors(selectedUpload.uploadId)}
                     onCancel={() => setSelectedUploadId(null)}
                     isFailed={selectedUpload.status === 'failed'}
+                    isLoading={uploadManager.loadingActions[selectedUpload.uploadId] || false}
                 />
             )}
 
@@ -293,7 +294,7 @@ export const UploadBook = () => {
                 <ConfirmDialog
                     type={confirmDialog.type}
                     uploadId={confirmDialog.uploadId}
-                    isLoading={uploadManager.loadingActions[confirmDialog.uploadId]}
+                    isLoading={uploadManager.loadingActions[confirmDialog.uploadId] || false}
                     onConfirm={handleConfirmAction}
                     onCancel={() => setConfirmDialog(null)}
                 />
