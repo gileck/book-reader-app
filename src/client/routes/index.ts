@@ -8,6 +8,7 @@ import { Bookmarks } from './Bookmarks';
 import { ReadingHistory } from './ReadingHistory';
 import { BookLibrary } from './BookLibrary';
 import { TtsUsage } from './TtsUsage';
+import { UploadBook } from './UploadBook';
 import { createRoutes } from '../router';
 
 // Define routes
@@ -15,6 +16,7 @@ export const routes = createRoutes({
   '/': Reader,
   '/home': Home,
   '/book-library': BookLibrary,
+  '/upload-book': UploadBook,
   '/ai-chat': AIChat,
   '/bookmarks': Bookmarks,
   '/reading-history': ReadingHistory,

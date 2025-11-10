@@ -258,6 +258,12 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         debug: options.debug || false,
         forceReparse: options.forceReparse || false,
         useCache: options.useCache !== false, // default true
+        // Production runner callbacks
+        skipErrorsProvider: options.skipErrorsProvider || (async () => []),
+        onValidationError: options.onValidationError || null,
+        onStepStart: options.onStepStart || null,
+        onStepProgress: options.onStepProgress || null,
+        onStepComplete: options.onStepComplete || null,
         ...options
     };
 
@@ -326,8 +332,14 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         }
 
         // Execute all steps in sequence
-        for (const stepName of STEP_NAMES) {
+        for (let stepIndex = 0; stepIndex < STEP_NAMES.length; stepIndex++) {
+            const stepName = STEP_NAMES[stepIndex];
             const stepStartTime = Date.now();
+
+            // Call onStepStart callback
+            if (opts.onStepStart) {
+                await opts.onStepStart(stepName, stepIndex + 1, STEP_NAMES.length);
+            }
 
             if (opts.debug) {
                 console.log(`Running ${stepName}...`);
@@ -386,6 +398,11 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                         duration: 0,
                         fromCache: true
                     };
+                    
+                    // Call onStepComplete callback for cached steps
+                    if (opts.onStepComplete) {
+                        await opts.onStepComplete(stepName, stepResult);
+                    }
                 } else if (opts.validate) {
                     const stepModule = STEP_MODULES[stepName];
                     if (stepModule && typeof stepModule.validate === 'function') {
@@ -452,10 +469,31 @@ async function parseBook(pdfPath, outputPath, options = {}) {
 
                             // Handle skipped validation errors (if any)
                             if (!isValid) {
-                                const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
-                                if (fs.existsSync(skippedFile)) {
-                                    try {
-                                        const entries = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
+                                // First, try to get skip errors from callback provider
+                                let skipErrors = [];
+                                try {
+                                    skipErrors = await opts.skipErrorsProvider();
+                                } catch (err) {
+                                    if (opts.debug) {
+                                        console.log(`⚠️  Failed to load skip errors from provider: ${err.message}`);
+                                    }
+                                }
+
+                                // If no skip errors from provider, try file-based skip errors
+                                if (skipErrors.length === 0) {
+                                    const skippedFile = path.join(path.dirname(outputDir), 'skipped-validation-errors.json');
+                                    if (fs.existsSync(skippedFile)) {
+                                        try {
+                                            skipErrors = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
+                                        } catch (_) {
+                                            // ignore errors reading skipped file
+                                        }
+                                    }
+                                }
+
+                                // If we have skip errors, process them
+                                if (skipErrors.length > 0) {
+                                    const entries = skipErrors;
 
                                         // Helper function to check if a string matches a wildcard pattern
                                         const matchesWildcard = (text, pattern) => {
@@ -610,21 +648,42 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                             }
                                         }
 
-                                    } catch (_) { /* ignore errors reading skipped file */ }
                                 } else {
-                                    // No skip file exists, invalid: summarize only
-                                    if (errorCount > 0) {
-                                        console.log(`❗ Validation failed in ${stepName}: ${errorCount} error(s).Details: ${validationOutputPath}`);
-                                        if (Array.isArray(chapterErrorSummary) && chapterErrorSummary.length > 0) {
-                                            console.log('   Error breakdown by chapter:');
-                                            for (const line of chapterErrorSummary) {
-                                                console.log(`   ${line}`);
+                                    // No skip file exists, invalid: check if we have callback handler
+                                    if (opts.onValidationError) {
+                                        // Prepare error details
+                                        const errorDetails = {
+                                            step: stepName,
+                                            errorCount,
+                                            validationOutput,
+                                            chapterErrorSummary
+                                        };
+
+                                        // Call the validation error handler
+                                        const shouldContinue = await opts.onValidationError(stepName, errorDetails);
+                                        
+                                        if (shouldContinue) {
+                                            // User approved to continue, treat as valid
+                                            isValid = true;
+                                            if (errorCount > 0) {
+                                                console.log(`⏭️  Validation error approved by handler in ${stepName}: ${errorCount} error(s) suppressed.`);
                                             }
                                         }
-                                        // Only write details when there are errors and no skip
-                                        if (validationOutput.trim()) {
-                                            const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
-                                            fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
+                                    } else {
+                                        // No callback handler, summarize only
+                                        if (errorCount > 0) {
+                                            console.log(`❗ Validation failed in ${stepName}: ${errorCount} error(s).Details: ${validationOutputPath}`);
+                                            if (Array.isArray(chapterErrorSummary) && chapterErrorSummary.length > 0) {
+                                                console.log('   Error breakdown by chapter:');
+                                                for (const line of chapterErrorSummary) {
+                                                    console.log(`   ${line}`);
+                                                }
+                                            }
+                                            // Only write details when there are errors and no skip
+                                            if (validationOutput.trim()) {
+                                                const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
+                                                fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
+                                            }
                                         }
                                     }
                                 }
@@ -637,6 +696,14 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 timestamp: new Date().toISOString(),
                                 duration: Date.now() - stepEndTime
                             };
+
+                            // Call onStepComplete callback even if validation failed (before throwing)
+                            if (opts.onStepComplete && !isValid && opts.onValidationError) {
+                                // If we have validation error handler, complete callback was likely already called in the handler
+                                // Skip to avoid double calling
+                            } else if (opts.onStepComplete && isValid) {
+                                await opts.onStepComplete(stepName, stepResult);
+                            }
 
                             if (!isValid) {
                                 throw new Error(`Step ${stepName} validation failed`);
@@ -662,6 +729,11 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                 const shouldCache = !usedCache && (validationResult?.passed || validationResult === null);
                 if (shouldCache) {
                     saveCachedStep(pdfPath, stepName, stepResult, true);
+                }
+
+                // Call onStepProgress callback with 100% after completion
+                if (opts.onStepProgress) {
+                    await opts.onStepProgress(stepName, 100);
                 }
 
                 if (opts.debug) {
@@ -709,11 +781,22 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         pipelineState.metadata.processingEndTime = new Date().toISOString();
 
         // Create simplified output with only chapters and basic metadata
-        // Strip transient chapter.content (concatenated text/markers) from final output
+        // Strip transient chapter.content (concatenated text/markers) and rawText from final output
         const chaptersForOutput = (pipelineState.chapters || []).map(chapter => {
-            const { content, ...rest } = chapter;
-            // Strip debug-only fields from image chunks
+            const { content, rawText, ...rest } = chapter;
+            
+            // Calculate word count from chunks
+            let wordCount = 0;
             if (Array.isArray(rest.chunks)) {
+                rest.chunks.forEach(chunk => {
+                    if (chunk && chunk.type === 'text' && chunk.content) {
+                        // Count words in text chunks
+                        const words = chunk.content.trim().split(/\s+/).filter(w => w.length > 0);
+                        wordCount += words.length;
+                    }
+                });
+                
+                // Strip debug-only fields from image chunks
                 rest.chunks = rest.chunks.map(chunk => {
                     if (chunk && chunk.type === 'image') {
                         const cleaned = { ...chunk };
@@ -725,19 +808,22 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                     return chunk;
                 });
             }
-            return rest;
+            
+            return {
+                ...rest,
+                wordCount
+            };
         });
-        const simplifiedOutput = {
+        
+        // Create clean final output for both local file and production return
+        const cleanFinalOutput = {
             chapters: chaptersForOutput,
-            metadata: {
-                title: pipelineState.metadata?.title || pipelineState.metadata?.bookTitle || 'Unknown Title',
-                author: pipelineState.metadata?.author || pipelineState.metadata?.bookAuthor || 'Unknown Author'
-            }
+            metadata: pipelineState.metadata
         };
 
         // Save output.json with ONLY chapters and basic metadata
         const outputJsonPath = path.join(outputDir, 'output.json');
-        fs.writeFileSync(outputJsonPath, JSON.stringify(simplifiedOutput, null, 2));
+        fs.writeFileSync(outputJsonPath, JSON.stringify(cleanFinalOutput, null, 2));
 
         // Save validation.json with all validation results
         const validationJsonPath = path.join(outputDir, 'validation.json');
@@ -765,7 +851,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         return {
             success: true,
             outputDir: outputDir,
-            finalOutput: pipelineState,
+            finalOutput: cleanFinalOutput,
             validationResults: validationSummary,
             totalDuration: totalDuration
         };

@@ -15,6 +15,15 @@ import { API_BOOK_CONTENT_CHAT, API_BOOK_CONTENT_CHAT_ESTIMATE_COST } from "./bo
 import { ttsUsageApiHandlers } from './ttsUsage/server';
 import { promptPresetsApiHandlers } from './promptPresets/server';
 import { chapterOverviewApiHandlers } from './chapterOverview/server';
+import * as upload from './upload/server';
+import {
+    LIST_UPLOADS,
+    GET_UPLOAD_STATUS,
+    APPROVE_ERRORS,
+    FINALIZE_UPLOAD,
+    DELETE_UPLOAD,
+    GET_METADATA
+} from './upload/index';
 
 // Convert API handlers to typed format
 const typedBooksApiHandlers = Object.entries(booksApiHandlers).reduce(
@@ -109,6 +118,13 @@ export const apiHandlers: ApiHandlers = {
   [API_UPDATE_USER_SETTINGS]: { process: userSettings.updateUserSettings as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [API_BOOK_CONTENT_CHAT]: { process: bookContentChat.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [API_BOOK_CONTENT_CHAT_ESTIMATE_COST]: { process: bookContentChat.estimateCost as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  // Upload APIs
+  [LIST_UPLOADS]: { process: upload.listUploads as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [GET_UPLOAD_STATUS]: { process: upload.getUploadStatus as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [APPROVE_ERRORS]: { process: upload.approveErrors as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [FINALIZE_UPLOAD]: { process: upload.finalizeUpload as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [DELETE_UPLOAD]: { process: upload.deleteUpload as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
+  [GET_METADATA]: { process: upload.getMetadata as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   ...typedBooksApiHandlers,
   ...typedChaptersApiHandlers,
   ...typedTtsApiHandlers,

@@ -60,6 +60,14 @@ export async function initializeIndexes(): Promise<void> {
         await readingLogsCollection.createIndex({ bookId: 1 });
         console.log('✓ Reading Logs indexes created');
 
+        // Book Uploads collection indexes
+        const bookUploadsCollection = db.collection('bookUploads');
+        await bookUploadsCollection.createIndex({ userId: 1 });
+        await bookUploadsCollection.createIndex({ status: 1 });
+        await bookUploadsCollection.createIndex({ createdAt: -1 });
+        await bookUploadsCollection.createIndex({ userId: 1, createdAt: -1 });
+        console.log('✓ Book Uploads indexes created');
+
         console.log('✅ All database indexes initialized successfully');
     } catch (error) {
         console.error('Error initializing database indexes:', error);

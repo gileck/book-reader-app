@@ -86,18 +86,108 @@ async function execute(pipelineState, config) {
 module.exports = { execute, validate };
 ```
 
+## Parser Architecture: Local vs. Production
+
+The parser is designed to be **environment-agnostic**, supporting both local CLI usage and production API integration through a **runner pattern**.
+
+### Core Parser (`parser.js`)
+
+The core parser is a pure, reusable module that:
+- ✅ Has no knowledge of its execution environment
+- ✅ Accepts callbacks for progress updates and error handling
+- ✅ Returns structured output (not side effects)
+- ✅ Can be used in any Node.js environment
+
+### Runners
+
+**Runners** wrap the core parser and adapt it to specific environments:
+
+#### 1. Local Runner (CLI)
+
+**File**: `book-parser/parser/localRunner.js`
+
+Used for local development and testing:
+```bash
+node parse-pdf-book.js path/to/book.pdf
+```
+
+**Features**:
+- Console logging for progress
+- File system for input/output
+- Interactive validation error prompts
+- Cache support for faster iteration
+- Debug output to local files
+
+#### 2. Production Runner (API)
+
+**File**: `src/server/parser/productionRunner.ts`
+
+Used in the web application:
+```typescript
+await runParserWithSSE(uploadId, userId, pdfPath, outputPath, res);
+```
+
+**Features**:
+- Server-Sent Events (SSE) for real-time progress
+- MongoDB for state persistence
+- S3 for file storage
+- User approval workflow for validation errors
+- Automatic cleanup of temporary files
+
+### Runner Comparison
+
+| Feature | Local Runner | Production Runner |
+|---------|-------------|-------------------|
+| **Progress Updates** | Console logs | SSE events |
+| **Input** | Local PDF file | S3 or uploaded file |
+| **Output** | Local files | S3 storage |
+| **State** | In-memory | MongoDB |
+| **Validation Errors** | Interactive prompts | User approval via API |
+| **Caching** | File-based cache | Disabled (fresh parse each time) |
+| **Cleanup** | Manual | Automatic |
+| **Environment** | CLI | Next.js API |
+
 ## Programmatic API
 
-The main module now provides a clean programmatic interface:
+The core parser provides a clean programmatic interface:
 
 ```javascript
 const parser = require('./parser.js');
 
-// Parse entire book
-const results = await parser.parseBook(pdfPath, outputPath, options);
+// Parse entire book with callbacks
+const results = await parser.parseBook(pdfPath, outputPath, {
+    validate: true,
+    debug: false,
+    useCache: false,
+    
+    // Optional callbacks for environment-specific behavior
+    skipErrorsProvider: async (stepName) => {
+        // Return array of errors to skip
+        return [];
+    },
+    onValidationError: async (stepName, errorDetails) => {
+        // Handle validation errors
+        // Return true to continue, false to abort
+        return true;
+    },
+    onStepStart: async (stepName, stepNumber, totalSteps) => {
+        // Called when a step starts
+    },
+    onStepProgress: async (stepName, progress) => {
+        // Called during step execution
+    },
+    onStepComplete: async (stepName) => {
+        // Called when a step completes
+    }
+});
 
 // Parse specific steps only  
-const partialResults = await parser.parseBookSteps(pdfPath, outputPath, ['step-1', 'step-3-2'], options);
+const partialResults = await parser.parseBookSteps(
+    pdfPath, 
+    outputPath, 
+    ['step-1', 'step-3-2'], 
+    options
+);
 
 // Get available steps
 const steps = parser.getAvailableSteps();
@@ -111,6 +201,194 @@ parser.clearCache(pdfPath);
 // Clear cache from a specific step onwards (useful for debugging)
 const clearedCount = parser.clearCacheFromStep(pdfPath, 'step-4');
 ```
+
+### Callback Interface
+
+The parser accepts optional callbacks to integrate with different environments:
+
+#### `skipErrorsProvider(stepName)`
+Called before validation to get a list of errors to skip.
+
+**Local Runner**: Returns empty array (no skipping)
+**Production Runner**: Queries database for user-approved errors
+
+```typescript
+// Production example
+skipErrorsProvider: async (stepName) => {
+    const upload = await getBookUpload(uploadId);
+    return upload.skippedValidationErrors
+        .filter(e => e.step === stepName)
+        .map(e => ({ errorId: e.errorId }));
+}
+```
+
+#### `onValidationError(stepName, errorDetails)`
+Called when validation errors are detected.
+
+**Local Runner**: Prompts user in terminal
+**Production Runner**: Updates database, sends SSE event, waits for user approval
+
+```typescript
+// Production example
+onValidationError: async (stepName, errorDetails) => {
+    await updateBookUpload(uploadId, {
+        status: 'awaiting-approval',
+        validationErrors: [errorDetails]
+    });
+    
+    sendSSE(res, {
+        type: 'validation-error',
+        step: stepName,
+        errors: [errorDetails]
+    });
+    
+    // Poll database for approval
+    const approved = await waitForApproval(uploadId, 60);
+    return approved;
+}
+```
+
+#### `onStepStart(stepName, stepNumber, totalSteps)`
+Called when a parser step begins.
+
+**Local Runner**: Logs to console
+**Production Runner**: Updates database, sends SSE event
+
+```typescript
+// Production example
+onStepStart: async (stepName, stepNumber, totalSteps) => {
+    const progress = Math.round((stepNumber / totalSteps) * 100);
+    
+    sendSSE(res, {
+        type: 'step-start',
+        step: stepName,
+        stepNumber,
+        totalSteps,
+        progress
+    });
+    
+    await updateBookUpload(uploadId, {
+        currentStep: stepName,
+        currentStepNumber: stepNumber,
+        totalSteps,
+        progress
+    });
+}
+```
+
+#### `onStepProgress(stepName, progress)`
+Called during step execution with progress updates.
+
+**Local Runner**: Updates console progress bar
+**Production Runner**: Sends SSE event
+
+```typescript
+// Production example
+onStepProgress: async (stepName, progress) => {
+    sendSSE(res, {
+        type: 'step-progress',
+        step: stepName,
+        progress
+    });
+}
+```
+
+#### `onStepComplete(stepName)`
+Called when a step finishes successfully.
+
+**Local Runner**: Logs completion
+**Production Runner**: Sends SSE event
+
+```typescript
+// Production example
+onStepComplete: async (stepName) => {
+    sendSSE(res, {
+        type: 'step-complete',
+        step: stepName
+    });
+}
+```
+
+### Creating Custom Runners
+
+You can create your own runner for any environment by implementing the callback interface:
+
+```javascript
+// Example: Slack notification runner
+const parser = require('./parser.js');
+const { WebClient } = require('@slack/web-api');
+
+async function parseWithSlackNotifications(pdfPath, outputPath, channelId) {
+    const slack = new WebClient(process.env.SLACK_TOKEN);
+    
+    const results = await parser.parseBook(pdfPath, outputPath, {
+        validate: true,
+        useCache: false,
+        
+        onStepStart: async (stepName, stepNumber, totalSteps) => {
+            await slack.chat.postMessage({
+                channel: channelId,
+                text: `📖 Starting ${stepName} (${stepNumber}/${totalSteps})`
+            });
+        },
+        
+        onValidationError: async (stepName, errorDetails) => {
+            await slack.chat.postMessage({
+                channel: channelId,
+                text: `⚠️ Validation errors in ${stepName}: ${errorDetails.errorCount} errors`,
+                blocks: [
+                    {
+                        type: 'section',
+                        text: {
+                            type: 'mrkdwn',
+                            text: `*Validation Errors*\n${errorDetails.validationOutput}`
+                        }
+                    },
+                    {
+                        type: 'actions',
+                        elements: [
+                            {
+                                type: 'button',
+                                text: { type: 'plain_text', text: 'Approve' },
+                                action_id: 'approve_errors'
+                            },
+                            {
+                                type: 'button',
+                                text: { type: 'plain_text', text: 'Reject' },
+                                action_id: 'reject_errors'
+                            }
+                        ]
+                    }
+                ]
+            });
+            
+            // Wait for user response via Slack interaction
+            return await waitForSlackResponse(channelId);
+        },
+        
+        onStepComplete: async (stepName) => {
+            await slack.chat.postMessage({
+                channel: channelId,
+                text: `✅ Completed ${stepName}`
+            });
+        }
+    });
+    
+    await slack.chat.postMessage({
+        channel: channelId,
+        text: `🎉 Parsing complete! Book: ${results.finalOutput.metadata.title}`
+    });
+    
+    return results;
+}
+```
+
+**Key Principles for Custom Runners**:
+1. ✅ Keep the core parser pure and environment-agnostic
+2. ✅ Implement only the callbacks you need
+3. ✅ Handle errors gracefully (callbacks can throw)
+4. ✅ Return `true`/`false` from `onValidationError` to control flow
+5. ✅ Use `skipErrorsProvider` to skip previously approved errors
 
 ### API Options
 

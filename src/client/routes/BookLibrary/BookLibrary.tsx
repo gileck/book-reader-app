@@ -433,7 +433,31 @@ export const BookLibrary = () => {
     return (
         <div className={styles.bookLibrary}>
             <header className={styles.libraryHeader}>
+                <h1>Your Library</h1>
                 <div className={styles.libraryControls}>
+                    <button 
+                        className={styles.uploadButton}
+                        onClick={() => navigate('/upload-book')}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            padding: '10px 20px',
+                            backgroundColor: 'var(--color-tint)',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '999px',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'opacity 0.2s'
+                        }}
+                        onMouseOver={(e) => (e.currentTarget.style.opacity = '0.8')}
+                        onMouseOut={(e) => (e.currentTarget.style.opacity = '1')}
+                    >
+                        <Upload style={{ fontSize: '20px' }} />
+                        Upload Book
+                    </button>
                     <div className={styles.sortDropdown}>
                         <label htmlFor="sort-select" className="sr-only">Sort books</label>
                         <select
