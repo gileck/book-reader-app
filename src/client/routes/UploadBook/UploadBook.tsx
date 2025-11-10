@@ -80,7 +80,11 @@ export const UploadBook = () => {
                 },
                 (event: SSEEvent) => {
                     // Handle SSE event and get real uploadId
-                    const uploadId = uploadManager.actions.handleSSEEvent(event, tempUploadId);
+                    // Only pass tempUploadId for the first event (when realUploadId is not set yet)
+                    const uploadId = uploadManager.actions.handleSSEEvent(
+                        event, 
+                        realUploadId ? undefined : tempUploadId
+                    );
                     
                     // Update realUploadId when we get it
                     if (uploadId && !realUploadId) {

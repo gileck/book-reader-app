@@ -128,16 +128,18 @@ export const useUploadManager = (userId: string | undefined) => {
                 status: 'parsing',
                 createdAt: new Date(),
                 fileName: uploadsRef.current.find(u => u.uploadId === tempUploadId)?.fileName,
-                currentStep: 'Starting parser...',
-                progress: 5
+                currentStep: event.message || 'Starting parser...',
+                progress: event.progress || 5
             });
-            // Don't return early - continue processing this event
+            // Return uploadId after replacement - don't process this event further
+            // as we already set the initial state in replaceUpload
+            return uploadId;
         }
         
         if (!uploadId) return null;
         
         // Update upload status from SSE event data
-        if (event.type === 'step-start' || event.type === 'step-complete' || event.type === 'step-progress' || event.type === 'finalizing') {
+        if (event.type === 'upload' || event.type === 'start' || event.type === 'step-start' || event.type === 'step-complete' || event.type === 'step-progress' || event.type === 'finalizing') {
             updateUpload(uploadId, {
                 status: 'parsing',
                 currentStep: event.message || event.step,
