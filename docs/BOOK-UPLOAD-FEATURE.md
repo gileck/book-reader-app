@@ -935,6 +935,12 @@ interface ParserMetadata {
     totalLinks?: number;
     averageWordsPerChapter?: number;
     averageWordsPerParagraph?: number;
+    coverImageUrl?: string;  // Vercel Blob URL for cover image
+    images?: Array<{
+        name: string;      // Image filename
+        url: string;       // Full Vercel Blob URL
+        sizeKB?: number;   // File size in KB (or 0.05 for <0.1 KB)
+    }>;
     chapters: Array<{
         number: number;
         title: string;
@@ -943,6 +949,26 @@ interface ParserMetadata {
     parserOutputUrl?: string;  // Signed URL for debugging
 }
 ```
+
+**Image Collection Logic**:
+
+The `getMetadata` endpoint collects ALL uploaded images by querying Vercel Blob directly:
+
+1. **Extracts book folder** from `metadata.imageBaseURL` (e.g., `/BookTitle/images/` → `books/BookTitle/`)
+2. **Lists all blobs** using Vercel Blob's `list()` API with the book's prefix
+3. **Extracts metadata** (filename, URL, size) from each blob
+4. **Sorts by filename** using numeric-aware `localeCompare` (same logic as cover selection)
+5. **Calculates sizes**:
+   - Files < 0.1 KB: Returns `0.05` (displayed as `<0.1 KB`)
+   - Files 0.1-0.9 KB: Rounded to 1 decimal place (e.g., `0.7`)
+   - Files >= 1 KB: Rounded to nearest integer
+
+This ensures ALL uploaded images are shown, including:
+- Cover images not embedded in text
+- Standalone decorative images
+- Images extracted but not referenced in chapters
+
+**Why not use chapter chunks?** Some images (like covers) are extracted by the parser but not placed in chapter content. Using Vercel Blob's `list()` API ensures we show every image that was uploaded, matching the CLI behavior exactly.
 
 ### 6. Finalize Upload (Add to Library)
 
