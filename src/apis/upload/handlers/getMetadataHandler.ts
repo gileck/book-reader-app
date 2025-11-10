@@ -1,6 +1,7 @@
 import { getBookUpload } from '@/server/database/collections/bookUploads';
 import { getFileAsString, getSignedFileUrl } from '@/server/s3/sdk';
 import { VERCEL_BLOB_IMAGES_BASE_PATH } from '@/common/constants';
+import { head } from '@vercel/blob';
 import type { ApiHandlerContext, GetMetadataRequest, GetMetadataResponse } from '../types';
 
 // TypeScript types for parser output
@@ -151,7 +152,7 @@ export async function getMetadataHandler(
 
         // Extract all images and cover image (first image from all chapters, sorted by filename)
         let coverImageUrl: string | undefined;
-        const images: Array<{ name: string; url: string }> = [];
+        const images: Array<{ name: string; url: string; sizeKB?: number }> = [];
         
         if (metadata.imageBaseURL) {
             const allImageNames: string[] = [];
@@ -176,11 +177,30 @@ export async function getMetadataHandler(
                 coverImageUrl = `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${firstImage}`;
                 console.log('[getMetadata] Cover image:', coverImageUrl);
                 
-                // Build full image list with URLs
+                // Build full image list with URLs and fetch sizes
+                const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+                
                 for (const imageName of allImageNames) {
+                    const imageUrl = `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${imageName}`;
+                    let sizeKB: number | undefined;
+                    
+                    // Try to get file size from Vercel Blob
+                    if (BLOB_READ_WRITE_TOKEN) {
+                        try {
+                            const blobInfo = await head(imageUrl, { token: BLOB_READ_WRITE_TOKEN });
+                            if (blobInfo && blobInfo.size) {
+                                sizeKB = Math.round(blobInfo.size / 1024); // Convert bytes to KB
+                            }
+                        } catch (err) {
+                            console.warn(`[getMetadata] Failed to get size for ${imageName}:`, err);
+                            // Continue without size info
+                        }
+                    }
+                    
                     images.push({
                         name: imageName,
-                        url: `${VERCEL_BLOB_IMAGES_BASE_PATH}${metadata.imageBaseURL}${imageName}`
+                        url: imageUrl,
+                        sizeKB
                     });
                 }
                 console.log('[getMetadata] Total images collected:', images.length);

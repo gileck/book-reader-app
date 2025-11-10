@@ -1,13 +1,13 @@
 {
-  "processingTime": 22,
+  "processingTime": 7,
   "extractionStats": {
     "totalChapters": 16,
     "originalChapterCount": 16,
     "filteredChapterCount": 0,
-    "totalPages": 213,
-    "averagePagesPerChapter": 13.3125,
-    "totalCharacters": 639946,
-    "averageCharactersPerChapter": 39996.625
+    "totalPages": 207,
+    "averagePagesPerChapter": 12.9375,
+    "totalCharacters": 641448,
+    "averageCharactersPerChapter": 40090.5
   },
   "filteredChapters": [
     {
@@ -15,112 +15,112 @@
       "chapterNumber": 0,
       "pageNumberStart": 5,
       "pageNumberEnd": 10,
-      "contentLength": 15806
+      "contentLength": 15824
     },
     {
       "title": "Animated",
       "chapterNumber": 1,
       "pageNumberStart": 11,
-      "pageNumberEnd": 22,
-      "contentLength": 34553
+      "pageNumberEnd": 21,
+      "contentLength": 34563
     },
     {
       "title": "Pixar is Born",
       "chapterNumber": 2,
-      "pageNumberStart": 23,
-      "pageNumberEnd": 36,
-      "contentLength": 47544
+      "pageNumberStart": 22,
+      "pageNumberEnd": 35,
+      "contentLength": 47600
     },
     {
       "title": "A Defining Goal",
       "chapterNumber": 3,
-      "pageNumberStart": 37,
-      "pageNumberEnd": 49,
-      "contentLength": 42555
+      "pageNumberStart": 36,
+      "pageNumberEnd": 47,
+      "contentLength": 42557
     },
     {
       "title": "Establishing Pixar’s Identity",
       "chapterNumber": 4,
-      "pageNumberStart": 50,
-      "pageNumberEnd": 61,
-      "contentLength": 34784
+      "pageNumberStart": 48,
+      "pageNumberEnd": 58,
+      "contentLength": 34789
     },
     {
       "title": "Honesty and Candor",
       "chapterNumber": 5,
-      "pageNumberStart": 62,
-      "pageNumberEnd": 74,
-      "contentLength": 43041
+      "pageNumberStart": 59,
+      "pageNumberEnd": 70,
+      "contentLength": 43050
     },
     {
       "title": "Fear and Failure",
       "chapterNumber": 6,
-      "pageNumberStart": 75,
-      "pageNumberEnd": 88,
-      "contentLength": 47119
+      "pageNumberStart": 71,
+      "pageNumberEnd": 84,
+      "contentLength": 47171
     },
     {
       "title": "The Hungry Beast and the Ugly Baby",
       "chapterNumber": 7,
-      "pageNumberStart": 89,
-      "pageNumberEnd": 98,
-      "contentLength": 32403
+      "pageNumberStart": 85,
+      "pageNumberEnd": 93,
+      "contentLength": 32404
     },
     {
       "title": "Change and Randomness",
       "chapterNumber": 8,
-      "pageNumberStart": 99,
-      "pageNumberEnd": 111,
-      "contentLength": 44655
+      "pageNumberStart": 94,
+      "pageNumberEnd": 106,
+      "contentLength": 44706
     },
     {
       "title": "The Hidden",
       "chapterNumber": 9,
-      "pageNumberStart": 112,
-      "pageNumberEnd": 124,
-      "contentLength": 37720
+      "pageNumberStart": 107,
+      "pageNumberEnd": 118,
+      "contentLength": 37740
     },
     {
       "title": "Broadening Our View",
       "chapterNumber": 10,
-      "pageNumberStart": 125,
-      "pageNumberEnd": 146,
-      "contentLength": 65485
+      "pageNumberStart": 119,
+      "pageNumberEnd": 140,
+      "contentLength": 65592
     },
     {
       "title": "The Unmade Future",
       "chapterNumber": 11,
-      "pageNumberStart": 147,
-      "pageNumberEnd": 157,
-      "contentLength": 33387
+      "pageNumberStart": 141,
+      "pageNumberEnd": 151,
+      "contentLength": 33442
     },
     {
       "title": "A New Challenge",
       "chapterNumber": 12,
-      "pageNumberStart": 158,
-      "pageNumberEnd": 177,
-      "contentLength": 64451
+      "pageNumberStart": 152,
+      "pageNumberEnd": 170,
+      "contentLength": 64508
     },
     {
       "title": "Notes Day",
       "chapterNumber": 13,
-      "pageNumberStart": 178,
-      "pageNumberEnd": 190,
-      "contentLength": 41983
+      "pageNumberStart": 171,
+      "pageNumberEnd": 182,
+      "contentLength": 42014
     },
     {
       "title": "Afterword: The Steve We Knew",
       "chapterNumber": 14,
-      "pageNumberStart": 191,
-      "pageNumberEnd": 201,
-      "contentLength": 37114
+      "pageNumberStart": 183,
+      "pageNumberEnd": 193,
+      "contentLength": 37170
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
       "chapterNumber": 15,
-      "pageNumberStart": 202,
-      "pageNumberEnd": 217,
-      "contentLength": 17346
+      "pageNumberStart": 194,
+      "pageNumberEnd": 211,
+      "contentLength": 18318
     }
   ],
   "originalChapters": [
@@ -129,127 +129,127 @@
       "chapterNumber": 0,
       "pageNumberStart": 5,
       "pageNumberEnd": 10,
-      "contentLength": 15806,
+      "contentLength": 15824,
       "filtered": false
     },
     {
       "title": "Animated",
       "chapterNumber": 1,
       "pageNumberStart": 11,
-      "pageNumberEnd": 22,
-      "contentLength": 34553,
+      "pageNumberEnd": 21,
+      "contentLength": 34563,
       "filtered": false
     },
     {
       "title": "Pixar is Born",
       "chapterNumber": 2,
-      "pageNumberStart": 23,
-      "pageNumberEnd": 36,
-      "contentLength": 47544,
+      "pageNumberStart": 22,
+      "pageNumberEnd": 35,
+      "contentLength": 47600,
       "filtered": false
     },
     {
       "title": "A Defining Goal",
       "chapterNumber": 3,
-      "pageNumberStart": 37,
-      "pageNumberEnd": 49,
-      "contentLength": 42555,
+      "pageNumberStart": 36,
+      "pageNumberEnd": 47,
+      "contentLength": 42557,
       "filtered": false
     },
     {
       "title": "Establishing Pixar’s Identity",
       "chapterNumber": 4,
-      "pageNumberStart": 50,
-      "pageNumberEnd": 61,
-      "contentLength": 34784,
+      "pageNumberStart": 48,
+      "pageNumberEnd": 58,
+      "contentLength": 34789,
       "filtered": false
     },
     {
       "title": "Honesty and Candor",
       "chapterNumber": 5,
-      "pageNumberStart": 62,
-      "pageNumberEnd": 74,
-      "contentLength": 43041,
+      "pageNumberStart": 59,
+      "pageNumberEnd": 70,
+      "contentLength": 43050,
       "filtered": false
     },
     {
       "title": "Fear and Failure",
       "chapterNumber": 6,
-      "pageNumberStart": 75,
-      "pageNumberEnd": 88,
-      "contentLength": 47119,
+      "pageNumberStart": 71,
+      "pageNumberEnd": 84,
+      "contentLength": 47171,
       "filtered": false
     },
     {
       "title": "The Hungry Beast and the Ugly Baby",
       "chapterNumber": 7,
-      "pageNumberStart": 89,
-      "pageNumberEnd": 98,
-      "contentLength": 32403,
+      "pageNumberStart": 85,
+      "pageNumberEnd": 93,
+      "contentLength": 32404,
       "filtered": false
     },
     {
       "title": "Change and Randomness",
       "chapterNumber": 8,
-      "pageNumberStart": 99,
-      "pageNumberEnd": 111,
-      "contentLength": 44655,
+      "pageNumberStart": 94,
+      "pageNumberEnd": 106,
+      "contentLength": 44706,
       "filtered": false
     },
     {
       "title": "The Hidden",
       "chapterNumber": 9,
-      "pageNumberStart": 112,
-      "pageNumberEnd": 124,
-      "contentLength": 37720,
+      "pageNumberStart": 107,
+      "pageNumberEnd": 118,
+      "contentLength": 37740,
       "filtered": false
     },
     {
       "title": "Broadening Our View",
       "chapterNumber": 10,
-      "pageNumberStart": 125,
-      "pageNumberEnd": 146,
-      "contentLength": 65485,
+      "pageNumberStart": 119,
+      "pageNumberEnd": 140,
+      "contentLength": 65592,
       "filtered": false
     },
     {
       "title": "The Unmade Future",
       "chapterNumber": 11,
-      "pageNumberStart": 147,
-      "pageNumberEnd": 157,
-      "contentLength": 33387,
+      "pageNumberStart": 141,
+      "pageNumberEnd": 151,
+      "contentLength": 33442,
       "filtered": false
     },
     {
       "title": "A New Challenge",
       "chapterNumber": 12,
-      "pageNumberStart": 158,
-      "pageNumberEnd": 177,
-      "contentLength": 64451,
+      "pageNumberStart": 152,
+      "pageNumberEnd": 170,
+      "contentLength": 64508,
       "filtered": false
     },
     {
       "title": "Notes Day",
       "chapterNumber": 13,
-      "pageNumberStart": 178,
-      "pageNumberEnd": 190,
-      "contentLength": 41983,
+      "pageNumberStart": 171,
+      "pageNumberEnd": 182,
+      "contentLength": 42014,
       "filtered": false
     },
     {
       "title": "Afterword: The Steve We Knew",
       "chapterNumber": 14,
-      "pageNumberStart": 191,
-      "pageNumberEnd": 201,
-      "contentLength": 37114,
+      "pageNumberStart": 183,
+      "pageNumberEnd": 193,
+      "contentLength": 37170,
       "filtered": false
     },
     {
       "title": "Starting Points: Thoughts for Managing a Creative Culture",
       "chapterNumber": 15,
-      "pageNumberStart": 202,
-      "pageNumberEnd": 217,
-      "contentLength": 17346,
+      "pageNumberStart": 194,
+      "pageNumberEnd": 211,
+      "contentLength": 18318,
       "filtered": false
     }
   ]

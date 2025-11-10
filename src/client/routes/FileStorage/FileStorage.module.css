@@ -295,27 +295,157 @@
         background: var(--color-system-bg, #000000);
     }
 
-    .fileList {
-        background: var(--color-secondary-bg, #111213);
+    .header {
+        color: var(--color-label, #ffffff);
+    }
+
+    .title {
+        color: var(--color-label, #ffffff);
+    }
+
+    .refreshButton {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--color-tint, #0a84ff);
+    }
+
+    .refreshButton:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .segmentedControl {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .segmentButton {
+        color: var(--color-label, #ffffff);
     }
 
     .segmentButtonActive {
-        background: var(--color-secondary-bg, #111213);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .statCard {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .statValue {
+        color: var(--color-tint, #0a84ff);
+    }
+
+    .statLabel {
+        color: var(--color-secondary-label, #9ca3af);
     }
 
     .searchInput {
-        background: var(--color-secondary-bg, #111213);
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--color-label, #ffffff);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .searchInput::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .searchInput:focus {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+        border-color: rgba(10, 132, 255, 0.5);
+    }
+
+    .selectionActions {
+        background: var(--color-tint, #0a84ff);
+    }
+
+    .fileList {
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .listHeader {
+        background: rgba(255, 255, 255, 0.08);
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .headerText {
+        color: var(--color-secondary-label, #9ca3af);
+    }
+
+    .fileItem {
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .fileItem:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .fileItem:active {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .fileItemSelected {
+        background: rgba(10, 132, 255, 0.15);
+        border-left: 3px solid var(--color-tint, #0a84ff);
+        padding-left: calc(var(--space-3, 12px) - 3px);
+    }
+
+    .fileName {
+        color: var(--color-label, #ffffff);
+    }
+
+    .fileDetails {
+        color: var(--color-secondary-label, #9ca3af);
+    }
+
+    .separator {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    .checkbox {
+        accent-color: var(--color-tint, #0a84ff);
+        filter: brightness(1.2);
+    }
+
+    .emptyState {
+        color: var(--color-secondary-label, #9ca3af);
+    }
+
+    .loadingState {
+        color: var(--color-secondary-label, #9ca3af);
+    }
+
+    .spinner {
+        border-color: rgba(255, 255, 255, 0.1);
+        border-top-color: var(--color-tint, #0a84ff);
     }
 
     .errorBanner {
-        background: rgba(255, 193, 7, 0.2);
-        border-color: rgba(255, 193, 7, 0.5);
-        color: #ffc107;
+        background: rgba(255, 149, 0, 0.15);
+        border-color: rgba(255, 149, 0, 0.4);
+        color: #ffab00;
+        box-shadow: 0 4px 16px rgba(255, 149, 0, 0.2);
     }
 
     .retryButton {
-        background: rgba(255, 193, 7, 0.3);
-        color: #ffc107;
+        background: rgba(255, 149, 0, 0.25);
+        color: #ffab00;
+        border: 1px solid rgba(255, 149, 0, 0.3);
+    }
+
+    .retryButton:hover {
+        background: rgba(255, 149, 0, 0.35);
+    }
+
+    .deleteButton {
+        background: rgba(255, 255, 255, 0.95);
+        color: #ff453a;
+        font-weight: 600;
+    }
+
+    .deleteButton:hover {
+        background: white;
     }
 }
 

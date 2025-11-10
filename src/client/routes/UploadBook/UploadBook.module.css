@@ -2353,6 +2353,17 @@
     line-height: 1.4;
 }
 
+.imageSize {
+    font-size: 12px;
+    color: var(--color-secondary-label);
+    font-weight: 600;
+    padding: 4px 10px;
+    background: var(--color-separator);
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 .imageLink {
     display: flex;
     align-items: center;

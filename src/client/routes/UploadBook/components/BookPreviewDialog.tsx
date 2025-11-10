@@ -228,6 +228,11 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
                                         <div key={index} className={styles.imageItem}>
                                             <span className={styles.imageNumber}>{index + 1}.</span>
                                             <span className={styles.imageName}>{image.name}</span>
+                                            {image.sizeKB !== undefined && (
+                                                <span className={styles.imageSize}>
+                                                    {image.sizeKB.toLocaleString()} KB
+                                                </span>
+                                            )}
                                             <a 
                                                 href={image.url}
                                                 target="_blank"

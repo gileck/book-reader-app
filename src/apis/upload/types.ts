@@ -103,8 +103,9 @@ export interface ParserMetadata {
     averageWordsPerParagraph?: number;
     coverImageUrl?: string; // Vercel Blob URL for cover image
     images?: Array<{
-        name: string; // Image filename
-        url: string;  // Full Vercel Blob URL
+        name: string;   // Image filename
+        url: string;    // Full Vercel Blob URL
+        sizeKB?: number; // File size in KB
     }>;
     chapters: Array<{
         number: number;
