@@ -80,26 +80,37 @@ interface ParserOutput {
  * Wait for user approval of validation errors
  * Polls the database with exponential backoff
  */
-async function waitForApproval(uploadId: string, timeoutSeconds: number = 60): Promise<boolean> {
+async function waitForApproval(uploadId: string, timeoutSeconds: number = 300): Promise<boolean> {
     const startTime = Date.now();
     const timeout = timeoutSeconds * 1000;
     let backoffDelay = 2000; // Start with 2 seconds
+    let pollCount = 0;
+
+    console.log(`⏳ Waiting for approval of uploadId ${uploadId} (timeout: ${timeoutSeconds}s)`);
 
     while (Date.now() - startTime < timeout) {
+        pollCount++;
+        const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+        
         // Poll database
         const upload = await getBookUpload(uploadId);
         
         if (!upload) {
+            console.log(`❌ Upload ${uploadId} not found (poll #${pollCount})`);
             return false; // Upload deleted or doesn't exist
         }
 
+        console.log(`📊 Poll #${pollCount} (${elapsedSeconds}s elapsed): status=${upload.status}`);
+
         // Check if status changed back to 'parsing' (approval signal)
         if (upload.status === 'parsing') {
+            console.log(`✅ Approval detected for ${uploadId} after ${elapsedSeconds}s (${pollCount} polls)`);
             return true;
         }
 
         // Check if explicitly failed/cancelled
         if (upload.status === 'failed') {
+            console.log(`❌ Upload ${uploadId} marked as failed during wait`);
             return false;
         }
 
@@ -109,6 +120,7 @@ async function waitForApproval(uploadId: string, timeoutSeconds: number = 60): P
     }
 
     // Timeout
+    console.log(`⏱️ Approval timeout for ${uploadId} after ${pollCount} polls (${timeoutSeconds}s)`);
     return false;
 }
 
@@ -159,10 +171,11 @@ export async function runParserWithSSE(
     }, 15000); // Every 15 seconds
 
     try {
-        // Skip errors provider - loads from database
-        const skipErrorsProvider = async () => {
+        // Skip errors provider - loads from database, filtered by step
+        const skipErrorsProvider = async (stepName: string) => {
             const upload = await getBookUpload(uploadId);
-            return upload?.skippedValidationErrors || [];
+            // Filter errors to only return those for the current step
+            return (upload?.skippedValidationErrors || []).filter(err => err.step === stepName);
         };
 
         // Validation error handler - pause and wait for user approval
@@ -212,8 +225,8 @@ export async function runParserWithSSE(
 
             console.log(`⏳ Waiting for user approval for ${stepName}...`);
 
-            // Wait for user approval
-            const approved = await waitForApproval(uploadId, 60);
+            // Wait for user approval (5 minutes timeout)
+            const approved = await waitForApproval(uploadId, 300);
 
             if (approved) {
                 console.log(`✓ User approved errors for ${stepName}`);
@@ -228,6 +241,16 @@ export async function runParserWithSSE(
             }
 
             console.log(`✗ User did not approve errors for ${stepName} (timeout or rejection)`);
+            
+            // Update status to 'failed' since approval timed out
+            await updateBookUpload(uploadId, {
+                status: 'failed',
+                error: {
+                    message: `Validation error approval timed out for ${stepName}`,
+                    timestamp: new Date()
+                }
+            });
+            
             // Not approved or timed out
             sendSSE(res, {
                 type: 'error',

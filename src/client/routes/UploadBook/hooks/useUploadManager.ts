@@ -216,7 +216,8 @@ export const useUploadManager = (userId: string | undefined) => {
                 throw new Error(result.data.error);
             }
 
-            await loadUploads();
+            // Don't reload uploads - the SSE stream is still active and will update the state
+            // Calling loadUploads() here causes a race condition and can wipe out the upload list
             return true;
         } catch (err) {
             console.error('Approve errors failed:', err);
@@ -225,7 +226,7 @@ export const useUploadManager = (userId: string | undefined) => {
         } finally {
             setLoadingActions(prev => ({ ...prev, [uploadId]: false }));
         }
-    }, [loadUploads]);
+    }, []);
 
     /**
      * Finalize upload and add to library

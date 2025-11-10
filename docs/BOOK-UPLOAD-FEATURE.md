@@ -158,7 +158,9 @@ sequenceDiagram
     Client->>Client: Navigate to /?bookId=${bookId}
 ```
 
-### 2. Error Flow: Validation Errors → Approval → Continue
+### 2. Error Flow: Per-Step Validation Errors → Approval → Continue
+
+**Important**: Validation errors are isolated per step. Approving errors in step-4 does NOT affect validation in step-5.
 
 ```mermaid
 sequenceDiagram
@@ -168,39 +170,52 @@ sequenceDiagram
     participant Parser
     participant DB
 
-    Parser->>Parser: Run validation step
-    Parser->>Parser: Detect validation errors
+    Parser->>Parser: Run validation (step-4)
+    Parser->>Parser: Detect 2 validation errors
     
-    Parser->>API: onValidationError (errorCount: 15)
+    Parser->>API: onValidationError (step: step-4, errorCount: 2)
     API->>DB: Update status: awaiting-approval
-    API->>DB: Save validationErrors
+    API->>DB: Save validationErrors (with step: step-4)
     API->>Client: SSE: validation-error
     
-    Client->>Client: Show "REVIEW ERRORS" button
-    
-    User->>Client: Click "REVIEW ERRORS"
     Client->>Client: Show ValidationErrorDialog
     
     User->>Client: Review errors
     User->>Client: Click "APPROVE & CONTINUE"
     
     Client->>API: POST /api/upload/approve-errors
-    API->>DB: Save approved errors to skippedValidationErrors
+    API->>DB: Save approved errors to skippedValidationErrors[].step=step-4
     API->>DB: Update status: parsing
-    API->>Client: Return success
     
-    Note over API,Parser: Parser polls DB for approval
-    Parser->>DB: Check for approval (exponential backoff)
-    DB->>Parser: Found approved errors
+    Note over API,Parser: Parser polls DB (exponential backoff, 5min timeout)
+    Parser->>DB: Check for approval
+    DB->>Parser: Status changed to 'parsing'
     
-    Parser->>Parser: Skip approved errors
+    Parser->>Parser: Continue to step-5
+    
+    Parser->>Parser: Run validation (step-5)
+    Parser->>Parser: Detect 10 NEW validation errors
+    
+    Parser->>API: onValidationError (step: step-5, errorCount: 10)
+    API->>DB: Update status: awaiting-approval
+    API->>Client: SSE: validation-error
+    
+    Note over Client: Dialog stays open, shows new errors
+    
+    User->>Client: Click "APPROVE & CONTINUE"
+    Client->>API: POST /api/upload/approve-errors
+    API->>DB: Save approved errors with step: step-5
+    
     Parser->>Parser: Continue parsing
-    
-    Parser->>API: onStepComplete
-    API->>Client: SSE: step-complete
     
     Note over Parser,Client: Continue with normal flow
 ```
+
+**Key Features:**
+- ✅ **Per-Step Isolation**: Each validation step has independent approval
+- ✅ **5-Minute Timeout**: Users have 5 minutes to review and approve errors
+- ✅ **Seamless UX**: Dialog stays open across multiple validation steps
+- ✅ **No Race Conditions**: SSE stream handles all state updates
 
 ### 3. Error Flow: Critical Parser Failure
 
@@ -1304,20 +1319,33 @@ const signedUrl = await getSignedFileUrl(imageUrl);
 
 ---
 
-## Automatic File Expiration (24-Hour Cleanup)
+## Automatic File Expiration & Cleanup
 
 ### Overview
 
-To prevent storage bloat from abandoned uploads, the system automatically deletes temporary upload files (PDFs and parser outputs) after **24 hours** if not added to the library. This is implemented using a **dual-layer approach**:
+To prevent storage bloat from abandoned uploads, the system automatically deletes temporary upload files with different retention policies based on status:
 
-1. **S3 Lifecycle Rules** - AWS S3 automatically deletes tagged files
-2. **Client-Side Cleanup** - Manual cleanup on page load as a backup
-3. **Database Tracking** - `expiresAt` field tracks expiration time
+**Cleanup Schedule**:
+- ✅ **Failed uploads**: 1 hour (no reason to keep failed attempts)
+- ✅ **All other uploads**: 24 hours (parsing, awaiting-approval, success)
 
-### Why 24 Hours?
+**Implementation Strategy**:
+1. **S3 Lifecycle Rules** - AWS S3 automatically deletes tagged files after 24 hours
+2. **API-Based Cleanup** - Active cleanup of failed uploads after 1 hour
+3. **Client-Side Cleanup** - Manual cleanup on page load as a backup
+4. **Database Tracking** - `expiresAt` field tracks expiration time
 
-- Gives users enough time to review and add books
-- Prevents indefinite storage of abandoned uploads
+### Why Different Retention Periods?
+
+**Failed Uploads (1 hour)**:
+- No value in keeping failed attempts longer
+- Reduces storage costs immediately
+- Hidden from UI automatically
+- User can retry if needed
+
+**Successful Uploads (24 hours)**:
+- Gives users time to review parsed content
+- Allows fixing validation errors
 - Balances user convenience with storage costs
 - Most users either add immediately or never return
 
@@ -1467,7 +1495,70 @@ Check if file has the tag:
 
 ---
 
+### API-Based Cleanup (Failed Uploads)
+
+**File**: `src/apis/upload/handlers/cleanupExpiredUploadsHandler.ts`
+
+```typescript
+export async function cleanupExpiredUploadsHandler(
+    _params: CleanupExpiredUploadsRequest,
+    context: ApiHandlerContext
+): Promise<CleanupExpiredUploadsResponse> {
+    // Get all expired uploads for this user (24h old)
+    const expiredUploads = await getExpiredUploadsForUser(context.userId);
+
+    // Get failed uploads older than 1 hour
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const recentFailed = await getRecentUploadsForUser(context.userId, {
+        hoursAgo: 24,
+        statuses: ['failed'],
+        limit: 50
+    });
+    const oldFailedUploads = recentFailed.filter(upload => 
+        upload.createdAt < oneHourAgo
+    );
+
+    // Combine and deduplicate
+    const uploadsToDelete = [...expiredUploads, ...oldFailedUploads];
+    
+    // Delete S3 files + Vercel Blob images + DB records
+    for (const upload of uploadsToDelete) {
+        await deleteFile(upload.pdfS3Key);
+        await deleteFile(upload.parserOutputS3Key);
+        await deleteImages(upload); // Vercel Blob
+        await deleteBookUpload(upload._id);
+    }
+}
+```
+
+**When Called**:
+- Automatically on page load (via `useUploadManager`)
+- Runs every time user visits upload page
+- Removes failed uploads > 1 hour old
+- Removes all uploads > 24 hours old
+
+**Benefits**:
+- ✅ Immediate cleanup of failed uploads
+- ✅ No wasted storage on failed attempts
+- ✅ User never sees old failed uploads
+
+---
+
 ### User Interface Changes
+
+#### Failed Uploads Hidden from UI
+
+**File**: `src/apis/upload/handlers/listUploadsHandler.ts`
+
+```typescript
+const uploads = await getRecentUploadsForUser(context.userId, {
+    hoursAgo: 24,
+    statuses: ['parsing', 'awaiting-approval', 'success'], // ← No 'failed' status
+    limit: 10
+});
+```
+
+**Result**: Failed uploads are hidden from the upload list immediately after failure, keeping the UI clean.
 
 #### Countdown Timer
 

@@ -1,11 +1,12 @@
-import { getExpiredUploadsForUser } from '@/server/database/collections/bookUploads';
+import { getExpiredUploadsForUser, getRecentUploadsForUser } from '@/server/database/collections/bookUploads';
 import { deleteFile, getFileAsString } from '@/server/s3/sdk';
 import { list, del } from '@vercel/blob';
 import { deleteBookUpload } from '@/server/database/collections/bookUploads';
 import type { ApiHandlerContext, CleanupExpiredUploadsRequest, CleanupExpiredUploadsResponse } from '../types';
+import type { BookUpload } from '@/server/database/collections/bookUploads/types';
 
 /**
- * Cleanup expired uploads for a user
+ * Cleanup expired uploads and old failed uploads for a user
  * Deletes S3 files (PDF, parser output), Vercel Blob images, and database records
  */
 export async function cleanupExpiredUploadsHandler(
@@ -20,18 +21,43 @@ export async function cleanupExpiredUploadsHandler(
         // Get all expired uploads for this user
         const expiredUploads = await getExpiredUploadsForUser(context.userId);
 
-        if (expiredUploads.length === 0) {
+        // Also get failed uploads older than 1 hour (no need to keep them for 24 hours)
+        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+        const recentFailed = await getRecentUploadsForUser(context.userId, {
+            hoursAgo: 24,
+            statuses: ['failed'],
+            limit: 50
+        });
+        const oldFailedUploads = recentFailed.filter(upload => 
+            upload.createdAt < oneHourAgo
+        );
+
+        // Combine expired and old failed uploads, removing duplicates
+        const uploadIdsSet = new Set<string>();
+        const uploadsToDelete: BookUpload[] = [];
+        
+        for (const upload of [...expiredUploads, ...oldFailedUploads]) {
+            const uploadId = upload._id.toString();
+            if (!uploadIdsSet.has(uploadId)) {
+                uploadIdsSet.add(uploadId);
+                uploadsToDelete.push(upload);
+            }
+        }
+
+        if (uploadsToDelete.length === 0) {
             return { success: true, deletedCount: 0 };
         }
 
-        console.log(`🧹 Found ${expiredUploads.length} expired uploads for user ${context.userId}`);
+        console.log(`🧹 Found ${uploadsToDelete.length} uploads to clean up for user ${context.userId}`);
+        console.log(`   - ${expiredUploads.length} expired uploads`);
+        console.log(`   - ${oldFailedUploads.length} old failed uploads (>1 hour)`);
 
         let deletedCount = 0;
 
-        // Process each expired upload
-        for (const upload of expiredUploads) {
+        // Process each upload to delete
+        for (const upload of uploadsToDelete) {
             try {
-                console.log(`🗑️  Cleaning up expired upload: ${upload._id}`);
+                console.log(`🗑️  Cleaning up upload: ${upload._id} (status: ${upload.status})`);
 
                 const deletePromises: Promise<void>[] = [];
 
@@ -104,7 +130,7 @@ export async function cleanupExpiredUploadsHandler(
                 // Delete the database record
                 await deleteBookUpload(upload._id);
 
-                console.log(`✅ Deleted expired upload ${upload._id}`);
+                console.log(`✅ Deleted upload ${upload._id}`);
                 deletedCount++;
             } catch (error) {
                 console.error(`Failed to delete upload ${upload._id}:`, error);
@@ -112,7 +138,7 @@ export async function cleanupExpiredUploadsHandler(
             }
         }
 
-        console.log(`🎉 Cleanup complete: ${deletedCount} expired uploads deleted`);
+        console.log(`🎉 Cleanup complete: ${deletedCount} uploads deleted`);
 
         return {
             success: true,

@@ -21,12 +21,14 @@ const parser = require('../parser');
  * @returns {Object} - Complete parsing results
  */
 async function runLocalParser(pdfPath, outputPath, options = {}) {
-    // Skip errors provider reads from local file
-    const skipErrorsProvider = async () => {
+    // Skip errors provider reads from local file, filtered by step
+    const skipErrorsProvider = async (stepName) => {
         const skippedFile = path.join(path.dirname(outputPath), 'skipped-validation-errors.json');
         if (fs.existsSync(skippedFile)) {
             try {
-                return JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
+                const allSkipErrors = JSON.parse(fs.readFileSync(skippedFile, 'utf8'));
+                // Filter to only return errors for the current step
+                return allSkipErrors.filter(err => err.step === stepName);
             } catch (error) {
                 console.warn(`⚠️  Failed to read skipped-validation-errors.json: ${error.message}`);
                 return [];

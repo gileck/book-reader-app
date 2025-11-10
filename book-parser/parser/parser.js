@@ -259,7 +259,7 @@ async function parseBook(pdfPath, outputPath, options = {}) {
         forceReparse: options.forceReparse || false,
         useCache: options.useCache !== false, // default true
         // Production runner callbacks
-        skipErrorsProvider: options.skipErrorsProvider || (async () => []),
+        skipErrorsProvider: options.skipErrorsProvider || (async (stepName) => []),
         onValidationError: options.onValidationError || null,
         onStepStart: options.onStepStart || null,
         onStepProgress: options.onStepProgress || null,
@@ -469,10 +469,10 @@ async function parseBook(pdfPath, outputPath, options = {}) {
 
                             // Handle skipped validation errors (if any)
                             if (!isValid) {
-                                // First, try to get skip errors from callback provider
+                                // First, try to get skip errors from callback provider (pass stepName for filtering)
                                 let skipErrors = [];
                                 try {
-                                    skipErrors = await opts.skipErrorsProvider();
+                                    skipErrors = await opts.skipErrorsProvider(stepName);
                                 } catch (err) {
                                     if (opts.debug) {
                                         console.log(`⚠️  Failed to load skip errors from provider: ${err.message}`);
@@ -640,6 +640,28 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                                 if (filteredValidationOutput.trim()) {
                                                     const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
                                                     fs.appendFileSync(validationOutputPath, header + filteredValidationOutput + '\n');
+                                                }
+                                                
+                                                // Check if we have callback handler for remaining errors
+                                                if (opts.onValidationError) {
+                                                    // Prepare error details
+                                                    const errorDetails = {
+                                                        step: stepName,
+                                                        errorCount: filteredErrorCount,
+                                                        validationOutput: filteredValidationOutput,
+                                                        chapterErrorSummary
+                                                    };
+
+                                                    // Call the validation error handler
+                                                    const shouldContinue = await opts.onValidationError(stepName, errorDetails);
+                                                    
+                                                    if (shouldContinue) {
+                                                        // User approved to continue, treat as valid
+                                                        isValid = true;
+                                                        if (filteredErrorCount > 0) {
+                                                            console.log(`⏭️  Validation error approved by handler in ${stepName}: ${filteredErrorCount} error(s) suppressed.`);
+                                                        }
+                                                    }
                                                 }
                                             } else {
                                                 // All errors were filtered out, validation passes

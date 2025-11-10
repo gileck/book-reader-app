@@ -55,6 +55,16 @@ export const UploadBook = () => {
         setShowUploadForm(false);
         uploadForm.clearError();
 
+        // Clean up any old awaiting-approval uploads before starting a new one
+        // to prevent confusion with multiple uploads in the same state
+        const oldAwaitingUploads = uploadManager.uploads.filter(
+            u => u.status === 'awaiting-approval'
+        );
+        for (const oldUpload of oldAwaitingUploads) {
+            console.log(`🧹 Cleaning up old awaiting-approval upload: ${oldUpload.uploadId}`);
+            await uploadManager.actions.deleteUpload(oldUpload.uploadId);
+        }
+
         // Create optimistic temporary upload item for immediate feedback
         const tempUploadId = `temp-${Date.now()}`;
         const now = new Date();
@@ -128,10 +138,9 @@ export const UploadBook = () => {
      * Handle error approval
      */
     const handleApproveErrors = async (uploadId: string) => {
-        const success = await uploadManager.actions.approveErrors(uploadId);
-        if (success) {
-            setSelectedUploadId(null);
-        }
+        await uploadManager.actions.approveErrors(uploadId);
+        // Don't clear selectedUploadId - keep the same upload selected
+        // so user can continue approving errors for subsequent validation steps
     };
 
     /**

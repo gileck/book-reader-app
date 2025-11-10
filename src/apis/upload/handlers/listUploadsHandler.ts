@@ -11,9 +11,11 @@ export async function listUploadsHandler(
         }
 
         // Get recent uploads using database layer
+        // Only show active uploads (parsing, awaiting-approval, success)
+        // Hide 'failed' uploads to avoid clutter (user can always retry)
         const uploads = await getRecentUploadsForUser(context.userId, {
             hoursAgo: 24,
-            statuses: ['parsing', 'awaiting-approval', 'success', 'failed'],
+            statuses: ['parsing', 'awaiting-approval', 'success'],
             limit: 10
         });
 
