@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { getBookUpload, updateBookUpload } from '@/server/database/collections/bookUploads';
+import { getBookUpload, deleteBookUpload } from '@/server/database/collections/bookUploads';
 import { createBook } from '@/server/database/collections/books/books';
 import { createChapter } from '@/server/database/collections/chapters/chapters';
 import { deleteBook } from '@/server/database/collections/books/books';
@@ -219,16 +219,13 @@ export async function finalizeUploadHandler(
             // The imageBaseURL from parser output is already in the correct format.
             console.log(`📸 Images already uploaded to Vercel Blob: ${metadata.imageBaseURL || 'none'}`);
 
-            // Update upload record with book ID
-            await updateBookUpload(params.uploadId, {
-                bookId: book._id
-            });
-
-            // Clean up upload artifacts (PDF and parser output)
-            // Images were already deleted during the move operation above
-            console.log(`🧹 Cleaning up upload artifacts...`);
+            // Clean up upload artifacts (PDF, parser output, and upload record)
+            // NOTE: Images are NOT deleted - they're already in the correct Vercel Blob location
+            // for the library book (books/BookTitle/images/) and are referenced by the book record
+            console.log(`🧹 Cleaning up upload artifacts for uploadId: ${params.uploadId}...`);
             const cleanupPromises: Promise<void>[] = [];
             
+            // Delete PDF from S3
             if (upload.pdfS3Key) {
                 cleanupPromises.push(
                     deleteFile(upload.pdfS3Key).catch(err => {
@@ -237,6 +234,7 @@ export async function finalizeUploadHandler(
                 );
             }
             
+            // Delete parser output from S3
             if (upload.parserOutputS3Key) {
                 cleanupPromises.push(
                     deleteFile(upload.parserOutputS3Key).catch(err => {
@@ -245,8 +243,19 @@ export async function finalizeUploadHandler(
                 );
             }
             
+            // Wait for all file deletions to complete
             await Promise.all(cleanupPromises);
-            console.log(`✅ Upload artifacts cleaned up`);
+            console.log(`✅ Upload artifacts cleaned up (PDF, parser output)`);
+            console.log(`📸 Images kept in Vercel Blob at: ${metadata.imageBaseURL || 'N/A'} (used by library book)`);
+            
+            // Delete the upload record from database
+            try {
+                await deleteBookUpload(params.uploadId);
+                console.log(`✅ Deleted upload record: ${params.uploadId}`);
+            } catch (err) {
+                console.error(`Failed to delete upload record ${params.uploadId}:`, err);
+                // Don't throw - book was created successfully, this is just cleanup
+            }
 
             return {
                 success: true,
