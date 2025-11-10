@@ -108,24 +108,30 @@ export async function finalizeUploadHandler(
         let createdBookId: ObjectId | null = null;
 
         try {
-            // Find the first image in chapters to use as cover
+            // Find the first image (sorted by filename) to use as cover
+            // This matches the logic in upload-book.js and getMetadataHandler.ts
             let coverImage: string | undefined;
+            
+            // Collect all image names from all chapters
+            const allImageNames: string[] = [];
             for (const chapter of chapters) {
                 if (chapter.chunks && Array.isArray(chapter.chunks)) {
-                    const imageChunk = chapter.chunks.find((chunk: unknown) => {
+                    for (const chunk of chapter.chunks) {
                         const c = chunk as { type?: string; imageName?: string };
-                        return c.type === 'image' && c.imageName;
-                    });
-                    if (imageChunk) {
-                        const c = imageChunk as { imageName?: string };
-                        if (c.imageName) {
-                            // Construct cover image path using imageBaseURL and imageName
-                            const baseURL = metadata.imageBaseURL || '';
-                            coverImage = baseURL ? `${baseURL}${c.imageName}` : undefined;
-                            break;
+                        if (c.type === 'image' && c.imageName) {
+                            allImageNames.push(c.imageName);
                         }
                     }
                 }
+            }
+            
+            // Sort by filename (numerically) and pick the first one
+            if (allImageNames.length > 0) {
+                allImageNames.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+                const firstImage = allImageNames[0];
+                const baseURL = metadata.imageBaseURL || '';
+                coverImage = baseURL ? `${baseURL}${firstImage}` : undefined;
+                console.log(`[finalizeUpload] Selected cover image: ${coverImage} (from ${allImageNames.length} total images)`);
             }
 
             // Create book
