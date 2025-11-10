@@ -441,9 +441,23 @@ export async function runParserWithSSE(
         const existingUpload = await getBookUpload(uploadId);
         const hasValidationErrors = existingUpload?.validationErrors && existingUpload.validationErrors.length > 0;
 
-        // Update database with error, but preserve validation errors if they exist
+        // Check if this is a validation error (user needs to approve)
+        const isValidationError = error instanceof Error && error.message.includes('validation failed');
+        
+        // If validation errors exist and this is a validation failure, keep status as awaiting-approval
+        // Otherwise, mark as failed
+        const newStatus = (hasValidationErrors && isValidationError) ? 'awaiting-approval' : 'failed';
+
+        console.log(`❌ Parser error for uploadId ${uploadId}:`, {
+            errorMessage: error instanceof Error ? error.message : 'Unknown error',
+            hasValidationErrors,
+            isValidationError,
+            newStatus
+        });
+
+        // Update database with error, preserving validation errors and status
         await updateBookUpload(uploadId, {
-            status: 'failed',
+            status: newStatus,
             error: {
                 message: error instanceof Error ? error.message : 'Unknown error',
                 stack: error instanceof Error ? error.stack : undefined,
