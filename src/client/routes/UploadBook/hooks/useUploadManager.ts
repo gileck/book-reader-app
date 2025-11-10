@@ -117,8 +117,6 @@ export const useUploadManager = (userId: string | undefined) => {
      * Handle SSE events and update upload state
      */
     const handleSSEEvent = useCallback((event: SSEEvent, tempUploadId?: string) => {
-        console.log('📡 SSE Event:', event);
-        
         const uploadId = event.uploadId;
         
         // Get uploadId from first event and replace temp upload
@@ -136,7 +134,9 @@ export const useUploadManager = (userId: string | undefined) => {
             return uploadId;
         }
         
-        if (!uploadId) return null;
+        if (!uploadId) {
+            return null;
+        }
         
         // Update upload status from SSE event data
         if (event.type === 'upload' || event.type === 'start' || event.type === 'step-start' || event.type === 'step-complete' || event.type === 'step-progress' || event.type === 'finalizing') {
@@ -160,7 +160,6 @@ export const useUploadManager = (userId: string | undefined) => {
         
         // Handle completion
         if (event.type === 'complete') {
-            console.log('✅ Received complete event, updating UI to success status');
             updateUpload(uploadId, {
                 status: 'success',
                 currentStep: undefined,

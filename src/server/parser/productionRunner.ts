@@ -154,6 +154,7 @@ export async function runParserWithSSE(
             // Send validation error event to client
             sendSSE(res, {
                 type: 'validation-error',
+                uploadId, // Include uploadId in event
                 step: stepName,
                 errorCount: errorDetails.errorCount,
                 errors: errors.slice(0, 10), // Send first 10 errors to avoid overwhelming client
@@ -182,6 +183,7 @@ export async function runParserWithSSE(
                 // Send resume event
                 sendSSE(res, {
                     type: 'step-resume',
+                    uploadId, // Include uploadId in event
                     step: stepName,
                     message: 'Continuing with approved errors...'
                 });
@@ -192,6 +194,7 @@ export async function runParserWithSSE(
             // Not approved or timed out
             sendSSE(res, {
                 type: 'error',
+                uploadId, // Include uploadId in event
                 message: 'Validation error approval timed out or was rejected'
             });
             return false; // Abort parsing
@@ -205,6 +208,7 @@ export async function runParserWithSSE(
             
             sendSSE(res, {
                 type: 'step-start',
+                uploadId, // Include uploadId in event
                 step: stepName,
                 stepNumber,
                 totalSteps,
@@ -227,6 +231,7 @@ export async function runParserWithSSE(
             
             sendSSE(res, {
                 type: 'step-progress',
+                uploadId, // Include uploadId in event
                 step: stepName,
                 progress: percentage
             });
@@ -238,6 +243,7 @@ export async function runParserWithSSE(
             
             sendSSE(res, {
                 type: 'step-complete',
+                uploadId, // Include uploadId in event
                 step: stepName,
                 message: `${stepName} completed`
             });
@@ -265,6 +271,7 @@ export async function runParserWithSSE(
         // Notify user: Uploading images
         sendSSE(res, {
             type: 'finalizing',
+            uploadId, // Include uploadId in event
             message: 'Uploading images...',
             progress: 90
         });
@@ -328,6 +335,7 @@ export async function runParserWithSSE(
         // Notify user: Saving parser output
         sendSSE(res, {
             type: 'finalizing',
+            uploadId, // Include uploadId in event
             message: 'Saving parser output...',
             progress: 95
         });
@@ -357,6 +365,7 @@ export async function runParserWithSSE(
         // Notify user: Finalizing
         sendSSE(res, {
             type: 'finalizing',
+            uploadId, // Include uploadId in event
             message: 'Finalizing upload...',
             progress: 98
         });
@@ -410,6 +419,7 @@ export async function runParserWithSSE(
         // Send error event (no stack in production)
         sendSSE(res, {
             type: 'error',
+            uploadId, // Include uploadId in event
             message: error instanceof Error ? error.message : 'Unknown error occurred',
             stack: process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
         });
