@@ -142,14 +142,15 @@ sequenceDiagram
     Client->>API: POST /api/upload/finalize
     
     API->>S3: Download output.json
+    API->>Vercel Blob: List all images to determine cover
     API->>DB: Create book
     API->>DB: Create chapters
     
-    API->>S3: Move images (uploads → books)
     API->>S3: Delete upload PDF
     API->>S3: Delete parser output
+    API->>DB: Delete upload record
     
-    API->>DB: Update book with final imageBaseURL
+    Note over API,Vercel Blob: Images kept in Vercel Blob (already in final location)
     API->>Client: Return bookId
     
     Client->>Client: Navigate to /?bookId=${bookId}
@@ -669,7 +670,7 @@ execSync(`pdfimages -j "${pdfPath}" "${imagesDir}/image"`);
 
 **File**: `src/server/parser/productionRunner.ts`
 
-After parsing completes, images are uploaded to S3:
+After parsing completes, images are uploaded directly to Vercel Blob in their final location:
 
 ```typescript
 const imagesDir = path.join(result.outputDir, 'images');
@@ -679,58 +680,86 @@ if (fs.existsSync(imagesDir)) {
         /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
     );
     
+    // Sort images by filename (numerically) to ensure deterministic cover selection
+    imageFiles.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+    
+    // Get book title from parser output for folder naming
+    const bookTitle = result.finalOutput?.metadata?.title || 'Unknown-Book';
+    const bookFolderName = bookTitle.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+    const blobPrefix = `books/${bookFolderName}/images/`;
+    
+    // Upload each image to Vercel Blob
     await Promise.all(
         imageFiles.map(async (filename) => {
             const fileContent = fs.readFileSync(path.join(imagesDir, filename));
+            const contentType = getContentType(filename);
+            const blobKey = `${blobPrefix}${filename}`;
             
-            await uploadFile({
-                content: fileContent,
-                fileName: `users/${userId}/uploads/${uploadId}/images/${filename}`,
-                contentType: getContentType(filename)
+            await put(blobKey, fileContent, {
+                access: 'public',
+                contentType,
+                token: BLOB_READ_WRITE_TOKEN,
+                addRandomSuffix: false,
+                allowOverwrite: true // Allow re-uploads
             });
         })
     );
     
-    // Set imageBaseURL in metadata
-    imageBaseURL = `/users/${userId}/uploads/${uploadId}/images/`;
+    // Set imageBaseURL in metadata (relative path for Vercel Blob)
+    imageBaseURL = `/${bookFolderName}/images/`;
 }
 ```
 
-#### Image Move on Finalization
+**Key Points**:
+- Images uploaded directly to **Vercel Blob** (not S3)
+- Path: `books/BookTitle/images/` (final location, no moving needed)
+- Images sorted before upload to ensure consistent cover selection
+- `allowOverwrite: true` permits re-parsing the same book
+
+#### Cover Image Selection on Finalization
 
 **File**: `src/apis/upload/handlers/finalizeUploadHandler.ts`
 
-When adding to library, images are moved from `uploads/` to `books/`:
+When adding to library, cover image is determined by listing ALL images from Vercel Blob:
 
 ```typescript
-const uploadImagesPrefix = `users/${userId}/uploads/${uploadId}/images/`;
-const bookImagesPrefix = `users/${userId}/books/${bookId}/images/`;
+// Extract book folder from imageBaseURL
+const bookFolder = metadata.imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
+const blobPrefix = `books/${bookFolder}`;
 
-const imageFiles = await listFiles(uploadImagesPrefix);
+// List all blobs with this prefix
+const { blobs } = await list({
+    prefix: blobPrefix,
+    token: BLOB_READ_WRITE_TOKEN
+});
 
-await Promise.all(
-    imageFiles.map(async (file) => {
-        // Download from uploads
-        const imageBuffer = await getFile(file.key);
-        
-        // Upload to books
-        await uploadFile({
-            content: imageBuffer,
-            fileName: `${bookImagesPrefix}${filename}`,
-            contentType
-        });
-        
-        // Delete from uploads
-        await deleteFile(file.key);
-    })
+// Extract filenames and sort numerically
+const blobsWithNames = blobs.map(blob => ({
+    filename: blob.pathname.split('/').pop() || '',
+    url: blob.url
+})).filter(b => b.filename);
+
+blobsWithNames.sort((a, b) => 
+    a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' })
 );
 
-// Update book with new imageBaseURL
-await updateBook(bookId, {
-    imageBaseURL: `/${bookImagesPrefix}`,
-    coverImage: `/${bookImagesPrefix}${firstImage}`
+// Pick first image as cover
+const coverImage = blobsWithNames[0]?.url;
+
+// Create book with cover image
+await createBook({
+    title: metadata.title,
+    coverImage,
+    imageBaseURL: metadata.imageBaseURL, // e.g., "/BookTitle/images/"
+    // ... other fields
 });
 ```
+
+**Why This Approach?**
+- ✅ Gets ALL images (including standalone covers not in chapter text)
+- ✅ Consistent with CLI and preview logic
+- ✅ No image moving/copying required
+- ✅ Images already in permanent location
 
 ### 4. Database Schema Conversion
 
@@ -994,12 +1023,24 @@ This ensures ALL uploaded images are shown, including:
 
 **Process**:
 1. Download parser output from S3
-2. Create book in database
-3. Create chapters in database
-4. Move images from `uploads/` to `books/`
-5. Update book with final `imageBaseURL`
-6. Clean up upload artifacts (PDF, parser output, upload images)
+2. List all images from Vercel Blob to determine cover image (sorted numerically)
+3. Create book in database with cover image URL
+4. Create chapters in database (parallel for performance)
+5. Clean up temporary artifacts:
+   - Delete PDF from S3
+   - Delete parser output JSON from S3
+   - Delete upload record from database
+6. **Keep images in Vercel Blob** (already in final location: `books/BookTitle/images/`)
 7. Return `bookId` for navigation
+
+**Cover Image Selection**:
+- Uses Vercel Blob `list()` API to get ALL uploaded images
+- Sorts images by filename numerically: `localeCompare(..., { numeric: true })`
+- Picks the first sorted image as cover
+- This matches the logic in CLI and preview, ensuring consistency
+
+**Why Keep Images?**
+Images are uploaded to `books/BookTitle/images/` during parsing (productionRunner.ts), which is already the correct final location for library books. No need to move or copy them - they're already where they need to be!
 
 ### 7. Delete Upload
 
@@ -1154,47 +1195,52 @@ interface ChunkLink {
 
 ---
 
-## S3 Storage Structure
+## Storage Structure
 
-### Upload Stage (Temporary)
+### S3 (AWS) - Temporary Files Only
 
+**Upload Stage**:
 ```
 users/${userId}/uploads/${uploadId}/
-├── ${uploadId}.pdf                    # Original PDF
-├── images/                            # Extracted images (temporary)
-│   ├── image-001.jpg
-│   ├── image-002.png
-│   └── image-003.jpg
+├── ${uploadId}.pdf                    # Original PDF (deleted after finalization)
 └── parser-output/${uploadId}/
-    └── output.json                    # Parser output with metadata
+    └── output.json                    # Parser output (deleted after finalization)
 ```
 
-**Lifecycle**: Created during upload, deleted after finalization or manual deletion.
+**Lifecycle**: Created during upload, **deleted after finalization** or manual deletion.
 
-### Library Stage (Permanent)
+### Vercel Blob - Permanent Image Storage
 
+**Library Stage** (images uploaded directly here during parsing):
 ```
-users/${userId}/books/${bookId}/
-└── images/                            # Final images (moved from uploads)
-    ├── image-001.jpg
-    ├── image-002.png
-    └── image-003.jpg
+books/${bookTitle}/images/
+├── image-001.jpg                      # Cover image (first sorted image)
+├── image-002.png
+└── image-003.jpg
 ```
 
-**Lifecycle**: Created during finalization, deleted only when book is deleted.
+**Key Points**:
+- Images uploaded **directly to final location** during parsing (no moving needed)
+- Path based on book title: `books/BookTitle/images/`
+- Images sorted by filename (numerically) before upload
+- `allowOverwrite: true` permits re-parsing the same book
+- **Lifecycle**: Created during parsing, kept permanently for library books
 
 ### Image URL Resolution
 
 **In Database**:
 ```typescript
-book.imageBaseURL = "/users/123/books/abc/images/";
+book.imageBaseURL = "/BookTitle/images/";
+book.coverImage = "https://xxx.public.blob.vercel-storage.com/books/BookTitle/images/image-001.jpg";
 chunk.imageName = "image-001.jpg";
 ```
 
 **In Reader**:
 ```typescript
+// Construct full Vercel Blob URL from imageBaseURL + imageName
 const imageUrl = book.imageBaseURL + chunk.imageName;
-// = "/users/123/books/abc/images/image-001.jpg"
+// = "/BookTitle/images/image-001.jpg"
+// Vercel Blob automatically resolves this to full URL
 
 // S3 SDK serves the image
 const signedUrl = await getSignedFileUrl(imageUrl);
