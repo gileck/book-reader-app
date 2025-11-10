@@ -338,6 +338,50 @@
     border-radius: 8px;
 }
 
+/* Upload Metadata (File Name and ID) */
+.uploadMetadata {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 28px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (prefers-color-scheme: light) {
+    .uploadMetadata {
+        background: rgba(0, 0, 0, 0.02);
+        border-bottom-color: rgba(0, 0, 0, 0.05);
+    }
+}
+
+.uploadFileName,
+.uploadId {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.uploadMetadataLabel {
+    color: #8E8E93;
+    font-weight: 600;
+    min-width: 30px;
+}
+
+.uploadMetadataValue {
+    color: var(--color-label);
+    font-weight: 500;
+    font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+    word-break: break-all;
+}
+
+@media (prefers-color-scheme: dark) {
+    .uploadMetadataLabel {
+        color: #AEAEB2;
+    }
+}
+
 .uploadCardBody {
     padding: 28px;
     background: #1C1C1E;

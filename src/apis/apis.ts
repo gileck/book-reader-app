@@ -24,6 +24,7 @@ import {
     DELETE_UPLOAD,
     GET_METADATA
 } from './upload/index';
+import { fileStorageApiHandlers } from './fileStorage/server';
 
 // Convert API handlers to typed format
 const typedBooksApiHandlers = Object.entries(booksApiHandlers).reduce(
@@ -134,6 +135,12 @@ export const apiHandlers: ApiHandlers = {
   ...typedTtsUsageApiHandlers,
   ...typedChapterOverviewApiHandlers,
   ...Object.entries(promptPresetsApiHandlers).reduce((acc, [key, handler]) => {
+    acc[key] = {
+      process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
+    };
+    return acc;
+  }, {} as ApiHandlers),
+  ...Object.entries(fileStorageApiHandlers).reduce((acc, [key, handler]) => {
     acc[key] = {
       process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
     };

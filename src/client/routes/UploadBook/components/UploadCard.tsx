@@ -68,6 +68,20 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                 </div>
             </div>
 
+            {/* File Name and Upload ID */}
+            <div className={styles.uploadMetadata}>
+                {upload.fileName && (
+                    <div className={styles.uploadFileName}>
+                        <span className={styles.uploadMetadataLabel}>📄</span>
+                        <span className={styles.uploadMetadataValue}>{upload.fileName}</span>
+                    </div>
+                )}
+                <div className={styles.uploadId}>
+                    <span className={styles.uploadMetadataLabel}>ID:</span>
+                    <span className={styles.uploadMetadataValue}>{upload.uploadId}</span>
+                </div>
+            </div>
+
             <div className={styles.uploadCardBody}>
                 {/* Uploading Status */}
                 {upload.status === 'uploading' && (
