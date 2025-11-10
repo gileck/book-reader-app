@@ -456,7 +456,170 @@ async function waitForApproval(uploadId: string, timeoutMinutes: number): Promis
 }
 ```
 
-### 3. Image Handling
+### 3. Optimistic UI and Temp/Real Upload ID Flow
+
+The upload feature uses an **optimistic UI pattern** to provide immediate feedback to users when they click "START UPLOAD", before the server creates the actual database record.
+
+#### Why Optimistic UI?
+
+Without optimistic UI, users would see nothing happen for several seconds after clicking "START UPLOAD" while:
+1. The PDF is being encoded to base64 (for file uploads)
+2. The HTTP request is sent to the server
+3. The server creates a database record
+4. The server starts the SSE stream
+
+This delay creates a poor user experience. The optimistic UI pattern solves this by immediately showing a temporary upload item.
+
+#### The Flow
+
+**File**: `src/client/routes/UploadBook/UploadBook.tsx`
+
+```typescript
+const handleStartUpload = async () => {
+    // 1. Generate temporary ID
+    const tempUploadId = `temp-${Date.now()}`;
+    
+    // 2. Immediately add optimistic upload item to UI
+    uploadManager.actions.addOptimisticUpload({
+        uploadId: tempUploadId,
+        status: 'uploading',
+        createdAt: new Date(),
+        fileName: uploadForm.getFileName(),
+        currentStep: 'Uploading PDF...',
+        progress: 0
+    });
+    
+    // 3. Start SSE upload (async)
+    let realUploadId: string | null = null;
+    
+    await sseUpload.startUpload(
+        { file, pdfUrl, uploadMode, fileName },
+        (event: SSEEvent) => {
+            // 4. On first SSE event with real uploadId, replace temp
+            const uploadId = uploadManager.actions.handleSSEEvent(
+                event, 
+                realUploadId ? undefined : tempUploadId // Only pass temp ID once
+            );
+            
+            if (uploadId && !realUploadId) {
+                realUploadId = uploadId; // Store real ID
+            }
+            
+            return uploadId;
+        }
+    );
+};
+```
+
+#### Server-Side ID Generation
+
+**File**: `src/pages/api/upload/parse.ts`
+
+```typescript
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    // 1. Generate ObjectId for upload (will be used as DB _id)
+    const uploadObjectId = new ObjectId();
+    const uploadId = uploadObjectId.toString();
+    
+    // 2. Create minimal DB record immediately
+    await createBookUpload({
+        _id: uploadObjectId, // Use the same ObjectId
+        userId: new ObjectId(user._id),
+        pdfS3Key: '', // Will update later
+        status: 'uploading',
+        skippedValidationErrors: [],
+        fileName: req.body.fileName || pdfUrl || 'Unknown'
+    });
+    
+    // 3. Send uploadId via SSE immediately
+    res.write(`data: ${JSON.stringify({ 
+        type: 'upload', 
+        uploadId,  // Real ID from database
+        progress: 5, 
+        message: 'Initializing...' 
+    })}\n\n`);
+    
+    // ... continue with PDF upload and parsing
+}
+```
+
+#### Client-Side Replacement Logic
+
+**File**: `src/client/routes/UploadBook/hooks/useUploadManager.ts`
+
+```typescript
+const handleSSEEvent = useCallback((event: SSEEvent, tempUploadId?: string) => {
+    const uploadId = event.uploadId;
+    
+    // If we have both real uploadId and temp uploadId, replace the temp item
+    if (uploadId && tempUploadId) {
+        replaceUpload(tempUploadId, {
+            uploadId,  // Real ID from server
+            status: 'parsing',
+            createdAt: new Date(),
+            fileName: uploadsRef.current.find(u => u.uploadId === tempUploadId)?.fileName,
+            currentStep: event.message || 'Starting parser...',
+            progress: event.progress || 5
+        });
+        
+        // Don't process this event further (already set initial state)
+        return uploadId;
+    }
+    
+    // For subsequent events, just update the upload with real ID
+    if (!uploadId) return null;
+    
+    updateUpload(uploadId, {
+        status: 'parsing',
+        currentStep: event.message || event.step,
+        progress: event.progress
+    });
+    
+    return uploadId;
+}, [updateUpload, replaceUpload]);
+```
+
+#### Key Points
+
+1. **Temp ID Format**: `temp-${Date.now()}` - Guaranteed unique, easy to identify
+2. **Real ID Format**: MongoDB ObjectId string (24 hex characters)
+3. **Replacement Timing**: On first SSE event that contains `uploadId`
+4. **ID Consistency**: Server generates ObjectId and uses it for both DB `_id` and SSE `uploadId`
+5. **Single Replacement**: The `tempUploadId` parameter is only passed for the first SSE event
+
+#### Benefits
+
+- ✅ **Instant Feedback**: User sees upload item immediately
+- ✅ **No Flickering**: Smooth transition from temp to real ID
+- ✅ **No Duplicates**: Old temp item is filtered out when real item is added
+- ✅ **Persistent State**: Real ID matches database, survives page reload
+
+#### Common Issues
+
+**Problem**: Two items appear (one temp, one real)
+
+**Cause**: Temp upload not being replaced
+
+**Solution**: Ensure `tempUploadId` is only passed on first SSE event:
+```typescript
+realUploadId ? undefined : tempUploadId
+```
+
+**Problem**: UI shows "Starting parser... 0%" and never updates
+
+**Cause**: SSE events missing `uploadId` field
+
+**Solution**: Ensure all SSE events include `uploadId`:
+```typescript
+sendSSE(res, {
+    type: 'step-start',
+    uploadId,  // Must be included!
+    step: stepName,
+    progress: 50
+});
+```
+
+### 4. Image Handling
 
 #### Image Extraction (Parser)
 
