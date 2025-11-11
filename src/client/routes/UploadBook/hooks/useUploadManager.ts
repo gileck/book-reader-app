@@ -32,7 +32,7 @@ export interface SSEEvent {
     progress?: number;
     errors?: ValidationError[];
     totalAccumulatedErrors?: number; // For validation-error-accumulated events
-    totalErrors?: number; // For validation-errors-summary events
+    totalErrors?: number; // For validation-errors-info events
     errorCount?: number; // For validation error events
 }
 
@@ -191,11 +191,11 @@ export const useUploadManager = (userId: string | undefined) => {
             });
         }
 
-        // Handle validation errors summary (shown at the end in continue mode)
-        if (event.type === 'validation-errors-summary') {
+        // Handle validation errors info (continue mode - just display, no approval)
+        if (event.type === 'validation-errors-info') {
             updateUpload(uploadId, {
-                status: 'awaiting-approval',
-                currentStep: `${event.totalErrors} validation ${event.totalErrors === 1 ? 'error' : 'errors'} found`,
+                status: 'parsing', // Keep parsing, don't block for approval
+                currentStep: event.message || `${event.totalErrors} validation ${event.totalErrors === 1 ? 'error' : 'errors'} found`,
                 validationErrors: event.errors,
                 accumulatedErrorCount: event.totalErrors
             });

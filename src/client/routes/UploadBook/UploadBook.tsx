@@ -264,11 +264,16 @@ export const UploadBook = () => {
             )}
 
             {/* Validation Error Dialog */}
-            {/* Show dialog for: normal mode awaiting-approval, continue mode final summary, or failed uploads */}
-            {((selectedUpload?.status === 'awaiting-approval' && selectedUpload.validationErrors && 
-               (!selectedUpload.continueOnValidationError || (selectedUpload.continueOnValidationError && selectedUpload.accumulatedErrorCount))) ||
-              (selectedUpload?.status === 'failed' && ((selectedUpload.validationErrors && selectedUpload.validationErrors.length > 0) || 
-              (selectedUpload.error && selectedUpload.error.toLowerCase().includes('validation'))))) && (
+            {/* For continue mode: NEVER show automatically - only when user explicitly clicks */}
+            {/* For normal mode: show automatically when awaiting-approval or failed */}
+            {selectedUpload && (
+                (selectedUpload.status === 'awaiting-approval' && 
+                 selectedUpload.validationErrors && 
+                 !selectedUpload.continueOnValidationError) || // Normal mode: show automatically
+                (selectedUpload.status === 'failed' && 
+                 ((selectedUpload.validationErrors && selectedUpload.validationErrors.length > 0) || 
+                  (selectedUpload.error && selectedUpload.error.toLowerCase().includes('validation'))))
+            ) && (
                 <ValidationErrorDialog
                     errors={selectedUpload.validationErrors && selectedUpload.validationErrors.length > 0 
                         ? selectedUpload.validationErrors 
@@ -280,7 +285,7 @@ export const UploadBook = () => {
                     onCancel={() => setSelectedUploadId(null)}
                     isFailed={selectedUpload.status === 'failed'}
                     isLoading={uploadManager.loadingActions[selectedUpload.uploadId] || false}
-                    isSummary={selectedUpload.continueOnValidationError && !!selectedUpload.accumulatedErrorCount}
+                    isSummary={false}
                 />
             )}
 

@@ -367,54 +367,32 @@ export async function runParserWithSSE(
 
         console.log(`✅ Parser completed successfully for uploadId: ${uploadId}`);
 
-        // If continueOnValidationError was true and we have accumulated errors, show them now
+        // If continueOnValidationError was true and we have accumulated errors, just display them
         if (continueOnValidationError && accumulatedErrors.length > 0) {
-            console.log(`⚠️  Parsing complete with ${accumulatedErrors.length} accumulated validation errors. Updating DB and notifying user...`);
+            console.log(`⚠️  Parsing complete with ${accumulatedErrors.length} accumulated validation errors. Auto-continuing (no approval needed)...`);
             
-            // Update DB status to awaiting-approval with all accumulated errors
-            await updateBookUpload(uploadId, {
-                status: 'awaiting-approval',
-                currentStep: 'Review All Validation Errors',
-                validationErrors: accumulatedErrors
-            });
-
-            // Send consolidated errors event
+            // Send informational event about accumulated errors (NO approval needed)
             sendSSE(res, {
-                type: 'validation-errors-summary',
+                type: 'validation-errors-info',
                 uploadId,
                 totalErrors: accumulatedErrors.length,
                 errors: accumulatedErrors.slice(0, 20), // Send first 20 for display
-                message: `Parsing complete with ${accumulatedErrors.length} validation errors. Please review.`
+                message: `Parsing complete with ${accumulatedErrors.length} validation ${accumulatedErrors.length === 1 ? 'error' : 'errors'} (auto-continuing)`
             });
 
-            // Wait for user approval before finalizing
-            console.log(`⏳ Waiting for user approval of all accumulated errors...`);
-            const approved = await waitForApproval(uploadId, 300);
-
-            if (!approved) {
-                console.log(`✗ User did not approve accumulated errors (timeout or rejection)`);
-                await updateBookUpload(uploadId, {
-                    status: 'failed',
-                    error: {
-                        message: 'Accumulated validation errors approval timed out or was rejected',
-                        timestamp: new Date()
-                    }
-                });
-                sendSSE(res, {
-                    type: 'error',
-                    uploadId,
-                    message: 'Validation errors were not approved'
-                });
-                return;
-            }
-
-            console.log(`✓ User approved all accumulated errors. Continuing with finalization...`);
-            sendSSE(res, {
-                type: 'step-resume',
-                uploadId,
-                step: 'finalization',
-                message: 'Continuing with approved errors...'
+            // Auto-save errors to DB for reference
+            await updateBookUpload(uploadId, {
+                status: 'parsing', // Keep as parsing, not awaiting-approval
+                currentStep: `Found ${accumulatedErrors.length} validation ${accumulatedErrors.length === 1 ? 'error' : 'errors'}`,
+                validationErrors: accumulatedErrors,
+                skippedValidationErrors: accumulatedErrors.map(err => ({
+                    step: err.step,
+                    chunkId: 'auto-approved'
+                }))
             });
+
+            // NO WAITING - just continue immediately
+            console.log(`✓ Auto-continuing with ${accumulatedErrors.length} errors (no approval needed)...`);
         }
 
         // Notify user: Uploading images (parser finished at 85%, now continue to 90%)
