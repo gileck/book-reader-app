@@ -766,35 +766,53 @@
     padding: 0 16px;
     border-radius: 10px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
     border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .viewButton {
-    background: rgba(0, 122, 255, 0.15);
-    color: var(--color-tint);
-    border: 1px solid rgba(0, 122, 255, 0.3);
+    background: linear-gradient(135deg, #007AFF 0%, #0A84FF 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .viewButton:hover:not(:disabled) {
-    background: rgba(0, 122, 255, 0.25);
+    background: linear-gradient(135deg, #0062CC 0%, #0073E6 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+}
+
+.viewButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
 }
 
 .addButton {
-    background: var(--color-tint);
+    background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
     color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .addButton:hover:not(:disabled) {
-    opacity: 0.9;
+    background: linear-gradient(135deg, #28A745 0%, #28B84C 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.4);
+}
+
+.addButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(52, 199, 89, 0.3);
 }
 
 .viewButton:disabled,
 .addButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .expirationTimerBottom {
