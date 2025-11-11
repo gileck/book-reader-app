@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ParserProgress } from './ParserProgress';
 import type { UploadItem } from '../hooks/useUploadManager';
-import styles from '../UploadBook.module.css';
-import cardStyles from '../UploadCard.module.css';
+import styles from '../styles';
 
 interface UploadCardProps {
     upload: UploadItem;
     isSelected: boolean;
     isLoading: boolean;
+    isLoadingPreview: boolean;
     onSelectUpload: (uploadId: string) => void;
     onViewValidationErrors: (uploadId: string) => void;
     onFinalizeUpload: (uploadId: string) => void;
@@ -39,6 +39,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
     upload,
     isSelected,
     isLoading,
+    isLoadingPreview,
     onSelectUpload,
     onViewValidationErrors,
     onFinalizeUpload,
@@ -200,12 +201,12 @@ export const UploadCard: React.FC<UploadCardProps> = ({
 
                 {/* Success Status - Show validation errors summary if any */}
                 {!isExpired && upload.status === 'success' && upload.validationErrors && upload.validationErrors.length > 0 && (
-                    <div className={cardStyles.validationErrorsSummary}>
-                        <span className={cardStyles.validationErrorsText}>
+                    <div className={styles.validationErrorsSummary}>
+                        <span className={styles.validationErrorsText}>
                             ⚠️ {upload.validationErrors.length} validation {upload.validationErrors.length === 1 ? 'error' : 'errors'} found
                         </span>
                         <button
-                            className={cardStyles.viewErrorsButton}
+                            className={styles.viewErrorsButton}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onViewValidationErrors(upload.uploadId);
@@ -271,9 +272,16 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                                         e.stopPropagation();
                                         onSelectUpload(upload.uploadId);
                                     }}
-                                    disabled={isLoading}
+                                    disabled={isLoadingPreview || isLoading}
                                 >
-                                    {isLoading ? '⏳' : '📋 VIEW SUMMARY'}
+                                    {isLoadingPreview ? (
+                                        <>
+                                            <span className={styles.buttonSpinner} />
+                                            Loading...
+                                        </>
+                                    ) : (
+                                        '📋 VIEW SUMMARY'
+                                    )}
                                 </button>
                                 <button
                                     className={styles.addButton}
@@ -281,7 +289,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                                         e.stopPropagation();
                                         onFinalizeUpload(upload.uploadId);
                                     }}
-                                    disabled={isLoading}
+                                    disabled={isLoading || isLoadingPreview}
                                 >
                                     {isLoading ? '⏳ ADDING...' : '📚 ADD TO LIBRARY'}
                                 </button>

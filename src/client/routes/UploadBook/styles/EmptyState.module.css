@@ -1,0 +1,31 @@
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 80px 32px;
+    margin: 40px 0;
+    background: linear-gradient(135deg, 
+        rgba(0, 122, 255, 0.03) 0%, 
+        rgba(88, 86, 214, 0.02) 100%);
+    border-radius: 24px;
+    border: 2px dashed var(--color-separator);
+}
+
+.emptyStateIcon {
+    font-size: 80px;
+    margin-bottom: 24px;
+    opacity: 0.5;
+}
+
+.emptyStateTitle {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-label);
+    margin-bottom: 12px;
+}
+
+.emptyStateText {
+    font-size: 17px;
+    color: var(--color-secondary-label);
+    line-height: 1.5;
+}
+

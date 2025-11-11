@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as uploadApi from '@/apis/upload/client';
 import type { ParserMetadata } from '@/apis/upload/types';
-import styles from '../UploadBook.module.css';
+import styles from '../styles';
 
 interface BookPreviewDialogProps {
     uploadId: string;

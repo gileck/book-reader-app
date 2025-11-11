@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../UploadBook.module.css';
+import styles from '../styles';
 
 export type ConfirmDialogType = 'stop' | 'delete';
 

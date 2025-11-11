@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useRouter } from '../../router';
 import { useAuth } from '../../context/AuthContext';
-import styles from './UploadBook.module.css';
+import styles from './styles';
 
 // Hooks
 import { useUploadManager } from './hooks/useUploadManager';
@@ -37,6 +37,7 @@ export const UploadBook = () => {
     const [showUploadForm, setShowUploadForm] = useState(false);
     const [confirmDialog, setConfirmDialog] = useState<{ type: ConfirmDialogType; uploadId: string } | null>(null);
     const [showValidationErrorsFor, setShowValidationErrorsFor] = useState<string | null>(null);
+    const [loadingPreviewFor, setLoadingPreviewFor] = useState<string | null>(null);
 
     // Get selected upload
     const selectedUpload = uploadManager.uploads.find(u => u.uploadId === selectedUploadId);
@@ -223,6 +224,7 @@ export const UploadBook = () => {
                     uploads={uploadManager.uploads}
                     selectedId={selectedUploadId}
                     loadingActions={uploadManager.loadingActions}
+                    loadingPreviewFor={loadingPreviewFor}
                     onSelectUpload={setSelectedUploadId}
                     onViewValidationErrors={setShowValidationErrorsFor}
                     onFinalizeUpload={handleFinalizeUpload}
@@ -299,8 +301,16 @@ export const UploadBook = () => {
                 <BookPreviewDialog
                     uploadId={selectedUpload.uploadId}
                     onFinalize={() => handleFinalizeUpload(selectedUpload.uploadId)}
-                    onCancel={() => setSelectedUploadId(null)}
+                    onCancel={() => {
+                        setSelectedUploadId(null);
+                        setLoadingPreviewFor(null);
+                    }}
                     onLoadingChange={(loading) => {
+                        if (loading) {
+                            setLoadingPreviewFor(selectedUpload.uploadId);
+                        } else {
+                            setLoadingPreviewFor(null);
+                        }
                         uploadManager.actions.setLoadingAction(selectedUpload.uploadId, loading);
                     }}
                 />

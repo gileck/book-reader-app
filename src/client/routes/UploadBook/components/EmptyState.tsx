@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../UploadBook.module.css';
+import styles from '../styles';
 
 /**
  * Empty state component shown when no uploads exist
