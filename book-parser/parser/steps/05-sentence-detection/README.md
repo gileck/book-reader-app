@@ -79,6 +79,10 @@ Step 5 converts paragraph chunks from Step 4 into individual sentences with para
 - **Content**: Clean text, no newlines, starts with capital letter or valid symbol
 - **Word Count**: ≥ 1 word (no strict min/max in Phase 1)
 - **Sentence Count**: ≥1
+- **Sentence Terminators**: Chunks should end with proper punctuation (., !, ?)
+  - **Exception**: Chunks ending with bullet list items (e.g., "• Medicine ball") don't require a period
+  - **Exception**: List introductions ending with colons
+  - **Exception**: Headers, image markers, and other special content types
 - **Paragraph Index**: Positive integer (1, 2, 3, etc.)
 - **Links**: All link text must exist in chunk content
 

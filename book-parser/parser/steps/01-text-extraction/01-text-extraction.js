@@ -166,6 +166,42 @@ async function execute(pipelineState, config) {
         const wordCount = rawText.split(/\s+/).filter(word => word.length > 0).length;
         const literalNewlineCount = (rawText.match(/\\n/g) || []).length;
 
+        // Calculate pages with actual content (excluding page markers)
+        const pagesWithContent = pageInfo.filter(page => page.characterCount > 50).length;
+        const emptyPagePercentage = ((totalPages - pagesWithContent) / totalPages * 100).toFixed(1);
+        
+        // Early warning for corrupted PDFs - check if most pages are empty
+        if (pagesWithContent < totalPages * 0.1) { // Less than 10% of pages have content
+            const warningMsg = `
+⚠️  WARNING: PDF appears to be corrupted or unreadable!
+
+   Extraction Results:
+   - Total pages: ${totalPages}
+   - Pages with content: ${pagesWithContent} (${(pagesWithContent / totalPages * 100).toFixed(1)}%)
+   - Empty pages: ${totalPages - pagesWithContent} (${emptyPagePercentage}%)
+   - Average words per page: ${Math.round(wordCount / pageCount)}
+   
+   This PDF has ${emptyPagePercentage}% empty pages, which strongly suggests:
+   
+   1. 🔴 PDF is corrupted (compression stream errors)
+   2. 🔴 PDF contains only scanned images (requires OCR)
+   3. 🔴 PDF uses non-standard encoding that cannot be extracted
+   
+   Recommended Actions:
+   - Try opening the PDF in a viewer and check if you can select/copy text
+   - If text is selectable, the PDF may be corrupted - try re-downloading or repairing it
+   - If text is NOT selectable, the PDF contains only images and requires OCR processing
+   - Try converting the PDF using Adobe Acrobat or another tool and re-saving it
+`;
+            console.error(warningMsg);
+            throw new Error(`PDF extraction failed: ${emptyPagePercentage}% of pages are empty. The PDF appears to be corrupted or contains only images. Please check the PDF file and try again with a valid, text-based PDF.`);
+        }
+        
+        // Warning for PDFs with significant empty pages
+        if (pagesWithContent < totalPages * 0.5) { // Less than 50% of pages have content
+            console.warn(`⚠️  Warning: ${emptyPagePercentage}% of pages appear to be empty. This may indicate PDF quality issues.`);
+        }
+
         // Generate text samples for validation
         const textSample = rawText.substring(0, 500);
         const textEnd = rawText.substring(Math.max(0, rawText.length - 500));
@@ -180,7 +216,14 @@ async function execute(pipelineState, config) {
                 literalNewlineCount,
                 extractionTime,
                 extractionMethod: 'page_by_page_fixed',
-                totalTextContentItems: rawTextContentItems.reduce((sum, page) => sum + page.totalItems, 0)
+                totalTextContentItems: rawTextContentItems.reduce((sum, page) => sum + page.totalItems, 0),
+                pagesWithContent,
+                emptyPages: totalPages - pagesWithContent,
+                emptyPagePercentage: parseFloat(emptyPagePercentage),
+                extractionQuality: pagesWithContent > totalPages * 0.9 ? 'excellent' : 
+                                   pagesWithContent > totalPages * 0.7 ? 'good' : 
+                                   pagesWithContent > totalPages * 0.5 ? 'fair' : 
+                                   pagesWithContent > totalPages * 0.1 ? 'poor' : 'failed'
             },
             textValidation: {
                 hasContent: rawText.length > 0,
@@ -188,7 +231,13 @@ async function execute(pipelineState, config) {
                 endsWithText: textEnd.length > 0,
                 containsLiteralNewlines: literalNewlineCount > 0,
                 averageWordsPerPage: Math.round(wordCount / pageCount),
-                hasPageMarkers: rawText.includes('--- PAGE')
+                hasPageMarkers: rawText.includes('--- PAGE'),
+                qualityCheck: {
+                    pagesWithContent,
+                    emptyPages: totalPages - pagesWithContent,
+                    contentPercentage: (pagesWithContent / totalPages * 100).toFixed(1),
+                    isHealthy: pagesWithContent > totalPages * 0.5
+                }
             },
             textSamples: {
                 beginning: textSample + (rawText.length > 500 ? '...' : ''),
@@ -260,16 +309,44 @@ async function execute(pipelineState, config) {
 
 /**
  * Extract clean text from a page with improved spacing logic
- * @param {Object} textContent - Text content from pdfjs-dist
+ * 
+ * CRITICAL FEATURES:
+ * 1. Position-Based Sorting: Sorts text items by visual position (Y-coordinate desc, then X-coordinate asc)
+ *    to ensure correct reading order, preventing issues where bullets appear out of order.
+ * 2. Bullet Merging: Automatically merges standalone bullets/numbered markers with their list items
+ *    after extraction to fix PDF structure issues.
+ * 3. Page Number Removal: Removes standalone page numbers from the beginning of page content.
+ * 
+ * @param {Object} textContent - Text content from pdfjs-dist with items array
  * @param {number} pageNum - Page number (0-based)
- * @returns {string} - Clean page text
+ * @returns {string} - Clean page text with bullets properly merged and page numbers removed
  */
 function extractCleanPageText(textContent, pageNum) {
     if (!textContent || !textContent.items || textContent.items.length === 0) {
         return '';
     }
 
-    const items = textContent.items;
+    // CRITICAL FIX: Sort items by their visual position (Y-coordinate, then X-coordinate)
+    // This ensures bullets and text appear in reading order, not PDF file structure order
+    const items = textContent.items.slice(); // Clone to avoid modifying original
+    items.sort((a, b) => {
+        // Get Y-coordinate from transform array [scaleX, skewY, skewX, scaleY, translateX, translateY]
+        // Higher Y values = lower on page, so we reverse the sort
+        const aY = a.transform ? a.transform[5] : 0;
+        const bY = b.transform ? b.transform[5] : 0;
+        const aX = a.transform ? a.transform[4] : 0;
+        const bX = b.transform ? b.transform[4] : 0;
+        
+        // Sort by Y (vertical position) first - with tolerance for same line
+        const yTolerance = 2; // Allow 2 units of vertical variance for same line
+        if (Math.abs(aY - bY) > yTolerance) {
+            return bY - aY; // Reverse sort: higher Y = lower on page = later in text
+        }
+        
+        // If on same line (within tolerance), sort by X (horizontal position)
+        return aX - bX;
+    });
+
     let pageText = '';
 
     for (let i = 0; i < items.length; i++) {
@@ -299,15 +376,107 @@ function extractCleanPageText(textContent, pageNum) {
         if (item.hasEOL) {
             pageText += '\n';
         } else {
-            // Add space after each text item unless it's the last item or already ends with space
+            // CRITICAL: Smart spacing detection using PDF positioning data
+            // 
+            // PDF.js gives us the physical position and width of each text item.
+            // We can calculate if items are touching (ligatures) or separated (normal words).
+            //
+            // Why this matters:
+            // - Professional PDFs use font ligatures (fi, fl, ff, ffi, ffl) for better typography
+            // - PDF.js extracts ligatures as SEPARATE items but they're positioned with NO gap
+            // - Example: "find" → ["fi", "nd"] with 0 gap between them
+            // - We should NOT add space between items that are physically touching!
+            //
+            // Algorithm:
+            // 1. Calculate where current item ends: position + width
+            // 2. Get where next item starts: next position
+            // 3. Calculate gap = nextStart - currentEnd
+            // 4. If gap is tiny (< 1 unit), items are touching → NO space
+            // 5. If gap is larger, items are separated → ADD space
+            
             if (i < items.length - 1 && !itemText.endsWith(' ')) {
-                pageText += ' ';
+                const nextItem = items[i + 1];
+                
+                // Extract position data from transform matrix [scaleX, skewY, skewX, scaleY, translateX, translateY]
+                // Index 4 = translateX (horizontal position)
+                const currentX = item.transform[4];           // Where current item starts
+                const currentWidth = item.width;              // Width of current item
+                const currentEndX = currentX + currentWidth;  // Where current item ends
+                
+                const nextX = nextItem.transform[4];          // Where next item starts
+                
+                // Calculate the physical gap between items
+                const gap = nextX - currentEndX;
+                
+                // Threshold: If gap is > 1.0 units, items are separated and need a space
+                // If gap is ≤ 1.0 units, items are touching (ligature) and should join directly
+                // 
+                // Examples from real PDFs:
+                // - "fi" + "nd" (ligature): gap = 0.00 → NO space → "find" ✅
+                // - "hello" + "world": gap = 4.50 → ADD space → "hello world" ✅
+                const SPACE_THRESHOLD = 1.0;
+                
+                if (gap > SPACE_THRESHOLD) {
+                    pageText += ' ';
+                }
+                // If gap ≤ threshold, don't add space (items are touching/ligature)
             }
         }
     }
 
     // Clean the page text by removing standalone page numbers at the beginning
-    return removeStandalonePageNumber(pageText.trim(), pageNum);
+    let cleanedText = removeStandalonePageNumber(pageText.trim(), pageNum);
+    
+    // CRITICAL FIX: Merge standalone bullets with their text on the next line
+    // Pattern: A line with only a bullet (•, -, *, etc.) followed by text on next line
+    cleanedText = mergeBulletsWithText(cleanedText);
+    
+    return cleanedText;
+}
+
+/**
+ * Merge standalone bullet points with their text on the next line
+ * 
+ * Fixes common PDF extraction issue where bullets appear on separate lines from their text:
+ * - Input:  "•\nYoga mat\n•\nBench"
+ * - Output: "• Yoga mat\n• Bench"
+ * 
+ * Handles both bullet markers (•, ●, ■, -, *, +) and numbered list markers (1., 2.), etc.)
+ * 
+ * This is critical for proper list parsing in downstream steps, preventing validation errors
+ * and ensuring list items are correctly identified and formatted.
+ * 
+ * @param {string} text - Page text with potential standalone bullets
+ * @returns {string} - Text with bullets merged to their list items
+ */
+function mergeBulletsWithText(text) {
+    if (!text) return text;
+    
+    const lines = text.split('\n');
+    const result = [];
+    let i = 0;
+    
+    while (i < lines.length) {
+        const currentLine = lines[i].trim();
+        const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : '';
+        
+        // Check if current line is ONLY a bullet/list marker
+        const isBulletOnly = /^[•●■▪▫◦⦿⦾\-\*\+]\s*$/.test(currentLine);
+        
+        // Check if current line is a numbered list marker (e.g., "1.", "2)", etc.)
+        const isNumberedMarkerOnly = /^\d+[\.\)]\s*$/.test(currentLine);
+        
+        if ((isBulletOnly || isNumberedMarkerOnly) && nextLine && nextLine.length > 0) {
+            // Merge bullet with next line's text
+            result.push(currentLine + ' ' + nextLine);
+            i += 2; // Skip both current and next line
+        } else {
+            result.push(lines[i]);
+            i++;
+        }
+    }
+    
+    return result.join('\n');
 }
 
 /**

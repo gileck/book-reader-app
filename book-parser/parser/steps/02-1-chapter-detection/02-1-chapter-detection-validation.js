@@ -82,14 +82,51 @@ function validateChapterSequence(potentialChapters) {
 /**
  * Validate chapter detection results
  * @param {Object} output - Output from execute function
+ * @param {Object} pipelineState - Current pipeline state (to check extraction quality)
  * @returns {boolean} - True if validation passes
  */
-function validate(output) {
+function validate(output, pipelineState) {
     const chapters = output.chapterMetadata;
     
     // 1. chapters array must have more than 1 chapter
     if (!chapters || chapters.length <= 1) {
-        console.error(`❌ Chapter validation failed: Chapters array must have more than 1 chapter. Found: ${chapters?.length || 0}`);
+        // Check if this is likely due to poor text extraction quality
+        const extractionMetadata = pipelineState?.metadata?.textExtraction;
+        const hasQualityIssues = extractionMetadata && (
+            extractionMetadata.averageWordsPerPage < 20 || 
+            extractionMetadata.extractionQuality === 'poor' ||
+            extractionMetadata.extractionQuality === 'failed'
+        );
+        
+        if (hasQualityIssues) {
+            const errorMsg = `
+❌ Chapter detection failed: No chapters found (${chapters?.length || 0} chapters detected)
+
+   This appears to be caused by poor text extraction quality:
+   - Average words per page: ${extractionMetadata.averageWordsPerPage}
+   - Pages with content: ${extractionMetadata.pagesWithContent || 'unknown'}/${extractionMetadata.pageCount || 'unknown'}
+   - Extraction quality: ${extractionMetadata.extractionQuality || 'unknown'}
+   ${extractionMetadata.emptyPagePercentage ? `- Empty pages: ${extractionMetadata.emptyPagePercentage}%` : ''}
+   
+   📋 Likely causes:
+   
+   1. 🔴 PDF is corrupted (compression stream errors)
+      → Try re-downloading the PDF or repairing it with Adobe Acrobat
+      
+   2. 🔴 PDF contains only scanned images (no text layer)
+      → This requires OCR processing to extract text
+      
+   3. 🔴 PDF uses non-standard encoding
+      → Try converting/re-saving the PDF in a different tool
+      
+   💡 Quick check: Open the PDF and try to select/copy text
+      - If you CAN select text → PDF is likely corrupted
+      - If you CANNOT select text → PDF needs OCR processing
+`;
+            console.error(errorMsg);
+        } else {
+            console.error(`❌ Chapter validation failed: Chapters array must have more than 1 chapter. Found: ${chapters?.length || 0}`);
+        }
         return false;
     }
 

@@ -42,9 +42,17 @@ The step uses **pdfjs-dist** library for PDF processing with a custom page-by-pa
 
 - **Text File Caching**: Automatically saves extracted text to a `.txt` file (same name as PDF) and uses cached version in subsequent runs
 - **Force Reparse Option**: Set `config.FORCE_REPARSE = true` to force re-extraction from PDF even if `.txt` file exists
-- **Simplified Spacing Logic**: Adds spaces after each text item unless it already ends with space/newline
+- **Position-Based Text Ordering**: Sorts text items by their visual position (Y-coordinate then X-coordinate) to ensure correct reading order, preventing issues where bullets appear out of order from their list items
+- **Bullet Point Merging**: Automatically detects standalone bullets or numbered markers on separate lines and merges them with their corresponding text, fixing PDF extraction issues where bullets are separated from list items (e.g., `•\nYoga mat` → `• Yoga mat`)
+- **🎯 CRITICAL: Position-Based Smart Spacing**: Uses PDF positioning data (X-coordinates and widths) to intelligently determine spacing between text items:
+  - **Calculates physical gaps** between consecutive text items using their position and width from PDF.js transform data
+  - **Ligature Detection**: Automatically handles font ligatures (fi, fl, ff, ffi, ffl) without pattern matching by detecting when items are physically touching (gap ≤ 1.0 units)
+  - **Word Preservation**: Only adds spaces between items that are physically separated (gap > 1.0 units)
+  - **Universal Solution**: Works for ANY ligature or typography, not just specific patterns
+  - **Examples**: 
+    - `"fi" + "nd"` with gap=0.00 → `"find"` (no space added) ✅
+    - `"hello" + "world"` with gap=4.50 → `"hello world"` (space added) ✅
 - **Paragraph Break Preservation**: Treats empty items with `hasEOL: true` as explicit blank lines, preserving paragraph boundaries and list breaks
-- **Word Boundary Preservation**: Prevents common PDF extraction issues like "forTransformer" → "for Transformer"
 - **Standalone Page Number Removal**: Removes standalone page numbers from the beginning of each page
 - **Complete Content Coverage**: Ensures no sections or chapters are missing
 - **Robust Error Handling**: Graceful fallback mechanisms for different PDF structures and missing dependencies
@@ -58,9 +66,27 @@ The step uses **pdfjs-dist** library for PDF processing with a custom page-by-pa
 2. Load PDF document from configured path
 3. For each page:
    - Extract text items array
+   - **CRITICAL: Sort items by visual position** (Y-coordinate desc, then X-coordinate asc)
+     * Ensures correct reading order, preventing bullets from appearing out of sequence
+     * Handles PDFs where file structure order differs from visual layout
    - For each item:
      - If `item.str` is empty (`""`) and `item.hasEOL === true`, append a newline to preserve a blank line (paragraph break)
-     - Otherwise, append the text and add either a newline (when `hasEOL` is true) or a space (for flow)
+     - Otherwise, append the text
+     - If `item.hasEOL === true`, append newline
+     - If `item.hasEOL === false`, determine spacing:
+       * **🎯 POSITION-BASED SPACING (CRITICAL)**:
+         1. Extract position data from PDF.js transform matrix:
+            - currentX = item.transform[4] (X position)
+            - currentWidth = item.width
+            - currentEndX = currentX + currentWidth (where item ends)
+         2. Get next item's position: nextX = nextItem.transform[4]
+         3. Calculate physical gap: gap = nextX - currentEndX
+         4. Apply spacing threshold:
+            - If gap > 1.0 units → items are separated → ADD SPACE
+            - If gap ≤ 1.0 units → items are touching (ligature) → NO SPACE
+         5. This automatically handles ALL ligatures (fi, fl, ff, ffi, ffl, etc.)
+       * Example: "fi" (ends at 277.06) + "nd" (starts at 277.06) = gap 0.00 → "find" ✅
+   - **Merge standalone bullets with text**: Detect lines containing only bullet markers (•, -, *, numbered) and merge with the following line
    - Remove standalone page numbers from the beginning of each page
    - Accumulate page text with proper boundaries
 4. Generate extraction metadata

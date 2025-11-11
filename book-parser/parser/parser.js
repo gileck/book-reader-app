@@ -417,8 +417,8 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                 // Don't print to console yet - we'll decide later based on skip logic
                             };
 
-                            // Run validation
-                            let isValid = stepModule.validate(stepResult);
+                            // Run validation (pass pipelineState for context-aware error messages)
+                            let isValid = stepModule.validate(stepResult, pipelineState);
 
                             // Restore console immediately
                             console.error = originalConsoleError;
@@ -639,7 +639,24 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                                 // Only write detailed output when NOT skipped - use filtered output
                                                 if (filteredValidationOutput.trim()) {
                                                     const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
-                                                    fs.appendFileSync(validationOutputPath, header + filteredValidationOutput + '\n');
+                                                    
+                                                    // Add helpful footer with example
+                                                    const footer = `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                                                        `💡 To skip these validation errors, create a 'skipped-validation-errors.json' file\n` +
+                                                        `   in the same directory as your PDF with the following content:\n\n` +
+                                                        `[\n` +
+                                                        `    {\n` +
+                                                        `        "step": "${stepName}",      // The validation step (e.g., "step-4", "step-5")\n` +
+                                                        `        "chunkId": "1_42"    // The chunk ID from the error message (e.g., "1_42", "5_21")\n` +
+                                                        `    },\n` +
+                                                        `    {\n` +
+                                                        `        "step": "${stepName}",\n` +
+                                                        `        "chunkId": "3_15"\n` +
+                                                        `    }\n` +
+                                                        `]\n\n` +
+                                                        `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+                                                    
+                                                    fs.appendFileSync(validationOutputPath, header + filteredValidationOutput + footer);
                                                 }
                                                 
                                                 // Check if we have callback handler for remaining errors
@@ -704,7 +721,24 @@ async function parseBook(pdfPath, outputPath, options = {}) {
                                             // Only write details when there are errors and no skip
                                             if (validationOutput.trim()) {
                                                 const header = `\n ==== ${stepName} validation output @${new Date().toISOString()} ====\n`;
-                                                fs.appendFileSync(validationOutputPath, header + validationOutput + '\n');
+                                                
+                                                // Add helpful footer with example
+                                                const footer = `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                                                    `💡 To skip these validation errors, create a 'skipped-validation-errors.json' file\n` +
+                                                    `   in the same directory as your PDF with the following content:\n\n` +
+                                                    `[\n` +
+                                                    `    {\n` +
+                                                    `        "step": "${stepName}",      // The validation step (e.g., "step-4", "step-5")\n` +
+                                                    `        "chunkId": "1_42"    // The chunk ID from the error message (e.g., "1_42", "5_21")\n` +
+                                                    `    },\n` +
+                                                    `    {\n` +
+                                                    `        "step": "${stepName}",\n` +
+                                                    `        "chunkId": "3_15"\n` +
+                                                    `    }\n` +
+                                                    `]\n\n` +
+                                                    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+                                                
+                                                fs.appendFileSync(validationOutputPath, header + validationOutput + footer);
                                             }
                                         }
                                     }

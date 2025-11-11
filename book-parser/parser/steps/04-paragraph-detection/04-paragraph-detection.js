@@ -361,12 +361,25 @@ function mergeLowercaseStartParagraphs(chunks) {
             const text = (curr.content || '').trim();
             const firstAlpha = (text.replace(/^[^A-Za-z]+/, '')[0] || '');
             const startsLower = firstAlpha && firstAlpha === firstAlpha.toLowerCase() && firstAlpha !== firstAlpha.toUpperCase();
-            if (startsLower) {
-                const prev = merged[merged.length - 1];
-                const newContent = (prev.content || '').replace(/\s+$/, '') + ' ' + (curr.content || '').replace(/^\s+/, '');
+            
+            // Also check if previous paragraph ends with single capital letter + period (genus abbreviation)
+            // and current paragraph starts with lowercase (species name)
+            const prev = merged[merged.length - 1];
+            const prevContent = (prev.content || '').trim();
+            // Remove trailing quotes/brackets to check for single letter + period pattern
+            const prevSanitized = prevContent.replace(/["'"')}\]]+$/g, '');
+            const endsWithSingleLetterPeriod = /\b[A-Z]\.$/.test(prevSanitized);
+            
+            // Merge if:
+            // 1. Current paragraph starts with lowercase letter, OR
+            // 2. Previous ends with single capital letter + period AND current starts with lowercase
+            if (startsLower || (endsWithSingleLetterPeriod && startsLower)) {
+                const newContent = prevContent.replace(/\s+$/, '') + ' ' + text.replace(/^\s+/, '');
                 merged[merged.length - 1] = {
                     ...prev,
-                    content: newContent
+                    content: newContent,
+                    wordCount: sharedGetWordCount(newContent),
+                    sentenceCount: sharedGetSentenceCount(newContent)
                 };
                 continue;
             }
@@ -572,6 +585,17 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                 const nextFirstAlpha = nextLineTrim.replace(/^[^A-Za-z]+/, '')[0] || '';
                 const nextStartsLower = nextContentIndex !== -1 && nextFirstAlpha && nextFirstAlpha === nextFirstAlpha.toLowerCase() && nextFirstAlpha !== nextFirstAlpha.toUpperCase();
 
+                const lineTrim = line.trim();
+                
+                // Special case: line ends with numbered list item like "1.", "2.", "3.", "4."
+                // Remove trailing quotes/brackets first
+                const lineSanitized = lineTrim.replace(/["'"')}\]]+$/g, '');
+                const endsWithNumberedListItem = /\b\d+\.$/.test(lineSanitized);
+                if (endsWithNumberedListItem && nextStartsLower) {
+                    // This is likely a numbered list, don't split
+                    continue;
+                }
+
                 // Special case: if current line ends with initials and next line starts with a capital letter
                 // that could be continuing the same sentence (like another name), don't split
                 if (nextContentIndex !== -1 && endsWithInitials(line) &&
@@ -581,9 +605,8 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
 
                 // If line ends with an abbreviation/initials and the next line starts lowercase,
                 // keep it in the same paragraph (common book layout wrap)
-                const lineTrim = line.trim();
                 const endIsSingleInitial = /\b[A-Z]\.$/.test(lineTrim);
-                const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'”’)]{1})?$/.test(lineTrim);
+                const endIsMultiInitials = /(?:\b(?:[A-Z]\.)){2,}(?:["'"')]{1})?$/.test(lineTrim);
                 const endIsAbbreviation = endsWithAbbreviation(lineTrim);
                 if ((endIsSingleInitial || endIsMultiInitials || endIsAbbreviation) && nextStartsLower) {
                     // Continue building the paragraph instead of splitting
@@ -643,9 +666,14 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
 
                 const nextIsHeader = nextContentIndex !== -1 && isHeader(lines[nextContentIndex], nextContentIndex, lines);
                 const emptyLineButContinuation = hasEmptyLineBetween && nextStartsLower && (endIsSingleInitial || endIsMultiInitials || endIsAbbreviation || endsWithEllipsis);
+                
+                // Additional check: if previous line doesn't end with sentence terminator AND next starts lowercase,
+                // this might be table data or list items - don't split even with empty line
+                const previousLineNoTerminator = !sharedEndsWithSentenceTerminator(lineTrim);
+                const tablelikeContinuation = hasEmptyLineBetween && previousLineNoTerminator && nextStartsLower;
 
                 if (nextContentIndex === -1 || // End of page
-                    (hasEmptyLineBetween && !emptyLineButContinuation) || // Empty line(s) but not a continuation case
+                    (hasEmptyLineBetween && !emptyLineButContinuation && !tablelikeContinuation) || // Empty line(s) but not a continuation case
                     nextIsHeader) { // Next line is header
 
                     // End current paragraph

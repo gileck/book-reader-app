@@ -419,11 +419,21 @@ function cleanPageContentWithoutPageNumbers(content, pageNumber) {
 
 /**
  * Determine if a line should be removed during cleaning
- * @param {string} line - Line to check
+ * 
+ * Removes page numbers, chapter numbers, and lowercase chapter titles from headers/footers
+ * while preserving actual content.
+ * 
+ * CRITICAL SAFETY FEATURES:
+ * - Lines ending with colons (:) are NEVER removed - they introduce lists or content sections
+ *   Example: "fi nd a setup similar to this:" is preserved, not removed as a chapter title
+ * - Multiple content word checks prevent accidental removal of actual content
+ * - Position-based (first/last 3 lines) to avoid removing content in page body
+ * 
+ * @param {string} line - Line to check (trimmed)
  * @param {number} pageNumber - Current page number
- * @param {number} lineIndex - Position in page
+ * @param {number} lineIndex - Position in page (0-based)
  * @param {number} totalLines - Total lines in page
- * @returns {boolean} - True if line should be removed
+ * @returns {boolean} - True if line should be removed (page number, header, footer)
  */
 function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
     // Remove empty lines
@@ -468,6 +478,7 @@ function shouldRemoveLine(line, pageNumber, lineIndex, totalLines) {
                 trimmed.length > 3 && trimmed.length < 50 && 
                 /^[a-z]/.test(trimmed) && // starts with lowercase
                 (trimmed.match(/[.!?]/g) || []).length === 0 && // no sentence-ending punctuation
+                !trimmed.endsWith(':') && // CRITICAL: Don't remove lines ending with colons (they introduce lists/content)
                 !trimmed.endsWith(' the') && // doesn't end mid-sentence
                 !trimmed.endsWith(' a') &&
                 !trimmed.endsWith(' an') &&

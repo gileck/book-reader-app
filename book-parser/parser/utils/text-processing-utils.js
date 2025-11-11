@@ -26,12 +26,28 @@ const COMMON_ABBREVIATIONS = [
     // Time and dates
     'Jan.', 'Feb.', 'Mar.', 'Apr.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Sept.', 'Oct.', 'Nov.', 'Dec.',
     'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.',
+    
+    // Time of day (case-sensitive variations)
+    'a.m.', 'A.M.', 'p.m.', 'P.M.',
 
     // Common Latin and other abbreviations
     'vs.', 'etc.', 'i.e.', 'e.g.', 'cf.', 'et al.', 'ibid.',
 
     // Organizational abbreviations (including the missing P.U.)
-    'P.U.', 'A.I.', 'I.T.', 'R.D.', 'Q.A.', 'H.R.'
+    'P.U.', 'A.I.', 'I.T.', 'R.D.', 'Q.A.', 'H.R.',
+    
+    // Common scientific genus abbreviations (genus + species)
+    'C. difficile', 'C. diff', 'C. di', 'L. reuteri', 'L. acidophilus', 'L. plantarum',
+    'E. coli', 'S. aureus', 'B. subtilis', 'P. aeruginosa',
+    // Single-letter genus abbreviations (should not be sentence endings when followed by lowercase)
+    'C.', 'L.', 'E.', 'S.', 'B.', 'P.', 'A.', 'M.', 'T.', 'H.',
+    
+    // Common scientific compound names with single letters
+    'vitamin A.', 'vitamin B.', 'vitamin C.', 'vitamin D.', 'vitamin E.', 'vitamin K.',
+    'urolithin A.', 'urolithin B.', 'urolithin C.', 'urolithin D.',
+    'type A.', 'type B.', 'type C.', 'type D.',
+    'hepatitis A.', 'hepatitis B.', 'hepatitis C.',
+    'plan A.', 'plan B.'
 ];
 
 /**
@@ -192,7 +208,67 @@ function endsWithInitials(text) {
     if (!text) return false;
     const trimmed = text.trim();
     // Allow trailing quotes/brackets when checking ending
-    const sanitized = trimmed.replace(/["'”’)}\]]+$/g, '');
+    const sanitized = trimmed.replace(/["'"')}\]]+$/g, '');
+
+    // Common measurement units that look like initials but aren't
+    // These should NOT be flagged as initials
+    const MEASUREMENT_UNITS = [
+        // Concentration and volume units
+        /\b\d+\.?\d*\s*mg\/L\.?$/i,      // milligrams per liter
+        /\b\d+\.?\d*\s*mcg\/L\.?$/i,     // micrograms per liter
+        /\b\d+\.?\d*\s*μg\/L\.?$/i,      // micrograms per liter (Greek mu)
+        /\b\d+\.?\d*\s*ng\/L\.?$/i,      // nanograms per liter
+        /\b\d+\.?\d*\s*U\/L\.?$/i,       // units per liter
+        /\b\d+\.?\d*\s*IU\/L\.?$/i,      // international units per liter
+        /\b\d+\.?\d*\s*nmol\/L\.?$/i,    // nanomoles per liter
+        /\b\d+\.?\d*\s*pmol\/L\.?$/i,    // picomoles per liter
+        /\b\d+\.?\d*\s*mmol\/L\.?$/i,    // millimoles per liter
+        /\b\d+\.?\d*\s*g\/L\.?$/i,       // grams per liter
+        /\b\d+\.?\d*\s*mL\.?$/i,         // milliliters
+        /\b\d+\.?\d*\s*dL\.?$/i,         // deciliters
+        /\b\d+\.?\d*\s*μL\.?$/i,         // microliters
+        // Size and distance units
+        /\b\d+\.?\d*\s*nm\.?$/i,         // nanometers
+        /\b\d+\.?\d*\s*μm\.?$/i,         // micrometers
+        /\b\d+\.?\d*\s*mm\.?$/i,         // millimeters
+        /\b\d+\.?\d*\s*cm\.?$/i,         // centimeters
+        /\b\d+\.?\d*\s*m\.?$/i,          // meters (only if preceded by number)
+        // Other common units
+        /\b\d+\.?\d*\s*mg\.?$/i,         // milligrams
+        /\b\d+\.?\d*\s*mcg\.?$/i,        // micrograms
+        /\b\d+\.?\d*\s*g\.?$/i,          // grams
+        /\b\d+\.?\d*\s*kg\.?$/i,         // kilograms
+    ];
+    
+    // Check if text ends with a measurement unit
+    if (MEASUREMENT_UNITS.some(pattern => pattern.test(sanitized))) {
+        return false; // Not initials, it's a measurement unit
+    }
+    
+    // Common scientific compound names that end with single letter + period
+    // These should NOT be flagged as initials
+    const SCIENTIFIC_COMPOUNDS = [
+        /\burolithin\s+[A-Z]\.?$/i,       // urolithin A, urolithin B, etc.
+        /\bvitamin\s+[A-Z]\.?$/i,         // vitamin A, vitamin B, etc.
+        /\btype\s+[A-Z]\.?$/i,            // type A, type B, etc.
+        /\bhepatitis\s+[A-Z]\.?$/i,       // hepatitis A, hepatitis B, etc.
+        /\bplan\s+[A-Z]\.?$/i,            // plan A, plan B
+        /\bpoint\s+[A-Z]\.?$/i,           // point A, point B
+        /\bappendix\s+[A-Z]\.?$/i,        // appendix A, appendix B
+        /\bfigure\s+[A-Z]\.?$/i,          // figure A, figure B
+        /\bsection\s+[A-Z]\.?$/i,         // section A, section B
+        /\bchapter\s+[A-Z]\.?$/i,         // chapter A, chapter B
+        /\btable\s+[A-Z]\.?$/i,           // table A, table B
+        /\bcolumn\s+[A-Z]\.?$/i,          // column A, column B
+        /\boption\s+[A-Z]\.?$/i,          // option A, option B
+        // Common abbreviations in biology/medicine
+        /\b(?:free|total|bound)\s+[A-Z]\.?$/i,  // free T, total T, bound T (testosterone, etc.)
+    ];
+    
+    // Check if text ends with a scientific compound name
+    if (SCIENTIFIC_COMPOUNDS.some(pattern => pattern.test(sanitized))) {
+        return false; // Not initials, it's a scientific compound name
+    }
 
     // Single initial like "J."
     if (/\b[A-Z]\.$/.test(sanitized)) return true;

@@ -51,6 +51,10 @@ The step uses page boundary detection, content cleaning, and intelligent chapter
 #### 2. Page Content Cleaning
 - **Page Number Removal**: Removes page numbers from headers and footers
 - **Header/Footer Removal**: Removes running headers (e.g., book title, author name)
+- **Lowercase Chapter Title Detection**: Intelligently removes lowercase chapter titles while preserving content
+  - **Critical Safety**: Lines ending with colons (`:`) are **never** removed, as they introduce lists or content sections (e.g., "fi nd a setup similar to this:")
+  - Only removes short lowercase lines (< 50 chars) that clearly look like titles, not content
+  - Includes multiple safety checks to prevent content loss
 - **Automatic Capitalization**: Capitalizes first letter after page number removal
 - **Spaced Number Handling**: Detects and removes spaced page numbers (e.g., "1 1" for 11)
 
@@ -241,6 +245,10 @@ const isValid = pageExtraction.validate(result);
 - **Running Headers**: Removes repeated book titles and author names
 - **Position-Based Detection**: Checks first/last 3 lines of each page
 - **Conservative Approach**: Only removes clear header/footer patterns
+- **Colon Protection**: Lines ending with colons are **never** removed as they introduce lists or content sections
+  - Example: "fi nd a setup similar to this:" is preserved, not removed as a chapter title
+  - Prevents loss of list introductions and section headers
+  - Critical for maintaining document structure and readability
 
 ### Chapter-Level Concatenation
 - **Intelligent Joining**: Analyzes sentence terminators and capitalization

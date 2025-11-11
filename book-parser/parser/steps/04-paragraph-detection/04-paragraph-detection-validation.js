@@ -221,9 +221,13 @@ function validate(output) {
                     const prevParaCtx = findPreviousParagraph(chunks, i);
                     const prevTextTrim = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim() : '';
                     const prevEndsWithAbbrev = prevTextTrim ? endsWithAbbreviation(prevTextTrim) : false;
-                    const prevEndsWithSpacedEllipsis = prevTextTrim ? (/(?:\.\s*){3,}["'”’)]?$/.test(prevTextTrim) || /\.\.\.["'”’)]?$/.test(prevTextTrim)) : false;
+                    const prevEndsWithSpacedEllipsis = prevTextTrim ? (/(?:\.\s*){3,}["'"')]?$/.test(prevTextTrim) || /\.\.\.["'"')]?$/.test(prevTextTrim)) : false;
+                    
+                    // Check if there's a header immediately before this paragraph (indicating table/list data)
+                    const prevChunk = i > 0 ? chunks[i - 1] : null;
+                    const hasHeaderBefore = prevChunk && prevChunk.type === 'header';
 
-                    if (!isValidStart && !allowedByHeuristic && !(prevEndsWithAbbrev || prevEndsWithSpacedEllipsis)) {
+                    if (!isValidStart && !allowedByHeuristic && !(prevEndsWithAbbrev || prevEndsWithSpacedEllipsis) && !hasHeaderBefore) {
                         const prevParaCtx = findPreviousParagraph(chunks, i);
                         const prevLastWords = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim().split(/\s+/).slice(-8).join(' ') : 'none';
                         const prevLastWord = prevParaCtx && prevParaCtx.content ? prevParaCtx.content.trim().split(/\s+/).slice(-1)[0] : '';
@@ -254,8 +258,12 @@ function validate(output) {
                     validationErrors.push(`Image ${fullChunkIdentifier} should have sentenceCount of 0, found: ${chunk.sentenceCount}`);
                 }
             } else if (chunk.type === 'paragraph') {
+                // Skip validation for paragraphs that only contain image markers
+                // These will be converted to actual image chunks in Step 5-1
+                const isImageOnlyParagraph = /^\s*\[\[IMG\s+[^\]]+\]\]\s*$/i.test(chunk.content);
+                
                 // Paragraph chunks should be between 80 and 300 words target (flexible 20-500 absolute) for proper book content
-                if (wordCount < 20 || wordCount > 500) {
+                if (!isImageOnlyParagraph && (wordCount < 20 || wordCount > 500)) {
                     let neighborInfo = '';
                     if (wordCount < 20) {
                         // Add information about neighboring paragraph chunks to understand why merging failed
