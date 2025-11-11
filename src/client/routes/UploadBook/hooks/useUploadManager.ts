@@ -18,6 +18,8 @@ export interface UploadItem {
     progress?: number;
     error?: string;
     validationErrors?: ValidationError[];
+    continueOnValidationError?: boolean; // Track if this upload is in continue mode
+    accumulatedErrorCount?: number; // Track total accumulated errors
 }
 
 export interface SSEEvent {
@@ -29,6 +31,9 @@ export interface SSEEvent {
     totalSteps?: number;
     progress?: number;
     errors?: ValidationError[];
+    totalAccumulatedErrors?: number; // For validation-error-accumulated events
+    totalErrors?: number; // For validation-errors-summary events
+    errorCount?: number; // For validation error events
 }
 
 /**
@@ -136,14 +141,16 @@ export const useUploadManager = (userId: string | undefined) => {
         if (uploadId && tempUploadId) {
             const now = new Date();
             const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
+            const tempUpload = uploadsRef.current.find(u => u.uploadId === tempUploadId);
             replaceUpload(tempUploadId, {
                 uploadId,
                 status: 'parsing',
                 createdAt: now,
                 expiresAt: expiresAt,
-                fileName: uploadsRef.current.find(u => u.uploadId === tempUploadId)?.fileName,
+                fileName: tempUpload?.fileName,
                 currentStep: event.message || 'Starting parser...',
-                progress: event.progress || 5
+                progress: event.progress || 5,
+                continueOnValidationError: tempUpload?.continueOnValidationError
             });
             // Return uploadId after replacement - don't process this event further
             // as we already set the initial state in replaceUpload
@@ -179,7 +186,8 @@ export const useUploadManager = (userId: string | undefined) => {
             updateUpload(uploadId, {
                 status: 'parsing',
                 currentStep: event.message,
-                progress: event.progress
+                progress: event.progress,
+                accumulatedErrorCount: event.totalAccumulatedErrors
             });
         }
 
@@ -187,8 +195,9 @@ export const useUploadManager = (userId: string | undefined) => {
         if (event.type === 'validation-errors-summary') {
             updateUpload(uploadId, {
                 status: 'awaiting-approval',
-                currentStep: 'Review All Validation Errors',
-                validationErrors: event.errors
+                currentStep: `${event.totalErrors} validation ${event.totalErrors === 1 ? 'error' : 'errors'} found`,
+                validationErrors: event.errors,
+                accumulatedErrorCount: event.totalErrors
             });
         }
         

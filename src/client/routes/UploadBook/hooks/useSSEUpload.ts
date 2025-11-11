@@ -68,7 +68,7 @@ export const useSSEUpload = () => {
         while (true) {
             const { done, value } = await streamReader.read();
             
-            console.log('📞 Stream chunk received:', { done, valueSize: value?.length });
+            // console.log('📞 Stream chunk received:', { done, valueSize: value?.length });
             
             if (done) break;
 

@@ -12,6 +12,7 @@ interface ValidationErrorDialogProps {
     onCancel: () => void;
     isFailed?: boolean; // New prop to indicate if this is a failed upload
     isLoading?: boolean; // Loading state for approve action
+    isSummary?: boolean; // Is this a summary of all accumulated errors?
 }
 
 export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
@@ -19,7 +20,8 @@ export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
     onApprove,
     onCancel,
     isFailed = false,
-    isLoading = false
+    isLoading = false,
+    isSummary = false
 }) => {
     return (
         <div className={styles.dialogOverlay}>
@@ -27,16 +29,18 @@ export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
                 <div className={styles.dialogHeader}>
                     <div className={styles.warningIcon}>{isFailed ? '❌' : '⚠️'}</div>
                     <h2 className={styles.dialogTitle}>
-                        {isFailed ? 'Parser Failed' : 'Validation Issues Found'}
+                        {isFailed ? 'Parser Failed' : isSummary ? 'All Validation Errors' : 'Validation Issues Found'}
                     </h2>
                     <p className={styles.dialogSubtitle}>
-                        {errors.length} {errors.length === 1 ? 'issue' : 'issues'} detected during parsing
+                        {errors.length} {errors.length === 1 ? 'issue' : 'issues'} {isSummary ? 'found across all parsing steps' : 'detected during parsing'}
                     </p>
                 </div>
                 
                 <p className={styles.dialogText}>
                     {isFailed 
                         ? 'The parser encountered errors and could not complete. Review the details below.'
+                        : isSummary
+                        ? 'The parser completed successfully but found these validation issues across all steps. These are typically minor formatting inconsistencies that won\'t affect your reading experience. Review and approve to continue.'
                         : 'These are typically minor formatting inconsistencies that won\'t affect your reading experience. Review the details below and choose to continue or cancel.'
                     }
                 </p>

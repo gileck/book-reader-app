@@ -76,7 +76,8 @@ export const UploadBook = () => {
             expiresAt: expiresAt,
             fileName: uploadForm.getFileName(),
             currentStep: 'Uploading PDF...',
-            progress: 0
+            progress: 0,
+            continueOnValidationError: uploadForm.continueOnValidationError
         });
         setSelectedUploadId(tempUploadId);
 
@@ -263,7 +264,9 @@ export const UploadBook = () => {
             )}
 
             {/* Validation Error Dialog */}
-            {((selectedUpload?.status === 'awaiting-approval' && selectedUpload.validationErrors) ||
+            {/* Show dialog for: normal mode awaiting-approval, continue mode final summary, or failed uploads */}
+            {((selectedUpload?.status === 'awaiting-approval' && selectedUpload.validationErrors && 
+               (!selectedUpload.continueOnValidationError || (selectedUpload.continueOnValidationError && selectedUpload.accumulatedErrorCount))) ||
               (selectedUpload?.status === 'failed' && ((selectedUpload.validationErrors && selectedUpload.validationErrors.length > 0) || 
               (selectedUpload.error && selectedUpload.error.toLowerCase().includes('validation'))))) && (
                 <ValidationErrorDialog
@@ -277,6 +280,7 @@ export const UploadBook = () => {
                     onCancel={() => setSelectedUploadId(null)}
                     isFailed={selectedUpload.status === 'failed'}
                     isLoading={uploadManager.loadingActions[selectedUpload.uploadId] || false}
+                    isSummary={selectedUpload.continueOnValidationError && !!selectedUpload.accumulatedErrorCount}
                 />
             )}
 
