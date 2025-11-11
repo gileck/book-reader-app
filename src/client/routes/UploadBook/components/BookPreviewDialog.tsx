@@ -60,14 +60,9 @@ export const BookPreviewDialog: React.FC<BookPreviewDialogProps> = ({
         }
     };
 
+    // Don't render the dialog while loading - let the button show loading state
     if (loading) {
-        return (
-            <div className={styles.dialogOverlay}>
-                <div className={styles.dialog}>
-                    <div className={styles.spinner} />
-                </div>
-            </div>
-        );
+        return null;
     }
 
     if (error || !metadata) {
