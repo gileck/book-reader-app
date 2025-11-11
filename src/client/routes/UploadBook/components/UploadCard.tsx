@@ -271,7 +271,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                                     }}
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? '⏳' : '📋 VIEW'}
+                                    {isLoading ? '⏳' : '📋 VIEW SUMMARY'}
                                 </button>
                                 <button
                                     className={styles.addButton}
@@ -281,7 +281,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                                     }}
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? '⏳ ADDING...' : '📚 ADD'}
+                                    {isLoading ? '⏳ ADDING...' : '📚 ADD TO LIBRARY'}
                                 </button>
                             </div>
                         )}
