@@ -41,7 +41,8 @@ export const config = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        res.status(405).json({ error: 'Method not allowed' });
+        return;
     }
 
     // Set SSE headers
@@ -61,7 +62,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         user = await getUserFromRequest(req);
         if (!user) {
             res.write(`data: ${JSON.stringify({ type: 'error', message: 'Unauthorized' })}\n\n`);
-            return res.end();
+            res.end();
+            return;
         }
 
         // Check rate limit
@@ -70,7 +72,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 type: 'error', 
                 message: `Rate limit exceeded. Maximum ${MAX_UPLOADS_PER_HOUR} uploads per hour.` 
             })}\n\n`);
-            return res.end();
+            res.end();
+            return;
         }
 
         const { pdfBase64, pdfUrl, continueOnValidationError } = req.body;
@@ -78,7 +81,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Validate input - either pdfBase64 or pdfUrl must be provided
         if (!pdfBase64 && !pdfUrl) {
             res.write(`data: ${JSON.stringify({ type: 'error', message: 'PDF data or URL is required' })}\n\n`);
-            return res.end();
+            res.end();
+            return;
         }
 
         // Send upload start event
