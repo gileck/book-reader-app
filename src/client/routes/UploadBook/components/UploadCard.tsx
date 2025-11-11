@@ -191,6 +191,30 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                     </>
                 )}
 
+                {/* Success Status - Show validation errors summary if any */}
+                {!isExpired && upload.status === 'success' && upload.validationErrors && upload.validationErrors.length > 0 && (
+                    <div className={styles.validationErrorsSummary}>
+                        <div className={styles.validationErrorsHeader}>
+                            <span className={styles.validationErrorsIcon}>⚠️</span>
+                            <span className={styles.validationErrorsTitle}>
+                                {upload.validationErrors.length} validation {upload.validationErrors.length === 1 ? 'error' : 'errors'} found
+                            </span>
+                        </div>
+                        <p className={styles.validationErrorsDescription}>
+                            Minor formatting inconsistencies detected (auto-approved)
+                        </p>
+                        <button
+                            className={styles.viewErrorsButton}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onSelectUpload(upload.uploadId);
+                            }}
+                        >
+                            View Details
+                        </button>
+                    </div>
+                )}
+
                 {/* Failed Status */}
                 {!isExpired && upload.status === 'failed' && upload.error && (
                     <div className={styles.uploadError}>

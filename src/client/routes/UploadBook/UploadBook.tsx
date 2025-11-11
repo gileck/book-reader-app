@@ -117,6 +117,8 @@ export const UploadBook = () => {
                                 progress: 100
                             });
                         });
+                        // Don't auto-select - let user click to view preview/errors
+                        setSelectedUploadId(null);
                     }
                     
                     return uploadId;
@@ -289,8 +291,21 @@ export const UploadBook = () => {
                 />
             )}
 
+            {/* Errors Display Dialog (view-only, no approval) */}
+            {selectedUpload?.status === 'success' && selectedUpload.validationErrors && selectedUpload.validationErrors.length > 0 && (
+                <ValidationErrorDialog
+                    errors={selectedUpload.validationErrors}
+                    onApprove={() => setSelectedUploadId(null)} // Just close
+                    onCancel={() => setSelectedUploadId(null)}
+                    isFailed={false}
+                    isLoading={false}
+                    isSummary={true}
+                    viewOnly={true} // New prop for view-only mode
+                />
+            )}
+
             {/* Book Preview Dialog */}
-            {selectedUpload?.status === 'success' && (
+            {selectedUpload?.status === 'success' && !selectedUpload.validationErrors && (
                 <BookPreviewDialog
                     uploadId={selectedUpload.uploadId}
                     onFinalize={() => handleFinalizeUpload(selectedUpload.uploadId)}

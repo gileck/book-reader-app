@@ -13,6 +13,7 @@ interface ValidationErrorDialogProps {
     isFailed?: boolean; // New prop to indicate if this is a failed upload
     isLoading?: boolean; // Loading state for approve action
     isSummary?: boolean; // Is this a summary of all accumulated errors?
+    viewOnly?: boolean; // View-only mode (no approval buttons, just display)
 }
 
 export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
@@ -21,7 +22,8 @@ export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
     onCancel,
     isFailed = false,
     isLoading = false,
-    isSummary = false
+    isSummary = false,
+    viewOnly = false
 }) => {
     return (
         <div className={styles.dialogOverlay}>
@@ -39,6 +41,8 @@ export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
                 <p className={styles.dialogText}>
                     {isFailed 
                         ? 'The parser encountered errors and could not complete. Review the details below.'
+                        : viewOnly
+                        ? 'These validation errors were found during parsing but were automatically approved. They are typically minor formatting inconsistencies that won\'t affect your reading experience.'
                         : isSummary
                         ? 'The parser completed successfully but found these validation issues across all steps. These are typically minor formatting inconsistencies that won\'t affect your reading experience. Review and approve to continue.'
                         : 'These are typically minor formatting inconsistencies that won\'t affect your reading experience. Review the details below and choose to continue or cancel.'
@@ -65,9 +69,9 @@ export const ValidationErrorDialog: React.FC<ValidationErrorDialogProps> = ({
                 </div>
                 
                 <div className={styles.dialogActions}>
-                    {isFailed ? (
-                        // For failed uploads, only show a close button
-                        <button className={styles.approveButton} onClick={onCancel}>
+                    {viewOnly || isFailed ? (
+                        // For view-only or failed uploads, only show a close button
+                        <button className={styles.approveButton} onClick={onCancel} style={{ width: '100%' }}>
                             Close
                         </button>
                     ) : (
