@@ -864,8 +864,8 @@ const convertedChunks = chapter.chunks.map((chunk, index) => {
 // Validation error accumulated (continue mode - doesn't pause)
 { type: 'validation-error-accumulated', uploadId: string, step: string, errorCount: number, totalAccumulatedErrors: number, message: string }
 
-// Validation errors summary (continue mode - shown at end)
-{ type: 'validation-errors-summary', uploadId: string, totalErrors: number, errors: ValidationError[], message: string }
+// Validation errors info (continue mode - informational only, no approval)
+{ type: 'validation-errors-info', uploadId: string, totalErrors: number, errors: ValidationError[], message: string }
 
 // Finalization
 { type: 'finalizing', message: string, progress: number }
