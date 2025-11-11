@@ -807,6 +807,39 @@
     box-shadow: 0 2px 6px rgba(52, 199, 89, 0.3);
 }
 
+/* Dark mode - softer, less bright colors */
+@media (prefers-color-scheme: dark) {
+    .viewButton {
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.25) 0%, rgba(10, 132, 255, 0.3) 100%);
+        color: #66B3FF;
+        border: 1.5px solid rgba(10, 132, 255, 0.4);
+    }
+
+    .viewButton:hover:not(:disabled) {
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.35) 0%, rgba(10, 132, 255, 0.4) 100%);
+        box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25);
+    }
+
+    .viewButton:active:not(:disabled) {
+        box-shadow: 0 2px 6px rgba(10, 132, 255, 0.2);
+    }
+
+    .addButton {
+        background: linear-gradient(135deg, rgba(48, 209, 88, 0.25) 0%, rgba(48, 209, 88, 0.3) 100%);
+        color: #6CD98A;
+        border: 1.5px solid rgba(48, 209, 88, 0.4);
+    }
+
+    .addButton:hover:not(:disabled) {
+        background: linear-gradient(135deg, rgba(48, 209, 88, 0.35) 0%, rgba(48, 209, 88, 0.4) 100%);
+        box-shadow: 0 4px 12px rgba(48, 209, 88, 0.25);
+    }
+
+    .addButton:active:not(:disabled) {
+        box-shadow: 0 2px 6px rgba(48, 209, 88, 0.2);
+    }
+}
+
 .viewButton:disabled,
 .addButton:disabled {
     opacity: 0.5;
