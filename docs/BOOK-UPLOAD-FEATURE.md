@@ -842,6 +842,7 @@ const convertedChunks = chapter.chunks.map((chunk, index) => {
     pdfBase64?: string;  // Base64-encoded PDF (for file upload)
     pdfUrl?: string;     // PDF URL (for URL upload)
     fileName?: string;   // Original filename or URL
+    continueOnValidationError?: boolean; // If true, accumulate errors and show at end instead of pausing
 }
 ```
 
@@ -857,8 +858,14 @@ const convertedChunks = chapter.chunks.map((chunk, index) => {
 { type: 'step-progress', step: string, progress: number }
 { type: 'step-complete', step: string }
 
-// Validation error
+// Validation error (normal mode - pauses for approval)
 { type: 'validation-error', step: string, errors: ValidationError[] }
+
+// Validation error accumulated (continue mode - doesn't pause)
+{ type: 'validation-error-accumulated', uploadId: string, step: string, errorCount: number, totalAccumulatedErrors: number, message: string }
+
+// Validation errors summary (continue mode - shown at end)
+{ type: 'validation-errors-summary', uploadId: string, totalErrors: number, errors: ValidationError[], message: string }
 
 // Finalization
 { type: 'finalizing', message: string, progress: number }

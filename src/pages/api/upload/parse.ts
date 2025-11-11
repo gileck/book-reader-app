@@ -73,7 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.end();
         }
 
-        const { pdfBase64, pdfUrl } = req.body;
+        const { pdfBase64, pdfUrl, continueOnValidationError } = req.body;
 
         // Validate input - either pdfBase64 or pdfUrl must be provided
         if (!pdfBase64 && !pdfUrl) {
@@ -168,7 +168,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // Run parser with SSE
-        await runParserWithSSE(uploadId, user._id, tempPdfPath, tempOutputPath, res);
+        await runParserWithSSE(uploadId, user._id, tempPdfPath, tempOutputPath, res, continueOnValidationError);
 
         // Cleanup temp files
         try {

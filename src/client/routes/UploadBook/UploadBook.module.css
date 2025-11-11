@@ -1428,6 +1428,43 @@
     margin: 0;
 }
 
+.checkboxSection {
+    margin: 20px 0;
+    padding: 16px;
+    background: rgba(0, 122, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 122, 255, 0.15);
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    gap: 12px;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--color-tint);
+    flex-shrink: 0;
+}
+
+.checkboxText {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-label);
+}
+
+.checkboxDescription {
+    margin: 8px 0 0 32px;
+    font-size: 13px;
+    color: var(--color-secondary-label);
+    line-height: 1.5;
+}
+
 .uploadButton {
     min-height: 50px;
     padding: 0 32px;

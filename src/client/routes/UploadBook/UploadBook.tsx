@@ -89,7 +89,8 @@ export const UploadBook = () => {
                     file: uploadForm.file,
                     pdfUrl: uploadForm.pdfUrl,
                     uploadMode: uploadForm.uploadMode,
-                    fileName: uploadForm.getFileName()
+                    fileName: uploadForm.getFileName(),
+                    continueOnValidationError: uploadForm.continueOnValidationError
                 },
                 (event: SSEEvent) => {
                     // Handle SSE event and get real uploadId
@@ -247,10 +248,12 @@ export const UploadBook = () => {
                     error={uploadForm.error}
                     isUploading={sseUpload.isUploading}
                     isValid={uploadForm.isValid}
+                    continueOnValidationError={uploadForm.continueOnValidationError}
                     fileInputRef={uploadForm.fileInputRef as React.RefObject<HTMLInputElement>}
                     onModeToggle={uploadForm.handleModeToggle}
                     onFileSelect={uploadForm.handleFileSelect}
                     onUrlChange={uploadForm.setPdfUrl}
+                    onContinueOnErrorToggle={uploadForm.setContinueOnValidationError}
                     onSubmit={handleStartUpload}
                     onClose={() => {
                         setShowUploadForm(false);

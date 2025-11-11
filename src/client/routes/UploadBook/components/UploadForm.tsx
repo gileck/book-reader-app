@@ -8,10 +8,12 @@ interface UploadFormProps {
     error: string | null;
     isUploading: boolean;
     isValid: boolean;
+    continueOnValidationError: boolean;
     fileInputRef: React.RefObject<HTMLInputElement>;
     onModeToggle: (mode: 'file' | 'url') => void;
     onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onUrlChange: (url: string) => void;
+    onContinueOnErrorToggle: (enabled: boolean) => void;
     onSubmit: () => void;
     onClose: () => void;
 }
@@ -27,10 +29,12 @@ export const UploadForm: React.FC<UploadFormProps> = ({
     error,
     isUploading,
     isValid,
+    continueOnValidationError,
     fileInputRef,
     onModeToggle,
     onFileSelect,
     onUrlChange,
+    onContinueOnErrorToggle,
     onSubmit,
     onClose
 }) => {
@@ -100,6 +104,23 @@ export const UploadForm: React.FC<UploadFormProps> = ({
                         {error}
                     </div>
                 )}
+
+                <div className={styles.checkboxSection}>
+                    <label className={styles.checkboxLabel}>
+                        <input
+                            type="checkbox"
+                            checked={continueOnValidationError}
+                            onChange={(e) => onContinueOnErrorToggle(e.target.checked)}
+                            className={styles.checkbox}
+                        />
+                        <span className={styles.checkboxText}>
+                            Continue on validation errors
+                        </span>
+                    </label>
+                    <p className={styles.checkboxDescription}>
+                        Don&apos;t stop parsing when validation errors occur. All errors will be shown at the end.
+                    </p>
+                </div>
 
                 <button
                     className={styles.uploadButton}

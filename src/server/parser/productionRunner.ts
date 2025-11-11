@@ -151,7 +151,8 @@ export async function runParserWithSSE(
     userId: string,
     pdfPath: string,
     outputPath: string,
-    res: NextApiResponse
+    res: NextApiResponse,
+    continueOnValidationError: boolean = false
 ): Promise<void> {
     // Send initial event with uploadId
     sendSSE(res, {
@@ -171,6 +172,14 @@ export async function runParserWithSSE(
     }, 15000); // Every 15 seconds
 
     try {
+        // Array to accumulate validation errors in continue mode
+        const accumulatedErrors: Array<{
+            step: string;
+            message: string;
+            errorCount: number;
+            chapterErrorSummary?: string[];
+        }> = [];
+
         // Skip errors provider - loads from database, filtered by step
         const skipErrorsProvider = async (stepName: string) => {
             const upload = await getBookUpload(uploadId);
@@ -178,7 +187,7 @@ export async function runParserWithSSE(
             return (upload?.skippedValidationErrors || []).filter(err => err.step === stepName);
         };
 
-        // Validation error handler - pause and wait for user approval
+        // Validation error handler - pause and wait for user approval OR accumulate errors
         const onValidationError = async (stepName: string, errorDetails: {
             step: string;
             errorCount: number;
@@ -201,6 +210,34 @@ export async function runParserWithSSE(
                 }
             }
 
+            // If continueOnValidationError is true, accumulate errors and continue
+            if (continueOnValidationError) {
+                console.log(`⏭️  Accumulating errors for ${stepName} and continuing...`);
+                
+                // Add errors to accumulated list
+                errors.forEach(err => {
+                    accumulatedErrors.push({
+                        step: err.step,
+                        message: err.message,
+                        errorCount: errorDetails.errorCount,
+                        chapterErrorSummary: errorDetails.chapterErrorSummary || undefined
+                    });
+                });
+
+                // Send progress event to client (don't pause)
+                sendSSE(res, {
+                    type: 'validation-error-accumulated',
+                    uploadId,
+                    step: stepName,
+                    errorCount: errorDetails.errorCount,
+                    totalAccumulatedErrors: accumulatedErrors.length,
+                    message: `Found ${errorDetails.errorCount} validation errors in ${stepName}, continuing...`
+                });
+
+                return true; // Continue parsing without pausing
+            }
+
+            // Normal flow: pause and wait for approval
             // Send validation error event to client
             sendSSE(res, {
                 type: 'validation-error',
@@ -329,6 +366,56 @@ export async function runParserWithSSE(
         }) as ParserOutput;
 
         console.log(`✅ Parser completed successfully for uploadId: ${uploadId}`);
+
+        // If continueOnValidationError was true and we have accumulated errors, show them now
+        if (continueOnValidationError && accumulatedErrors.length > 0) {
+            console.log(`⚠️  Parsing complete with ${accumulatedErrors.length} accumulated validation errors. Updating DB and notifying user...`);
+            
+            // Update DB status to awaiting-approval with all accumulated errors
+            await updateBookUpload(uploadId, {
+                status: 'awaiting-approval',
+                currentStep: 'Review All Validation Errors',
+                validationErrors: accumulatedErrors
+            });
+
+            // Send consolidated errors event
+            sendSSE(res, {
+                type: 'validation-errors-summary',
+                uploadId,
+                totalErrors: accumulatedErrors.length,
+                errors: accumulatedErrors.slice(0, 20), // Send first 20 for display
+                message: `Parsing complete with ${accumulatedErrors.length} validation errors. Please review.`
+            });
+
+            // Wait for user approval before finalizing
+            console.log(`⏳ Waiting for user approval of all accumulated errors...`);
+            const approved = await waitForApproval(uploadId, 300);
+
+            if (!approved) {
+                console.log(`✗ User did not approve accumulated errors (timeout or rejection)`);
+                await updateBookUpload(uploadId, {
+                    status: 'failed',
+                    error: {
+                        message: 'Accumulated validation errors approval timed out or was rejected',
+                        timestamp: new Date()
+                    }
+                });
+                sendSSE(res, {
+                    type: 'error',
+                    uploadId,
+                    message: 'Validation errors were not approved'
+                });
+                return;
+            }
+
+            console.log(`✓ User approved all accumulated errors. Continuing with finalization...`);
+            sendSSE(res, {
+                type: 'step-resume',
+                uploadId,
+                step: 'finalization',
+                message: 'Continuing with approved errors...'
+            });
+        }
 
         // Notify user: Uploading images (parser finished at 85%, now continue to 90%)
         sendSSE(res, {

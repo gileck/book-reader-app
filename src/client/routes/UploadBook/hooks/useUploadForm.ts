@@ -9,6 +9,7 @@ export const useUploadForm = () => {
     const [file, setFile] = useState<File | null>(null);
     const [pdfUrl, setPdfUrl] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const [continueOnValidationError, setContinueOnValidationError] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     /**
@@ -77,6 +78,7 @@ export const useUploadForm = () => {
         setFile(null);
         setPdfUrl('');
         setError(null);
+        setContinueOnValidationError(false);
     }, []);
 
     /**
@@ -108,6 +110,7 @@ export const useUploadForm = () => {
         file,
         pdfUrl,
         error,
+        continueOnValidationError,
         fileInputRef,
         isValid,
         
@@ -116,6 +119,7 @@ export const useUploadForm = () => {
         setFile,
         setPdfUrl,
         setError,
+        setContinueOnValidationError,
         handleFileSelect,
         handleModeToggle,
         validate,

@@ -6,6 +6,7 @@ interface UploadParams {
     pdfUrl: string;
     uploadMode: 'file' | 'url';
     fileName?: string;
+    continueOnValidationError?: boolean;
 }
 
 /**
@@ -21,8 +22,9 @@ export const useSSEUpload = () => {
     const prepareRequestBody = async (
         file: File | null,
         pdfUrl: string,
-        uploadMode: 'file' | 'url'
-    ): Promise<{ pdfBase64?: string; pdfUrl?: string; fileName?: string }> => {
+        uploadMode: 'file' | 'url',
+        continueOnValidationError?: boolean
+    ): Promise<{ pdfBase64?: string; pdfUrl?: string; fileName?: string; continueOnValidationError?: boolean }> => {
         if (uploadMode === 'file' && file) {
             const reader = new FileReader();
             const base64Promise = new Promise<string>((resolve, reject) => {
@@ -37,11 +39,13 @@ export const useSSEUpload = () => {
             const base64 = await base64Promise;
             return {
                 pdfBase64: base64,
-                fileName: file.name
+                fileName: file.name,
+                continueOnValidationError
             };
         } else {
             return {
-                pdfUrl: pdfUrl.trim()
+                pdfUrl: pdfUrl.trim(),
+                continueOnValidationError
             };
         }
     };
@@ -105,7 +109,8 @@ export const useSSEUpload = () => {
             const requestBody = await prepareRequestBody(
                 params.file,
                 params.pdfUrl,
-                params.uploadMode
+                params.uploadMode,
+                params.continueOnValidationError
             );
 
             console.log('📞 Sending upload request...');

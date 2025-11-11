@@ -173,6 +173,24 @@ export const useUploadManager = (userId: string | undefined) => {
                 validationErrors: event.errors
             });
         }
+
+        // Handle accumulated validation errors (continue mode)
+        if (event.type === 'validation-error-accumulated') {
+            updateUpload(uploadId, {
+                status: 'parsing',
+                currentStep: event.message,
+                progress: event.progress
+            });
+        }
+
+        // Handle validation errors summary (shown at the end in continue mode)
+        if (event.type === 'validation-errors-summary') {
+            updateUpload(uploadId, {
+                status: 'awaiting-approval',
+                currentStep: 'Review All Validation Errors',
+                validationErrors: event.errors
+            });
+        }
         
         // Handle completion
         if (event.type === 'complete') {
