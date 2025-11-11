@@ -35,6 +35,14 @@ The step uses a **hybrid detection strategy** for maximum reliability:
 - Provides most accurate chapter boundaries when available
 - Handles nested bookmark structures
 - Extracts page destinations directly from PDF metadata
+- **CRITICAL: Filters out non-chapter structural bookmarks** to prevent front matter from being treated as chapters:
+  - **Cover** - Book cover page
+  - **Title Page** - Title page with book name/author
+  - **Copyright** or **Copyright Page** - Copyright and publication info
+  - **Contents** - Table of Contents
+  - **Dedication**, **Acknowledgments**, **About the Author(s)** - Front/back matter
+  - **Photo Insert** - Photo section between chapters
+  - Uses flexible pattern matching (e.g., "copyright( page)?") to handle different PDF formats
 
 #### 2. Fallback Method: Text-Based TOC Analysis
 - Analyzes raw text for Table of Contents patterns
@@ -43,6 +51,11 @@ The step uses a **hybrid detection strategy** for maximum reliability:
 - Validates chapter boundaries using content analysis
 
 #### 3. Validation and Filtering
+- **CRITICAL: TOC Detection** - Identifies where Table of Contents ends to avoid matching TOC entries instead of actual chapters
+  - Uses low threshold (1500 characters) to catch early chapters like Introduction
+  - Looks for page markers in content area (pages 8-15)
+  - Validates substantial content follows chapter titles (>100 chars in next 5 lines)
+  - Falls back to searching from beginning if TOC end unclear (safer than skipping chapters)
 - Applies `validateChapterStart()` to verify real chapter beginnings vs TOC entries
 - Uses `validateChapterSequence()` to ensure reasonable chapter progression
 - Filters out false positives from TOC references

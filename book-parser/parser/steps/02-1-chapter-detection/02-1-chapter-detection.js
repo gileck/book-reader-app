@@ -253,23 +253,28 @@ function findTOCEndPosition(rawText) {
     const lines = rawText.split('\n');
     let tocEndPosition = 0;
 
-    // Look for patterns that indicate end of TOC:
-    // 1. Look for "Introduction" or first chapter starting
-    // 2. Look for page markers that seem to be in content area
-    // 3. Look for bibliography/references section to avoid
+    // CRITICAL: Find where Table of Contents ends and actual book content begins
+    // This is important because chapter titles appear in BOTH the TOC and actual chapters
+    // We need to skip the TOC entries and only search for chapters in the content area
+    //
+    // Strategy:
+    // 1. Look for page markers in the typical content start range (pages 8-15)
+    // 2. Look for patterns like "Introduction", "Chapter 1", "Preface" with substantial content following
+    // 3. Use a conservative estimate if no clear TOC end is found
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
-
-        // Skip if we're still in the very beginning (first few thousand characters)
         const currentPosition = lines.slice(0, i).join('\n').length;
-        if (currentPosition < 5000) {
+
+        // CRITICAL FIX: Lower threshold from 5000 to 1500 to catch early chapters
+        // Some books have Introduction starting around 4000 characters, which was
+        // being skipped by the old 5000 character threshold
+        if (currentPosition < 1500) {
             continue;
         }
 
-        // Avoid book-specific title checks; rely on generic signals below
-
         // Look for page markers that indicate content area (around page 8-15)
+        // TOC typically ends around page 7-8, content starts page 8-15
         const pageMatch = line.match(/^---\s*PAGE\s+(\d+)\s*---$/);
         if (pageMatch) {
             const pageNum = parseInt(pageMatch[1]);
@@ -281,7 +286,8 @@ function findTOCEndPosition(rawText) {
         }
 
         // Look for patterns that suggest we're past TOC
-        if (line.match(/^(Chapter\s+\d+|1\s+|Introduction|Preface)/i) && currentPosition > 10000) {
+        // Only check after reasonable TOC length (3000 chars = ~2-3 pages)
+        if (line.match(/^(Chapter\s+\d+|1\s+|Introduction|Preface)/i) && currentPosition > 3000) {
             // Check if this looks like actual chapter content, not just TOC entry
             const nextFewLines = lines.slice(i + 1, i + 5).join('\n');
             if (nextFewLines.length > 100) { // Has substantial content following
@@ -292,8 +298,9 @@ function findTOCEndPosition(rawText) {
     }
 
     // If we couldn't find a clear TOC end, use a conservative estimate
+    // Return 0 to search from the beginning (safer than skipping potential chapters)
     if (tocEndPosition === 0) {
-        tocEndPosition = Math.min(25000, Math.floor(rawText.length * 0.1));
+        tocEndPosition = 0; // Changed from 25000 - safer to search from beginning
     }
 
     // TOC analysis complete
@@ -608,8 +615,20 @@ async function extractBookmarks(outline, doc, level = 0) {
     for (const bookmark of outline) {
         const title = typeof bookmark.title === 'string' ? bookmark.title.trim() : '';
 
-        // Skip clearly non-chapter structural bookmarks, but still traverse children
-        const isNonChapterStructural = title.match(/^(contents|title page|copyright|photo insert|dedication|acknowledgments|about the authors)$/i);
+        // CRITICAL: Filter out non-chapter structural bookmarks (cover, TOC, copyright, etc.)
+        // These bookmarks mark front matter and should not be treated as chapters
+        // 
+        // Filtering rules:
+        // - "Cover" - Book cover page
+        // - "Title Page" - Title page with book name/author
+        // - "Copyright" or "Copyright Page" - Copyright and publication info
+        // - "Contents" - Table of Contents
+        // - "Dedication", "Acknowledgments", "About the Author(s)" - Front/back matter
+        // - "Photo Insert" - Photo section
+        //
+        // Note: Pattern uses optional groups (e.g., "copyright( page)?") to match both
+        // "Copyright" and "Copyright Page" formats that different PDFs may use
+        const isNonChapterStructural = title.match(/^(cover|contents|title page|copyright( page)?|photo insert|dedication|acknowledgments?|about the authors?)$/i);
 
         const hasChildren = Array.isArray(bookmark.items) && bookmark.items.length > 0;
 
