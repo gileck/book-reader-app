@@ -291,21 +291,8 @@ export const UploadBook = () => {
                 />
             )}
 
-            {/* Errors Display Dialog (view-only, no approval) */}
-            {selectedUpload?.status === 'success' && selectedUpload.validationErrors && selectedUpload.validationErrors.length > 0 && (
-                <ValidationErrorDialog
-                    errors={selectedUpload.validationErrors}
-                    onApprove={() => setSelectedUploadId(null)} // Just close
-                    onCancel={() => setSelectedUploadId(null)}
-                    isFailed={false}
-                    isLoading={false}
-                    isSummary={true}
-                    viewOnly={true} // New prop for view-only mode
-                />
-            )}
-
-            {/* Book Preview Dialog */}
-            {selectedUpload?.status === 'success' && !selectedUpload.validationErrors && (
+            {/* Book Preview Dialog - Always show for successful uploads */}
+            {selectedUpload?.status === 'success' && (
                 <BookPreviewDialog
                     uploadId={selectedUpload.uploadId}
                     onFinalize={() => handleFinalizeUpload(selectedUpload.uploadId)}
