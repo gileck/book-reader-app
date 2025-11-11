@@ -1,0 +1,220 @@
+{
+  "stepName": "step-2-1",
+  "pdfHash": "20bc3d776ffe5354",
+  "timestamp": "2025-11-11T18:18:31.484Z",
+  "validationPassed": true,
+  "output": {
+    "chapterMetadata": [
+      {
+        "title": "Copyright Page",
+        "chapterNumber": 0,
+        "startingPage": 5,
+        "endPage": 25,
+        "confidence": 0.7,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Coffee, Booze & Horror Flicks",
+        "chapterNumber": 1,
+        "startingPage": 26,
+        "endPage": 68,
+        "confidence": 0.7999999999999999,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "38 Degrees Below Zero",
+        "chapterNumber": 2,
+        "startingPage": 69,
+        "endPage": 94,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Breathwork and Beyond",
+        "chapterNumber": 3,
+        "startingPage": 95,
+        "endPage": 139,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Eat Yourself Smart",
+        "chapterNumber": 4,
+        "startingPage": 140,
+        "endPage": 197,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Limitless and Lucy",
+        "chapterNumber": 5,
+        "startingPage": 198,
+        "endPage": 264,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Upgrade Your Head",
+        "chapterNumber": 6,
+        "startingPage": 265,
+        "endPage": 291,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Sleep",
+        "chapterNumber": 7,
+        "startingPage": 292,
+        "endPage": 368,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Lean and Mean",
+        "chapterNumber": 8,
+        "startingPage": 369,
+        "endPage": 421,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Sexy Forever",
+        "chapterNumber": 9,
+        "startingPage": 422,
+        "endPage": 470,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Fitness Decoded",
+        "chapterNumber": 10,
+        "startingPage": 471,
+        "endPage": 503,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Biohack Your Body",
+        "chapterNumber": 11,
+        "startingPage": 504,
+        "endPage": 549,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Wolverine",
+        "chapterNumber": 12,
+        "startingPage": 550,
+        "endPage": 618,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Clean Gut",
+        "chapterNumber": 13,
+        "startingPage": 619,
+        "endPage": 675,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Diets Suck",
+        "chapterNumber": 14,
+        "startingPage": 676,
+        "endPage": 734,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Never Get Sick",
+        "chapterNumber": 15,
+        "startingPage": 735,
+        "endPage": 823,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Quantified Self",
+        "chapterNumber": 16,
+        "startingPage": 824,
+        "endPage": 866,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Supermodel",
+        "chapterNumber": 17,
+        "startingPage": 867,
+        "endPage": 950,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Sex",
+        "chapterNumber": 18,
+        "startingPage": 951,
+        "endPage": 1003,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Longevity Decoded",
+        "chapterNumber": 19,
+        "startingPage": 1004,
+        "endPage": 1177,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Invisible",
+        "chapterNumber": 20,
+        "startingPage": 1178,
+        "endPage": 1266,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Routines and Rituals",
+        "chapterNumber": 21,
+        "startingPage": 1267,
+        "endPage": 1313,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      },
+      {
+        "title": "Conclusion",
+        "chapterNumber": 22,
+        "startingPage": 1314,
+        "endPage": null,
+        "confidence": 1,
+        "detectionSource": "pdf_bookmarks"
+      }
+    ],
+    "metadata": {
+      "processingStartTime": "2025-11-11T18:18:20.466Z",
+      "processingEndTime": null,
+      "stepResults": {},
+      "textExtraction": {
+        "characterCount": 2420331,
+        "pageCount": 1323,
+        "lineCount": 40850,
+        "wordCount": 390086,
+        "literalNewlineCount": 0,
+        "extractionTime": "2025-11-11T18:18:23.912Z",
+        "averageWordsPerPage": 295,
+        "extractionMethod": "page_by_page_fixed",
+        "totalTextContentItems": 59821
+      },
+      "chapterDetection": {
+        "chaptersDetected": 23,
+        "tocSource": "pdf_bookmarks",
+        "tocEntriesFound": 25,
+        "patternMatches": 501,
+        "averageDetectionConfidence": 0.9782608695652174,
+        "pageOffset": 0,
+        "processingTime": 7100,
+        "detectionMethod": "hybrid_v1_toc_detection"
+      }
+    }
+  }
+}
