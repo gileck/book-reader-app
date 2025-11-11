@@ -188,6 +188,31 @@
     position: relative;
 }
 
+.deleteIconButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 59, 48, 0.1);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+    color: #FF3B30;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.deleteIconButton:hover {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: #FF3B30;
+    transform: scale(1.1);
+}
+
 @media (prefers-color-scheme: light) {
     .uploadCardHeader {
         background: linear-gradient(135deg, 
@@ -332,10 +357,13 @@
 .uploadTime {
     font-size: 13px;
     color: var(--color-secondary-label);
-    font-weight: 600;
-    background: var(--color-secondary-bg);
-    padding: 6px 12px;
-    border-radius: 8px;
+    font-weight: 500;
+}
+
+.expirationDivider {
+    color: var(--color-separator);
+    font-weight: 300;
+    font-size: 14px;
 }
 
 /* Upload Metadata (File Name and ID) */
@@ -723,6 +751,63 @@
 
 .deleteButton:active {
     transform: translateY(-1px);
+}
+
+.successButtonsRow {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.viewButton,
+.addButton {
+    flex: 1;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.viewButton {
+    background: rgba(0, 122, 255, 0.15);
+    color: var(--color-tint);
+    border: 1px solid rgba(0, 122, 255, 0.3);
+}
+
+.viewButton:hover:not(:disabled) {
+    background: rgba(0, 122, 255, 0.25);
+}
+
+.addButton {
+    background: var(--color-tint);
+    color: white;
+}
+
+.addButton:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.viewButton:disabled,
+.addButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.expirationTimerBottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(255, 149, 0, 0.1);
+    border-top: 1px solid var(--color-separator);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-secondary-label);
 }
 
 .stopButton {

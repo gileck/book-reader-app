@@ -103,9 +103,6 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                         {getStatusText(upload.status)}
                     </span>
                 </div>
-                <div className={styles.uploadTime}>
-                    {new Date(upload.createdAt).toLocaleString()}
-                </div>
                 {/* Delete button at top right */}
                 {!isExpired && upload.status === 'success' && (
                     <button
@@ -344,6 +341,10 @@ export const UploadCard: React.FC<UploadCardProps> = ({
             {/* Expiration Timer at bottom */}
             {!isExpired && (
                 <div className={styles.expirationTimerBottom}>
+                    <span className={styles.uploadTime}>
+                        {new Date(upload.createdAt).toLocaleString()}
+                    </span>
+                    <span className={styles.expirationDivider}>•</span>
                     <span className={styles.expirationIcon}>⏰</span>
                     <span className={styles.expirationText}>{remainingTime}</span>
                 </div>
