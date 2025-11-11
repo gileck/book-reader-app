@@ -9,6 +9,7 @@ interface UploadCardProps {
     isSelected: boolean;
     isLoading: boolean;
     onSelectUpload: (uploadId: string) => void;
+    onViewValidationErrors: (uploadId: string) => void;
     onFinalizeUpload: (uploadId: string) => void;
     onDeleteUpload: (uploadId: string) => void;
     onRestartUpload: (uploadId: string) => void;
@@ -39,6 +40,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
     isSelected,
     isLoading,
     onSelectUpload,
+    onViewValidationErrors,
     onFinalizeUpload,
     onDeleteUpload,
     onRestartUpload,
@@ -206,7 +208,7 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                             className={cardStyles.viewErrorsButton}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onSelectUpload(upload.uploadId);
+                                onViewValidationErrors(upload.uploadId);
                             }}
                         >
                             View

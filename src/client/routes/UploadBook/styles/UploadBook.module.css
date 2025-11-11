@@ -1,0 +1,118 @@
+/* Main Container & Header */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px 24px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, 
+        var(--color-system-bg) 0%, 
+        var(--color-secondary-bg) 100%);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding: 40px 32px;
+    background: linear-gradient(135deg, 
+        rgba(0, 122, 255, 0.08) 0%, 
+        rgba(88, 86, 214, 0.05) 100%);
+    border-radius: 24px;
+    border: 2px solid var(--color-separator);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        #007AFF 0%, 
+        #5856D6 50%, 
+        #007AFF 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.header h1 {
+    font-size: 40px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.header p {
+    font-size: 18px;
+    color: #8E8E93;
+    font-weight: 600;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+    .container {
+        background: linear-gradient(135deg, 
+            #000000 0%, 
+            #0a0a0a 100%);
+    }
+
+    .header {
+        background: linear-gradient(135deg, 
+            rgba(10, 132, 255, 0.12) 0%, 
+            rgba(88, 86, 214, 0.08) 100%);
+        border-color: rgba(84, 84, 88, 0.65);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .header::before {
+        background: linear-gradient(90deg, 
+            #0A84FF 0%, 
+            #5E5CE6 50%, 
+            #0A84FF 100%);
+        background-size: 200% 100%;
+    }
+
+    .header h1 {
+        background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header p {
+        color: #AEAEB2;
+    }
+}
+
+/* Uploads List */
+.uploadsList {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+/* Loading Section */
+.loadingSection {
+    text-align: center;
+    padding: 60px 24px;
+}
+
+.loadingSection p {
+    margin-top: 16px;
+    font-size: 15px;
+    color: var(--color-secondary-label);
+}
+

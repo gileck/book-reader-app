@@ -1,0 +1,246 @@
+/* Upload Progress */
+.uploadProgress {
+    margin-bottom: 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, 
+        var(--color-secondary-bg) 0%, 
+        var(--color-system-bg) 100%);
+    border-radius: 16px;
+    border: 2px solid var(--color-separator);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+    .uploadProgress {
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Parsing Message */
+.parsingMessage {
+    padding: 24px;
+    text-align: center;
+    background: linear-gradient(135deg, 
+        rgba(0, 122, 255, 0.08) 0%, 
+        rgba(88, 86, 214, 0.06) 100%);
+    border: 3px dashed rgba(0, 122, 255, 0.4);
+    border-radius: 16px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.parsingMessage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(0, 122, 255, 0.1) 50%,
+        transparent 100%);
+    animation: parsing-shimmer 2s infinite;
+}
+
+@keyframes parsing-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.parsingMessageText {
+    font-size: 17px;
+    color: #007AFF;
+    font-weight: 700;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.parsingMessageSubtext {
+    font-size: 14px;
+    color: #8E8E93;
+    margin: 8px 0 0 0;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .parsingMessage {
+        background: linear-gradient(135deg, 
+            rgba(10, 132, 255, 0.12) 0%, 
+            rgba(88, 86, 214, 0.08) 100%);
+        border-color: rgba(10, 132, 255, 0.5);
+    }
+
+    .parsingMessageText {
+        color: #0A84FF;
+    }
+
+    .parsingMessageSubtext {
+        color: #AEAEB2;
+    }
+}
+
+/* Compact Parsing Message */
+.compactParsingMessage {
+    padding: 12px 16px;
+    text-align: center;
+    background: rgba(0, 122, 255, 0.05);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.compactParsingMessageText {
+    font-size: 13px;
+    color: var(--color-secondary-label);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+    .compactParsingMessage {
+        background: rgba(10, 132, 255, 0.08);
+    }
+}
+
+/* Progress Section */
+.progressSection {
+    text-align: center;
+    padding: 48px 24px;
+}
+
+.compactProgressSection {
+    text-align: center;
+    padding: 0;
+}
+
+.progressIcon {
+    margin-bottom: 24px;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    border: 4px solid var(--color-separator);
+    border-top-color: var(--color-tint);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.buttonSpinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: rgba(255, 255, 255, 1);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.progressSection h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-label);
+}
+
+.currentStep {
+    font-size: 17px;
+    color: var(--color-secondary-label);
+    margin-bottom: 24px;
+}
+
+/* Progress Bar */
+.progressBar {
+    width: 100%;
+    max-width: 400px;
+    height: 12px;
+    background: var(--color-separator);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin: 0 auto 12px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    transition: width 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.progressFill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: progress-shine 2s linear infinite;
+}
+
+@keyframes progress-shine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@media (prefers-color-scheme: dark) {
+    .progressBar {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .progressFill {
+        background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+        box-shadow: 0 2px 8px rgba(10, 132, 255, 0.5);
+    }
+}
+
+.progressText {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-label);
+    margin-bottom: 8px;
+}
+
+.progressHint {
+    font-size: 15px;
+    color: var(--color-secondary-label);
+}
+
+.compactStepLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-label);
+    margin: 0 0 12px 0;
+}
+
+.compactProgressText {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-secondary-label);
+    margin: 8px 0 0 0;
+}
+

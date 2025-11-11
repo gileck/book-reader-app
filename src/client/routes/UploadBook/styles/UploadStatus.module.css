@@ -1,0 +1,205 @@
+/* Upload Status Badge */
+.uploadStatusBadge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    border-radius: 28px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.uploadStatusBadge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: badge-shine 3s infinite;
+}
+
+@keyframes badge-shine {
+    0%, 100% { left: -100%; }
+    50% { left: 100%; }
+}
+
+.uploadStatusBadge.uploading {
+    background: linear-gradient(135deg, rgba(88, 86, 214, 0.25) 0%, rgba(94, 92, 230, 0.25) 100%);
+    color: #5856D6;
+    border: 3px solid rgba(88, 86, 214, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(88, 86, 214, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.uploadStatusBadge.parsing {
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.25) 0%, rgba(88, 86, 214, 0.25) 100%);
+    color: #007AFF;
+    border: 3px solid rgba(0, 122, 255, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(0, 122, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.uploadStatusBadge.awaitingApproval {
+    background: linear-gradient(135deg, rgba(255, 149, 0, 0.25) 0%, rgba(255, 59, 48, 0.25) 100%);
+    color: #FF9500;
+    border: 3px solid rgba(255, 149, 0, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(255, 149, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.uploadStatusBadge.success {
+    background: linear-gradient(135deg, rgba(52, 199, 89, 0.25) 0%, rgba(48, 209, 88, 0.25) 100%);
+    color: #34C759;
+    border: 3px solid rgba(52, 199, 89, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(52, 199, 89, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.uploadStatusBadge.failed {
+    background: linear-gradient(135deg, rgba(255, 59, 48, 0.25) 0%, rgba(255, 45, 85, 0.25) 100%);
+    color: #FF3B30;
+    border: 3px solid rgba(255, 59, 48, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(255, 59, 48, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+    .uploadStatusBadge.uploading {
+        color: #5E5CE6;
+        border-color: rgba(94, 92, 230, 0.6);
+    }
+
+    .uploadStatusBadge.parsing {
+        color: #0A84FF;
+        border-color: rgba(10, 132, 255, 0.6);
+    }
+
+    .uploadStatusBadge.awaitingApproval {
+        color: #FF9F0A;
+        border-color: rgba(255, 159, 10, 0.6);
+    }
+
+    .uploadStatusBadge.success {
+        color: #30D158;
+        border-color: rgba(48, 209, 88, 0.6);
+    }
+
+    .uploadStatusBadge.failed {
+        color: #FF453A;
+        border-color: rgba(255, 69, 58, 0.6);
+    }
+}
+
+.uploadStatusIcon {
+    font-size: 22px;
+}
+
+.uploadStatusText {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Expiration Timer */
+.expirationTimer {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, rgba(255, 159, 10, 0.15) 0%, rgba(255, 69, 58, 0.15) 100%);
+    border-bottom: 2px solid rgba(255, 159, 10, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.expirationIcon {
+    font-size: 16px;
+}
+
+.expirationText {
+    font-size: 14px;
+    font-weight: 600;
+    color: #FF9F0A;
+}
+
+.expirationTimer.expired {
+    background: linear-gradient(135deg, rgba(255, 69, 58, 0.2) 0%, rgba(255, 59, 48, 0.2) 100%);
+    border-bottom-color: rgba(255, 69, 58, 0.4);
+}
+
+.expirationTimer.expired .expirationText {
+    color: #FF453A;
+}
+
+@media (prefers-color-scheme: light) {
+    .expirationTimer {
+        background: linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 69, 58, 0.1) 100%);
+        border-bottom-color: rgba(255, 149, 0, 0.25);
+    }
+
+    .expirationText {
+        color: #FF9500;
+    }
+
+    .expirationTimer.expired {
+        background: linear-gradient(135deg, rgba(255, 59, 48, 0.15) 0%, rgba(255, 45, 85, 0.15) 100%);
+        border-bottom-color: rgba(255, 59, 48, 0.3);
+    }
+
+    .expirationTimer.expired .expirationText {
+        color: #FF3B30;
+    }
+}
+
+/* Expired State */
+.expiredState {
+    padding: 32px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 69, 58, 0.1) 0%, rgba(255, 59, 48, 0.1) 100%);
+    border-radius: 16px;
+    border: 2px solid rgba(255, 69, 58, 0.3);
+}
+
+.expiredIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.expiredTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FF453A;
+    margin-bottom: 12px;
+}
+
+.expiredMessage {
+    font-size: 15px;
+    color: #AEAEB2;
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: light) {
+    .expiredState {
+        background: linear-gradient(135deg, rgba(255, 59, 48, 0.08) 0%, rgba(255, 45, 85, 0.08) 100%);
+        border-color: rgba(255, 59, 48, 0.25);
+    }
+
+    .expiredTitle {
+        color: #FF3B30;
+    }
+
+    .expiredMessage {
+        color: #8E8E93;
+    }
+}
+

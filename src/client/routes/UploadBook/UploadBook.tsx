@@ -36,9 +36,11 @@ export const UploadBook = () => {
     const [selectedUploadId, setSelectedUploadId] = useState<string | null>(null);
     const [showUploadForm, setShowUploadForm] = useState(false);
     const [confirmDialog, setConfirmDialog] = useState<{ type: ConfirmDialogType; uploadId: string } | null>(null);
+    const [showValidationErrorsFor, setShowValidationErrorsFor] = useState<string | null>(null);
 
     // Get selected upload
     const selectedUpload = uploadManager.uploads.find(u => u.uploadId === selectedUploadId);
+    const uploadWithValidationErrors = uploadManager.uploads.find(u => u.uploadId === showValidationErrorsFor);
 
     /**
      * Handle upload start - creates optimistic UI and starts SSE stream
@@ -222,6 +224,7 @@ export const UploadBook = () => {
                     selectedId={selectedUploadId}
                     loadingActions={uploadManager.loadingActions}
                     onSelectUpload={setSelectedUploadId}
+                    onViewValidationErrors={setShowValidationErrorsFor}
                     onFinalizeUpload={handleFinalizeUpload}
                     onDeleteUpload={handleDeleteUpload}
                     onRestartUpload={handleRestartUpload}
@@ -300,6 +303,19 @@ export const UploadBook = () => {
                     onLoadingChange={(loading) => {
                         uploadManager.actions.setLoadingAction(selectedUpload.uploadId, loading);
                     }}
+                />
+            )}
+
+            {/* Validation Errors Dialog - For viewing errors on successful uploads */}
+            {uploadWithValidationErrors && uploadWithValidationErrors.validationErrors && uploadWithValidationErrors.validationErrors.length > 0 && (
+                <ValidationErrorDialog
+                    errors={uploadWithValidationErrors.validationErrors}
+                    onApprove={() => setShowValidationErrorsFor(null)} // Just close, no approval needed
+                    onCancel={() => setShowValidationErrorsFor(null)}
+                    isFailed={false}
+                    isLoading={false}
+                    isSummary={true}
+                    viewOnly={true}
                 />
             )}
 

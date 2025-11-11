@@ -1,0 +1,235 @@
+/* Upload Card Container */
+.uploadCard {
+    padding: 0;
+    background: #1C1C1E;
+    border: 4px solid #2C2C2E;
+    border-radius: 24px;
+    cursor: default;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.uploadCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        #0A84FF 50%,
+        transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.uploadCard:hover::before {
+    opacity: 0.7;
+}
+
+.uploadCard.selected {
+    border-color: #0A84FF;
+    box-shadow: 
+        0 12px 48px rgba(10, 132, 255, 0.4),
+        0 6px 24px rgba(10, 132, 255, 0.3),
+        inset 0 1px 0 rgba(10, 132, 255, 0.2);
+    transform: translateY(-4px);
+}
+
+.uploadCard.selected::before {
+    opacity: 1;
+}
+
+.uploadCard.expired {
+    border-color: rgba(255, 69, 58, 0.4);
+    box-shadow: 
+        0 8px 32px rgba(255, 69, 58, 0.2),
+        0 4px 16px rgba(255, 69, 58, 0.15);
+}
+
+@media (prefers-color-scheme: light) {
+    .uploadCard {
+        background: #FFFFFF;
+        border-color: #D1D1D6;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.15),
+            0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .uploadCard::before {
+        background: linear-gradient(90deg, 
+            transparent 0%,
+            #007AFF 50%,
+            transparent 100%);
+    }
+
+    .uploadCard.selected {
+        border-color: #007AFF;
+        box-shadow: 
+            0 12px 48px rgba(0, 122, 255, 0.3),
+            0 6px 24px rgba(0, 122, 255, 0.2);
+    }
+
+    .uploadCard.expired {
+        border-color: rgba(255, 59, 48, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(255, 59, 48, 0.15),
+            0 4px 16px rgba(255, 59, 48, 0.1);
+    }
+}
+
+/* Upload Card Header */
+.uploadCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, 
+        rgba(10, 132, 255, 0.08) 0%, 
+        rgba(88, 86, 214, 0.05) 100%);
+    border-bottom: 4px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.uploadCardHeader::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        var(--color-tint) 50%,
+        transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.uploadCard:hover .uploadCardHeader::after {
+    opacity: 0.3;
+}
+
+@media (prefers-color-scheme: light) {
+    .uploadCardHeader {
+        background: linear-gradient(135deg, 
+            rgba(0, 122, 255, 0.05) 0%, 
+            rgba(88, 86, 214, 0.03) 100%);
+        border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* Delete Icon Button */
+.deleteIconButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 59, 48, 0.1);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+    color: #FF3B30;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.deleteIconButton:hover {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: #FF3B30;
+    transform: scale(1.1);
+}
+
+/* Upload Metadata */
+.uploadMetadata {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 28px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (prefers-color-scheme: light) {
+    .uploadMetadata {
+        background: rgba(0, 0, 0, 0.02);
+        border-bottom-color: rgba(0, 0, 0, 0.05);
+    }
+}
+
+.uploadFileName,
+.uploadId {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.uploadMetadataLabel {
+    color: #8E8E93;
+    font-weight: 600;
+    min-width: 30px;
+}
+
+.uploadMetadataValue {
+    color: var(--color-label);
+    font-weight: 500;
+    font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+    word-break: break-all;
+}
+
+@media (prefers-color-scheme: dark) {
+    .uploadMetadataLabel {
+        color: #AEAEB2;
+    }
+}
+
+/* Upload Card Body */
+.uploadCardBody {
+    padding: 28px;
+    background: #1C1C1E;
+}
+
+@media (prefers-color-scheme: light) {
+    .uploadCardBody {
+        background: #FFFFFF;
+    }
+}
+
+.uploadTime {
+    font-size: 13px;
+    color: var(--color-secondary-label);
+    font-weight: 500;
+}
+
+.expirationDivider {
+    color: var(--color-separator);
+    font-weight: 300;
+    font-size: 14px;
+}
+
+/* Expiration Timer Bottom */
+.expirationTimerBottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(255, 149, 0, 0.1);
+    border-top: 1px solid var(--color-separator);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-secondary-label);
+}
+

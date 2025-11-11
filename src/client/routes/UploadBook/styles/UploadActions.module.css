@@ -1,0 +1,381 @@
+/* Upload Actions */
+.uploadActions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 0;
+    padding-top: 20px;
+    border-top: 2px solid var(--color-separator);
+}
+
+/* Primary Action Buttons */
+.approveButton,
+.finalizeButton,
+.restartButton,
+.retryButton {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    color: #fff;
+    border: none;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.3px;
+}
+
+.approveButton:hover,
+.finalizeButton:hover,
+.restartButton:hover,
+.retryButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.5);
+}
+
+.approveButton:active,
+.finalizeButton:active,
+.restartButton:active,
+.retryButton:active {
+    transform: translateY(-1px);
+}
+
+.approveButton:disabled,
+.finalizeButton:disabled,
+.restartButton:disabled,
+.retryButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Delete Button */
+.deleteButton {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 12px;
+    background: var(--color-system-bg);
+    color: #FF3B30;
+    border: 3px solid var(--color-separator);
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.3px;
+}
+
+.deleteButton:hover {
+    background: rgba(255, 59, 48, 0.15);
+    border-color: #FF3B30;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+}
+
+.deleteButton:active {
+    transform: translateY(-1px);
+}
+
+/* Success Buttons Row */
+.successButtonsRow {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.viewButton,
+.addButton {
+    flex: 1;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.viewButton {
+    background: linear-gradient(135deg, #007AFF 0%, #0A84FF 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.viewButton:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0062CC 0%, #0073E6 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+}
+
+.viewButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
+}
+
+.addButton {
+    background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.addButton:hover:not(:disabled) {
+    background: linear-gradient(135deg, #28A745 0%, #28B84C 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.4);
+}
+
+.addButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(52, 199, 89, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .viewButton {
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.25) 0%, rgba(10, 132, 255, 0.3) 100%);
+        color: #66B3FF;
+        border: 1.5px solid rgba(10, 132, 255, 0.4);
+    }
+
+    .viewButton:hover:not(:disabled) {
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.35) 0%, rgba(10, 132, 255, 0.4) 100%);
+        box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25);
+    }
+
+    .viewButton:active:not(:disabled) {
+        box-shadow: 0 2px 6px rgba(10, 132, 255, 0.2);
+    }
+
+    .addButton {
+        background: linear-gradient(135deg, rgba(48, 209, 88, 0.25) 0%, rgba(48, 209, 88, 0.3) 100%);
+        color: #6CD98A;
+        border: 1.5px solid rgba(48, 209, 88, 0.4);
+    }
+
+    .addButton:hover:not(:disabled) {
+        background: linear-gradient(135deg, rgba(48, 209, 88, 0.35) 0%, rgba(48, 209, 88, 0.4) 100%);
+        box-shadow: 0 4px 12px rgba(48, 209, 88, 0.25);
+    }
+
+    .addButton:active:not(:disabled) {
+        box-shadow: 0 2px 6px rgba(48, 209, 88, 0.2);
+    }
+}
+
+.viewButton:disabled,
+.addButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stop Button */
+.stopButton {
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    padding: 0 32px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
+    color: #fff;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 8px 24px rgba(255, 59, 48, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+
+.stopButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.stopButton:hover::before {
+    left: 100%;
+}
+
+.stopButton:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+        0 12px 32px rgba(255, 59, 48, 0.6),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.stopButton:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: 
+        0 6px 20px rgba(255, 59, 48, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stopIcon {
+    font-size: 24px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.stopText {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+/* New Upload Button */
+.newUploadButton {
+    position: relative;
+    width: 100%;
+    min-height: 70px;
+    padding: 0 36px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    color: #ffffff;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 32px;
+    box-shadow: 
+        0 10px 30px rgba(0, 122, 255, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 2px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.newUploadButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%
+    );
+    transition: left 0.7s ease;
+}
+
+.newUploadButton:hover::before {
+    left: 100%;
+}
+
+.newUploadButton::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    opacity: 0;
+    z-index: -1;
+    filter: blur(20px);
+    transition: opacity 0.3s ease;
+}
+
+.newUploadButton:hover::after {
+    opacity: 0.6;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+.newUploadButton:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+        0 16px 40px rgba(0, 122, 255, 0.6),
+        0 6px 16px rgba(0, 0, 0, 0.35),
+        inset 0 2px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.newUploadButton:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: 
+        0 8px 24px rgba(0, 122, 255, 0.5),
+        0 3px 10px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+    .newUploadButton {
+        background: linear-gradient(135deg, #0A84FF 0%, #0066CC 100%);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 
+            0 10px 30px rgba(10, 132, 255, 0.5),
+            0 4px 12px rgba(0, 0, 0, 0.4),
+            inset 0 2px 0 rgba(255, 255, 255, 0.2),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .newUploadButton::after {
+        background: linear-gradient(135deg, #0A84FF 0%, #0066CC 100%);
+    }
+
+    .newUploadButton:hover {
+        box-shadow: 
+            0 16px 40px rgba(10, 132, 255, 0.7),
+            0 6px 16px rgba(0, 0, 0, 0.5),
+            inset 0 2px 0 rgba(255, 255, 255, 0.3),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+

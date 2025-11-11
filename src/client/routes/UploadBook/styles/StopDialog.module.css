@@ -1,0 +1,131 @@
+/* Stop Confirmation Dialog */
+.stopDialog {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 440px;
+    width: 90%;
+    box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.8), 
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.stopDialog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #FF3B30 0%, #FF453A 100%);
+    border-radius: 24px 24px 0 0;
+}
+
+.stopDialogIcon {
+    font-size: 72px;
+    margin-bottom: 24px;
+    animation: shake 0.5s;
+    filter: drop-shadow(0 4px 8px rgba(255, 59, 48, 0.3));
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-10px) rotate(-5deg); }
+    75% { transform: translateX(10px) rotate(5deg); }
+}
+
+.stopDialogTitle {
+    font-size: 28px;
+    font-weight: 900;
+    color: #1C1C1E;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.5px;
+}
+
+.stopDialogMessage {
+    font-size: 17px;
+    color: #3A3A3C;
+    line-height: 1.6;
+    margin: 0 0 32px 0;
+    font-weight: 500;
+}
+
+.stopDialogActions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stopDialogCancel {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 14px;
+    background: #F2F2F7;
+    color: #007AFF;
+    border: none;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    order: 2;
+}
+
+.stopDialogCancel:hover {
+    background: #E5E5EA;
+    transform: scale(1.02);
+}
+
+.stopDialogConfirm {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
+    color: #FFFFFF;
+    border: none;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 6px 20px rgba(255, 59, 48, 0.4);
+    order: 1;
+}
+
+.stopDialogConfirm:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 28px rgba(255, 59, 48, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+    .stopDialog {
+        background: #1C1C1E;
+        box-shadow: 
+            0 32px 64px rgba(0, 0, 0, 0.9), 
+            0 0 0 1px rgba(255, 255, 255, 0.15);
+    }
+
+    .stopDialog::before {
+        background: linear-gradient(90deg, #FF453A 0%, #FF375F 100%);
+    }
+
+    .stopDialogTitle {
+        color: #FFFFFF;
+    }
+
+    .stopDialogMessage {
+        color: #AEAEB2;
+    }
+
+    .stopDialogCancel {
+        background: #2C2C2E;
+        color: #0A84FF;
+    }
+
+    .stopDialogCancel:hover {
+        background: #3A3A3C;
+    }
+}
+

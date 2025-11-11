@@ -8,6 +8,7 @@ interface UploadListProps {
     selectedId: string | null;
     loadingActions: Record<string, boolean>;
     onSelectUpload: (uploadId: string) => void;
+    onViewValidationErrors: (uploadId: string) => void;
     onFinalizeUpload: (uploadId: string) => void;
     onDeleteUpload: (uploadId: string) => void;
     onRestartUpload: (uploadId: string) => void;
@@ -22,6 +23,7 @@ export const UploadList: React.FC<UploadListProps> = ({
     selectedId,
     loadingActions,
     onSelectUpload,
+    onViewValidationErrors,
     onFinalizeUpload,
     onDeleteUpload,
     onRestartUpload,
@@ -36,6 +38,7 @@ export const UploadList: React.FC<UploadListProps> = ({
                     isSelected={selectedId === upload.uploadId}
                     isLoading={loadingActions[upload.uploadId] || false}
                     onSelectUpload={onSelectUpload}
+                    onViewValidationErrors={onViewValidationErrors}
                     onFinalizeUpload={onFinalizeUpload}
                     onDeleteUpload={onDeleteUpload}
                     onRestartUpload={onRestartUpload}
