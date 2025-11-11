@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ParserProgress } from './ParserProgress';
 import type { UploadItem } from '../hooks/useUploadManager';
 import styles from '../UploadBook.module.css';
+import cardStyles from '../UploadCard.module.css';
 
 interface UploadCardProps {
     upload: UploadItem;
@@ -105,12 +106,19 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                 <div className={styles.uploadTime}>
                     {new Date(upload.createdAt).toLocaleString()}
                 </div>
-            </div>
-
-            {/* Expiration Timer */}
-            <div className={`${styles.expirationTimer} ${isExpired ? styles.expired : ''}`}>
-                <span className={styles.expirationIcon}>⏰</span>
-                <span className={styles.expirationText}>{remainingTime}</span>
+                {/* Delete button at top right */}
+                {!isExpired && upload.status === 'success' && (
+                    <button
+                        className={styles.deleteIconButton}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onDeleteUpload(upload.uploadId);
+                        }}
+                        aria-label="Delete upload"
+                    >
+                        ✕
+                    </button>
+                )}
             </div>
 
             {/* File Name and Upload ID */}
@@ -193,24 +201,18 @@ export const UploadCard: React.FC<UploadCardProps> = ({
 
                 {/* Success Status - Show validation errors summary if any */}
                 {!isExpired && upload.status === 'success' && upload.validationErrors && upload.validationErrors.length > 0 && (
-                    <div className={styles.validationErrorsSummary}>
-                        <div className={styles.validationErrorsHeader}>
-                            <span className={styles.validationErrorsIcon}>⚠️</span>
-                            <span className={styles.validationErrorsTitle}>
-                                {upload.validationErrors.length} validation {upload.validationErrors.length === 1 ? 'error' : 'errors'} found
-                            </span>
-                        </div>
-                        <p className={styles.validationErrorsDescription}>
-                            Minor formatting inconsistencies detected (auto-approved)
-                        </p>
+                    <div className={cardStyles.validationErrorsSummary}>
+                        <span className={cardStyles.validationErrorsText}>
+                            ⚠️ {upload.validationErrors.length} validation {upload.validationErrors.length === 1 ? 'error' : 'errors'} found
+                        </span>
                         <button
-                            className={styles.viewErrorsButton}
+                            className={cardStyles.viewErrorsButton}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onSelectUpload(upload.uploadId);
                             }}
                         >
-                            View Details
+                            View
                         </button>
                     </div>
                 )}
@@ -263,42 +265,28 @@ export const UploadCard: React.FC<UploadCardProps> = ({
 
                         {/* Success Actions */}
                         {upload.status === 'success' && (
-                            <>
+                            <div className={styles.successButtonsRow}>
                                 <button
-                                    className={styles.approveButton}
+                                    className={styles.viewButton}
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onSelectUpload(upload.uploadId);
                                     }}
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? (
-                                        <>⏳ LOADING...</>
-                                    ) : (
-                                        <><span>📋</span> VIEW SUMMARY</>
-                                    )}
+                                    {isLoading ? '⏳' : '📋 VIEW'}
                                 </button>
                                 <button
-                                    className={styles.finalizeButton}
+                                    className={styles.addButton}
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onFinalizeUpload(upload.uploadId);
                                     }}
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? '⏳ ADDING...' : '📚 ADD TO LIBRARY'}
+                                    {isLoading ? '⏳ ADDING...' : '📚 ADD'}
                                 </button>
-                                <button
-                                    className={styles.deleteButton}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onDeleteUpload(upload.uploadId);
-                                    }}
-                                    disabled={isLoading}
-                                >
-                                    {isLoading ? '⏳' : '🗑️'} DELETE
-                                </button>
-                            </>
+                            </div>
                         )}
 
                         {/* Failed Actions */}
@@ -352,6 +340,14 @@ export const UploadCard: React.FC<UploadCardProps> = ({
                     </div>
                 )}
             </div>
+
+            {/* Expiration Timer at bottom */}
+            {!isExpired && (
+                <div className={styles.expirationTimerBottom}>
+                    <span className={styles.expirationIcon}>⏰</span>
+                    <span className={styles.expirationText}>{remainingTime}</span>
+                </div>
+            )}
         </div>
     );
 };
