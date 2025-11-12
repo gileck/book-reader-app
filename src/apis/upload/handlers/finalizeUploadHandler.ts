@@ -4,7 +4,6 @@ import { createBook } from '@/server/database/collections/books/books';
 import { createChapter } from '@/server/database/collections/chapters/chapters';
 import { deleteBook } from '@/server/database/collections/books/books';
 import { getFileAsString, deleteFile } from '@/server/s3/sdk';
-import { list } from '@vercel/blob';
 import type { ApiHandlerContext, FinalizeUploadRequest, FinalizeUploadResponse } from '../types';
 
 // TypeScript types for parser output
@@ -110,56 +109,15 @@ export async function finalizeUploadHandler(
 
         try {
             // Find the first image (sorted by filename) to use as cover
-            // Use Vercel Blob list() to get ALL uploaded images (not just chapter-referenced ones)
-            // This matches the logic in upload-book.js and getMetadataHandler.ts
+            // Read from database instead of calling list() on Vercel Blob
             let coverImage: string | undefined;
             
-            if (metadata.imageBaseURL) {
-                const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-                
-                if (BLOB_READ_WRITE_TOKEN) {
-                    try {
-                        // Extract book folder from imageBaseURL (e.g., "/BookTitle/images/" -> "books/BookTitle/")
-                        const bookFolder = metadata.imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
-                        const blobPrefix = `books/${bookFolder}`;
-                        
-                        console.log(`[finalizeUpload] Listing all images from Vercel Blob with prefix: ${blobPrefix}`);
-                        
-                        // List all blobs with this prefix
-                        const { blobs } = await list({
-                            prefix: blobPrefix,
-                            token: BLOB_READ_WRITE_TOKEN
-                        });
-                        
-                        console.log(`[finalizeUpload] Found ${blobs.length} blobs in Vercel Blob`);
-                        
-                        if (blobs.length > 0) {
-                            // Extract just the filename from each blob URL
-                            const blobsWithNames = blobs.map(blob => {
-                                // Extract filename from pathname (e.g., "books/BookTitle/images/image-001-1.jpg" -> "image-001-1.jpg")
-                                const filename = blob.pathname.split('/').pop() || '';
-                                return {
-                                    filename,
-                                    url: blob.url
-                                };
-                            }).filter(b => b.filename); // Filter out any empty filenames
-                            
-                            // Sort by filename (numerically) to match upload-book.js logic
-                            blobsWithNames.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' }));
-                            
-                            // Pick first image as cover
-                            if (blobsWithNames.length > 0) {
-                                coverImage = blobsWithNames[0].url;
-                                console.log(`[finalizeUpload] Selected cover image: ${coverImage} (${blobsWithNames[0].filename}, from ${blobsWithNames.length} total images)`);
-                            }
-                        }
-                    } catch (err) {
-                        console.error('[finalizeUpload] Failed to list images from Vercel Blob:', err);
-                        // Fall back to no cover image
-                    }
-                } else {
-                    console.warn('[finalizeUpload] BLOB_READ_WRITE_TOKEN not set, cannot determine cover image');
-                }
+            if (upload.images && upload.images.length > 0) {
+                // First image is the cover (sorted during upload)
+                coverImage = upload.images[0].url;
+                console.log(`[finalizeUpload] Selected cover image from database: ${coverImage} (${upload.images[0].name}, from ${upload.images.length} total images)`);
+            } else {
+                console.log('[finalizeUpload] No images found in database for this upload');
             }
 
             // Create book

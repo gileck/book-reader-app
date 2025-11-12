@@ -14,6 +14,13 @@ export interface ValidationError {
     chapterErrorSummary?: string[];
 }
 
+export interface UploadedImage {
+    name: string; // Filename (e.g., "image-001-1.jpg")
+    url: string; // Full Vercel Blob URL
+    size: number; // Size in bytes
+    blobKey: string; // Blob key for deletion (e.g., "books/BookTitle/images/image-001-1.jpg")
+}
+
 export interface BookUpload {
     _id: ObjectId;
     userId: ObjectId;
@@ -33,6 +40,8 @@ export interface BookUpload {
         timestamp: Date;
     };
     bookId?: ObjectId;
+    images?: UploadedImage[]; // Store uploaded image URLs to avoid list() operations
+    imageBaseURL?: string; // Relative path for image base URL (e.g., "/BookTitle/images/")
     expiresAt: Date; // Automatic deletion time (24 hours from creation)
     createdAt: Date;
     updatedAt: Date;

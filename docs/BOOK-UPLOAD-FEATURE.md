@@ -7,10 +7,11 @@
 4. [Technical Implementation](#technical-implementation)
 5. [API Reference](#api-reference)
 6. [Database Schema](#database-schema)
-7. [S3 Storage Structure](#s3-storage-structure)
-8. [Automatic File Expiration (24-Hour Cleanup)](#automatic-file-expiration-24-hour-cleanup)
-9. [Error Handling](#error-handling)
-10. [Troubleshooting](#troubleshooting)
+7. [Storage Structure](#storage-structure)
+8. [Image Storage Optimization](#image-storage-optimization)
+9. [Automatic File Expiration (24-Hour Cleanup)](#automatic-file-expiration-24-hour-cleanup)
+10. [Error Handling](#error-handling)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -144,8 +145,8 @@ sequenceDiagram
     Client->>API: POST /api/upload/finalize
     
     API->>S3: Download output.json
-    API->>Vercel Blob: List all images to determine cover
-    API->>DB: Create book
+    API->>DB: Read image URLs from upload record
+    API->>DB: Create book (with cover from upload.images[0])
     API->>DB: Create chapters
     
     API->>S3: Delete upload PDF
@@ -737,31 +738,18 @@ if (fs.existsSync(imagesDir)) {
 
 **File**: `src/apis/upload/handlers/finalizeUploadHandler.ts`
 
-When adding to library, cover image is determined by listing ALL images from Vercel Blob:
+When adding to library, cover image is read directly from the database upload record (optimized - no Vercel Blob list() calls):
 
 ```typescript
-// Extract book folder from imageBaseURL
-const bookFolder = metadata.imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
-const blobPrefix = `books/${bookFolder}`;
+// Images are stored in upload record during parsing
+// First image is the cover (already sorted during upload)
+let coverImage: string | undefined;
 
-// List all blobs with this prefix
-const { blobs } = await list({
-    prefix: blobPrefix,
-    token: BLOB_READ_WRITE_TOKEN
-});
-
-// Extract filenames and sort numerically
-const blobsWithNames = blobs.map(blob => ({
-    filename: blob.pathname.split('/').pop() || '',
-    url: blob.url
-})).filter(b => b.filename);
-
-blobsWithNames.sort((a, b) => 
-    a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' })
-);
-
-// Pick first image as cover
-const coverImage = blobsWithNames[0]?.url;
+if (upload.images && upload.images.length > 0) {
+    // First image is the cover (sorted during upload)
+    coverImage = upload.images[0].url;
+    console.log(`[finalizeUpload] Selected cover image from database: ${coverImage}`);
+}
 
 // Create book with cover image
 await createBook({
@@ -771,6 +759,8 @@ await createBook({
     // ... other fields
 });
 ```
+
+**Optimization**: Image URLs are stored in the database during upload, eliminating expensive Vercel Blob `list()` operations.
 
 **Why This Approach?**
 - ✅ Gets ALL images (including standalone covers not in chapter text)
@@ -1005,13 +995,11 @@ interface ParserMetadata {
 
 **Image Collection Logic**:
 
-The `getMetadata` endpoint collects ALL uploaded images by querying Vercel Blob directly:
+The `getMetadata` endpoint retrieves ALL uploaded images from the database (optimized - no Vercel Blob operations):
 
-1. **Extracts book folder** from `metadata.imageBaseURL` (e.g., `/BookTitle/images/` → `books/BookTitle/`)
-2. **Lists all blobs** using Vercel Blob's `list()` API with the book's prefix
-3. **Extracts metadata** (filename, URL, size) from each blob
-4. **Sorts by filename** using numeric-aware `localeCompare` (same logic as cover selection)
-5. **Calculates sizes**:
+1. **Reads images** from `upload.images[]` field in database (stored during upload)
+2. **First image** is always the cover (sorted numerically during upload)
+3. **Calculates display sizes**:
    - Files < 0.1 KB: Returns `0.05` (displayed as `<0.1 KB`)
    - Files 0.1-0.9 KB: Rounded to 1 decimal place (e.g., `0.7`)
    - Files >= 1 KB: Rounded to nearest integer
@@ -1021,7 +1009,7 @@ This ensures ALL uploaded images are shown, including:
 - Standalone decorative images
 - Images extracted but not referenced in chapters
 
-**Why not use chapter chunks?** Some images (like covers) are extracted by the parser but not placed in chapter content. Using Vercel Blob's `list()` API ensures we show every image that was uploaded, matching the CLI behavior exactly.
+**Optimization**: Image metadata (name, URL, size, blobKey) is stored in the database during upload, eliminating expensive Vercel Blob `list()` operations on every metadata request. This keeps the app under Vercel's free tier limits for Advanced Operations (2,000/month).
 
 ### 6. Finalize Upload (Add to Library)
 
@@ -1047,7 +1035,7 @@ This ensures ALL uploaded images are shown, including:
 
 **Process**:
 1. Download parser output from S3
-2. List all images from Vercel Blob to determine cover image (sorted numerically)
+2. Read image URLs from database upload record (first image = cover)
 3. Create book in database with cover image URL
 4. Create chapters in database (parallel for performance)
 5. Clean up temporary artifacts:
@@ -1058,7 +1046,7 @@ This ensures ALL uploaded images are shown, including:
 7. Return `bookId` for navigation
 
 **Cover Image Selection**:
-- Uses Vercel Blob `list()` API to get ALL uploaded images
+- Reads image metadata from database (stored during upload)
 - Sorts images by filename numerically: `localeCompare(..., { numeric: true })`
 - Picks the first sorted image as cover
 - This matches the logic in CLI and preview, ensuring consistency
@@ -1323,6 +1311,158 @@ const imageUrl = book.imageBaseURL + chunk.imageName;
 // S3 SDK serves the image
 const signedUrl = await getSignedFileUrl(imageUrl);
 ```
+
+---
+
+## Image Storage Optimization
+
+### Overview
+
+To keep the application within Vercel Blob's free tier limits (2,000 Advanced Operations per month), image metadata is stored in the database during upload instead of calling Vercel Blob's `list()` API on every request.
+
+### Problem: Expensive list() Operations
+
+**Before Optimization:**
+- Every metadata view triggered a `list()` call to Vercel Blob
+- Every book finalization triggered a `list()` call for cover selection  
+- Every upload deletion triggered a `list()` call to find images
+- **Result**: Thousands of Advanced Operations per month (exceeded free tier)
+
+### Solution: Database-Backed Image Metadata
+
+**After Optimization:**
+- Image metadata stored in database during upload (`BookUpload.images[]`)
+- All handlers read from database instead of Vercel Blob
+- **Result**: Zero `list()` calls in upload flow (stays under free tier)
+
+### Implementation
+
+#### 1. Database Schema
+
+**File**: `src/server/database/collections/bookUploads/types.ts`
+
+```typescript
+export interface UploadedImage {
+    name: string;     // Filename (e.g., "image-001-1.jpg")
+    url: string;      // Full Vercel Blob URL
+    size: number;     // Size in bytes
+    blobKey: string;  // Blob key for deletion (e.g., "books/BookTitle/images/image-001-1.jpg")
+}
+
+export interface BookUpload {
+    // ... other fields
+    images?: UploadedImage[];        // Store uploaded image URLs
+    imageBaseURL?: string;            // Relative path (e.g., "/BookTitle/images/")
+}
+```
+
+#### 2. Upload: Store Image Metadata
+
+**File**: `src/server/parser/productionRunner.ts`
+
+During image upload, metadata is collected and stored in the database:
+
+```typescript
+// Upload each image and collect metadata
+const uploadPromises = imageFiles.map(async (filename) => {
+    const blobUrl = await uploadFileToBlob(blobKey, fileContent, contentType);
+    
+    return {
+        name: filename,
+        url: blobUrl,
+        size: fileContent.length,
+        blobKey
+    };
+});
+
+const uploadedImages = await Promise.all(uploadPromises);
+
+// Store in database
+await updateBookUpload(uploadId, {
+    images: uploadedImages,
+    imageBaseURL: `/${bookFolderName}/images/`
+});
+```
+
+#### 3. Metadata: Read from Database
+
+**File**: `src/apis/upload/handlers/getMetadataHandler.ts`
+
+```typescript
+// ❌ Before: Expensive list() call
+// const { blobs } = await list({ prefix: blobPrefix, token });
+
+// ✅ After: Read from database
+if (upload.images && upload.images.length > 0) {
+    coverImageUrl = upload.images[0].url;  // First image is cover
+    images = upload.images.map(img => ({
+        name: img.name,
+        url: img.url,
+        sizeKB: Math.round(img.size / 1024)
+    }));
+}
+```
+
+#### 4. Deletion: Use Stored URLs
+
+**Files**: 
+- `src/apis/upload/handlers/deleteUploadHandler.ts`
+- `src/apis/upload/handlers/cleanupExpiredUploadsHandler.ts`
+
+```typescript
+// ❌ Before: Expensive list() call to find images
+// const { blobs } = await list({ prefix, token });
+// await del(blobs.map(b => b.url), { token });
+
+// ✅ After: Use stored URLs from database
+if (upload.images && upload.images.length > 0) {
+    const blobUrls = upload.images.map(img => img.url);
+    await del(blobUrls, { token: BLOB_READ_WRITE_TOKEN });
+}
+```
+
+#### 5. Finalization: Read Cover from Database
+
+**File**: `src/apis/upload/handlers/finalizeUploadHandler.ts`
+
+```typescript
+// ❌ Before: Expensive list() call
+// const { blobs } = await list({ prefix, token });
+// const coverImage = blobs[0]?.url;
+
+// ✅ After: Read from database
+if (upload.images && upload.images.length > 0) {
+    coverImage = upload.images[0].url;  // Already sorted
+}
+```
+
+### Benefits
+
+1. **Cost Reduction**: Stays under Vercel's 2,000 Advanced Operations/month free tier
+2. **Performance**: Faster metadata retrieval (no network call to Blob storage)
+3. **Reliability**: No dependency on external service for metadata
+4. **Consistency**: Single source of truth in database
+
+### Remaining list() Calls
+
+The only `list()` call that remains is in the **File Storage Browser** (`src/apis/fileStorage/server.ts`):
+
+```typescript
+export async function listVercelFiles() {
+    // This is intentional - used for administrative file browsing
+    const result = await listVercelBlobs({ token, prefix, limit: 1000 });
+    // ...
+}
+```
+
+This is acceptable because:
+- Only triggered when explicitly browsing the storage UI
+- Rare admin action, not part of normal user flow
+- Not triggered automatically
+
+### Migration Note
+
+Existing uploads created before this optimization will not have the `images` field populated. These will gracefully fall back to no images (acceptable since uploads expire after 24 hours).
 
 ---
 

@@ -1,6 +1,5 @@
 import { getBookUpload } from '@/server/database/collections/bookUploads';
 import { getFileAsString, getSignedFileUrl } from '@/server/s3/sdk';
-import { list } from '@vercel/blob';
 import type { ApiHandlerContext, GetMetadataRequest, GetMetadataResponse } from '../types';
 
 // TypeScript types for parser output
@@ -149,81 +148,42 @@ export async function getMetadataHandler(
             // Continue without the URL if generation fails
         }
 
-        // Extract all images and cover image by listing ALL uploaded images from Vercel Blob
-        // This ensures we get ALL images, not just those referenced in chapters
+        // Extract all images and cover image from database (stored during upload)
+        // This avoids expensive list() operations on Vercel Blob
         let coverImageUrl: string | undefined;
         const images: Array<{ name: string; url: string; sizeKB?: number }> = [];
         
-        if (metadata.imageBaseURL) {
-            const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+        if (upload.images && upload.images.length > 0) {
+            console.log(`[getMetadata] Found ${upload.images.length} images in database`);
             
-            if (BLOB_READ_WRITE_TOKEN) {
-                try {
-                    // Extract book folder from imageBaseURL (e.g., "/BookTitle/images/" -> "books/BookTitle/")
-                    const bookFolder = metadata.imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
-                    const blobPrefix = `books/${bookFolder}`;
-                    
-                    console.log(`[getMetadata] Listing all images from Vercel Blob with prefix: ${blobPrefix}`);
-                    
-                    // List all blobs with this prefix
-                    const { blobs } = await list({
-                        prefix: blobPrefix,
-                        token: BLOB_READ_WRITE_TOKEN
-                    });
-                    
-                    console.log(`[getMetadata] Found ${blobs.length} blobs in Vercel Blob`);
-                    
-                    if (blobs.length > 0) {
-                        // Extract just the filename from each blob URL
-                        const blobsWithNames = blobs.map(blob => {
-                            // Extract filename from pathname (e.g., "books/BookTitle/images/image-001-1.jpg" -> "image-001-1.jpg")
-                            const filename = blob.pathname.split('/').pop() || '';
-                            return {
-                                filename,
-                                url: blob.url,
-                                size: blob.size
-                            };
-                        }).filter(b => b.filename); // Filter out any empty filenames
-                        
-                        // Sort by filename (numerically) to match upload-book.js logic
-                        blobsWithNames.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true, sensitivity: 'base' }));
-                        
-                        // Pick first image as cover
-                        if (blobsWithNames.length > 0) {
-                            coverImageUrl = blobsWithNames[0].url;
-                            console.log('[getMetadata] Cover image:', coverImageUrl);
-                        }
-                        
-                        // Build full image list with URLs and sizes
-                        for (const blob of blobsWithNames) {
-                            let sizeKB: number | undefined;
-                            if (blob.size) {
-                                const kb = blob.size / 1024;
-                                if (kb < 0.1) {
-                                    sizeKB = 0.05; // Special marker for <0.1 KB
-                                } else if (kb < 1) {
-                                    sizeKB = Math.round(kb * 10) / 10; // Round to 1 decimal place (0.1, 0.2, etc.)
-                                } else {
-                                    sizeKB = Math.round(kb); // Round to nearest integer for >= 1 KB
-                                }
-                            }
-                            
-                            images.push({
-                                name: blob.filename,
-                                url: blob.url,
-                                sizeKB
-                            });
-                        }
-                        
-                        console.log('[getMetadata] Total images collected from Vercel Blob:', images.length);
+            // First image is the cover (sorted during upload)
+            coverImageUrl = upload.images[0].url;
+            console.log('[getMetadata] Cover image from database:', coverImageUrl);
+            
+            // Build full image list with URLs and sizes
+            for (const img of upload.images) {
+                let sizeKB: number | undefined;
+                if (img.size) {
+                    const kb = img.size / 1024;
+                    if (kb < 0.1) {
+                        sizeKB = 0.05; // Special marker for <0.1 KB
+                    } else if (kb < 1) {
+                        sizeKB = Math.round(kb * 10) / 10; // Round to 1 decimal place (0.1, 0.2, etc.)
+                    } else {
+                        sizeKB = Math.round(kb); // Round to nearest integer for >= 1 KB
                     }
-                } catch (err) {
-                    console.error('[getMetadata] Failed to list images from Vercel Blob:', err);
-                    // Fall back to empty images array
                 }
-            } else {
-                console.warn('[getMetadata] BLOB_READ_WRITE_TOKEN not set, cannot list images');
+                
+                images.push({
+                    name: img.name,
+                    url: img.url,
+                    sizeKB
+                });
             }
+            
+            console.log('[getMetadata] Total images from database:', images.length);
+        } else {
+            console.log('[getMetadata] No images found in database for this upload');
         }
 
         return {

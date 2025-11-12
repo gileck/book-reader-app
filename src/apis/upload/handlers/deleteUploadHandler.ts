@@ -1,6 +1,6 @@
 import { getBookUpload, deleteBookUpload } from '@/server/database/collections/bookUploads';
-import { deleteFile, getFileAsString } from '@/server/s3/sdk';
-import { list, del } from '@vercel/blob';
+import { deleteFile } from '@/server/s3/sdk';
+import { del } from '@vercel/blob';
 import type { ApiHandlerContext, DeleteUploadRequest, DeleteUploadResponse } from '../types';
 
 export async function deleteUploadHandler(
@@ -45,45 +45,22 @@ export async function deleteUploadHandler(
             );
         }
 
-        // Delete images from Vercel Blob
-        if (upload.parserOutputS3Key) {
-            const parserOutputS3Key = upload.parserOutputS3Key; // Capture for closure
+        // Delete images from Vercel Blob using stored URLs from database
+        if (upload.images && upload.images.length > 0) {
+            const imagesToDelete = upload.images; // Capture for closure
             deletePromises.push(
                 (async () => {
                     try {
-                        // Get parser output to find imageBaseURL
-                        const parserOutputJson = await getFileAsString(parserOutputS3Key);
-                        const parserOutput = JSON.parse(parserOutputJson);
-                        
-                        if (parserOutput?.finalOutput?.metadata?.imageBaseURL) {
-                            const imageBaseURL = parserOutput.finalOutput.metadata.imageBaseURL;
-                            // Extract book folder from imageBaseURL (e.g., "/BookTitle/images/" -> "books/BookTitle/")
-                            const bookFolder = imageBaseURL.replace(/^\//, '').replace(/\/images\/$/, '');
-                            const blobPrefix = `books/${bookFolder}`;
-                            
-                            console.log(`🔍 Looking for Vercel Blob images with prefix: ${blobPrefix}`);
-                            
-                            // List all blobs with this prefix
-                            const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-                            if (!BLOB_READ_WRITE_TOKEN) {
-                                console.warn('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image deletion');
-                                return;
-                            }
-                            
-                            const { blobs } = await list({
-                                prefix: blobPrefix,
-                                token: BLOB_READ_WRITE_TOKEN
-                            });
-                            
-                            if (blobs.length > 0) {
-                                const blobUrls = blobs.map(blob => blob.url);
-                                console.log(`🗑️  Deleting ${blobUrls.length} images from Vercel Blob`);
-                                await del(blobUrls, { token: BLOB_READ_WRITE_TOKEN });
-                                console.log(`✅ Deleted ${blobUrls.length} images from Vercel Blob`);
-                            } else {
-                                console.log(`📸 No images found in Vercel Blob for prefix: ${blobPrefix}`);
-                            }
+                        const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+                        if (!BLOB_READ_WRITE_TOKEN) {
+                            console.warn('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image deletion');
+                            return;
                         }
+                        
+                        const blobUrls = imagesToDelete.map(img => img.url);
+                        console.log(`🗑️  Deleting ${blobUrls.length} images from Vercel Blob`);
+                        await del(blobUrls, { token: BLOB_READ_WRITE_TOKEN });
+                        console.log(`✅ Deleted ${blobUrls.length} images from Vercel Blob`);
                     } catch (err) {
                         console.error('Failed to delete Vercel Blob images:', err);
                         // Don't throw - allow deletion to continue even if image cleanup fails

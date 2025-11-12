@@ -412,6 +412,12 @@ export async function runParserWithSSE(
         // Upload images to Vercel Blob if they exist
         const imagesDir = path.join(result.outputDir, 'images');
         let imageBaseURL = '';
+        const uploadedImages: Array<{
+            name: string;
+            url: string;
+            size: number;
+            blobKey: string;
+        }> = [];
         
         if (fs.existsSync(imagesDir)) {
             console.log(`📸 Uploading images from: ${imagesDir}`);
@@ -431,7 +437,7 @@ export async function runParserWithSSE(
                 const bookFolderName = bookTitle.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
                 const blobPrefix = `books/${bookFolderName}/images/`;
                 
-                // Upload each image to Vercel Blob
+                // Upload each image to Vercel Blob and store metadata
                 const uploadPromises = imageFiles.map(async (filename) => {
                     const filePath = path.join(imagesDir, filename);
                     const fileContent = fs.readFileSync(filePath);
@@ -440,12 +446,20 @@ export async function runParserWithSSE(
                     
                     console.log(`   📤 Uploading to Vercel Blob: ${filename}`);
                     
-                    await uploadFileToBlob(blobKey, fileContent, contentType);
+                    const blobUrl = await uploadFileToBlob(blobKey, fileContent, contentType);
                     
                     console.log(`   ✓ Uploaded: ${filename}`);
+                    
+                    return {
+                        name: filename,
+                        url: blobUrl,
+                        size: fileContent.length,
+                        blobKey
+                    };
                 });
                 
-                await Promise.all(uploadPromises);
+                const results = await Promise.all(uploadPromises);
+                uploadedImages.push(...results);
                 
                 // Set imageBaseURL as relative path (Vercel Blob format)
                 imageBaseURL = `/${bookFolderName}/images/`;
@@ -509,10 +523,12 @@ export async function runParserWithSSE(
             status: 'parsing'
         });
 
-        // Update database with S3 key and success status (100% complete!)
+        // Update database with S3 key, images, and success status (100% complete!)
         console.log(`📝 Updating database with success status for uploadId: ${uploadId}`);
         await updateBookUpload(uploadId, {
             parserOutputS3Key: s3Key,
+            images: uploadedImages.length > 0 ? uploadedImages : undefined,
+            imageBaseURL: imageBaseURL || undefined,
             currentStep: 'Complete',
             progress: 100,
             status: 'success'
