@@ -78,6 +78,7 @@ Options:
   --no-cache                    Disable step caching (re-run all steps)
   --clear-cache                 Clear all cached steps before running
   --clear-cache-from=<step>     Clear cache from specific step onwards (e.g., step-4)
+  --approve-all-validation-errors  Automatically approve all validation errors
 
 Modes (use with --mode flag):
   parse-only                    Only parse the book, don't upload
@@ -123,6 +124,9 @@ Examples:
   
   # Debug step 4 - clear cache from step 4 onwards (keeps cache for steps 1-3)
   node run-parser-and-upload.js ./my-book-folder --clear-cache-from=step-4
+  
+  # Auto-approve all validation errors
+  node run-parser-and-upload.js ./my-book-folder --mode=parse-only --approve-all-validation-errors
 
 Note: When running in interactive mode, the script will show the equivalent 
       non-interactive command BEFORE starting operations, making it easy to 
@@ -258,8 +262,71 @@ async function selectMode(hasExistingOutput) {
     return answer.mode;
 }
 
+/**
+ * Handle validation errors by displaying them and prompting user for approval
+ * @param {string} stepName - The name of the validation step that failed
+ * @param {Object} errorDetails - Details about the validation errors
+ * @param {number} errorDetails.errorCount - Total number of validation errors
+ * @param {Array<string>} errorDetails.chapterErrorSummary - Per-chapter error breakdown
+ * @param {string} outputPath - Path to the output directory containing validation-output.txt
+ * @param {boolean} approveAll - If true, automatically approve without prompting
+ * @returns {Promise<boolean>} - True to continue parsing, false to stop
+ */
+async function handleValidationError(stepName, errorDetails, outputPath, approveAll) {
+    const { errorCount, chapterErrorSummary } = errorDetails;
+    const validationOutputPath = path.join(outputPath, 'validation-output.txt');
+
+    console.log(`\n❌ Validation failed in ${stepName} with ${errorCount} error(s)\n`);
+
+    if (chapterErrorSummary && chapterErrorSummary.length > 0) {
+        console.log('Error breakdown by chapter:');
+        for (const line of chapterErrorSummary) {
+            console.log(`  ${line}`);
+        }
+        console.log('');
+    }
+
+    console.log(`📄 Review the detailed errors in: ${validationOutputPath}\n`);
+
+    // If approve-all flag is set, automatically approve
+    if (approveAll) {
+        console.log('✓ Automatically approving errors (--approve-all-validation-errors flag is set)');
+        return true;
+    }
+
+    // Prompt user for decision
+    const answer = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'decision',
+            message: 'Do you want to approve these validation errors and continue?',
+            choices: [
+                {
+                    name: '✅ Approve and continue to next step',
+                    value: 'approve',
+                    short: 'Approve'
+                },
+                {
+                    name: '❌ Reject and stop the parser',
+                    value: 'reject',
+                    short: 'Reject'
+                }
+            ],
+            default: 'reject'
+        }
+    ]);
+
+    if (answer.decision === 'approve') {
+        console.log('✓ Errors approved. Continuing to next step...\n');
+        return true;
+    } else {
+        console.log('✗ Errors rejected. Stopping parser.\n');
+        return false;
+    }
+}
+
 async function runParser(pdfPath, outputPath, options = {}) {
-    const { forceReparse = false, useCache = true } = options;
+    const { forceReparse = false, useCache = true, approveAllValidationErrors = false } = options;
 
     console.log(`📚 Starting book parser...\n`);
     console.log(`   Input:  ${pdfPath}`);
@@ -271,13 +338,22 @@ async function runParser(pdfPath, outputPath, options = {}) {
     } else {
         console.log(`   Cache:  Enabled`);
     }
+
+    // Show validation approval status
+    if (approveAllValidationErrors) {
+        console.log(`   Validation: Auto-approve all errors (--approve-all-validation-errors)`);
+    }
+
     console.log('');
 
     await parser.parseBook(pdfPath, outputPath, {
         debug: true,
         validate: true,
         forceReparse: forceReparse,
-        useCache: useCache
+        useCache: useCache,
+        onValidationError: async (stepName, errorDetails) => {
+            return await handleValidationError(stepName, errorDetails, outputPath, approveAllValidationErrors);
+        }
     });
 
     console.log('\n✅ Parser completed successfully!');
@@ -313,7 +389,7 @@ function parseModeFlag(args) {
 }
 
 function buildRerunCommand(folderName, mode, options, scriptDir) {
-    const { forceReparse = false, noCache = false, clearCache = false, clearCacheFrom = null } = options;
+    const { forceReparse = false, noCache = false, clearCache = false, clearCacheFrom = null, approveAllValidationErrors = false } = options;
 
     // Determine the script path relative to current working directory
     const cwd = process.cwd();
@@ -334,6 +410,9 @@ function buildRerunCommand(folderName, mode, options, scriptDir) {
     if (clearCacheFrom) {
         cmd += ` --clear-cache-from=${clearCacheFrom}`;
     }
+    if (approveAllValidationErrors) {
+        cmd += ' --approve-all-validation-errors';
+    }
     return cmd;
 }
 
@@ -345,6 +424,7 @@ async function main() {
         const forceReparse = flags.has('--force-reparse') || flags.has('-f');
         const noCache = flags.has('--no-cache');
         let clearCache = flags.has('--clear-cache');
+        const approveAllValidationErrors = flags.has('--approve-all-validation-errors');
         const modeFlag = parseModeFlag(args);
 
         // Parse --clear-cache-from flag
@@ -441,7 +521,8 @@ async function main() {
                 forceReparse,
                 noCache,
                 clearCache,
-                clearCacheFrom
+                clearCacheFrom,
+                approveAllValidationErrors
             }, __dirname);
             console.log('💡 To re-run with the same options without prompts:');
             console.log(`   ${rerunCmd}\n`);
@@ -480,7 +561,8 @@ async function main() {
         // Run parser for all parse modes
         await runParser(pdfPath, outputPath, {
             forceReparse: forceReparse,
-            useCache: !noCache
+            useCache: !noCache,
+            approveAllValidationErrors: approveAllValidationErrors
         });
 
         // Run upload if requested

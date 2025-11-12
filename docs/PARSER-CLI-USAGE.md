@@ -77,6 +77,23 @@ node files/run-parser-and-upload.js ./files/MyBook --clear-cache-from=step-4
 node files/run-parser-and-upload.js ./files/MyBook --force-reparse
 ```
 
+### Validation Error Handling
+
+```bash
+# Automatically approve all validation errors (skip interactive prompts)
+node files/run-parser-and-upload.js ./files/MyBook --approve-all-validation-errors
+
+# Interactive mode (default): Prompts for approval when validation errors occur
+node files/run-parser-and-upload.js ./files/MyBook --mode=parse-only
+```
+
+When validation errors occur without the `--approve-all-validation-errors` flag:
+1. Parser displays error summary and chapter breakdown
+2. Shows path to detailed `validation-output.txt` file
+3. Prompts user to approve or reject errors
+4. If approved: continues to next step
+5. If rejected: stops parsing
+
 ### Help
 
 ```bash
@@ -165,20 +182,44 @@ node files/run-parser-and-upload.js ./files/MyBook --mode=parse-only
 
 ### 2. Validation Error Handling
 
-When validation errors occur:
+The parser provides two ways to handle validation errors:
 
-1. Parser stops and shows error details
-2. Creates `skipped-validation-errors.json` in output folder
-3. Edit this file to approve errors
-4. Re-run the parser to continue
+#### Option 1: Interactive Approval (Recommended)
 
-**Example `skipped-validation-errors.json`**:
+When validation errors occur, the parser will:
+1. Display error summary and per-chapter breakdown
+2. Show path to detailed `validation-output.txt` file
+3. Prompt you to approve or reject:
+   - ✅ **Approve**: Continue parsing to next step
+   - ❌ **Reject**: Stop parsing immediately
+
+```bash
+# Interactive mode (default)
+node files/run-parser-and-upload.js ./files/MyBook --mode=parse-only
+```
+
+#### Option 2: Auto-Approve All Errors
+
+Use the `--approve-all-validation-errors` flag to automatically approve all validation errors:
+
+```bash
+# Auto-approve mode
+node files/run-parser-and-upload.js ./files/MyBook --approve-all-validation-errors
+```
+
+#### Option 3: File-Based Skipping (Advanced)
+
+Create a `skipped-validation-errors.json` file in the book folder to skip specific errors:
+
 ```json
 [
   {
     "step": "step-5",
-    "errorId": "all",
-    "approvedAt": "2025-11-10T12:00:00.000Z"
+    "chunkId": "1_42"
+  },
+  {
+    "step": "step-4",
+    "chunkId": "3_*"
   }
 ]
 ```
@@ -388,9 +429,9 @@ Clear cache from a specific step onwards.
 ### Issue: Validation errors
 
 **Solution**:
-1. Review the error details in console
-2. Edit `output/skipped-validation-errors.json` to approve errors
-3. Re-run the parser
+1. **Interactive Mode (Recommended)**: Review errors and choose to approve or reject
+2. **Auto-Approve**: Use `--approve-all-validation-errors` flag to skip prompts
+3. **File-Based**: Edit `skipped-validation-errors.json` in book folder for specific errors
 
 ### Issue: Cache not working
 
@@ -453,6 +494,24 @@ node files/run-parser-and-upload.js ./files/MyBook \
 # Upload previously parsed book
 node files/run-parser-and-upload.js ./files/MyBook \
   --mode=upload-only-images
+```
+
+### Example 5: Handle Validation Errors
+
+```bash
+# Interactive mode - prompts for approval on validation errors
+node files/run-parser-and-upload.js ./files/MyBook --mode=parse-only
+
+# Auto-approve all validation errors
+node files/run-parser-and-upload.js ./files/MyBook \
+  --mode=parse-only \
+  --approve-all-validation-errors
+
+# Combined with force reparse
+node files/run-parser-and-upload.js ./files/MyBook \
+  --mode=parse-upload \
+  --force-reparse \
+  --approve-all-validation-errors
 ```
 
 ## Comparison: CLI vs. Production
