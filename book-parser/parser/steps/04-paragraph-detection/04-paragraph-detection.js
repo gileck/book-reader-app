@@ -248,9 +248,9 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
             if (next.type !== 'paragraph') break;
 
             const currentText = (current.content || '').trim();
-            const endsWithHardTerminator = /[.!?]["'”’)]?$/.test(currentText);
+            const endsWithHardTerminator = /[.!?]["'"')]?$/.test(currentText);
             // Treat ellipsis (including spaced variants like ". . .") as non-terminating for merge purposes
-            const endsWithEllipsis = /(?:\.\s*){3,}["'”’)]?$/.test(currentText) || /\.\.\.["'”’)]?$/.test(currentText);
+            const endsWithEllipsis = /(?:\.\s*){3,}["'"')]?$/.test(currentText) || /\.\.\.["'"')]?$/.test(currentText);
             // Treat common abbreviations/initials at the end as NOT a hard sentence terminator
             const endsWithSingleInitial = /\b[A-Z]\.$/.test(currentText);
             const endsWithMultiInitials = /(?:\b(?:[A-Z]\.)){2,}$/.test(currentText);
@@ -259,8 +259,16 @@ function mergeSplitParagraphsAcrossPageBoundaries(chunks) {
             const nextText = (next.content || '').trim();
             const nextStartsLower = /^[a-z]/.test(nextText);
             const nextLooksLikeHeader = isHeader(nextText, 0, [nextText]);
-            const nextStartsList = /^•\s+\S/.test(nextText) || /^\d+[\.)]\s+/.test(nextText);
-            if (!currEndsWithTerminator && !nextLooksLikeHeader && !nextStartsList) {
+            // CRITICAL: Detect list starts, but exclude 4-digit years (like "2008.")
+            // List items typically use 1-3 digits (e.g., "1.", "42.", "999.")
+            // Years like "2008." should NOT be treated as list items
+            const nextStartsList = /^•\s+\S/.test(nextText) || /^\d{1,3}[\.)]\s+/.test(nextText);
+            // CRITICAL: Don't merge if current paragraph is extremely short (1-2 words)
+            // Very short paragraphs like "Buteyko" are often table cells or list labels
+            // that should remain standalone, not merged with following content
+            const currentWordCount = sharedGetWordCount(currentText);
+            const isVeryShortParagraph = currentWordCount <= 2;
+            if (!currEndsWithTerminator && !nextLooksLikeHeader && !nextStartsList && !isVeryShortParagraph) {
 
                 // Merge next into current
                 const newContent = (current.content || '').replace(/\s+$/, '') + ' ' + (next.content || '').replace(/^\s+/, '');
@@ -551,6 +559,29 @@ function detectChunksInPage(page, chapterNumber, startChunkCounter) {
                 }
             }
 
+            // CRITICAL: Check if there's an empty line between the last content line and current line
+            // If yes, flush the current paragraph before starting a new one
+            // This prevents merging text across visual paragraph breaks (e.g., "Buteyko\n\nTo use...")
+            if (currentParagraph && i > 0) {
+                // Check if previous line was empty (indicates visual paragraph break)
+                let hasEmptyLineBefore = false;
+                for (let j = i - 1; j >= 0; j--) {
+                    const prevLine = lines[j].trim();
+                    if (prevLine.length > 0) {
+                        // Found previous content line, check if there was a gap
+                        hasEmptyLineBefore = (j < i - 1);
+                        break;
+                    }
+                }
+                
+                // If there's an empty line gap, flush current paragraph before adding new line
+                if (hasEmptyLineBefore) {
+                    chunks.push(createParagraphChunk(currentParagraph.trim(), page, ''));
+                    currentParagraph = '';
+                    currentParagraphStartIndex = i;
+                }
+            }
+            
             // Add line to current paragraph
             if (currentParagraph) {
                 currentParagraph += '\n' + line;
@@ -795,9 +826,11 @@ function isHeader(line, lineIndex, allLines) {
         return false;
     }
 
-    // Rule 2: No Punctuation - Does not end with sentence punctuation or colons
+    // Rule 2: No Punctuation - Does not end with sentence punctuation, colons, or commas
     // Colons typically introduce lists or content, not standalone headers
-    if (/[.!?:]$/.test(tline)) {
+    // CRITICAL: Commas indicate incomplete phrases (e.g., "To use the control-pause technique,")
+    // which are often table cells or mid-sentence content, not headers
+    if (/[.!?:,]$/.test(tline)) {
         return false;
     }
 
@@ -992,13 +1025,32 @@ function optimizeChunkSizes(chunks) {
 
                 i = mergedChunk.nextIndex; // Skip to the merged paragraph
             } else {
-                // Try merging with previous paragraph if next merge failed
-                const mergeResult = tryMergeWithPreviousParagraph(optimized, chunk);
-                if (mergeResult) {
-                    // Replace the specific paragraph we merged with (not necessarily the last chunk)
-                    optimized[mergeResult.indexToReplace] = mergeResult.merged;
-
+                // CRITICAL: Before trying to merge backward, check if there's a header between
+                // the current chunk and any previous paragraph in the ORIGINAL chunks array
+                // We must NEVER merge across header boundaries as this destroys logical order
+                let hasHeaderBefore = false;
+                for (let j = i - 1; j >= 0; j--) {
+                    if (chunks[j].type === 'header') {
+                        hasHeaderBefore = true;
+                        break;
+                    }
+                    if (chunks[j].type === 'paragraph') {
+                        // Found a previous paragraph without hitting a header first
+                        break;
+                    }
+                }
+                
+                // Try merging with previous paragraph if next merge failed AND no header between them
+                if (!hasHeaderBefore) {
+                    const mergeResult = tryMergeWithPreviousParagraph(optimized, chunk);
+                    if (mergeResult) {
+                        // Replace the specific paragraph we merged with (not necessarily the last chunk)
+                        optimized[mergeResult.indexToReplace] = mergeResult.merged;
+                    } else {
+                        optimized.push(chunk);
+                    }
                 } else {
+                    // Don't merge - there's a header between current and previous paragraph
                     optimized.push(chunk);
                 }
             }
@@ -1041,13 +1093,48 @@ function optimizeChunkSizes(chunks) {
         }
 
         if (chunk.type === 'paragraph' && chunk.wordCount < 20) {
-            // Try to merge with previous paragraph
-            const mergeResult = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
-            if (mergeResult) {
-                // Replace the specific paragraph we merged with (not necessarily the last chunk)
-                secondPassOptimized[mergeResult.indexToReplace] = mergeResult.merged;
+            // CRITICAL: Before trying to merge backward, check if there's a header between
+            // the current chunk and any previous paragraph in the ORIGINAL optimized array
+            // We must NEVER merge across header boundaries as this destroys logical order
+            let hasHeaderBefore = false;
+            for (let j = i - 1; j >= 0; j--) {
+                if (optimized[j].type === 'header') {
+                    hasHeaderBefore = true;
+                    break;
+                }
+                if (optimized[j].type === 'paragraph') {
+                    // Found a previous paragraph without hitting a header first
+                    break;
+                }
+            }
+            
+            // Try to merge with previous paragraph only if no header between them
+            if (!hasHeaderBefore) {
+                const mergeResult = tryMergeWithPreviousParagraph(secondPassOptimized, chunk);
+                if (mergeResult) {
+                    // Replace the specific paragraph we merged with (not necessarily the last chunk)
+                    secondPassOptimized[mergeResult.indexToReplace] = mergeResult.merged;
+                } else {
+                    // Try to merge with next paragraph
+                    const mergedWithNext = tryMergeWithNextParagraph(optimized, i);
+                    if (mergedWithNext) {
+                        secondPassOptimized.push(mergedWithNext.merged);
+
+                        // Process any headers that were skipped during merge
+                        for (let skipIndex = i + 1; skipIndex < mergedWithNext.nextIndex; skipIndex++) {
+                            if (optimized[skipIndex].type === 'header') {
+                                secondPassOptimized.push(optimized[skipIndex]);
+                            }
+                        }
+
+                        i = mergedWithNext.nextIndex; // Skip to the merged paragraph
+                    } else {
+                        secondPassOptimized.push(chunk);
+                    }
+                }
             } else {
-                // Try to merge with next paragraph
+                // Don't merge backward - there's a header between current and previous paragraph
+                // Try to merge with next paragraph instead
                 const mergedWithNext = tryMergeWithNextParagraph(optimized, i);
                 if (mergedWithNext) {
                     secondPassOptimized.push(mergedWithNext.merged);
@@ -1136,6 +1223,13 @@ function tryMergeWithPreviousParagraph(optimizedChunks, currentChunk) {
 
         if (previousChunk.type === 'paragraph') {
             // Page semantics removed: no page-based merge restriction
+            
+            // CRITICAL: Don't merge if current paragraph is extremely short (1-2 words)
+            // Very short paragraphs like "Buteyko" are often table cells or list labels
+            // that should remain standalone, not merged backward with previous content
+            if (currentChunk.wordCount <= 2) {
+                return null; // Don't merge very short paragraphs
+            }
 
             const combinedWordCount = previousChunk.wordCount + currentChunk.wordCount;
 

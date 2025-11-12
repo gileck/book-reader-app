@@ -39,7 +39,7 @@ The step uses **advanced paragraph optimization** with intelligent header detect
 All rules must be satisfied for header classification:
 
 1. **Length**: 2-5 words only (Numbered headers allow 2–12 words)
-2. **No Punctuation**: Does not end with sentence punctuation (., !, ?) or colons (:) - colons typically introduce lists or content
+2. **No Punctuation**: Does not end with sentence punctuation (., !, ?, :, ,) - punctuation indicates incomplete phrases or list introductions, not standalone headers
 3. **Capitalization**: Starts with a capital letter
 4. **Line Structure**: Appears as standalone line
 5. **Context - Previous**: Previous line ends with sentence-ending punctuation
@@ -105,6 +105,10 @@ Numbered headers are supported:
 - **Two-Pass Optimization**: Eliminates all small paragraph validation errors
 - **Enhanced Link Validation**: Strict footnote patterns prevent false matches
 - **Smart Cross-Page Logic**: Preserves content structure across page boundaries
+- **Year Protection**: 4-digit years (like "2008.") are NOT treated as list items during paragraph merging
+- **Empty Line Paragraph Breaks**: Empty lines now trigger paragraph boundaries during chunk detection
+- **Very Short Paragraph Protection**: 1-2 word paragraphs (like "Buteyko") are not merged with following content (likely table cells/list labels)
+- **Header Boundary Protection**: Paragraphs are NEVER merged across header boundaries during optimization, preserving logical document order (prevents reordering bugs)
 - **Production-Quality Output**: Zero validation errors with comprehensive optimization
 
 ## Validation

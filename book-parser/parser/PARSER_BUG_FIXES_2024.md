@@ -169,6 +169,106 @@ Normal words "hello world":
 
 ---
 
+### 5. Paragraph Reordering Bug - Merging Across Headers (Step 4 - Paragraph Detection)
+
+**Issue:** Text that should appear AFTER a header was being merged BACKWARD into the paragraph BEFORE the header, destroying the logical document order.
+
+**Example:**
+```
+Before (buggy):
+Chunk 3_97: "...can help you stay accountable and motivated. Buteyko To use the control-pause technique,"
+Chunk 3_98: "Breathing Practices Summary" (header)
+
+After (fixed):
+Chunk 3_97: "...can help you stay accountable and motivated."
+Chunk 3_98: "Breathing Practices Summary" (header)
+Chunk 3_99: "Buteyko To use the control-pause technique,"
+```
+
+**Root Cause:** In `optimizeChunkSizes`, when small paragraphs (< 20 words) failed to merge forward, they would try to merge backward using `tryMergeWithPreviousParagraph`. This function looked backward in the `optimized` array but **didn't check if there was a header in the ORIGINAL `chunks` array** between the current chunk and the target paragraph!
+
+**Why This Happened:**
+- Small paragraphs like "Buteyko" (1 word) couldn't merge forward with the next paragraph
+- The optimization logic then tried to merge backward
+- It successfully found a previous paragraph in the `optimized` array
+- But it didn't check if a header existed BETWEEN them in the original document order
+- Result: Text moved above headers, breaking logical structure
+
+**Solution - Header Boundary Protection** (lines 1028-1055, 1096-1143 in `04-paragraph-detection.js`):
+
+Added critical checks in BOTH optimization passes to prevent merging across headers:
+
+```javascript
+// CRITICAL: Before trying to merge backward, check if there's a header between
+// the current chunk and any previous paragraph in the ORIGINAL chunks array
+// We must NEVER merge across header boundaries as this destroys logical order
+let hasHeaderBefore = false;
+for (let j = i - 1; j >= 0; j--) {
+    if (chunks[j].type === 'header') {
+        hasHeaderBefore = true;
+        break;
+    }
+    if (chunks[j].type === 'paragraph') {
+        // Found a previous paragraph without hitting a header first
+        break;
+    }
+}
+
+// Only merge backward if no header between them
+if (!hasHeaderBefore) {
+    const mergeResult = tryMergeWithPreviousParagraph(optimized, chunk);
+    // ... merge logic
+} else {
+    // Don't merge - preserve order
+    optimized.push(chunk);
+}
+```
+
+**Additional Related Fixes:**
+
+1. **Very Short Paragraph Protection** (lines 266-270, 1226-1232):
+   - 1-2 word paragraphs like "Buteyko" are not merged with following content
+   - These are often table cells or list labels that should remain standalone
+
+2. **Empty Line Paragraph Breaks** (lines 562-583):
+   - Empty lines now properly trigger paragraph boundaries during chunk detection
+   - Prevents merging text across visual paragraph breaks
+
+3. **Year Protection** (line 265):
+   - 4-digit years like "2008." are NOT treated as list items
+   - Prevents incorrect paragraph splits: "trainer in" + "2008." becoming separate chunks
+
+4. **Comma in Header Detection** (line 832):
+   - Lines ending with commas are rejected as headers
+   - Prevents table cells like "To use the control-pause technique," from being misclassified
+
+**Files Modified:**
+- `/book-parser/parser/steps/04-paragraph-detection/04-paragraph-detection.js`
+- `/book-parser/parser/steps/04-paragraph-detection/README.md`
+
+**Impact:** 
+- **CRITICAL FIX**: Preserves logical document order, preventing text from appearing above headers
+- Ensures table structures remain intact
+- Maintains the semantic relationships between headers and their content
+- Prevents confusing reading experience where content appears out of order
+
+**Verification Results:**
+```
+Before Fix:
+- motivated. Buteyko To use the control-pause technique, (chunk 3_97)
+- Breathing Practices Summary (header 3_98)
+
+After Fix:
+- motivated. (chunk 3_97)
+- Breathing Practices Summary (header 3_98)
+- Buteyko To use the control-pause technique, (chunk 3_99)
+```
+
+**Design Principle:**
+**Headers are sacred boundaries** - paragraphs must NEVER be merged across header boundaries during any optimization pass. This preserves the author's intended document structure and reading flow.
+
+---
+
 ## Code Quality Improvements
 
 ### Documentation Updates
@@ -318,4 +418,6 @@ if (!trimmed.endsWith(':') && /* other conditions */) {
 - **2024-11-11:** Documentation updates across all affected files
 - **2024-11-11:** Validation improvements for bullet list items
 - **2024-11-11:** Position-based smart spacing implementation to handle font ligatures universally
+- **2024-11-12:** Critical fix for paragraph reordering bug - added header boundary protection to prevent merging across headers
+- **2024-11-12:** Added very short paragraph protection, empty line paragraph breaks, year protection, and comma rejection in headers
 
