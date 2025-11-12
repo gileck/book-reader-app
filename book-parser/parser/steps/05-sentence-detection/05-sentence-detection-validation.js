@@ -288,6 +288,12 @@ function validate(output) {
                 const endsWithAuthorAttribution = /[.!?]\s*[\u2014-]\s*[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){0,3}\s*$/.test(trimmed); // . —Name
                 const isBulletListIntro = /:\s*(?:•|\u2022)/.test(trimmed); // colon followed by bullet
                 const startsWithBullet = /^(?:•|\u2022)\s+\S/.test(trimmed);
+                
+                // CRITICAL: Check if next chunk starts with a bullet point (list introduction pattern)
+                // Example: "The most important zeitgebers are" followed by "• Natural light..."
+                // This is valid formatting where the sentence introduces a list without needing a period
+                const nextChunk = chunks[i + 1];
+                const nextChunkStartsWithBullet = nextChunk && nextChunk.content && /^(?:•|\u2022|●|■|▪|▫|◦|⦿|⦾)\s+/.test(nextChunk.content.trim());
                 // CRITICAL: Check if chunk ends with a bullet list item (bullet + text, no period needed)
                 // Example: "• Medicine ball" or "• Yoga mat" - these don't require a period at the end
                 // This prevents false validation errors for list items that naturally don't end with periods
@@ -321,7 +327,7 @@ function validate(output) {
                 // This detects opening quote + content + ellipsis without proper closing quote
                 const hasIncompleteQuoteWithEllipsis = /[\u2018\u2019\u201C\u201D"'`'][^'\u2019\u201D"]*\.{3}\s*$/.test(trimmed);
 
-                if (!isStandaloneImageChunk && wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || endsWithBulletItem || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || endsWithSimpleNumberedItem || endsWithPhotoCaption || looksLikeTableOfContents || hasIncompleteQuoteWithEllipsis || endsWithListIntroColon) && !endsWithCommonSingleLetterWord(trimmed)) {
+                if (!isStandaloneImageChunk && wordCount > 3 && !(endsWithEOS || endsWithFootnote || endsWithQuoteFootnote || endsWithClosingQuote || endsWithAuthorAttribution || isBulletListIntro || startsWithBullet || nextChunkStartsWithBullet || endsWithBulletItem || endsWithRefRange || endsWithRefList || looksLikeResourceList || bracketHasEOS || endsWithImageMarker || endsWithNumberedList || endsWithSimpleNumberedItem || endsWithPhotoCaption || looksLikeTableOfContents || hasIncompleteQuoteWithEllipsis || endsWithListIntroColon) && !endsWithCommonSingleLetterWord(trimmed)) {
                     validationErrors.push(`Text chunk ${fullChunkIdentifier} should end with sentence terminator. Content: "${chunk.content}"`);
                 }
 

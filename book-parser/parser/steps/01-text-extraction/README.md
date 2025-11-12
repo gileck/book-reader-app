@@ -70,6 +70,7 @@ The step uses **pdfjs-dist** library for PDF processing with a custom page-by-pa
      * Ensures correct reading order, preventing bullets from appearing out of sequence
      * Handles PDFs where file structure order differs from visual layout
    - For each item:
+     - **🎯 CRITICAL: Preserve Standalone Space Items**: If `item.str` is a space (`" "` or `"  "`), add it directly to the output. PDF.js often extracts spaces as separate items between words, and these must be preserved to prevent word concatenation (e.g., "his" + " " + "first" → "his first", not "hisfirst")
      - If `item.str` is empty (`""`) and `item.hasEOL === true`, append a newline to preserve a blank line (paragraph break)
      - Otherwise, append the text
      - If `item.hasEOL === true`, append newline

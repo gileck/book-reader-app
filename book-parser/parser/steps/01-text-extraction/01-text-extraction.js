@@ -362,6 +362,16 @@ function extractCleanPageText(textContent, pageNum) {
         }
         const itemTrimmed = typeof itemText === 'string' ? itemText.trim() : '';
         if (itemTrimmed.length === 0) {
+            // CRITICAL: Don't skip space items that are word separators!
+            // PDF.js often includes standalone space items " " between words
+            // These are NOT empty lines, they're meaningful spacing
+            // Only skip truly empty items (empty string "")
+            if (itemText === ' ' || itemText === '  ') {
+                // This is a space item - add it as-is (important for word separation!)
+                pageText += itemText;
+                continue;
+            }
+            
             // Treat an empty item that signals end-of-line as a blank line (paragraph break)
             if (item.hasEOL) {
                 pageText += '\n';

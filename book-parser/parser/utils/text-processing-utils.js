@@ -418,8 +418,10 @@ function splitIntoSentences(text) {
 
     // Protect single capital letter list markers (A., B., C., etc.)
     // These are common in options, lists, and multiple choice questions
-    // Pattern: word boundary + single capital letter + period (+ optional space)
-    processedText = processedText.replace(/\b([A-Z])\.\s*/g, '$1<LETTERLIST> ');
+    // CRITICAL: Only match standalone capital letters (not after hyphens like "Wall-E.")
+    // Pattern: (start of text or whitespace) + single capital letter + period + whitespace
+    // The (?<!-) negative lookbehind prevents matching "E." in "Wall-E."
+    processedText = processedText.replace(/(?<!-)(?:^|\s)([A-Z])\.\s+/g, ' $1<LETTERLIST> ');
 
     // Protect ellipses (". . .", "...", "…")
     const ellipsisReplacements = [];
