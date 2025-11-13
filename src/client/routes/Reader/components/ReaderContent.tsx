@@ -1,8 +1,11 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
+import { TranslationPopup } from './TranslationPopup';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
 import { useParagraphGrouping } from '../hooks/useParagraphGrouping';
+import { translateText } from '@/apis/translation/client';
+import { useSettings } from '@/client/settings/SettingsContext';
 import type { SentenceChunk, ParagraphGroupMeta } from '../types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 import type { BookClient } from '../../../../apis/books/types';
@@ -52,6 +55,19 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
 }) => {
     const readerContentRef = useRef<HTMLDivElement>(null);
     const [cssVarsApplied, setCssVarsApplied] = useState(false);
+    const { userSettings, updateUserSettings } = useSettings();
+
+    // Translation state
+    const [translationPopup, setTranslationPopup] = useState<{
+        chunkIndex: number;
+        position: { x: number; y: number };
+    } | null>(null);
+    const [translations, setTranslations] = useState<Record<number, string>>({});
+    const [translationLanguages, setTranslationLanguages] = useState<Record<number, string>>({});
+    const [translationCosts, setTranslationCosts] = useState<Record<number, number>>({});
+    const [translationFromCache, setTranslationFromCache] = useState<Record<number, boolean>>({});
+    const [freeTierUsage, setFreeTierUsage] = useState<Record<number, { used: number; total: number; remaining: number; percentUsed: number }>>({});
+    const [isTranslating, setIsTranslating] = useState(false);
 
     // Set CSS variables on the reader content container only
     useEffect(() => {
@@ -74,33 +90,171 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
             });
         }
     }, [fontSize, lineHeight, fontFamily, textColor, highlightColor, sentenceHighlightColor]);
-    // Navigate to chunk with parser v2 targeting
-    const handleNavigateToChunk = useCallback((chunkIndex: number) => {
-        console.log('🚀 ReaderContent: Navigating to chunk', chunkIndex);
+    // Handle double-click on chunk for translation
+    const handleChunkDoubleClick = useCallback((chunkIndex: number, event: React.MouseEvent) => {
+        const rect = (event.target as HTMLElement).getBoundingClientRect();
+        setTranslationPopup({
+            chunkIndex,
+            position: {
+                x: rect.left + rect.width / 2 - 125, // Center the popup (250px wide / 2)
+                y: rect.bottom + 5, // Below the clicked sentence
+            },
+        });
+    }, []);
 
-        // Parser v2 scroll targeting
-        setTimeout(() => {
-            const selector = `[data-paragraph-index][data-chunk-index="${chunkIndex}"]`;
-            const element = document.querySelector(selector);
-            if (element) {
-                console.log('✅ Found element with selector:', selector);
-                element.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                    inline: 'nearest'
-                });
-            } else {
-                console.log('❌ No element found for chunk', chunkIndex);
+    // Handle translation request for multiple sentences
+    const handleTranslate = useCallback(
+        async (targetLanguage: string, sentenceCount: number) => {
+            if (!translationPopup) return;
+
+            const startChunkIndex = translationPopup.chunkIndex;
+            
+            // Find consecutive text chunks starting from the clicked chunk
+            const allChunks = chapter.content.chunks;
+            const startIdx = allChunks.findIndex(c => c.index === startChunkIndex);
+            
+            if (startIdx === -1) {
+                console.error('Start chunk not found');
+                return;
             }
-        }, 100);
-    }, [onNavigateToChunk]);
+
+            // Collect the next N text chunks
+            const chunksToTranslate = [];
+            let textChunkCount = 0;
+            
+            for (let i = startIdx; i < allChunks.length && textChunkCount < sentenceCount; i++) {
+                const chunk = allChunks[i];
+                if (chunk.type === 'text') {
+                    chunksToTranslate.push(chunk);
+                    textChunkCount++;
+                }
+            }
+
+            if (chunksToTranslate.length === 0) {
+                console.error('No text chunks found to translate');
+                return;
+            }
+
+            console.log(`[Translation] Translating ${chunksToTranslate.length} sentences`);
+            setIsTranslating(true);
+
+            try {
+                // Translate all chunks in parallel
+                const translationPromises = chunksToTranslate.map(chunk =>
+                    translateText({
+                        text: chunk.text,
+                        targetLanguage,
+                    }).then(result => ({ chunkIndex: chunk.index, result }))
+                );
+
+                const results = await Promise.all(translationPromises);
+                
+                // Process all results
+                let lastFreeTierUsage: { used: number; total: number; remaining: number; percentUsed: number } | null = null;
+                
+                results.forEach(({ chunkIndex, result }) => {
+                    if (result.data?.success && result.data.translatedText) {
+                        // Save translation
+                        setTranslations(prev => ({
+                            ...prev,
+                            [chunkIndex]: result.data!.translatedText,
+                        }));
+                        
+                        // Save translation language
+                        setTranslationLanguages(prev => ({
+                            ...prev,
+                            [chunkIndex]: targetLanguage,
+                        }));
+
+                        // Save translation cost
+                        if (result.data.cost !== undefined) {
+                            setTranslationCosts(prev => ({
+                                ...prev,
+                                [chunkIndex]: result.data.cost!,
+                            }));
+                        }
+
+                        // Save cache status
+                        if (result.data.fromCache !== undefined) {
+                            setTranslationFromCache(prev => ({
+                                ...prev,
+                                [chunkIndex]: result.data.fromCache!,
+                            }));
+                        }
+
+                        // Save free tier usage (use the last one for all)
+                        if (result.data.freeTierUsage) {
+                            lastFreeTierUsage = result.data.freeTierUsage;
+                        }
+                    } else {
+                        console.error('Translation failed for chunk', chunkIndex, ':', result.data?.error);
+                    }
+                });
+
+                // Update free tier usage for all translated chunks
+                if (lastFreeTierUsage) {
+                    const usage = lastFreeTierUsage;
+                    chunksToTranslate.forEach(chunk => {
+                        setFreeTierUsage(prev => ({
+                            ...prev,
+                            [chunk.index]: usage,
+                        }));
+                    });
+                }
+
+                // Save language preference immediately (always update)
+                console.log('[Translation] Saving language preference:', targetLanguage);
+                await updateUserSettings({ lastTranslationLanguage: targetLanguage });
+            } catch (error) {
+                console.error('Translation error:', error);
+            } finally {
+                setIsTranslating(false);
+                setTranslationPopup(null);
+            }
+        },
+        [translationPopup, chapter.content.chunks, updateUserSettings]
+    );
+
+    // Handle closing translation popup
+    const handleCloseTranslationPopup = useCallback(() => {
+        setTranslationPopup(null);
+    }, []);
+
+    // Toggle translation view for a chunk
+    const handleToggleTranslation = useCallback((chunkIndex: number) => {
+        setTranslations(prev => {
+            const newTranslations = { ...prev };
+            delete newTranslations[chunkIndex];
+            return newTranslations;
+        });
+        setTranslationLanguages(prev => {
+            const newLanguages = { ...prev };
+            delete newLanguages[chunkIndex];
+            return newLanguages;
+        });
+        setTranslationCosts(prev => {
+            const newCosts = { ...prev };
+            delete newCosts[chunkIndex];
+            return newCosts;
+        });
+        setTranslationFromCache(prev => {
+            const newCache = { ...prev };
+            delete newCache[chunkIndex];
+            return newCache;
+        });
+        setFreeTierUsage(prev => {
+            const newUsage = { ...prev };
+            delete newUsage[chunkIndex];
+            return newUsage;
+        });
+    }, []);
 
     // Enhanced navigation for link handling
     const { handleLinkNavigation } = useEnhancedNavigation({
         chapter,
         currentChapterNumber: chapter.chapterNumber,
         onNavigateToChapter,
-        onNavigateToChunk: handleNavigateToChunk,
+        onNavigateToChunk,
         onNavigateToBookmark
     });
 
@@ -139,11 +293,28 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 book={book}
                 handleLinkClick={handleLinkNavigation}
                 currentChunkIndex={currentChunkIndex}
-                onChunkDoubleClick={onNavigateToChunk}
+                onChunkDoubleClick={handleChunkDoubleClick}
                 ttsEnabled={ttsEnabled}
                 bionicReadingEnabled={bionicReadingEnabled}
                 chunkSpacing={chunkSpacing}
+                translations={translations}
+                translationLanguages={translationLanguages}
+                translationCosts={translationCosts}
+                translationFromCache={translationFromCache}
+                freeTierUsage={freeTierUsage}
+                onToggleTranslation={handleToggleTranslation}
             />
+
+            {/* Translation Popup */}
+            {translationPopup && (
+                <TranslationPopup
+                    position={translationPopup.position}
+                    onTranslate={handleTranslate}
+                    onClose={handleCloseTranslationPopup}
+                    isLoading={isTranslating}
+                    defaultLanguage={userSettings?.lastTranslationLanguage || 'es'}
+                />
+            )}
         </Box>
     );
 };

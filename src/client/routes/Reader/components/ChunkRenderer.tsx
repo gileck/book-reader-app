@@ -12,10 +12,16 @@ interface ChunkRendererProps {
     book: BookClient;
     handleLinkClick: (link: ChunkLink) => void;
     currentChunkIndex: number;
-    onChunkDoubleClick?: (chunkIndex: number) => void;
+    onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
     ttsEnabled?: boolean;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
+    translations?: Record<number, string>;
+    translationLanguages?: Record<number, string>;
+    translationCosts?: Record<number, number>;
+    translationFromCache?: Record<number, boolean>;
+    freeTierUsage?: Record<number, { used: number; total: number; remaining: number; percentUsed: number }>;
+    onToggleTranslation?: (chunkIndex: number) => void;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -28,7 +34,13 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     onChunkDoubleClick,
     ttsEnabled = true,
     bionicReadingEnabled = false,
-    chunkSpacing = 0.5
+    chunkSpacing = 0.5,
+    translations = {},
+    translationLanguages = {},
+    translationCosts = {},
+    translationFromCache = {},
+    freeTierUsage = {},
+    onToggleTranslation
 }) => {
     const renderChunk = (chunk: TextChunkClient, groupIndex: number, chunkIndexInGroup: number) => {
         switch (chunk.type) {
@@ -66,6 +78,12 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         ttsEnabled={ttsEnabled}
                         bionicReadingEnabled={bionicReadingEnabled}
                         chunkSpacing={chunkSpacing}
+                        translatedText={translations[chunk.index]}
+                        translatedLanguage={translationLanguages[chunk.index]}
+                        translationCost={translationCosts[chunk.index]}
+                        translationFromCache={translationFromCache[chunk.index]}
+                        freeTierUsage={freeTierUsage[chunk.index]}
+                        onToggleTranslation={onToggleTranslation}
                     />
                 );
         }

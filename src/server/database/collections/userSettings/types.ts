@@ -34,6 +34,9 @@ export interface UserSettings {
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';
 
+    // Translation
+    lastTranslationLanguage?: string;
+
     // Reading Preferences
     autoAdvance: boolean;
     chunkSize: number;
@@ -76,6 +79,7 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     bionicReadingEnabled: false,
     chunkSpacing: 0.5,
     readingMode: 'focus', // Default to focus for better performance
+    lastTranslationLanguage: 'es', // Default to Spanish
     autoAdvance: true,
     chunkSize: 10
 }; 

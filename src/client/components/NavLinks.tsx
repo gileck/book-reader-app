@@ -6,6 +6,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import TranslateIcon from '@mui/icons-material/Translate';
 import StorageIcon from '@mui/icons-material/Storage';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -17,6 +18,7 @@ export const navItems: NavItem[] = [
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
   { path: '/tts-usage', label: 'TTS Usage', icon: <RecordVoiceOverIcon /> },
+  { path: '/translation-usage', label: 'Translation Usage', icon: <TranslateIcon /> },
   { path: '/file-storage', label: 'File Storage', icon: <StorageIcon /> },
   { path: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
@@ -29,6 +31,7 @@ export const menuItems: NavItem[] = [
   { path: '/bookmarks', label: 'Bookmarks', icon: <BookmarkIcon /> },
   { path: '/reading-history', label: 'Reading History', icon: <HistoryIcon /> },
   { path: '/tts-usage', label: 'TTS Usage', icon: <RecordVoiceOverIcon /> },
+  { path: '/translation-usage', label: 'Translation Usage', icon: <TranslateIcon /> },
   { path: '/file-storage', label: 'File Storage', icon: <StorageIcon /> },
   { path: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];

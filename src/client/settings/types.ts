@@ -41,6 +41,8 @@ export interface UserSettings {
     chunkSpacing?: number;
     // Reading mode preference (focus vs full)
     readingMode?: 'focus' | 'full';
+    // Translation preferences
+    lastTranslationLanguage?: string;
 }
 
 // Define the settings context type
@@ -93,5 +95,6 @@ export const defaultUserSettings: UserSettings = {
     autoFontScaling: true, // Auto scale font for long sentences by default
     bionicReadingEnabled: false, // Bionic reading disabled by default
     chunkSpacing: 0.5, // Default spacing between sentences
-    readingMode: 'focus' // Default to focus for better performance
+    readingMode: 'focus', // Default to focus for better performance
+    lastTranslationLanguage: 'es' // Default to Spanish
 }; 

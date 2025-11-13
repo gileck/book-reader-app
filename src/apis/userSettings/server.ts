@@ -77,6 +77,9 @@ function mapClientSettingsToDb(
     // Reading Mode
     if (clientSettings.readingMode !== undefined) dbSettings.readingMode = clientSettings.readingMode;
 
+    // Translation Settings
+    if (clientSettings.lastTranslationLanguage !== undefined) dbSettings.lastTranslationLanguage = clientSettings.lastTranslationLanguage;
+
     // Note: autoAdvance and chunkSize are not in client settings (they're DB-only)
 
     return dbSettings;
@@ -144,6 +147,8 @@ function mapDbSettingsToClient(dbSettings: DbUserSettings): Omit<ClientUserSetti
         chunkSpacing: dbSettings.chunkSpacing,
         // Reading Mode
         readingMode: dbSettings.readingMode,
+        // Translation Settings
+        lastTranslationLanguage: dbSettings.lastTranslationLanguage,
         // Timestamps
         createdAt: dbSettings.createdAt.toISOString(),
         updatedAt: dbSettings.updatedAt.toISOString()

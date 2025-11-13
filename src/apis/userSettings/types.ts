@@ -23,6 +23,8 @@ export interface UserSettings {
     chunkSpacing?: number;
     // Reading mode preference
     readingMode?: 'focus' | 'full';
+    // Translation preferences
+    lastTranslationLanguage?: string;
     // Per-mode color storage
     highlightColorLight?: string;
     highlightColorDark?: string;
@@ -78,6 +80,9 @@ export interface UpdateUserSettingsPayload {
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';
+
+    // Translation
+    lastTranslationLanguage?: string;
 
     // Reading Preferences
     autoAdvance?: boolean;

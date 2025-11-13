@@ -123,7 +123,8 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                     autoFontScaling: s.autoFontScaling ?? true,
                     bionicReadingEnabled: s.bionicReadingEnabled ?? false,
                     chunkSpacing: s.chunkSpacing ?? 0.5,
-                    readingMode: (s.readingMode as 'focus' | 'full') ?? 'focus'
+                    readingMode: (s.readingMode as 'focus' | 'full') ?? 'focus',
+                    lastTranslationLanguage: s.lastTranslationLanguage ?? 'es'
                 };
 
                 setUserSettings(loadedSettings);
@@ -180,15 +181,18 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
             return;
         }
 
+        console.log('[SettingsContext] Updating user settings:', newSettings);
+
         // Update local state immediately
         setUserSettings(prev => prev ? { ...prev, ...newSettings } : null);
 
         // Persist to database
         try {
-            await updateUserSettingsApi({
+            const result = await updateUserSettingsApi({
                 userId: user.id,
                 settings: newSettings as Partial<UserSettingsApi>
             });
+            console.log('[SettingsContext] Settings persisted to database:', result.data);
         } catch (error) {
             console.error('Error updating user settings:', error);
             // TODO: Could revert local state on error
