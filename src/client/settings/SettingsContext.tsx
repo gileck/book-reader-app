@@ -119,7 +119,9 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                     textColorLight: textLight,
                     textColorDark: textDark,
                     wordHighlightingEnabled: s.wordHighlightingEnabled ?? true,
-                    highlightMode: (s.highlightMode as 'word' | 'line' | 'off') ?? (s.wordHighlightingEnabled === false ? 'off' : 'word')
+                    highlightMode: (s.highlightMode as 'word' | 'line' | 'off') ?? (s.wordHighlightingEnabled === false ? 'off' : 'word'),
+                    autoFontScaling: s.autoFontScaling ?? true,
+                    bionicReadingEnabled: s.bionicReadingEnabled ?? false
                 };
 
                 setUserSettings(loadedSettings);

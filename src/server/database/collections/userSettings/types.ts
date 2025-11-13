@@ -27,6 +27,8 @@ export interface UserSettings {
     // Focus Mode
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
+    autoFontScaling?: boolean;
+    bionicReadingEnabled?: boolean;
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';
@@ -69,6 +71,8 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     textColorDark: '#ffffff',
     wordHighlightingEnabled: true,
     highlightMode: 'word',
+    autoFontScaling: true,
+    bionicReadingEnabled: false,
     readingMode: 'focus', // Default to focus for better performance
     autoAdvance: true,
     chunkSize: 10

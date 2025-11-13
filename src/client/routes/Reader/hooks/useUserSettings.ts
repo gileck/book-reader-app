@@ -134,7 +134,8 @@ export const useUserSettings = () => {
             textColorLight: '#000000',
             textColorDark: '#ffffff',
             highlightMode: 'word',
-            autoFontScaling: true
+            autoFontScaling: true,
+            bionicReadingEnabled: false
         });
     }, [updateUserSettings]);
 
@@ -151,6 +152,10 @@ export const useUserSettings = () => {
 
     const handleAutoFontScalingChange = useCallback(async (enabled: boolean) => {
         await updateUserSettings({ autoFontScaling: enabled });
+    }, [updateUserSettings]);
+
+    const handleBionicReadingChange = useCallback(async (enabled: boolean) => {
+        await updateUserSettings({ bionicReadingEnabled: enabled });
     }, [updateUserSettings]);
 
     // Return the same interface as before, but data comes from Context
@@ -177,6 +182,7 @@ export const useUserSettings = () => {
         highlightMode: userSettings.highlightMode ?? 'word',
         wordHighlightingEnabled: userSettings.wordHighlightingEnabled ?? true,
         autoFontScaling: userSettings.autoFontScaling ?? true,
+        bionicReadingEnabled: userSettings.bionicReadingEnabled ?? false,
         settingsLoaded: userSettingsLoaded,
 
         // Local UI state
@@ -204,6 +210,7 @@ export const useUserSettings = () => {
         handleWordHighlightingEnabledChange,
         handleResetToDefaults,
         handleHighlightModeChange,
-        handleAutoFontScalingChange
+        handleAutoFontScalingChange,
+        handleBionicReadingChange
     };
 };

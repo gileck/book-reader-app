@@ -437,6 +437,7 @@ export const ReaderUI = ({
                         highlightMode={settings.highlightMode} 
                         ttsEnabled={settings.ttsEnabled} 
                         autoFontScaling={settings.autoFontScaling}
+                        bionicReadingEnabled={settings.bionicReadingEnabled}
                         book={book} 
                     />
                 ) : activeTab === 'qa' ? (
@@ -568,6 +569,7 @@ export const ReaderUI = ({
                             highlightColor={settings.highlightColor}
                             sentenceHighlightColor={settings.sentenceHighlightColor}
                             ttsEnabled={settings.ttsEnabled}
+                            bionicReadingEnabled={settings.bionicReadingEnabled}
                         />
                     </Paper>
                 )}
@@ -705,6 +707,8 @@ export const ReaderUI = ({
                     onHighlightModeChange={settings.handleHighlightModeChange}
                     autoFontScaling={settings.autoFontScaling}
                     onAutoFontScalingChange={settings.handleAutoFontScalingChange}
+                    bionicReadingEnabled={settings.bionicReadingEnabled}
+                    onBionicReadingChange={settings.handleBionicReadingChange}
                     onResetToDefaults={settings.handleResetToDefaults}
                 />
 

@@ -19,6 +19,7 @@ export interface UserSettings {
     wordHighlightingEnabled?: boolean; // legacy toggle
     highlightMode?: 'word' | 'line' | 'off';
     autoFontScaling?: boolean;
+    bionicReadingEnabled?: boolean;
     // Reading mode preference
     readingMode?: 'focus' | 'full';
     // Per-mode color storage
@@ -71,6 +72,7 @@ export interface UpdateUserSettingsPayload {
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
     autoFontScaling?: boolean;
+    bionicReadingEnabled?: boolean;
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';

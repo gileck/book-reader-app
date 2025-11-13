@@ -9,6 +9,7 @@ interface TextChunkProps {
     handleLinkClick: (link: ChunkLink) => void;
     onChunkDoubleClick?: (chunkIndex: number) => void;
     ttsEnabled?: boolean;
+    bionicReadingEnabled?: boolean;
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({
@@ -17,7 +18,8 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     currentChunkIndex,
     handleLinkClick,
     onChunkDoubleClick,
-    ttsEnabled = true
+    ttsEnabled = true,
+    bionicReadingEnabled = false
 }) => {
     const isHighlighted = ttsEnabled && currentChunkIndex === chunkIndex;
 
@@ -43,6 +45,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                 chunk={chunk}
                 chunkIndex={chunkIndex}
                 onLinkClick={handleLinkClick}
+                bionicReadingEnabled={bionicReadingEnabled}
             />
         </div>
     );

@@ -26,6 +26,7 @@ interface ReaderContentProps {
     highlightColor: string;
     sentenceHighlightColor: string;
     ttsEnabled?: boolean;
+    bionicReadingEnabled?: boolean;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -44,7 +45,8 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     textColor,
     highlightColor,
     sentenceHighlightColor,
-    ttsEnabled = true
+    ttsEnabled = true,
+    bionicReadingEnabled = false
 }) => {
     const readerContentRef = useRef<HTMLDivElement>(null);
     const [cssVarsApplied, setCssVarsApplied] = useState(false);
@@ -137,6 +139,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 currentChunkIndex={currentChunkIndex}
                 onChunkDoubleClick={onNavigateToChunk}
                 ttsEnabled={ttsEnabled}
+                bionicReadingEnabled={bionicReadingEnabled}
             />
         </Box>
     );

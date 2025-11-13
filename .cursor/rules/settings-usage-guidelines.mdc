@@ -73,9 +73,58 @@ const MyComponent = () => {
 
 The user interface for managing settings is located in `[src/client/routes/Settings/Settings.tsx](mdc:src/client/routes/Settings/Settings.tsx)`. This component allows users to modify application settings, such as selecting an AI model and clearing the cache.
 
-## Adding a New Settings Field
+## User-Specific Settings
 
-To add a new field to the settings:
+The application supports two types of settings:
+
+1. **App Settings** (`Settings`): Stored in localStorage, not synced across devices. Examples: `aiModel`, `offlineMode`
+2. **User Settings** (`UserSettings`): Stored in the database, synced across devices for authenticated users. Examples: `bionicReadingEnabled`, `fontSize`, `playbackSpeed`
+
+### Accessing User Settings
+
+User settings are available through the same `useSettings` hook:
+
+```typescript
+import { useSettings } from '@/client/settings/SettingsContext';
+
+const MyComponent = () => {
+  const { userSettings, userSettingsLoaded, updateUserSettings } = useSettings();
+  
+  // Always check if settings are loaded
+  if (!userSettingsLoaded) {
+    return <div>Loading settings...</div>;
+  }
+
+  return (
+    <div>
+      Bionic Reading: {userSettings?.bionicReadingEnabled ? 'Enabled' : 'Disabled'}
+    </div>
+  );
+};
+```
+
+### Updating User Settings
+
+User settings updates are persisted to the database:
+
+```typescript
+import { useSettings } from '@/client/settings/SettingsContext';
+
+const MyComponent = () => {
+  const { updateUserSettings } = useSettings();
+
+  const handleToggleBionicReading = async (enabled: boolean) => {
+    // This will update both local state and persist to database
+    await updateUserSettings({ bionicReadingEnabled: enabled });
+  };
+
+  // ...
+};
+```
+
+## Adding a New App Settings Field
+
+To add a new **app-level** field (localStorage only):
 
 1.  **Update the `Settings` interface** in `[src/client/settings/types.ts](mdc:src/client/settings/types.ts)`:
     ```typescript
@@ -96,6 +145,91 @@ To add a new field to the settings:
 3.  **The `SettingsContext` in `[src/client/settings/SettingsContext.tsx](mdc:src/client/settings/SettingsContext.tsx)` will automatically pick up these changes** as it imports `Settings` and `defaultSettings` from `types.ts`.
 
 4.  **(Optional) Update the UI** in `[src/client/routes/Settings/Settings.tsx](mdc:src/client/routes/Settings/Settings.tsx)` if the new setting needs to be configurable by the user.
+
+## Adding a New User Settings Field
+
+To add a new **user-specific** field (database-synced):
+
+1.  **Update the `UserSettings` interface** in `[src/client/settings/types.ts](mdc:src/client/settings/types.ts)`:
+    ```typescript
+    export interface UserSettings {
+      // ... existing fields
+      newUserField?: boolean; // Add your new field here (optional)
+    }
+    ```
+
+2.  **Update the `defaultUserSettings` object** in `[src/client/settings/types.ts](mdc:src/client/settings/types.ts)`:
+    ```typescript
+    export const defaultUserSettings: UserSettings = {
+      // ... existing defaults
+      newUserField: false, // Provide a default value
+    };
+    ```
+
+3.  **Update the API types** in `[src/apis/userSettings/types.ts](mdc:src/apis/userSettings/types.ts)`:
+    ```typescript
+    export interface UserSettings {
+      // ... existing fields
+      newUserField?: boolean;
+    }
+    
+    export interface UpdateUserSettingsPayload {
+      // ... existing fields
+      newUserField?: boolean;
+    }
+    ```
+
+4.  **Update the server types** in `[src/server/database/collections/userSettings/types.ts](mdc:src/server/database/collections/userSettings/types.ts)`:
+    ```typescript
+    export interface UserSettings {
+      // ... existing fields
+      newUserField?: boolean;
+    }
+    
+    export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'createdAt' | 'updatedAt'> = {
+      // ... existing defaults
+      newUserField: false,
+    };
+    ```
+
+5.  **Update the SettingsContext** in `[src/client/settings/SettingsContext.tsx](mdc:src/client/settings/SettingsContext.tsx)` to load the new field:
+    ```typescript
+    const loadedSettings: UserSettings = {
+      // ... existing mappings
+      newUserField: s.newUserField ?? false
+    };
+    ```
+
+6.  **(Optional) Update the UI** in `[src/client/components/ThemeModal.tsx](mdc:src/client/components/ThemeModal.tsx)` or other settings UI components if the new setting needs to be configurable by the user.
+
+### Example: Bionic Reading Setting
+
+The `bionicReadingEnabled` setting is a complete example of a user-specific setting:
+
+**Client Types** (`src/client/settings/types.ts`):
+```typescript
+export interface UserSettings {
+  // ...
+  /** Enable bionic reading mode - bolds first part of each word for faster reading */
+  bionicReadingEnabled?: boolean;
+}
+
+export const defaultUserSettings: UserSettings = {
+  // ...
+  bionicReadingEnabled: false,
+};
+```
+
+**Usage in Components**:
+```typescript
+const { userSettings, updateUserSettings } = useSettings();
+
+// Access the setting
+const isBionicEnabled = userSettings?.bionicReadingEnabled ?? false;
+
+// Update the setting
+await updateUserSettings({ bionicReadingEnabled: true });
+```
 
 ## Key Files
 

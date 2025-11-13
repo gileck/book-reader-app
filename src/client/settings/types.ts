@@ -35,6 +35,8 @@ export interface UserSettings {
     highlightMode?: 'word' | 'line' | 'off';
     /** Automatically scale font size down for long sentences to fit viewport (default: true) */
     autoFontScaling?: boolean;
+    /** Enable bionic reading mode - bolds first part of each word for faster reading */
+    bionicReadingEnabled?: boolean;
     // Reading mode preference (focus vs full)
     readingMode?: 'focus' | 'full';
 }
@@ -87,5 +89,6 @@ export const defaultUserSettings: UserSettings = {
     wordHighlightingEnabled: true,
     highlightMode: 'word',
     autoFontScaling: true, // Auto scale font for long sentences by default
+    bionicReadingEnabled: false, // Bionic reading disabled by default
     readingMode: 'focus' // Default to focus for better performance
 }; 

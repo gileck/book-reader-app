@@ -203,13 +203,6 @@ export const useReaderData = (): UseReaderDataResult => {
                 });
                 setLoading(false);
 
-                console.log('📊 [useReaderData] Data loaded successfully:', {
-                    bookId: book._id,
-                    bookTitle: book.title,
-                    currentChapterNumber: currentChapter,
-                    currentChunkIndex: currentChunk,
-                    chapterChunksCount: resolvedChapter.content?.chunks?.length
-                });
 
             } catch (error) {
                 console.error('Error loading reader data:', error);

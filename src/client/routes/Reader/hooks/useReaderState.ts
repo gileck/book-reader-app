@@ -338,6 +338,7 @@ export const useReaderState = ({
             highlightMode: userSettings.highlightMode,
             wordHighlightingEnabled: userSettings.wordHighlightingEnabled,
             autoFontScaling: userSettings.autoFontScaling,
+            bionicReadingEnabled: userSettings.bionicReadingEnabled,
             settingsLoaded: userSettings.settingsLoaded,
             handleSpeedChange,
             handleTtsEnabledChange: userSettings.handleTtsEnabledChange,
@@ -359,7 +360,8 @@ export const useReaderState = ({
             handleResetToDefaults: userSettings.handleResetToDefaults,
             handleWordHighlightingEnabledChange: userSettings.handleWordHighlightingEnabledChange,
             handleHighlightModeChange: userSettings.handleHighlightModeChange,
-            handleAutoFontScalingChange: userSettings.handleAutoFontScalingChange
+            handleAutoFontScalingChange: userSettings.handleAutoFontScalingChange,
+            handleBionicReadingChange: userSettings.handleBionicReadingChange
         },
 
         // Bookmarks

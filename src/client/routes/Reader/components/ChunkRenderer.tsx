@@ -14,6 +14,7 @@ interface ChunkRendererProps {
     currentChunkIndex: number;
     onChunkDoubleClick?: (chunkIndex: number) => void;
     ttsEnabled?: boolean;
+    bionicReadingEnabled?: boolean;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -24,7 +25,8 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     handleLinkClick,
     currentChunkIndex,
     onChunkDoubleClick,
-    ttsEnabled = true
+    ttsEnabled = true,
+    bionicReadingEnabled = false
 }) => {
     const renderChunk = (chunk: TextChunkClient, groupIndex: number, chunkIndexInGroup: number) => {
         switch (chunk.type) {
@@ -60,6 +62,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         handleLinkClick={handleLinkClick}
                         onChunkDoubleClick={onChunkDoubleClick}
                         ttsEnabled={ttsEnabled}
+                        bionicReadingEnabled={bionicReadingEnabled}
                     />
                 );
         }

@@ -39,6 +39,8 @@ interface ThemeModalProps {
     onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
     autoFontScaling?: boolean;
     onAutoFontScalingChange?: (enabled: boolean) => void;
+    bionicReadingEnabled?: boolean;
+    onBionicReadingChange?: (enabled: boolean) => void;
     onResetToDefaults: () => void;
 }
 
@@ -63,6 +65,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onHighlightModeChange,
     autoFontScaling = true,
     onAutoFontScalingChange,
+    bionicReadingEnabled = false,
+    onBionicReadingChange,
     onResetToDefaults
 }) => {
     const [localTheme, setLocalTheme] = useState(currentTheme);
@@ -74,6 +78,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localTextColor, setLocalTextColor] = useState(currentTextColor);
     const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
     const [localAutoFontScaling, setLocalAutoFontScaling] = useState(autoFontScaling);
+    const [localBionicReadingEnabled, setLocalBionicReadingEnabled] = useState(bionicReadingEnabled);
 
     useEffect(() => {
         setLocalTheme(currentTheme);
@@ -85,7 +90,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalTextColor(currentTextColor);
         setLocalHighlightMode(highlightMode);
         setLocalAutoFontScaling(autoFontScaling);
-    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode, autoFontScaling]);
+        setLocalBionicReadingEnabled(bionicReadingEnabled);
+    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode, autoFontScaling, bionicReadingEnabled]);
 
     const handleThemeToggle = (checked: boolean) => {
         const newTheme = checked ? 'dark' : 'light';
@@ -167,6 +173,13 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalAutoFontScaling(enabled);
         if (onAutoFontScalingChange) {
             onAutoFontScalingChange(enabled);
+        }
+    };
+
+    const handleBionicReadingToggle = (enabled: boolean) => {
+        setLocalBionicReadingEnabled(enabled);
+        if (onBionicReadingChange) {
+            onBionicReadingChange(enabled);
         }
     };
 
@@ -461,6 +474,25 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                             />
                         }
                         label={localAutoFontScaling ? 'Enabled' : 'Disabled'}
+                    />
+
+                    <Divider sx={{ my: 3 }} />
+
+                    {/* Bionic Reading */}
+                    <Typography variant="h6" gutterBottom>
+                        Bionic Reading
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Emphasize the first part of each word to help guide your eye and improve reading speed. Works in both Focus and Full reading modes.
+                    </Typography>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={localBionicReadingEnabled}
+                                onChange={(e) => handleBionicReadingToggle(e.target.checked)}
+                            />
+                        }
+                        label={localBionicReadingEnabled ? 'Enabled' : 'Disabled'}
                     />
 
                     <Divider sx={{ my: 3 }} />

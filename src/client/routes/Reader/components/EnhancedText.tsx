@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { TextChunkClient, ChunkLink } from '@/apis/chapters/types';
 import { linkCssClasses } from '../styles/linkStyles';
+import { toBionicReading } from '../utils/bionicReading';
 
 interface EnhancedTextProps {
     chunk: TextChunkClient;
     chunkIndex: number;
     onLinkClick: (link: ChunkLink) => void;
-
+    bionicReadingEnabled?: boolean;
 }
 
 // Escape special regex characters in a literal string
@@ -40,7 +41,8 @@ const findFootnotePattern = (text: string, linkText: string): number => {
 export const EnhancedText: React.FC<EnhancedTextProps> = ({
     chunk,
     chunkIndex,
-    onLinkClick
+    onLinkClick,
+    bionicReadingEnabled = false
 }) => {
     // Add CSS for link styles
     useEffect(() => {
@@ -70,7 +72,7 @@ export const EnhancedText: React.FC<EnhancedTextProps> = ({
                                 data-word-id={`chunk-${chunkIndex}-word-${wordIndex}`}
                                 style={{ cursor: 'pointer' }}
                             >
-                                {word}
+                                {bionicReadingEnabled ? toBionicReading(word) : word}
                             </span>
                             {wordIndex < words.length - 1 && ' '}
                         </React.Fragment>

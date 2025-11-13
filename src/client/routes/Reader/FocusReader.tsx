@@ -37,8 +37,9 @@ export const FocusReader: React.FC<{
     highlightMode?: 'word' | 'line' | 'off';
     ttsEnabled?: boolean;
     autoFontScaling?: boolean;
+    bionicReadingEnabled?: boolean;
     book?: BookClient;
-}> = ({ controller, highlightMode = 'word', ttsEnabled = true, autoFontScaling = true, book }) => {
+}> = ({ controller, highlightMode = 'word', ttsEnabled = true, autoFontScaling = true, bionicReadingEnabled = false, book }) => {
     const sentences = controller.sentences;
     const currentSentenceIndex = controller.currentSentenceIndex;
     const isPlaying = controller.isPlaying;
@@ -537,7 +538,7 @@ export const FocusReader: React.FC<{
                             sx={{
                                 fontSize: isHeader ? `${fontSize * 2 * fontScale}rem` : `${fontSize * 1.5 * fontScale}rem`,
                                 lineHeight: isHeader ? 1.3 : lineHeight,
-                                fontWeight: isHeader ? 800 : 700,
+                                fontWeight: isHeader ? 800 : (bionicReadingEnabled ? 400 : 700),
                                 textAlign: 'center',
                                 color: textColor,
                                 fontFamily: fontFamily,
@@ -554,6 +555,16 @@ export const FocusReader: React.FC<{
                             {currentWords.map((w, i) => {
                                 // Check if this word starts with a bullet character
                                 const startsWithBullet = /^[*•]/.test(w);
+                                
+                                // Bionic reading: determine bold length
+                                const getBoldLength = (word: string) => {
+                                    const len = word.length;
+                                    if (len <= 1) return 1;
+                                    if (len <= 3) return 1;
+                                    if (len <= 5) return 2;
+                                    return Math.ceil(len / 2);
+                                };
+                                
                                 return (
                                     <React.Fragment key={`w-${i}`}>
                                         {startsWithBullet && i > 0 && <br />}
@@ -567,7 +578,12 @@ export const FocusReader: React.FC<{
                                             })()}
                                             data-word-index={i}
                                         >
-                                            {w}
+                                            {bionicReadingEnabled ? (
+                                                <>
+                                                    <span style={{ fontWeight: 900 }}>{w.slice(0, getBoldLength(w))}</span>
+                                                    <span style={{ fontWeight: 400 }}>{w.slice(getBoldLength(w))}</span>
+                                                </>
+                                            ) : w}
                                             {i < currentWords.length - 1 ? ' ' : ''}
                                         </span>
                                     </React.Fragment>
