@@ -56,10 +56,39 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     const [showOriginal, setShowOriginal] = useState(false);
     const hasTranslation = !!translatedText;
     const isRTL = isRTLLanguage(translatedLanguage);
+    
+    // Mobile double-tap detection
+    const lastTapRef = React.useRef<number>(0);
+    const DOUBLE_TAP_DELAY = 300; // milliseconds
 
     const handleDoubleClick = (event: React.MouseEvent) => {
         if (onChunkDoubleClick) {
             onChunkDoubleClick(chunkIndex, event);
+        }
+    };
+
+    // Handle touch events for mobile double-tap
+    const handleTouchEnd = (event: React.TouchEvent) => {
+        const now = Date.now();
+        const timeSinceLastTap = now - lastTapRef.current;
+
+        if (timeSinceLastTap < DOUBLE_TAP_DELAY && timeSinceLastTap > 0) {
+            // Double tap detected
+            event.preventDefault();
+            if (onChunkDoubleClick) {
+                // Create a synthetic mouse event for compatibility
+                const touch = event.changedTouches[0];
+                const syntheticEvent = {
+                    target: event.target,
+                    currentTarget: event.currentTarget,
+                    clientX: touch?.clientX || 0,
+                    clientY: touch?.clientY || 0,
+                } as React.MouseEvent;
+                onChunkDoubleClick(chunkIndex, syntheticEvent);
+            }
+            lastTapRef.current = 0; // Reset
+        } else {
+            lastTapRef.current = now;
         }
     };
 
@@ -101,6 +130,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}
             onDoubleClick={handleDoubleClick}
+            onTouchEnd={handleTouchEnd}
         >
             {hasTranslation ? (
                 <>
