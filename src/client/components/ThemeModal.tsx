@@ -37,6 +37,8 @@ interface ThemeModalProps {
     // New: highlight mode
     highlightMode?: 'word' | 'line' | 'off';
     onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
+    autoFontScaling?: boolean;
+    onAutoFontScalingChange?: (enabled: boolean) => void;
     onResetToDefaults: () => void;
 }
 
@@ -59,6 +61,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onTextColorChange,
     highlightMode = 'word',
     onHighlightModeChange,
+    autoFontScaling = true,
+    onAutoFontScalingChange,
     onResetToDefaults
 }) => {
     const [localTheme, setLocalTheme] = useState(currentTheme);
@@ -69,6 +73,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localFontFamily, setLocalFontFamily] = useState(currentFontFamily);
     const [localTextColor, setLocalTextColor] = useState(currentTextColor);
     const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
+    const [localAutoFontScaling, setLocalAutoFontScaling] = useState(autoFontScaling);
 
     useEffect(() => {
         setLocalTheme(currentTheme);
@@ -79,7 +84,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalFontFamily(currentFontFamily);
         setLocalTextColor(currentTextColor);
         setLocalHighlightMode(highlightMode);
-    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode]);
+        setLocalAutoFontScaling(autoFontScaling);
+    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode, autoFontScaling]);
 
     const handleThemeToggle = (checked: boolean) => {
         const newTheme = checked ? 'dark' : 'light';
@@ -155,6 +161,13 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const handleResetToDefaults = () => {
         // Call the reset function passed from parent
         onResetToDefaults();
+    };
+
+    const handleAutoFontScalingToggle = (enabled: boolean) => {
+        setLocalAutoFontScaling(enabled);
+        if (onAutoFontScalingChange) {
+            onAutoFontScalingChange(enabled);
+        }
     };
 
     const handleDialogClose = () => {
@@ -430,6 +443,27 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                         <Button variant={localHighlightMode === 'line' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('line')}>Line</Button>
                         <Button variant={localHighlightMode === 'off' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('off')}>Off</Button>
                     </Box>
+
+                    <Divider sx={{ my: 3 }} />
+
+                    {/* Auto Font Scaling */}
+                    <Typography variant="h6" gutterBottom>
+                        Auto Font Scaling
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Automatically scale down text size for long sentences to fit them on screen in Focus mode.
+                    </Typography>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={localAutoFontScaling}
+                                onChange={(e) => handleAutoFontScalingToggle(e.target.checked)}
+                            />
+                        }
+                        label={localAutoFontScaling ? 'Enabled' : 'Disabled'}
+                    />
+
+                    <Divider sx={{ my: 3 }} />
 
                     {/* Preview */}
                     <Typography variant="h6" gutterBottom>

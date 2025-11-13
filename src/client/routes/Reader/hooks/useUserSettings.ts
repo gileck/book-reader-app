@@ -147,6 +147,10 @@ export const useUserSettings = () => {
         });
     }, [updateUserSettings]);
 
+    const handleAutoFontScalingChange = useCallback(async (enabled: boolean) => {
+        await updateUserSettings({ autoFontScaling: enabled });
+    }, [updateUserSettings]);
+
     // Return the same interface as before, but data comes from Context
     return {
         // Data from Context
@@ -170,6 +174,7 @@ export const useUserSettings = () => {
             : (userSettings.textColorLight ?? '#000000'),
         highlightMode: userSettings.highlightMode ?? 'word',
         wordHighlightingEnabled: userSettings.wordHighlightingEnabled ?? true,
+        autoFontScaling: userSettings.autoFontScaling ?? true,
         settingsLoaded: userSettingsLoaded,
 
         // Local UI state
@@ -196,6 +201,7 @@ export const useUserSettings = () => {
         handleTextColorChange,
         handleWordHighlightingEnabledChange,
         handleResetToDefaults,
-        handleHighlightModeChange
+        handleHighlightModeChange,
+        handleAutoFontScalingChange
     };
 };

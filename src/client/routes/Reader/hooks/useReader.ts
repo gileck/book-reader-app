@@ -498,6 +498,7 @@ export const useReader = () => {
             textColor: userSettings.textColor,
             highlightMode: userSettings.highlightMode,
             wordHighlightingEnabled: userSettings.wordHighlightingEnabled,
+            autoFontScaling: userSettings.autoFontScaling,
             settingsLoaded: userSettings.settingsLoaded,
             handleSpeedChange,
             handleTtsEnabledChange: userSettings.handleTtsEnabledChange,
@@ -518,7 +519,8 @@ export const useReader = () => {
             handleTextColorChange: userSettings.handleTextColorChange,
             handleResetToDefaults: userSettings.handleResetToDefaults,
             handleWordHighlightingEnabledChange: userSettings.handleWordHighlightingEnabledChange,
-            handleHighlightModeChange: userSettings.handleHighlightModeChange
+            handleHighlightModeChange: userSettings.handleHighlightModeChange,
+            handleAutoFontScalingChange: userSettings.handleAutoFontScalingChange
         },
 
         // Bookmarks

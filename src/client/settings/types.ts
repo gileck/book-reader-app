@@ -33,6 +33,7 @@ export interface UserSettings {
     // Focus mode preferences
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
+    autoFontScaling?: boolean;
     // Reading mode preference (focus vs full)
     readingMode?: 'focus' | 'full';
 }
@@ -84,5 +85,6 @@ export const defaultUserSettings: UserSettings = {
     textColorDark: '#ffffff',
     wordHighlightingEnabled: true,
     highlightMode: 'word',
+    autoFontScaling: true, // Auto scale font for long sentences by default
     readingMode: 'focus' // Default to focus for better performance
 }; 

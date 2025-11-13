@@ -432,7 +432,13 @@ export const ReaderUI = ({
                 )}
 
                 {activeTab === 'focus' ? (
-                    <FocusReader controller={sentenceAudio.controller} highlightMode={settings.highlightMode} ttsEnabled={settings.ttsEnabled} book={book} />
+                    <FocusReader 
+                        controller={sentenceAudio.controller} 
+                        highlightMode={settings.highlightMode} 
+                        ttsEnabled={settings.ttsEnabled} 
+                        autoFontScaling={settings.autoFontScaling}
+                        book={book} 
+                    />
                 ) : activeTab === 'qa' ? (
                     // QA Chat Tab - WRAPPER for ChatContent component
                     // IMPORTANT: This tab uses the SHARED ChatContent component from BookQAPanel/ChatContent.tsx
@@ -697,6 +703,8 @@ export const ReaderUI = ({
                     onTextColorChange={settings.handleTextColorChange}
                     highlightMode={settings.highlightMode}
                     onHighlightModeChange={settings.handleHighlightModeChange}
+                    autoFontScaling={settings.autoFontScaling}
+                    onAutoFontScalingChange={settings.handleAutoFontScalingChange}
                     onResetToDefaults={settings.handleResetToDefaults}
                 />
 
