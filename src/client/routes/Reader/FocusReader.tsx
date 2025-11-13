@@ -7,6 +7,31 @@ import type { BookClient } from '@/apis/books/types';
 import { useUserTheme } from '@/client/components/UserThemeProvider';
 import { VERCEL_BLOB_IMAGES_BASE_PATH } from '@/common/constants';
 
+/**
+ * FocusReader Component
+ * 
+ * A focused reading mode that displays one sentence at a time with optional
+ * text-to-speech highlighting and dynamic font scaling for long sentences.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {SentenceAudioApi} props.controller - Audio playback controller for TTS
+ * @param {'word' | 'line' | 'off'} [props.highlightMode='word'] - Text highlighting mode during TTS playback
+ * @param {boolean} [props.ttsEnabled=true] - Whether text-to-speech is enabled
+ * @param {boolean} [props.autoFontScaling=true] - Enable automatic font scaling for long sentences
+ * @param {BookClient} [props.book] - Book data including image URLs
+ * 
+ * @example
+ * ```tsx
+ * <FocusReader
+ *   controller={sentenceAudioController}
+ *   highlightMode="word"
+ *   ttsEnabled={true}
+ *   autoFontScaling={true}
+ *   book={currentBook}
+ * />
+ * ```
+ */
 export const FocusReader: React.FC<{
     controller: SentenceAudioApi;
     highlightMode?: 'word' | 'line' | 'off';
@@ -180,42 +205,83 @@ export const FocusReader: React.FC<{
         return () => window.removeEventListener('resize', updateLinePos);
     }, [currentWordIndex, currentWords.length, ttsEnabled]);
 
-    // Calculate font scale directly based on text characteristics (no state/useEffect needed)
+    /**
+     * Dynamic Font Scaling for Long Sentences
+     * 
+     * Automatically calculates and applies font scaling to ensure long sentences
+     * fit within the viewport without requiring scrolling. This improves the
+     * reading experience by maintaining all content visible on screen.
+     * 
+     * Algorithm Overview:
+     * 1. Estimates the number of characters per line based on container width and font size
+     * 2. Calculates how many lines the current text will occupy
+     * 3. Estimates the total rendered height (lines × line height)
+     * 4. Adds a 20% safety buffer to account for word wrapping variations
+     * 5. Compares estimated height against available viewport height
+     * 6. If content would overflow, scales font down proportionally
+     * 
+     * Key Features:
+     * - Minimum scale: 0.65 (65%) - ensures text remains readable
+     * - Maximum scale: 1.0 (100%) - never scales up
+     * - Accounts for: container padding, nav bars, controls, prev/next sections
+     * - Disabled for images (images have their own sizing)
+     * - Can be disabled by user via Theme & Appearance Settings
+     * 
+     * Performance: Uses useMemo to only recalculate when dependencies change
+     * 
+     * @returns {number} Scale factor between 0.65 and 1.0 to apply to font size
+     */
     const fontScale = useMemo(() => {
         // Skip scaling if disabled by user or for images
         if (!autoFontScaling || isImage) {
             return 1;
         }
         
-        // Estimate height based on text length and screen size
-        // Calculate actual characters per line based on container width
-        const containerMaxWidth = 800; // from Box sx maxWidth
-        const containerPadding = 32; // px: 2 (16px each side)
+        // Step 1: Calculate effective container width
+        // Container has max-width: 800px and horizontal padding of 16px each side
+        const containerMaxWidth = 800;
+        const containerPadding = 32; // 16px left + 16px right
         const effectiveWidth = Math.min(containerMaxWidth, window.innerWidth) - containerPadding;
         
-        // Estimate character width: fontSize * 1.5 (h4) * 16 (rem to px) * 0.45 (avg char width ratio)
+        // Step 2: Estimate characters per line
+        // Font size calculation: user fontSize setting × 1.5 (h4 variant) × 16 (rem to px)
+        // Character width ratio: 0.45 (empirically determined average for proportional fonts)
         const baseFontSizePx = fontSize * 1.5 * 16;
         const avgCharWidth = baseFontSizePx * 0.45;
         const avgCharsPerLine = Math.floor(effectiveWidth / avgCharWidth);
         
+        // Step 3: Calculate estimated number of lines
         const textLength = currText.length;
         const estimatedLines = Math.ceil(textLength / avgCharsPerLine);
         
-        // Estimate height: lines * fontSize * lineHeight
-        // Add 20% buffer to account for padding, margins, and word wrapping variations
+        // Step 4: Calculate estimated height with safety buffer
+        // Line height in pixels = base font size × user's line height setting
+        // Safety buffer: 1.2 (20%) accounts for:
+        //   - Word wrapping variations (some lines may have fewer characters)
+        //   - Container padding and margins
+        //   - Font rendering differences across browsers
         const lineHeightPx = baseFontSizePx * lineHeight;
         const estimatedHeight = estimatedLines * lineHeightPx * 1.2;
         
-        // Available height accounting for UI elements (nav, controls, prev/next sections, padding)
+        // Step 5: Calculate available height
+        // Reserved space breakdown:
+        //   - Top navigation bar: ~64px
+        //   - Bottom playback controls: ~140px
+        //   - Previous/next sentence sections: ~176px total (88px each when shown)
+        //   - Additional padding and margins: ~50px
+        //   Total reserved: ~430px (using 350px as conservative estimate)
         const availableHeight = window.innerHeight - 350;
         
+        // Step 6: Apply scaling if content would overflow
         if (estimatedHeight > availableHeight) {
-            // Scale down proportionally, minimum 0.65 (65%)
+            // Calculate proportional scale to fit content
             const targetScale = (availableHeight / estimatedHeight);
+            // Clamp scale between 0.65 (minimum for readability) and 1.0 (no upscaling)
             const scale = Math.max(0.65, Math.min(1, targetScale));
             return scale;
         }
         
+        // Content fits without scaling
         return 1;
     }, [currText, isImage, fontSize, lineHeight, isHeader, autoFontScaling]);
 

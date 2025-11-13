@@ -48,7 +48,26 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Line Overlay**: Straight line background across the current word line
 - ✅ **Highlight Mode Toggle**: User can choose between word, line, or no highlighting in focus mode
 
-### 4. Navigation
+### 4. Dynamic Font Scaling (Focus Mode)
+
+- ✅ **Automatic Scaling**: Intelligently scales down font size for long sentences that would overflow viewport
+- ✅ **User Controllable**: Enable/disable via Theme & Appearance Settings (enabled by default)
+- ✅ **Smart Algorithm**: Estimates required height based on text length, font size, and viewport dimensions
+- ✅ **Readability Focused**: Maintains minimum 65% scale to ensure text remains readable
+- ✅ **Context Awareness**: Hides prev/next sentence previews when scaling is active
+- ✅ **Smooth Transitions**: Font size changes animate smoothly with iOS-like easing
+- ✅ **Performance Optimized**: Uses useMemo for efficient calculation without DOM measurements
+
+**Key Features**:
+- Accounts for container padding, navigation bars, and playback controls
+- Includes 20% safety buffer for word wrapping variations
+- Never scales up beyond user's preferred font size
+- Automatically disabled for images
+- Responsive to window resize events
+
+**Detailed Documentation**: See [Focus Reader Font Scaling](./focus-reader-font-scaling.md) for complete technical documentation, algorithm details, and troubleshooting guide.
+
+### 5. Navigation
 
 #### Chapter Navigation
 - ✅ **Next Chapter**: Navigate to the next chapter
@@ -61,14 +80,14 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Scroll to Current**: Button to scroll to currently playing sentence (full mode)
 - ✅ **Word Click**: Click any word to start playback from that position
 
-### 5. Bookmarks
+### 6. Bookmarks
 
 - ✅ **Add Bookmark**: Save current reading position
 - ✅ **Bookmark List**: View all bookmarks for the current book
 - ✅ **Navigate to Bookmark**: Jump to any saved bookmark
 - ✅ **Bookmark Persistence**: Bookmarks saved to user account
 
-### 6. Theme Customization
+### 7. Theme Customization
 
 #### Typography
 - ✅ **Font Size**: Adjustable from 0.8rem to 2.0rem (applies to both full and focus modes)
@@ -83,7 +102,7 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Sentence Highlight Color**: Customizable sentence highlighting color
 - ✅ **Real-time Preview**: Changes apply instantly in both reading modes
 
-### 7. Content Rendering
+### 8. Content Rendering
 
 #### Text Chunks
 - ✅ **Sentence-Level Chunks**: Each sentence is a separate playable unit
@@ -112,13 +131,13 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Preserves Highlighting**: Word-by-word highlighting works across list items
 - ✅ **Consistent Styling**: List sentences maintain same font size, weight, and styling as regular text
 
-### 8. Settings Persistence
+### 9. Settings Persistence
 
 - ✅ **User Settings**: All theme and playback settings saved to user account
 - ✅ **Reading Progress**: Current chapter and sentence automatically saved
 - ✅ **Cross-Device Sync**: Settings and progress sync across devices
 
-### 9. TTS Usage Monitoring
+### 10. TTS Usage Monitoring
 
 - ✅ **Free Tier Tracking**: Monitors usage against free tier limits for all TTS providers
 - ✅ **Real-time Usage Display**: Shows current usage in Playback Settings modal
@@ -129,13 +148,13 @@ This document provides a comprehensive list of all features supported in the Boo
   - ElevenLabs: 20K characters/month
 - ✅ **Centralized Pricing**: Single source of truth for pricing constants
 
-### 10. Offline Support
+### 11. Offline Support
 
 - ✅ **Offline Reading**: Downloaded chapters readable without internet
 - ✅ **Chapter Downloads**: Users can download chapters for offline access
 - ✅ **Offline Indicator**: Clear indication when reading offline content
 
-### 11. AI Features
+### 12. AI Features
 
 - ✅ **Ask AI Panel**: Chat with AI about the book content
 - ✅ **Context-Aware**: AI has access to current chapter and sentence

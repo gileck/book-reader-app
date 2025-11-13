@@ -132,7 +132,9 @@ export const useUserSettings = () => {
             lineHeight: 1.5,
             fontFamily: 'Inter, system-ui, sans-serif',
             textColorLight: '#000000',
-            textColorDark: '#ffffff'
+            textColorDark: '#ffffff',
+            highlightMode: 'word',
+            autoFontScaling: true
         });
     }, [updateUserSettings]);
 

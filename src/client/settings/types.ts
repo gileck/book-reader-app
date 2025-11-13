@@ -33,6 +33,7 @@ export interface UserSettings {
     // Focus mode preferences
     wordHighlightingEnabled?: boolean;
     highlightMode?: 'word' | 'line' | 'off';
+    /** Automatically scale font size down for long sentences to fit viewport (default: true) */
     autoFontScaling?: boolean;
     // Reading mode preference (focus vs full)
     readingMode?: 'focus' | 'full';
