@@ -118,16 +118,21 @@ This document provides a comprehensive list of all features supported in the Boo
 
 #### Typography
 - ✅ **Font Size**: Adjustable from 0.8rem to 2.0rem (applies to both full and focus modes)
-- ✅ **Line Height**: Adjustable from 1.2 to 2.5 (applies to both full and focus modes)
-- ✅ **Font Family**: Multiple font choices - Sans-serif, Serif, Monospace, Custom (applies to both full and focus modes)
+- ✅ **Line Height**: Adjustable from 1.2 to 2.0 (applies to both full and focus modes)
+- ✅ **Font Family**: 40+ font choices with autocomplete search - Sans-serif (25 fonts), Serif (16 fonts), Monospace (11 fonts), plus custom font input support
+- ✅ **Font Search**: Type-ahead autocomplete with category grouping and freeSolo support for custom fonts
 
 #### Colors
-- ✅ **Theme Mode**: Light, Dark, Sepia, Custom
-- ✅ **Text Color**: Customizable text color (applies to both full and focus modes)
-- ✅ **Background Color**: Customizable background color
-- ✅ **Word Highlight Color**: Customizable word highlighting color
-- ✅ **Sentence Highlight Color**: Customizable sentence highlighting color
-- ✅ **Real-time Preview**: Changes apply instantly in both reading modes
+- ✅ **Theme Mode**: Light, Dark mode toggle
+- ✅ **Text Color**: Customizable text color with preset swatches and color picker
+- ✅ **Word Highlight Color**: Customizable word highlighting color with 12 preset swatches
+- ✅ **Sentence Highlight Color**: Customizable sentence highlighting color with 8 theme-aware preset swatches
+- ✅ **Real-time Preview**: Fixed preview panel at bottom shows all changes instantly
+
+#### UI Organization
+- ✅ **Tabbed Interface**: Settings organized into Colors, Typography, and Features tabs
+- ✅ **Live Preview**: Always-visible preview panel at bottom of modal
+- ✅ **Modern Design**: Clean, iOS-inspired interface with proper spacing and visual hierarchy
 
 ### 9. Content Rendering
 
@@ -388,6 +393,16 @@ This document provides a comprehensive list of all features supported in the Boo
 ## Recent Updates
 
 ### November 13, 2025
+- ✅ **Theme & Appearance Settings Redesign**: Complete UI overhaul of the settings modal
+  - Organized into 3 logical tabs: Colors, Typography, Features
+  - Expanded font library to 40+ fonts with autocomplete search (Sans-serif, Serif, Monospace)
+  - Added freeSolo support for custom font input
+  - Text color now uses swatch picker pattern (consistent with highlight colors)
+  - Fixed preview panel at bottom showing real-time changes
+  - Modern, clean iOS-inspired design with Stack components and better spacing
+  - Improved accessibility with proper ARIA labels and keyboard navigation
+  - Implementation in `src/client/components/ThemeModal.tsx`
+
 - ✅ **Bionic Reading Mode**: Implemented bionic reading feature that emphasizes the first part of each word
   - Smart bolding algorithm based on word length (1 char for short words, ~50% for long words)
   - Toggle available in Theme & Appearance Settings (disabled by default)

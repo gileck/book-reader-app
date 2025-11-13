@@ -11,11 +11,106 @@ import {
     TextField,
     Slider,
     Button,
-    Divider,
     Paper,
-    IconButton
+    IconButton,
+    Tabs,
+    Tab,
+    Autocomplete,
+    Stack,
+    Chip
 } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
+
+interface FontOption {
+    label: string;
+    value: string;
+    category: string;
+}
+
+const FONT_FAMILY_OPTIONS: FontOption[] = [
+    // Sans-serif fonts
+    { label: 'Inter', value: 'Inter, system-ui, sans-serif', category: 'Sans-serif' },
+    { label: 'SF Pro', value: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif', category: 'Sans-serif' },
+    { label: 'Arial', value: 'Arial, sans-serif', category: 'Sans-serif' },
+    { label: 'Helvetica', value: 'Helvetica, sans-serif', category: 'Sans-serif' },
+    { label: 'Roboto', value: 'Roboto, sans-serif', category: 'Sans-serif' },
+    { label: 'Open Sans', value: 'Open Sans, sans-serif', category: 'Sans-serif' },
+    { label: 'Lato', value: 'Lato, sans-serif', category: 'Sans-serif' },
+    { label: 'Montserrat', value: 'Montserrat, sans-serif', category: 'Sans-serif' },
+    { label: 'Source Sans Pro', value: 'Source Sans Pro, sans-serif', category: 'Sans-serif' },
+    { label: 'Poppins', value: 'Poppins, sans-serif', category: 'Sans-serif' },
+    { label: 'Raleway', value: 'Raleway, sans-serif', category: 'Sans-serif' },
+    { label: 'Nunito', value: 'Nunito, sans-serif', category: 'Sans-serif' },
+    { label: 'Ubuntu', value: 'Ubuntu, sans-serif', category: 'Sans-serif' },
+    { label: 'PT Sans', value: 'PT Sans, sans-serif', category: 'Sans-serif' },
+    { label: 'Noto Sans', value: 'Noto Sans, sans-serif', category: 'Sans-serif' },
+    { label: 'Work Sans', value: 'Work Sans, sans-serif', category: 'Sans-serif' },
+    { label: 'Quicksand', value: 'Quicksand, sans-serif', category: 'Sans-serif' },
+    { label: 'Mulish', value: 'Mulish, sans-serif', category: 'Sans-serif' },
+    { label: 'Barlow', value: 'Barlow, sans-serif', category: 'Sans-serif' },
+    { label: 'Verdana', value: 'Verdana, sans-serif', category: 'Sans-serif' },
+    { label: 'Tahoma', value: 'Tahoma, sans-serif', category: 'Sans-serif' },
+    { label: 'Trebuchet MS', value: 'Trebuchet MS, sans-serif', category: 'Sans-serif' },
+    { label: 'IBM Plex Sans', value: 'IBM Plex Sans, sans-serif', category: 'Sans-serif' },
+    { label: 'Space Grotesk', value: '"Space Grotesk", sans-serif', category: 'Sans-serif' },
+
+    // Serif fonts
+    { label: 'Georgia', value: 'Georgia, serif', category: 'Serif' },
+    { label: 'Times New Roman', value: 'Times New Roman, serif', category: 'Serif' },
+    { label: 'Merriweather', value: 'Merriweather, serif', category: 'Serif' },
+    { label: 'Crimson Text', value: 'Crimson Text, serif', category: 'Serif' },
+    { label: 'Playfair Display', value: 'Playfair Display, serif', category: 'Serif' },
+    { label: 'Lora', value: 'Lora, serif', category: 'Serif' },
+    { label: 'PT Serif', value: 'PT Serif, serif', category: 'Serif' },
+    { label: 'Noto Serif', value: 'Noto Serif, serif', category: 'Serif' },
+    { label: 'Source Serif Pro', value: 'Source Serif Pro, serif', category: 'Serif' },
+    { label: 'EB Garamond', value: 'EB Garamond, serif', category: 'Serif' },
+    { label: 'Libre Baskerville', value: 'Libre Baskerville, serif', category: 'Serif' },
+    { label: 'Cormorant', value: 'Cormorant, serif', category: 'Serif' },
+    { label: 'Spectral', value: 'Spectral, serif', category: 'Serif' },
+    { label: 'Cardo', value: 'Cardo, serif', category: 'Serif' },
+    { label: 'Gentium Plus', value: '"Gentium Plus", serif', category: 'Serif' },
+    { label: 'Literata', value: 'Literata, serif', category: 'Serif' },
+
+    // Monospace fonts
+    { label: 'Courier New', value: 'Courier New, monospace', category: 'Monospace' },
+    { label: 'Monaco', value: 'Monaco, monospace', category: 'Monospace' },
+    { label: 'Consolas', value: 'Consolas, monospace', category: 'Monospace' },
+    { label: 'Fira Code', value: 'Fira Code, monospace', category: 'Monospace' },
+    { label: 'Source Code Pro', value: 'Source Code Pro, monospace', category: 'Monospace' },
+    { label: 'JetBrains Mono', value: 'JetBrains Mono, monospace', category: 'Monospace' },
+    { label: 'IBM Plex Mono', value: 'IBM Plex Mono, monospace', category: 'Monospace' },
+    { label: 'Roboto Mono', value: 'Roboto Mono, monospace', category: 'Monospace' },
+    { label: 'Ubuntu Mono', value: 'Ubuntu Mono, monospace', category: 'Monospace' },
+    { label: 'Inconsolata', value: 'Inconsolata, monospace', category: 'Monospace' },
+    { label: 'Cascadia Code', value: '"Cascadia Code", monospace', category: 'Monospace' }
+];
+
+const findFontOptionByValue = (value: string) =>
+    FONT_FAMILY_OPTIONS.find(
+        (option) => option.value === value || option.label.toLowerCase() === value.toLowerCase()
+    );
+
+const getFontLabelFromValue = (value: string) => {
+    const match = findFontOptionByValue(value);
+    return match ? match.label : value;
+};
+
+const tabAccessibilityProps = (index: number) => ({
+    id: `theme-modal-tab-${index}`,
+    'aria-controls': `theme-modal-tabpanel-${index}`
+});
+
+const TabPanel: React.FC<{ value: number; index: number; children: React.ReactNode }> = ({ value, index, children }) => (
+    <Box
+        role="tabpanel"
+        hidden={value !== index}
+        id={`theme-modal-tabpanel-${index}`}
+        aria-labelledby={`theme-modal-tab-${index}`}
+    >
+        {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
+    </Box>
+);
 
 interface ThemeModalProps {
     open: boolean;
@@ -34,7 +129,6 @@ interface ThemeModalProps {
     onLineHeightChange: (lineHeight: number) => void;
     onFontFamilyChange: (fontFamily: string) => void;
     onTextColorChange: (textColor: string) => void;
-    // New: highlight mode
     highlightMode?: 'word' | 'line' | 'off';
     onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
     autoFontScaling?: boolean;
@@ -69,6 +163,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onBionicReadingChange,
     onResetToDefaults
 }) => {
+    const [activeTab, setActiveTab] = useState(0);
     const [localTheme, setLocalTheme] = useState(currentTheme);
     const [localHighlightColor, setLocalHighlightColor] = useState(currentHighlightColor);
     const [localSentenceHighlightColor, setLocalSentenceHighlightColor] = useState(currentSentenceHighlightColor);
@@ -79,6 +174,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
     const [localAutoFontScaling, setLocalAutoFontScaling] = useState(autoFontScaling);
     const [localBionicReadingEnabled, setLocalBionicReadingEnabled] = useState(bionicReadingEnabled);
+    const [fontInputValue, setFontInputValue] = useState(getFontLabelFromValue(currentFontFamily));
 
     useEffect(() => {
         setLocalTheme(currentTheme);
@@ -91,7 +187,14 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalHighlightMode(highlightMode);
         setLocalAutoFontScaling(autoFontScaling);
         setLocalBionicReadingEnabled(bionicReadingEnabled);
+        setFontInputValue(getFontLabelFromValue(currentFontFamily));
     }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode, autoFontScaling, bionicReadingEnabled]);
+
+    useEffect(() => {
+        if (open) {
+            setActiveTab(0);
+        }
+    }, [open]);
 
     const handleThemeToggle = (checked: boolean) => {
         const newTheme = checked ? 'dark' : 'light';
@@ -100,23 +203,21 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
 
         // Auto-adjust sentence highlight color for better contrast
         if (newTheme === 'dark' && (localSentenceHighlightColor.startsWith('#e') || localSentenceHighlightColor.startsWith('#f'))) {
-            const newColor = '#1a237e'; // Default dark blue for dark mode
+            const newColor = '#1a237e';
             setLocalSentenceHighlightColor(newColor);
             onSentenceHighlightColorChange(newColor);
         } else if (newTheme === 'light' && !localSentenceHighlightColor.startsWith('#e') && !localSentenceHighlightColor.startsWith('#f')) {
-            const newColor = '#e3f2fd'; // Default light blue for light mode
+            const newColor = '#e3f2fd';
             setLocalSentenceHighlightColor(newColor);
             onSentenceHighlightColorChange(newColor);
         }
     };
 
     const handleHighlightColorChange = (color: string) => {
-        // Update local only; commit on dialog close
         setLocalHighlightColor(color);
     };
 
     const handleSentenceHighlightColorChange = (color: string) => {
-        // Update local only; commit on dialog close
         setLocalSentenceHighlightColor(color);
     };
 
@@ -136,7 +237,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     };
 
     const handleTextColorChange = (textColor: string) => {
-        // Update local only; commit on dialog close
         setLocalTextColor(textColor);
     };
 
@@ -165,7 +265,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     };
 
     const handleResetToDefaults = () => {
-        // Call the reset function passed from parent
         onResetToDefaults();
     };
 
@@ -184,7 +283,6 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     };
 
     const handleDialogClose = () => {
-        // Commit color changes on dialog close only
         if (localHighlightColor !== currentHighlightColor) onHighlightColorChange(localHighlightColor);
         if (localSentenceHighlightColor !== currentSentenceHighlightColor) onSentenceHighlightColorChange(localSentenceHighlightColor);
         if (localTextColor !== currentTextColor) onTextColorChange(localTextColor);
@@ -192,316 +290,412 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         onClose();
     };
 
+    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+        setActiveTab(newValue);
+    };
+
+    const commitFontFamilyFromInput = (input: string) => {
+        const trimmed = input.trim();
+        if (!trimmed) return;
+
+        const match = FONT_FAMILY_OPTIONS.find(
+            (opt) => opt.label.toLowerCase() === trimmed.toLowerCase()
+        );
+
+        if (match) {
+            handleFontFamilyChange(match.value);
+            setFontInputValue(match.label);
+        } else {
+            handleFontFamilyChange(trimmed);
+            setFontInputValue(trimmed);
+        }
+    };
+
+    const renderColorSwatch = (
+        color: string,
+        selectedColor: string,
+        onChange: (color: string) => void,
+        ariaLabel: string
+    ) => {
+        const isSelected = color === selectedColor;
+        return (
+            <Box
+                key={color}
+                onClick={() => onChange(color)}
+                aria-label={`${ariaLabel} ${color}`}
+                sx={{
+                    width: 36,
+                    height: 36,
+                    backgroundColor: color,
+                    borderRadius: 1,
+                    cursor: 'pointer',
+                    border: isSelected ? '3px solid' : '2px solid',
+                    borderColor: isSelected ? 'primary.main' : 'divider',
+                    transition: 'all 0.2s',
+                    '&:hover': {
+                        transform: 'scale(1.1)',
+                        borderColor: isSelected ? 'primary.main' : 'text.secondary'
+                    }
+                }}
+            />
+        );
+    };
+
     const presetColors = [
-        '#ffeb3b', // Yellow
-        '#ff9800', // Orange  
-        '#f44336', // Red
-        '#e91e63', // Pink
-        '#9c27b0', // Purple
-        '#3f51b5', // Indigo
-        '#2196f3', // Blue
-        '#00bcd4', // Cyan
-        '#009688', // Teal
-        '#4caf50', // Green
-        '#8bc34a', // Light Green
-        '#cddc39'  // Lime
+        '#ffeb3b', '#ff9800', '#f44336', '#e91e63',
+        '#9c27b0', '#3f51b5', '#2196f3', '#00bcd4',
+        '#009688', '#4caf50', '#8bc34a', '#cddc39'
     ];
 
     const presetSentenceColors = localTheme === 'dark' ? [
-        '#1a237e', // Dark Blue
-        '#4a148c', // Dark Purple
-        '#1b5e20', // Dark Green
-        '#e65100', // Dark Orange
-        '#880e4f', // Dark Pink
-        '#33691e', // Dark Lime
-        '#004d40', // Dark Teal
-        '#f57f17'  // Dark Yellow
+        '#1a237e', '#4a148c', '#1b5e20', '#e65100',
+        '#880e4f', '#33691e', '#004d40', '#f57f17'
     ] : [
-        '#e3f2fd', // Light Blue
-        '#f3e5f5', // Light Purple
-        '#e8f5e8', // Light Green
-        '#fff3e0', // Light Orange
-        '#fce4ec', // Light Pink
-        '#f1f8e9', // Light Lime
-        '#e0f2f1', // Light Teal
-        '#fff8e1'  // Light Yellow
+        '#e3f2fd', '#f3e5f5', '#e8f5e8', '#fff3e0',
+        '#fce4ec', '#f1f8e9', '#e0f2f1', '#fff8e1'
     ];
 
-    const fontSizeMarks = [
-        { value: 0.8, label: '0.8x' },
-        { value: 1.0, label: '1x' },
-        { value: 1.5, label: '1.5x' },
-        { value: 2.0, label: '2x' }
+    const presetTextColors = localTheme === 'dark' ? [
+        '#ffffff', '#e0e0e0', '#b0b0b0', '#90caf9',
+        '#a5d6a7', '#ffcc80', '#f48fb1', '#ce93d8'
+    ] : [
+        '#000000', '#212121', '#424242', '#1976d2',
+        '#388e3c', '#f57c00', '#c2185b', '#7b1fa2'
     ];
 
-    const lineHeightMarks = [
-        { value: 1.2, label: '1.2' },
-        { value: 1.5, label: '1.5' },
-        { value: 1.8, label: '1.8' },
-        { value: 2.0, label: '2.0' }
-    ];
+    const selectedFontOption = findFontOptionByValue(localFontFamily);
+    const fontAutocompleteValue: FontOption | string = selectedFontOption ?? localFontFamily;
 
     return (
-        <Dialog open={open} onClose={handleDialogClose} maxWidth="md" fullWidth>
-            <DialogTitle>Theme & Appearance Settings</DialogTitle>
-            <DialogContent>
-                <Box sx={{ py: 2 }}>
-                    {/* Theme Toggle */}
-                    <Typography variant="h6" gutterBottom>
-                        Theme Mode
-                    </Typography>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={localTheme === 'dark'}
-                                onChange={(e) => handleThemeToggle(e.target.checked)}
-                            />
+        <Dialog 
+            open={open} 
+            onClose={handleDialogClose} 
+            maxWidth="md" 
+            fullWidth
+            PaperProps={{
+                sx: {
+                    height: '90vh',
+                    maxHeight: 800
+                }
+            }}
+        >
+            <DialogTitle sx={{ pb: 2 }}>Theme & Appearance</DialogTitle>
+            <DialogContent sx={{ p: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                <Tabs
+                    value={activeTab}
+                    onChange={handleTabChange}
+                    variant="fullWidth"
+                    sx={{ 
+                        borderBottom: 1, 
+                        borderColor: 'divider',
+                        px: 3,
+                        minHeight: 48,
+                        '& .MuiTab-root': {
+                            minHeight: 48,
+                            textTransform: 'none',
+                            fontSize: '0.95rem',
+                            fontWeight: 500
                         }
-                        label={`${localTheme === 'dark' ? 'Dark' : 'Light'} Mode`}
-                        sx={{ mb: 3 }}
-                    />
+                    }}
+                >
+                    <Tab label="Colors" {...tabAccessibilityProps(0)} />
+                    <Tab label="Typography" {...tabAccessibilityProps(1)} />
+                    <Tab label="Features" {...tabAccessibilityProps(2)} />
+                </Tabs>
 
-                    <Divider sx={{ my: 3 }} />
+                <Box sx={{ flex: 1, overflow: 'auto', px: 3 }}>
+                    <TabPanel value={activeTab} index={0}>
+                        <Stack spacing={3}>
+                            {/* Theme Mode */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Theme Mode
+                                </Typography>
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={localTheme === 'dark'}
+                                            onChange={(e) => handleThemeToggle(e.target.checked)}
+                                        />
+                                    }
+                                    label={localTheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+                                />
+                            </Box>
 
-                    {/* Word Highlight Color */}
-                    <Typography variant="h6" gutterBottom>
-                        Word Highlight Color
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Color used to highlight the currently playing word
-                    </Typography>
+                            {/* Text Color */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Text Color
+                                </Typography>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                                    {presetTextColors.map((color) =>
+                                        renderColorSwatch(color, localTextColor, handleTextColorChange, 'Set text color to')
+                                    )}
+                                </Box>
+                                <TextField
+                                    type="color"
+                                    value={localTextColor}
+                                    onChange={(e) => handleTextColorChange(e.target.value)}
+                                    size="small"
+                                    fullWidth
+                                    sx={{ maxWidth: 200 }}
+                                />
+                            </Box>
 
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                        {presetColors.map((color) => (
-                            <Paper
-                                key={color}
-                                sx={{
-                                    width: 40,
-                                    height: 40,
-                                    backgroundColor: color,
-                                    cursor: 'pointer',
-                                    border: localHighlightColor === color ? '3px solid #000' : '1px solid #ccc',
-                                    '&:hover': { border: '2px solid #666' }
-                                }}
-                                onClick={() => handleHighlightColorChange(color)}
-                            />
-                        ))}
-                    </Box>
+                            {/* Word Highlight */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Word Highlight
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Highlights the currently playing word
+                                </Typography>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                                    {presetColors.map((color) =>
+                                        renderColorSwatch(color, localHighlightColor, handleHighlightColorChange, 'Set word highlight to')
+                                    )}
+                                </Box>
+                                <TextField
+                                    type="color"
+                                    value={localHighlightColor}
+                                    onChange={(e) => handleHighlightColorChange(e.target.value)}
+                                    size="small"
+                                    fullWidth
+                                    sx={{ maxWidth: 200 }}
+                                />
+                            </Box>
 
-                    <TextField
-                        label="Custom Color"
-                        type="color"
-                        value={localHighlightColor}
-                        onChange={(e) => handleHighlightColorChange(e.target.value)}
-                        size="small"
-                        sx={{ mb: 3 }}
-                    />
+                            {/* Sentence Highlight */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Sentence Background
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Background color for the current sentence
+                                </Typography>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                                    {presetSentenceColors.map((color) =>
+                                        renderColorSwatch(color, localSentenceHighlightColor, handleSentenceHighlightColorChange, 'Set sentence background to')
+                                    )}
+                                </Box>
+                                <TextField
+                                    type="color"
+                                    value={localSentenceHighlightColor}
+                                    onChange={(e) => handleSentenceHighlightColorChange(e.target.value)}
+                                    size="small"
+                                    fullWidth
+                                    sx={{ maxWidth: 200 }}
+                                />
+                            </Box>
+                        </Stack>
+                    </TabPanel>
 
-                    <Divider sx={{ my: 3 }} />
+                    <TabPanel value={activeTab} index={1}>
+                        <Stack spacing={3}>
+                            {/* Font Size */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Font Size
+                                </Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <IconButton
+                                        onClick={handleFontSizeDecrease}
+                                        disabled={localFontSize <= 0.8}
+                                        size="small"
+                                    >
+                                        <Remove />
+                                    </IconButton>
+                                    <Slider
+                                        value={localFontSize}
+                                        onChange={(_, value) => handleFontSizeChange(value as number)}
+                                        min={0.8}
+                                        max={2.0}
+                                        step={0.1}
+                                        valueLabelDisplay="auto"
+                                        sx={{ flex: 1 }}
+                                    />
+                                    <IconButton
+                                        onClick={handleFontSizeIncrease}
+                                        disabled={localFontSize >= 2.0}
+                                        size="small"
+                                    >
+                                        <Add />
+                                    </IconButton>
+                                    <Chip label={`${localFontSize}x`} size="small" sx={{ minWidth: 60 }} />
+                                </Box>
+                            </Box>
 
-                    {/* Sentence Highlight Color */}
-                    <Typography variant="h6" gutterBottom>
-                        Sentence Highlight Color
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Background color for the current sentence
-                    </Typography>
+                            {/* Line Height */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Line Height
+                                </Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <IconButton
+                                        onClick={handleLineHeightDecrease}
+                                        disabled={localLineHeight <= 1.2}
+                                        size="small"
+                                    >
+                                        <Remove />
+                                    </IconButton>
+                                    <Slider
+                                        value={localLineHeight}
+                                        onChange={(_, value) => handleLineHeightChange(value as number)}
+                                        min={1.2}
+                                        max={2.0}
+                                        step={0.1}
+                                        valueLabelDisplay="auto"
+                                        sx={{ flex: 1 }}
+                                    />
+                                    <IconButton
+                                        onClick={handleLineHeightIncrease}
+                                        disabled={localLineHeight >= 2.0}
+                                        size="small"
+                                    >
+                                        <Add />
+                                    </IconButton>
+                                    <Chip label={`${localLineHeight}`} size="small" sx={{ minWidth: 60 }} />
+                                </Box>
+                            </Box>
 
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                        {presetSentenceColors.map((color) => (
-                            <Paper
-                                key={color}
-                                sx={{
-                                    width: 40,
-                                    height: 40,
-                                    backgroundColor: color,
-                                    cursor: 'pointer',
-                                    border: localSentenceHighlightColor === color ? '3px solid #000' : '1px solid #ccc',
-                                    '&:hover': { border: '2px solid #666' }
-                                }}
-                                onClick={() => handleSentenceHighlightColorChange(color)}
-                            />
-                        ))}
-                    </Box>
+                            {/* Font Family */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Font Family
+                                </Typography>
+                                <Autocomplete<FontOption | string, false, false, true>
+                                    value={fontAutocompleteValue}
+                                    options={FONT_FAMILY_OPTIONS}
+                                    freeSolo
+                                    inputValue={fontInputValue}
+                                    onInputChange={(_, newInputValue) => setFontInputValue(newInputValue)}
+                                    onChange={(_, newValue) => {
+                                        if (typeof newValue === 'string') {
+                                            commitFontFamilyFromInput(newValue);
+                                        } else if (newValue?.value) {
+                                            handleFontFamilyChange(newValue.value);
+                                        }
+                                    }}
+                                    onBlur={(e) => {
+                                        const target = e.target as HTMLInputElement;
+                                        if (target?.value) {
+                                            commitFontFamilyFromInput(target.value);
+                                        }
+                                    }}
+                                    groupBy={(option) => typeof option === 'string' ? 'Custom' : option.category}
+                                    getOptionLabel={(option) => typeof option === 'string' ? option : option.label}
+                                    renderOption={(props, option) => {
+                                        const { key, ...otherProps } = props;
+                                        return (
+                                            <li key={key} {...otherProps}>
+                                                {typeof option === 'string' ? option : option.label}
+                                            </li>
+                                        );
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            placeholder="Search or type font name..."
+                                            size="small"
+                                        />
+                                    )}
+                                />
+                            </Box>
+                        </Stack>
+                    </TabPanel>
 
-                    <TextField
-                        label="Custom Color"
-                        type="color"
-                        value={localSentenceHighlightColor}
-                        onChange={(e) => handleSentenceHighlightColorChange(e.target.value)}
-                        size="small"
-                        sx={{ mb: 3 }}
-                    />
+                    <TabPanel value={activeTab} index={2}>
+                        <Stack spacing={3}>
+                            {/* Highlight Mode */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Highlight Mode
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Choose how text is highlighted in Focus mode
+                                </Typography>
+                                <Stack direction="row" spacing={1}>
+                                    <Button
+                                        variant={localHighlightMode === 'word' ? 'contained' : 'outlined'}
+                                        onClick={() => setLocalHighlightMode('word')}
+                                        size="small"
+                                    >
+                                        Word
+                                    </Button>
+                                    <Button
+                                        variant={localHighlightMode === 'line' ? 'contained' : 'outlined'}
+                                        onClick={() => setLocalHighlightMode('line')}
+                                        size="small"
+                                    >
+                                        Line
+                                    </Button>
+                                    <Button
+                                        variant={localHighlightMode === 'off' ? 'contained' : 'outlined'}
+                                        onClick={() => setLocalHighlightMode('off')}
+                                        size="small"
+                                    >
+                                        Off
+                                    </Button>
+                                </Stack>
+                            </Box>
 
-                    <Divider sx={{ my: 3 }} />
+                            {/* Auto Font Scaling */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Auto Font Scaling
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Automatically scale down long sentences in Focus mode
+                                </Typography>
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={localAutoFontScaling}
+                                            onChange={(e) => handleAutoFontScalingToggle(e.target.checked)}
+                                        />
+                                    }
+                                    label={localAutoFontScaling ? 'Enabled' : 'Disabled'}
+                                />
+                            </Box>
 
-                    {/* Typography Settings */}
-                    <Typography variant="h6" gutterBottom>
-                        Typography
-                    </Typography>
+                            {/* Bionic Reading */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Bionic Reading
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Bold the first part of each word for faster reading
+                                </Typography>
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={localBionicReadingEnabled}
+                                            onChange={(e) => handleBionicReadingToggle(e.target.checked)}
+                                        />
+                                    }
+                                    label={localBionicReadingEnabled ? 'Enabled' : 'Disabled'}
+                                />
+                            </Box>
+                        </Stack>
+                    </TabPanel>
+                </Box>
 
-                    {/* Font Size */}
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Font size: {localFontSize}x
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                        <IconButton
-                            onClick={handleFontSizeDecrease}
-                            disabled={localFontSize <= 0.8}
-                            size="small"
-                            sx={{ minWidth: 40, height: 40 }}
-                        >
-                            <Remove />
-                        </IconButton>
-                        <Slider
-                            value={localFontSize}
-                            onChange={(_, value) => handleFontSizeChange(value as number)}
-                            min={0.8}
-                            max={2.0}
-                            step={0.1}
-                            marks={fontSizeMarks}
-                            valueLabelDisplay="auto"
-                            sx={{ flex: 1 }}
-                        />
-                        <IconButton
-                            onClick={handleFontSizeIncrease}
-                            disabled={localFontSize >= 2.0}
-                            size="small"
-                            sx={{ minWidth: 40, height: 40 }}
-                        >
-                            <Add />
-                        </IconButton>
-                    </Box>
-
-                    {/* Line Height */}
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Line height: {localLineHeight}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                        <IconButton
-                            onClick={handleLineHeightDecrease}
-                            disabled={localLineHeight <= 1.2}
-                            size="small"
-                            sx={{ minWidth: 40, height: 40 }}
-                        >
-                            <Remove />
-                        </IconButton>
-                        <Slider
-                            value={localLineHeight}
-                            onChange={(_, value) => handleLineHeightChange(value as number)}
-                            min={1.2}
-                            max={2.0}
-                            step={0.1}
-                            marks={lineHeightMarks}
-                            valueLabelDisplay="auto"
-                            sx={{ flex: 1 }}
-                        />
-                        <IconButton
-                            onClick={handleLineHeightIncrease}
-                            disabled={localLineHeight >= 2.0}
-                            size="small"
-                            sx={{ minWidth: 40, height: 40 }}
-                        >
-                            <Add />
-                        </IconButton>
-                    </Box>
-
-                    {/* Font Family */}
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Font Family
-                    </Typography>
-                    <TextField
-                        select
-                        fullWidth
-                        value={localFontFamily}
-                        onChange={(e) => handleFontFamilyChange(e.target.value)}
-                        SelectProps={{ native: true }}
-                        sx={{ mb: 3 }}
-                    >
-                        <option value="Inter, system-ui, sans-serif">Inter</option>
-                        <option value="Georgia, serif">Georgia</option>
-                        <option value="Times New Roman, serif">Times New Roman</option>
-                        <option value="Arial, sans-serif">Arial</option>
-                        <option value="Helvetica, sans-serif">Helvetica</option>
-                        <option value="Roboto, sans-serif">Roboto</option>
-                        <option value="Open Sans, sans-serif">Open Sans</option>
-                        <option value="Lato, sans-serif">Lato</option>
-                        <option value="Montserrat, sans-serif">Montserrat</option>
-                        <option value="Merriweather, serif">Merriweather</option>
-                        <option value="Crimson Text, serif">Crimson Text</option>
-                        <option value="Fira Sans, sans-serif">Fira Sans</option>
-                    </TextField>
-
-                    {/* Text Color */}
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Text Color
-                    </Typography>
-                    <TextField
-                        label="Text Color"
-                        type="color"
-                        value={localTextColor}
-                        onChange={(e) => handleTextColorChange(e.target.value)}
-                        size="small"
-                        sx={{ mb: 3 }}
-                    />
-
-                    <Divider sx={{ my: 3 }} />
-
-                    {/* Highlight Mode */}
-                    <Typography variant="h6" gutterBottom>
-                        Highlight Mode
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
-                        <Button variant={localHighlightMode === 'word' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('word')}>Word</Button>
-                        <Button variant={localHighlightMode === 'line' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('line')}>Line</Button>
-                        <Button variant={localHighlightMode === 'off' ? 'contained' : 'outlined'} onClick={() => setLocalHighlightMode('off')}>Off</Button>
-                    </Box>
-
-                    <Divider sx={{ my: 3 }} />
-
-                    {/* Auto Font Scaling */}
-                    <Typography variant="h6" gutterBottom>
-                        Auto Font Scaling
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Automatically scale down text size for long sentences to fit them on screen in Focus mode.
-                    </Typography>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={localAutoFontScaling}
-                                onChange={(e) => handleAutoFontScalingToggle(e.target.checked)}
-                            />
-                        }
-                        label={localAutoFontScaling ? 'Enabled' : 'Disabled'}
-                    />
-
-                    <Divider sx={{ my: 3 }} />
-
-                    {/* Bionic Reading */}
-                    <Typography variant="h6" gutterBottom>
-                        Bionic Reading
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        Emphasize the first part of each word to help guide your eye and improve reading speed. Works in both Focus and Full reading modes.
-                    </Typography>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={localBionicReadingEnabled}
-                                onChange={(e) => handleBionicReadingToggle(e.target.checked)}
-                            />
-                        }
-                        label={localBionicReadingEnabled ? 'Enabled' : 'Disabled'}
-                    />
-
-                    <Divider sx={{ my: 3 }} />
-
-                    {/* Preview */}
-                    <Typography variant="h6" gutterBottom>
+                {/* Preview - Fixed at bottom */}
+                <Paper
+                    elevation={3}
+                    sx={{
+                        p: 2,
+                        borderRadius: 0,
+                        borderTop: 1,
+                        borderColor: 'divider',
+                        backgroundColor: 'background.paper'
+                    }}
+                >
+                    <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 600 }}>
                         Preview
                     </Typography>
                     <Paper
+                        variant="outlined"
                         sx={{
                             p: 2,
                             backgroundColor: localTheme === 'dark' ? '#1a1a1a' : '#ffffff',
@@ -511,34 +705,34 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                             fontFamily: localFontFamily
                         }}
                     >
-                        <Typography component="span" sx={{ backgroundColor: localSentenceHighlightColor, p: 0.5 }}>
-                            This is a sample sentence with{' '}
-                            <Typography
+                        <Box component="span" sx={{ backgroundColor: localSentenceHighlightColor, px: 0.5, py: 0.25, borderRadius: 0.5 }}>
+                            Sample text with{' '}
+                            <Box
                                 component="span"
                                 sx={{
                                     backgroundColor: localHighlightColor,
-                                    color: '#ffffff',
-                                    p: '0 2px',
-                                    borderRadius: '3px'
+                                    color: '#fff',
+                                    px: 1,
+                                    py: 0.25,
+                                    borderRadius: '12px',
+                                    fontWeight: 600
                                 }}
                             >
-                                highlighted
-                            </Typography>
-                            {' '}word to show how the theme looks.
-                        </Typography>
+                                highlight
+                            </Box>
+                        </Box>
                     </Paper>
-                </Box>
+                </Paper>
             </DialogContent>
-            <DialogActions>
-                <Button
-                    onClick={handleResetToDefaults}
-                    variant="outlined"
-                    color="secondary"
-                >
-                    Reset to Defaults
+
+            <DialogActions sx={{ px: 3, py: 2 }}>
+                <Button onClick={handleResetToDefaults} variant="outlined" color="secondary">
+                    Reset
                 </Button>
-                <Button onClick={handleDialogClose}>Close</Button>
+                <Button onClick={handleDialogClose} variant="contained">
+                    Done
+                </Button>
             </DialogActions>
         </Dialog>
     );
-}; 
+};
