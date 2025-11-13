@@ -25,6 +25,7 @@ interface ReaderContentProps {
     textColor: string;
     highlightColor: string;
     sentenceHighlightColor: string;
+    chunkSpacing: number;
     ttsEnabled?: boolean;
     bionicReadingEnabled?: boolean;
     // Note: Word highlighting now handled outside React via DOM manipulation
@@ -45,6 +46,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     textColor,
     highlightColor,
     sentenceHighlightColor,
+    chunkSpacing,
     ttsEnabled = true,
     bionicReadingEnabled = false
 }) => {
@@ -140,6 +142,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 onChunkDoubleClick={onNavigateToChunk}
                 ttsEnabled={ttsEnabled}
                 bionicReadingEnabled={bionicReadingEnabled}
+                chunkSpacing={chunkSpacing}
             />
         </Box>
     );

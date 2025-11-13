@@ -10,6 +10,7 @@ interface TextChunkProps {
     onChunkDoubleClick?: (chunkIndex: number) => void;
     ttsEnabled?: boolean;
     bionicReadingEnabled?: boolean;
+    chunkSpacing?: number;
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({
@@ -19,7 +20,8 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     handleLinkClick,
     onChunkDoubleClick,
     ttsEnabled = true,
-    bionicReadingEnabled = false
+    bionicReadingEnabled = false,
+    chunkSpacing = 0.5
 }) => {
     const isHighlighted = ttsEnabled && currentChunkIndex === chunkIndex;
 
@@ -31,6 +33,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                 fontFamily: 'var(--reader-font-family, inherit)',
                 color: 'var(--reader-text-color, inherit)',
                 padding: '0px 5px 0px 5px',
+                marginBottom: `${chunkSpacing}em`, // Space between chunks (sentences)
                 backgroundColor: isHighlighted ? 'var(--sentence-highlight-color, transparent)' : 'transparent',
                 borderRadius: '6px',
                 transition: 'all 0.3s ease',

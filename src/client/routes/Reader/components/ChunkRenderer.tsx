@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { HeaderChunk } from './chunks/HeaderChunk';
 import { ImageChunk } from './chunks/ImageChunk';
 import { TextChunk } from './chunks/TextChunk';
@@ -15,6 +15,7 @@ interface ChunkRendererProps {
     onChunkDoubleClick?: (chunkIndex: number) => void;
     ttsEnabled?: boolean;
     bionicReadingEnabled?: boolean;
+    chunkSpacing?: number;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
 }
@@ -26,7 +27,8 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     currentChunkIndex,
     onChunkDoubleClick,
     ttsEnabled = true,
-    bionicReadingEnabled = false
+    bionicReadingEnabled = false,
+    chunkSpacing = 0.5
 }) => {
     const renderChunk = (chunk: TextChunkClient, groupIndex: number, chunkIndexInGroup: number) => {
         switch (chunk.type) {
@@ -63,6 +65,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         onChunkDoubleClick={onChunkDoubleClick}
                         ttsEnabled={ttsEnabled}
                         bionicReadingEnabled={bionicReadingEnabled}
+                        chunkSpacing={chunkSpacing}
                     />
                 );
         }
@@ -70,13 +73,36 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
 
     return (
         <>
-            {paragraphGroups.map((group, groupIndex) => (
-                <Box key={groupIndex} sx={{ mb: 2 }}>
-                    {group.chunks.map((chunk, chunkIndexInGroup) =>
-                        renderChunk(chunk, groupIndex, chunkIndexInGroup)
-                    )}
-                </Box>
-            ))}
+            {paragraphGroups.map((group, groupIndex) => {
+                const nextGroup = paragraphGroups[groupIndex + 1];
+                const isParagraph = !group.isStandalone;
+                const nextIsParagraph = nextGroup && !nextGroup.isStandalone;
+                const showDivider = isParagraph && nextIsParagraph;
+                
+                // Add double spacing (blank line) between consecutive paragraphs
+                // Single spacing for other cases (after headers/images, or before standalone elements)
+                // Using 1.5em to represent approximately one blank line (scales with font-size)
+                const marginBottom = showDivider
+                    ? { mb: '1em' } // Less margin since divider provides visual separation
+                    : { mb: 2 }; // Normal spacing
+                
+                return (
+                    <React.Fragment key={groupIndex}>
+                        <Box sx={marginBottom}>
+                            {group.chunks.map((chunk, chunkIndexInGroup) =>
+                                renderChunk(chunk, groupIndex, chunkIndexInGroup)
+                            )}
+                        </Box>
+                        {showDivider && (
+                            <Divider sx={{ 
+                                my: '1em',
+                                opacity: 0.3,
+                                borderColor: 'var(--reader-text-color, currentColor)'
+                            }} />
+                        )}
+                    </React.Fragment>
+                );
+            })}
         </>
     );
 };

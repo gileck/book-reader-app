@@ -4,45 +4,156 @@ import type {
     GetUserSettingsRequest,
     GetUserSettingsResponse,
     UpdateUserSettingsRequest,
-    UpdateUserSettingsResponse
+    UpdateUserSettingsResponse,
+    UserSettings as ClientUserSettings
 } from './types';
+import type { UserSettings as DbUserSettings } from '../../server/database/collections/userSettings/types';
 
 export { API_GET_USER_SETTINGS, API_UPDATE_USER_SETTINGS };
+
+/**
+ * Type-safe mapper from client settings to database settings.
+ * 
+ * This function explicitly maps each field from the client-facing API format
+ * to the database schema format. By avoiding generic Record<string, unknown>
+ * approaches, TypeScript can verify that all fields are properly handled.
+ * 
+ * Key Benefits:
+ * - Type safety: TypeScript will error if we miss any field
+ * - Explicit field handling: No silent data drops
+ * - Field transformations: Handles naming differences (e.g., selectedVoice → voiceId)
+ * - Legacy support: Handles effective colors that apply to both light/dark modes
+ * 
+ * @param clientSettings - Partial client settings from API request
+ * @returns Partial database settings ready for MongoDB update
+ */
+function mapClientSettingsToDb(
+    clientSettings: Partial<ClientUserSettings>
+): Partial<Omit<DbUserSettings, '_id' | 'userId' | 'createdAt' | 'updatedAt'>> {
+    const dbSettings: Partial<Omit<DbUserSettings, '_id' | 'userId' | 'createdAt' | 'updatedAt'>> = {};
+
+    // Audio Settings
+    if (clientSettings.playbackSpeed !== undefined) dbSettings.playbackSpeed = clientSettings.playbackSpeed;
+    if (clientSettings.ttsEnabled !== undefined) dbSettings.ttsEnabled = clientSettings.ttsEnabled;
+    if (clientSettings.selectedVoice !== undefined) dbSettings.voiceId = clientSettings.selectedVoice;
+    if (clientSettings.selectedProvider !== undefined) dbSettings.selectedProvider = clientSettings.selectedProvider;
+    if (clientSettings.wordTimingOffset !== undefined) dbSettings.wordTimingOffset = clientSettings.wordTimingOffset;
+
+    // Visual Settings
+    if (clientSettings.theme !== undefined) dbSettings.theme = clientSettings.theme;
+    if (clientSettings.fontSize !== undefined) dbSettings.fontSize = clientSettings.fontSize;
+    if (clientSettings.lineHeight !== undefined) dbSettings.lineHeight = clientSettings.lineHeight;
+    if (clientSettings.fontFamily !== undefined) dbSettings.fontFamily = clientSettings.fontFamily;
+
+    // Legacy/effective color fields (apply to both modes if sent)
+    if (clientSettings.highlightColor !== undefined) {
+        dbSettings.highlightColorLight = clientSettings.highlightColor;
+        dbSettings.highlightColorDark = clientSettings.highlightColor;
+    }
+    if (clientSettings.sentenceHighlightColor !== undefined) {
+        dbSettings.sentenceHighlightColorLight = clientSettings.sentenceHighlightColor;
+        dbSettings.sentenceHighlightColorDark = clientSettings.sentenceHighlightColor;
+    }
+    if (clientSettings.textColor !== undefined) {
+        dbSettings.textColorLight = clientSettings.textColor;
+        dbSettings.textColorDark = clientSettings.textColor;
+    }
+
+    // Per-mode color fields (override legacy if both sent)
+    if (clientSettings.highlightColorLight !== undefined) dbSettings.highlightColorLight = clientSettings.highlightColorLight;
+    if (clientSettings.highlightColorDark !== undefined) dbSettings.highlightColorDark = clientSettings.highlightColorDark;
+    if (clientSettings.sentenceHighlightColorLight !== undefined) dbSettings.sentenceHighlightColorLight = clientSettings.sentenceHighlightColorLight;
+    if (clientSettings.sentenceHighlightColorDark !== undefined) dbSettings.sentenceHighlightColorDark = clientSettings.sentenceHighlightColorDark;
+    if (clientSettings.textColorLight !== undefined) dbSettings.textColorLight = clientSettings.textColorLight;
+    if (clientSettings.textColorDark !== undefined) dbSettings.textColorDark = clientSettings.textColorDark;
+
+    // Focus Mode Settings
+    if (clientSettings.wordHighlightingEnabled !== undefined) dbSettings.wordHighlightingEnabled = clientSettings.wordHighlightingEnabled;
+    if (clientSettings.highlightMode !== undefined) dbSettings.highlightMode = clientSettings.highlightMode;
+    if (clientSettings.autoFontScaling !== undefined) dbSettings.autoFontScaling = clientSettings.autoFontScaling;
+    if (clientSettings.bionicReadingEnabled !== undefined) dbSettings.bionicReadingEnabled = clientSettings.bionicReadingEnabled;
+    if (clientSettings.chunkSpacing !== undefined) dbSettings.chunkSpacing = clientSettings.chunkSpacing;
+
+    // Reading Mode
+    if (clientSettings.readingMode !== undefined) dbSettings.readingMode = clientSettings.readingMode;
+
+    // Note: autoAdvance and chunkSize are not in client settings (they're DB-only)
+
+    return dbSettings;
+}
+
+/**
+ * Type-safe mapper from database settings to client settings.
+ * 
+ * This function transforms database documents into the client-facing API format.
+ * It computes effective colors based on the current theme and ensures all
+ * required fields are present with appropriate defaults.
+ * 
+ * Key Responsibilities:
+ * - Convert ObjectId to string for _id and userId
+ * - Convert Date to ISO string for timestamps
+ * - Compute effective colors based on theme (highlightColor, sentenceHighlightColor, textColor)
+ * - Apply defaults for optional fields
+ * - Handle field name transformations (e.g., voiceId → selectedVoice)
+ * 
+ * @param dbSettings - Complete user settings document from MongoDB
+ * @returns Client-facing settings object with effective colors and string IDs
+ */
+function mapDbSettingsToClient(dbSettings: DbUserSettings): Omit<ClientUserSettings, '_id' | 'userId' | 'createdAt' | 'updatedAt'> & {
+    _id: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+} {
+    return {
+        _id: dbSettings._id.toString(),
+        userId: dbSettings.userId.toString(),
+        // Audio Settings
+        ttsEnabled: dbSettings.ttsEnabled,
+        playbackSpeed: dbSettings.playbackSpeed,
+        selectedVoice: dbSettings.voiceId || 'en-US-Neural2-A',
+        selectedProvider: dbSettings.selectedProvider || 'google',
+        wordTimingOffset: dbSettings.wordTimingOffset,
+        // Visual Settings
+        theme: dbSettings.theme,
+        fontSize: dbSettings.fontSize,
+        lineHeight: dbSettings.lineHeight,
+        fontFamily: dbSettings.fontFamily,
+        // Effective colors (derived from current theme)
+        highlightColor: dbSettings.theme === 'dark' 
+            ? (dbSettings.highlightColorDark || '#ffeb3b') 
+            : (dbSettings.highlightColorLight || '#ffeb3b'),
+        sentenceHighlightColor: dbSettings.theme === 'dark' 
+            ? (dbSettings.sentenceHighlightColorDark || '#1a237e') 
+            : (dbSettings.sentenceHighlightColorLight || '#e3f2fd'),
+        textColor: dbSettings.theme === 'dark' 
+            ? (dbSettings.textColorDark || '#ffffff') 
+            : (dbSettings.textColorLight || '#000000'),
+        // Per-mode colors
+        highlightColorLight: dbSettings.highlightColorLight,
+        highlightColorDark: dbSettings.highlightColorDark,
+        sentenceHighlightColorLight: dbSettings.sentenceHighlightColorLight,
+        sentenceHighlightColorDark: dbSettings.sentenceHighlightColorDark,
+        textColorLight: dbSettings.textColorLight,
+        textColorDark: dbSettings.textColorDark,
+        // Focus Mode Settings
+        wordHighlightingEnabled: dbSettings.wordHighlightingEnabled,
+        highlightMode: dbSettings.highlightMode,
+        autoFontScaling: dbSettings.autoFontScaling,
+        bionicReadingEnabled: dbSettings.bionicReadingEnabled,
+        chunkSpacing: dbSettings.chunkSpacing,
+        // Reading Mode
+        readingMode: dbSettings.readingMode,
+        // Timestamps
+        createdAt: dbSettings.createdAt.toISOString(),
+        updatedAt: dbSettings.updatedAt.toISOString()
+    };
+}
 
 export async function getUserSettings(params: GetUserSettingsRequest): Promise<GetUserSettingsResponse> {
     try {
         const userSettings = await findOrCreateUserSettings(params.userId);
-
-        // Convert to client format
-        const clientSettings = {
-            _id: userSettings._id.toString(),
-            userId: userSettings.userId.toString(),
-            ttsEnabled: userSettings.ttsEnabled,
-            playbackSpeed: userSettings.playbackSpeed,
-            selectedVoice: userSettings.voiceId || 'en-US-Neural2-A',
-            selectedProvider: userSettings.selectedProvider || 'google',
-            wordTimingOffset: userSettings.wordTimingOffset,
-            theme: userSettings.theme,
-            // Effective colors for current theme can be derived client-side; here we return placeholders for backward compatibility
-            highlightColor: userSettings.theme === 'dark' ? (userSettings.highlightColorDark || '#ffeb3b') : (userSettings.highlightColorLight || '#ffeb3b'),
-            sentenceHighlightColor: userSettings.theme === 'dark' ? (userSettings.sentenceHighlightColorDark || '#1a237e') : (userSettings.sentenceHighlightColorLight || '#e3f2fd'),
-            fontSize: userSettings.fontSize,
-            lineHeight: userSettings.lineHeight,
-            fontFamily: userSettings.fontFamily,
-            textColor: userSettings.theme === 'dark' ? (userSettings.textColorDark || '#ffffff') : (userSettings.textColorLight || '#000000'),
-            // Also expose per-mode colors
-            highlightColorLight: userSettings.highlightColorLight,
-            highlightColorDark: userSettings.highlightColorDark,
-            sentenceHighlightColorLight: userSettings.sentenceHighlightColorLight,
-            sentenceHighlightColorDark: userSettings.sentenceHighlightColorDark,
-            textColorLight: userSettings.textColorLight,
-            textColorDark: userSettings.textColorDark,
-            // Focus mode
-            wordHighlightingEnabled: userSettings.wordHighlightingEnabled,
-            highlightMode: userSettings.highlightMode,
-            createdAt: userSettings.createdAt.toISOString(),
-            updatedAt: userSettings.updatedAt.toISOString()
-        };
+        const clientSettings = mapDbSettingsToClient(userSettings);
 
         return {
             success: true,
@@ -59,99 +170,17 @@ export async function getUserSettings(params: GetUserSettingsRequest): Promise<G
 
 export async function updateUserSettings(params: UpdateUserSettingsRequest): Promise<UpdateUserSettingsResponse> {
     try {
-        // Convert client settings to server format
-        const serverSettings: Record<string, unknown> = {};
-        if (params.settings.playbackSpeed !== undefined) {
-            serverSettings.playbackSpeed = params.settings.playbackSpeed;
-        }
-        if (params.settings.ttsEnabled !== undefined) {
-            serverSettings.ttsEnabled = params.settings.ttsEnabled;
-        }
-        if (params.settings.selectedVoice !== undefined) {
-            serverSettings.voiceId = params.settings.selectedVoice;
-        }
-        if (params.settings.selectedProvider !== undefined) {
-            serverSettings.selectedProvider = params.settings.selectedProvider;
-        }
-        if (params.settings.wordTimingOffset !== undefined) {
-            serverSettings.wordTimingOffset = params.settings.wordTimingOffset;
-        }
-        if (params.settings.theme !== undefined) {
-            serverSettings.theme = params.settings.theme;
-        }
-        // Legacy/effective fields (optional): if sent, apply to both modes
-        if (params.settings.highlightColor !== undefined) {
-            serverSettings.highlightColorLight = params.settings.highlightColor;
-            serverSettings.highlightColorDark = params.settings.highlightColor;
-        }
-        if (params.settings.sentenceHighlightColor !== undefined) {
-            serverSettings.sentenceHighlightColorLight = params.settings.sentenceHighlightColor;
-            serverSettings.sentenceHighlightColorDark = params.settings.sentenceHighlightColor;
-        }
-        if (params.settings.fontSize !== undefined) {
-            serverSettings.fontSize = params.settings.fontSize;
-        }
-        if (params.settings.lineHeight !== undefined) {
-            serverSettings.lineHeight = params.settings.lineHeight;
-        }
-        if (params.settings.fontFamily !== undefined) {
-            serverSettings.fontFamily = params.settings.fontFamily;
-        }
-        if (params.settings.textColor !== undefined) {
-            serverSettings.textColorLight = params.settings.textColor;
-            serverSettings.textColorDark = params.settings.textColor;
-        }
+        // Convert client settings to database format using type-safe mapper
+        const dbSettingsUpdate = mapClientSettingsToDb(params.settings);
 
-        // New per-mode color fields
-        if (params.settings.highlightColorLight !== undefined) serverSettings.highlightColorLight = params.settings.highlightColorLight;
-        if (params.settings.highlightColorDark !== undefined) serverSettings.highlightColorDark = params.settings.highlightColorDark;
-        if (params.settings.sentenceHighlightColorLight !== undefined) serverSettings.sentenceHighlightColorLight = params.settings.sentenceHighlightColorLight;
-        if (params.settings.sentenceHighlightColorDark !== undefined) serverSettings.sentenceHighlightColorDark = params.settings.sentenceHighlightColorDark;
-        if (params.settings.textColorLight !== undefined) serverSettings.textColorLight = params.settings.textColorLight;
-        if (params.settings.textColorDark !== undefined) serverSettings.textColorDark = params.settings.textColorDark;
-
-        // Focus Mode
-        if (params.settings.wordHighlightingEnabled !== undefined) {
-            serverSettings.wordHighlightingEnabled = params.settings.wordHighlightingEnabled;
-        }
-        if (params.settings.highlightMode !== undefined) {
-            serverSettings.highlightMode = params.settings.highlightMode;
-        }
-
-        const updatedSettings = await updateSettings(params.userId, serverSettings);
+        const updatedSettings = await updateSettings(params.userId, dbSettingsUpdate);
 
         if (!updatedSettings) {
             throw new Error('Failed to update user settings');
         }
 
-        // Convert to client format
-        const clientSettings = {
-            _id: updatedSettings._id.toString(),
-            userId: updatedSettings.userId.toString(),
-            ttsEnabled: updatedSettings.ttsEnabled,
-            playbackSpeed: updatedSettings.playbackSpeed,
-            selectedVoice: updatedSettings.voiceId || 'en-US-Neural2-A',
-            selectedProvider: updatedSettings.selectedProvider || 'google',
-            wordTimingOffset: updatedSettings.wordTimingOffset,
-            theme: updatedSettings.theme,
-            highlightColor: updatedSettings.theme === 'dark' ? (updatedSettings.highlightColorDark || '#ffeb3b') : (updatedSettings.highlightColorLight || '#ffeb3b'),
-            sentenceHighlightColor: updatedSettings.theme === 'dark' ? (updatedSettings.sentenceHighlightColorDark || '#1a237e') : (updatedSettings.sentenceHighlightColorLight || '#e3f2fd'),
-            fontSize: updatedSettings.fontSize,
-            lineHeight: updatedSettings.lineHeight,
-            fontFamily: updatedSettings.fontFamily,
-            textColor: updatedSettings.theme === 'dark' ? (updatedSettings.textColorDark || '#ffffff') : (updatedSettings.textColorLight || '#000000'),
-            highlightColorLight: updatedSettings.highlightColorLight,
-            highlightColorDark: updatedSettings.highlightColorDark,
-            sentenceHighlightColorLight: updatedSettings.sentenceHighlightColorLight,
-            sentenceHighlightColorDark: updatedSettings.sentenceHighlightColorDark,
-            textColorLight: updatedSettings.textColorLight,
-            textColorDark: updatedSettings.textColorDark,
-            // Focus mode
-            wordHighlightingEnabled: updatedSettings.wordHighlightingEnabled,
-            highlightMode: updatedSettings.highlightMode,
-            createdAt: updatedSettings.createdAt.toISOString(),
-            updatedAt: updatedSettings.updatedAt.toISOString()
-        };
+        // Convert back to client format using type-safe mapper
+        const clientSettings = mapDbSettingsToClient(updatedSettings);
 
         return {
             success: true,

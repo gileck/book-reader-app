@@ -20,6 +20,7 @@ export interface UserSettings {
     highlightMode?: 'word' | 'line' | 'off';
     autoFontScaling?: boolean;
     bionicReadingEnabled?: boolean;
+    chunkSpacing?: number;
     // Reading mode preference
     readingMode?: 'focus' | 'full';
     // Per-mode color storage
@@ -73,6 +74,7 @@ export interface UpdateUserSettingsPayload {
     highlightMode?: 'word' | 'line' | 'off';
     autoFontScaling?: boolean;
     bionicReadingEnabled?: boolean;
+    chunkSpacing?: number;
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';

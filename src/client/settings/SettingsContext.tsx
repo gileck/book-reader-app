@@ -121,7 +121,9 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                     wordHighlightingEnabled: s.wordHighlightingEnabled ?? true,
                     highlightMode: (s.highlightMode as 'word' | 'line' | 'off') ?? (s.wordHighlightingEnabled === false ? 'off' : 'word'),
                     autoFontScaling: s.autoFontScaling ?? true,
-                    bionicReadingEnabled: s.bionicReadingEnabled ?? false
+                    bionicReadingEnabled: s.bionicReadingEnabled ?? false,
+                    chunkSpacing: s.chunkSpacing ?? 0.5,
+                    readingMode: (s.readingMode as 'focus' | 'full') ?? 'focus'
                 };
 
                 setUserSettings(loadedSettings);

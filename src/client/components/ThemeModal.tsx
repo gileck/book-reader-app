@@ -122,6 +122,7 @@ interface ThemeModalProps {
     currentLineHeight: number;
     currentFontFamily: string;
     currentTextColor: string;
+    currentChunkSpacing: number;
     onThemeChange: (theme: 'light' | 'dark') => void;
     onHighlightColorChange: (color: string) => void;
     onSentenceHighlightColorChange: (color: string) => void;
@@ -129,6 +130,7 @@ interface ThemeModalProps {
     onLineHeightChange: (lineHeight: number) => void;
     onFontFamilyChange: (fontFamily: string) => void;
     onTextColorChange: (textColor: string) => void;
+    onChunkSpacingChange: (spacing: number) => void;
     highlightMode?: 'word' | 'line' | 'off';
     onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
     autoFontScaling?: boolean;
@@ -148,6 +150,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     currentLineHeight,
     currentFontFamily,
     currentTextColor,
+    currentChunkSpacing,
     onThemeChange,
     onHighlightColorChange,
     onSentenceHighlightColorChange,
@@ -155,6 +158,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onLineHeightChange,
     onFontFamilyChange,
     onTextColorChange,
+    onChunkSpacingChange,
     highlightMode = 'word',
     onHighlightModeChange,
     autoFontScaling = true,
@@ -171,6 +175,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localLineHeight, setLocalLineHeight] = useState(currentLineHeight);
     const [localFontFamily, setLocalFontFamily] = useState(currentFontFamily);
     const [localTextColor, setLocalTextColor] = useState(currentTextColor);
+    const [localChunkSpacing, setLocalChunkSpacing] = useState(currentChunkSpacing);
     const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
     const [localAutoFontScaling, setLocalAutoFontScaling] = useState(autoFontScaling);
     const [localBionicReadingEnabled, setLocalBionicReadingEnabled] = useState(bionicReadingEnabled);
@@ -184,11 +189,12 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalLineHeight(currentLineHeight);
         setLocalFontFamily(currentFontFamily);
         setLocalTextColor(currentTextColor);
+        setLocalChunkSpacing(currentChunkSpacing);
         setLocalHighlightMode(highlightMode);
         setLocalAutoFontScaling(autoFontScaling);
         setLocalBionicReadingEnabled(bionicReadingEnabled);
         setFontInputValue(getFontLabelFromValue(currentFontFamily));
-    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, highlightMode, autoFontScaling, bionicReadingEnabled]);
+    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, currentChunkSpacing, highlightMode, autoFontScaling, bionicReadingEnabled]);
 
     useEffect(() => {
         if (open) {
@@ -262,6 +268,23 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         const newHeight = Math.min(2.0, Math.round((localLineHeight + 0.1) * 10) / 10);
         setLocalLineHeight(newHeight);
         onLineHeightChange(newHeight);
+    };
+
+    const handleChunkSpacingChange = (value: number) => {
+        setLocalChunkSpacing(value);
+        onChunkSpacingChange(value);
+    };
+
+    const handleChunkSpacingDecrease = () => {
+        const newSpacing = Math.max(0, Math.round((localChunkSpacing - 0.1) * 10) / 10);
+        setLocalChunkSpacing(newSpacing);
+        onChunkSpacingChange(newSpacing);
+    };
+
+    const handleChunkSpacingIncrease = () => {
+        const newSpacing = Math.min(2.0, Math.round((localChunkSpacing + 0.1) * 10) / 10);
+        setLocalChunkSpacing(newSpacing);
+        onChunkSpacingChange(newSpacing);
     };
 
     const handleResetToDefaults = () => {
@@ -555,6 +578,42 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                                         <Add />
                                     </IconButton>
                                     <Chip label={`${localLineHeight}`} size="small" sx={{ minWidth: 60 }} />
+                                </Box>
+                            </Box>
+
+                            {/* Chunk Spacing */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Sentence Spacing
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Space between sentences
+                                </Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <IconButton
+                                        onClick={handleChunkSpacingDecrease}
+                                        disabled={localChunkSpacing <= 0}
+                                        size="small"
+                                    >
+                                        <Remove />
+                                    </IconButton>
+                                    <Slider
+                                        value={localChunkSpacing}
+                                        onChange={(_, value) => handleChunkSpacingChange(value as number)}
+                                        min={0}
+                                        max={2.0}
+                                        step={0.1}
+                                        valueLabelDisplay="auto"
+                                        sx={{ flex: 1 }}
+                                    />
+                                    <IconButton
+                                        onClick={handleChunkSpacingIncrease}
+                                        disabled={localChunkSpacing >= 2.0}
+                                        size="small"
+                                    >
+                                        <Add />
+                                    </IconButton>
+                                    <Chip label={`${localChunkSpacing}em`} size="small" sx={{ minWidth: 60 }} />
                                 </Box>
                             </Box>
 

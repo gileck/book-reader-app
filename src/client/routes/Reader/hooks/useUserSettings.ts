@@ -133,6 +133,7 @@ export const useUserSettings = () => {
             fontFamily: 'Inter, system-ui, sans-serif',
             textColorLight: '#000000',
             textColorDark: '#ffffff',
+            chunkSpacing: 0.5,
             highlightMode: 'word',
             autoFontScaling: true,
             bionicReadingEnabled: false
@@ -156,6 +157,10 @@ export const useUserSettings = () => {
 
     const handleBionicReadingChange = useCallback(async (enabled: boolean) => {
         await updateUserSettings({ bionicReadingEnabled: enabled });
+    }, [updateUserSettings]);
+
+    const handleChunkSpacingChange = useCallback(async (spacing: number) => {
+        await updateUserSettings({ chunkSpacing: spacing });
     }, [updateUserSettings]);
 
     // Return the same interface as before, but data comes from Context
@@ -183,6 +188,7 @@ export const useUserSettings = () => {
         wordHighlightingEnabled: userSettings.wordHighlightingEnabled ?? true,
         autoFontScaling: userSettings.autoFontScaling ?? true,
         bionicReadingEnabled: userSettings.bionicReadingEnabled ?? false,
+        chunkSpacing: userSettings.chunkSpacing ?? 0.5,
         settingsLoaded: userSettingsLoaded,
 
         // Local UI state
@@ -211,6 +217,7 @@ export const useUserSettings = () => {
         handleResetToDefaults,
         handleHighlightModeChange,
         handleAutoFontScalingChange,
-        handleBionicReadingChange
+        handleBionicReadingChange,
+        handleChunkSpacingChange
     };
 };

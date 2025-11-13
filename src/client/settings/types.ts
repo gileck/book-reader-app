@@ -37,6 +37,8 @@ export interface UserSettings {
     autoFontScaling?: boolean;
     /** Enable bionic reading mode - bolds first part of each word for faster reading */
     bionicReadingEnabled?: boolean;
+    /** Spacing between chunks/sentences in em units (default: 0.5) */
+    chunkSpacing?: number;
     // Reading mode preference (focus vs full)
     readingMode?: 'focus' | 'full';
 }
@@ -90,5 +92,6 @@ export const defaultUserSettings: UserSettings = {
     highlightMode: 'word',
     autoFontScaling: true, // Auto scale font for long sentences by default
     bionicReadingEnabled: false, // Bionic reading disabled by default
+    chunkSpacing: 0.5, // Default spacing between sentences
     readingMode: 'focus' // Default to focus for better performance
 }; 

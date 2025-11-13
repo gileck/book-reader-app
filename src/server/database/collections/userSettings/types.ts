@@ -29,6 +29,7 @@ export interface UserSettings {
     highlightMode?: 'word' | 'line' | 'off';
     autoFontScaling?: boolean;
     bionicReadingEnabled?: boolean;
+    chunkSpacing?: number;
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';
@@ -73,6 +74,7 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     highlightMode: 'word',
     autoFontScaling: true,
     bionicReadingEnabled: false,
+    chunkSpacing: 0.5,
     readingMode: 'focus', // Default to focus for better performance
     autoAdvance: true,
     chunkSize: 10
