@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { Box, Paper, Alert, Snackbar, Fab, Tabs, Tab } from '@mui/material';
-import MyLocationIcon from '@mui/icons-material/MyLocation';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import { Box, Paper, Alert, Snackbar, Tabs, Tab } from '@mui/material';
 import { useRouter } from '../../router';
 import type { BookClient } from '../../../apis/books/types';
 import type { ChapterClient } from '../../../apis/chapters/types';
@@ -73,7 +71,6 @@ export const ReaderUI = ({
 
     // Initialize content context hook (needs to be after bookQA is initialized)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const [showScrollToCurrent, setShowScrollToCurrent] = useState(false);
 
     // Initialize activeTab with user's reading mode from database (already loaded)
     // Priority: URL param > user settings (database) > app settings (localStorage) > default ('focus')
@@ -153,7 +150,32 @@ export const ReaderUI = ({
     const contentContext = useContentContext(chapter, audio, bookQA);
 
     // Initialize scroll handling hook
-    const { handleScrollToCurrentChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
+    const { scrollToChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
+
+    // Handler to scroll to current playing chunk
+    const handleScrollToCurrentChunk = useCallback(() => {
+        if (activeTab === 'full') {
+            // Get the current index fresh when button is clicked
+            const currentIndex = sentenceAudio.controller.currentSentenceIndex;
+            scrollToChunk(currentIndex);
+        }
+    }, [sentenceAudio.controller, scrollToChunk, activeTab]);
+
+    // Handler to go to top (navigate to first sentence and scroll to top)
+    const handleGoToTop = useCallback(() => {
+        // Navigate audio to first sentence
+        sentenceAudio.controller.goToSentence(0);
+        
+        // Scroll to top in full mode
+        if (activeTab === 'full') {
+            const container = scrollContainerRef.current;
+            if (container) {
+                setTimeout(() => {
+                    container.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }
+        }
+    }, [sentenceAudio.controller.goToSentence, activeTab]);
 
     // Track if initial position has been scrolled to (full mode only)
     const hasScrolledToInitialPosition = useRef(false);
@@ -189,63 +211,6 @@ export const ReaderUI = ({
             }, 300); // Give time for DOM elements to render
         });
     }, [loading, chapter, audio.currentChunkIndex, activeTab, handleScrollToCurrentChunk]);
-
-    // Show a floating button when current chunk is outside of the scroll container's viewport (full mode only)
-    useEffect(() => {
-        if (activeTab !== 'full') {
-            setShowScrollToCurrent(false);
-            return;
-        }
-        const container = scrollContainerRef.current;
-        if (!container || loading || !chapter || audio.currentChunkIndex === null) {
-            setShowScrollToCurrent(false);
-            return;
-        }
-
-        let observer: IntersectionObserver | null = null;
-        let retryTimeout: number | undefined;
-
-        const attachObserver = () => {
-            // Prefer paragraph-aware targeting first
-            const selectorPrimary = `[data-paragraph-index][data-chunk-index="${audio.currentChunkIndex}"]`;
-            const selectorFallback = `[data-chunk-index="${audio.currentChunkIndex}"]`;
-            const targetElement = (document.querySelector(selectorPrimary) || document.querySelector(selectorFallback)) as Element | null;
-
-            if (!targetElement) {
-                // DOM may not be ready yet; retry shortly
-                retryTimeout = window.setTimeout(attachObserver, 250);
-                return;
-            }
-
-            // Account for bottom audio bar so items hidden under it are treated as not visible
-            const bottomObstruction = 120; // px
-            observer = new IntersectionObserver(
-                (entries) => {
-                    const entry = entries[0];
-                    setShowScrollToCurrent(!entry.isIntersecting);
-                },
-                { root: container, threshold: 0, rootMargin: `0px 0px -${bottomObstruction}px 0px` }
-            );
-
-            observer.observe(targetElement);
-
-            // Also run an initial visibility check
-            const containerRect = container.getBoundingClientRect();
-            const targetRect = (targetElement as HTMLElement).getBoundingClientRect();
-            const adjustedBottom = containerRect.bottom - bottomObstruction;
-            const isInView = targetRect.top < adjustedBottom && targetRect.bottom > containerRect.top;
-            setShowScrollToCurrent(!isInView);
-        };
-
-        // Defer to next frame to ensure DOM is painted
-        const raf = requestAnimationFrame(attachObserver);
-
-        return () => {
-            if (observer) observer.disconnect();
-            if (retryTimeout) clearTimeout(retryTimeout);
-            cancelAnimationFrame(raf);
-        };
-    }, [loading, chapter, audio.currentChunkIndex, audio.textChunks.length, activeTab]);
 
     const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview') => {
         setActiveTab(newTab);
@@ -575,35 +540,7 @@ export const ReaderUI = ({
                     </Paper>
                 )}
 
-                {activeTab === 'full' && showScrollToCurrent && !isFullscreen && (
-                    <Fab
-                        color="primary"
-                        size="medium"
-                        aria-label="Scroll to current chunk"
-                        onClick={handleScrollToCurrentChunk}
-                        sx={{ position: 'fixed', right: 16, bottom: { xs: 96, sm: 104 }, zIndex: 1200 }}
-                    >
-                        <MyLocationIcon />
-                    </Fab>
-                )}
-
-                {/* Enter Fullscreen Button - Only shown in full mode when not in fullscreen */}
-                {activeTab === 'full' && !isFullscreen && (
-                    <Fab
-                        color="default"
-                        size="medium"
-                        aria-label="Enter fullscreen"
-                        onClick={handleToggleFullscreen}
-                        sx={{ 
-                            position: 'fixed', 
-                            right: 16, 
-                            bottom: showScrollToCurrent ? { xs: 160, sm: 172 } : { xs: 96, sm: 104 }, 
-                            zIndex: 1200 
-                        }}
-                    >
-                        <FullscreenIcon />
-                    </Fab>
-                )}
+                {/* FAB buttons removed - now integrated into AudioControls */}
 
                 {/* Fullscreen Text Controls - Only shown in fullscreen mode */}
                 {activeTab === 'full' && isFullscreen && (
@@ -666,6 +603,11 @@ export const ReaderUI = ({
                     unitLabelOverride="sentences"
                     estimatedTimeRemaining={estimatedTimeRemaining}
                     hideChapterInfo={activeTab === 'qa' || activeTab === 'overview'}
+                    onJumpToCurrentChunk={handleScrollToCurrentChunk}
+                    showJumpToCurrentChunk={activeTab === 'full'}
+                    onToggleFullscreen={handleToggleFullscreen}
+                    showFullscreenButton={activeTab === 'full' && !isFullscreen}
+                    onGoToTop={handleGoToTop}
                 />
                 )}
 

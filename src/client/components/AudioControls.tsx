@@ -26,7 +26,9 @@ import {
     List,
     Close,
     Menu,
-    VerticalAlignTop
+    VerticalAlignTop,
+    MyLocation,
+    Fullscreen
 } from '@mui/icons-material';
 import { BookmarkDropdown } from './BookmarkDropdown';
 import type { BookmarkClient } from '../../apis/bookmarks/types';
@@ -76,6 +78,12 @@ interface AudioControlsProps {
     unitLabelOverride?: string;
     estimatedTimeRemaining?: string;
     hideChapterInfo?: boolean; // Hide chapter title and progress bar
+    // Navigation controls (integrated into audio controls)
+    onJumpToCurrentChunk?: () => void; // Handler to scroll to currently playing chunk
+    showJumpToCurrentChunk?: boolean; // Show "Jump to current chunk" button (left side)
+    onToggleFullscreen?: () => void; // Handler to toggle fullscreen mode
+    showFullscreenButton?: boolean; // Show fullscreen button (right side)
+    onGoToTop?: () => void; // Handler to navigate to first sentence and scroll to top
 }
 
 export const AudioControls: React.FC<AudioControlsProps> = ({
@@ -113,7 +121,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     chapterTransitionLoading = false,
     unitLabelOverride,
     estimatedTimeRemaining,
-    hideChapterInfo = false
+    hideChapterInfo = false,
+    onJumpToCurrentChunk,
+    showJumpToCurrentChunk = false,
+    onToggleFullscreen,
+    showFullscreenButton = false,
+    onGoToTop
 }) => {
     // Use local progress for immediate feedback, fall back to server progress
     const displayProgress = progress;
@@ -297,29 +310,51 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         mb: 2,
                         minHeight: 24,
                         gap: 1
                     }}>
-                        {/* Go to Top Button */}
-                        <IconButton
-                            onClick={() => onNavigateToChunk?.(0)}
-                            size="small"
-                            sx={{
-                                color: '#b0b0b0',
-                                padding: '4px',
-                                '&:hover': {
-                                    color: '#e0e0e0',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                                }
-                            }}
-                            title="Go to first sentence"
-                        >
-                            <VerticalAlignTop sx={{ fontSize: 18 }} />
-                        </IconButton>
+                        {/* Left side buttons */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 'fit-content' }}>
+                            {/* Jump to Current Chunk Button */}
+                            {showJumpToCurrentChunk && onJumpToCurrentChunk && (
+                                <IconButton
+                                    onClick={onJumpToCurrentChunk}
+                                    size="small"
+                                    sx={{
+                                        color: '#4285f4',
+                                        padding: '6px',
+                                        '&:hover': {
+                                            color: '#5a9fff',
+                                            backgroundColor: 'rgba(66, 133, 244, 0.1)'
+                                        }
+                                    }}
+                                    title="Jump to current chunk"
+                                >
+                                    <MyLocation sx={{ fontSize: 20 }} />
+                                </IconButton>
+                            )}
+                            
+                            {/* Go to Top Button */}
+                            <IconButton
+                                onClick={onGoToTop || (() => onNavigateToChunk?.(0))}
+                                size="small"
+                                sx={{
+                                    color: '#b0b0b0',
+                                    padding: '4px',
+                                    '&:hover': {
+                                        color: '#e0e0e0',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                    }
+                                }}
+                                title="Go to first sentence"
+                            >
+                                <VerticalAlignTop sx={{ fontSize: 18 }} />
+                            </IconButton>
+                        </Box>
 
-                        {/* Sentence Counter (centered) */}
+                        {/* Center: Sentence Counter */}
                         <Typography
                             variant="body2"
                             sx={{
@@ -344,22 +379,44 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                             )}
                         </Typography>
 
-                        {/* Navigate to Sentence Button */}
-                        <IconButton
-                            onClick={() => setNavigationDialogOpen(true)}
-                            size="small"
-                            sx={{
-                                color: '#b0b0b0',
-                                padding: '4px',
-                                '&:hover': {
-                                    color: '#e0e0e0',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                                }
-                            }}
-                            title="Go to sentence..."
-                        >
-                            <Menu sx={{ fontSize: 18 }} />
-                        </IconButton>
+                        {/* Right side buttons */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 'fit-content' }}>
+                            {/* Navigate to Sentence Button */}
+                            <IconButton
+                                onClick={() => setNavigationDialogOpen(true)}
+                                size="small"
+                                sx={{
+                                    color: '#b0b0b0',
+                                    padding: '4px',
+                                    '&:hover': {
+                                        color: '#e0e0e0',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                    }
+                                }}
+                                title="Go to sentence..."
+                            >
+                                <Menu sx={{ fontSize: 18 }} />
+                            </IconButton>
+
+                            {/* Fullscreen Button */}
+                            {showFullscreenButton && onToggleFullscreen && (
+                                <IconButton
+                                    onClick={onToggleFullscreen}
+                                    size="small"
+                                    sx={{
+                                        color: '#b0b0b0',
+                                        padding: '6px',
+                                        '&:hover': {
+                                            color: '#e0e0e0',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                        }
+                                    }}
+                                    title="Enter fullscreen"
+                                >
+                                    <Fullscreen sx={{ fontSize: 20 }} />
+                                </IconButton>
+                            )}
+                        </Box>
                     </Box>
                 </>
             )}

@@ -24,9 +24,9 @@ When activated in the "Full" reading mode, the fullscreen mode provides:
 ## User Experience
 
 ### Entering Fullscreen Mode
-- A floating action button (FAB) with a fullscreen icon appears on the right side when in Full mode
+- A fullscreen button appears in the audio controls (right side of the sentence counter) when in Full mode
 - Click the button to enter fullscreen mode
-- Button position adjusts based on whether the scroll-to-current button is visible
+- Button is only visible when not already in fullscreen
 
 ### In Fullscreen Mode
 - All navigation elements are hidden (tab bar, header, audio controls)
@@ -59,16 +59,31 @@ When activated in the "Full" reading mode, the fullscreen mode provides:
   - Added `handleToggleFullscreen` callback
   - Conditional rendering of UI elements based on fullscreen state
   - Responsive layout adjustments for fullscreen mode
+  - Passes fullscreen button state to AudioControls component
+
+- **AudioControls.tsx**: Integrated fullscreen and navigation controls:
+  - Added fullscreen button (right side of sentence counter)
+  - Added "Jump to current chunk" button (left side, always visible in full mode)
+  - Removed separate floating action buttons (FABs)
+  - Buttons conditionally rendered based on reading mode and fullscreen state
 
 ### Conditional UI Rendering
 When `isFullscreen && activeTab === 'full'`:
-- **Hidden**: Tab bar, ReaderHeader, AudioControls, scroll-to-current FAB
+- **Hidden**: Tab bar, ReaderHeader, AudioControls
 - **Shown**: FullscreenTextControls
 - **Adjusted**: Paper container (full width, full height, optimized padding)
 
+### Audio Controls Integration
+In normal (non-fullscreen) full mode:
+- **Left side of sentence counter**: "Jump to current chunk" button (MyLocation icon, blue color)
+- **Right side of sentence counter**: Fullscreen button (Fullscreen icon, gray color)
+- Both buttons positioned inline with "X of Y sentences" counter
+- Provides quick access without overlaying content
+
 ## Files Modified
-- `/src/client/routes/Reader/ReaderUI.tsx`
-- `/src/client/routes/Reader/components/FullscreenTextControls.tsx` (new)
+- `/src/client/routes/Reader/ReaderUI.tsx` - Fullscreen state management and button handlers
+- `/src/client/routes/Reader/components/FullscreenTextControls.tsx` (new) - In-fullscreen controls
+- `/src/client/components/AudioControls.tsx` - Integrated fullscreen and navigation buttons
 
 ## Design Principles
 - **Mobile-first**: Optimized for mobile reading experience
