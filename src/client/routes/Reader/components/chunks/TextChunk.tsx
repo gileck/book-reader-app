@@ -11,7 +11,6 @@ interface TextChunkProps {
     currentChunkIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
     onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
-    ttsEnabled?: boolean;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
     translatedText?: string;
@@ -42,7 +41,6 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     currentChunkIndex,
     handleLinkClick,
     onChunkDoubleClick,
-    ttsEnabled = true,
     bionicReadingEnabled = false,
     chunkSpacing = 0.5,
     translatedText,
@@ -52,7 +50,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     freeTierUsage,
     onToggleTranslation
 }) => {
-    const isHighlighted = ttsEnabled && currentChunkIndex === chunkIndex;
+    const isHighlighted = currentChunkIndex === chunkIndex;
     const [showOriginal, setShowOriginal] = useState(false);
     const hasTranslation = !!translatedText;
     const isRTL = isRTLLanguage(translatedLanguage);

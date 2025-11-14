@@ -10,6 +10,8 @@ export interface Settings {
 }
 
 // Define user-specific settings (from database)
+// Reminder: Persisted settings defined here must also be handled in mapClientSettingsToDb
+// inside src/apis/userSettings/server.ts so they round-trip correctly.
 export interface UserSettings {
     ttsEnabled: boolean;
     playbackSpeed: number;
@@ -39,6 +41,10 @@ export interface UserSettings {
     bionicReadingEnabled?: boolean;
     /** Spacing between chunks/sentences in em units (default: 0.5) */
     chunkSpacing?: number;
+    /** Continuous auto-scroll speed in pixels per second (default: 60).
+     *  Update mapClientSettingsToDb when modifying persisted settings like this.
+     */
+    autoScrollSpeed?: number;
     // Reading mode preference (focus vs full)
     readingMode?: 'focus' | 'full';
     // Translation preferences
@@ -95,6 +101,7 @@ export const defaultUserSettings: UserSettings = {
     autoFontScaling: true, // Auto scale font for long sentences by default
     bionicReadingEnabled: false, // Bionic reading disabled by default
     chunkSpacing: 0.5, // Default spacing between sentences
+    autoScrollSpeed: 60, // Default auto-scroll speed (px/sec)
     readingMode: 'focus', // Default to focus for better performance
     lastTranslationLanguage: 'es' // Default to Spanish
 }; 

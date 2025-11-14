@@ -82,6 +82,31 @@ export const ReaderUI = ({
 
     // Fullscreen state
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isAutoScrollActive, setIsAutoScrollActive] = useState(false);
+    const sentences = sentenceAudio.sentences;
+    const currentSentenceIndex = audio.currentChunkIndex ?? sentenceAudio.controller.currentSentenceIndex ?? 0;
+    const previousSentenceIndex = useMemo(() => {
+        for (let i = currentSentenceIndex - 1; i >= 0; i--) {
+            const chunk = sentences[i];
+            if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk.text?.trim()) {
+                return i;
+            }
+        }
+        return null;
+    }, [currentSentenceIndex, sentences]);
+
+    const nextSentenceIndex = useMemo(() => {
+        for (let i = currentSentenceIndex + 1; i < sentences.length; i++) {
+            const chunk = sentences[i];
+            if (chunk && (chunk.type === 'text' || chunk.type === 'header') && chunk.text?.trim()) {
+                return i;
+            }
+        }
+        return null;
+    }, [currentSentenceIndex, sentences]);
+
+    const canGoPrevSentence = previousSentenceIndex !== null;
+    const canGoNextSentence = nextSentenceIndex !== null;
 
     // QA Chat state
     const [qaQuestion, setQaQuestion] = useState('');
@@ -150,7 +175,7 @@ export const ReaderUI = ({
     const contentContext = useContentContext(chapter, audio, bookQA);
 
     // Initialize scroll handling hook
-    const { scrollToChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
+    const { scrollToChunk, scrollToSentenceChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
 
     // Handler to scroll to current playing chunk
     const handleScrollToCurrentChunk = useCallback(() => {
@@ -180,6 +205,7 @@ export const ReaderUI = ({
     // Track if initial position has been scrolled to (full mode only)
     const hasScrolledToInitialPosition = useRef(false);
     const initialChapterNumberRef = useRef<number | null>(null);
+    const centerSentenceAfterNavRef = useRef(false);
 
     // Auto-scroll to saved reading position on initial load (full mode only)
     useEffect(() => {
@@ -273,7 +299,14 @@ export const ReaderUI = ({
     }, []);
 
     const handleToggleFullscreen = useCallback(() => {
+        if (activeTab === 'full') {
+            centerSentenceAfterNavRef.current = true;
+        }
         setIsFullscreen(prev => !prev);
+    }, [activeTab]);
+
+    const handleToggleAutoScroll = useCallback(() => {
+        setIsAutoScrollActive(prev => !prev);
     }, []);
 
     // QA Chat handlers
@@ -312,10 +345,120 @@ export const ReaderUI = ({
         }
     }, [activeTab, bookQA.messages, bookQA.isLoading]);
 
+    // Stop auto-scroll when leaving fullscreen full mode
+    useEffect(() => {
+        if (!isFullscreen || activeTab !== 'full') {
+            setIsAutoScrollActive(false);
+        }
+    }, [isFullscreen, activeTab]);
+
+    const autoScrollSpeed = settings.autoScrollSpeed ?? 60;
+
+    useEffect(() => {
+        if (!centerSentenceAfterNavRef.current) return;
+        if (activeTab !== 'full') return;
+        centerSentenceAfterNavRef.current = false;
+
+        const timeoutId = window.setTimeout(() => {
+            scrollToSentenceChunk(currentSentenceIndex);
+        }, 80);
+
+        return () => {
+            window.clearTimeout(timeoutId);
+        };
+    }, [currentSentenceIndex, activeTab, isFullscreen, scrollToSentenceChunk]);
+
+    // Handle continuous auto-scroll in fullscreen mode
+    useEffect(() => {
+        if (!(isAutoScrollActive && isFullscreen && activeTab === 'full')) return;
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        let frameId: number | null = null;
+        let lastTimestamp: number | null = null;
+
+        const stopAutoScroll = () => {
+            setIsAutoScrollActive(false);
+        };
+
+        const step = (timestamp: number) => {
+            if (!lastTimestamp) {
+                lastTimestamp = timestamp;
+            }
+            const deltaSeconds = (timestamp - lastTimestamp) / 1000;
+            lastTimestamp = timestamp;
+
+            container.scrollTop += autoScrollSpeed * deltaSeconds;
+
+            const nearBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 4;
+            if (nearBottom) {
+                stopAutoScroll();
+                return;
+            }
+
+            frameId = requestAnimationFrame(step);
+        };
+
+        frameId = requestAnimationFrame(step);
+
+        container.addEventListener('wheel', stopAutoScroll, { passive: true });
+        container.addEventListener('touchstart', stopAutoScroll, { passive: true });
+        container.addEventListener('mousedown', stopAutoScroll);
+
+        return () => {
+            if (frameId) {
+                cancelAnimationFrame(frameId);
+            }
+            container.removeEventListener('wheel', stopAutoScroll);
+            container.removeEventListener('touchstart', stopAutoScroll);
+            container.removeEventListener('mousedown', stopAutoScroll);
+        };
+    }, [isAutoScrollActive, isFullscreen, activeTab, autoScrollSpeed]);
+
     // Wrap play function to mark it as user-initiated
     const handleUserPlay = useCallback(() => {
         void sentenceAudio.controller.play(true); // User clicked play button
     }, [sentenceAudio.controller]);
+
+    const handleFullscreenPrevSentence = useCallback(() => {
+        if (previousSentenceIndex === null) return;
+        if (isAutoScrollActive) {
+            setIsAutoScrollActive(false);
+        }
+        centerSentenceAfterNavRef.current = true;
+        sentenceAudio.controller.goToSentence(previousSentenceIndex);
+        navigation.setCurrentChunkIndex(previousSentenceIndex);
+    }, [previousSentenceIndex, isAutoScrollActive, sentenceAudio.controller, navigation.setCurrentChunkIndex]);
+
+    const handleFullscreenNextSentence = useCallback(() => {
+        if (nextSentenceIndex === null) return;
+        if (isAutoScrollActive) {
+            setIsAutoScrollActive(false);
+        }
+        centerSentenceAfterNavRef.current = true;
+        sentenceAudio.controller.goToSentence(nextSentenceIndex);
+        navigation.setCurrentChunkIndex(nextSentenceIndex);
+    }, [nextSentenceIndex, isAutoScrollActive, sentenceAudio.controller, navigation.setCurrentChunkIndex]);
+
+    const handlePreviousChunk = useCallback(() => {
+        sentenceAudio.controller.prevSentence();
+        if (activeTab === 'full') {
+            centerSentenceAfterNavRef.current = true;
+            if (isFullscreen && isAutoScrollActive) {
+                setIsAutoScrollActive(false);
+            }
+        }
+    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
+
+    const handleNextChunk = useCallback(() => {
+        sentenceAudio.controller.nextSentence();
+        if (activeTab === 'full') {
+            centerSentenceAfterNavRef.current = true;
+            if (isFullscreen && isAutoScrollActive) {
+                setIsAutoScrollActive(false);
+            }
+        }
+    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
 
     // Calculate estimated time remaining to read the chapter
     const estimatedTimeRemaining = useMemo(() => {
@@ -534,7 +677,6 @@ export const ReaderUI = ({
                             highlightColor={settings.highlightColor}
                             sentenceHighlightColor={settings.sentenceHighlightColor}
                             chunkSpacing={settings.chunkSpacing}
-                            ttsEnabled={settings.ttsEnabled}
                             bionicReadingEnabled={settings.bionicReadingEnabled}
                         />
                     </Paper>
@@ -551,6 +693,14 @@ export const ReaderUI = ({
                         onTextColorChange={settings.handleTextColorChange}
                         isFullscreen={isFullscreen}
                         onToggleFullscreen={handleToggleFullscreen}
+                        isAutoScrolling={isAutoScrollActive}
+                        onToggleAutoScroll={handleToggleAutoScroll}
+                        autoScrollSpeed={autoScrollSpeed}
+                        onAutoScrollSpeedChange={settings.handleAutoScrollSpeedChange}
+                        onPreviousSentence={handleFullscreenPrevSentence}
+                        onNextSentence={handleFullscreenNextSentence}
+                        canGoToPrevious={canGoPrevSentence}
+                        canGoToNext={canGoNextSentence}
                     />
                 )}
 
@@ -562,8 +712,8 @@ export const ReaderUI = ({
                     totalChunks={sentenceAudio.sentences.length}
                     onPlay={handleUserPlay}
                     onPause={sentenceAudio.controller.pause}
-                    onPreviousChunk={sentenceAudio.controller.prevSentence}
-                    onNextChunk={sentenceAudio.controller.nextSentence}
+                    onPreviousChunk={handlePreviousChunk}
+                    onNextChunk={handleNextChunk}
                     onPreviousChapter={navigation.handlePreviousChapter}
                     onNextChapter={navigation.handleNextChapter}
                     onBookmark={bookmarks.handleBookmark}
@@ -640,6 +790,7 @@ export const ReaderUI = ({
                     currentFontFamily={settings.fontFamily}
                     currentTextColor={settings.textColor}
                     currentChunkSpacing={settings.chunkSpacing}
+                    currentAutoScrollSpeed={settings.autoScrollSpeed}
                     onThemeChange={settings.handleThemeChange}
                     onHighlightColorChange={settings.handleHighlightColorChange}
                     onSentenceHighlightColorChange={settings.handleSentenceHighlightColorChange}
@@ -648,6 +799,7 @@ export const ReaderUI = ({
                     onFontFamilyChange={settings.handleFontFamilyChange}
                     onTextColorChange={settings.handleTextColorChange}
                     onChunkSpacingChange={settings.handleChunkSpacingChange}
+                    onAutoScrollSpeedChange={settings.handleAutoScrollSpeedChange}
                     highlightMode={settings.highlightMode}
                     onHighlightModeChange={settings.handleHighlightModeChange}
                     autoFontScaling={settings.autoFontScaling}

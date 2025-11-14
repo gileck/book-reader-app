@@ -30,6 +30,7 @@ export interface UserSettings {
     autoFontScaling?: boolean;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
+    autoScrollSpeed?: number;
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';
@@ -78,6 +79,7 @@ export const DEFAULT_USER_SETTINGS: Omit<UserSettings, '_id' | 'userId' | 'creat
     autoFontScaling: true,
     bionicReadingEnabled: false,
     chunkSpacing: 0.5,
+    autoScrollSpeed: 60,
     readingMode: 'focus', // Default to focus for better performance
     lastTranslationLanguage: 'es', // Default to Spanish
     autoAdvance: true,

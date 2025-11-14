@@ -13,7 +13,6 @@ interface ChunkRendererProps {
     handleLinkClick: (link: ChunkLink) => void;
     currentChunkIndex: number;
     onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
-    ttsEnabled?: boolean;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
     translations?: Record<number, string>;
@@ -32,7 +31,6 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     handleLinkClick,
     currentChunkIndex,
     onChunkDoubleClick,
-    ttsEnabled = true,
     bionicReadingEnabled = false,
     chunkSpacing = 0.5,
     translations = {},
@@ -51,7 +49,6 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         chunk={chunk}
                         chunkIndex={chunk.index}
                         currentChunkIndex={currentChunkIndex}
-                        ttsEnabled={ttsEnabled}
                     />
                 );
 
@@ -75,7 +72,6 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         currentChunkIndex={currentChunkIndex}
                         handleLinkClick={handleLinkClick}
                         onChunkDoubleClick={onChunkDoubleClick}
-                        ttsEnabled={ttsEnabled}
                         bionicReadingEnabled={bionicReadingEnabled}
                         chunkSpacing={chunkSpacing}
                         translatedText={translations[chunk.index]}

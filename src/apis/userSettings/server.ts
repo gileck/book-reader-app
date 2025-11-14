@@ -73,6 +73,7 @@ function mapClientSettingsToDb(
     if (clientSettings.autoFontScaling !== undefined) dbSettings.autoFontScaling = clientSettings.autoFontScaling;
     if (clientSettings.bionicReadingEnabled !== undefined) dbSettings.bionicReadingEnabled = clientSettings.bionicReadingEnabled;
     if (clientSettings.chunkSpacing !== undefined) dbSettings.chunkSpacing = clientSettings.chunkSpacing;
+    if (clientSettings.autoScrollSpeed !== undefined) dbSettings.autoScrollSpeed = clientSettings.autoScrollSpeed;
 
     // Reading Mode
     if (clientSettings.readingMode !== undefined) dbSettings.readingMode = clientSettings.readingMode;
@@ -145,6 +146,7 @@ function mapDbSettingsToClient(dbSettings: DbUserSettings): Omit<ClientUserSetti
         autoFontScaling: dbSettings.autoFontScaling,
         bionicReadingEnabled: dbSettings.bionicReadingEnabled,
         chunkSpacing: dbSettings.chunkSpacing,
+        autoScrollSpeed: dbSettings.autoScrollSpeed,
         // Reading Mode
         readingMode: dbSettings.readingMode,
         // Translation Settings

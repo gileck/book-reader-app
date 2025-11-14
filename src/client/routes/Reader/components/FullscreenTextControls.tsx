@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Box, IconButton, Paper, Button, Popover } from '@mui/material';
-import { Add, Remove, Fullscreen, FullscreenExit, Palette } from '@mui/icons-material';
+import React, { useEffect, useState } from 'react';
+import { Box, IconButton, Paper, Button, Popover, Stack, Typography, TextField } from '@mui/material';
+import { Add, Remove, Fullscreen, FullscreenExit, Palette, PlayArrow, Pause, ChevronLeft, ChevronRight } from '@mui/icons-material';
 
 interface FullscreenTextControlsProps {
     /** Current font size multiplier (0.8 - 2.0) */
@@ -15,6 +15,22 @@ interface FullscreenTextControlsProps {
     isFullscreen: boolean;
     /** Callback to toggle fullscreen mode */
     onToggleFullscreen: () => void;
+    /** Whether auto scroll is currently active */
+    isAutoScrolling: boolean;
+    /** Callback to toggle auto scroll */
+    onToggleAutoScroll: () => void;
+    /** Current auto scroll speed (px/sec) */
+    autoScrollSpeed: number;
+    /** Callback when auto scroll speed changes */
+    onAutoScrollSpeedChange: (speed: number) => void;
+    /** Navigate to previous sentence */
+    onPreviousSentence: () => void;
+    /** Navigate to next sentence */
+    onNextSentence: () => void;
+    /** Whether previous sentence navigation is available */
+    canGoToPrevious: boolean;
+    /** Whether next sentence navigation is available */
+    canGoToNext: boolean;
 }
 
 /**
@@ -50,10 +66,17 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
     textColor,
     onTextColorChange,
     isFullscreen,
-    onToggleFullscreen
+    onToggleFullscreen,
+    isAutoScrolling,
+    onToggleAutoScroll,
+    autoScrollSpeed,
+    onAutoScrollSpeedChange,
+    onPreviousSentence,
+    onNextSentence,
+    canGoToPrevious,
+    canGoToNext
 }) => {
-    const [showFontSizeControls, setShowFontSizeControls] = useState(false);
-    const [colorPickerAnchor, setColorPickerAnchor] = useState<HTMLButtonElement | null>(null);
+    const [typographyAnchorEl, setTypographyAnchorEl] = useState<HTMLButtonElement | null>(null);
     const handleDecrease = () => {
         const newSize = Math.max(0.8, Math.round((fontSize - 0.1) * 10) / 10);
         onFontSizeChange(newSize);
@@ -64,17 +87,14 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
         onFontSizeChange(newSize);
     };
 
-    const handleColorClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setColorPickerAnchor(event.currentTarget);
-    };
-
-    const handleColorClose = () => {
-        setColorPickerAnchor(null);
-    };
-
     const handleColorSelect = (color: string) => {
         onTextColorChange(color);
-        handleColorClose();
+        handleTypographyClose();
+    };
+
+    const handleColorInputChange = (value: string) => {
+        onTextColorChange(value);
+        handleTypographyClose();
     };
 
     const presetColors = [
@@ -91,6 +111,25 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
         '#d4d4d4', // Lighter gray
         '#a3a3a3'  // Medium light gray
     ];
+
+    const handleTypographyButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setTypographyAnchorEl(event.currentTarget);
+    };
+
+    const handleTypographyClose = () => {
+        setTypographyAnchorEl(null);
+    };
+
+    useEffect(() => {
+        if (isAutoScrolling && typographyAnchorEl) {
+            setTypographyAnchorEl(null);
+        }
+    }, [isAutoScrolling, typographyAnchorEl]);
+
+    const handleAutoScrollSpeedAdjust = (delta: number) => {
+        const next = Math.min(200, Math.max(20, Math.round(autoScrollSpeed + delta)));
+        onAutoScrollSpeedChange(next);
+    };
 
     return (
         <>
@@ -118,78 +157,35 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                     }
                 }}
             >
-                {/* Font Size Controls - Collapsible */}
-                {showFontSizeControls ? (
-                    <>
-                        {/* Decrease Font Size */}
-                        <IconButton
-                            onClick={handleDecrease}
-                            disabled={fontSize <= 0.8}
-                            size="medium"
-                            sx={{
-                                width: 44,
-                                height: 44,
-                                '&:disabled': { opacity: 0.3 }
-                            }}
-                            aria-label="Decrease font size"
-                        >
-                            <Remove />
-                        </IconButton>
+                {/* Previous Sentence */}
+                <IconButton
+                    onClick={onPreviousSentence}
+                    disabled={!canGoToPrevious}
+                    size="medium"
+                    sx={{
+                        width: 44,
+                        height: 44,
+                        '&:disabled': { opacity: 0.3 }
+                    }}
+                    aria-label="Previous sentence"
+                >
+                    <ChevronLeft />
+                </IconButton>
 
-                        {/* Font Size Display Button */}
-                        <Button
-                            onClick={() => setShowFontSizeControls(false)}
-                            sx={{
-                                minWidth: 50,
-                                height: 44,
-                                textAlign: 'center',
-                                fontWeight: 600,
-                                fontSize: '0.875rem',
-                                color: 'text.primary',
-                                '&:hover': {
-                                    backgroundColor: 'action.hover'
-                                }
-                            }}
-                            aria-label="Hide font size controls"
-                        >
-                            {fontSize.toFixed(1)}x
-                        </Button>
-
-                        {/* Increase Font Size */}
-                        <IconButton
-                            onClick={handleIncrease}
-                            disabled={fontSize >= 2.0}
-                            size="medium"
-                            sx={{
-                                width: 44,
-                                height: 44,
-                                '&:disabled': { opacity: 0.3 }
-                            }}
-                            aria-label="Increase font size"
-                        >
-                            <Add />
-                        </IconButton>
-                    </>
-                ) : (
-                    /* Font Size Button - Collapsed */
-                    <Button
-                        onClick={() => setShowFontSizeControls(true)}
-                        sx={{
-                            minWidth: 50,
-                            height: 44,
-                            textAlign: 'center',
-                            fontWeight: 600,
-                            fontSize: '0.875rem',
-                            color: 'text.primary',
-                            '&:hover': {
-                                backgroundColor: 'action.hover'
-                            }
-                        }}
-                        aria-label="Show font size controls"
-                    >
-                        {fontSize.toFixed(1)}x
-                    </Button>
-                )}
+                {/* Next Sentence */}
+                <IconButton
+                    onClick={onNextSentence}
+                    disabled={!canGoToNext}
+                    size="medium"
+                    sx={{
+                        width: 44,
+                        height: 44,
+                        '&:disabled': { opacity: 0.3 }
+                    }}
+                    aria-label="Next sentence"
+                >
+                    <ChevronRight />
+                </IconButton>
 
                 {/* Divider */}
                 <Box
@@ -201,18 +197,85 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                     }}
                 />
 
-                {/* Font Color Picker */}
+                {isAutoScrolling ? (
+                    <>
+                        <IconButton
+                            onClick={() => handleAutoScrollSpeedAdjust(-1)}
+                            disabled={autoScrollSpeed <= 20}
+                            size="medium"
+                            sx={{
+                                width: 44,
+                                height: 44,
+                                '&:disabled': { opacity: 0.3 }
+                            }}
+                            aria-label="Decrease auto scroll speed"
+                        >
+                            <Remove />
+                        </IconButton>
+                        <Button
+                            sx={{
+                                minWidth: 90,
+                                height: 44,
+                                textAlign: 'center',
+                                fontWeight: 600,
+                                fontSize: '0.875rem',
+                                color: 'text.primary',
+                                '&:hover': {
+                                    backgroundColor: 'action.hover'
+                                }
+                            }}
+                            disableRipple
+                        >
+                            {autoScrollSpeed} px/s
+                        </Button>
+                        <IconButton
+                            onClick={() => handleAutoScrollSpeedAdjust(1)}
+                            disabled={autoScrollSpeed >= 200}
+                            size="medium"
+                            sx={{
+                                width: 44,
+                                height: 44,
+                                '&:disabled': { opacity: 0.3 }
+                            }}
+                            aria-label="Increase auto scroll speed"
+                        >
+                            <Add />
+                        </IconButton>
+                    </>
+                ) : (
+                    <Button
+                        onClick={handleTypographyButtonClick}
+                        sx={{
+                            minWidth: 110,
+                            height: 44,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            fontWeight: 600,
+                            textTransform: 'none',
+                            color: 'text.primary',
+                            '&:hover': {
+                                backgroundColor: 'action.hover'
+                            }
+                        }}
+                        aria-label="Open typography controls"
+                    >
+                        <Palette fontSize="small" />
+                        Text
+                    </Button>
+                )}
+
+                {/* Auto Scroll Toggle */}
                 <IconButton
-                    onClick={handleColorClick}
+                    onClick={onToggleAutoScroll}
                     size="medium"
                     sx={{
                         width: 44,
-                        height: 44,
-                        color: textColor
+                        height: 44
                     }}
-                    aria-label="Change text color"
+                    aria-label={isAutoScrolling ? 'Pause auto scroll' : 'Start auto scroll'}
                 >
-                    <Palette />
+                    {isAutoScrolling ? <Pause /> : <PlayArrow />}
                 </IconButton>
 
                 {/* Divider */}
@@ -239,23 +302,24 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                 </IconButton>
             </Paper>
 
-            {/* Color Picker Popover */}
+            {/* Typography & Color Popover */}
             <Popover
-                open={Boolean(colorPickerAnchor)}
-                anchorEl={colorPickerAnchor}
-                onClose={handleColorClose}
+                open={Boolean(typographyAnchorEl)}
+                anchorEl={typographyAnchorEl}
+                onClose={handleTypographyClose}
                 anchorOrigin={{
                     vertical: 'top',
-                    horizontal: 'center',
+                    horizontal: 'center'
                 }}
                 transformOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'center',
+                    horizontal: 'center'
                 }}
                 sx={{
                     '& .MuiPaper-root': {
                         borderRadius: 3,
                         p: 2,
+                        minWidth: 240,
                         backdropFilter: 'blur(10px)',
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',
                         '@media (prefers-color-scheme: dark)': {
@@ -264,35 +328,86 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                     }
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(4, 1fr)',
-                        gap: 1.5,
-                        maxWidth: 200
-                    }}
-                >
-                    {presetColors.map((color) => (
-                        <IconButton
-                            key={color}
-                            onClick={() => handleColorSelect(color)}
+                <Stack spacing={2}>
+                    <Box>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                            Font Size
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <IconButton
+                                onClick={handleDecrease}
+                                disabled={fontSize <= 0.8}
+                                size="small"
+                                sx={{ '&:disabled': { opacity: 0.3 } }}
+                                aria-label="Decrease font size"
+                            >
+                                <Remove fontSize="small" />
+                            </IconButton>
+                            <Button
+                                disableRipple
+                                sx={{
+                                    minWidth: 70,
+                                    height: 36,
+                                    fontWeight: 600,
+                                    color: 'text.primary',
+                                    '&:hover': { backgroundColor: 'action.hover' }
+                                }}
+                            >
+                                {fontSize.toFixed(1)}x
+                            </Button>
+                            <IconButton
+                                onClick={handleIncrease}
+                                disabled={fontSize >= 2.0}
+                                size="small"
+                                sx={{ '&:disabled': { opacity: 0.3 } }}
+                                aria-label="Increase font size"
+                            >
+                                <Add fontSize="small" />
+                            </IconButton>
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                            Font Color
+                        </Typography>
+                        <Box
                             sx={{
-                                width: 40,
-                                height: 40,
-                                backgroundColor: color,
-                                border: textColor === color ? '3px solid' : '1px solid',
-                                borderColor: textColor === color ? 'primary.main' : 'divider',
-                                '&:hover': {
-                                    backgroundColor: color,
-                                    opacity: 0.8,
-                                    border: '2px solid',
-                                    borderColor: 'primary.main'
-                                }
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(4, 1fr)',
+                                gap: 1,
+                                mb: 1.5
                             }}
-                            aria-label={`Select color ${color}`}
+                        >
+                            {presetColors.map((color) => (
+                                <IconButton
+                                    key={color}
+                                    onClick={() => handleColorSelect(color)}
+                                    sx={{
+                                        width: 36,
+                                        height: 36,
+                                        backgroundColor: color,
+                                        border: textColor === color ? '3px solid' : '1px solid',
+                                        borderColor: textColor === color ? 'primary.main' : 'divider',
+                                        '&:hover': {
+                                            backgroundColor: color,
+                                            opacity: 0.85,
+                                            border: '2px solid',
+                                            borderColor: 'primary.main'
+                                        }
+                                    }}
+                                    aria-label={`Select color ${color}`}
+                                />
+                            ))}
+                        </Box>
+                        <TextField
+                            type="color"
+                            value={textColor}
+                            onChange={(e) => handleColorInputChange(e.target.value)}
+                            size="small"
+                            fullWidth
                         />
-                    ))}
-                </Box>
+                    </Box>
+                </Stack>
             </Popover>
         </>
     );

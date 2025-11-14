@@ -136,7 +136,8 @@ export const useUserSettings = () => {
             chunkSpacing: 0.5,
             highlightMode: 'word',
             autoFontScaling: true,
-            bionicReadingEnabled: false
+            bionicReadingEnabled: false,
+            autoScrollSpeed: 60
         });
     }, [updateUserSettings]);
 
@@ -161,6 +162,12 @@ export const useUserSettings = () => {
 
     const handleChunkSpacingChange = useCallback(async (spacing: number) => {
         await updateUserSettings({ chunkSpacing: spacing });
+    }, [updateUserSettings]);
+
+    const handleAutoScrollSpeedChange = useCallback(async (speed: number) => {
+        // Reminder: if you add new persisted settings here, also add them to mapClientSettingsToDb
+        // in src/apis/userSettings/server.ts so values are stored server-side.
+        await updateUserSettings({ autoScrollSpeed: speed });
     }, [updateUserSettings]);
 
     // Return the same interface as before, but data comes from Context
@@ -189,6 +196,7 @@ export const useUserSettings = () => {
         autoFontScaling: userSettings.autoFontScaling ?? true,
         bionicReadingEnabled: userSettings.bionicReadingEnabled ?? false,
         chunkSpacing: userSettings.chunkSpacing ?? 0.5,
+        autoScrollSpeed: userSettings.autoScrollSpeed ?? 60,
         settingsLoaded: userSettingsLoaded,
 
         // Local UI state
@@ -218,6 +226,7 @@ export const useUserSettings = () => {
         handleHighlightModeChange,
         handleAutoFontScalingChange,
         handleBionicReadingChange,
-        handleChunkSpacingChange
+        handleChunkSpacingChange,
+        handleAutoScrollSpeedChange
     };
 };

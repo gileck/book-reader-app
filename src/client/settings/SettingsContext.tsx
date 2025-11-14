@@ -123,6 +123,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
                     autoFontScaling: s.autoFontScaling ?? true,
                     bionicReadingEnabled: s.bionicReadingEnabled ?? false,
                     chunkSpacing: s.chunkSpacing ?? 0.5,
+                    autoScrollSpeed: s.autoScrollSpeed ?? 60,
                     readingMode: (s.readingMode as 'focus' | 'full') ?? 'focus',
                     lastTranslationLanguage: s.lastTranslationLanguage ?? 'es'
                 };

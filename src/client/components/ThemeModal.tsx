@@ -123,6 +123,7 @@ interface ThemeModalProps {
     currentFontFamily: string;
     currentTextColor: string;
     currentChunkSpacing: number;
+    currentAutoScrollSpeed: number;
     onThemeChange: (theme: 'light' | 'dark') => void;
     onHighlightColorChange: (color: string) => void;
     onSentenceHighlightColorChange: (color: string) => void;
@@ -131,6 +132,7 @@ interface ThemeModalProps {
     onFontFamilyChange: (fontFamily: string) => void;
     onTextColorChange: (textColor: string) => void;
     onChunkSpacingChange: (spacing: number) => void;
+    onAutoScrollSpeedChange: (speed: number) => void;
     highlightMode?: 'word' | 'line' | 'off';
     onHighlightModeChange?: (mode: 'word' | 'line' | 'off') => void;
     autoFontScaling?: boolean;
@@ -151,6 +153,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     currentFontFamily,
     currentTextColor,
     currentChunkSpacing,
+    currentAutoScrollSpeed,
     onThemeChange,
     onHighlightColorChange,
     onSentenceHighlightColorChange,
@@ -159,6 +162,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     onFontFamilyChange,
     onTextColorChange,
     onChunkSpacingChange,
+    onAutoScrollSpeedChange,
     highlightMode = 'word',
     onHighlightModeChange,
     autoFontScaling = true,
@@ -176,6 +180,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
     const [localFontFamily, setLocalFontFamily] = useState(currentFontFamily);
     const [localTextColor, setLocalTextColor] = useState(currentTextColor);
     const [localChunkSpacing, setLocalChunkSpacing] = useState(currentChunkSpacing);
+    const [localAutoScrollSpeed, setLocalAutoScrollSpeed] = useState(currentAutoScrollSpeed);
     const [localHighlightMode, setLocalHighlightMode] = useState<'word' | 'line' | 'off'>(highlightMode);
     const [localAutoFontScaling, setLocalAutoFontScaling] = useState(autoFontScaling);
     const [localBionicReadingEnabled, setLocalBionicReadingEnabled] = useState(bionicReadingEnabled);
@@ -190,11 +195,12 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         setLocalFontFamily(currentFontFamily);
         setLocalTextColor(currentTextColor);
         setLocalChunkSpacing(currentChunkSpacing);
+        setLocalAutoScrollSpeed(currentAutoScrollSpeed);
         setLocalHighlightMode(highlightMode);
         setLocalAutoFontScaling(autoFontScaling);
         setLocalBionicReadingEnabled(bionicReadingEnabled);
         setFontInputValue(getFontLabelFromValue(currentFontFamily));
-    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, currentChunkSpacing, highlightMode, autoFontScaling, bionicReadingEnabled]);
+    }, [currentTheme, currentHighlightColor, currentSentenceHighlightColor, currentFontSize, currentLineHeight, currentFontFamily, currentTextColor, currentChunkSpacing, currentAutoScrollSpeed, highlightMode, autoFontScaling, bionicReadingEnabled]);
 
     useEffect(() => {
         if (open) {
@@ -285,6 +291,20 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
         const newSpacing = Math.min(2.0, Math.round((localChunkSpacing + 0.1) * 10) / 10);
         setLocalChunkSpacing(newSpacing);
         onChunkSpacingChange(newSpacing);
+    };
+
+    const handleAutoScrollSpeedChangeInternal = (value: number) => {
+        const clamped = Math.min(200, Math.max(20, Math.round(value)));
+        setLocalAutoScrollSpeed(clamped);
+        onAutoScrollSpeedChange(clamped);
+    };
+
+    const handleAutoScrollSpeedDecrease = () => {
+        handleAutoScrollSpeedChangeInternal(localAutoScrollSpeed - 1);
+    };
+
+    const handleAutoScrollSpeedIncrease = () => {
+        handleAutoScrollSpeedChangeInternal(localAutoScrollSpeed + 1);
     };
 
     const handleResetToDefaults = () => {
@@ -665,6 +685,42 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
 
                     <TabPanel value={activeTab} index={2}>
                         <Stack spacing={3}>
+                            {/* Auto Scroll Speed */}
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                                    Auto Scroll Speed
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                                    Controls how fast the page scrolls in fullscreen auto-scroll mode (pixels per second)
+                                </Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <IconButton
+                                        onClick={handleAutoScrollSpeedDecrease}
+                                        disabled={localAutoScrollSpeed <= 20}
+                                        size="small"
+                                    >
+                                        <Remove />
+                                    </IconButton>
+                                    <Slider
+                                        value={localAutoScrollSpeed}
+                                        onChange={(_, value) => handleAutoScrollSpeedChangeInternal(value as number)}
+                                        min={20}
+                                        max={200}
+                                        step={1}
+                                        valueLabelDisplay="auto"
+                                        sx={{ flex: 1 }}
+                                    />
+                                    <IconButton
+                                        onClick={handleAutoScrollSpeedIncrease}
+                                        disabled={localAutoScrollSpeed >= 200}
+                                        size="small"
+                                    >
+                                        <Add />
+                                    </IconButton>
+                                    <Chip label={`${localAutoScrollSpeed} px/s`} size="small" sx={{ minWidth: 80 }} />
+                                </Box>
+                            </Box>
+
                             {/* Highlight Mode */}
                             <Box>
                                 <Typography variant="subtitle1" fontWeight={600} gutterBottom>

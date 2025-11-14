@@ -8,15 +8,13 @@ interface HeaderChunkProps {
     chunkIndex: number;
     currentChunkIndex: number;
     level?: number; // Determined by content analysis
-    ttsEnabled?: boolean;
 }
 
 export const HeaderChunk: React.FC<HeaderChunkProps> = ({
     chunk,
     chunkIndex,
     currentChunkIndex,
-    level = 2,
-    ttsEnabled = true
+    level = 2
 }) => {
     const { settings } = useSettings();
 
@@ -73,7 +71,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                 },
                 p: { xs: 2, sm: 3 },
                 backgroundColor:
-                    (ttsEnabled && currentChunkIndex === chunkIndex)
+                    currentChunkIndex === chunkIndex
                         ? 'var(--sentence-highlight-color, transparent)'
                         : 'transparent',
                 borderRadius: '6px',

@@ -21,6 +21,7 @@ export interface UserSettings {
     autoFontScaling?: boolean;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
+    autoScrollSpeed?: number;
     // Reading mode preference
     readingMode?: 'focus' | 'full';
     // Translation preferences
@@ -77,6 +78,7 @@ export interface UpdateUserSettingsPayload {
     autoFontScaling?: boolean;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
+    autoScrollSpeed?: number;
 
     // Reading Mode Preference
     readingMode?: 'focus' | 'full';
