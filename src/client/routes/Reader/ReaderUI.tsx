@@ -28,6 +28,7 @@ import { QuickPromptsDialog } from '../../components/QuickPromptsDialog';
 import { BookOverviewPanel } from './components/BookOverviewPanel';
 import { extractChapterTextContent } from './utils/chapterUtils';
 import { FullscreenTextControls } from './components/FullscreenTextControls';
+import { QuestionInputDialog } from './components/QuestionInputDialog';
 
 interface ReaderUIProps {
     initialBook: BookClient;
@@ -117,6 +118,10 @@ export const ReaderUI = ({
 
     // Chat input collapse state
     const [chatInputCollapsed, setChatInputCollapsed] = useState(false);
+
+    // Question input dialog state (for "Ask a question" from context menu)
+    const [questionDialogOpen, setQuestionDialogOpen] = useState(false);
+    const [questionDialogChunkIndex, setQuestionDialogChunkIndex] = useState<number | null>(null);
 
     // Create a ref to store the contextLines accessor
     const getContextLines = useRef<() => number>(() => 3);
@@ -489,6 +494,39 @@ export const ReaderUI = ({
         }
     }, [currentSentenceIndex, canGoNextSentence, canGoPrevSentence, handleFullscreenNextSentence, handleFullscreenPrevSentence]);
 
+    /**
+     * Handle "Ask a question" from context menu
+     * Opens the question input dialog for the selected sentence
+     */
+    const handleAskQuestionAboutSentence = useCallback((chunkIndex: number) => {
+        setQuestionDialogChunkIndex(chunkIndex);
+        setQuestionDialogOpen(true);
+    }, []);
+
+    /**
+     * Handle question submission from the dialog
+     * Sets the question in QA chat and navigates to QA tab
+     */
+    const handleQuestionSubmit = useCallback((question: string) => {
+        // Set the question in the QA input
+        setQaQuestion(question);
+        
+        // Close the dialog
+        setQuestionDialogOpen(false);
+        setQuestionDialogChunkIndex(null);
+        
+        // Navigate to QA tab
+        handleOpenQAChat();
+    }, [handleOpenQAChat]);
+
+    /**
+     * Handle closing the question dialog
+     */
+    const handleQuestionDialogClose = useCallback(() => {
+        setQuestionDialogOpen(false);
+        setQuestionDialogChunkIndex(null);
+    }, []);
+
     return (
         <UserThemeProvider
             theme={settings.theme}
@@ -686,6 +724,7 @@ export const ReaderUI = ({
                             onNavigateToChunk={navigation.setCurrentChunkIndex}
                             onNavigateToBookmark={navigation.handleNavigateToBookmark}
                             onChunkClick={handleChunkClick}
+                            onAskQuestion={handleAskQuestionAboutSentence}
                             currentChunkIndex={audio.currentChunkIndex}
                             fontSize={settings.fontSize}
                             lineHeight={settings.lineHeight}
@@ -877,6 +916,18 @@ export const ReaderUI = ({
                     onClose={handleCloseQuickPrompts}
                     onSelectPrompt={handleSelectPrompt}
                     onOpenSettings={bookQA.openSettings}
+                />
+
+                {/* Question Input Dialog - for "Ask a question" from context menu */}
+                <QuestionInputDialog
+                    open={questionDialogOpen}
+                    sentenceText={
+                        questionDialogChunkIndex !== null && audio.textChunks[questionDialogChunkIndex]
+                            ? audio.textChunks[questionDialogChunkIndex].text
+                            : ''
+                    }
+                    onSubmit={handleQuestionSubmit}
+                    onClose={handleQuestionDialogClose}
                 />
 
                 {/* Reading Progress Error Alert */}

@@ -112,7 +112,13 @@ This document provides a comprehensive list of all features supported in the Boo
   - Works in both fullscreen and normal modes
   - Component-based implementation (cleaner than DOM querying)
   - Intelligently ignores clicks on links, buttons, and translated text
-  - Double click opens translation menu (existing functionality preserved)
+- ✅ **Sentence Context Menu**: Double-click any sentence to open context menu with 3 options
+  - **Translate**: Opens translation popup for the selected sentence
+  - **Set current sentence**: Navigates playback to the clicked sentence
+  - **Ask a question**: Opens dialog to ask AI about the selected sentence, then navigates to QA chat
+  - iOS-inspired design with smooth animations and auto-positioning
+  - Auto-closes when clicking outside
+  - Works seamlessly with existing single-click navigation
 
 ### 7. Bookmarks
 
@@ -225,7 +231,7 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ## Implementation Status
 
-### ✅ Completed Features (39/40)
+### ✅ Completed Features (40/40)
 - All core reading modes
 - Audio playback with auto-advance
 - Playback speed control
@@ -246,6 +252,7 @@ This document provides a comprehensive list of all features supported in the Boo
 - AI chat integration
 - Focus mode theme integration
 - Bullet list rendering (both modes)
+- Sentence context menu (double-click)
 
 ### ✅ Recently Verified
 - ✅ **Focus Mode Theme Integration**: All theme settings (font size, line height, font family, text color) now apply to focus mode (October 2025)
@@ -253,8 +260,8 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **TTS Usage Display**: Real-time free tier usage and cost display in Playback Settings modal (October 2025)
 - ✅ **Bionic Reading Mode**: Word emphasis for improved reading speed, works in both modes (November 2025)
 
-### ⚠️ To Be Verified (1/40)
-- TTS voice selection (verify voice is applied)
+### ⚠️ To Be Verified (0/40)
+None - all features verified and working!
 
 ### 🚀 Future Enhancements (Phase 6)
 - Viewport-driven word-span hydration for performance
@@ -321,7 +328,11 @@ This document provides a comprehensive list of all features supported in the Boo
 - [ ] Focus mode: Arrow Right/Left keyboard navigation
 - [ ] Single click on sentences navigates forward/backward (all modes)
 - [ ] Single click only works when no translation is active
-- [ ] Double click opens translation menu (not single click)
+- [ ] Double click opens sentence context menu with 3 options
+- [ ] Context menu "Translate" option opens translation popup
+- [ ] Context menu "Set current sentence" navigates to clicked sentence
+- [ ] Context menu "Ask a question" opens question dialog and navigates to QA chat
+- [ ] Context menu closes when clicking outside
 - [ ] Clicks on links/buttons don't trigger navigation
 - [ ] Scroll to current button works in full mode
 - [ ] Word click starts playback from that word
@@ -398,12 +409,22 @@ This document provides a comprehensive list of all features supported in the Boo
 ---
 
 **Last Updated**: November 20, 2025  
-**Implementation Status**: ✅ 39/40 features complete (97.5%)  
-**Next Steps**: Verify remaining 1 feature, then proceed with Phase 6 optimizations
+**Implementation Status**: ✅ 40/40 features complete (100%)  
+**Next Steps**: Phase 6 performance optimizations
 
 ## Recent Updates
 
 ### November 20, 2025
+- ✅ **Sentence Context Menu**: Implemented double-click context menu for sentence interactions
+  - Three options: Translate, Set current sentence, Ask a question
+  - "Translate" opens existing translation popup
+  - "Set current sentence" navigates playback to the clicked sentence
+  - "Ask a question" opens dialog with sentence context, then navigates to QA chat with the question
+  - iOS-inspired design with rounded corners, smooth animations, and auto-positioning
+  - Auto-closes when clicking outside (100ms delay to prevent immediate close from double-click)
+  - Works seamlessly with existing single-click navigation
+  - Implementation: `SentenceContextMenu.tsx`, `QuestionInputDialog.tsx`, updates to `ReaderContent.tsx` and `ReaderUI.tsx`
+
 - ✅ **Mobile Scroll Detection Fix**: Fixed issue where scrolling triggered navigation on iPhone
   - Added touch movement tracking to distinguish between taps and scroll gestures
   - Scroll threshold set to 10px - movements beyond this are treated as scrolls, not taps

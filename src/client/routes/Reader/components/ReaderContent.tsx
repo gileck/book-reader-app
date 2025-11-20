@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { ChunkRenderer } from './ChunkRenderer';
 import { TranslationPopup } from './TranslationPopup';
+import { SentenceContextMenu } from './SentenceContextMenu';
 import { useEnhancedNavigation } from '../hooks/useEnhancedNavigation';
 import { useParagraphGrouping } from '../hooks/useParagraphGrouping';
 import { translateText } from '@/apis/translation/client';
@@ -18,6 +19,7 @@ interface ReaderContentProps {
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
     onChunkClick?: (chunkIndex: number) => void;
+    onAskQuestion?: (chunkIndex: number) => void;
     currentChunkIndex: number;
     // Optional sentence-level data (Phase 4)
     sentences?: SentenceChunk[];
@@ -43,6 +45,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     onNavigateToChunk,
     onNavigateToBookmark,
     onChunkClick,
+    onAskQuestion,
     currentChunkIndex,
     fontSize,
     lineHeight,
@@ -56,6 +59,12 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     const readerContentRef = useRef<HTMLDivElement>(null);
     const [cssVarsApplied, setCssVarsApplied] = useState(false);
     const { userSettings, updateUserSettings } = useSettings();
+
+    // Context menu state
+    const [contextMenu, setContextMenu] = useState<{
+        chunkIndex: number;
+        position: { x: number; y: number };
+    } | null>(null);
 
     // Translation state
     const [translationPopup, setTranslationPopup] = useState<{
@@ -90,16 +99,52 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
             });
         }
     }, [fontSize, lineHeight, fontFamily, textColor, highlightColor, sentenceHighlightColor]);
-    // Handle double-click on chunk for translation
+
+    // Handle double-click on chunk - show context menu
     const handleChunkDoubleClick = useCallback((chunkIndex: number, event: React.MouseEvent) => {
         const rect = (event.target as HTMLElement).getBoundingClientRect();
-        setTranslationPopup({
+        setContextMenu({
             chunkIndex,
             position: {
-                x: rect.left + rect.width / 2 - 125, // Center the popup (250px wide / 2)
+                x: rect.left + rect.width / 2 - 110, // Center the menu
                 y: rect.bottom + 5, // Below the clicked sentence
             },
         });
+    }, []);
+
+    // Handle translate action from context menu
+    const handleTranslateFromMenu = useCallback(() => {
+        if (!contextMenu) return;
+        
+        // Transfer context menu position to translation popup
+        setTranslationPopup({
+            chunkIndex: contextMenu.chunkIndex,
+            position: contextMenu.position,
+        });
+        setContextMenu(null);
+    }, [contextMenu]);
+
+    // Handle set current sentence action from context menu
+    const handleSetCurrentSentence = useCallback(() => {
+        if (!contextMenu) return;
+        
+        onNavigateToChunk(contextMenu.chunkIndex);
+        setContextMenu(null);
+    }, [contextMenu, onNavigateToChunk]);
+
+    // Handle ask question action from context menu
+    const handleAskQuestionFromMenu = useCallback(() => {
+        if (!contextMenu) return;
+        
+        if (onAskQuestion) {
+            onAskQuestion(contextMenu.chunkIndex);
+        }
+        setContextMenu(null);
+    }, [contextMenu, onAskQuestion]);
+
+    // Handle closing context menu
+    const handleCloseContextMenu = useCallback(() => {
+        setContextMenu(null);
     }, []);
 
     // Handle translation request for multiple sentences
@@ -304,6 +349,17 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 freeTierUsage={freeTierUsage}
                 onToggleTranslation={handleToggleTranslation}
             />
+
+            {/* Context Menu - shown on double-click */}
+            {contextMenu && (
+                <SentenceContextMenu
+                    position={contextMenu.position}
+                    onTranslate={handleTranslateFromMenu}
+                    onSetCurrentSentence={handleSetCurrentSentence}
+                    onAskQuestion={handleAskQuestionFromMenu}
+                    onClose={handleCloseContextMenu}
+                />
+            )}
 
             {/* Translation Popup */}
             {translationPopup && (
