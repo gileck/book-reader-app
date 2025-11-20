@@ -167,8 +167,8 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                 }}
             >
                 {/* Chapter Progress Bar - Inside panel at the top */}
-                <Box sx={{ 
-                    width: '100%', 
+                <Box sx={{
+                    width: '100%',
                     paddingLeft: '24px',
                     paddingRight: '24px',
                     paddingTop: '14px',
@@ -203,155 +203,155 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                         paddingBottom: '6px'
                     }}
                 >
-                {/* Previous Sentence */}
-                <IconButton
-                    onClick={onPreviousSentence}
-                    disabled={!canGoToPrevious}
-                    size="medium"
-                    sx={{
-                        width: 44,
-                        height: 44,
-                        '&:disabled': { opacity: 0.3 }
-                    }}
-                    aria-label="Previous sentence"
-                >
-                    <ChevronLeft />
-                </IconButton>
+                    {/* Previous Sentence */}
+                    <IconButton
+                        onClick={onPreviousSentence}
+                        disabled={!canGoToPrevious}
+                        size="medium"
+                        sx={{
+                            width: 44,
+                            height: 44,
+                            '&:disabled': { opacity: 0.3 }
+                        }}
+                        aria-label="Previous sentence"
+                    >
+                        <ChevronLeft />
+                    </IconButton>
 
-                {/* Next Sentence */}
-                <IconButton
-                    onClick={onNextSentence}
-                    disabled={!canGoToNext}
-                    size="medium"
-                    sx={{
-                        width: 44,
-                        height: 44,
-                        '&:disabled': { opacity: 0.3 }
-                    }}
-                    aria-label="Next sentence"
-                >
-                    <ChevronRight />
-                </IconButton>
+                    {/* Next Sentence */}
+                    <IconButton
+                        onClick={onNextSentence}
+                        disabled={!canGoToNext}
+                        size="medium"
+                        sx={{
+                            width: 44,
+                            height: 44,
+                            '&:disabled': { opacity: 0.3 }
+                        }}
+                        aria-label="Next sentence"
+                    >
+                        <ChevronRight />
+                    </IconButton>
 
-                {/* Divider */}
-                <Box
-                    sx={{
-                        width: '1px',
-                        height: 32,
-                        backgroundColor: 'rgba(0, 0, 0, 0.12)',
-                        mx: 1,
-                        '@media (prefers-color-scheme: dark)': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.12)'
-                        }
-                    }}
-                />
+                    {/* Divider */}
+                    <Box
+                        sx={{
+                            width: '1px',
+                            height: 32,
+                            backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                            mx: 1,
+                            '@media (prefers-color-scheme: dark)': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                            }
+                        }}
+                    />
 
-                {isAutoScrolling ? (
-                    <>
-                        <IconButton
-                            onClick={() => handleAutoScrollSpeedAdjust(-1)}
-                            disabled={autoScrollSpeed <= 20}
-                            size="medium"
-                            sx={{
-                                width: 44,
-                                height: 44,
-                                '&:disabled': { opacity: 0.3 }
-                            }}
-                            aria-label="Decrease auto scroll speed"
-                        >
-                            <Remove />
-                        </IconButton>
+                    {isAutoScrolling ? (
+                        <>
+                            <IconButton
+                                onClick={() => handleAutoScrollSpeedAdjust(-1)}
+                                disabled={autoScrollSpeed <= 20}
+                                size="medium"
+                                sx={{
+                                    width: 44,
+                                    height: 44,
+                                    '&:disabled': { opacity: 0.3 }
+                                }}
+                                aria-label="Decrease auto scroll speed"
+                            >
+                                <Remove />
+                            </IconButton>
+                            <Button
+                                sx={{
+                                    minWidth: 90,
+                                    height: 44,
+                                    textAlign: 'center',
+                                    fontWeight: 600,
+                                    fontSize: '0.875rem',
+                                    color: 'text.primary',
+                                    '&:hover': {
+                                        backgroundColor: 'action.hover'
+                                    }
+                                }}
+                                disableRipple
+                            >
+                                {autoScrollSpeed} px/s
+                            </Button>
+                            <IconButton
+                                onClick={() => handleAutoScrollSpeedAdjust(1)}
+                                disabled={autoScrollSpeed >= 200}
+                                size="medium"
+                                sx={{
+                                    width: 44,
+                                    height: 44,
+                                    '&:disabled': { opacity: 0.3 }
+                                }}
+                                aria-label="Increase auto scroll speed"
+                            >
+                                <Add />
+                            </IconButton>
+                        </>
+                    ) : (
                         <Button
+                            onClick={handleTypographyButtonClick}
                             sx={{
-                                minWidth: 90,
+                                minWidth: 110,
                                 height: 44,
-                                textAlign: 'center',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
                                 fontWeight: 600,
-                                fontSize: '0.875rem',
+                                textTransform: 'none',
                                 color: 'text.primary',
                                 '&:hover': {
                                     backgroundColor: 'action.hover'
                                 }
                             }}
-                            disableRipple
+                            aria-label="Open typography controls"
                         >
-                            {autoScrollSpeed} px/s
+                            <Palette fontSize="small" />
+                            Text
                         </Button>
-                        <IconButton
-                            onClick={() => handleAutoScrollSpeedAdjust(1)}
-                            disabled={autoScrollSpeed >= 200}
-                            size="medium"
-                            sx={{
-                                width: 44,
-                                height: 44,
-                                '&:disabled': { opacity: 0.3 }
-                            }}
-                            aria-label="Increase auto scroll speed"
-                        >
-                            <Add />
-                        </IconButton>
-                    </>
-                ) : (
-                    <Button
-                        onClick={handleTypographyButtonClick}
+                    )}
+
+                    {/* Auto Scroll Toggle */}
+                    <IconButton
+                        onClick={onToggleAutoScroll}
+                        size="medium"
                         sx={{
-                            minWidth: 110,
-                            height: 44,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1,
-                            fontWeight: 600,
-                            textTransform: 'none',
-                            color: 'text.primary',
-                            '&:hover': {
-                                backgroundColor: 'action.hover'
+                            width: 44,
+                            height: 44
+                        }}
+                        aria-label={isAutoScrolling ? 'Pause auto scroll' : 'Start auto scroll'}
+                    >
+                        {isAutoScrolling ? <Pause /> : <PlayArrow />}
+                    </IconButton>
+
+                    {/* Divider */}
+                    <Box
+                        sx={{
+                            width: '1px',
+                            height: 32,
+                            backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                            mx: 1,
+                            '@media (prefers-color-scheme: dark)': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.12)'
                             }
                         }}
-                        aria-label="Open typography controls"
+                    />
+
+                    {/* Toggle Fullscreen */}
+                    <IconButton
+                        onClick={onToggleFullscreen}
+                        size="medium"
+                        sx={{
+                            width: 44,
+                            height: 44
+                        }}
+                        aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
                     >
-                        <Palette fontSize="small" />
-                        Text
-                    </Button>
-                )}
-
-                {/* Auto Scroll Toggle */}
-                <IconButton
-                    onClick={onToggleAutoScroll}
-                    size="medium"
-                    sx={{
-                        width: 44,
-                        height: 44
-                    }}
-                    aria-label={isAutoScrolling ? 'Pause auto scroll' : 'Start auto scroll'}
-                >
-                    {isAutoScrolling ? <Pause /> : <PlayArrow />}
-                </IconButton>
-
-                {/* Divider */}
-                <Box
-                    sx={{
-                        width: '1px',
-                        height: 32,
-                        backgroundColor: 'rgba(0, 0, 0, 0.12)',
-                        mx: 1,
-                        '@media (prefers-color-scheme: dark)': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.12)'
-                        }
-                    }}
-                />
-
-                {/* Toggle Fullscreen */}
-                <IconButton
-                    onClick={onToggleFullscreen}
-                    size="medium"
-                    sx={{
-                        width: 44,
-                        height: 44
-                    }}
-                    aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-                >
-                    {isFullscreen ? <FullscreenExit /> : <Fullscreen />}
-                </IconButton>
+                        {isFullscreen ? <FullscreenExit /> : <Fullscreen />}
+                    </IconButton>
                 </Box>
             </Paper>
 

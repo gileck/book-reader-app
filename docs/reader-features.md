@@ -106,6 +106,12 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Sentence-Level Navigation**: Navigate by individual sentences
 - ✅ **Scroll to Current**: Button to scroll to currently playing sentence (full mode)
 - ✅ **Word Click**: Click any word to start playback from that position
+- ✅ **Full Mode Click Navigation**: Click-to-navigate sentences in full reading mode (both fullscreen and normal)
+  - Click on any sentence ahead of current to advance
+  - Click on any sentence before current to go back
+  - Click empty space below current sentence to advance
+  - Click empty space above current sentence to go back
+  - Works alongside keyboard and button controls
 
 ### 7. Bookmarks
 
@@ -312,6 +318,8 @@ This document provides a comprehensive list of all features supported in the Boo
 - [ ] Focus mode: Click current area to advance
 - [ ] Focus mode: Click previous sentence to go back
 - [ ] Focus mode: Arrow Right/Left keyboard navigation
+- [ ] Full mode: Click on sentences to navigate forward/backward
+- [ ] Full mode: Click empty space above/below current sentence to navigate
 - [ ] Scroll to current button works in full mode
 - [ ] Word click starts playback from that word
 - [ ] Bookmarks navigate correctly
@@ -386,11 +394,22 @@ This document provides a comprehensive list of all features supported in the Boo
 
 ---
 
-**Last Updated**: November 13, 2025  
+**Last Updated**: November 20, 2025  
 **Implementation Status**: ✅ 39/40 features complete (97.5%)  
 **Next Steps**: Verify remaining 1 feature, then proceed with Phase 6 optimizations
 
 ## Recent Updates
+
+### November 20, 2025
+- ✅ **Full Mode Click Navigation**: Implemented click-to-navigate feature for full reading mode
+  - Click on any sentence ahead of current to advance to next sentence
+  - Click on any sentence before current to go back to previous sentence
+  - Click empty space below current sentence to advance
+  - Click empty space above current sentence to go back
+  - Works in both fullscreen and normal full reading mode
+  - Intelligently ignores clicks on buttons, links, and interactive elements
+  - Uses two-strategy approach: direct chunk click detection + spatial position detection
+  - Implementation in `ReaderUI.tsx` with handleContainerClick callback
 
 ### November 13, 2025
 - ✅ **Theme & Appearance Settings Redesign**: Complete UI overhaul of the settings modal
