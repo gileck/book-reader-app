@@ -29,6 +29,7 @@ import { BookOverviewPanel } from './components/BookOverviewPanel';
 import { extractChapterTextContent } from './utils/chapterUtils';
 import { FullscreenTextControls } from './components/FullscreenTextControls';
 import { QuestionInputDialog } from './components/QuestionInputDialog';
+import { SearchPanel } from './components/SearchPanel';
 
 interface ReaderUIProps {
     initialBook: BookClient;
@@ -75,11 +76,11 @@ export const ReaderUI = ({
 
     // Initialize activeTab with user's reading mode from database (already loaded)
     // Priority: URL param > user settings (database) > app settings (localStorage) > default ('focus')
-    const initialMode = (queryParams.mode as 'focus' | 'full' | 'qa' | 'overview' | undefined)
+    const initialMode = (queryParams.mode as 'focus' | 'full' | 'qa' | 'overview' | 'search' | undefined)
         || userSettings?.readingMode
         || appSettings.readingMode
         || 'focus';
-    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview'>(initialMode);
+    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview' | 'search'>(initialMode);
 
     // Fullscreen state
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -123,6 +124,10 @@ export const ReaderUI = ({
     const [questionDialogOpen, setQuestionDialogOpen] = useState(false);
     const [questionDialogChunkIndex, setQuestionDialogChunkIndex] = useState<number | null>(null);
 
+    // Search state - persisted across tab switches
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchScope, setSearchScope] = useState<'current' | 'all'>('current');
+
     // Create a ref to store the contextLines accessor
     const getContextLines = useRef<() => number>(() => 3);
 
@@ -164,10 +169,10 @@ export const ReaderUI = ({
 
     // Sync reading mode from URL param on load/change
     useEffect(() => {
-        const urlMode = (queryParams.mode as 'full' | 'focus' | 'qa' | 'overview' | undefined) || undefined;
+        const urlMode = (queryParams.mode as 'full' | 'focus' | 'qa' | 'overview' | 'search' | undefined) || undefined;
         if (urlMode) {
             setActiveTab(urlMode);
-            if (urlMode !== 'qa' && urlMode !== 'overview' && urlMode !== appSettings.readingMode) {
+            if (urlMode !== 'qa' && urlMode !== 'overview' && urlMode !== 'search' && urlMode !== appSettings.readingMode) {
                 updateSettings({ readingMode: urlMode });
             }
         } else {
@@ -242,13 +247,13 @@ export const ReaderUI = ({
         });
     }, [loading, chapter, audio.currentChunkIndex, activeTab, handleScrollToCurrentChunk]);
 
-    const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview') => {
+    const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview' | 'search') => {
         setActiveTab(newTab);
         // Exit fullscreen when switching tabs
         setIsFullscreen(false);
 
         // Update reading mode setting for focus/full tabs
-        if (newTab !== 'qa' && newTab !== 'overview') {
+        if (newTab !== 'qa' && newTab !== 'overview' && newTab !== 'search') {
             // Save to user settings (database) for persistence across devices
             if (newTab !== userSettings?.readingMode) {
                 void updateUserSettings({ readingMode: newTab });
@@ -587,6 +592,7 @@ export const ReaderUI = ({
                         >
                             <Tab label="Full" value="full" />
                             <Tab label="Focus" value="focus" />
+                            <Tab label="Search" value="search" />
                             <Tab label="QA Chat" value="qa" />
                             <Tab label="Overview" value="overview" />
                         </Tabs>
@@ -678,6 +684,47 @@ export const ReaderUI = ({
                             />
                         )}
                     </Box>
+                ) : activeTab === 'search' ? (
+                    // Search Tab
+                    <SearchPanel
+                        bookId={book?._id || ''}
+                        currentChapter={chapter}
+                        query={searchQuery}
+                        searchScope={searchScope}
+                        onQueryChange={setSearchQuery}
+                        onSearchScopeChange={setSearchScope}
+                        onNavigateToChunk={(chapterNumber, chunkIndex) => {
+                            // Navigate to the chapter if different from current
+                            if (chapterNumber !== chapter.chapterNumber) {
+                                navigation.setCurrentChapterNumber(chapterNumber);
+                            }
+                            // Set the chunk index and switch to full mode
+                            navigation.setCurrentChunkIndex(chunkIndex);
+                            setActiveTab('full');
+                        }}
+                        onBookmark={(chapterNumber, chunkIndex) => {
+                            // We need to ensure we're bookmarking the correct chapter
+                            // Since bookmarks hook uses current chapter state, we might need to handle cross-chapter bookmarks differently
+                            // For now, if it's the current chapter, we use the hook
+                            if (chapterNumber === chapter.chapterNumber) {
+                                // Set the chunk index first, then bookmark
+                                navigation.setCurrentChunkIndex(chunkIndex);
+                                setTimeout(() => {
+                                    bookmarks.handleBookmark();
+                                }, 100);
+                            } else {
+                                // TODO: Support bookmarking other chapters directly
+                                // For now, navigate then bookmark (user will see transition)
+                                navigation.setCurrentChapterNumber(chapterNumber);
+                                setTimeout(() => {
+                                    navigation.setCurrentChunkIndex(chunkIndex);
+                                    setTimeout(() => {
+                                        bookmarks.handleBookmark();
+                                    }, 100);
+                                }, 500);
+                            }
+                        }}
+                    />
                 ) : activeTab === 'overview' ? (
                     // Overview Tab
                     <BookOverviewPanel
@@ -810,7 +857,7 @@ export const ReaderUI = ({
                         chapterTransitionLoading={chapterTransitionLoading}
                         unitLabelOverride="sentences"
                         estimatedTimeRemaining={estimatedTimeRemaining}
-                        hideChapterInfo={activeTab === 'qa' || activeTab === 'overview'}
+                        hideChapterInfo={activeTab === 'qa' || activeTab === 'overview' || activeTab === 'search'}
                         onJumpToCurrentChunk={handleScrollToCurrentChunk}
                         showJumpToCurrentChunk={activeTab === 'full'}
                         onToggleFullscreen={handleToggleFullscreen}

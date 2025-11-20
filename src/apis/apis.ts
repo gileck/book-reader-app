@@ -28,6 +28,7 @@ import {
 import { fileStorageApiHandlers } from './fileStorage/server';
 import { translationApiHandlers } from './translation/server';
 import { translationUsageApiHandlers } from './translationUsage/server';
+import { searchApiHandlers } from './search/server';
 
 // Convert API handlers to typed format
 const typedBooksApiHandlers = Object.entries(booksApiHandlers).reduce(
@@ -130,6 +131,16 @@ const typedTranslationUsageApiHandlers = Object.entries(translationUsageApiHandl
   {} as ApiHandlers
 );
 
+const typedSearchApiHandlers = Object.entries(searchApiHandlers).reduce(
+  (acc, [key, handler]) => {
+    acc[key] = {
+      process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
+    };
+    return acc;
+  },
+  {} as ApiHandlers
+);
+
 export const apiHandlers: ApiHandlers = {
   [chat.name]: { process: chat.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
   [clearCache.name]: { process: clearCache.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown> },
@@ -160,6 +171,7 @@ export const apiHandlers: ApiHandlers = {
   ...typedChapterOverviewApiHandlers,
   ...typedTranslationApiHandlers,
   ...typedTranslationUsageApiHandlers,
+  ...typedSearchApiHandlers,
   ...Object.entries(promptPresetsApiHandlers).reduce((acc, [key, handler]) => {
     acc[key] = {
       process: handler.process as (params: unknown, context: ApiHandlerContext) => Promise<unknown>,
