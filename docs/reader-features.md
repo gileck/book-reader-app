@@ -106,12 +106,13 @@ This document provides a comprehensive list of all features supported in the Boo
 - ✅ **Sentence-Level Navigation**: Navigate by individual sentences
 - ✅ **Scroll to Current**: Button to scroll to currently playing sentence (full mode)
 - ✅ **Word Click**: Click any word to start playback from that position
-- ✅ **Full Mode Click Navigation**: Click-to-navigate sentences in full reading mode (both fullscreen and normal)
-  - Click on any sentence ahead of current to advance
-  - Click on any sentence before current to go back
-  - Click empty space below current sentence to advance
-  - Click empty space above current sentence to go back
-  - Works alongside keyboard and button controls
+- ✅ **Click-to-Navigate**: Single click on sentences to navigate in all reading modes
+  - Single click on any sentence ahead of current to advance
+  - Single click on any sentence before current to go back
+  - Works in both fullscreen and normal modes
+  - Component-based implementation (cleaner than DOM querying)
+  - Intelligently ignores clicks on links, buttons, and translated text
+  - Double click opens translation menu (existing functionality preserved)
 
 ### 7. Bookmarks
 
@@ -318,8 +319,10 @@ This document provides a comprehensive list of all features supported in the Boo
 - [ ] Focus mode: Click current area to advance
 - [ ] Focus mode: Click previous sentence to go back
 - [ ] Focus mode: Arrow Right/Left keyboard navigation
-- [ ] Full mode: Click on sentences to navigate forward/backward
-- [ ] Full mode: Click empty space above/below current sentence to navigate
+- [ ] Single click on sentences navigates forward/backward (all modes)
+- [ ] Single click only works when no translation is active
+- [ ] Double click opens translation menu (not single click)
+- [ ] Clicks on links/buttons don't trigger navigation
 - [ ] Scroll to current button works in full mode
 - [ ] Word click starts playback from that word
 - [ ] Bookmarks navigate correctly
@@ -401,15 +404,15 @@ This document provides a comprehensive list of all features supported in the Boo
 ## Recent Updates
 
 ### November 20, 2025
-- ✅ **Full Mode Click Navigation**: Implemented click-to-navigate feature for full reading mode
-  - Click on any sentence ahead of current to advance to next sentence
-  - Click on any sentence before current to go back to previous sentence
-  - Click empty space below current sentence to advance
-  - Click empty space above current sentence to go back
-  - Works in both fullscreen and normal full reading mode
-  - Intelligently ignores clicks on buttons, links, and interactive elements
-  - Uses two-strategy approach: direct chunk click detection + spatial position detection
-  - Implementation in `ReaderUI.tsx` with handleContainerClick callback
+- ✅ **Click-to-Navigate (Refactored)**: Implemented clean click navigation for all reading modes
+  - Single click on sentences navigates forward/backward (works in all modes)
+  - Double click opens translation menu (existing functionality preserved)
+  - Component-based implementation: ReaderUI → ReaderContent → ChunkRenderer → TextChunk
+  - Proper single/double click differentiation using timeout pattern (200ms delay)
+  - Intelligently ignores clicks on buttons, links, and translated text
+  - Mobile-friendly: double-tap for translation, single tap for navigation
+  - Much cleaner than previous DOM querying approach
+  - Implementation spans `ReaderUI.tsx`, `ReaderContent.tsx`, `ChunkRenderer.tsx`, and `TextChunk.tsx`
 
 ### November 13, 2025
 - ✅ **Theme & Appearance Settings Redesign**: Complete UI overhaul of the settings modal

@@ -10,6 +10,7 @@ interface TextChunkProps {
     chunkIndex: number;
     currentChunkIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
+    onChunkClick?: (chunkIndex: number) => void;
     onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
@@ -40,6 +41,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     chunkIndex,
     currentChunkIndex,
     handleLinkClick,
+    onChunkClick,
     onChunkDoubleClick,
     bionicReadingEnabled = false,
     chunkSpacing = 0.5,
@@ -55,11 +57,48 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     const hasTranslation = !!translatedText;
     const isRTL = isRTLLanguage(translatedLanguage);
     
+    // Single/Double click differentiation
+    const clickTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+    const CLICK_DELAY = 200; // milliseconds to wait before treating as single click
+    
     // Mobile double-tap detection
     const lastTapRef = React.useRef<number>(0);
     const DOUBLE_TAP_DELAY = 300; // milliseconds
 
+    /**
+     * Handle single click - navigate to next/prev sentence
+     * Only works when there's no translation (to avoid interfering with translation UI)
+     */
+    const handleClick = (event: React.MouseEvent) => {
+        // Don't handle single clicks if there's a translation or if clicking on controls
+        if (hasTranslation) return;
+        
+        // Check if clicking on interactive elements (links, buttons)
+        const target = event.target as HTMLElement;
+        if (target.closest('a') || target.closest('button') || target.closest('[role="button"]')) {
+            return;
+        }
+
+        // Set timeout to execute single click after delay
+        // This will be cleared if double click happens before timeout
+        clickTimeoutRef.current = setTimeout(() => {
+            if (onChunkClick) {
+                onChunkClick(chunkIndex);
+            }
+        }, CLICK_DELAY);
+    };
+
+    /**
+     * Handle double click - open translation menu
+     */
     const handleDoubleClick = (event: React.MouseEvent) => {
+        // Clear single click timeout
+        if (clickTimeoutRef.current) {
+            clearTimeout(clickTimeoutRef.current);
+            clickTimeoutRef.current = null;
+        }
+
+        // Execute double click action (translation menu)
         if (onChunkDoubleClick) {
             onChunkDoubleClick(chunkIndex, event);
         }
@@ -71,8 +110,15 @@ export const TextChunk: React.FC<TextChunkProps> = ({
         const timeSinceLastTap = now - lastTapRef.current;
 
         if (timeSinceLastTap < DOUBLE_TAP_DELAY && timeSinceLastTap > 0) {
-            // Double tap detected
+            // Double tap detected - open translation
             event.preventDefault();
+            
+            // Clear single click timeout
+            if (clickTimeoutRef.current) {
+                clearTimeout(clickTimeoutRef.current);
+                clickTimeoutRef.current = null;
+            }
+            
             if (onChunkDoubleClick) {
                 // Create a synthetic mouse event for compatibility
                 const touch = event.changedTouches[0];
@@ -86,9 +132,28 @@ export const TextChunk: React.FC<TextChunkProps> = ({
             }
             lastTapRef.current = 0; // Reset
         } else {
+            // Single tap - handle navigation if no translation
+            if (!hasTranslation && onChunkClick) {
+                setTimeout(() => {
+                    // Only execute if no double tap follows
+                    const timeSinceThisTap = Date.now() - now;
+                    if (timeSinceThisTap >= DOUBLE_TAP_DELAY) {
+                        onChunkClick(chunkIndex);
+                    }
+                }, DOUBLE_TAP_DELAY);
+            }
             lastTapRef.current = now;
         }
     };
+
+    // Cleanup timeout on unmount
+    React.useEffect(() => {
+        return () => {
+            if (clickTimeoutRef.current) {
+                clearTimeout(clickTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const handleToggle = (event: React.MouseEvent) => {
         event.stopPropagation();
@@ -122,11 +187,12 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                 borderRadius: '6px',
                 borderLeft: hasTranslation ? '3px solid #2196f3' : 'none',
                 transition: 'all 0.3s ease',
-                cursor: onChunkDoubleClick ? 'pointer' : 'default',
+                cursor: (onChunkClick || onChunkDoubleClick) ? 'pointer' : 'default',
             }}
             id={`text-chunk-${chunkIndex}`}
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}
+            onClick={handleClick}
             onDoubleClick={handleDoubleClick}
             onTouchEnd={handleTouchEnd}
         >

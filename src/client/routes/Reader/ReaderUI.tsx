@@ -474,68 +474,19 @@ export const ReaderUI = ({
     // Chapter navigation errors are shown as Snackbars (see navigationError below)
 
     /**
-     * Handle click on container to advance to next/prev sentence
+     * Handle single click on a text chunk to navigate forward/backward
      * 
-     * This enables click-to-navigate functionality in full reading mode (both fullscreen and normal).
-     * Users can click on sentences ahead/before the current one, or click empty space above/below
-     * to navigate. This provides an intuitive touch/mouse interface alongside keyboard and button controls.
-     * 
-     * Strategy 1: Direct sentence click - checks if user clicked on a text chunk element
-     * Strategy 2: Empty space click - checks if click is physically above/below current sentence
-     * 
-     * Note: Ignores clicks on buttons, links, and other interactive elements to prevent conflicts.
+     * This provides intuitive click-to-navigate functionality in all reading modes.
+     * Single click navigates to the clicked sentence (or next/prev if clicking current).
+     * Double click opens translation menu (handled separately in TextChunk).
      */
-    const handleContainerClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-        // Ignore if clicking on controls or interactive elements
-        const target = event.target as HTMLElement;
-        if (target.closest('button') || target.closest('a') || target.closest('[role="button"]')) {
-            return;
+    const handleChunkClick = useCallback((clickedIndex: number) => {
+        if (clickedIndex > currentSentenceIndex && canGoNextSentence) {
+            handleFullscreenNextSentence();
+        } else if (clickedIndex < currentSentenceIndex && canGoPrevSentence) {
+            handleFullscreenPrevSentence();
         }
-
-        // Strategy 1: Check if user clicked directly on a text chunk
-        const clickedChunkElement = target.closest('[data-chunk-index]');
-        if (clickedChunkElement) {
-            const clickedIndex = parseInt(clickedChunkElement.getAttribute('data-chunk-index') || '-1', 10);
-
-            // Clicked on next sentence(s)
-            if (clickedIndex > currentSentenceIndex) {
-                if (canGoNextSentence) {
-                    handleFullscreenNextSentence();
-                }
-                return;
-            }
-
-            // Clicked on previous sentence(s)
-            if (clickedIndex < currentSentenceIndex) {
-                if (canGoPrevSentence) {
-                    handleFullscreenPrevSentence();
-                }
-                return;
-            }
-        }
-
-        // Strategy 2: Check if click is physically below/above the current sentence (for empty space clicks)
-        // We use querySelector to find the element by data attribute, which works for both TextChunk and HeaderChunk
-        const currentElement = document.querySelector(`[data-chunk-index="${currentSentenceIndex}"]`);
-
-        if (currentElement) {
-            const rect = currentElement.getBoundingClientRect();
-
-            // Check if click is below the current sentence
-            // We add a small buffer (10px) to avoid accidental clicks when trying to click the sentence itself
-            if (event.clientY > rect.bottom + 10) {
-                if (canGoNextSentence) {
-                    handleFullscreenNextSentence();
-                }
-            }
-            // Check if click is above the current sentence
-            else if (event.clientY < rect.top - 10) {
-                if (canGoPrevSentence) {
-                    handleFullscreenPrevSentence();
-                }
-            }
-        }
-    }, [isFullscreen, activeTab, currentSentenceIndex, canGoNextSentence, canGoPrevSentence, handleFullscreenNextSentence, handleFullscreenPrevSentence]);
+    }, [currentSentenceIndex, canGoNextSentence, canGoPrevSentence, handleFullscreenNextSentence, handleFullscreenPrevSentence]);
 
     return (
         <UserThemeProvider
@@ -712,7 +663,6 @@ export const ReaderUI = ({
                 ) : (
                     <Paper
                         ref={scrollContainerRef}
-                        onClick={handleContainerClick}
                         elevation={0}
                         sx={{
                             maxWidth: isFullscreen ? '100%' : 800,
@@ -721,8 +671,7 @@ export const ReaderUI = ({
                             pb: isFullscreen ? { xs: 12, sm: 14 } : { xs: 20, sm: 16 },
                             borderRadius: 0,
                             height: isFullscreen ? '100vh' : 'calc(100vh - 200px)',
-                            overflow: 'auto',
-                            cursor: (isFullscreen && activeTab === 'full') ? 'text' : 'default'
+                            overflow: 'auto'
                         }}
                     >
                         {/* ReaderHeader - Hidden in fullscreen mode */}
@@ -735,6 +684,7 @@ export const ReaderUI = ({
                             onNavigateToChapter={navigation.setCurrentChapterNumber}
                             onNavigateToChunk={navigation.setCurrentChunkIndex}
                             onNavigateToBookmark={navigation.handleNavigateToBookmark}
+                            onChunkClick={handleChunkClick}
                             currentChunkIndex={audio.currentChunkIndex}
                             fontSize={settings.fontSize}
                             lineHeight={settings.lineHeight}

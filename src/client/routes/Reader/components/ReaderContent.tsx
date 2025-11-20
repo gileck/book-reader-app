@@ -17,6 +17,7 @@ interface ReaderContentProps {
     onNavigateToChapter: (chapterNumber: number) => void;
     onNavigateToChunk: (chunkIndex: number) => void;
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
+    onChunkClick?: (chunkIndex: number) => void;
     currentChunkIndex: number;
     // Optional sentence-level data (Phase 4)
     sentences?: SentenceChunk[];
@@ -41,6 +42,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     onNavigateToChapter,
     onNavigateToChunk,
     onNavigateToBookmark,
+    onChunkClick,
     currentChunkIndex,
     fontSize,
     lineHeight,
@@ -291,6 +293,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 book={book}
                 handleLinkClick={handleLinkNavigation}
                 currentChunkIndex={currentChunkIndex}
+                onChunkClick={onChunkClick}
                 onChunkDoubleClick={handleChunkDoubleClick}
                 bionicReadingEnabled={bionicReadingEnabled}
                 chunkSpacing={chunkSpacing}

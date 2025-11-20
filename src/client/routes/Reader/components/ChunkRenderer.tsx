@@ -12,6 +12,7 @@ interface ChunkRendererProps {
     book: BookClient;
     handleLinkClick: (link: ChunkLink) => void;
     currentChunkIndex: number;
+    onChunkClick?: (chunkIndex: number) => void;
     onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
     bionicReadingEnabled?: boolean;
     chunkSpacing?: number;
@@ -30,6 +31,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     book,
     handleLinkClick,
     currentChunkIndex,
+    onChunkClick,
     onChunkDoubleClick,
     bionicReadingEnabled = false,
     chunkSpacing = 0.5,
@@ -71,6 +73,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         chunkIndex={chunk.index}
                         currentChunkIndex={currentChunkIndex}
                         handleLinkClick={handleLinkClick}
+                        onChunkClick={onChunkClick}
                         onChunkDoubleClick={onChunkDoubleClick}
                         bionicReadingEnabled={bionicReadingEnabled}
                         chunkSpacing={chunkSpacing}
