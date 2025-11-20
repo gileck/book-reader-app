@@ -460,6 +460,18 @@ export const ReaderUI = ({
         }
     }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
 
+    // Handler for "Go to Sentence" feature
+    const handleNavigateToChunk = useCallback((targetIndex: number) => {
+        // Set flag to trigger auto-scroll after state update
+        if (activeTab === 'full') {
+            centerSentenceAfterNavRef.current = true;
+        }
+        // Update controller state
+        sentenceAudio.controller.goToSentence(targetIndex);
+        // Update parent state (this triggers highlighting, progress, and scroll)
+        navigation.setCurrentChunkIndex(targetIndex);
+    }, [sentenceAudio.controller, navigation, activeTab]);
+
     // Calculate estimated time remaining to read the chapter
     const estimatedTimeRemaining = useMemo(() => {
         return getFormattedTimeRemaining(
@@ -750,7 +762,7 @@ export const ReaderUI = ({
                         currentChunkIndex={audio.currentChunkIndex}
                         totalChapters={book.totalChapters}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
-                        onNavigateToChunk={sentenceAudio.controller.goToSentence}
+                        onNavigateToChunk={handleNavigateToChunk}
                         progressData={progress}
                         onChapters={chapterDialog.openDialog}
                         minChapterNumber={book?.chapterStartNumber ?? 1}
