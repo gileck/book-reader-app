@@ -51,6 +51,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         chunk={chunk}
                         chunkIndex={chunk.index}
                         currentChunkIndex={currentChunkIndex}
+                        onChunkClick={onChunkClick}
                     />
                 );
 

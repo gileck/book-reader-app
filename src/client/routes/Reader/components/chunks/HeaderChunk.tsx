@@ -8,15 +8,92 @@ interface HeaderChunkProps {
     chunkIndex: number;
     currentChunkIndex: number;
     level?: number; // Determined by content analysis
+    onChunkClick?: (chunkIndex: number) => void;
 }
 
 export const HeaderChunk: React.FC<HeaderChunkProps> = ({
     chunk,
     chunkIndex,
     currentChunkIndex,
-    level = 2
+    level = 2,
+    onChunkClick
 }) => {
     const { settings } = useSettings();
+    
+    // Single/Double click differentiation (same pattern as TextChunk)
+    const clickTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+    const CLICK_DELAY = 200; // milliseconds to wait before treating as single click
+    
+    // Mobile double-tap detection
+    const lastTapRef = React.useRef<number>(0);
+    const DOUBLE_TAP_DELAY = 300; // milliseconds
+
+    /**
+     * Handle single click - navigate to next/prev sentence
+     */
+    const handleClick = () => {
+        // Clear any existing timeout (important for double-click to work properly)
+        if (clickTimeoutRef.current) {
+            clearTimeout(clickTimeoutRef.current);
+        }
+
+        // Set timeout to execute single click after delay
+        clickTimeoutRef.current = setTimeout(() => {
+            if (onChunkClick) {
+                onChunkClick(chunkIndex);
+            }
+        }, CLICK_DELAY);
+    };
+
+    /**
+     * Handle double click - for headers, just cancel single click (no special action)
+     */
+    const handleDoubleClick = () => {
+        // Clear single click timeout to prevent navigation on double-click
+        if (clickTimeoutRef.current) {
+            clearTimeout(clickTimeoutRef.current);
+            clickTimeoutRef.current = null;
+        }
+    };
+
+    // Handle touch events for mobile
+    const handleTouchEnd = (event: React.TouchEvent) => {
+        const now = Date.now();
+        const timeSinceLastTap = now - lastTapRef.current;
+
+        if (timeSinceLastTap < DOUBLE_TAP_DELAY && timeSinceLastTap > 0) {
+            // Double tap detected - just cancel navigation
+            event.preventDefault();
+            
+            if (clickTimeoutRef.current) {
+                clearTimeout(clickTimeoutRef.current);
+                clickTimeoutRef.current = null;
+            }
+            
+            lastTapRef.current = 0; // Reset
+        } else {
+            // Single tap - handle navigation
+            if (onChunkClick) {
+                if (clickTimeoutRef.current) {
+                    clearTimeout(clickTimeoutRef.current);
+                }
+                
+                clickTimeoutRef.current = setTimeout(() => {
+                    onChunkClick(chunkIndex);
+                }, DOUBLE_TAP_DELAY);
+            }
+            lastTapRef.current = now;
+        }
+    };
+
+    // Cleanup timeout on unmount
+    React.useEffect(() => {
+        return () => {
+            if (clickTimeoutRef.current) {
+                clearTimeout(clickTimeoutRef.current);
+            }
+        };
+    }, []);
 
     // Determine header level based on content length and formatting
     const determineHeaderLevel = (text: string, suggestedLevel: number): number => {
@@ -75,11 +152,15 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                         ? 'var(--sentence-highlight-color, transparent)'
                         : 'transparent',
                 borderRadius: '6px',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                cursor: onChunkClick ? 'pointer' : 'default'
             }}
             id={`header-chunk-${chunkIndex}`}
             data-chunk-index={chunkIndex}
             data-paragraph-index={chunk.paragraphIndex}
+            onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
+            onTouchEnd={handleTouchEnd}
         >
             <Typography
                 variant={variant}
