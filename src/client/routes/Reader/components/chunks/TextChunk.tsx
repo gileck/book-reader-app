@@ -79,6 +79,11 @@ export const TextChunk: React.FC<TextChunkProps> = ({
             return;
         }
 
+        // Clear any existing timeout (important for double-click to work properly)
+        if (clickTimeoutRef.current) {
+            clearTimeout(clickTimeoutRef.current);
+        }
+
         // Set timeout to execute single click after delay
         // This will be cleared if double click happens before timeout
         clickTimeoutRef.current = setTimeout(() => {
