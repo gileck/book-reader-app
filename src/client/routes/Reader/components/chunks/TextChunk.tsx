@@ -64,6 +64,10 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     // Mobile double-tap detection
     const lastTapRef = React.useRef<number>(0);
     const DOUBLE_TAP_DELAY = 300; // milliseconds
+    
+    // Touch movement tracking to distinguish tap from scroll
+    const touchStartRef = React.useRef<{ x: number; y: number } | null>(null);
+    const SCROLL_THRESHOLD = 10; // pixels - if finger moves more than this, it's a scroll
 
     /**
      * Handle single click - navigate to next/prev sentence
@@ -109,8 +113,42 @@ export const TextChunk: React.FC<TextChunkProps> = ({
         }
     };
 
-    // Handle touch events for mobile double-tap
+    /**
+     * Track touch start position to detect scroll vs tap
+     * Stores the initial touch coordinates to compare against touch end position.
+     * This prevents scroll gestures from triggering navigation clicks on mobile.
+     */
+    const handleTouchStart = (event: React.TouchEvent) => {
+        const touch = event.touches[0];
+        if (touch) {
+            touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+        }
+    };
+
+    /**
+     * Handle touch end events for mobile navigation and double-tap
+     * 
+     * This function:
+     * 1. Detects scroll gestures by comparing touch start/end positions (>10px movement = scroll)
+     * 2. Distinguishes between single tap (navigate) and double tap (translation menu)
+     * 3. Only triggers navigation when touch movement is minimal (actual tap, not scroll)
+     */
     const handleTouchEnd = (event: React.TouchEvent) => {
+        // Check if this was a scroll gesture (finger moved significantly)
+        const touch = event.changedTouches[0];
+        if (touch && touchStartRef.current) {
+            const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
+            const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+            
+            // If finger moved more than threshold, it's a scroll - don't trigger click
+            if (deltaX > SCROLL_THRESHOLD || deltaY > SCROLL_THRESHOLD) {
+                touchStartRef.current = null;
+                return;
+            }
+        }
+        
+        touchStartRef.current = null; // Reset for next touch
+        
         const now = Date.now();
         const timeSinceLastTap = now - lastTapRef.current;
 
@@ -202,6 +240,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
             data-paragraph-index={chunk.paragraphIndex}
             onClick={handleClick}
             onDoubleClick={handleDoubleClick}
+            onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
             {hasTranslation ? (

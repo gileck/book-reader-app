@@ -404,6 +404,13 @@ This document provides a comprehensive list of all features supported in the Boo
 ## Recent Updates
 
 ### November 20, 2025
+- ✅ **Mobile Scroll Detection Fix**: Fixed issue where scrolling triggered navigation on iPhone
+  - Added touch movement tracking to distinguish between taps and scroll gestures
+  - Scroll threshold set to 10px - movements beyond this are treated as scrolls, not taps
+  - Prevents accidental navigation during vertical/horizontal scrolling
+  - Preserves single-tap navigation and double-tap translation menu functionality
+  - Implementation in `TextChunk.tsx` using `onTouchStart` and enhanced `onTouchEnd` handlers
+
 - ✅ **Click-to-Navigate (Refactored)**: Implemented clean click navigation for all reading modes
   - Single click on sentences navigates forward/backward (works in all modes)
   - Double click opens translation menu (existing functionality preserved)
