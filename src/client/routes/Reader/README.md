@@ -1099,29 +1099,35 @@ sequenceDiagram
     end
 ```
 
-### State Update Flow
+### State Update Flow (v4.0 - Truly Controlled)
 
 ```mermaid
 graph LR
-    A[Audio Event] --> B[useSentenceAudioController]
-    B --> C[Update State]
-    C --> D{Index Changed?}
-    D -->|Yes| E[useReader receives update]
-    D -->|No| F[Skip update]
-    E --> G[audioPlayback object updated]
-    G --> H[Reader.tsx re-renders]
-    H --> I[TextChunk receives new currentChunkIndex]
-    I --> J[Sentence highlight updates]
+    A[User Navigation/<br/>Audio Event] --> B[Call onSentenceIndexChange]
+    B --> C[Parent: setCurrentChunkIndex]
+    C --> D[Parent state updates]
+    D --> E[React re-renders]
+    E --> F[Controller receives new prop]
+    F --> G[sentenceAudio.currentSentenceIndex<br/>reflects new value]
+    G --> H[TextChunk receives new currentChunkIndex]
+    H --> I[Sentence highlight updates]
     
-    B --> K{Word Index Changed?}
-    K -->|Yes| L[WordHighlightingAPI.highlightWord]
-    K -->|No| M[No action]
-    L --> N[DOM updated directly]
+    F --> J{Word Index Changed?}
+    J -->|Yes| K[WordHighlightingAPI.highlightWord]
+    J -->|No| L[No action]
+    K --> M[DOM updated directly]
     
-    style B fill:#90EE90
-    style L fill:#FFD700
-    style J fill:#87CEEB
+    style C fill:#90EE90
+    style F fill:#87CEEB
+    style K fill:#FFD700
+    
+    Note1[Single source of truth:<br/>Parent state.currentChunkIndex]
+    Note2[No internal state in controller]
 ```
+
+**Key Difference from v3.x:**
+- **v3.x (Pseudo-Controlled)**: Had internal state + sync effect
+- **v4.0 (Truly Controlled)**: No internal state, uses prop directly
 
 ## Key Features
 
@@ -1160,49 +1166,56 @@ graph LR
 - Tracks reading time and sessions
 - Syncs with server (debounced)
 - **Restores position on reload** - Always starts at saved position
-- **Controlled component architecture** - State drives controller, controller tracks progress
+- **Truly controlled component architecture** - Parent state is single source of truth, controller uses callback pattern
 
-**Implementation (v3.1 - Controlled Component):**
+**Implementation (v4.0 - Truly Controlled Component):**
 ```typescript
-// Audio controller is a "controlled component" driven by state
+// Audio controller is a TRULY controlled component (like <input value={x} onChange={...}>)
+// No internal state for currentSentenceIndex - uses parent state directly via prop
 const sentenceAudio = useSentenceAudioController(
     state.chapter,
     userSettings.selectedVoice,
     userSettings.selectedProvider as TtsProvider,
     userSettings.playbackSpeed,
     userSettings.ttsEnabled,
-    state.currentChunkIndex ?? 0,  // ← Controlled by state
+    state.currentChunkIndex ?? 0,  // ← Single source of truth (prop)
+    setCurrentChunkIndex,          // ← Callback to update parent state
     0,
     userSettings.highlightMode,
     userSettings.wordSpeedOffset
 );
 
-// Reading progress tracks controller's real-time position
+// Reading progress tracks controller's position (which reflects parent state)
 const readingProgress = useReadingProgress({
     userId: user?.id || '',
     bookId,
     currentChapterNumber: state.currentChapterNumber,
-    currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Real-time position
+    currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Same as state.currentChunkIndex
     isPlaying: audioPlayback.isPlaying,
     isInitialLoadComplete: true
 });
 
-// User navigation updates state first, controller follows
+// User navigation: Just update parent state, controller follows automatically
 const audioPlayback = {
     handleNextChunk: () => {
         const newIndex = Math.min(sentenceAudio.sentences.length - 1, (state.currentChunkIndex ?? 0) + 1);
-        setCurrentChunkIndex(newIndex); // Update state, controller follows
+        setCurrentChunkIndex(newIndex); // Controller re-renders with new prop
     },
     // ...
 };
 ```
 
-**Position Restoration Fix (v3.1):**
+**Truly Controlled Pattern Benefits (v4.0):**
+- ✅ **Single source of truth** - Parent state only, no duplication
+- ✅ **No sync logic** - No useEffect to keep states in sync
+- ✅ **Callback pattern** - Controller calls `onSentenceIndexChange()` like onChange
+- ✅ **Simpler navigation** - Update parent state once, done
+- ✅ **No stale state bugs** - Only one state to manage
+
+**Position Restoration (v3.1+):**
 - ✅ **Data loader pattern** - All data loads before UI renders (no race conditions)
 - ✅ **Lazy initialization** - Controller initializes at correct position from the start
 - ✅ **Initial mount guard** - Chapter change effect skips reset on first render
-- ✅ **Controlled component** - State drives controller, eliminates sync complexity
-- ✅ **Real-time progress** - Tracks actual playback position, not stale state
 - ✅ **Works in both modes** - Full and Focus modes restore correctly
 
 **Bug Fixes Applied:**
