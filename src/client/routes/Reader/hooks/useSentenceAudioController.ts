@@ -47,14 +47,30 @@ export function useSentenceAudioController(
     selectedProvider: TtsProvider,
     playbackSpeed: number,
     ttsEnabled: boolean,
-    currentSentenceIndex: number,
-    onSentenceIndexChange: (index: number) => void,
+    currentSentenceIndex: number,                      // ← PROP: Parent's state (single source of truth)
+    onSentenceIndexChange: (index: number) => void,    // ← CALLBACK: Request parent state update
     initialWordIndex: number | null,
     highlightMode: 'word' | 'line' | 'off' = 'word',
     wordTimingOffset: number = 0
 ): SentenceAudioApi {
-    // Truly controlled component - no internal state for currentSentenceIndex
-    // Parent state is the single source of truth
+    /**
+     * TRULY CONTROLLED COMPONENT PATTERN (like <input value={x} onChange={...}>)
+     * 
+     * Architecture:
+     * 1. NO internal state for currentSentenceIndex - uses prop directly
+     * 2. When controller needs to change index → calls onSentenceIndexChange(newIndex)
+     * 3. Parent updates state → component re-renders with new prop value
+     * 4. Single source of truth: parent's state.currentChunkIndex
+     * 
+     * Benefits:
+     * - No state duplication
+     * - No sync effects needed
+     * - Simpler navigation (just update parent state)
+     * - Impossible to have drift between controller and parent
+     */
+    
+    // Internal state ONLY for: word index, playback state, loading, errors
+    // Does NOT include currentSentenceIndex (that's controlled by parent)
     const [state, setState] = useState<SentenceAudioState>(() => {
         const defaultState = getDefaultState();
         return {
@@ -62,13 +78,28 @@ export function useSentenceAudioController(
             currentWordIndex: initialWordIndex ?? 0
         };
     });
+    
     const stateRef = useRef(state);
+    
+    /**
+     * IMPORTANT: currentSentenceIndexRef
+     * 
+     * Why we need this:
+     * - Event listeners (handleEnded, handleError) are set up once in useEffect
+     * - They capture the currentSentenceIndex value from when the effect ran (stale closure)
+     * - Ref always has the latest value via .current without re-creating listeners
+     * - Performance: Avoid removing/re-adding listeners on every sentence change
+     * 
+     * Pattern: Keep ref in sync with prop, access ref in event handlers
+     */
     const currentSentenceIndexRef = useRef(currentSentenceIndex);
+    
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const timepointsRef = useRef<Array<{ time: number; wordIndex: number }>>([]);
     const cacheRef = useRef<Record<number, { src: string; timepoints: Array<{ time: number; wordIndex: number }> }>>({});
     const previousHighlightRef = useRef<{ sentenceIndex: number; wordIndex: number } | null>(null);
 
+    // Keep refs in sync with their values (cheap operations, no re-renders)
     useEffect(() => { stateRef.current = state; }, [state]);
     useEffect(() => { currentSentenceIndexRef.current = currentSentenceIndex; }, [currentSentenceIndex]);
 
@@ -129,6 +160,7 @@ export function useSentenceAudioController(
     }, [chapter, selectedProvider, selectedVoice, sentences, ttsEnabled, update]);
 
     const play = useCallback(async (userInitiated: boolean = false) => {
+        // Use currentSentenceIndex prop directly (controlled component)
         const chunk = sentences[currentSentenceIndex];
 
         // Skip playback for images only - play both text and headers
@@ -138,6 +170,7 @@ export function useSentenceAudioController(
                 i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
             );
             if (nextPlayableIndex !== -1) {
+                // CONTROLLED: Request parent to update state via callback
                 onSentenceIndexChange(nextPlayableIndex);
                 // Retry play with new index (preserve userInitiated flag)
                 setTimeout(() => void play(userInitiated), 50);
@@ -191,7 +224,18 @@ export function useSentenceAudioController(
 
     /**
      * Core navigation helper that handles audio state transitions consistently.
-     * Stops current audio, navigates to new index, and resumes playback if needed.
+     * 
+     * CONTROLLED COMPONENT FLOW:
+     * 1. Stop current audio (internal state update)
+     * 2. Reset word index (internal state update)
+     * 3. Call onSentenceIndexChange(newIndex) → parent updates state
+     * 4. Parent re-renders component with new currentSentenceIndex prop
+     * 5. If audio was playing, resume at new index
+     * 
+     * This function coordinates:
+     * - Internal state (word index, playback state)
+     * - Parent state (sentence index via callback)
+     * - Audio element (pause/play operations)
      */
     const navigateToSentenceIndex = useCallback((newIndex: number) => {
         const { intendedPlay } = stateRef.current;
@@ -207,7 +251,8 @@ export function useSentenceAudioController(
         // Reset word index when navigating to new sentence
         update({ currentWordIndex: 0 });
 
-        // Update parent state (controlled component pattern)
+        // CONTROLLED: Request parent to update sentence index
+        // Parent will update state → component re-renders → prop changes
         onSentenceIndexChange(clamped);
 
         // If audio was playing, start playing the new chunk
@@ -343,6 +388,7 @@ export function useSentenceAudioController(
 
             // Reset playback state to beginning of new chapter
             update({ isPlaying: false, intendedPlay: false, currentWordIndex: 0 });
+            // CONTROLLED: Request parent to reset to first sentence of new chapter
             onSentenceIndexChange(0);
 
             // Clear audio cache for previous chapter
@@ -498,6 +544,18 @@ export function useSentenceAudioController(
         // Handle ended event for auto-play next sentence
         const handleEnded = () => {
             const { intendedPlay } = stateRef.current;
+            
+            /**
+             * IMPORTANT: Use ref instead of prop for event handlers
+             * 
+             * Why: This event listener is set up once (lines 547-549).
+             * If we used the currentSentenceIndex prop directly, it would be stale
+             * (captured from when the effect ran). The ref always has the latest value.
+             * 
+             * Example: User navigates from sentence 10 → 50 during playback
+             * - Without ref: handleEnded would still see index 10 (stale)
+             * - With ref: handleEnded sees index 50 (fresh) ✅
+             */
             const currentIndex = currentSentenceIndexRef.current;
             setState(prev => ({ ...prev, isPlaying: false }));
 
@@ -555,20 +613,26 @@ export function useSentenceAudioController(
         };
     }, [sentences.length, goToSentence, play, wordTimingOffset, update]);
 
-    // Always clamp currentSentenceIndex to valid bounds before returning
+    /**
+     * Return API
+     * 
+     * CONTROLLED COMPONENT: currentSentenceIndex comes directly from prop (parent state)
+     * Not from internal state - we just clamp it and return it back to caller
+     * This ensures parent and controller always agree on the current sentence
+     */
     const clampedCurrentSentenceIndex = Math.max(0, Math.min(sentences.length - 1, currentSentenceIndex));
 
     return {
         sentences,
-        currentSentenceIndex: clampedCurrentSentenceIndex,
-        currentWordIndex: state.currentWordIndex,
-        isPlaying: state.isPlaying,
-        isCurrentSentenceLoading: state.isCurrentSentenceLoading,
+        currentSentenceIndex: clampedCurrentSentenceIndex,  // ← From prop, not internal state!
+        currentWordIndex: state.currentWordIndex,           // ← From internal state
+        isPlaying: state.isPlaying,                         // ← From internal state
+        isCurrentSentenceLoading: state.isCurrentSentenceLoading,  // ← From internal state
         play,
         pause,
-        nextSentence,
-        prevSentence,
-        goToSentence,
+        nextSentence,      // Calls onSentenceIndexChange internally
+        prevSentence,      // Calls onSentenceIndexChange internally
+        goToSentence,      // Calls onSentenceIndexChange internally
         handleWordClick,
         preload,
         retryFailed,
