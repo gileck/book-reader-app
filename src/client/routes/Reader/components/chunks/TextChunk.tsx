@@ -139,12 +139,15 @@ export const TextChunk: React.FC<TextChunkProps> = ({
         } else {
             // Single tap - handle navigation if no translation
             if (!hasTranslation && onChunkClick) {
-                setTimeout(() => {
-                    // Only execute if no double tap follows
-                    const timeSinceThisTap = Date.now() - now;
-                    if (timeSinceThisTap >= DOUBLE_TAP_DELAY) {
-                        onChunkClick(chunkIndex);
-                    }
+                // Clear any existing timeout (same pattern as mouse clicks)
+                if (clickTimeoutRef.current) {
+                    clearTimeout(clickTimeoutRef.current);
+                }
+                
+                // Set timeout to execute single tap action
+                // This will be cleared if double tap happens before timeout
+                clickTimeoutRef.current = setTimeout(() => {
+                    onChunkClick(chunkIndex);
                 }, DOUBLE_TAP_DELAY);
             }
             lastTapRef.current = now;
