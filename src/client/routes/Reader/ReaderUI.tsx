@@ -488,6 +488,17 @@ export const ReaderUI = ({
         }
     }, [currentSentenceIndex, canGoNextSentence, canGoPrevSentence, handleFullscreenNextSentence, handleFullscreenPrevSentence]);
 
+    /**
+     * Handle direct navigation to a chunk (e.g. from "Go to Sentence" dialog)
+     * Ensures the view scrolls to the target sentence in full mode.
+     */
+    const handleNavigateToChunk = useCallback((index: number) => {
+        sentenceAudio.controller.goToSentence(index);
+        if (activeTab === 'full') {
+            centerSentenceAfterNavRef.current = true;
+        }
+    }, [sentenceAudio.controller, activeTab]);
+
     return (
         <UserThemeProvider
             theme={settings.theme}
@@ -750,7 +761,7 @@ export const ReaderUI = ({
                         currentChunkIndex={audio.currentChunkIndex}
                         totalChapters={book.totalChapters}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
-                        onNavigateToChunk={sentenceAudio.controller.goToSentence}
+                        onNavigateToChunk={handleNavigateToChunk}
                         progressData={progress}
                         onChapters={chapterDialog.openDialog}
                         minChapterNumber={book?.chapterStartNumber ?? 1}
