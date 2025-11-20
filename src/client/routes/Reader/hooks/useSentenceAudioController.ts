@@ -5,7 +5,6 @@ import type { TtsProvider } from '../../../../../src/common/tts/ttsUtils';
 import { WordHighlightingAPI } from '../utils/WordHighlightingAPI';
 
 export interface SentenceAudioState {
-    currentSentenceIndex: number;
     currentWordIndex: number;
     isPlaying: boolean;
     intendedPlay: boolean;
@@ -34,7 +33,6 @@ export interface SentenceAudioApi {
 }
 
 const getDefaultState = (): SentenceAudioState => ({
-    currentSentenceIndex: 0,
     currentWordIndex: 0,
     isPlaying: false,
     intendedPlay: false,
@@ -49,27 +47,30 @@ export function useSentenceAudioController(
     selectedProvider: TtsProvider,
     playbackSpeed: number,
     ttsEnabled: boolean,
-    initialSentenceIndex: number | null,
+    currentSentenceIndex: number,
+    onSentenceIndexChange: (index: number) => void,
     initialWordIndex: number | null,
     highlightMode: 'word' | 'line' | 'off' = 'word',
     wordTimingOffset: number = 0
 ): SentenceAudioApi {
-    // Use lazy initialization to set correct state from the start
+    // Truly controlled component - no internal state for currentSentenceIndex
+    // Parent state is the single source of truth
     const [state, setState] = useState<SentenceAudioState>(() => {
         const defaultState = getDefaultState();
         return {
             ...defaultState,
-            currentSentenceIndex: initialSentenceIndex ?? 0,
             currentWordIndex: initialWordIndex ?? 0
         };
     });
     const stateRef = useRef(state);
+    const currentSentenceIndexRef = useRef(currentSentenceIndex);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const timepointsRef = useRef<Array<{ time: number; wordIndex: number }>>([]);
     const cacheRef = useRef<Record<number, { src: string; timepoints: Array<{ time: number; wordIndex: number }> }>>({});
     const previousHighlightRef = useRef<{ sentenceIndex: number; wordIndex: number } | null>(null);
 
     useEffect(() => { stateRef.current = state; }, [state]);
+    useEffect(() => { currentSentenceIndexRef.current = currentSentenceIndex; }, [currentSentenceIndex]);
 
     // Use ALL chunks - sentence indices will match chunk indices (no mapping needed!)
     const sentences: TextChunkClient[] = useMemo(() => {
@@ -128,7 +129,6 @@ export function useSentenceAudioController(
     }, [chapter, selectedProvider, selectedVoice, sentences, ttsEnabled, update]);
 
     const play = useCallback(async (userInitiated: boolean = false) => {
-        const { currentSentenceIndex } = stateRef.current;
         const chunk = sentences[currentSentenceIndex];
 
         // Skip playback for images only - play both text and headers
@@ -138,7 +138,7 @@ export function useSentenceAudioController(
                 i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
             );
             if (nextPlayableIndex !== -1) {
-                update({ currentSentenceIndex: nextPlayableIndex });
+                onSentenceIndexChange(nextPlayableIndex);
                 // Retry play with new index (preserve userInitiated flag)
                 setTimeout(() => void play(userInitiated), 50);
             }
@@ -180,7 +180,7 @@ export function useSentenceAudioController(
                 console.debug('Expected browser audio interruption:', errorMessage);
             }
         }
-    }, [loadSentence, playbackSpeed, update, sentences]);
+    }, [loadSentence, playbackSpeed, update, sentences, currentSentenceIndex, onSentenceIndexChange]);
 
     const pause = useCallback(() => {
         const audio = audioRef.current;
@@ -204,12 +204,11 @@ export function useSentenceAudioController(
             update({ isPlaying: false });
         }
 
-        // Update to new sentence
-        const newState = { currentSentenceIndex: clamped, currentWordIndex: 0 };
-        update(newState);
+        // Reset word index when navigating to new sentence
+        update({ currentWordIndex: 0 });
 
-        // CRITICAL: Update stateRef immediately so play() sees the new index
-        stateRef.current = { ...stateRef.current, ...newState };
+        // Update parent state (controlled component pattern)
+        onSentenceIndexChange(clamped);
 
         // If audio was playing, start playing the new chunk
         if (intendedPlay) {
@@ -217,14 +216,13 @@ export function useSentenceAudioController(
                 void play();
             }, 50);
         }
-    }, [sentences.length, update, play]);
+    }, [sentences.length, update, play, onSentenceIndexChange]);
 
     const goToSentence = useCallback((index: number) => {
         navigateToSentenceIndex(index);
     }, [navigateToSentenceIndex]);
 
     const nextSentence = useCallback(() => {
-        const { currentSentenceIndex } = stateRef.current;
         // Find next playable chunk (text or header)
         const nextPlayableIndex = sentences.findIndex((c, i) =>
             i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
@@ -232,10 +230,9 @@ export function useSentenceAudioController(
         if (nextPlayableIndex !== -1) {
             navigateToSentenceIndex(nextPlayableIndex);
         }
-    }, [sentences, navigateToSentenceIndex]);
+    }, [sentences, navigateToSentenceIndex, currentSentenceIndex]);
 
     const prevSentence = useCallback(() => {
-        const { currentSentenceIndex } = stateRef.current;
         // Find previous playable chunk (text or header)
         let foundIndex = -1;
         for (let i = currentSentenceIndex - 1; i >= 0; i--) {
@@ -249,7 +246,7 @@ export function useSentenceAudioController(
         if (foundIndex !== -1) {
             navigateToSentenceIndex(foundIndex);
         }
-    }, [sentences, navigateToSentenceIndex]);
+    }, [sentences, navigateToSentenceIndex, currentSentenceIndex]);
 
     const handleWordClick = useCallback((sentenceIndex: number, wordIndex: number) => {
         goToSentence(sentenceIndex);
@@ -274,8 +271,6 @@ export function useSentenceAudioController(
     const prevTtsEnabledRef = useRef(ttsEnabled);
 
     useEffect(() => {
-        const { currentSentenceIndex } = stateRef.current;
-
         // Reset flag when TTS is toggled on (from false to true)
         if (ttsEnabled && !prevTtsEnabledRef.current) {
             hasInitiallyLoadedRef.current = false;
@@ -318,7 +313,7 @@ export function useSentenceAudioController(
                 void loadSentence(prevIndex);
             }
         }
-    }, [state.currentSentenceIndex, sentences.length, loadSentence, ttsEnabled]);
+    }, [currentSentenceIndex, sentences.length, loadSentence, ttsEnabled]);
 
     // Reset and cleanup when chapter changes (but not on initial mount)
     const isInitialMount = useRef(true);
@@ -347,7 +342,8 @@ export function useSentenceAudioController(
             }
 
             // Reset playback state to beginning of new chapter
-            update({ isPlaying: false, intendedPlay: false, currentWordIndex: 0, currentSentenceIndex: 0 });
+            update({ isPlaying: false, intendedPlay: false, currentWordIndex: 0 });
+            onSentenceIndexChange(0);
 
             // Clear audio cache for previous chapter
             cacheRef.current = {};
@@ -362,7 +358,7 @@ export function useSentenceAudioController(
 
             prevChapterNumber.current = currentChapterNumber;
         }
-    }, [chapter?.chapterNumber, update]);
+    }, [chapter?.chapterNumber, update, onSentenceIndexChange]);
 
     // Update playback speed when it changes
     useEffect(() => {
@@ -390,7 +386,6 @@ export function useSentenceAudioController(
         if (hasChanged) {
             const audio = audioRef.current;
             const wasPlaying = state.isPlaying;
-            const { currentSentenceIndex } = stateRef.current;
 
             // Stop current audio if playing
             if (audio && wasPlaying) {
@@ -443,7 +438,7 @@ export function useSentenceAudioController(
         if (highlightMode !== 'word') return;
         if (!state.isPlaying) return;
 
-        const { currentSentenceIndex, currentWordIndex } = state;
+        const { currentWordIndex } = state;
         const previous = previousHighlightRef.current;
 
         // No mapping needed - sentence index IS chunk index!
@@ -465,7 +460,7 @@ export function useSentenceAudioController(
                 );
             }
         };
-    }, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex, highlightMode, ttsEnabled]);
+    }, [state.isPlaying, currentSentenceIndex, state.currentWordIndex, highlightMode, ttsEnabled]);
 
     // Setup audio element and event listeners
     useEffect(() => {
@@ -502,12 +497,13 @@ export function useSentenceAudioController(
 
         // Handle ended event for auto-play next sentence
         const handleEnded = () => {
-            const { currentSentenceIndex, intendedPlay } = stateRef.current;
+            const { intendedPlay } = stateRef.current;
+            const currentIndex = currentSentenceIndexRef.current;
             setState(prev => ({ ...prev, isPlaying: false }));
 
             // Auto-play next sentence if user intended continuous play
-            if (intendedPlay && currentSentenceIndex < sentences.length - 1) {
-                goToSentence(currentSentenceIndex + 1);
+            if (intendedPlay && currentIndex < sentences.length - 1) {
+                goToSentence(currentIndex + 1);
                 // Play next sentence after a brief delay
                 setTimeout(() => {
                     if (stateRef.current.intendedPlay) {
@@ -540,9 +536,9 @@ export function useSentenceAudioController(
             // MEDIA_ERR_NETWORK (2), MEDIA_ERR_DECODE (3), MEDIA_ERR_SRC_NOT_SUPPORTED (4)
             if (error && error.code >= 2) {
                 const errorMessage = error.message || `Media error (code ${error.code})`;
-                const { currentSentenceIndex } = stateRef.current;
+                const currentIndex = currentSentenceIndexRef.current;
                 update({
-                    ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex },
+                    ttsError: { message: errorMessage, sentenceIndex: currentIndex },
                     isPlaying: false
                 });
             }
@@ -560,7 +556,7 @@ export function useSentenceAudioController(
     }, [sentences.length, goToSentence, play, wordTimingOffset, update]);
 
     // Always clamp currentSentenceIndex to valid bounds before returning
-    const clampedCurrentSentenceIndex = Math.max(0, Math.min(sentences.length - 1, state.currentSentenceIndex));
+    const clampedCurrentSentenceIndex = Math.max(0, Math.min(sentences.length - 1, currentSentenceIndex));
 
     return {
         sentences,

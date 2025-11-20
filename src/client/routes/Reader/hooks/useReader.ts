@@ -323,6 +323,7 @@ export const useReader = () => {
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
         state.currentChunkIndex ?? 0,
+        setCurrentChunkIndex,  // Callback for controller to update parent state
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset

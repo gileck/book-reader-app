@@ -164,24 +164,27 @@ export const useReaderState = ({
     // Build sentence map
     const sentenceMap = state.chapter ? buildSentenceMap(state.chapter) : { sentences: [], paragraphGroups: [], chunkToSentenceIndexMap: new Map() };
 
-    // Initialize sentence audio controller with CURRENT state position (not initial)
-    // This makes the controller a "controlled component" that always reflects state
+    // Initialize sentence audio controller as a truly "controlled component"
+    // The controller uses parent state directly (no internal state for currentSentenceIndex)
+    // Controller calls onSentenceIndexChange callback to request parent state updates
     const sentenceAudio = useSentenceAudioController(
         state.chapter,
         userSettings.selectedVoice,
         userSettings.selectedProvider as TtsProvider,
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
-        state.currentChunkIndex ?? 0,  // ← Use current state, not initial prop!
+        state.currentChunkIndex ?? 0,  // ← Single source of truth: parent state (prop)
+        setCurrentChunkIndex,          // ← Callback for controller to update parent
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset
     );
 
-    // NO SYNC EFFECT NEEDED!
-    // The controller is now "controlled" by state, similar to controlled form inputs
-    // When state changes → controller updates automatically
-    // When user navigates → we update state directly via callbacks
+    // Truly controlled component pattern (like <input value={x} onChange={...}>):
+    // 1. Controller uses parent state directly (currentSentenceIndex prop)
+    // 2. Controller calls onSentenceIndexChange() to request updates
+    // 3. Parent updates state → controller re-renders with new prop value
+    // 4. No internal state, no sync effect needed!
 
     // Legacy audio adapter
     // Wrap controller methods to update state when user navigates

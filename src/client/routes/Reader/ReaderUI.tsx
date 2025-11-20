@@ -205,7 +205,6 @@ export const ReaderUI = ({
     // Track if initial position has been scrolled to (full mode only)
     const hasScrolledToInitialPosition = useRef(false);
     const initialChapterNumberRef = useRef<number | null>(null);
-    const centerSentenceAfterNavRef = useRef(false);
 
     // Auto-scroll to saved reading position on initial load (full mode only)
     useEffect(() => {
@@ -299,11 +298,8 @@ export const ReaderUI = ({
     }, []);
 
     const handleToggleFullscreen = useCallback(() => {
-        if (activeTab === 'full') {
-            centerSentenceAfterNavRef.current = true;
-        }
         setIsFullscreen(prev => !prev);
-    }, [activeTab]);
+    }, []);
 
     const handleToggleAutoScroll = useCallback(() => {
         setIsAutoScrollActive(prev => !prev);
@@ -354,10 +350,10 @@ export const ReaderUI = ({
 
     const autoScrollSpeed = settings.autoScrollSpeed ?? 60;
 
+    // Auto-scroll to current sentence when it changes (but not during active playback)
     useEffect(() => {
-        if (!centerSentenceAfterNavRef.current) return;
+        if (sentenceAudio.controller.isPlaying) return; // Don't scroll during playback
         if (activeTab !== 'full') return;
-        centerSentenceAfterNavRef.current = false;
 
         const timeoutId = window.setTimeout(() => {
             scrollToSentenceChunk(currentSentenceIndex);
@@ -366,7 +362,7 @@ export const ReaderUI = ({
         return () => {
             window.clearTimeout(timeoutId);
         };
-    }, [currentSentenceIndex, activeTab, isFullscreen, scrollToSentenceChunk]);
+    }, [currentSentenceIndex, activeTab, sentenceAudio.controller.isPlaying, scrollToSentenceChunk]);
 
     // Handle continuous auto-scroll in fullscreen mode
     useEffect(() => {
@@ -425,52 +421,45 @@ export const ReaderUI = ({
         if (isAutoScrollActive) {
             setIsAutoScrollActive(false);
         }
-        centerSentenceAfterNavRef.current = true;
-        sentenceAudio.controller.goToSentence(previousSentenceIndex);
+        // Update parent state → controller syncs automatically (controlled component)
         navigation.setCurrentChunkIndex(previousSentenceIndex);
-    }, [previousSentenceIndex, isAutoScrollActive, sentenceAudio.controller, navigation.setCurrentChunkIndex]);
+    }, [previousSentenceIndex, isAutoScrollActive, navigation]);
 
     const handleFullscreenNextSentence = useCallback(() => {
         if (nextSentenceIndex === null) return;
         if (isAutoScrollActive) {
             setIsAutoScrollActive(false);
         }
-        centerSentenceAfterNavRef.current = true;
-        sentenceAudio.controller.goToSentence(nextSentenceIndex);
+        // Update parent state → controller syncs automatically (controlled component)
         navigation.setCurrentChunkIndex(nextSentenceIndex);
-    }, [nextSentenceIndex, isAutoScrollActive, sentenceAudio.controller, navigation.setCurrentChunkIndex]);
+    }, [nextSentenceIndex, isAutoScrollActive, navigation]);
 
     const handlePreviousChunk = useCallback(() => {
-        sentenceAudio.controller.prevSentence();
-        if (activeTab === 'full') {
-            centerSentenceAfterNavRef.current = true;
-            if (isFullscreen && isAutoScrollActive) {
-                setIsAutoScrollActive(false);
-            }
+        if (previousSentenceIndex !== null) {
+            // Update parent state → controller syncs automatically (controlled component)
+            navigation.setCurrentChunkIndex(previousSentenceIndex);
         }
-    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
+        if (activeTab === 'full' && isFullscreen && isAutoScrollActive) {
+            setIsAutoScrollActive(false);
+        }
+    }, [previousSentenceIndex, navigation, activeTab, isFullscreen, isAutoScrollActive]);
 
     const handleNextChunk = useCallback(() => {
-        sentenceAudio.controller.nextSentence();
-        if (activeTab === 'full') {
-            centerSentenceAfterNavRef.current = true;
-            if (isFullscreen && isAutoScrollActive) {
-                setIsAutoScrollActive(false);
-            }
+        if (nextSentenceIndex !== null) {
+            // Update parent state → controller syncs automatically (controlled component)
+            navigation.setCurrentChunkIndex(nextSentenceIndex);
         }
-    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
+        if (activeTab === 'full' && isFullscreen && isAutoScrollActive) {
+            setIsAutoScrollActive(false);
+        }
+    }, [nextSentenceIndex, navigation, activeTab, isFullscreen, isAutoScrollActive]);
 
     // Handler for "Go to Sentence" feature
     const handleNavigateToChunk = useCallback((targetIndex: number) => {
-        // Set flag to trigger auto-scroll after state update
-        if (activeTab === 'full') {
-            centerSentenceAfterNavRef.current = true;
-        }
-        // Update controller state
-        sentenceAudio.controller.goToSentence(targetIndex);
-        // Update parent state (this triggers highlighting, progress, and scroll)
+        // Update parent state → controller syncs automatically (controlled component)
+        // This triggers highlighting, progress tracking, and auto-scroll
         navigation.setCurrentChunkIndex(targetIndex);
-    }, [sentenceAudio.controller, navigation, activeTab]);
+    }, [navigation]);
 
     // Calculate estimated time remaining to read the chapter
     const estimatedTimeRemaining = useMemo(() => {
