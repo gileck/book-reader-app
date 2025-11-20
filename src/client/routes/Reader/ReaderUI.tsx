@@ -701,6 +701,8 @@ export const ReaderUI = ({
                         onNextSentence={handleFullscreenNextSentence}
                         canGoToPrevious={canGoPrevSentence}
                         canGoToNext={canGoNextSentence}
+                        currentSentenceIndex={currentSentenceIndex}
+                        totalSentences={sentences.length}
                     />
                 )}
 

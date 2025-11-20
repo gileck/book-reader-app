@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, IconButton, Paper, Button, Popover, Stack, Typography, TextField } from '@mui/material';
 import { Add, Remove, Fullscreen, FullscreenExit, Palette, PlayArrow, Pause, ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { ChapterProgressBar } from './ChapterProgressBar';
 
 interface FullscreenTextControlsProps {
     /** Current font size multiplier (0.8 - 2.0) */
@@ -31,6 +32,10 @@ interface FullscreenTextControlsProps {
     canGoToPrevious: boolean;
     /** Whether next sentence navigation is available */
     canGoToNext: boolean;
+    /** Current sentence index for progress tracking */
+    currentSentenceIndex: number;
+    /** Total number of sentences in the chapter */
+    totalSentences: number;
 }
 
 /**
@@ -74,7 +79,9 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
     onPreviousSentence,
     onNextSentence,
     canGoToPrevious,
-    canGoToNext
+    canGoToNext,
+    currentSentenceIndex,
+    totalSentences
 }) => {
     const [typographyAnchorEl, setTypographyAnchorEl] = useState<HTMLButtonElement | null>(null);
     const handleDecrease = () => {
@@ -133,6 +140,7 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
 
     return (
         <>
+            {/* Control Panel */}
             <Paper
                 elevation={8}
                 sx={{
@@ -141,22 +149,60 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                     left: '50%',
                     transform: 'translateX(-50%)',
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: 1,
-                    px: 2,
-                    py: 1.5,
-                    borderRadius: 50,
+                    flexDirection: 'column',
+                    gap: 0,
+                    borderRadius: 4,
                     backgroundColor: 'background.paper',
                     backdropFilter: 'blur(10px)',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
                     zIndex: 1300,
                     transition: 'all 0.2s ease',
+                    overflow: 'hidden',
+                    minWidth: { xs: '90vw', sm: '600px' },
+                    maxWidth: '600px',
                     '@media (prefers-color-scheme: dark)': {
                         backgroundColor: 'rgba(30, 30, 30, 0.95)',
                         boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
                     }
                 }}
             >
+                {/* Chapter Progress Bar - Inside panel at the top */}
+                <Box sx={{ 
+                    width: '100%', 
+                    paddingLeft: '24px',
+                    paddingRight: '24px',
+                    paddingTop: '14px',
+                    paddingBottom: '8px'
+                }}>
+                    <ChapterProgressBar
+                        currentSentenceIndex={currentSentenceIndex}
+                        totalSentences={totalSentences}
+                    />
+                </Box>
+
+                {/* Divider */}
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '1px',
+                        backgroundColor: 'divider',
+                        opacity: 0.3
+                    }}
+                />
+
+                {/* Controls Row */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1,
+                        paddingLeft: '16px',
+                        paddingRight: '16px',
+                        paddingTop: '0px',
+                        paddingBottom: '6px'
+                    }}
+                >
                 {/* Previous Sentence */}
                 <IconButton
                     onClick={onPreviousSentence}
@@ -190,10 +236,13 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                 {/* Divider */}
                 <Box
                     sx={{
-                        width: 1,
+                        width: '1px',
                         height: 32,
-                        backgroundColor: 'divider',
-                        mx: 1
+                        backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                        mx: 1,
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                        }
                     }}
                 />
 
@@ -281,10 +330,13 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                 {/* Divider */}
                 <Box
                     sx={{
-                        width: 1,
+                        width: '1px',
                         height: 32,
-                        backgroundColor: 'divider',
-                        mx: 1
+                        backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                        mx: 1,
+                        '@media (prefers-color-scheme: dark)': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                        }
                     }}
                 />
 
@@ -300,6 +352,7 @@ export const FullscreenTextControls: React.FC<FullscreenTextControlsProps> = ({
                 >
                     {isFullscreen ? <FullscreenExit /> : <Fullscreen />}
                 </IconButton>
+                </Box>
             </Paper>
 
             {/* Typography & Color Popover */}

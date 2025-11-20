@@ -8,6 +8,11 @@ Implemented a fullscreen reading mode for the Reader component that provides a d
 ### Fullscreen Mode (Full Tab Only)
 When activated in the "Full" reading mode, the fullscreen mode provides:
 - **Distraction-free reading**: Hides all UI elements except the text content
+- **Chapter progress indicator**: Visual progress bar showing current position in the chapter
+  - Progress bar integrated at the top of the control panel
+  - Updates automatically as you navigate through sentences
+  - Clean, minimal design without text values
+  - iOS-inspired styling with smooth transitions
 - **Collapsible font size controls**: Floating controls at the bottom center with:
   - Font size button displaying current size (e.g., "1.0x") - click to expand/collapse
   - When expanded: decrease (-) and increase (+) buttons appear
@@ -32,6 +37,7 @@ When activated in the "Full" reading mode, the fullscreen mode provides:
 - All navigation elements are hidden (tab bar, header, audio controls)
 - Text content is displayed with optimal padding
 - Floating text controls appear at the bottom center
+- **Progress tracking**: Visual indicator at the top of the control panel automatically updates with each sentence
 - **Font size**: Click the size button to expand/collapse controls, adjust in real-time (0.8x to 2.0x range)
 - **Font color**: Click palette icon to choose from 12 preset colors
 - Changes apply immediately without page refresh
@@ -44,8 +50,17 @@ When activated in the "Full" reading mode, the fullscreen mode provides:
 
 ## Technical Implementation
 
-### New Component
+### New Components
+- **ChapterProgressBar.tsx**: A visual progress indicator that displays:
+  - Linear progress bar showing chapter completion
+  - Calculates progress based on current sentence index
+  - Updates automatically when navigating between sentences
+  - Embedded at the top of the control panel
+  - iOS-inspired styling with smooth transitions
+  - Proper ARIA attributes for accessibility
+
 - **FullscreenTextControls.tsx**: A floating control panel that displays:
+  - Chapter progress bar at the top (via ChapterProgressBar component)
   - Collapsible font size controls (click to expand/collapse +/- buttons)
   - Font color picker with popover and 12 preset colors
   - Current font size indicator as clickable button
@@ -81,8 +96,9 @@ In normal (non-fullscreen) full mode:
 - Provides quick access without overlaying content
 
 ## Files Modified
-- `/src/client/routes/Reader/ReaderUI.tsx` - Fullscreen state management and button handlers
-- `/src/client/routes/Reader/components/FullscreenTextControls.tsx` (new) - In-fullscreen controls
+- `/src/client/routes/Reader/ReaderUI.tsx` - Fullscreen state management, button handlers, and progress tracking
+- `/src/client/routes/Reader/components/ChapterProgressBar.tsx` (new) - Chapter progress indicator
+- `/src/client/routes/Reader/components/FullscreenTextControls.tsx` - In-fullscreen controls with progress bar
 - `/src/client/components/AudioControls.tsx` - Integrated fullscreen and navigation buttons
 
 ## Design Principles
