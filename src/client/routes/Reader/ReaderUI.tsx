@@ -562,7 +562,9 @@ export const ReaderUI = ({
                         <Tabs
                             value={activeTab}
                             onChange={handleTabChange}
-                            centered
+                            variant="scrollable"
+                            scrollButtons="auto"
+                            allowScrollButtonsMobile
                             sx={{
                                 maxWidth: 800,
                                 mx: 'auto',
@@ -592,8 +594,8 @@ export const ReaderUI = ({
                         >
                             <Tab label="Full" value="full" />
                             <Tab label="Focus" value="focus" />
-                            <Tab label="Search" value="search" />
                             <Tab label="QA Chat" value="qa" />
+                            <Tab label="Search" value="search" />
                             <Tab label="Overview" value="overview" />
                         </Tabs>
                     </Box>

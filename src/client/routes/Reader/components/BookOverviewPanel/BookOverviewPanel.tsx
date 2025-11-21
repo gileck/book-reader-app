@@ -166,7 +166,9 @@ export const BookOverviewPanel: React.FC<BookOverviewPanelProps> = ({
                 <Tabs
                     value={activeSubTab}
                     onChange={handleSubTabChange}
-                    centered
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    allowScrollButtonsMobile
                     sx={{
                         minHeight: 48,
                         '& .MuiTab-root': {
