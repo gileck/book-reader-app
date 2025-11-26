@@ -54,7 +54,7 @@ node upload-images-to-vercel-blob.js ./books/transformers/ "Transformer: the dee
 
 #### Environment Variables Required
 ```bash
-BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+VERCEL_BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
 ```
 
 #### New Features (2024)
@@ -289,7 +289,7 @@ The upload scripts now verify the latest text processing improvements:
 ### Vercel Blob Setup
 ```bash
 # Set environment variable
-export BLOB_READ_WRITE_TOKEN=your_vercel_token
+export VERCEL_BLOB_READ_WRITE_TOKEN=your_vercel_token
 
 # Images will be accessible at:
 # https://xyz.public.blob.vercel-storage.com/books/Book-Title/images/

@@ -6,21 +6,21 @@ const inquirer = require('inquirer');
 
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
-const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 // Vercel Blob Configuration
+const VERCEL_BLOB_TOKEN = process.env.VERCEL_BLOB_READ_WRITE_TOKEN;
 
 /**
  * Upload a file to Vercel Blob
  */
 async function uploadFileToBlob(key, content, contentType) {
-    if (!BLOB_READ_WRITE_TOKEN) {
-        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    if (!VERCEL_BLOB_TOKEN) {
+        throw new Error('VERCEL_BLOB_READ_WRITE_TOKEN environment variable is not set');
     }
 
     const blob = await put(key, content, {
         access: 'public',
         contentType: contentType || 'application/octet-stream',
-        token: BLOB_READ_WRITE_TOKEN,
+        token: VERCEL_BLOB_TOKEN,
         allowOverwrite: true
     });
 
@@ -366,7 +366,7 @@ async function selectOrCreateBook(booksCollection, suggestedTitle) {
  * If a book with the same title exists, it will be updated with new content (keeping same ID)
  * @param {string} outputFolderPath - Path to the parser output folder containing output.json and images/
  * @param {Object} [options]
- * @param {boolean} [options.uploadImages=false] - When true, uploads images to Vercel Blob (requires BLOB_READ_WRITE_TOKEN)
+ * @param {boolean} [options.uploadImages=false] - When true, uploads images to Vercel Blob (requires VERCEL_BLOB_READ_WRITE_TOKEN)
  */
 async function uploadParsedBookV2(outputFolderPath, options = {}) {
     const uri = 'mongodb+srv://gileck:jfxccnxeruiowqrioqsdjkla@cluster0.frtddwb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
@@ -562,10 +562,10 @@ async function uploadParsedBookV2(outputFolderPath, options = {}) {
         const uploadImages = Boolean(options.uploadImages);
 
         if (imagesPath) {
-            if (uploadImages && BLOB_READ_WRITE_TOKEN) {
+            if (uploadImages && VERCEL_BLOB_TOKEN) {
                 await uploadImagesToBlob(finalBook, imagesPath, db);
-            } else if (uploadImages && !BLOB_READ_WRITE_TOKEN) {
-                console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
+            } else if (uploadImages && !VERCEL_BLOB_TOKEN) {
+                console.log('⚠️  VERCEL_BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
                 console.log('   Images remain in local folder and imageName references are preserved');
             } else {
                 console.log('⏭️  Skipping image upload (enable with options.uploadImages or --upload-images)');
@@ -656,7 +656,7 @@ Arguments:
   OUTPUT_FOLDER      Path to parser output folder containing output.json and images/ (required)
 
 Options:
-  --upload-images    Upload images to Vercel Blob (requires BLOB_READ_WRITE_TOKEN)
+  --upload-images    Upload images to Vercel Blob (requires VERCEL_BLOB_READ_WRITE_TOKEN)
 
 Examples:
   # Upload from parser output folder
@@ -708,9 +708,9 @@ Behavior:
   - The script reads ONLY the output.json file and images/ folder
 
 Environment Variables:
-  BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for image uploads (optional)
+  VERCEL_BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token (required for image uploads)
   
-If BLOB_READ_WRITE_TOKEN is not set, book content will be uploaded but images will remain local.
+If the token is not set, book content will be uploaded but images will remain local.
 `);
 }
 

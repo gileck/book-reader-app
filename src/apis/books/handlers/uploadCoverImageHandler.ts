@@ -1,7 +1,7 @@
 import { ApiHandlerContext } from '@/apis/types';
 import { UploadCoverImagePayload, UploadCoverImageResponse } from '../types';
 import { books } from '@/server/database/collections';
-import { put } from '@vercel/blob';
+import * as vercelBlobSDK from '@/server/vercel-blob/sdk';
 
 export async function processUploadCoverImage(
     payload: UploadCoverImagePayload & { bookId: string },
@@ -16,9 +16,8 @@ export async function processUploadCoverImage(
         throw new Error('Book not found');
     }
 
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) {
-        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    if (!vercelBlobSDK.isConfigured()) {
+        throw new Error('Vercel Blob is not configured');
     }
 
     let buffer: Buffer;
@@ -50,15 +49,15 @@ export async function processUploadCoverImage(
     const bookFolderName = existingBook.title.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
     const blobKey = `books/${bookFolderName}/covers/${filename}`;
 
-    const blob = await put(blobKey, buffer, {
-        access: 'public',
+    const blobUrl = await vercelBlobSDK.uploadFile({
+        key: blobKey,
+        content: buffer,
         contentType: contentType || 'application/octet-stream',
-        token: token,
         allowOverwrite: true
     });
 
     const updatedBook = await books.updateBook(payload.bookId, {
-        coverImage: blob.url,
+        coverImage: blobUrl,
         updatedAt: new Date()
     });
 
@@ -68,7 +67,7 @@ export async function processUploadCoverImage(
 
     return {
         success: true,
-        coverImageUrl: blob.url
+        coverImageUrl: blobUrl
     };
 }
 

@@ -70,7 +70,7 @@ Parser v2 uses a flat chunk structure with typed chunks:
 
 ```bash
 # Required for image upload
-BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+VERCEL_BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
 ```
 
 ## Examples

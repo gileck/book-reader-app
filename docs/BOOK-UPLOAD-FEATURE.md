@@ -716,7 +716,7 @@ if (fs.existsSync(imagesDir)) {
             await put(blobKey, fileContent, {
                 access: 'public',
                 contentType,
-                token: BLOB_READ_WRITE_TOKEN,
+                token: VERCEL_BLOB_READ_WRITE_TOKEN,
                 addRandomSuffix: false,
                 allowOverwrite: true // Allow re-uploads
             });
@@ -1417,7 +1417,7 @@ if (upload.images && upload.images.length > 0) {
 // ✅ After: Use stored URLs from database
 if (upload.images && upload.images.length > 0) {
     const blobUrls = upload.images.map(img => img.url);
-    await del(blobUrls, { token: BLOB_READ_WRITE_TOKEN });
+    await del(blobUrls, { token: VERCEL_BLOB_READ_WRITE_TOKEN });
 }
 ```
 

@@ -161,7 +161,7 @@ Use the segmented control at the top to switch between:
 - **Authentication Required**: All endpoints require user authentication
 - **User Context**: Uses `context.userId` for access control
 - **Environment Variables**: 
-  - `BLOB_READ_WRITE_TOKEN` required for Vercel Blob operations
+  - `VERCEL_BLOB_READ_WRITE_TOKEN` required for Vercel Blob operations
   - AWS credentials for S3 operations
 
 ## Technical Details
@@ -259,7 +259,7 @@ To test the feature:
 Required environment variables:
 ```bash
 # For Vercel Blob operations
-BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+VERCEL_BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
 
 # For S3 operations (already configured)
 AWS_REGION=us-east-1

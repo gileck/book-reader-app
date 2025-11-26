@@ -237,14 +237,16 @@ Chapter (1) ──> (N) ReadingLogs (via chapterNumber)
 
 Images use a three-part URL construction system for maximum flexibility:
 
-1. **Vercel Blob Base Path** (hardcoded in app): `https://zdllzsw6qffmlxhs.public.blob.vercel-storage.com/books`
+1. **Vercel Blob Base Path** (from SDK): `https://adsrs5mrj2rqyazd.public.blob.vercel-storage.com/books`
 2. **Book Image Path** (stored in DB): `/The-Daily-Stoic/images/`
 3. **Image Filename** (stored in chunk): `page-005-image-1.jpg`
 
 **Full URL**: `VERCEL_BLOB_BASE_PATH + book.imageBaseURL + chunk.imageName`
-**Example**: `https://zdllzsw6qffmlxhs.public.blob.vercel-storage.com/books/The-Daily-Stoic/images/page-005-image-1.jpg`
+**Example**: `https://adsrs5mrj2rqyazd.public.blob.vercel-storage.com/books/The-Daily-Stoic/images/page-005-image-1.jpg`
 
-This design allows easy migration of the entire image storage system by changing only the hardcoded base path.
+This design allows easy migration of the entire image storage system by changing only the SDK configuration.
+
+**Vercel Blob Store**: book-reader-app-blob (Store ID: store_aDSRs5mRJ2rQyAzd)
 
 ## Book Upload Process
 
@@ -271,7 +273,7 @@ node upload-images-to-vercel-blob.js "/path/to/book/folder/" "Book Title"
 ### Required Environment Variables
 ```bash
 MONGODB_URI=mongodb://localhost:27017/book-reader-app
-BLOB_READ_WRITE_TOKEN=vercel_blob_token_here
+VERCEL_BLOB_READ_WRITE_TOKEN=vercel_blob_token_here
 ```
 
 ### Book Folder Structure

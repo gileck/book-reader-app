@@ -6,20 +6,20 @@ const { put } = require('@vercel/blob');
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 // Vercel Blob Configuration
-const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+const VERCEL_BLOB_TOKEN = process.env.VERCEL_BLOB_READ_WRITE_TOKEN;
 
 /**
  * Upload a file to Vercel Blob
  */
 async function uploadFileToBlob(key, content, contentType) {
-    if (!BLOB_READ_WRITE_TOKEN) {
-        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    if (!VERCEL_BLOB_TOKEN) {
+        throw new Error('VERCEL_BLOB_READ_WRITE_TOKEN environment variable is not set');
     }
 
     const blob = await put(key, content, {
         access: 'public',
         contentType: contentType || 'application/octet-stream',
-        token: BLOB_READ_WRITE_TOKEN,
+        token: VERCEL_BLOB_TOKEN,
         allowOverwrite: true
     });
 
@@ -398,10 +398,10 @@ const skipImages = process.argv.includes('--skip-images');
 
 if (skipImages) {
     console.log('⏭️  Skipping image upload (--skip-images flag provided)');
-} else if (BLOB_READ_WRITE_TOKEN && imagesPath) {
+} else if (VERCEL_BLOB_TOKEN && imagesPath) {
     await uploadImagesToBlob(finalBook, imagesPath, db);
-} else if (!BLOB_READ_WRITE_TOKEN && imagesPath) {
-    console.log('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
+} else if (!VERCEL_BLOB_TOKEN && imagesPath) {
+    console.log('⚠️  VERCEL_BLOB_READ_WRITE_TOKEN not set, skipping image upload to Vercel');
     console.log('   Images remain in local folder and imageUrl references are preserved');
 }
 
@@ -458,13 +458,13 @@ Behavior:
   - If a book with the same title already exists in the database, the script will update it
     with the new content, keeping the same book ID
   - If no book with that title exists, a new book will be created
-  - Images will be automatically uploaded to Vercel Blob if BLOB_READ_WRITE_TOKEN is set
+  - Images will be automatically uploaded to Vercel Blob if VERCEL_BLOB_READ_WRITE_TOKEN is set
   - This allows for re-parsing and updating books without losing bookmarks, reading progress, etc.
 
 Environment Variables:
-  BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for image uploads (optional)
+  VERCEL_BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for image uploads (optional)
   
-If BLOB_READ_WRITE_TOKEN is not set, book content will be uploaded but images will remain local.
+If VERCEL_BLOB_READ_WRITE_TOKEN is not set, book content will be uploaded but images will remain local.
 `);
 }
 

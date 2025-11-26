@@ -1,6 +1,6 @@
 import { getExpiredUploadsForUser, getRecentUploadsForUser } from '@/server/database/collections/bookUploads';
 import { deleteFile } from '@/server/s3/sdk';
-import { del } from '@vercel/blob';
+import * as vercelBlobSDK from '@/server/vercel-blob/sdk';
 import { deleteBookUpload } from '@/server/database/collections/bookUploads';
 import type { ApiHandlerContext, CleanupExpiredUploadsRequest, CleanupExpiredUploadsResponse } from '../types';
 import type { BookUpload } from '@/server/database/collections/bookUploads/types';
@@ -85,15 +85,14 @@ export async function cleanupExpiredUploadsHandler(
                     deletePromises.push(
                         (async () => {
                             try {
-                                const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-                                if (!BLOB_READ_WRITE_TOKEN) {
-                                    console.warn('⚠️  BLOB_READ_WRITE_TOKEN not set, skipping image deletion');
+                                if (!vercelBlobSDK.isConfigured()) {
+                                    console.warn('⚠️  Vercel Blob not configured, skipping image deletion');
                                     return;
                                 }
 
                                 const blobUrls = imagesToDelete.map(img => img.url);
                                 console.log(`🗑️  Deleting ${blobUrls.length} images from Vercel Blob`);
-                                await del(blobUrls, { token: BLOB_READ_WRITE_TOKEN });
+                                await vercelBlobSDK.deleteFiles(blobUrls);
                                 console.log(`✅ Deleted ${blobUrls.length} images from Vercel Blob`);
                             } catch (err) {
                                 console.error('Failed to delete Vercel Blob images:', err);

@@ -22,7 +22,7 @@ import {
     StorageStats
 } from './types';
 import { listFiles as listS3FilesSDK, deleteFile as deleteS3FileSDK } from '../../server/s3/sdk';
-import { list as listVercelBlobs, del as deleteVercelBlob } from '@vercel/blob';
+import * as vercelBlobSDK from '../../server/vercel-blob/sdk';
 
 /**
  * List files from S3 storage
@@ -60,13 +60,11 @@ export async function listVercelFiles(
         throw new Error('Authentication required');
     }
 
-    const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!BLOB_READ_WRITE_TOKEN) {
-        throw new Error('BLOB_READ_WRITE_TOKEN not configured');
+    if (!vercelBlobSDK.isConfigured()) {
+        throw new Error('Vercel Blob not configured');
     }
 
-    const result = await listVercelBlobs({
-        token: BLOB_READ_WRITE_TOKEN,
+    const result = await vercelBlobSDK.listFiles({
         prefix: params.prefix,
         cursor: params.cursor,
         limit: params.limit || 1000
@@ -78,7 +76,7 @@ export async function listVercelFiles(
     const foldersMap = new Map<string, { size: number; count: number }>();
 
     for (const blob of result.blobs) {
-        const relativePath = blob.pathname.replace(currentPrefix, '');
+        const relativePath = blob.key.replace(currentPrefix, '');
         
         // Skip if empty path
         if (!relativePath) continue;
@@ -87,10 +85,10 @@ export async function listVercelFiles(
 
         // If it's a file at current level (no more slashes)
         if (parts.length === 1) {
-            filesMap.set(blob.pathname, {
-                key: blob.pathname,
+            filesMap.set(blob.key, {
+                key: blob.key,
                 size: blob.size,
-                lastModified: new Date(blob.uploadedAt),
+                lastModified: blob.uploadedAt,
                 url: blob.url,
                 isFolder: false
             });
@@ -168,14 +166,11 @@ export async function deleteVercelFile(
         throw new Error('Authentication required');
     }
 
-    const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!BLOB_READ_WRITE_TOKEN) {
-        throw new Error('BLOB_READ_WRITE_TOKEN not configured');
+    if (!vercelBlobSDK.isConfigured()) {
+        throw new Error('Vercel Blob not configured');
     }
 
-    await deleteVercelBlob(params.url, {
-        token: BLOB_READ_WRITE_TOKEN
-    });
+    await vercelBlobSDK.deleteFile(params.url);
 
     return { success: true };
 }
@@ -201,19 +196,15 @@ export async function getStorageStats(
         };
         return { stats };
     } else {
-        const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-        if (!BLOB_READ_WRITE_TOKEN) {
-            throw new Error('BLOB_READ_WRITE_TOKEN not configured');
+        if (!vercelBlobSDK.isConfigured()) {
+            throw new Error('Vercel Blob not configured');
         }
 
-        const result = await listVercelBlobs({
-            token: BLOB_READ_WRITE_TOKEN,
-            limit: 1000
-        });
+        const blobStats = await vercelBlobSDK.getStorageStats();
 
         const stats: StorageStats = {
-            totalFiles: result.blobs.length,
-            totalSize: result.blobs.reduce((sum, blob) => sum + blob.size, 0),
+            totalFiles: blobStats.totalFiles,
+            totalSize: blobStats.totalSize,
             totalFolders: 0
         };
 

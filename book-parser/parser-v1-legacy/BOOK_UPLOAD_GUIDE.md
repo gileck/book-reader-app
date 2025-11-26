@@ -19,7 +19,7 @@ This guide covers the complete process of parsing a PDF book and uploading it to
 Create a `.env` file in the `book-parser/` directory:
 ```bash
 # Vercel Blob Storage
-BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+VERCEL_BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
 
 # Optional: Enable debug mode
 DEBUG_TEXT=/path/to/debug/output.txt
@@ -438,7 +438,7 @@ node upload-parsed-book.js /path/to/MyBook/ --force
 **6. Image upload fails:**
 ```bash
 # Check environment variables
-echo $BLOB_READ_WRITE_TOKEN
+echo $VERCEL_BLOB_READ_WRITE_TOKEN
 
 # Verify book title matches exactly
 node -e "

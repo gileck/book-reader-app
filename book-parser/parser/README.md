@@ -903,7 +903,7 @@ const { uploadParsedBookV2 } = require('./upload-book.js');
 // Upload book content only
 await uploadParsedBookV2('/path/to/parser/output');
 
-// Upload book content and images (requires BLOB_READ_WRITE_TOKEN)
+// Upload book content and images (requires VERCEL_BLOB_READ_WRITE_TOKEN)
 await uploadParsedBookV2('/path/to/parser/output', { uploadImages: true });
 ```
 

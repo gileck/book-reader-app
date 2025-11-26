@@ -6,20 +6,20 @@ const { put } = require('@vercel/blob');
 require('dotenv').config();
 
 // Vercel Blob Configuration
-const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+const VERCEL_BLOB_TOKEN = process.env.VERCEL_BLOB_READ_WRITE_TOKEN;
 
 /**
  * Upload a file to Vercel Blob
  */
 async function uploadFileToBlob(key, content, contentType) {
-    if (!BLOB_READ_WRITE_TOKEN) {
-        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
+    if (!VERCEL_BLOB_TOKEN) {
+        throw new Error('VERCEL_BLOB_READ_WRITE_TOKEN environment variable is not set');
     }
 
     const blob = await put(key, content, {
         access: 'public',
         contentType: contentType || 'application/octet-stream',
-        token: BLOB_READ_WRITE_TOKEN,
+        token: VERCEL_BLOB_TOKEN,
         allowOverwrite: true
     });
 
@@ -235,7 +235,7 @@ Book folder structure:
   └── config.json       # Book configuration
 
 Environment Variables Required:
-  BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for uploads
+  VERCEL_BLOB_READ_WRITE_TOKEN    Vercel Blob read-write token for uploads
 
 The script will:
 1. Upload all images from the images/ folder to Vercel Blob
@@ -265,9 +265,9 @@ async function main() {
         }
 
         // Check for required environment variables
-        if (!process.env.BLOB_READ_WRITE_TOKEN) {
-            console.error('❌ BLOB_READ_WRITE_TOKEN not found in environment variables');
-            console.error('   Please set BLOB_READ_WRITE_TOKEN in .env file');
+        if (!process.env.VERCEL_BLOB_READ_WRITE_TOKEN) {
+            console.error('❌ VERCEL_BLOB_READ_WRITE_TOKEN not found in environment variables');
+            console.error('   Please set VERCEL_BLOB_READ_WRITE_TOKEN in .env file');
             process.exit(1);
         }
 

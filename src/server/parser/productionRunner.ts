@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next/types';
 import { getBookUpload, updateBookUpload } from '../database/collections/bookUploads';
 import { uploadFile } from '../s3/sdk';
-import { put } from '@vercel/blob';
+import * as vercelBlobSDK from '../vercel-blob/sdk';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -10,24 +10,15 @@ import * as path from 'path';
 const parser = require('../../../book-parser/parser/parser');
 
 /**
- * Upload a file to Vercel Blob
+ * Upload a file to Vercel Blob using the SDK
  */
 async function uploadFileToBlob(key: string, content: Buffer, contentType: string): Promise<string> {
-    const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
-    
-    if (!BLOB_READ_WRITE_TOKEN) {
-        throw new Error('BLOB_READ_WRITE_TOKEN environment variable is not set');
-    }
-
-    const blob = await put(key, content, {
-        access: 'public',
+    return vercelBlobSDK.uploadFile({
+        key,
+        content,
         contentType: contentType || 'application/octet-stream',
-        token: BLOB_READ_WRITE_TOKEN,
-        addRandomSuffix: false,
-        allowOverwrite: true // Allow overwriting existing blobs
+        allowOverwrite: true
     });
-
-    return blob.url;
 }
 
 /**
