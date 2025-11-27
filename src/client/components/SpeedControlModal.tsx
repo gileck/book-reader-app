@@ -52,11 +52,11 @@ const getTierConfig = (provider: TtsProvider, tier: string): TierConfig => {
 
 const groupVoicesByTier = (voices: Voice[], provider: TtsProvider) => {
     const groups: Record<string, { config: TierConfig; voices: Voice[] }> = {};
-    const tierOrder = provider === 'google' 
+    const tierOrder = provider === 'google'
         ? ['chirp3-hd', 'studio', 'neural2', 'wavenet', 'standard']
-        : provider === 'polly' 
-        ? ['long-form', 'generative', 'neural', 'standard'] 
-        : ['neural'];
+        : provider === 'polly'
+            ? ['long-form', 'generative', 'neural', 'standard']
+            : ['neural'];
 
     tierOrder.forEach(tier => {
         groups[tier] = { config: getTierConfig(provider, tier), voices: [] };
