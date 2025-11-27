@@ -4,7 +4,7 @@ export interface TtsErrorRecord {
     _id?: ObjectId;
     id: string;
     timestamp: Date;
-    provider: 'google' | 'polly' | 'elevenlabs' | 'gemini';
+    provider: 'google' | 'polly' | 'elevenlabs';
     voiceId: string;
     textLength: number;
     errorCode: string;

@@ -14,7 +14,7 @@ export interface TTSConfig {
     speakingRate?: number;
     pitch?: number;
     volumeGainDb?: number;
-    voiceTier?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite';
+    voiceTier?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative';
 }
 
 export abstract class BaseTtsAdapter {

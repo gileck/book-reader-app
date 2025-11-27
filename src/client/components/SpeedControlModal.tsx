@@ -45,14 +45,6 @@ const getTierConfig = (provider: TtsProvider, tier: string): TierConfig => {
             case 'neural': return { key: 'neural', label: 'Neural', price: '$16/1M', freeLimit: '1M free', isPremium: true };
             default: return { key: 'standard', label: 'Standard', price: '$4/1M', freeLimit: '5M free', isPremium: false };
         }
-    } else if (provider === 'gemini') {
-        // Gemini TTS uses token-based pricing (input + output tokens)
-        // Approximate per-character costs shown for comparison
-        switch (tier) {
-            case 'gemini-pro': return { key: 'gemini-pro', label: 'Pro (HQ)', price: '~$21/1M', freeLimit: 'No free tier', isPremium: true };
-            case 'gemini-flash-lite': return { key: 'gemini-flash-lite', label: 'Flash Lite', price: '~$10/1M', freeLimit: 'No free tier', isPremium: false };
-            default: return { key: 'gemini-flash', label: 'Flash', price: '~$10/1M', freeLimit: 'No free tier', isPremium: false };
-        }
     } else {
         return { key: 'neural', label: 'Premium AI', price: '~$0.22/1K', freeLimit: '10K free', isPremium: true };
     }
@@ -60,13 +52,11 @@ const getTierConfig = (provider: TtsProvider, tier: string): TierConfig => {
 
 const groupVoicesByTier = (voices: Voice[], provider: TtsProvider) => {
     const groups: Record<string, { config: TierConfig; voices: Voice[] }> = {};
-    const tierOrder = provider === 'google'
+    const tierOrder = provider === 'google' 
         ? ['chirp3-hd', 'studio', 'neural2', 'wavenet', 'standard']
-        : provider === 'polly'
-            ? ['long-form', 'generative', 'neural', 'standard']
-            : provider === 'gemini'
-                ? ['gemini-pro', 'gemini-flash', 'gemini-flash-lite']
-                : ['neural'];
+        : provider === 'polly' 
+        ? ['long-form', 'generative', 'neural', 'standard'] 
+        : ['neural'];
 
     tierOrder.forEach(tier => {
         groups[tier] = { config: getTierConfig(provider, tier), voices: [] };
@@ -599,7 +589,7 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
 
                         {/* Provider Segmented Control */}
                         <div style={styles.segmentedControl}>
-                            {(['google', 'gemini', 'polly', 'elevenlabs'] as TtsProvider[]).map(provider => (
+                            {(['google', 'polly', 'elevenlabs'] as TtsProvider[]).map(provider => (
                                 <button
                                     key={provider}
                                     style={{
@@ -608,7 +598,7 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                                     }}
                                     onClick={() => handleProviderClick(provider)}
                                 >
-                                    {provider === 'google' ? 'Google' : provider === 'gemini' ? 'Gemini' : provider === 'polly' ? 'Polly' : 'ElevenLabs'}
+                                    {provider === 'google' ? 'Google' : provider === 'polly' ? 'Polly' : 'ElevenLabs'}
                                 </button>
                             ))}
                         </div>

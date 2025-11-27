@@ -1,9 +1,9 @@
 export interface TtsUsageRecord {
   id: string;
   timestamp: string;
-  provider: 'google' | 'polly' | 'elevenlabs' | 'gemini';
+  provider: 'google' | 'polly' | 'elevenlabs';
   voiceId: string;
-  voiceType: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite';
+  voiceType: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative';
   textLength: number;
   audioLength: number;
   cost: number;
@@ -14,7 +14,7 @@ export interface TtsUsageRecord {
 export interface TtsErrorRecord {
   id: string;
   timestamp: string;
-  provider: 'google' | 'polly' | 'elevenlabs' | 'gemini';
+  provider: 'google' | 'polly' | 'elevenlabs';
   voiceId: string;
   textLength: number;
   errorCode: string;
@@ -157,10 +157,5 @@ export interface FreeTierMonthUsage {
   };
   elevenlabs: {
     total: number;
-  };
-  gemini: {
-    flash: number;
-    pro: number;
-    flashLite: number;
   };
 }

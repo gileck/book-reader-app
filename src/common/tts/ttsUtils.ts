@@ -2,18 +2,17 @@ export interface Voice {
     id: string;
     name: string;
     gender: 'Male' | 'Female';
-    tier: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite';
+    tier: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative';
     /**
      * Whether this voice supports SSML <mark> tags for word-level timing.
      * - Google: Studio and Chirp3-HD voices do NOT support marks
      * - AWS Polly: Generative voices do NOT support marks (speech marks unavailable)
      * - ElevenLabs: Uses character alignment API, not SSML marks
-     * - Gemini: Does NOT support SSML marks
      */
     supportsSsmlMarks: boolean;
 }
 
-export type TtsProvider = 'google' | 'polly' | 'elevenlabs' | 'gemini';
+export type TtsProvider = 'google' | 'polly' | 'elevenlabs';
 
 /**
  * Voice mappings for all TTS providers (Updated November 2025)
@@ -128,31 +127,6 @@ export const VOICE_MAPPINGS: Record<TtsProvider, Voice[]> = {
         { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel', gender: 'Male', tier: 'neural', supportsSsmlMarks: false },
         { id: 'N2lVS1w4EtoT3dr4eOWO', name: 'Callum', gender: 'Male', tier: 'neural', supportsSsmlMarks: false },
         { id: 'XB0fDUnXU5powFXDhCwa', name: 'Charlotte', gender: 'Female', tier: 'neural', supportsSsmlMarks: false }
-    ],
-    gemini: [
-        // Gemini 2.5 Flash TTS voices (~$8/1M chars) - Fast, cost-effective - NO SSML mark support
-        { id: 'gemini-Puck', name: 'Puck (Upbeat)', gender: 'Male', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Charon', name: 'Charon (Informative)', gender: 'Male', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Kore', name: 'Kore (Firm)', gender: 'Female', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Fenrir', name: 'Fenrir (Excitable)', gender: 'Male', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Aoede', name: 'Aoede (Breezy)', gender: 'Female', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Leda', name: 'Leda (Youthful)', gender: 'Female', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Orus', name: 'Orus (Firm)', gender: 'Male', tier: 'gemini-flash', supportsSsmlMarks: false },
-        { id: 'gemini-Zephyr', name: 'Zephyr (Bright)', gender: 'Female', tier: 'gemini-flash', supportsSsmlMarks: false },
-
-        // Gemini 2.5 Pro TTS voices (~$30/1M chars) - Higher quality - NO SSML mark support
-        { id: 'gemini-pro-Puck', name: 'Puck Pro', gender: 'Male', tier: 'gemini-pro', supportsSsmlMarks: false },
-        { id: 'gemini-pro-Charon', name: 'Charon Pro', gender: 'Male', tier: 'gemini-pro', supportsSsmlMarks: false },
-        { id: 'gemini-pro-Kore', name: 'Kore Pro', gender: 'Female', tier: 'gemini-pro', supportsSsmlMarks: false },
-        { id: 'gemini-pro-Fenrir', name: 'Fenrir Pro', gender: 'Male', tier: 'gemini-pro', supportsSsmlMarks: false },
-        { id: 'gemini-pro-Aoede', name: 'Aoede Pro', gender: 'Female', tier: 'gemini-pro', supportsSsmlMarks: false },
-        { id: 'gemini-pro-Zephyr', name: 'Zephyr Pro', gender: 'Female', tier: 'gemini-pro', supportsSsmlMarks: false },
-
-        // Gemini 2.5 Flash Lite TTS voices (~$4/1M chars) - Budget option, free preview - NO SSML mark support
-        { id: 'gemini-lite-Puck', name: 'Puck Lite', gender: 'Male', tier: 'gemini-flash-lite', supportsSsmlMarks: false },
-        { id: 'gemini-lite-Charon', name: 'Charon Lite', gender: 'Male', tier: 'gemini-flash-lite', supportsSsmlMarks: false },
-        { id: 'gemini-lite-Kore', name: 'Kore Lite', gender: 'Female', tier: 'gemini-flash-lite', supportsSsmlMarks: false },
-        { id: 'gemini-lite-Aoede', name: 'Aoede Lite', gender: 'Female', tier: 'gemini-flash-lite', supportsSsmlMarks: false }
     ]
 };
 
@@ -202,8 +176,6 @@ export const getDefaultVoiceForProvider = (provider: TtsProvider): string => {
             return 'Joanna';
         case 'elevenlabs':
             return 'pNInz6obpgDQGcFmaJgB'; // Adam voice
-        case 'gemini':
-            return 'gemini-Puck'; // Puck voice (upbeat)
         case 'google':
         default:
             return 'en-US-Neural2-A'; // Emma voice

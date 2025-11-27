@@ -157,8 +157,7 @@ export function TtsUsage() {
   const currentMonthUsage = summary?.freeTierMonthUsage || {
     polly: { standard: 0, neural: 0, longform: 0, generative: 0 },
     google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0, chirp3hd: 0 },
-    elevenlabs: { total: 0 },
-    gemini: { flash: 0, pro: 0, flashLite: 0 }
+    elevenlabs: { total: 0 }
   };
   const formatNumber = (num: number) => num.toLocaleString();
   const formatPercentage = (used: number, limit: number) => Math.min((used / limit) * 100, 100);
@@ -268,39 +267,6 @@ export function TtsUsage() {
         const exceededUsage = Math.max(0, monthlyUsage - FREE_TIER_LIMITS.elevenlabs.total);
 
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
-          const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
-          const adjustedCost = exceededUsage * originalCostPerChar;
-
-          adjustedProviderStats.usageByVoiceType[voiceType] = {
-            ...voiceStats,
-            totalCost: adjustedCost
-          };
-          adjustedProviderStats.totalCost += adjustedCost;
-        });
-      } else if (provider === 'gemini') {
-        // Gemini TTS free tier calculation
-        Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
-          let freeLimit = 0;
-          let monthlyUsage = 0;
-          switch (voiceType) {
-            case 'gemini-flash':
-              freeLimit = FREE_TIER_LIMITS.gemini.flash;
-              monthlyUsage = currentMonthUsage.gemini.flash;
-              break;
-            case 'gemini-pro':
-              freeLimit = FREE_TIER_LIMITS.gemini.pro;
-              monthlyUsage = currentMonthUsage.gemini.pro;
-              break;
-            case 'gemini-flash-lite':
-              freeLimit = FREE_TIER_LIMITS.gemini.flashLite;
-              monthlyUsage = currentMonthUsage.gemini.flashLite;
-              break;
-            default:
-              freeLimit = FREE_TIER_LIMITS.gemini.flash;
-              monthlyUsage = currentMonthUsage.gemini.flash;
-          }
-
-          const exceededUsage = Math.max(0, monthlyUsage - freeLimit);
           const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
           const adjustedCost = exceededUsage * originalCostPerChar;
 

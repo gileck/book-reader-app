@@ -43,13 +43,6 @@ function getVoiceTypeKey(provider: TtsProvider, voiceTier: string): string {
       case 'generative': return 'generative';
       default: return 'standard';
     }
-  } else if (provider === 'gemini') {
-    switch (voiceTier) {
-      case 'gemini-flash': return 'flash';
-      case 'gemini-pro': return 'pro';
-      case 'gemini-flash-lite': return 'flashLite';
-      default: return 'flash';
-    }
   }
   return 'total'; // elevenlabs
 }
@@ -136,28 +129,6 @@ export function getVoiceTypeUsage(
     usedCharacters = freeTierMonthUsage.elevenlabs.total;
     freeLimit = FREE_TIER_LIMITS.elevenlabs.total;
     pricePerChar = PRICING_PER_CHARACTER.elevenlabs.total;
-  } else if (provider === 'gemini') {
-    switch (voiceTypeKey) {
-      case 'flash':
-        usedCharacters = freeTierMonthUsage.gemini.flash;
-        freeLimit = FREE_TIER_LIMITS.gemini.flash;
-        pricePerChar = PRICING_PER_CHARACTER.gemini.flash;
-        break;
-      case 'pro':
-        usedCharacters = freeTierMonthUsage.gemini.pro;
-        freeLimit = FREE_TIER_LIMITS.gemini.pro;
-        pricePerChar = PRICING_PER_CHARACTER.gemini.pro;
-        break;
-      case 'flashLite':
-        usedCharacters = freeTierMonthUsage.gemini.flashLite;
-        freeLimit = FREE_TIER_LIMITS.gemini.flashLite;
-        pricePerChar = PRICING_PER_CHARACTER.gemini.flashLite;
-        break;
-      default:
-        usedCharacters = freeTierMonthUsage.gemini.flash;
-        freeLimit = FREE_TIER_LIMITS.gemini.flash;
-        pricePerChar = PRICING_PER_CHARACTER.gemini.flash;
-    }
   }
 
   const percentageUsed = freeLimit > 0 ? Math.min((usedCharacters / freeLimit) * 100, 100) : 0;
@@ -210,14 +181,6 @@ export function getTotalCostBeyondFreeTier(
   // ElevenLabs
   const elevenlabs = getVoiceTypeUsage('elevenlabs', 'neural', freeTierMonthUsage);
   totalCost += elevenlabs.costBeyondFreeTier;
-
-  // Gemini - all voice tiers (no free tier, usage-based)
-  const geminiFlash = getVoiceTypeUsage('gemini', 'gemini-flash', freeTierMonthUsage);
-  const geminiPro = getVoiceTypeUsage('gemini', 'gemini-pro', freeTierMonthUsage);
-  const geminiFlashLite = getVoiceTypeUsage('gemini', 'gemini-flash-lite', freeTierMonthUsage);
-  totalCost += geminiFlash.costBeyondFreeTier + 
-               geminiPro.costBeyondFreeTier +
-               geminiFlashLite.costBeyondFreeTier;
 
   return totalCost;
 }

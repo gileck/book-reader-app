@@ -5,7 +5,7 @@ import { type TtsProvider } from '../../common/tts/ttsUtils';
 import { awsCostExplorer } from '../aws-cost-explorer';
 
 // Helper function to determine voice type from voiceId
-function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite' {
+function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' {
   if (provider === 'polly') {
     // Generative voices ($30/1M chars)
     const generativeVoices = ['Ruth'];
@@ -37,11 +37,6 @@ function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'wav
   } else if (provider === 'elevenlabs') {
     // ElevenLabs uses a flat tier model
     return 'neural';
-  } else if (provider === 'gemini') {
-    // Gemini TTS voice tiers
-    if (voiceId.includes('-pro-')) return 'gemini-pro';
-    if (voiceId.includes('-lite-')) return 'gemini-flash-lite';
-    return 'gemini-flash'; // Default to flash
   }
 
   return 'standard'; // fallback
@@ -54,7 +49,7 @@ export const addTtsUsageRecord = async (
   audioLength: number,
   cost: number,
   endpoint: string = 'unknown',
-  voiceType?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite',
+  voiceType?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative',
   userId?: string,
   fromCache?: boolean
 ): Promise<ttsUsage.TtsUsageRecord> => {
@@ -202,7 +197,6 @@ async function getFreeTierMonthUsage(rangeDays: 30 | 60 | 90 | 'current-month' |
   const polly = { standard: 0, neural: 0, longform: 0, generative: 0 };
   const google = { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0, chirp3hd: 0 };
   const elevenlabs = { total: 0 };
-  const gemini = { flash: 0, pro: 0, flashLite: 0 };
 
   monthRecords.forEach((record) => {
     if (record.provider === 'polly') {
@@ -219,14 +213,10 @@ async function getFreeTierMonthUsage(rangeDays: 30 | 60 | 90 | 'current-month' |
       else google.neural2 += record.textLength; // Default to neural2 for unknown Google tiers
     } else if (record.provider === 'elevenlabs') {
       elevenlabs.total += record.textLength;
-    } else if (record.provider === 'gemini') {
-      if (record.voiceType === 'gemini-pro') gemini.pro += record.textLength;
-      else if (record.voiceType === 'gemini-flash-lite') gemini.flashLite += record.textLength;
-      else gemini.flash += record.textLength; // Default to flash
     }
   });
 
-  return { polly, google, elevenlabs, gemini };
+  return { polly, google, elevenlabs };
 }
 
 export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<TtsUsageSummary> => {
@@ -270,7 +260,7 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     costSavingsFromCache: 0,
     usageByProvider: {},
     usageByDay: {},
-    freeTierMonthUsage: { polly: { standard: 0, neural: 0, longform: 0, generative: 0 }, google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0, chirp3hd: 0 }, elevenlabs: { total: 0 }, gemini: { flash: 0, pro: 0, flashLite: 0 } }
+    freeTierMonthUsage: { polly: { standard: 0, neural: 0, longform: 0, generative: 0 }, google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0, chirp3hd: 0 }, elevenlabs: { total: 0 } }
   };
 
   records.forEach(record => {

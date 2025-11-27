@@ -4,9 +4,9 @@ export interface TtsUsageRecord {
     _id?: ObjectId;
     id: string;
     timestamp: Date;
-    provider: 'google' | 'polly' | 'elevenlabs' | 'gemini';
+    provider: 'google' | 'polly' | 'elevenlabs';
     voiceId: string;
-    voiceType: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite';
+    voiceType: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative';
     textLength: number;
     audioLength: number;
     cost: number;
