@@ -117,11 +117,14 @@ export class ElevenLabsAdapter extends BaseTtsAdapter {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private calculateCost(textLength: number, _audioLength: number): number {
-        // ElevenLabs pricing (approximate)
-        // Creator plan: $5/month for 30,000 characters
-        // Pro plan: $11/month for 100,000 characters  
-        // Assuming pay-per-use model: ~$0.00018 per character
-        return textLength * 0.00018;
+        // ElevenLabs pricing (November 2025)
+        // https://elevenlabs.io/pricing
+        // Free: 10,000 chars/month
+        // Starter: $5/month for 30,000 characters ($0.000167/char)
+        // Creator: $22/month for 100,000 characters ($0.00022/char)
+        // Pro: $99/month for 500,000 characters ($0.000198/char)
+        // Using Creator plan rate as reference: ~$0.00022 per character
+        return textLength * 0.00022;
     }
 
     async getSupportedVoices(): Promise<string[]> {

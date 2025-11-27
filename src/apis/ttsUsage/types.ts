@@ -3,7 +3,7 @@ export interface TtsUsageRecord {
   timestamp: string;
   provider: 'google' | 'polly' | 'elevenlabs';
   voiceId: string;
-  voiceType: 'standard' | 'neural' | 'long-form' | 'generative';
+  voiceType: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'long-form' | 'generative';
   textLength: number;
   audioLength: number;
   cost: number;
@@ -44,6 +44,7 @@ export interface AwsTtsData {
     standard: number;
     neural: number;
     longform: number;
+    generative: number;
   };
 }
 
@@ -144,10 +145,14 @@ export interface FreeTierMonthUsage {
     standard: number;
     neural: number;
     longform: number;
+    generative: number;
   };
   google: {
     standard: number;
+    wavenet: number;
     neural2: number;
+    polyglot: number;
+    studio: number;
   };
   elevenlabs: {
     total: number;

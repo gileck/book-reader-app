@@ -135,7 +135,7 @@ export function TtsUsage() {
 
   const last7DaysData = getLast7Days();
   const weeklyUsageData = aggregateWeeklyUsage();
-  
+
   // Calculate number of weeks based on range type
   const numberOfWeeks = (() => {
     if (rangeDays === 'current-month') {
@@ -155,8 +155,8 @@ export function TtsUsage() {
 
   // Use server-provided calendar-month aggregate for Free Tier usage
   const currentMonthUsage = summary?.freeTierMonthUsage || {
-    polly: { standard: 0, neural: 0, longform: 0 },
-    google: { standard: 0, neural2: 0 },
+    polly: { standard: 0, neural: 0, longform: 0, generative: 0 },
+    google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0 },
     elevenlabs: { total: 0 }
   };
   const formatNumber = (num: number) => num.toLocaleString();
@@ -182,16 +182,31 @@ export function TtsUsage() {
         // Amazon Polly free tier calculation
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           let freeLimit = 0;
+          let monthlyUsage = 0;
           switch (voiceType) {
-            case 'standard': freeLimit = FREE_TIER_LIMITS.polly.standard; break;
-            case 'neural': freeLimit = FREE_TIER_LIMITS.polly.neural; break;
-            case 'long-form': freeLimit = FREE_TIER_LIMITS.polly.longform; break;
-            default: freeLimit = 0;
+            case 'standard':
+              freeLimit = FREE_TIER_LIMITS.polly.standard;
+              monthlyUsage = currentMonthUsage.polly.standard;
+              break;
+            case 'neural':
+              freeLimit = FREE_TIER_LIMITS.polly.neural;
+              monthlyUsage = currentMonthUsage.polly.neural;
+              break;
+            case 'long-form':
+              freeLimit = FREE_TIER_LIMITS.polly.longform;
+              monthlyUsage = currentMonthUsage.polly.longform;
+              break;
+            case 'generative':
+              freeLimit = FREE_TIER_LIMITS.polly.generative;
+              monthlyUsage = currentMonthUsage.polly.generative;
+              break;
+            default:
+              freeLimit = 0;
+              monthlyUsage = 0;
           }
 
-          const monthlyUsage = currentMonthUsage.polly[voiceType as keyof typeof currentMonthUsage.polly] || 0;
           const exceededUsage = Math.max(0, monthlyUsage - freeLimit);
-          const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
+          const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
           const adjustedCost = exceededUsage * originalCostPerChar;
 
           adjustedProviderStats.usageByVoiceType[voiceType] = {
@@ -204,17 +219,36 @@ export function TtsUsage() {
         // Google TTS free tier calculation
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
           let freeLimit = 0;
-          if (voiceType === 'standard') {
-            freeLimit = FREE_TIER_LIMITS.google.standard;
-          } else {
-            freeLimit = FREE_TIER_LIMITS.google.neural2; // Neural2/WaveNet voices
+          let monthlyUsage = 0;
+          switch (voiceType) {
+            case 'standard':
+              freeLimit = FREE_TIER_LIMITS.google.standard;
+              monthlyUsage = currentMonthUsage.google.standard;
+              break;
+            case 'wavenet':
+              freeLimit = FREE_TIER_LIMITS.google.wavenet;
+              monthlyUsage = currentMonthUsage.google.wavenet;
+              break;
+            case 'neural2':
+            case 'neural': // Legacy mapping
+              freeLimit = FREE_TIER_LIMITS.google.neural2;
+              monthlyUsage = currentMonthUsage.google.neural2;
+              break;
+            case 'polyglot':
+              freeLimit = FREE_TIER_LIMITS.google.polyglot;
+              monthlyUsage = currentMonthUsage.google.polyglot;
+              break;
+            case 'studio':
+              freeLimit = FREE_TIER_LIMITS.google.studio;
+              monthlyUsage = currentMonthUsage.google.studio;
+              break;
+            default:
+              freeLimit = FREE_TIER_LIMITS.google.standard;
+              monthlyUsage = currentMonthUsage.google.standard;
           }
 
-          const monthlyUsage = voiceType === 'standard'
-            ? currentMonthUsage.google.standard
-            : currentMonthUsage.google.neural2;
           const exceededUsage = Math.max(0, monthlyUsage - freeLimit);
-          const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
+          const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
           const adjustedCost = exceededUsage * originalCostPerChar;
 
           adjustedProviderStats.usageByVoiceType[voiceType] = {
@@ -229,7 +263,7 @@ export function TtsUsage() {
         const exceededUsage = Math.max(0, monthlyUsage - FREE_TIER_LIMITS.elevenlabs.total);
 
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
-          const originalCostPerChar = voiceStats.totalCost / voiceStats.totalTextLength;
+          const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
           const adjustedCost = exceededUsage * originalCostPerChar;
 
           adjustedProviderStats.usageByVoiceType[voiceType] = {
@@ -371,8 +405,8 @@ export function TtsUsage() {
                           : '0.0'}%
                       </div>
                       <div className={styles.statNote}>
-                        {summary.usageByProvider['polly'] && summary.usageByProvider['polly'].totalCost > summary.awsData.totalCost 
-                          ? 'Over-estimated' 
+                        {summary.usageByProvider['polly'] && summary.usageByProvider['polly'].totalCost > summary.awsData.totalCost
+                          ? 'Over-estimated'
                           : 'Under-estimated'}
                       </div>
                     </div>
@@ -399,9 +433,10 @@ export function TtsUsage() {
                             </div>
                             {Object.entries(data.usageTypes).length > 0 && (
                               <div className={styles.awsDayTypes}>
-                                {Object.keys(data.usageTypes).map(type => 
-                                  type.includes('LongForm') ? 'LongForm' : 
-                                  type.includes('Neural') ? 'Neural' : 'Standard'
+                                {Object.keys(data.usageTypes).map(type =>
+                                  type.includes('LongForm') ? 'LongForm' :
+                                    type.includes('Generative') ? 'Generative' :
+                                      type.includes('Neural') ? 'Neural' : 'Standard'
                                 ).join(', ')}
                               </div>
                             )}
@@ -414,11 +449,11 @@ export function TtsUsage() {
                     <div className={`${styles.detailCard} ${styles.awsFreeTierCard}`}>
                       <h4 className={styles.awsFreeTierTitle}>
                         AWS Free Tier Usage (
-                        {rangeDays === 'current-month' 
+                        {rangeDays === 'current-month'
                           ? `${getCurrentMonthName()}`
                           : rangeDays === 'previous-month'
-                          ? `${getPreviousMonthName()}`
-                          : `${getCurrentMonthName()}`})
+                            ? `${getPreviousMonthName()}`
+                            : `${getCurrentMonthName()}`})
                       </h4>
                       <div className={styles.awsVoiceTypeGrid}>
                         {/* Standard Voice */}
@@ -433,7 +468,7 @@ export function TtsUsage() {
                                 <div
                                   className={`${styles.awsProgressFill} ${styles[
                                     summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.9 ? 'danger' :
-                                    summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.7 ? 'warning' : 'safe'
+                                      summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.7 ? 'warning' : 'safe'
                                   ]}`}
                                   style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard) * 100)}%` }}
                                 ></div>
@@ -444,7 +479,7 @@ export function TtsUsage() {
                                 </span>
                                 <span className={`${styles.awsPercentageText} ${styles[
                                   summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.9 ? 'danger' :
-                                  summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.7 ? 'warning' : 'safe'
+                                    summary.awsData.currentMonthFreeTier.standard / FREE_TIER_LIMITS.polly.standard > 0.7 ? 'warning' : 'safe'
                                 ]}`}>
                                   {formatPercentage(summary.awsData.currentMonthFreeTier.standard, FREE_TIER_LIMITS.polly.standard).toFixed(1)}%
                                 </span>
@@ -464,7 +499,7 @@ export function TtsUsage() {
                                 <div
                                   className={`${styles.awsProgressFill} ${styles[
                                     summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.9 ? 'danger' :
-                                    summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.7 ? 'warning' : 'safe'
+                                      summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.7 ? 'warning' : 'safe'
                                   ]}`}
                                   style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural) * 100)}%` }}
                                 ></div>
@@ -475,7 +510,7 @@ export function TtsUsage() {
                                 </span>
                                 <span className={`${styles.awsPercentageText} ${styles[
                                   summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.9 ? 'danger' :
-                                  summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.7 ? 'warning' : 'safe'
+                                    summary.awsData.currentMonthFreeTier.neural / FREE_TIER_LIMITS.polly.neural > 0.7 ? 'warning' : 'safe'
                                 ]}`}>
                                   {formatPercentage(summary.awsData.currentMonthFreeTier.neural, FREE_TIER_LIMITS.polly.neural).toFixed(1)}%
                                 </span>
@@ -495,7 +530,7 @@ export function TtsUsage() {
                                 <div
                                   className={`${styles.awsProgressFill} ${styles[
                                     summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.9 ? 'danger' :
-                                    summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.7 ? 'warning' : 'safe'
+                                      summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.7 ? 'warning' : 'safe'
                                   ]}`}
                                   style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform) * 100)}%` }}
                                 ></div>
@@ -506,9 +541,40 @@ export function TtsUsage() {
                                 </span>
                                 <span className={`${styles.awsPercentageText} ${styles[
                                   summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.9 ? 'danger' :
-                                  summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.7 ? 'warning' : 'safe'
+                                    summary.awsData.currentMonthFreeTier.longform / FREE_TIER_LIMITS.polly.longform > 0.7 ? 'warning' : 'safe'
                                 ]}`}>
                                   {formatPercentage(summary.awsData.currentMonthFreeTier.longform, FREE_TIER_LIMITS.polly.longform).toFixed(1)}%
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Generative Voice */}
+                        {summary.awsData.currentMonthFreeTier.generative > 0 && (
+                          <div className={styles.awsVoiceTypeItem}>
+                            <div className={styles.awsVoiceTypeHeader}>
+                              <span className={styles.awsVoiceTypeName}>Generative</span>
+                              <span className={styles.awsVoiceTypeBadge}>Free</span>
+                            </div>
+                            <div className={styles.awsProgressContainer}>
+                              <div className={styles.awsProgressBar}>
+                                <div
+                                  className={`${styles.awsProgressFill} ${styles[
+                                    summary.awsData.currentMonthFreeTier.generative / FREE_TIER_LIMITS.polly.generative > 0.9 ? 'danger' :
+                                      summary.awsData.currentMonthFreeTier.generative / FREE_TIER_LIMITS.polly.generative > 0.7 ? 'warning' : 'safe'
+                                  ]}`}
+                                  style={{ width: `${Math.min(100, (summary.awsData.currentMonthFreeTier.generative / FREE_TIER_LIMITS.polly.generative) * 100)}%` }}
+                                ></div>
+                              </div>
+                              <div className={styles.awsProgressText}>
+                                <span className={styles.awsUsageText}>
+                                  {formatNumber(Math.round(summary.awsData.currentMonthFreeTier.generative))} / {formatNumber(FREE_TIER_LIMITS.polly.generative)} chars
+                                </span>
+                                <span className={`${styles.awsPercentageText} ${styles[
+                                  summary.awsData.currentMonthFreeTier.generative / FREE_TIER_LIMITS.polly.generative > 0.9 ? 'danger' :
+                                    summary.awsData.currentMonthFreeTier.generative / FREE_TIER_LIMITS.polly.generative > 0.7 ? 'warning' : 'safe'
+                                ]}`}>
+                                  {formatPercentage(summary.awsData.currentMonthFreeTier.generative, FREE_TIER_LIMITS.polly.generative).toFixed(1)}%
                                 </span>
                               </div>
                             </div>
@@ -678,11 +744,11 @@ export function TtsUsage() {
           <section className={styles.freeTierSection}>
             <div className={styles.freeTierCard}>
               <h3 className={styles.cardTitle}>
-                Free Tier Usage - {rangeDays === 'current-month' 
+                Free Tier Usage - {rangeDays === 'current-month'
                   ? getCurrentMonthName()
                   : rangeDays === 'previous-month'
-                  ? getPreviousMonthName()
-                  : getCurrentMonthName()}
+                    ? getPreviousMonthName()
+                    : getCurrentMonthName()}
               </h3>
               <div className={styles.freeTierInfo}>
                 <p className={styles.freeTierDescription}>
@@ -807,6 +873,45 @@ export function TtsUsage() {
                       </div>
                     )}
                   </div>
+
+                  <div className={styles.voiceTypeItem}>
+                    <div className={styles.voiceTypeHeader}>
+                      <span className={styles.voiceTypeName}>Generative Voices</span>
+                      <span className={styles.voiceTypeBadge}>100K chars/month</span>
+                    </div>
+                    <div className={styles.progressContainer}>
+                      <div className={styles.progressBar}>
+                        <div
+                          className={styles.progressFill}
+                          style={{ width: `${formatPercentage(currentMonthUsage.polly.generative, FREE_TIER_LIMITS.polly.generative)}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        <span className={styles.usageText}>
+                          {formatNumber(currentMonthUsage.polly.generative)} / {formatNumber(FREE_TIER_LIMITS.polly.generative)} chars
+                        </span>
+                        <span className={styles.percentageText}>
+                          {formatPercentage(currentMonthUsage.polly.generative, FREE_TIER_LIMITS.polly.generative).toFixed(1)}%
+                        </span>
+                      </div>
+                    </div>
+                    {summary.awsData?.currentMonthFreeTier && (
+                      <div className={styles.usageComparison}>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>Internal Tracking:</span>
+                          <span className={styles.usageComparisonValue}>
+                            {formatNumber(currentMonthUsage.polly.generative)} chars
+                          </span>
+                        </div>
+                        <div className={styles.usageComparisonRow}>
+                          <span className={styles.usageComparisonLabel}>AWS Billing:</span>
+                          <span className={`${styles.usageComparisonValue} ${styles.aws}`}>
+                            {formatNumber(summary.awsData.currentMonthFreeTier.generative)} chars
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <h4 className={styles.serviceTitle}>Google Cloud Text-to-Speech</h4>
@@ -836,7 +941,30 @@ export function TtsUsage() {
 
                   <div className={styles.voiceTypeItem}>
                     <div className={styles.voiceTypeHeader}>
-                      <span className={styles.voiceTypeName}>Neural2/WaveNet Voices</span>
+                      <span className={styles.voiceTypeName}>WaveNet Voices</span>
+                      <span className={styles.voiceTypeBadge}>4M chars/month</span>
+                    </div>
+                    <div className={styles.progressContainer}>
+                      <div className={styles.progressBar}>
+                        <div
+                          className={styles.progressFill}
+                          style={{ width: `${formatPercentage(currentMonthUsage.google.wavenet, FREE_TIER_LIMITS.google.wavenet)}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        <span className={styles.usageText}>
+                          {formatNumber(currentMonthUsage.google.wavenet)} / {formatNumber(FREE_TIER_LIMITS.google.wavenet)} chars
+                        </span>
+                        <span className={styles.percentageText}>
+                          {formatPercentage(currentMonthUsage.google.wavenet, FREE_TIER_LIMITS.google.wavenet).toFixed(1)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.voiceTypeItem}>
+                    <div className={styles.voiceTypeHeader}>
+                      <span className={styles.voiceTypeName}>Neural2 Voices</span>
                       <span className={styles.voiceTypeBadge}>1M chars/month</span>
                     </div>
                     <div className={styles.progressContainer}>
@@ -856,6 +984,29 @@ export function TtsUsage() {
                       </div>
                     </div>
                   </div>
+
+                  <div className={styles.voiceTypeItem}>
+                    <div className={styles.voiceTypeHeader}>
+                      <span className={styles.voiceTypeName}>Studio Voices (Premium)</span>
+                      <span className={styles.voiceTypeBadge}>1M chars/month</span>
+                    </div>
+                    <div className={styles.progressContainer}>
+                      <div className={styles.progressBar}>
+                        <div
+                          className={styles.progressFill}
+                          style={{ width: `${formatPercentage(currentMonthUsage.google.studio, FREE_TIER_LIMITS.google.studio)}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        <span className={styles.usageText}>
+                          {formatNumber(currentMonthUsage.google.studio)} / {formatNumber(FREE_TIER_LIMITS.google.studio)} chars
+                        </span>
+                        <span className={styles.percentageText}>
+                          {formatPercentage(currentMonthUsage.google.studio, FREE_TIER_LIMITS.google.studio).toFixed(1)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <h4 className={styles.serviceTitle}>ElevenLabs</h4>
@@ -863,7 +1014,7 @@ export function TtsUsage() {
                   <div className={styles.voiceTypeItem}>
                     <div className={styles.voiceTypeHeader}>
                       <span className={styles.voiceTypeName}>All Voices</span>
-                      <span className={styles.voiceTypeBadge}>20K chars/month (10K credits)</span>
+                      <span className={styles.voiceTypeBadge}>10K chars/month</span>
                     </div>
                     <div className={styles.progressContainer}>
                       <div className={styles.progressBar}>
@@ -887,14 +1038,14 @@ export function TtsUsage() {
                 <div className={styles.freeTierNote}>
                   <p>
                     <strong>Amazon Polly:</strong> Free tier is available for the first 12 months starting from your first Polly request.
-                    Usage tracking is based on the current month&apos;s Polly requests.
+                    Standard (5M), Neural (1M), Long-Form (500K), and Generative (100K) have separate monthly limits.
                   </p>
                   <p>
                     <strong>Google TTS:</strong> Free tier is ongoing with monthly limits that reset each month.
-                    No time restriction - available as long as you stay within monthly limits.
+                    Standard/WaveNet (4M each), Neural2/Studio (1M each) have separate limits. No time restriction.
                   </p>
                   <p>
-                    <strong>ElevenLabs:</strong> Free tier provides 10,000 credits monthly (20,000 characters with Flash/Turbo models).
+                    <strong>ElevenLabs:</strong> Free tier provides 10,000 characters monthly.
                     Resets monthly with no time restrictions.
                   </p>
                 </div>

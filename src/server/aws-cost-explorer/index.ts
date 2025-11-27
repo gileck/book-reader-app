@@ -36,6 +36,7 @@ export interface AwsTtsUsageData {
     standard: number;
     neural: number;
     longform: number;
+    generative: number;
   };
 }
 
@@ -193,7 +194,8 @@ export class AwsCostExplorerWrapper {
     const usageByVoiceType = {
       standard: 0,
       neural: 0,
-      longform: 0
+      longform: 0,
+      generative: 0
     };
 
     response.ResultsByTime.forEach((timeResult: ResultByTime) => {
@@ -233,6 +235,8 @@ export class AwsCostExplorerWrapper {
           // Categorize by voice type for free-tier tracking
           if (usageType.includes('LongForm')) {
             usageByVoiceType.longform += characters;
+          } else if (usageType.includes('Generative')) {
+            usageByVoiceType.generative += characters;
           } else if (usageType.includes('Neural')) {
             usageByVoiceType.neural += characters;
           } else {

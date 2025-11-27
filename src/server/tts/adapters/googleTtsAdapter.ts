@@ -87,8 +87,23 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
     }
 
     private calculateCost(textLength: number, audioLength: number, voiceTier: string): number {
-        // Google TTS pricing (approximate)
-        const costPerCharacter = voiceTier === 'neural' ? 0.000016 : 0.000004;
+        // Google TTS pricing (November 2025)
+        // https://cloud.google.com/text-to-speech/pricing
+        let costPerCharacter: number;
+        switch (voiceTier) {
+            case 'studio':
+                costPerCharacter = 0.00016;   // $160 per 1M characters
+                break;
+            case 'neural2':
+            case 'polyglot':
+                costPerCharacter = 0.000016;  // $16 per 1M characters
+                break;
+            case 'wavenet':
+            case 'standard':
+            default:
+                costPerCharacter = 0.000004;  // $4 per 1M characters
+                break;
+        }
         return textLength * costPerCharacter;
     }
 

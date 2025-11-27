@@ -6,7 +6,7 @@ export interface TtsUsageRecord {
     timestamp: Date;
     provider: 'google' | 'polly' | 'elevenlabs';
     voiceId: string;
-    voiceType: 'standard' | 'neural' | 'long-form' | 'generative';
+    voiceType: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'long-form' | 'generative';
     textLength: number;
     audioLength: number;
     cost: number;

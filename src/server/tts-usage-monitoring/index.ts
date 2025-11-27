@@ -5,21 +5,37 @@ import { type TtsProvider } from '../../common/tts/ttsUtils';
 import { awsCostExplorer } from '../aws-cost-explorer';
 
 // Helper function to determine voice type from voiceId
-function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'neural' | 'long-form' | 'generative' {
+function getVoiceType(voiceId: string, provider: TtsProvider): 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'long-form' | 'generative' {
   if (provider === 'polly') {
-    const longFormVoices = ['Danielle', 'Gregory', 'Burrow'];
-    const neuralVoices = ['Emma', 'Olivia', 'Aria', 'Ayanda', 'Ivy'];
-    const standardVoices = ['Joanna', 'Matthew', 'Amy', 'Brian', 'Joey', 'Justin', 'Kendra', 'Kimberly', 'Salli', 'Kevin', 'Stephen'];
-
+    // Generative voices ($30/1M chars)
+    const generativeVoices = ['Ruth'];
+    // Long-form voices ($100/1M chars)
+    const longFormVoices = ['Danielle', 'Gregory'];
+    // Neural voices ($16/1M chars)
+    const neuralVoices = ['Olivia', 'Aria', 'Ayanda'];
+    // Standard voices ($4/1M chars) - many voices support both standard and neural engines
+    // The distinction is made by the engine parameter, not the voice name
+    
+    if (generativeVoices.includes(voiceId)) return 'generative';
     if (longFormVoices.includes(voiceId)) return 'long-form';
     if (neuralVoices.includes(voiceId)) return 'neural';
-    if (standardVoices.includes(voiceId)) return 'standard';
     
     // Log unknown voice to help identify classification issues
-    console.warn(`⚠️ Unknown Polly voice: "${voiceId}" - defaulting to 'standard'. This may cause discrepancy with AWS billing.`);
+    console.warn(`⚠️ Polly voice "${voiceId}" - defaulting to 'standard'. The actual tier depends on the engine parameter.`);
+    return 'standard';
   } else if (provider === 'google') {
-    // Google voices - all Neural2 voices are neural tier
-    if (voiceId.includes('Neural2')) return 'neural';
+    // Google TTS voice tiers
+    if (voiceId.includes('Studio')) return 'studio';
+    if (voiceId.includes('Neural2')) return 'neural2';
+    if (voiceId.includes('Polyglot')) return 'polyglot';
+    if (voiceId.includes('Wavenet')) return 'wavenet';
+    if (voiceId.includes('Standard')) return 'standard';
+    
+    // Default to neural2 for unknown Google voices
+    return 'neural2';
+  } else if (provider === 'elevenlabs') {
+    // ElevenLabs uses a flat tier model
+    return 'neural';
   }
 
   return 'standard'; // fallback
@@ -32,7 +48,7 @@ export const addTtsUsageRecord = async (
   audioLength: number,
   cost: number,
   endpoint: string = 'unknown',
-  voiceType?: 'standard' | 'neural' | 'long-form' | 'generative',
+  voiceType?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'long-form' | 'generative',
   userId?: string,
   fromCache?: boolean
 ): Promise<ttsUsage.TtsUsageRecord> => {
@@ -177,18 +193,22 @@ async function getFreeTierMonthUsage(rangeDays: 30 | 60 | 90 | 'current-month' |
   
   const monthRecords = await ttsUsage.getTtsUsageRecordsByDateRange(start, end);
 
-  const polly = { standard: 0, neural: 0, longform: 0 };
-  const google = { standard: 0, neural2: 0 };
+  const polly = { standard: 0, neural: 0, longform: 0, generative: 0 };
+  const google = { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0 };
   const elevenlabs = { total: 0 };
 
   monthRecords.forEach((record) => {
     if (record.provider === 'polly') {
       if (record.voiceType === 'neural') polly.neural += record.textLength;
       else if (record.voiceType === 'long-form') polly.longform += record.textLength;
+      else if (record.voiceType === 'generative') polly.generative += record.textLength;
       else polly.standard += record.textLength;
     } else if (record.provider === 'google') {
       if (record.voiceType === 'standard') google.standard += record.textLength;
-      else google.neural2 += record.textLength;
+      else if (record.voiceType === 'wavenet') google.wavenet += record.textLength;
+      else if (record.voiceType === 'polyglot') google.polyglot += record.textLength;
+      else if (record.voiceType === 'studio') google.studio += record.textLength;
+      else google.neural2 += record.textLength; // Default to neural2 for unknown Google tiers
     } else if (record.provider === 'elevenlabs') {
       elevenlabs.total += record.textLength;
     }
@@ -238,7 +258,7 @@ export const getTtsUsageSummary = async (params?: TtsUsageRangeParams): Promise<
     costSavingsFromCache: 0,
     usageByProvider: {},
     usageByDay: {},
-    freeTierMonthUsage: { polly: { standard: 0, neural: 0, longform: 0 }, google: { standard: 0, neural2: 0 }, elevenlabs: { total: 0 } }
+    freeTierMonthUsage: { polly: { standard: 0, neural: 0, longform: 0, generative: 0 }, google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0 }, elevenlabs: { total: 0 } }
   };
 
   records.forEach(record => {

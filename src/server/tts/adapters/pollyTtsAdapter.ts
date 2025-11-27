@@ -213,17 +213,18 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
     }
 
     private calculateCost(textLength: number, audioLength: number, voiceTier: string): number {
-        // Amazon Polly pricing (approximate)
+        // Amazon Polly pricing (November 2025)
+        // https://aws.amazon.com/polly/pricing/
         let costPerCharacter: number;
         switch (voiceTier) {
             case 'neural':
-                costPerCharacter = 0.000025; // $25 per 1M characters
+                costPerCharacter = 0.000016; // $16 per 1M characters
                 break;
             case 'long-form':
-                costPerCharacter = 0.00010; // $100 per 1M characters
+                costPerCharacter = 0.0001;   // $100 per 1M characters
                 break;
             case 'generative':
-                costPerCharacter = 0.00020; // $200 per 1M characters
+                costPerCharacter = 0.00003;  // $30 per 1M characters
                 break;
             default: // standard
                 costPerCharacter = 0.000004; // $4 per 1M characters

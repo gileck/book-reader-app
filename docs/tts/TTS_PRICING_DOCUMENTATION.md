@@ -59,13 +59,19 @@ See [AWS_POLLY_BILLING_CRITICAL_FINDINGS.md](./AWS_POLLY_BILLING_CRITICAL_FINDIN
 
 ## Google Cloud Text-to-Speech Pricing
 
-### Pricing Structure
+### Pricing Structure (November 2025)
 - **Standard Voices**: $4.00 per 1 million characters
-- **WaveNet/Neural2/Polyglot/Chirp/Studio Voices**: $16.00 per 1 million characters
+- **WaveNet Voices**: $4.00 per 1 million characters (same tier as standard)
+- **Neural2 Voices**: $16.00 per 1 million characters
+- **Polyglot Voices**: $16.00 per 1 million characters (preview)
+- **Studio Voices**: $160.00 per 1 million characters (premium)
 
 ### Free Tier (Monthly)
 - **Standard Voices**: 4 million characters/month
-- **WaveNet/Neural2/Polyglot/Chirp/Studio Voices**: 1 million characters/month each
+- **WaveNet Voices**: 4 million characters/month
+- **Neural2 Voices**: 1 million characters/month
+- **Polyglot Voices**: 1 million characters/month
+- **Studio Voices**: 1 million characters/month
 
 ### Character Counting Rules
 According to Google Cloud TTS documentation:
@@ -80,16 +86,17 @@ const billableCharCount = billableText.length;
 
 ## ElevenLabs Pricing
 
-### Pricing Structure
-- **Free Tier**: 10,000 credits/month (20,000 characters)
-- **Flash/Turbo Models**: 0.5 credits per character
-- **Multilingual v2**: Higher quality, more credits per character
-- **Flash v2.5**: Low-latency, optimized for real-time applications
+### Pricing Structure (November 2025)
+- **Free Plan**: 10,000 characters/month
+- **Starter Plan**: $5/month for 30,000 characters (~$0.000167/char)
+- **Creator Plan**: $22/month for 100,000 characters (~$0.00022/char)
+- **Pro Plan**: $99/month for 500,000 characters (~$0.000198/char)
+- **Scale Plan**: $330/month for 2 million characters (~$0.000165/char)
 
 ### Free Tier (Monthly)
-- **Credits**: 10,000 credits/month
-- **Characters**: 20,000 characters/month (with Flash/Turbo models)
-- **Audio Duration**: ~10 minutes with Multilingual v2, ~20 minutes with Flash v2.5
+- **Characters**: 10,000 characters/month
+- **Audio Duration**: ~10 minutes
+- **Features**: Text-to-Speech, Speech-to-Text, Music, Agents, Studio, API access
 
 ### Character Counting Rules
 ElevenLabs counts characters directly:
@@ -148,10 +155,10 @@ For the text "Hello world" (11 characters):
 private calculateCost(textLength: number, audioLength: number, voiceTier: string): number {
     let costPerCharacter: number;
     switch (voiceTier) {
-        case 'neural': costPerCharacter = 0.000025; break;
-        case 'long-form': costPerCharacter = 0.00010; break;
-        case 'generative': costPerCharacter = 0.00020; break;
-        default: costPerCharacter = 0.000004; break; // standard
+        case 'neural': costPerCharacter = 0.000016; break;      // $16/1M
+        case 'long-form': costPerCharacter = 0.0001; break;     // $100/1M
+        case 'generative': costPerCharacter = 0.00003; break;   // $30/1M
+        default: costPerCharacter = 0.000004; break;            // $4/1M (standard)
     }
     return textLength * costPerCharacter;
 }
@@ -160,7 +167,15 @@ private calculateCost(textLength: number, audioLength: number, voiceTier: string
 **Google TTS** (`src/server/tts/adapters/googleTtsAdapter.ts`):
 ```javascript
 private calculateCost(textLength: number, audioLength: number, voiceTier: string): number {
-    const costPerCharacter = voiceTier === 'neural' ? 0.000016 : 0.000004;
+    let costPerCharacter: number;
+    switch (voiceTier) {
+        case 'studio': costPerCharacter = 0.00016; break;       // $160/1M
+        case 'neural2':
+        case 'polyglot': costPerCharacter = 0.000016; break;    // $16/1M
+        case 'wavenet':
+        case 'standard':
+        default: costPerCharacter = 0.000004; break;            // $4/1M
+    }
     return textLength * costPerCharacter;
 }
 ```
@@ -168,9 +183,9 @@ private calculateCost(textLength: number, audioLength: number, voiceTier: string
 **ElevenLabs** (`src/server/tts/adapters/elevenLabsAdapter.ts`):
 ```javascript
 private calculateCost(textLength: number, audioLength: number): number {
-    // ElevenLabs pricing: 0.5 credits per character
-    // Assuming $0.00018 per character (approximate cost)
-    return textLength * 0.00018;
+    // ElevenLabs pricing based on Creator plan: $22/month for 100,000 chars
+    // Approximate cost per character: $0.00022
+    return textLength * 0.00022;
 }
 ```
 
@@ -203,12 +218,12 @@ The application includes free tier usage tracking in the TTS Usage Dashboard:
 
 ### Google TTS Free Tier  
 - Tracks monthly usage per voice type
-- Separate limits for Standard vs Neural2/WaveNet voices
+- Separate limits for Standard/WaveNet (4M), Neural2/Polyglot/Studio (1M each)
 - Resets monthly (no time limit)
 
 ### ElevenLabs Free Tier
 - Tracks monthly character usage
-- 20,000 characters/month (10,000 credits)
+- 10,000 characters/month (free plan)
 - Resets monthly (no time limit)
 
 ## Important Notes
