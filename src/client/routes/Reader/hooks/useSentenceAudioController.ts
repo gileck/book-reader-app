@@ -160,14 +160,16 @@ export function useSentenceAudioController(
     }, [chapter, selectedProvider, selectedVoice, sentences, ttsEnabled, update]);
 
     const play = useCallback(async (userInitiated: boolean = false) => {
-        // Use currentSentenceIndex prop directly (controlled component)
-        const chunk = sentences[currentSentenceIndex];
+        // IMPORTANT: Use ref to get latest value, not prop (avoids stale closure in setTimeout callbacks)
+        // The prop value gets captured when the callback is created, but the ref always has current value
+        const index = currentSentenceIndexRef.current;
+        const chunk = sentences[index];
 
         // Skip playback for images only - play both text and headers
         if (!chunk || chunk.type === 'image' || !chunk.text?.trim()) {
             // Auto-advance to next playable chunk (text or header)
             const nextPlayableIndex = sentences.findIndex((c, i) =>
-                i > currentSentenceIndex && (c.type === 'text' || c.type === 'header') && c.text?.trim()
+                i > index && (c.type === 'text' || c.type === 'header') && c.text?.trim()
             );
             if (nextPlayableIndex !== -1) {
                 // CONTROLLED: Request parent to update state via callback
@@ -178,9 +180,9 @@ export function useSentenceAudioController(
             return;
         }
 
-        await loadSentence(currentSentenceIndex);
+        await loadSentence(index);
         const audio = audioRef.current;
-        const entry = cacheRef.current[currentSentenceIndex];
+        const entry = cacheRef.current[index];
         if (!audio || !entry) return;
         audio.src = entry.src;
         audio.playbackRate = playbackSpeed; // Apply playback speed
@@ -206,14 +208,14 @@ export function useSentenceAudioController(
 
             if (!isExpectedBrowserError) {
                 // Only report unexpected errors to the user
-                update({ ttsError: { message: errorMessage, sentenceIndex: currentSentenceIndex }, isPlaying: false });
+                update({ ttsError: { message: errorMessage, sentenceIndex: index }, isPlaying: false });
             }
             // For expected errors, just log them for debugging but don't show to user
             if (isExpectedBrowserError) {
                 console.debug('Expected browser audio interruption:', errorMessage);
             }
         }
-    }, [loadSentence, playbackSpeed, update, sentences, currentSentenceIndex, onSentenceIndexChange]);
+    }, [loadSentence, playbackSpeed, update, sentences, onSentenceIndexChange]);
 
     const pause = useCallback(() => {
         const audio = audioRef.current;
@@ -548,7 +550,7 @@ export function useSentenceAudioController(
             /**
              * IMPORTANT: Use ref instead of prop for event handlers
              * 
-             * Why: This event listener is set up once (lines 547-549).
+             * Why: This event listener is set up once.
              * If we used the currentSentenceIndex prop directly, it would be stale
              * (captured from when the effect ran). The ref always has the latest value.
              * 
@@ -560,14 +562,10 @@ export function useSentenceAudioController(
             setState(prev => ({ ...prev, isPlaying: false }));
 
             // Auto-play next sentence if user intended continuous play
+            // Note: goToSentence → navigateToSentenceIndex already schedules play() if intendedPlay is true
+            // No need to schedule another play() here (was causing duplicate/stale playback)
             if (intendedPlay && currentIndex < sentences.length - 1) {
                 goToSentence(currentIndex + 1);
-                // Play next sentence after a brief delay
-                setTimeout(() => {
-                    if (stateRef.current.intendedPlay) {
-                        void play();
-                    }
-                }, 100);
             }
         };
 
