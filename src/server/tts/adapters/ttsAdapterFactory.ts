@@ -2,6 +2,7 @@ import { BaseTtsAdapter } from './baseTtsAdapter';
 import { GoogleTtsAdapter } from './googleTtsAdapter';
 import { PollyTtsAdapter } from './pollyTtsAdapter';
 import { ElevenLabsAdapter } from './elevenLabsAdapter';
+import { GeminiTtsAdapter } from './geminiTtsAdapter';
 import { type TtsProvider } from '../../../common/tts/ttsUtils';
 
 export type { TtsProvider };
@@ -12,7 +13,7 @@ export class TtsAdapterFactory {
 
     static async getAdapter(provider?: TtsProvider): Promise<BaseTtsAdapter | null> {
         const targetProvider = provider || this.currentProvider;
-        
+
         if (!this.adapters.has(targetProvider)) {
             const adapter = await this.createAdapter(targetProvider);
             if (adapter) {
@@ -31,6 +32,8 @@ export class TtsAdapterFactory {
                 return new PollyTtsAdapter();
             case 'elevenlabs':
                 return new ElevenLabsAdapter();
+            case 'gemini':
+                return new GeminiTtsAdapter();
             default:
                 console.error(`Unknown TTS provider: ${provider}`);
                 return null;
@@ -47,14 +50,14 @@ export class TtsAdapterFactory {
 
     static async getAvailableProviders(): Promise<TtsProvider[]> {
         const providers: TtsProvider[] = [];
-        
-        for (const provider of ['google', 'polly', 'elevenlabs'] as TtsProvider[]) {
+
+        for (const provider of ['google', 'polly', 'elevenlabs', 'gemini'] as TtsProvider[]) {
             const adapter = await this.createAdapter(provider);
             if (adapter && await adapter.isAvailable()) {
                 providers.push(provider);
             }
         }
-        
+
         return providers;
     }
 } 

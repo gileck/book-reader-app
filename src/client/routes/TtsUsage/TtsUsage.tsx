@@ -156,8 +156,9 @@ export function TtsUsage() {
   // Use server-provided calendar-month aggregate for Free Tier usage
   const currentMonthUsage = summary?.freeTierMonthUsage || {
     polly: { standard: 0, neural: 0, longform: 0, generative: 0 },
-    google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0 },
-    elevenlabs: { total: 0 }
+    google: { standard: 0, wavenet: 0, neural2: 0, polyglot: 0, studio: 0, chirp3hd: 0 },
+    elevenlabs: { total: 0 },
+    gemini: { flash: 0, pro: 0, flashLite: 0 }
   };
   const formatNumber = (num: number) => num.toLocaleString();
   const formatPercentage = (used: number, limit: number) => Math.min((used / limit) * 100, 100);
@@ -242,6 +243,10 @@ export function TtsUsage() {
               freeLimit = FREE_TIER_LIMITS.google.studio;
               monthlyUsage = currentMonthUsage.google.studio;
               break;
+            case 'chirp3-hd':
+              freeLimit = FREE_TIER_LIMITS.google.chirp3hd;
+              monthlyUsage = currentMonthUsage.google.chirp3hd;
+              break;
             default:
               freeLimit = FREE_TIER_LIMITS.google.standard;
               monthlyUsage = currentMonthUsage.google.standard;
@@ -263,6 +268,39 @@ export function TtsUsage() {
         const exceededUsage = Math.max(0, monthlyUsage - FREE_TIER_LIMITS.elevenlabs.total);
 
         Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
+          const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
+          const adjustedCost = exceededUsage * originalCostPerChar;
+
+          adjustedProviderStats.usageByVoiceType[voiceType] = {
+            ...voiceStats,
+            totalCost: adjustedCost
+          };
+          adjustedProviderStats.totalCost += adjustedCost;
+        });
+      } else if (provider === 'gemini') {
+        // Gemini TTS free tier calculation
+        Object.entries(stats.usageByVoiceType).forEach(([voiceType, voiceStats]) => {
+          let freeLimit = 0;
+          let monthlyUsage = 0;
+          switch (voiceType) {
+            case 'gemini-flash':
+              freeLimit = FREE_TIER_LIMITS.gemini.flash;
+              monthlyUsage = currentMonthUsage.gemini.flash;
+              break;
+            case 'gemini-pro':
+              freeLimit = FREE_TIER_LIMITS.gemini.pro;
+              monthlyUsage = currentMonthUsage.gemini.pro;
+              break;
+            case 'gemini-flash-lite':
+              freeLimit = FREE_TIER_LIMITS.gemini.flashLite;
+              monthlyUsage = currentMonthUsage.gemini.flashLite;
+              break;
+            default:
+              freeLimit = FREE_TIER_LIMITS.gemini.flash;
+              monthlyUsage = currentMonthUsage.gemini.flash;
+          }
+
+          const exceededUsage = Math.max(0, monthlyUsage - freeLimit);
           const originalCostPerChar = voiceStats.totalTextLength > 0 ? voiceStats.totalCost / voiceStats.totalTextLength : 0;
           const adjustedCost = exceededUsage * originalCostPerChar;
 
@@ -1007,6 +1045,29 @@ export function TtsUsage() {
                       </div>
                     </div>
                   </div>
+
+                  <div className={styles.voiceTypeItem}>
+                    <div className={styles.voiceTypeHeader}>
+                      <span className={styles.voiceTypeName}>Chirp 3: HD Voices</span>
+                      <span className={styles.voiceTypeBadge}>1M chars/month</span>
+                    </div>
+                    <div className={styles.progressContainer}>
+                      <div className={styles.progressBar}>
+                        <div
+                          className={styles.progressFill}
+                          style={{ width: `${formatPercentage(currentMonthUsage.google.chirp3hd, FREE_TIER_LIMITS.google.chirp3hd)}%` }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressText}>
+                        <span className={styles.usageText}>
+                          {formatNumber(currentMonthUsage.google.chirp3hd)} / {formatNumber(FREE_TIER_LIMITS.google.chirp3hd)} chars
+                        </span>
+                        <span className={styles.percentageText}>
+                          {formatPercentage(currentMonthUsage.google.chirp3hd, FREE_TIER_LIMITS.google.chirp3hd).toFixed(1)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <h4 className={styles.serviceTitle}>ElevenLabs</h4>
@@ -1042,7 +1103,7 @@ export function TtsUsage() {
                   </p>
                   <p>
                     <strong>Google TTS:</strong> Free tier is ongoing with monthly limits that reset each month.
-                    Standard/WaveNet (4M each), Neural2/Studio (1M each) have separate limits. No time restriction.
+                    Standard/WaveNet (4M each), Neural2/Studio/Chirp3-HD (1M each) have separate limits. No time restriction.
                   </p>
                   <p>
                     <strong>ElevenLabs:</strong> Free tier provides 10,000 characters monthly.

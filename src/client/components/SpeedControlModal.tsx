@@ -46,10 +46,12 @@ const getTierConfig = (provider: TtsProvider, tier: string): TierConfig => {
             default: return { key: 'standard', label: 'Standard', price: '$4/1M', freeLimit: '5M free', isPremium: false };
         }
     } else if (provider === 'gemini') {
+        // Gemini TTS uses token-based pricing (input + output tokens)
+        // Approximate per-character costs shown for comparison
         switch (tier) {
-            case 'gemini-pro': return { key: 'gemini-pro', label: 'Pro (HQ)', price: '$30/1M', freeLimit: 'Pay per use', isPremium: true };
-            case 'gemini-flash-lite': return { key: 'gemini-flash-lite', label: 'Flash Lite', price: '$4/1M', freeLimit: 'Pay per use', isPremium: false };
-            default: return { key: 'gemini-flash', label: 'Flash', price: '$8/1M', freeLimit: 'Pay per use', isPremium: false };
+            case 'gemini-pro': return { key: 'gemini-pro', label: 'Pro (HQ)', price: '~$21/1M', freeLimit: 'No free tier', isPremium: true };
+            case 'gemini-flash-lite': return { key: 'gemini-flash-lite', label: 'Flash Lite', price: '~$10/1M', freeLimit: 'No free tier', isPremium: false };
+            default: return { key: 'gemini-flash', label: 'Flash', price: '~$10/1M', freeLimit: 'No free tier', isPremium: false };
         }
     } else {
         return { key: 'neural', label: 'Premium AI', price: '~$0.22/1K', freeLimit: '10K free', isPremium: true };

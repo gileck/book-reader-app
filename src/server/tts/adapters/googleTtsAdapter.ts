@@ -1,7 +1,7 @@
 import * as textToSpeech from '@google-cloud/text-to-speech';
 import { BaseTtsAdapter, TTSResult, TTSConfig } from './baseTtsAdapter';
 import { addTtsUsageRecord } from '../../tts-usage-monitoring';
-import { getAllVoiceIds } from '../../../common/tts/ttsUtils';
+import { getAllVoiceIds, voiceSupportsSsmlMarks } from '../../../common/tts/ttsUtils';
 
 export class GoogleTtsAdapter extends BaseTtsAdapter {
     name = 'google';
@@ -33,11 +33,14 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
         }
 
         try {
-            const ssmlText = this.generateSSMLWithMarks(text);
+            // Check if this voice supports SSML marks for word-level timing
+            const supportsMarks = voiceSupportsSsmlMarks('google', config.voiceId);
+            const ssmlText = supportsMarks 
+                ? this.generateSSMLWithMarks(text) 
+                : this.generatePlainSSML(text);
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const request: any = {
-                enableTimePointing: ['SSML_MARK'],
                 input: { ssml: ssmlText },
                 voice: {
                     languageCode: config.languageCode || 'en-US',
@@ -51,13 +54,22 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
                 }
             };
 
+            // Only enable time pointing if the voice supports SSML marks
+            if (supportsMarks) {
+                request.enableTimePointing = ['SSML_MARK'];
+            }
+
             const [response] = await client.synthesizeSpeech(request);
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const timepoints = (response as any)?.timepoints?.map((tp: any) => ({
-                markName: tp.markName,
-                timeSeconds: tp.timeSeconds
-            })) || [];
+            // Only extract timepoints if the voice supports marks
+            /* eslint-disable @typescript-eslint/no-explicit-any */
+            const timepoints = supportsMarks 
+                ? ((response as any)?.timepoints?.map((tp: any) => ({
+                    markName: tp.markName,
+                    timeSeconds: tp.timeSeconds
+                })) || [])
+                : [];
+            /* eslint-enable @typescript-eslint/no-explicit-any */
 
             const audioContent = response.audioContent;
             const result = {
@@ -93,6 +105,9 @@ export class GoogleTtsAdapter extends BaseTtsAdapter {
         switch (voiceTier) {
             case 'studio':
                 costPerCharacter = 0.00016;   // $160 per 1M characters
+                break;
+            case 'chirp3-hd':
+                costPerCharacter = 0.00003;   // $30 per 1M characters
                 break;
             case 'neural2':
             case 'polyglot':

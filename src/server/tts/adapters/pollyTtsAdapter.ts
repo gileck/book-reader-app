@@ -1,7 +1,7 @@
 import { PollyClient, SynthesizeSpeechCommand } from '@aws-sdk/client-polly';
 import { BaseTtsAdapter, TTSResult, TTSConfig, TTSTimepoint } from './baseTtsAdapter';
 import { addTtsUsageRecord } from '../../tts-usage-monitoring';
-import { getAllVoiceIds } from '../../../common/tts/ttsUtils';
+import { getAllVoiceIds, voiceSupportsSsmlMarks } from '../../../common/tts/ttsUtils';
 
 export class PollyTtsAdapter extends BaseTtsAdapter {
     name = 'polly';
@@ -46,51 +46,65 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             }
         };
 
-        const ssmlText = this.generateSSMLWithMarks(text);
+        // Check if this voice supports SSML marks for word-level timing
+        // Generative voices do NOT support speech marks
+        const supportsMarks = voiceSupportsSsmlMarks('polly', config.voiceId);
+        const ssmlText = supportsMarks 
+            ? this.generateSSMLWithMarks(text) 
+            : this.generatePlainSSML(text);
         const engine = getEngine(config.voiceTier);
 
         try {
-
-            // First, get speech marks for timing
-            const speechMarksCommand = new SynthesizeSpeechCommand({
-                Text: ssmlText,
-                TextType: 'ssml',
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                VoiceId: config.voiceId as any,
-                OutputFormat: 'json',
-                SpeechMarkTypes: ['ssml'],
-                Engine: engine as 'standard' | 'neural' | 'long-form' | 'generative'
-            });
-
-            console.log('speechMarksCommand', {
-                ssmlTextLength: ssmlText.length,
-                textLength: text.length,
-            });
-
-            const speechMarksResponse = await client.send(speechMarksCommand);
-
-            // Parse speech marks to get timepoints
             const timepoints: TTSTimepoint[] = [];
-            if (speechMarksResponse.AudioStream) {
-                const speechMarksText = await this.streamToString(speechMarksResponse.AudioStream);
-                const lines = speechMarksText.trim().split('\n');
 
-                for (const line of lines) {
-                    try {
-                        const mark = JSON.parse(line);
-                        if (mark.type === 'ssml' && mark.value) {
-                            timepoints.push({
-                                markName: mark.value,
-                                timeSeconds: mark.time / 1000 // Convert ms to seconds
-                            });
+            // Only fetch speech marks if the voice supports them
+            if (supportsMarks) {
+                // First, get speech marks for timing
+                const speechMarksCommand = new SynthesizeSpeechCommand({
+                    Text: ssmlText,
+                    TextType: 'ssml',
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    VoiceId: config.voiceId as any,
+                    OutputFormat: 'json',
+                    SpeechMarkTypes: ['ssml'],
+                    Engine: engine as 'standard' | 'neural' | 'long-form' | 'generative'
+                });
+
+                console.log('speechMarksCommand', {
+                    ssmlTextLength: ssmlText.length,
+                    textLength: text.length,
+                });
+
+                const speechMarksResponse = await client.send(speechMarksCommand);
+
+                // Parse speech marks to get timepoints
+                if (speechMarksResponse.AudioStream) {
+                    const speechMarksText = await this.streamToString(speechMarksResponse.AudioStream);
+                    const lines = speechMarksText.trim().split('\n');
+
+                    for (const line of lines) {
+                        try {
+                            const mark = JSON.parse(line);
+                            if (mark.type === 'ssml' && mark.value) {
+                                timepoints.push({
+                                    markName: mark.value,
+                                    timeSeconds: mark.time / 1000 // Convert ms to seconds
+                                });
+                            }
+                        } catch {
+                            // Skip invalid JSON lines
                         }
-                    } catch {
-                        // Skip invalid JSON lines
                     }
                 }
+            } else {
+                console.log('🔵 [POLLY TTS] Skipping speech marks - voice does not support SSML marks:', {
+                    voiceId: config.voiceId,
+                    voiceTier: config.voiceTier,
+                    engine: engine
+                });
             }
 
-            // Then, get the actual audio
+            // Get the actual audio
             const audioCommand = new SynthesizeSpeechCommand({
                 Text: ssmlText,
                 TextType: 'ssml',
@@ -117,21 +131,29 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             // Track usage async (don't await)
             const audioLength = timepoints.length > 0 ? timepoints[timepoints.length - 1].timeSeconds : 0;
 
-            // Amazon Polly billing for Long-Form voices:
-            // AWS counts the original text PLUS the character count of mark attribute names
-            // Example: "Hello world" with marks "Hello-0" and "world-1"
-            //   Text: 11 chars + Mark attrs: 14 chars = 25 billable chars
-            const words = text.split(' ').filter(w => w.length > 0);
+            // Amazon Polly billing:
+            // - For voices with marks: AWS counts original text PLUS mark attribute names
+            // - For voices without marks: Just the plain SSML text
             const textChars = text.length;
-            const markAttributeChars = words.reduce((sum, word, i) => {
-                return sum + `${word}-${i}`.length;
-            }, 0);
-            const billableCharCount = textChars + markAttributeChars;
+            let billableCharCount: number;
+            let markAttributeChars = 0;
+            
+            if (supportsMarks) {
+                const words = text.split(' ').filter(w => w.length > 0);
+                markAttributeChars = words.reduce((sum, word, i) => {
+                    return sum + `${word}-${i}`.length;
+                }, 0);
+                billableCharCount = textChars + markAttributeChars;
+            } else {
+                // Plain SSML: just the text plus <speak></speak> tags (15 chars)
+                billableCharCount = textChars + 15;
+            }
 
             console.log('🟢 [POLLY TTS] Request completed:', {
                 voiceId: config.voiceId,
                 voiceTier: config.voiceTier,
                 engine: engine,
+                supportsMarks: supportsMarks,
                 originalTextChars: textChars,
                 markAttributeChars: markAttributeChars,
                 billableChars: billableCharCount,
@@ -167,14 +189,21 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
             const ssmlTextLength = ssmlText.length;
             
             // Calculate billable chars the same way as success case
-            const words = text.split(' ').filter(w => w.length > 0);
             const textChars = text.length;
-            const markAttributeChars = words.reduce((sum, word, i) => {
-                return sum + `${word}-${i}`.length;
-            }, 0);
-            const billableCharCount = textChars + markAttributeChars;
+            let billableCharCount: number;
+            let markAttributeChars = 0;
+            
+            if (supportsMarks) {
+                const words = text.split(' ').filter(w => w.length > 0);
+                markAttributeChars = words.reduce((sum, word, i) => {
+                    return sum + `${word}-${i}`.length;
+                }, 0);
+                billableCharCount = textChars + markAttributeChars;
+            } else {
+                billableCharCount = textChars + 15;
+            }
 
-            const textLengthInfo = `How long was the provided text: ${originalTextLength} characters (original), ${ssmlTextLength} characters (with SSML markup), ${billableCharCount} characters (billable with mark attributes)`;
+            const textLengthInfo = `How long was the provided text: ${originalTextLength} characters (original), ${ssmlTextLength} characters (with SSML markup), ${billableCharCount} characters (billable)`;
 
             console.error(`Polly TTS synthesis error: ${textLengthInfo}`, {
                 error: error,
@@ -183,6 +212,7 @@ export class PollyTtsAdapter extends BaseTtsAdapter {
                     ssmlTextLength,
                     billableCharCount,
                     markAttributeChars,
+                    supportsMarks,
                     ssmlOverhead: ssmlTextLength - originalTextLength,
                     compressionRatio: (ssmlTextLength / originalTextLength).toFixed(2)
                 },

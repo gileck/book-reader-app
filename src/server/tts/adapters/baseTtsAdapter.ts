@@ -14,7 +14,7 @@ export interface TTSConfig {
     speakingRate?: number;
     pitch?: number;
     volumeGainDb?: number;
-    voiceTier?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'long-form' | 'generative';
+    voiceTier?: 'standard' | 'wavenet' | 'neural' | 'neural2' | 'polyglot' | 'studio' | 'chirp3-hd' | 'long-form' | 'generative' | 'gemini-flash' | 'gemini-pro' | 'gemini-flash-lite';
 }
 
 export abstract class BaseTtsAdapter {
@@ -39,5 +39,13 @@ export abstract class BaseTtsAdapter {
 
         ssml += '</speak>';
         return ssml;
+    }
+
+    /**
+     * Generate plain SSML without mark tags.
+     * Used for voices that don't support SSML marks (e.g., Google Studio, AWS Polly Generative).
+     */
+    protected generatePlainSSML(text: string): string {
+        return `<speak>${text}</speak>`;
     }
 } 

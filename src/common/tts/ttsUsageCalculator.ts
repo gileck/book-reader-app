@@ -29,6 +29,7 @@ function getVoiceTypeKey(provider: TtsProvider, voiceTier: string): string {
       case 'neural2': return 'neural2';
       case 'polyglot': return 'polyglot';
       case 'studio': return 'studio';
+      case 'chirp3-hd': return 'chirp3hd';
       // Legacy mapping: 'neural' maps to 'neural2' for Google
       case 'neural': return 'neural2';
       default: return 'standard';
@@ -41,6 +42,13 @@ function getVoiceTypeKey(provider: TtsProvider, voiceTier: string): string {
       case 'longform': return 'longform';
       case 'generative': return 'generative';
       default: return 'standard';
+    }
+  } else if (provider === 'gemini') {
+    switch (voiceTier) {
+      case 'gemini-flash': return 'flash';
+      case 'gemini-pro': return 'pro';
+      case 'gemini-flash-lite': return 'flashLite';
+      default: return 'flash';
     }
   }
   return 'total'; // elevenlabs
@@ -87,6 +95,11 @@ export function getVoiceTypeUsage(
         freeLimit = FREE_TIER_LIMITS.google.studio;
         pricePerChar = PRICING_PER_CHARACTER.google.studio;
         break;
+      case 'chirp3hd':
+        usedCharacters = freeTierMonthUsage.google.chirp3hd;
+        freeLimit = FREE_TIER_LIMITS.google.chirp3hd;
+        pricePerChar = PRICING_PER_CHARACTER.google.chirp3hd;
+        break;
       default:
         usedCharacters = freeTierMonthUsage.google.standard;
         freeLimit = FREE_TIER_LIMITS.google.standard;
@@ -123,6 +136,28 @@ export function getVoiceTypeUsage(
     usedCharacters = freeTierMonthUsage.elevenlabs.total;
     freeLimit = FREE_TIER_LIMITS.elevenlabs.total;
     pricePerChar = PRICING_PER_CHARACTER.elevenlabs.total;
+  } else if (provider === 'gemini') {
+    switch (voiceTypeKey) {
+      case 'flash':
+        usedCharacters = freeTierMonthUsage.gemini.flash;
+        freeLimit = FREE_TIER_LIMITS.gemini.flash;
+        pricePerChar = PRICING_PER_CHARACTER.gemini.flash;
+        break;
+      case 'pro':
+        usedCharacters = freeTierMonthUsage.gemini.pro;
+        freeLimit = FREE_TIER_LIMITS.gemini.pro;
+        pricePerChar = PRICING_PER_CHARACTER.gemini.pro;
+        break;
+      case 'flashLite':
+        usedCharacters = freeTierMonthUsage.gemini.flashLite;
+        freeLimit = FREE_TIER_LIMITS.gemini.flashLite;
+        pricePerChar = PRICING_PER_CHARACTER.gemini.flashLite;
+        break;
+      default:
+        usedCharacters = freeTierMonthUsage.gemini.flash;
+        freeLimit = FREE_TIER_LIMITS.gemini.flash;
+        pricePerChar = PRICING_PER_CHARACTER.gemini.flash;
+    }
   }
 
   const percentageUsed = freeLimit > 0 ? Math.min((usedCharacters / freeLimit) * 100, 100) : 0;
@@ -154,11 +189,13 @@ export function getTotalCostBeyondFreeTier(
   const googleNeural2 = getVoiceTypeUsage('google', 'neural2', freeTierMonthUsage);
   const googlePolyglot = getVoiceTypeUsage('google', 'polyglot', freeTierMonthUsage);
   const googleStudio = getVoiceTypeUsage('google', 'studio', freeTierMonthUsage);
+  const googleChirp3HD = getVoiceTypeUsage('google', 'chirp3-hd', freeTierMonthUsage);
   totalCost += googleStandard.costBeyondFreeTier + 
                googleWavenet.costBeyondFreeTier + 
                googleNeural2.costBeyondFreeTier +
                googlePolyglot.costBeyondFreeTier +
-               googleStudio.costBeyondFreeTier;
+               googleStudio.costBeyondFreeTier +
+               googleChirp3HD.costBeyondFreeTier;
 
   // Polly - all voice tiers
   const pollyStandard = getVoiceTypeUsage('polly', 'standard', freeTierMonthUsage);
@@ -173,6 +210,14 @@ export function getTotalCostBeyondFreeTier(
   // ElevenLabs
   const elevenlabs = getVoiceTypeUsage('elevenlabs', 'neural', freeTierMonthUsage);
   totalCost += elevenlabs.costBeyondFreeTier;
+
+  // Gemini - all voice tiers (no free tier, usage-based)
+  const geminiFlash = getVoiceTypeUsage('gemini', 'gemini-flash', freeTierMonthUsage);
+  const geminiPro = getVoiceTypeUsage('gemini', 'gemini-pro', freeTierMonthUsage);
+  const geminiFlashLite = getVoiceTypeUsage('gemini', 'gemini-flash-lite', freeTierMonthUsage);
+  totalCost += geminiFlash.costBeyondFreeTier + 
+               geminiPro.costBeyondFreeTier +
+               geminiFlashLite.costBeyondFreeTier;
 
   return totalCost;
 }

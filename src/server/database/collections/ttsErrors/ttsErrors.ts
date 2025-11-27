@@ -32,7 +32,7 @@ export const getAllTtsErrorRecords = async (): Promise<TtsErrorRecord[]> => {
 
 // Get TTS error records by provider
 export const getTtsErrorRecordsByProvider = async (
-    provider: 'google' | 'polly' | 'elevenlabs'
+    provider: 'google' | 'polly' | 'elevenlabs' | 'gemini'
 ): Promise<TtsErrorRecord[]> => {
     const collection = await getTtsErrorsCollection();
     return collection.find({ provider }).sort({ timestamp: -1 }).toArray();
