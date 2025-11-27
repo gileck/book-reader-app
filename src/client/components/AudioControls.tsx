@@ -590,7 +590,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         }}
                     >
                         <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 'bold' }}>
-                            {playbackSpeed}x
+                            {playbackSpeed.toFixed(1)}x
                         </Typography>
                     </IconButton>
 
