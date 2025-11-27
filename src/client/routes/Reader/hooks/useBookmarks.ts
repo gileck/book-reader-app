@@ -76,24 +76,32 @@ export const useBookmarks = (
         return sentenceIndex;
     }, [chapter]);
 
-    const handleBookmark = useCallback(async () => {
-        if (!chapter || !bookId || currentChunkIndex === null) return;
+    /**
+     * Toggle bookmark at a specific chunk index
+     * 
+     * This function takes the chunk index as a parameter to avoid stale closure issues
+     * when called from setTimeout or async callbacks.
+     * 
+     * @param chunkIndex - The chunk index to bookmark (required to avoid stale closure)
+     */
+    const handleBookmarkAtIndex = useCallback(async (chunkIndex: number) => {
+        if (!chapter || !bookId) return;
 
         const textChunks = chapter.content.chunks.filter(chunk => chunk.type === 'text');
-        const currentChunk = textChunks[currentChunkIndex];
-        if (!currentChunk) return;
+        const targetChunk = textChunks[chunkIndex];
+        if (!targetChunk) return;
 
-        const previewText = currentChunk.text.substring(0, 100) + (currentChunk.text.length > 100 ? '...' : '');
+        const previewText = targetChunk.text.substring(0, 100) + (targetChunk.text.length > 100 ? '...' : '');
 
         // Enhanced bookmark creation with paragraph context (Parser v2)
-        const paragraphIndex = currentChunk.paragraphIndex;
-        const sentenceIndex = calculateSentenceIndexInParagraph(currentChunkIndex);
+        const paragraphIndex = targetChunk.paragraphIndex;
+        const sentenceIndex = calculateSentenceIndexInParagraph(chunkIndex);
 
         try {
             const result = await toggleBookmark({
                 bookId,
                 chapterNumber: chapter.chapterNumber,
-                chunkIndex: currentChunkIndex,
+                chunkIndex: chunkIndex,
                 paragraphIndex,
                 sentenceIndex,
                 previewText
@@ -103,22 +111,33 @@ export const useBookmarks = (
                 if (result.data.action === 'created' && result.data.bookmark) {
                     updateState({
                         bookmarks: [...state.bookmarks, result.data.bookmark],
-                        isBookmarked: true
+                        isBookmarked: chunkIndex === currentChunkIndex
                     });
                 } else if (result.data.action === 'deleted') {
                     updateState({
                         bookmarks: state.bookmarks.filter(bookmark =>
                             !(bookmark.chapterNumber === chapter.chapterNumber &&
-                                bookmark.chunkIndex === currentChunkIndex)
+                                bookmark.chunkIndex === chunkIndex)
                         ),
-                        isBookmarked: false
+                        isBookmarked: chunkIndex === currentChunkIndex ? false : state.isBookmarked
                     });
                 }
             }
         } catch (error) {
             console.error('Error toggling bookmark:', error);
         }
-    }, [chapter, bookId, currentChunkIndex, state.bookmarks, updateState, calculateSentenceIndexInParagraph]);
+    }, [chapter, bookId, currentChunkIndex, state.bookmarks, state.isBookmarked, updateState, calculateSentenceIndexInParagraph]);
+
+    /**
+     * Toggle bookmark at the current chunk index
+     * 
+     * Note: For use in setTimeout/async callbacks, prefer handleBookmarkAtIndex()
+     * to avoid stale closure issues.
+     */
+    const handleBookmark = useCallback(async () => {
+        if (currentChunkIndex === null) return;
+        return handleBookmarkAtIndex(currentChunkIndex);
+    }, [currentChunkIndex, handleBookmarkAtIndex]);
 
     const isChunkBookmarked = useCallback((chunkIndex: number) => {
         if (!chapter) return false;
@@ -132,6 +151,7 @@ export const useBookmarks = (
         bookmarks: state.bookmarks,
         isBookmarked: state.isBookmarked,
         handleBookmark,
+        handleBookmarkAtIndex,
         isChunkBookmarked
     };
 }; 

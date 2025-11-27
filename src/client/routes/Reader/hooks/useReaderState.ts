@@ -376,6 +376,7 @@ export const useReaderState = ({
             bookmarks: bookmarks.bookmarks,
             isBookmarked: bookmarks.isBookmarked,
             handleBookmark: bookmarks.handleBookmark,
+            handleBookmarkAtIndex: bookmarks.handleBookmarkAtIndex,
             isChunkBookmarked: bookmarks.isChunkBookmarked
         },
 

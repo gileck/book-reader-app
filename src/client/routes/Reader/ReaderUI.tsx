@@ -709,20 +709,20 @@ export const ReaderUI = ({
                             // Since bookmarks hook uses current chapter state, we might need to handle cross-chapter bookmarks differently
                             // For now, if it's the current chapter, we use the hook
                             if (chapterNumber === chapter.chapterNumber) {
-                                // Set the chunk index first, then bookmark
+                                // Navigate to the chunk and bookmark it directly
+                                // Use handleBookmarkAtIndex to avoid stale closure issues
                                 navigation.setCurrentChunkIndex(chunkIndex);
-                                setTimeout(() => {
-                                    bookmarks.handleBookmark();
-                                }, 100);
+                                bookmarks.handleBookmarkAtIndex(chunkIndex);
                             } else {
                                 // TODO: Support bookmarking other chapters directly
                                 // For now, navigate then bookmark (user will see transition)
+                                // Note: Cross-chapter bookmarking still uses setTimeout because
+                                // we need to wait for chapter navigation to complete
                                 navigation.setCurrentChapterNumber(chapterNumber);
                                 setTimeout(() => {
                                     navigation.setCurrentChunkIndex(chunkIndex);
-                                    setTimeout(() => {
-                                        bookmarks.handleBookmark();
-                                    }, 100);
+                                    // Use handleBookmarkAtIndex with explicit index to avoid stale closure
+                                    bookmarks.handleBookmarkAtIndex(chunkIndex);
                                 }, 500);
                             }
                         }}
