@@ -68,7 +68,7 @@ export function useSentenceAudioController(
      * - Simpler navigation (just update parent state)
      * - Impossible to have drift between controller and parent
      */
-    
+
     // Internal state ONLY for: word index, playback state, loading, errors
     // Does NOT include currentSentenceIndex (that's controlled by parent)
     const [state, setState] = useState<SentenceAudioState>(() => {
@@ -78,9 +78,9 @@ export function useSentenceAudioController(
             currentWordIndex: initialWordIndex ?? 0
         };
     });
-    
+
     const stateRef = useRef(state);
-    
+
     /**
      * IMPORTANT: currentSentenceIndexRef
      * 
@@ -93,7 +93,7 @@ export function useSentenceAudioController(
      * Pattern: Keep ref in sync with prop, access ref in event handlers
      */
     const currentSentenceIndexRef = useRef(currentSentenceIndex);
-    
+
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const timepointsRef = useRef<Array<{ time: number; wordIndex: number }>>([]);
     const cacheRef = useRef<Record<number, { src: string; timepoints: Array<{ time: number; wordIndex: number }> }>>({});
@@ -172,6 +172,9 @@ export function useSentenceAudioController(
                 i > index && (c.type === 'text' || c.type === 'header') && c.text?.trim()
             );
             if (nextPlayableIndex !== -1) {
+                // CRITICAL: Update ref SYNCHRONOUSLY before state update
+                // This ensures the recursive play() call sees the new index
+                currentSentenceIndexRef.current = nextPlayableIndex;
                 // CONTROLLED: Request parent to update state via callback
                 onSentenceIndexChange(nextPlayableIndex);
                 // Retry play with new index (preserve userInitiated flag)
@@ -252,6 +255,12 @@ export function useSentenceAudioController(
 
         // Reset word index when navigating to new sentence
         update({ currentWordIndex: 0 });
+
+        // CRITICAL: Update ref SYNCHRONOUSLY before triggering state update
+        // This ensures play() will read the correct index even if React hasn't re-rendered yet.
+        // The useEffect that syncs the ref runs AFTER React commits, which may be after the setTimeout fires.
+        // By updating the ref here, we guarantee play() sees the new index.
+        currentSentenceIndexRef.current = clamped;
 
         // CONTROLLED: Request parent to update sentence index
         // Parent will update state → component re-renders → prop changes
@@ -546,7 +555,7 @@ export function useSentenceAudioController(
         // Handle ended event for auto-play next sentence
         const handleEnded = () => {
             const { intendedPlay } = stateRef.current;
-            
+
             /**
              * IMPORTANT: Use ref instead of prop for event handlers
              * 

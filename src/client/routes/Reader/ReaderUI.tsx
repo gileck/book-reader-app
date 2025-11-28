@@ -445,24 +445,20 @@ export const ReaderUI = ({
     }, [nextSentenceIndex, isAutoScrollActive, navigation]);
 
     const handlePreviousChunk = useCallback(() => {
-        if (previousSentenceIndex !== null) {
-            // Update parent state → controller syncs automatically (controlled component)
-            navigation.setCurrentChunkIndex(previousSentenceIndex);
-        }
+        // Use audio controller's prevSentence to properly stop current audio and play new one
+        sentenceAudio.controller.prevSentence();
         if (activeTab === 'full' && isFullscreen && isAutoScrollActive) {
             setIsAutoScrollActive(false);
         }
-    }, [previousSentenceIndex, navigation, activeTab, isFullscreen, isAutoScrollActive]);
+    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
 
     const handleNextChunk = useCallback(() => {
-        if (nextSentenceIndex !== null) {
-            // Update parent state → controller syncs automatically (controlled component)
-            navigation.setCurrentChunkIndex(nextSentenceIndex);
-        }
+        // Use audio controller's nextSentence to properly stop current audio and play new one
+        sentenceAudio.controller.nextSentence();
         if (activeTab === 'full' && isFullscreen && isAutoScrollActive) {
             setIsAutoScrollActive(false);
         }
-    }, [nextSentenceIndex, navigation, activeTab, isFullscreen, isAutoScrollActive]);
+    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
 
     // Handler for "Go to Sentence" feature
     const handleNavigateToChunk = useCallback((targetIndex: number) => {
