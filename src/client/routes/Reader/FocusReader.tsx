@@ -45,8 +45,8 @@ export const FocusReader: React.FC<{
     const isPlaying = controller.isPlaying;
     const currentWordIndex = controller.currentWordIndex;
     const { textColor, highlightColor, fontSize, lineHeight, fontFamily } = useUserTheme();
-    const theme = useTheme();
-    const isDarkMode = theme.palette.mode === 'dark';
+    // Theme hook kept for potential future use with theme-dependent features
+    useTheme();
 
     // Helper: find index of next/prev/current displayable (text/header/image)
     const getDisplayableIndex = useCallback((fromIndex: number, direction: 'prev' | 'current' | 'next'): number | null => {
@@ -169,14 +169,15 @@ export const FocusReader: React.FC<{
         }
     }, [ttsEnabled]);
 
+    // Smooth page-turn animation for sentence transitions
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
         el.animate([
-            { opacity: 0.5, transform: 'translateY(16px)' },
-            { opacity: 1, transform: 'translateY(0px)' }
+            { opacity: 0, transform: 'translateY(24px) scale(0.98)' },
+            { opacity: 1, transform: 'translateY(0px) scale(1)' }
         ], {
-            duration: 360,
+            duration: 320,
             easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
         });
     }, [currentSentenceIndex]);
@@ -293,17 +294,21 @@ export const FocusReader: React.FC<{
                 mx: 'auto',
                 px: 2,
                 py: 1,
+                // Extra top padding so content is below floating tabs, negative margin to pull up
+                pt: 5,
+                mt: -5,
                 pb: { xs: 20, sm: 16 },
-                height: 'calc(100vh - 200px)',
+                height: 'calc(100vh - 160px)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 gap: 2,
-                backgroundColor: 'background.default',
+                // Apple Books warm background
+                backgroundColor: 'var(--reader-bg)',
                 color: textColor,
                 fontSize: `${fontSize}rem`,
                 lineHeight: lineHeight,
-                fontFamily: fontFamily
+                fontFamily: fontFamily,
             }}
             role="region"
             aria-label="Focus reading area"
@@ -325,27 +330,26 @@ export const FocusReader: React.FC<{
                         gap: 2,
                         mb: 2,
                         mt: 1,
-                        opacity: 0.4
+                        opacity: 0.6
                     }}
                 >
                     <Box
                         sx={{
                             flex: 1,
-                            height: '3px',
-                            background: isDarkMode 
-                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
-                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
-                            borderRadius: '2px'
+                            height: '2px',
+                            background: 'linear-gradient(90deg, transparent, var(--reader-accent) 50%, transparent)',
+                            borderRadius: '1px'
                         }}
                     />
                     <Typography
-                        variant="caption"
                         sx={{
-                            color: textColor,
-                            fontSize: '0.7rem',
-                            opacity: 0.6,
-                            fontStyle: 'italic',
-                            whiteSpace: 'nowrap'
+                            color: 'var(--reader-accent)',
+                            fontSize: '11px',
+                            fontWeight: 500,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            whiteSpace: 'nowrap',
+                            fontFamily: 'var(--reader-font-sans)'
                         }}
                     >
                         New Paragraph
@@ -353,11 +357,9 @@ export const FocusReader: React.FC<{
                     <Box
                         sx={{
                             flex: 1,
-                            height: '3px',
-                            background: isDarkMode 
-                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
-                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
-                            borderRadius: '2px'
+                            height: '2px',
+                            background: 'linear-gradient(90deg, transparent, var(--reader-accent) 50%, transparent)',
+                            borderRadius: '1px'
                         }}
                     />
                 </Box>
@@ -371,13 +373,21 @@ export const FocusReader: React.FC<{
                         maxHeight: 88,
                         overflow: 'hidden',
                         cursor: (prevText || isPrevImage) ? 'pointer' : 'default',
+                        borderRadius: '12px',
+                        px: 2,
+                        py: 1,
+                        transition: 'all 200ms cubic-bezier(0.22, 1, 0.36, 1)',
+                        '&:hover': {
+                            backgroundColor: 'var(--reader-accent-subtle)',
+                        },
                         ...(isPrevHeader && {
                             mx: -2,
                             px: 2,
                             py: 1.5,
-                            borderTop: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
-                            borderBottom: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
-                            backgroundColor: isDarkMode ? 'rgba(51, 51, 51, 0.6)' : 'rgba(211, 211, 211, 0.6)'
+                            borderRadius: 0,
+                            borderTop: '1px solid var(--reader-separator)',
+                            borderBottom: '1px solid var(--reader-separator)',
+                            backgroundColor: 'var(--reader-bg-secondary)',
                         })
                     }}
                     onClick={(e) => {
@@ -389,33 +399,32 @@ export const FocusReader: React.FC<{
                 >
                     {isPrevImage ? (
                         <Typography
-                            variant="caption"
                             sx={{
-                                color: textColor,
+                                color: 'var(--reader-text-muted)',
                                 textAlign: 'center',
-                                opacity: 0.5,
+                                fontSize: '13px',
                                 fontStyle: 'italic',
-                                display: 'block'
+                                display: 'block',
+                                fontFamily: 'var(--reader-font-sans)'
                             }}
                         >
                             [Previous Image]
                         </Typography>
                     ) : (
                         <Typography
-                            variant="body2"
                             sx={{
-                                color: textColor,
+                                color: 'var(--reader-text-secondary)',
                                 textAlign: 'center',
-                                opacity: isPrevHeader ? 0.8 : 0.6,
-                                fontWeight: isPrevHeader ? 700 : 400,
-                                fontSize: isPrevHeader ? '0.95rem' : 'inherit',
+                                fontWeight: isPrevHeader ? 600 : 400,
+                                fontSize: isPrevHeader ? '14px' : '14px',
                                 textTransform: isPrevHeader ? 'uppercase' : 'none',
-                                letterSpacing: isPrevHeader ? '0.05em' : 'normal',
+                                letterSpacing: isPrevHeader ? '0.06em' : '-0.01em',
                                 display: '-webkit-box',
                                 WebkitLineClamp: 3,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
-                                textOverflow: 'ellipsis'
+                                textOverflow: 'ellipsis',
+                                fontFamily: isPrevHeader ? 'var(--reader-font-sans)' : 'inherit'
                             }}
                         >
                             {prevText}
@@ -428,32 +437,38 @@ export const FocusReader: React.FC<{
                 </Box>
             )}
 
-            {/* Current (bold, big, centered) */}
+            {/* Current (bold, big, centered) - Card layout */}
             <Box
                 ref={containerRef}
                 sx={{
                     position: 'relative',
                     ['--word-highlight-color' as unknown as string]: highlightColor,
                     ...(!isHeader && !isImage && {
-                        py: 2,
-                        px: 2,
-                        mx: -2,
-                        borderRadius: '12px',
-                        ...(isDarkMode && {
-                            backgroundColor: 'rgba(0, 0, 0, 0.6)'
-                        })
+                        py: 3,
+                        px: 3,
+                        mx: -1,
+                        borderRadius: '16px',
+                        // Apple Books card style
+                        backgroundColor: 'var(--reader-surface)',
+                        boxShadow: 'var(--reader-shadow-medium)',
+                        transition: 'all 280ms cubic-bezier(0.22, 1, 0.36, 1)',
                     }),
                     ...(isHeader && {
                         mx: -2,
-                        px: 2,
+                        px: 3,
                         py: 3,
-                        backgroundColor: isDarkMode ? '#333333' : 'rgba(211, 211, 211, 0.3)',
-                        borderTop: isDarkMode ? '2px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)',
-                        borderBottom: isDarkMode ? '2px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)'
+                        backgroundColor: 'var(--reader-bg-secondary)',
+                        borderTop: '2px solid var(--reader-accent)',
+                        borderBottom: '1px solid var(--reader-separator)',
+                        borderRadius: 0,
                     }),
                     ...(isImage && {
                         my: 3,
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        backgroundColor: 'var(--reader-surface)',
+                        borderRadius: '16px',
+                        boxShadow: 'var(--reader-shadow-medium)',
+                        p: 2,
                     })
                 }}
             >
@@ -522,12 +537,12 @@ export const FocusReader: React.FC<{
                                 sx={{
                                     position: 'absolute',
                                     zIndex: 0,
-                                    left: 0,
-                                    right: 0,
+                                    left: -8,
+                                    right: -8,
                                     top: `${linePos.top}px`,
                                     height: `${linePos.height}px`,
                                     backgroundColor: highlightColor,
-                                    borderRadius: '6px',
+                                    borderRadius: '8px',
                                     pointerEvents: 'none',
                                     transition: 'top 220ms cubic-bezier(0.22, 1, 0.36, 1)'
                                 }}
@@ -537,16 +552,16 @@ export const FocusReader: React.FC<{
                             variant={isHeader ? "h2" : "h4"}
                             sx={{
                                 fontSize: isHeader ? `${fontSize * 2 * fontScale}rem` : `${fontSize * 1.5 * fontScale}rem`,
-                                lineHeight: isHeader ? 1.3 : lineHeight,
-                                fontWeight: isHeader ? 800 : (bionicReadingEnabled ? 400 : 700),
+                                lineHeight: isHeader ? 1.35 : lineHeight,
+                                fontWeight: isHeader ? 700 : (bionicReadingEnabled ? 400 : 600),
                                 textAlign: 'center',
-                                color: textColor,
-                                fontFamily: fontFamily,
+                                color: isHeader ? 'var(--reader-accent)' : 'var(--reader-text)',
+                                fontFamily: isHeader ? 'var(--reader-font-sans)' : fontFamily,
                                 whiteSpace: 'pre-wrap',
                                 wordBreak: 'break-word',
                                 position: 'relative',
                                 zIndex: 1,
-                                letterSpacing: isHeader ? '-0.01em' : 'normal',
+                                letterSpacing: isHeader ? '0.02em' : '-0.015em',
                                 textTransform: isHeader ? 'uppercase' : 'none',
                                 mb: 0,
                                 transition: 'font-size 220ms cubic-bezier(0.22, 1, 0.36, 1)'
@@ -614,29 +629,27 @@ export const FocusReader: React.FC<{
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: 2,
-                                width: '100%'
+                                width: '100%',
+                                opacity: 0.6
                             }}
                         >
                             <Box
                                 sx={{
                                     flex: 1,
-                                    height: '3px',
-                                    background: isDarkMode 
-                                        ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
-                                        : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
-                                    borderRadius: '2px'
+                                    height: '2px',
+                                    background: 'linear-gradient(90deg, transparent, var(--reader-accent) 50%, transparent)',
+                                    borderRadius: '1px'
                                 }}
                             />
                             <Typography
-                                variant="caption"
                                 sx={{
-                                    color: textColor,
-                                    fontSize: '0.75rem',
-                                    opacity: 0.5,
-                                    fontStyle: 'italic',
+                                    color: 'var(--reader-accent)',
+                                    fontSize: '11px',
+                                    fontWeight: 500,
+                                    letterSpacing: '0.08em',
                                     textTransform: 'uppercase',
-                                    letterSpacing: '0.1em',
-                                    whiteSpace: 'nowrap'
+                                    whiteSpace: 'nowrap',
+                                    fontFamily: 'var(--reader-font-sans)'
                                 }}
                             >
                                 End of Paragraph
@@ -644,11 +657,9 @@ export const FocusReader: React.FC<{
                             <Box
                                 sx={{
                                     flex: 1,
-                                    height: '3px',
-                                    background: isDarkMode 
-                                        ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
-                                        : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
-                                    borderRadius: '2px'
+                                    height: '2px',
+                                    background: 'linear-gradient(90deg, transparent, var(--reader-accent) 50%, transparent)',
+                                    borderRadius: '1px'
                                 }}
                             />
                         </Box>
@@ -660,45 +671,52 @@ export const FocusReader: React.FC<{
                             minHeight: 44,
                             maxHeight: 88,
                             overflow: 'hidden',
+                            borderRadius: '12px',
+                            px: 2,
+                            py: 1,
+                            transition: 'all 200ms cubic-bezier(0.22, 1, 0.36, 1)',
+                            '&:hover': {
+                                backgroundColor: 'var(--reader-accent-subtle)',
+                            },
                             ...(isNextHeader && {
                                 mx: -2,
                                 px: 2,
                                 py: 1.5,
-                                borderTop: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
-                                borderBottom: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)',
-                                backgroundColor: isDarkMode ? 'rgba(51, 51, 51, 0.6)' : 'rgba(211, 211, 211, 0.6)'
+                                borderRadius: 0,
+                                borderTop: '1px solid var(--reader-separator)',
+                                borderBottom: '1px solid var(--reader-separator)',
+                                backgroundColor: 'var(--reader-bg-secondary)',
                             })
                         }}
                     >
                         {isNextImage ? (
                             <Typography
-                                variant="caption"
                                 sx={{
-                                    color: textColor,
+                                    color: 'var(--reader-text-muted)',
                                     textAlign: 'center',
-                                    opacity: 0.5,
+                                    fontSize: '13px',
                                     fontStyle: 'italic',
-                                    display: 'block'
+                                    display: 'block',
+                                    fontFamily: 'var(--reader-font-sans)'
                                 }}
                             >
                                 [Next Image]
                             </Typography>
                         ) : (
                             <Typography
-                                variant="body2"
                                 sx={{
-                                    color: textColor,
+                                    color: 'var(--reader-text-secondary)',
                                     textAlign: 'center',
-                                    opacity: isNextHeader ? 0.8 : 0.6,
-                                    fontWeight: isNextHeader ? 700 : 400,
-                                    fontSize: isNextHeader ? '0.95rem' : 'inherit',
+                                    fontWeight: isNextHeader ? 600 : 400,
+                                    fontSize: '14px',
                                     textTransform: isNextHeader ? 'uppercase' : 'none',
-                                    letterSpacing: isNextHeader ? '0.05em' : 'normal',
+                                    letterSpacing: isNextHeader ? '0.06em' : '-0.01em',
                                     display: '-webkit-box',
                                     WebkitLineClamp: 3,
                                     WebkitBoxOrient: 'vertical',
                                     overflow: 'hidden',
-                                    textOverflow: 'ellipsis'
+                                    textOverflow: 'ellipsis',
+                                    fontFamily: isNextHeader ? 'var(--reader-font-sans)' : 'inherit'
                                 }}
                             >
                                 {nextText}
@@ -717,27 +735,26 @@ export const FocusReader: React.FC<{
                         gap: 2,
                         mt: 2,
                         mb: 1,
-                        opacity: 0.4
+                        opacity: 0.6
                     }}
                 >
                     <Box
                         sx={{
                             flex: 1,
-                            height: '3px',
-                            background: isDarkMode 
-                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
-                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
-                            borderRadius: '2px'
+                            height: '2px',
+                            background: 'linear-gradient(90deg, transparent, var(--reader-accent) 50%, transparent)',
+                            borderRadius: '1px'
                         }}
                     />
                     <Typography
-                        variant="caption"
                         sx={{
-                            color: textColor,
-                            fontSize: '0.7rem',
-                            opacity: 0.6,
-                            fontStyle: 'italic',
-                            whiteSpace: 'nowrap'
+                            color: 'var(--reader-accent)',
+                            fontSize: '11px',
+                            fontWeight: 500,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            whiteSpace: 'nowrap',
+                            fontFamily: 'var(--reader-font-sans)'
                         }}
                     >
                         New Paragraph
@@ -745,11 +762,9 @@ export const FocusReader: React.FC<{
                     <Box
                         sx={{
                             flex: 1,
-                            height: '3px',
-                            background: isDarkMode 
-                                ? 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent)'
-                                : 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2) 50%, transparent)',
-                            borderRadius: '2px'
+                            height: '2px',
+                            background: 'linear-gradient(90deg, transparent, var(--reader-accent) 50%, transparent)',
+                            borderRadius: '1px'
                         }}
                     />
                 </Box>

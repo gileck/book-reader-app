@@ -44,35 +44,53 @@ export const UserThemeProvider: React.FC<UserThemeProviderProps> = ({
     fontFamily,
     textColor
 }) => {
+    // Apple Books-inspired warm color palette
+    const warmPalette = {
+        light: {
+            background: {
+                default: '#fbf8f3',
+                paper: '#ffffff',
+            },
+            text: {
+                primary: '#2c2c2c',
+                secondary: '#6b6b6b',
+            },
+        },
+        dark: {
+            background: {
+                default: '#1c1a18',
+                paper: '#2a2826',
+            },
+            text: {
+                primary: '#e8e4df',
+                secondary: '#a8a4a0',
+            },
+        },
+    };
+
+    const currentPalette = warmPalette[theme];
+
     const muiTheme = createTheme({
         palette: {
             mode: theme,
             primary: {
-                main: '#1976d2',
+                main: theme === 'dark' ? '#E8B77D' : '#D4A574',
             },
             secondary: {
-                main: '#dc004e',
+                main: theme === 'dark' ? '#30d158' : '#34C759',
             },
-            ...(theme === 'dark' && {
-                background: {
-                    default: '#121212',
-                    paper: '#1e1e1e',
-                },
-                text: {
-                    primary: '#ffffff',
-                    secondary: '#b0b0b0',
-                },
-            })
+            background: currentPalette.background,
+            text: currentPalette.text,
         },
-        // Typography settings removed - now handled locally in Reader content only
+        typography: {
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif',
+        },
         components: {
             MuiPaper: {
                 styleOverrides: {
                     root: {
-                        ...(theme === 'dark' && {
-                            backgroundColor: '#1e1e1e',
-                            color: '#ffffff',
-                        })
+                        backgroundColor: currentPalette.background.paper,
+                        color: currentPalette.text.primary,
                     }
                 }
             }

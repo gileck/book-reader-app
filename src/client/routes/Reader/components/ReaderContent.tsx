@@ -322,15 +322,21 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
         <Box
             ref={readerContentRef}
             sx={{
-                mt: 4,
+                mt: 3,
                 // Apply theme settings directly to the reader content container
                 fontSize: 'var(--reader-font-size, 1rem)',
-                lineHeight: 'var(--reader-line-height, 1.5)',
-                fontFamily: 'var(--reader-font-family, Inter, system-ui, sans-serif)',
-                color: 'var(--reader-text-color, inherit)',
+                lineHeight: 'var(--reader-line-height, 1.65)',
+                fontFamily: 'var(--reader-font-family, var(--reader-font-serif, Georgia, serif))',
+                color: 'var(--reader-text-color, var(--reader-text))',
+                // Apple Books-inspired typography refinements
+                letterSpacing: '-0.01em',
+                textRendering: 'optimizeLegibility',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
                 // Hide content until CSS variables are applied to prevent flicker
                 opacity: cssVarsApplied ? 1 : 0,
-                transition: 'opacity 0.1s ease-in-out'
+                transition: 'opacity 0.15s ease-in-out',
+                // Paragraph first-letter styling (drop cap effect) handled in ChunkRenderer
             }}
         >
             <ChunkRenderer

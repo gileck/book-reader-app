@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
-import { useUserTheme } from '@/client/components/UserThemeProvider';
 import type { BookClient } from '../../../../apis/books/types';
 import type { ChapterClient } from '../../../../apis/chapters/types';
 
@@ -10,37 +9,89 @@ interface ReaderHeaderProps {
 }
 
 export const ReaderHeader: React.FC<ReaderHeaderProps> = ({ book, chapter }) => {
-    const { textColor } = useUserTheme();
     return (
-        <Box sx={{ mb: { xs: 3, sm: 4 } }}>
+        <Box sx={{ 
+            mb: { xs: 4, sm: 5 },
+            pt: { xs: 2, sm: 3 },
+        }}>
+            {/* Book Title */}
             <Typography
-                variant="h4"
                 sx={{
-                    color: textColor,
-                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
-                    lineHeight: { xs: 1.2, sm: 1.235 },
-                    fontWeight: { xs: 600, sm: 500 },
+                    color: 'var(--reader-text)',
+                    fontSize: { xs: '1.75rem', sm: '2.25rem', md: '2.5rem' },
+                    lineHeight: 1.2,
+                    fontWeight: 700,
+                    fontFamily: 'var(--reader-font-sans)',
+                    letterSpacing: '-0.025em',
                     wordWrap: 'break-word',
                     overflowWrap: 'break-word',
-                    mb: { xs: 1, sm: 1.5, md: 2 }
+                    mb: { xs: 1.5, sm: 2 }
                 }}
             >
                 {book.title}
             </Typography>
-            <Typography
-                variant="h5"
+            
+            {/* Chapter Badge & Title */}
+            <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: 1.5,
+                flexWrap: 'wrap'
+            }}>
+                {/* Chapter Number Badge */}
+                <Box
+                    sx={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        px: 1.5,
+                        py: 0.5,
+                        backgroundColor: 'var(--reader-accent)',
+                        borderRadius: '8px',
+                        minWidth: 'fit-content',
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            color: 'white',
+                            fontSize: '12px',
+                            fontWeight: 700,
+                            fontFamily: 'var(--reader-font-sans)',
+                            letterSpacing: '0.04em',
+                            textTransform: 'uppercase',
+                        }}
+                    >
+                        Chapter {chapter.chapterNumber}
+                    </Typography>
+                </Box>
+                
+                {/* Chapter Title */}
+                <Typography
+                    sx={{
+                        color: 'var(--reader-text-secondary)',
+                        fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.4rem' },
+                        lineHeight: 1.3,
+                        fontWeight: 500,
+                        fontFamily: 'var(--reader-font-sans)',
+                        letterSpacing: '-0.01em',
+                        wordWrap: 'break-word',
+                        overflowWrap: 'break-word',
+                    }}
+                >
+                    {chapter.title}
+                </Typography>
+            </Box>
+            
+            {/* Decorative accent line */}
+            <Box
                 sx={{
-                    color: textColor,
-                    fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
-                    lineHeight: { xs: 1.3, sm: 1.334 },
-                    fontWeight: { xs: 500, sm: 400 },
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word',
-                    mb: { xs: 2, sm: 3 }
+                    mt: 3,
+                    height: '3px',
+                    width: '60px',
+                    background: 'linear-gradient(90deg, var(--reader-accent), var(--reader-accent-light))',
+                    borderRadius: '2px',
                 }}
-            >
-                Chapter {chapter.chapterNumber}: {chapter.title}
-            </Typography>
+            />
         </Box>
     );
 }; 

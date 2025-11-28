@@ -40,9 +40,52 @@
 
   /* Motion */
   --ease-spring: cubic-bezier(0.25, 0.8, 0.25, 1.1);
+  --ease-ios: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 120ms;
   --duration-medium: 200ms;
   --duration-slow: 320ms;
+
+  /* ===== Apple Books Warm Theme - Reader Specific ===== */
+  
+  /* Reader Backgrounds */
+  --reader-bg: #fbf8f3;
+  --reader-bg-secondary: #f5f1ea;
+  --reader-surface: #ffffff;
+  --reader-surface-elevated: #ffffff;
+  
+  /* Reader Text Colors */
+  --reader-text: #2c2c2c;
+  --reader-text-secondary: #6b6b6b;
+  --reader-text-muted: #999999;
+  
+  /* Reader Accent Colors */
+  --reader-accent: #D4A574;
+  --reader-accent-light: #E8C9A8;
+  --reader-accent-subtle: rgba(212, 165, 116, 0.15);
+  
+  /* Reader Controls */
+  --reader-controls-bg: rgba(251, 248, 243, 0.92);
+  --reader-controls-border: rgba(212, 165, 116, 0.2);
+  --reader-controls-surface: rgba(255, 255, 255, 0.9);
+  
+  /* Reader Progress & Play */
+  --reader-progress-track: rgba(212, 165, 116, 0.2);
+  --reader-progress-fill: #D4A574;
+  --reader-play-button: #34C759;
+  --reader-play-button-hover: #2db84d;
+  --reader-pause-button: #FF6B6B;
+  
+  /* Reader Separator */
+  --reader-separator: rgba(212, 165, 116, 0.15);
+  
+  /* Reader Typography */
+  --reader-font-serif: 'New York', 'Georgia', 'Times New Roman', serif;
+  --reader-font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  
+  /* Reader Card Shadows */
+  --reader-shadow-soft: 0 2px 16px rgba(139, 109, 76, 0.08);
+  --reader-shadow-medium: 0 4px 24px rgba(139, 109, 76, 0.12);
+  --reader-shadow-elevated: 0 8px 32px rgba(139, 109, 76, 0.16);
 }
 
 @theme inline {
@@ -69,6 +112,44 @@
     --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.72);
     --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.64);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.56);
+
+    /* ===== Apple Books Warm Theme - Dark Mode ===== */
+    
+    /* Reader Backgrounds - Warm dark tones */
+    --reader-bg: #1c1a18;
+    --reader-bg-secondary: #252321;
+    --reader-surface: #2a2826;
+    --reader-surface-elevated: #332f2c;
+    
+    /* Reader Text Colors */
+    --reader-text: #e8e4df;
+    --reader-text-secondary: #a8a4a0;
+    --reader-text-muted: #6b6763;
+    
+    /* Reader Accent Colors */
+    --reader-accent: #E8B77D;
+    --reader-accent-light: #F0C896;
+    --reader-accent-subtle: rgba(232, 183, 125, 0.12);
+    
+    /* Reader Controls */
+    --reader-controls-bg: rgba(28, 26, 24, 0.92);
+    --reader-controls-border: rgba(232, 183, 125, 0.15);
+    --reader-controls-surface: rgba(42, 40, 38, 0.9);
+    
+    /* Reader Progress & Play */
+    --reader-progress-track: rgba(232, 183, 125, 0.15);
+    --reader-progress-fill: #E8B77D;
+    --reader-play-button: #30d158;
+    --reader-play-button-hover: #28c04e;
+    --reader-pause-button: #FF6B6B;
+    
+    /* Reader Separator */
+    --reader-separator: rgba(232, 183, 125, 0.1);
+    
+    /* Reader Card Shadows - Dark mode */
+    --reader-shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.3);
+    --reader-shadow-medium: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --reader-shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
   }
 }
 

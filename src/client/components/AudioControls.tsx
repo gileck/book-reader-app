@@ -145,12 +145,28 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: '#1a1a1a',
-            borderTop: '1px solid #333',
-            padding: 2,
-            paddingBottom: 'max(30px, env(safe-area-inset-bottom))',
-            zIndex: 1000
+            // Apple Books-inspired warm, translucent background
+            backdropFilter: 'saturate(180%) blur(20px)',
+            WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+            backgroundColor: 'var(--reader-controls-bg)',
+            borderTop: '0.5px solid var(--reader-separator)',
+            boxShadow: '0 -4px 24px rgba(0, 0, 0, 0.08)',
+            padding: 1.5,
+            paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
+            zIndex: 1000,
+            fontFamily: 'var(--reader-font-sans)',
         }}>
+            {/* Grabber indicator - iOS sheet affordance */}
+            <Box sx={{
+                width: 32,
+                height: 4,
+                borderRadius: 2,
+                backgroundColor: 'var(--reader-text-muted)',
+                opacity: 0.35,
+                mx: 'auto',
+                mb: 1,
+            }} />
+
             {/* Chapter Transition Progress Bar - Overlay at top */}
             {chapterTransitionLoading && (
                 <Box sx={{
@@ -164,15 +180,16 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         sx={{
                             height: 3,
                             borderRadius: 0,
-                            backgroundColor: 'rgba(64, 64, 64, 0.3)',
+                            backgroundColor: 'var(--reader-progress-track)',
                             '& .MuiLinearProgress-bar': {
-                                backgroundColor: '#ff9800',
+                                backgroundColor: 'var(--reader-accent)',
                                 borderRadius: 0
                             }
                         }}
                     />
                 </Box>
             )}
+
             {/* Error Alert - Show when there's a TTS error (but not when TTS is disabled) */}
             {hasError && !ttsDisabled && (
                 <Box sx={{ mb: 2, mx: 'auto', maxWidth: 600 }}>
@@ -182,6 +199,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         sx={{
                             backgroundColor: '#d32f2f',
                             color: 'white',
+                            borderRadius: '12px',
                             '& .MuiAlert-icon': {
                                 color: 'white'
                             }
@@ -225,16 +243,24 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        mb: 1
+                        mb: 0.75
                     }}>
                         <IconButton
                             onClick={onPreviousChapter}
                             disabled={currentChapterNumber <= minChapterNumber}
                             sx={{
-                                color: 'white',
-                                '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                                '&:disabled': { color: 'rgba(255,255,255,0.3)' },
-                                p: 1
+                                color: 'var(--reader-text)',
+                                '&:hover': { 
+                                    backgroundColor: 'var(--reader-accent-subtle)',
+                                    color: 'var(--reader-accent)'
+                                },
+                                '&:disabled': { 
+                                    color: 'var(--reader-text-muted)',
+                                    opacity: 0.4
+                                },
+                                p: 1,
+                                borderRadius: '10px',
+                                transition: 'all 180ms ease'
                             }}
                             size="medium"
                         >
@@ -249,12 +275,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                             gap: 1
                         }}>
                             <Typography
-                                variant="body2"
                                 sx={{
                                     textAlign: 'center',
-                                    fontWeight: 500,
-                                    color: '#e0e0e0',
-                                    fontSize: '1rem'
+                                    fontWeight: 600,
+                                    color: 'var(--reader-text)',
+                                    fontSize: '15px',
+                                    letterSpacing: '-0.01em',
                                 }}
                             >
                                 {chapterTitle}
@@ -263,9 +289,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                 <IconButton
                                     onClick={onChapters}
                                     sx={{
-                                        color: 'white',
-                                        '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                                        p: 0.5
+                                        color: 'var(--reader-accent)',
+                                        '&:hover': { 
+                                            backgroundColor: 'var(--reader-accent-subtle)'
+                                        },
+                                        p: 0.5,
+                                        borderRadius: '8px',
                                     }}
                                     size="small"
                                 >
@@ -278,10 +307,18 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                             onClick={onNextChapter}
                             disabled={totalChapters ? currentChapterNumber >= totalChapters : false}
                             sx={{
-                                color: 'white',
-                                '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                                '&:disabled': { color: 'rgba(255,255,255,0.3)' },
-                                p: 1
+                                color: 'var(--reader-text)',
+                                '&:hover': { 
+                                    backgroundColor: 'var(--reader-accent-subtle)',
+                                    color: 'var(--reader-accent)'
+                                },
+                                '&:disabled': { 
+                                    color: 'var(--reader-text-muted)',
+                                    opacity: 0.4
+                                },
+                                p: 1,
+                                borderRadius: '10px',
+                                transition: 'all 180ms ease'
                             }}
                             size="medium"
                         >
@@ -289,18 +326,19 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         </IconButton>
                     </Box>
 
-                    {/* Enhanced Progress Bar */}
-                    <Box sx={{ mb: 1 }}>
+                    {/* Enhanced Progress Bar - Pill style */}
+                    <Box sx={{ mb: 0.75, px: 1 }}>
                         <LinearProgress
                             variant="determinate"
                             value={displayProgress}
                             sx={{
-                                height: 4,
-                                borderRadius: 2,
-                                backgroundColor: '#404040',
+                                height: 5,
+                                borderRadius: 2.5,
+                                backgroundColor: 'var(--reader-progress-track)',
                                 '& .MuiLinearProgress-bar': {
-                                    backgroundColor: '#4285f4',
-                                    borderRadius: 2
+                                    backgroundColor: 'var(--reader-accent)',
+                                    borderRadius: 3,
+                                    transition: 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)'
                                 }
                             }}
                         />
@@ -311,9 +349,10 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        mb: 2,
+                        mb: 1,
                         minHeight: 24,
-                        gap: 1
+                        gap: 1,
+                        px: 0.5
                     }}>
                         {/* Left side buttons */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 'fit-content' }}>
@@ -323,11 +362,11 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                     onClick={onJumpToCurrentChunk}
                                     size="small"
                                     sx={{
-                                        color: '#4285f4',
+                                        color: 'var(--reader-accent)',
                                         padding: '6px',
+                                        borderRadius: '8px',
                                         '&:hover': {
-                                            color: '#5a9fff',
-                                            backgroundColor: 'rgba(66, 133, 244, 0.1)'
+                                            backgroundColor: 'var(--reader-accent-subtle)'
                                         }
                                     }}
                                     title="Jump to current chunk"
@@ -341,11 +380,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                 onClick={onGoToTop || (() => onNavigateToChunk?.(0))}
                                 size="small"
                                 sx={{
-                                    color: '#b0b0b0',
-                                    padding: '4px',
+                                    color: 'var(--reader-text-secondary)',
+                                    padding: '6px',
+                                    borderRadius: '8px',
                                     '&:hover': {
-                                        color: '#e0e0e0',
-                                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                        color: 'var(--reader-text)',
+                                        backgroundColor: 'var(--reader-accent-subtle)'
                                     }
                                 }}
                                 title="Go to first sentence"
@@ -356,12 +396,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
 
                         {/* Center: Sentence Counter */}
                         <Typography
-                            variant="body2"
                             sx={{
-                                color: '#b0b0b0',
-                                fontWeight: 400,
-                                fontSize: '0.875rem',
-                                whiteSpace: 'nowrap'
+                                color: 'var(--reader-text-secondary)',
+                                fontWeight: 500,
+                                fontSize: '13px',
+                                whiteSpace: 'nowrap',
+                                letterSpacing: '-0.01em'
                             }}
                         >
                             {currentChunk} of {totalChunks} {unitLabelOverride || 'sentences'}
@@ -370,8 +410,8 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                     component="span"
                                     sx={{
                                         ml: 1,
-                                        color: '#4285f4',
-                                        fontWeight: 500
+                                        color: 'var(--reader-accent)',
+                                        fontWeight: 600
                                     }}
                                 >
                                     ({estimatedTimeRemaining})
@@ -386,11 +426,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                 onClick={() => setNavigationDialogOpen(true)}
                                 size="small"
                                 sx={{
-                                    color: '#b0b0b0',
-                                    padding: '4px',
+                                    color: 'var(--reader-text-secondary)',
+                                    padding: '6px',
+                                    borderRadius: '8px',
                                     '&:hover': {
-                                        color: '#e0e0e0',
-                                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                        color: 'var(--reader-text)',
+                                        backgroundColor: 'var(--reader-accent-subtle)'
                                     }
                                 }}
                                 title="Go to sentence..."
@@ -404,11 +445,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                     onClick={onToggleFullscreen}
                                     size="small"
                                     sx={{
-                                        color: '#b0b0b0',
+                                        color: 'var(--reader-text-secondary)',
                                         padding: '6px',
+                                        borderRadius: '8px',
                                         '&:hover': {
-                                            color: '#e0e0e0',
-                                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                            color: 'var(--reader-text)',
+                                            backgroundColor: 'var(--reader-accent-subtle)'
                                         }
                                     }}
                                     title="Enter fullscreen"
@@ -428,31 +470,42 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 position: 'relative'
             }}>
                 {/* Left Controls */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 100 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 90 }}>
                     {/* Quick Prompts Button */}
                     <IconButton
                         onClick={onQuickPrompts || onAskAI}
                         sx={{
-                            color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            p: 1
+                            color: 'var(--reader-text)',
+                            backgroundColor: 'var(--reader-accent-subtle)',
+                            '&:hover': { 
+                                backgroundColor: 'var(--reader-accent-light)',
+                                color: 'var(--reader-surface)'
+                            },
+                            p: 1,
+                            borderRadius: '10px',
+                            transition: 'all 180ms ease'
                         }}
                         size="medium"
                     >
-                        <QuestionMark />
+                        <QuestionMark sx={{ fontSize: 20 }} />
                     </IconButton>
 
                     {/* Settings Button */}
                     <IconButton
                         onClick={onSettings}
                         sx={{
-                            color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            p: 1
+                            color: 'var(--reader-text-secondary)',
+                            '&:hover': { 
+                                backgroundColor: 'var(--reader-accent-subtle)',
+                                color: 'var(--reader-text)'
+                            },
+                            p: 1,
+                            borderRadius: '10px',
+                            transition: 'all 180ms ease'
                         }}
                         size="medium"
                     >
-                        <Settings />
+                        <Settings sx={{ fontSize: 20 }} />
                     </IconButton>
                 </Box>
 
@@ -463,21 +516,29 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     transform: 'translateX(-50%)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 0.5
+                    gap: 1
                 }}>
                     {/* Previous Chunk Button */}
                     <IconButton
                         onClick={onPreviousChunk}
                         disabled={currentChunk <= 1}
                         sx={{
-                            color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            '&:disabled': { color: 'rgba(255,255,255,0.3)' },
-                            p: 1
+                            color: 'var(--reader-text)',
+                            '&:hover': { 
+                                backgroundColor: 'var(--reader-accent-subtle)',
+                                color: 'var(--reader-accent)'
+                            },
+                            '&:disabled': { 
+                                color: 'var(--reader-text-muted)',
+                                opacity: 0.4
+                            },
+                            p: 0.75,
+                            borderRadius: '10px',
+                            transition: 'all 180ms ease'
                         }}
-                        size="large"
+                        size="medium"
                     >
-                        <SkipPrevious />
+                        <SkipPrevious sx={{ fontSize: 26 }} />
                     </IconButton>
 
                     {/* Play/Pause Button with Loading Indicator */}
@@ -501,35 +562,42 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                                 : 'Play'
                             }
                             sx={{
-                                backgroundColor:
-                                    isPlaying
-                                        ? '#f44336' // Red for pause (always enabled)
-                                        : (hasError || ttsDisabled)
-                                            ? '#9e9e9e' // Gray when disabled due to error or TTS is off
-                                            : '#4caf50', // Green for play
+                                backgroundColor: isPlaying
+                                    ? 'var(--reader-pause-button)'
+                                    : (hasError || ttsDisabled)
+                                        ? 'var(--reader-text-muted)'
+                                        : 'var(--reader-play-button)',
                                 color: 'white',
                                 '&:hover': {
-                                    backgroundColor:
-                                        isPlaying
-                                            ? '#d32f2f' // Darker red on hover for pause
-                                            : (hasError || ttsDisabled)
-                                                ? '#757575' // Darker gray on hover when disabled
-                                                : '#388e3c' // Darker green for play
+                                    backgroundColor: isPlaying
+                                        ? '#e55a5a'
+                                        : (hasError || ttsDisabled)
+                                            ? 'var(--reader-text-secondary)'
+                                            : 'var(--reader-play-button-hover)',
+                                    transform: 'scale(1.05)'
+                                },
+                                '&:active': {
+                                    transform: 'scale(0.95)'
                                 },
                                 '&:disabled': {
-                                    backgroundColor: '#9e9e9e', // Keep gray when disabled
-                                    color: 'white'
+                                    backgroundColor: 'var(--reader-text-muted)',
+                                    color: 'white',
+                                    opacity: 0.6
                                 },
                                 width: 64,
                                 height: 64,
-                                mx: 1
+                                mx: 1,
+                                boxShadow: isPlaying 
+                                    ? '0 4px 16px rgba(255, 107, 107, 0.4)'
+                                    : '0 4px 16px rgba(52, 199, 89, 0.4)',
+                                transition: 'all 180ms cubic-bezier(0.22, 1, 0.36, 1)'
                             }}
                             size="large"
                         >
                             {isPlaying ? (
-                                <Pause sx={{ fontSize: 32 }} />
+                                <Pause sx={{ fontSize: 36 }} />
                             ) : (
-                                <PlayArrow sx={{ fontSize: 32 }} />
+                                <PlayArrow sx={{ fontSize: 36 }} />
                             )}
                         </IconButton>
                         {/* Loading Spinner Overlay */}
@@ -538,7 +606,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                 size={72}
                                 thickness={2}
                                 sx={{
-                                    color: '#4caf50',
+                                    color: 'var(--reader-play-button)',
                                     position: 'absolute',
                                     top: '50%',
                                     left: '50%',
@@ -555,14 +623,22 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         onClick={onNextChunk}
                         disabled={currentChunk >= totalChunks}
                         sx={{
-                            color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            '&:disabled': { color: 'rgba(255,255,255,0.3)' },
-                            p: 1
+                            color: 'var(--reader-text)',
+                            '&:hover': { 
+                                backgroundColor: 'var(--reader-accent-subtle)',
+                                color: 'var(--reader-accent)'
+                            },
+                            '&:disabled': { 
+                                color: 'var(--reader-text-muted)',
+                                opacity: 0.4
+                            },
+                            p: 0.75,
+                            borderRadius: '10px',
+                            transition: 'all 180ms ease'
                         }}
-                        size="large"
+                        size="medium"
                     >
-                        <SkipNext />
+                        <SkipNext sx={{ fontSize: 26 }} />
                     </IconButton>
                 </Box>
 
@@ -572,27 +648,36 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     display: 'flex',
                     alignItems: 'center',
                     gap: 0.5,
-                    minWidth: 100,
+                    minWidth: 90,
                     justifyContent: 'flex-end'
                 }}>
                     {/* Speed Control Button */}
-                    <IconButton
+                    <Box
+                        component="button"
                         onClick={onSpeedSettings}
                         sx={{
-                            color: 'white',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
-                            minWidth: 50,
-                            height: 48,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 0.5,
-                            p: 1
+                            backgroundColor: 'var(--reader-accent-subtle)',
+                            color: 'var(--reader-accent)',
+                            border: 'none',
+                            borderRadius: '8px',
+                            padding: '6px 10px',
+                            cursor: 'pointer',
+                            fontFamily: 'var(--reader-font-sans)',
+                            fontSize: '14px',
+                            fontWeight: 700,
+                            letterSpacing: '-0.02em',
+                            transition: 'all 180ms ease',
+                            '&:hover': {
+                                backgroundColor: 'var(--reader-accent-light)',
+                                color: 'var(--reader-surface)'
+                            },
+                            '&:active': {
+                                transform: 'scale(0.95)'
+                            }
                         }}
                     >
-                        <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 'bold' }}>
-                            {playbackSpeed.toFixed(1)}x
-                        </Typography>
-                    </IconButton>
+                        {playbackSpeed.toFixed(1)}x
+                    </Box>
 
                     {/* Bookmark Button */}
                     <BookmarkDropdown
@@ -606,7 +691,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 </Box>
             </Box>
 
-            {/* Sentence Navigation Dialog */}
+            {/* Sentence Navigation Dialog - Apple Books style */}
             <Dialog
                 open={navigationDialogOpen}
                 onClose={() => {
@@ -615,13 +700,23 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 }}
                 PaperProps={{
                     sx: {
-                        backgroundColor: '#1a1a1a',
-                        color: 'white',
-                        minWidth: 300
+                        backgroundColor: 'var(--reader-surface)',
+                        color: 'var(--reader-text)',
+                        borderRadius: '16px',
+                        minWidth: 320,
+                        boxShadow: 'var(--reader-shadow-elevated)'
                     }
                 }}
             >
-                <DialogTitle sx={{ pb: 1 }}>Go to Sentence</DialogTitle>
+                <DialogTitle sx={{ 
+                    pb: 1,
+                    fontFamily: 'var(--reader-font-sans)',
+                    fontWeight: 600,
+                    fontSize: '18px',
+                    letterSpacing: '-0.01em'
+                }}>
+                    Go to Sentence
+                </DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
@@ -638,19 +733,23 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         }}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                                color: 'white',
+                                color: 'var(--reader-text)',
+                                borderRadius: '12px',
                                 '& fieldset': {
-                                    borderColor: 'rgba(255, 255, 255, 0.23)'
+                                    borderColor: 'var(--reader-separator)'
                                 },
                                 '&:hover fieldset': {
-                                    borderColor: 'rgba(255, 255, 255, 0.4)'
+                                    borderColor: 'var(--reader-accent-light)'
                                 },
                                 '&.Mui-focused fieldset': {
-                                    borderColor: '#4285f4'
+                                    borderColor: 'var(--reader-accent)'
                                 }
                             },
                             '& .MuiInputLabel-root': {
-                                color: 'rgba(255, 255, 255, 0.7)'
+                                color: 'var(--reader-text-secondary)'
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': {
+                                color: 'var(--reader-accent)'
                             }
                         }}
                         onKeyDown={(e) => {
@@ -665,13 +764,22 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         }}
                     />
                 </DialogContent>
-                <DialogActions sx={{ px: 3, pb: 2 }}>
+                <DialogActions sx={{ px: 3, pb: 2.5 }}>
                     <Button
                         onClick={() => {
                             setNavigationDialogOpen(false);
                             setTargetSentence('');
                         }}
-                        sx={{ color: '#b0b0b0' }}
+                        sx={{ 
+                            color: 'var(--reader-text-secondary)',
+                            fontFamily: 'var(--reader-font-sans)',
+                            fontWeight: 500,
+                            borderRadius: '10px',
+                            px: 2,
+                            '&:hover': {
+                                backgroundColor: 'var(--reader-accent-subtle)'
+                            }
+                        }}
                     >
                         Cancel
                     </Button>
@@ -685,10 +793,18 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                             }
                         }}
                         sx={{
-                            backgroundColor: '#4285f4',
+                            backgroundColor: 'var(--reader-accent)',
                             color: 'white',
+                            fontFamily: 'var(--reader-font-sans)',
+                            fontWeight: 600,
+                            borderRadius: '10px',
+                            px: 3,
                             '&:hover': {
-                                backgroundColor: '#3367d6'
+                                backgroundColor: 'var(--reader-accent-light)'
+                            },
+                            '&:disabled': {
+                                backgroundColor: 'var(--reader-text-muted)',
+                                opacity: 0.4
                             }
                         }}
                         disabled={
@@ -703,4 +819,4 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             </Dialog>
         </Box>
     );
-}; 
+};

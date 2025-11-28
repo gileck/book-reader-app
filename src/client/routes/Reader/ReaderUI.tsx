@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { Box, Paper, Alert, Snackbar, Tabs, Tab } from '@mui/material';
+import { Box, Paper, Alert, Snackbar } from '@mui/material';
+import { ReaderTabNav, type ReaderTab } from '../../components/ReaderTabNav';
 import { useRouter } from '../../router';
 import type { BookClient } from '../../../apis/books/types';
 import type { ChapterClient } from '../../../apis/chapters/types';
@@ -77,11 +78,11 @@ export const ReaderUI = ({
 
     // Initialize activeTab with user's reading mode from database (already loaded)
     // Priority: URL param > user settings (database) > app settings (localStorage) > default ('focus')
-    const initialMode = (queryParams.mode as 'focus' | 'full' | 'qa' | 'overview' | 'search' | undefined)
+    const initialMode = (queryParams.mode as ReaderTab | undefined)
         || userSettings?.readingMode
         || appSettings.readingMode
         || 'focus';
-    const [activeTab, setActiveTab] = useState<'focus' | 'full' | 'qa' | 'overview' | 'search'>(initialMode);
+    const [activeTab, setActiveTab] = useState<ReaderTab>(initialMode);
 
     // Fullscreen state
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -168,7 +169,7 @@ export const ReaderUI = ({
 
     // Sync reading mode from URL param on load/change
     useEffect(() => {
-        const urlMode = (queryParams.mode as 'full' | 'focus' | 'qa' | 'overview' | 'search' | undefined) || undefined;
+        const urlMode = (queryParams.mode as ReaderTab | undefined) || undefined;
         if (urlMode) {
             setActiveTab(urlMode);
             if (urlMode !== 'qa' && urlMode !== 'overview' && urlMode !== 'search' && urlMode !== appSettings.readingMode) {
@@ -246,7 +247,7 @@ export const ReaderUI = ({
         });
     }, [loading, chapter, currentSentenceIndex, activeTab, handleScrollToCurrentChunk]);
 
-    const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview' | 'search') => {
+    const handleTabChange = useCallback((newTab: ReaderTab) => {
         setActiveTab(newTab);
         // Exit fullscreen when switching tabs
         setIsFullscreen(false);
@@ -540,60 +541,10 @@ export const ReaderUI = ({
             <Box>
                 {/* Tab Menu - Hidden in fullscreen mode */}
                 {!(isFullscreen && activeTab === 'full') && (
-                    <Box sx={{
-                        position: 'sticky',
-                        top: 0,
-                        zIndex: 10,
-                        borderBottom: 1,
-                        borderColor: 'divider',
-                        backdropFilter: 'blur(10px)',
-                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
-                        '@media (prefers-color-scheme: dark)': {
-                            backgroundColor: 'rgba(18, 18, 18, 0.95)',
-                            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                        }
-                    }}>
-                        <Tabs
-                            value={activeTab}
-                            onChange={handleTabChange}
-                            variant="scrollable"
-                            scrollButtons="auto"
-                            allowScrollButtonsMobile
-                            sx={{
-                                maxWidth: 800,
-                                mx: 'auto',
-                                '& .MuiTabs-indicator': {
-                                    height: 3,
-                                    borderRadius: '3px 3px 0 0'
-                                },
-                                '& .MuiTab-root': {
-                                    color: 'text.primary',
-                                    fontWeight: 500,
-                                    fontSize: '0.95rem',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.05em',
-                                    minHeight: 56,
-                                    '@media (prefers-color-scheme: dark)': {
-                                        color: 'rgba(255, 255, 255, 0.7)'
-                                    }
-                                },
-                                '& .MuiTab-root.Mui-selected': {
-                                    color: 'primary.main',
-                                    fontWeight: 600,
-                                    '@media (prefers-color-scheme: dark)': {
-                                        color: 'primary.light'
-                                    }
-                                }
-                            }}
-                        >
-                            <Tab label="Full" value="full" />
-                            <Tab label="Focus" value="focus" />
-                            <Tab label="QA Chat" value="qa" />
-                            <Tab label="Search" value="search" />
-                            <Tab label="Overview" value="overview" />
-                        </Tabs>
-                    </Box>
+                    <ReaderTabNav
+                        activeTab={activeTab}
+                        onTabChange={handleTabChange}
+                    />
                 )}
 
                 {activeTab === 'focus' ? (
@@ -615,21 +566,22 @@ export const ReaderUI = ({
                         mx: 'auto',
                         display: 'flex',
                         flexDirection: 'column',
-                        height: 'calc(100vh - 56px - 120px)', // Tab bar (56px) + compact audio player (120px)
-                        backgroundColor: 'background.default',
+                        height: 'calc(100vh - 160px)',
+                        backgroundColor: 'var(--reader-bg)',
+                        pt: 5,
+                        mt: -5,
                         pb: 2 // Add padding at the bottom for spacing from audio player
                     }}>
                         {/* QA Chat Header */}
                         <Box sx={{
                             px: 2,
                             py: 1.5,
-                            borderBottom: 1,
-                            borderColor: 'divider',
+                            borderBottom: '0.5px solid var(--reader-separator)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'flex-end',
                             minHeight: 56,
-                            backgroundColor: 'background.paper'
+                            backgroundColor: 'var(--reader-surface)',
                         }}>
                             <PanelHeader
                                 onClose={() => setActiveTab('full')}
@@ -750,11 +702,18 @@ export const ReaderUI = ({
                         sx={{
                             maxWidth: isFullscreen ? '100%' : 800,
                             mx: 'auto',
-                            p: isFullscreen ? { xs: 2, sm: 4 } : 1,
+                            p: isFullscreen ? { xs: 2, sm: 4 } : 2,
+                            // Extra top padding so content starts below the floating tabs
+                            pt: isFullscreen ? { xs: 2, sm: 4 } : 5,
                             pb: isFullscreen ? { xs: 12, sm: 14 } : { xs: 20, sm: 16 },
+                            // Negative margin to pull content up under the tabs
+                            mt: isFullscreen ? 0 : -5,
                             borderRadius: 0,
-                            height: isFullscreen ? '100vh' : 'calc(100vh - 200px)',
-                            overflow: 'auto'
+                            height: isFullscreen ? '100vh' : 'calc(100vh - 160px)',
+                            overflow: 'auto',
+                            // Apple Books paper-like background
+                            backgroundColor: 'var(--reader-bg)',
+                            backgroundImage: 'none',
                         }}
                     >
                         {/* ReaderHeader - Hidden in fullscreen mode */}
