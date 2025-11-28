@@ -27,11 +27,11 @@ The most important architectural decision: sentence indices directly correspond 
 ```typescript
 // ✅ SIMPLIFIED (Current Implementation)
 const sentences = chapter?.content?.chunks || [];  // ALL chunks
-const currentChunkIndex = sentenceAudio.currentSentenceIndex;  // Direct match!
+const currentSentenceIndex = sentenceAudio.currentSentenceIndex;  // Direct match!
 
 // ❌ OLD (Complex Implementation)
 const sentences = chunks.filter(c => c.type === 'text');  // Filtered array
-const currentChunkIndex = sentenceToChunkIndex(sentenceIndex);  // Mapping required
+const currentSentenceIndex = sentenceToChunkIndex(sentenceIndex);  // Mapping required
 ```
 
 ### 2. Headers and Text Are Playable
@@ -113,7 +113,7 @@ graph TB
 
 ```typescript
 // 1. Data Loader fetches everything
-useReaderData() → { book, chapter, currentChapterNumber, currentChunkIndex }
+useReaderData() → { book, chapter, currentChapterNumber, currentSentenceIndex }
 
 // 2. ReaderUI receives loaded data
 <ReaderUI 
@@ -234,6 +234,9 @@ const loadSentence = async (index: number) => {
 const play = async () => {
     const chunk = sentences[currentSentenceIndex];
     
+    // Clear pendingPlay flag since we're handling the play request
+    update({ pendingPlay: false });
+    
     // Auto-advance past images only
     if (chunk.type === 'image' || !chunk.text?.trim()) {
         const nextPlayableIndex = sentences.findIndex(
@@ -243,7 +246,7 @@ const play = async () => {
         );
         if (nextPlayableIndex !== -1) {
             goToSentence(nextPlayableIndex);
-            setTimeout(() => play(), 50);
+            update({ pendingPlay: true }); // useEffect will trigger play()
         }
         return;
     }
@@ -252,13 +255,20 @@ const play = async () => {
     await loadSentence(currentSentenceIndex);
     // ...
 };
+
+// Declarative play trigger via useEffect (replaces setTimeout)
+useEffect(() => {
+    if (state.pendingPlay) {
+        void play();
+    }
+}, [state.pendingPlay, play]);
 ```
 
 **Navigation:**
 ```typescript
 /**
  * Core navigation helper that handles audio state transitions consistently.
- * Stops current audio, navigates to new index, and resumes playback if needed.
+ * Uses pendingPlay flag with useEffect instead of setTimeout for reliable timing.
  */
 const navigateToSentenceIndex = (newIndex: number) => {
     const { intendedPlay } = stateRef.current;
@@ -271,16 +281,19 @@ const navigateToSentenceIndex = (newIndex: number) => {
         update({ isPlaying: false });
     }
 
-    // Update to new sentence
-    const newState = { currentSentenceIndex: clamped, currentWordIndex: 0 };
-    update(newState);
+    // Reset word index
+    update({ currentWordIndex: 0 });
 
-    // CRITICAL: Update stateRef immediately so play() sees the new index
-    stateRef.current = { ...stateRef.current, ...newState };
+    // CRITICAL: Update ref SYNCHRONOUSLY before state update
+    currentSentenceIndexRef.current = clamped;
 
-    // If audio was playing, start playing the new chunk
+    // CONTROLLED: Request parent to update sentence index
+    onSentenceIndexChange(clamped);
+
+    // If audio was playing, schedule play via pendingPlay flag
+    // useEffect will trigger play() after state updates are committed
     if (intendedPlay) {
-        setTimeout(() => void play(), 50);
+        update({ pendingPlay: true });
     }
 };
 
@@ -663,7 +676,7 @@ Simple conditional className application:
 // TextChunk.tsx
 <div
     style={{
-        backgroundColor: currentChunkIndex === chunkIndex 
+        backgroundColor: currentSentenceIndex === chunkIndex 
             ? 'var(--sentence-highlight-color, transparent)' 
             : 'transparent'
     }}
@@ -674,10 +687,10 @@ Simple conditional className application:
 ```
 
 **How it works:**
-1. `currentChunkIndex` comes from audio controller
+1. `currentSentenceIndex` comes from audio controller
 2. Each text chunk knows its own `chunkIndex`
 3. When they match → apply sentence highlight color
-4. React re-renders automatically when `currentChunkIndex` changes
+4. React re-renders automatically when `currentSentenceIndex` changes
 
 ### Word Highlighting (DOM-Based)
 
@@ -784,21 +797,21 @@ export const Reader = () => {
             
             {/* Content */}
             {isFocusMode ? (
-                <FocusReader controller={sentenceAudio.controller} />
+                <FocusReader controller={sentenceAudio} />
             ) : (
                 <ReaderContent
                     chapter={chapter}
-                    currentChunkIndex={audio.currentChunkIndex}
+                    currentSentenceIndex={audio.currentSentenceIndex}
                     {...props}
                 />
             )}
             
             {/* Audio Controls */}
             <AudioControls
-                onPlay={sentenceAudio.controller.play}
-                onPause={sentenceAudio.controller.pause}
-                onNext={sentenceAudio.controller.nextSentence}
-                onPrev={sentenceAudio.controller.prevSentence}
+                onPlay={sentenceAudio.play}
+                onPause={sentenceAudio.pause}
+                onNext={sentenceAudio.nextSentence}
+                onPrev={sentenceAudio.prevSentence}
                 {...controlProps}
             />
         </UserThemeProvider>
@@ -806,49 +819,50 @@ export const Reader = () => {
 };
 ```
 
-### useReader Hook
+### useReaderState Hook
 
-Central state management hook:
+Central state management hook (v4.0 - simplified architecture):
 
 ```typescript
-export const useReader = () => {
-    // Load book and chapter data
-    const [state, setState] = useState<ReaderState>({
-        book: null,
-        chapter: null,
-        currentChapterNumber: null,
-        currentChunkIndex: null,
-        loading: true,
-        error: null
+export const useReaderState = ({
+    initialBook,
+    initialChapter,
+    initialChapterNumber,
+    initialChunkIndex
+}) => {
+    // Runtime state - initialized with pre-loaded data
+    const [state, setState] = useState<RuntimeState>({
+        book: initialBook,
+        chapter: initialChapter,
+        currentChapterNumber: initialChapterNumber,
+        currentSentenceIndex: initialChunkIndex,
+        chapterTransitionLoading: false,
+        navigationError: null
     });
     
-    // Initialize audio controller (simplified - no mapping!)
+    // Initialize audio controller as truly controlled component
+    // No internal state for currentSentenceIndex - uses prop directly
     const sentenceAudio = useSentenceAudioController(
         state.chapter,
         userSettings.selectedVoice,
         userSettings.selectedProvider,
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
-        state.currentChunkIndex ?? 0,
+        state.currentSentenceIndex ?? 0,  // ← Single source of truth (prop)
+        setCurrentSentenceIndex,          // ← Callback to update parent state
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset
     );
     
-    // Create audio playback adapter
-    const audioPlayback = {
-        currentChunkIndex: sentenceAudio.currentSentenceIndex,  // Direct!
-        currentWordIndex: sentenceAudio.currentWordIndex,
-        isPlaying: sentenceAudio.isPlaying,
-        // ...
-    };
-    
+    // Direct return - no wrapper object needed!
     return {
         book: state.book,
         chapter: state.chapter,
-        audio: audioPlayback,
+        currentSentenceIndex: state.currentSentenceIndex,  // Primary state
+        sentenceAudio,        // Audio controller exposed directly
+        sentences: sentenceAudio.sentences,
         settings: userSettings,
-        sentenceAudio,
         // ...
     };
 };
@@ -861,7 +875,7 @@ Renders the entire chapter with scrolling:
 ```typescript
 export const ReaderContent = ({
     chapter,
-    currentChunkIndex,
+    currentSentenceIndex,
     ...props
 }) => {
     // Group chunks by paragraph
@@ -871,7 +885,7 @@ export const ReaderContent = ({
         <Box>
             <ChunkRenderer
                 paragraphGroups={paragraphGroups}
-                currentChunkIndex={currentChunkIndex}
+                currentSentenceIndex={currentSentenceIndex}
                 {...props}
             />
         </Box>
@@ -886,7 +900,7 @@ Renders different chunk types:
 ```typescript
 export const ChunkRenderer = ({
     paragraphGroups,
-    currentChunkIndex,
+    currentSentenceIndex,
     ...props
 }) => {
     const renderChunk = (chunk: TextChunkClient) => {
@@ -903,7 +917,7 @@ export const ChunkRenderer = ({
                     <TextChunk
                         chunk={chunk}
                         chunkIndex={chunk.index}  // Original chunk index!
-                        currentChunkIndex={currentChunkIndex}
+                        currentSentenceIndex={currentSentenceIndex}
                         {...props}
                     />
                 );
@@ -930,10 +944,10 @@ Renders individual text chunk with highlighting:
 export const TextChunk = ({
     chunk,
     chunkIndex,
-    currentChunkIndex,
+    currentSentenceIndex,
     handleLinkClick
 }) => {
-    const isHighlighted = currentChunkIndex === chunkIndex;
+    const isHighlighted = currentSentenceIndex === chunkIndex;
     
     return (
         <div
@@ -1104,12 +1118,12 @@ sequenceDiagram
 ```mermaid
 graph LR
     A[User Navigation/<br/>Audio Event] --> B[Call onSentenceIndexChange]
-    B --> C[Parent: setCurrentChunkIndex]
+    B --> C[Parent: setCurrentSentenceIndex]
     C --> D[Parent state updates]
     D --> E[React re-renders]
     E --> F[Controller receives new prop]
     F --> G[sentenceAudio.currentSentenceIndex<br/>reflects new value]
-    G --> H[TextChunk receives new currentChunkIndex]
+    G --> H[TextChunk receives new currentSentenceIndex]
     H --> I[Sentence highlight updates]
     
     F --> J{Word Index Changed?}
@@ -1121,7 +1135,7 @@ graph LR
     style F fill:#87CEEB
     style K fill:#FFD700
     
-    Note1[Single source of truth:<br/>Parent state.currentChunkIndex]
+    Note1[Single source of truth:<br/>Parent state.currentSentenceIndex]
     Note2[No internal state in controller]
 ```
 
@@ -1178,8 +1192,8 @@ const sentenceAudio = useSentenceAudioController(
     userSettings.selectedProvider as TtsProvider,
     userSettings.playbackSpeed,
     userSettings.ttsEnabled,
-    state.currentChunkIndex ?? 0,  // ← Single source of truth (prop)
-    setCurrentChunkIndex,          // ← Callback to update parent state
+    state.currentSentenceIndex ?? 0,  // ← Single source of truth (prop)
+    setCurrentSentenceIndex,          // ← Callback to update parent state
     0,
     userSettings.highlightMode,
     userSettings.wordSpeedOffset
@@ -1190,19 +1204,16 @@ const readingProgress = useReadingProgress({
     userId: user?.id || '',
     bookId,
     currentChapterNumber: state.currentChapterNumber,
-    currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Same as state.currentChunkIndex
-    isPlaying: audioPlayback.isPlaying,
+    currentSentenceIndex: sentenceAudio.currentSentenceIndex,
+    isPlaying: sentenceAudio.isPlaying,
     isInitialLoadComplete: true
 });
 
-// User navigation: Just update parent state, controller follows automatically
-const audioPlayback = {
-    handleNextChunk: () => {
-        const newIndex = Math.min(sentenceAudio.sentences.length - 1, (state.currentChunkIndex ?? 0) + 1);
-        setCurrentChunkIndex(newIndex); // Controller re-renders with new prop
-    },
-    // ...
-};
+// User navigation: Use controller methods directly
+// Controller handles audio stop/start and calls onSentenceIndexChange callback
+sentenceAudio.nextSentence();   // Navigates and resumes playback if needed
+sentenceAudio.prevSentence();   // Navigates and resumes playback if needed
+sentenceAudio.goToSentence(42); // Jump to specific sentence
 ```
 
 **Truly Controlled Pattern Benefits (v4.0):**
@@ -1241,8 +1252,8 @@ useReadingLogs({
     userId: user?.id || '',
     bookId,
     chapter: state.chapter,
-    currentChunkIndex: sentenceAudio.currentSentenceIndex,  // Direct from audio controller
-    isPlaying: audioPlayback.isPlaying
+    currentSentenceIndex: sentenceAudio.currentSentenceIndex,  // Direct from audio controller
+    isPlaying: sentenceAudio.isPlaying
 });
 
 // In useReadingLogs hook
@@ -1460,23 +1471,23 @@ const prevSentence = () => {
 ### Basic Playback
 
 ```typescript
-// Get audio controller from useReader
-const { sentenceAudio } = useReader();
+// Get audio controller from useReaderState
+const { sentenceAudio } = useReaderState({ ... });
 
 // Play current sentence
-sentenceAudio.controller.play();
+sentenceAudio.play();
 
 // Pause
-sentenceAudio.controller.pause();
+sentenceAudio.pause();
 
 // Next sentence (finds next text chunk automatically)
-sentenceAudio.controller.nextSentence();
+sentenceAudio.nextSentence();
 
 // Previous sentence (finds previous text chunk)
-sentenceAudio.controller.prevSentence();
+sentenceAudio.prevSentence();
 
 // Jump to specific chunk
-sentenceAudio.controller.goToSentence(42);  // Chunk index 42
+sentenceAudio.goToSentence(42);  // Chunk index 42
 ```
 
 ### Highlighting Control
@@ -1651,8 +1662,8 @@ useEffect(() => {
 
 ### 4. Efficient Chunk Rendering
 ```typescript
-// Only re-renders when currentChunkIndex changes
-const isHighlighted = currentChunkIndex === chunkIndex;
+// Only re-renders when currentSentenceIndex changes
+const isHighlighted = currentSentenceIndex === chunkIndex;
 ```
 
 ### 5. Ref-Based State Tracking
@@ -1675,7 +1686,7 @@ const currentState = stateRef.current;
 
 **Root Causes Fixed in v3.1:**
 
-1. **Reading Progress Not Saving**: `useReadingProgress` was tracking stale `state.currentChunkIndex` instead of real-time controller position
+1. **Reading Progress Not Saving**: `useReadingProgress` was tracking stale `state.currentSentenceIndex` instead of real-time controller position
 2. **Position Reset on Mount**: Audio controller's chapter change effect ran on initial mount, resetting position to 0
 3. **Race Conditions**: Complex initialization order caused loaded position to be overwritten
 
@@ -1688,8 +1699,8 @@ const readingProgress = useReadingProgress({
     userId: user?.id || '',
     bookId,
     currentChapterNumber: state.currentChapterNumber,
-    currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Real-time, not stale state
-    isPlaying: audioPlayback.isPlaying,
+    currentSentenceIndex: sentenceAudio.currentSentenceIndex, // ← Real-time, not stale state
+    isPlaying: sentenceAudio.isPlaying,
     isInitialLoadComplete: true
 });
 ```
@@ -1729,7 +1740,7 @@ if (error) return <ErrorDisplay />;
 
 // Only render when data is ready
 return <ReaderUI 
-    initialChunkIndex={data.currentChunkIndex}  // ← Already determined
+    initialChunkIndex={data.currentSentenceIndex}  // ← Already determined
     {...data}
 />;
 ```
@@ -1783,26 +1794,26 @@ return <ReaderUI
 **Symptom:** AI responses reference incorrect sentences or positions.
 
 **Root Cause Fixed:**
-- QA chat was using `audio.currentChunkIndex` (stale state value) instead of real-time controller position
+- QA chat was using `audio.currentSentenceIndex` (stale state value) instead of real-time controller position
 - State was not updating as user navigated
 
 **Solution Applied:**
 ```typescript
 // BEFORE (Bug): Using stale state
 const bookQA = useBookQA({
-    currentSentence: audio.textChunks[audio.currentChunkIndex].text,
+    currentSentence: sentences[audio.currentSentenceIndex].text,
     getLastSentences: () => {
-        const startIndex = audio.currentChunkIndex - contextCount;
-        return audio.textChunks.slice(startIndex, audio.currentChunkIndex);
+        const startIndex = audio.currentSentenceIndex - contextCount;
+        return sentences.slice(startIndex, audio.currentSentenceIndex);
     }
 });
 
 // AFTER (Fixed): Using real-time controller position
 const bookQA = useBookQA({
-    currentSentence: audio.textChunks[sentenceAudio.controller.currentSentenceIndex].text,
+    currentSentence: sentences[sentenceAudio.currentSentenceIndex].text,
     getLastSentences: () => {
-        const startIndex = sentenceAudio.controller.currentSentenceIndex - contextCount;
-        return audio.textChunks.slice(startIndex, sentenceAudio.controller.currentSentenceIndex);
+        const startIndex = sentenceAudio.currentSentenceIndex - contextCount;
+        return sentences.slice(startIndex, sentenceAudio.currentSentenceIndex);
     }
 });
 ```
@@ -1835,8 +1846,8 @@ const play = useCallback(async (userInitiated: boolean = false) => {
 
 // In ReaderUI
 const handleUserPlay = useCallback(() => {
-    void sentenceAudio.controller.play(true); // User clicked play
-}, [sentenceAudio.controller]);
+    void sentenceAudio.play(true); // User clicked play
+}, [sentenceAudio]);
 ```
 
 **Result:** 

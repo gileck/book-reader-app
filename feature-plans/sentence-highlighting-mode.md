@@ -26,7 +26,7 @@ export interface HighlightingStrategy {
 }
 
 export interface HighlightingContext {
-  currentChunkIndex: number;
+  currentSentenceIndex: number;
   currentWordIndex: number;
   highlightColor: string;
   chapter: ChapterClient | null;
@@ -66,9 +66,9 @@ export class WordHighlightingStrategy implements HighlightingStrategy {
   constructor(private context: HighlightingContext) {}
 
   getWordStyle(chunkIndex: number, wordIndex: number): React.CSSProperties {
-    const { currentChunkIndex, currentWordIndex, highlightColor } = this.context;
+    const { currentSentenceIndex, currentWordIndex, highlightColor } = this.context;
     
-    if (chunkIndex === currentChunkIndex && wordIndex === currentWordIndex) {
+    if (chunkIndex === currentSentenceIndex && wordIndex === currentWordIndex) {
       return {
         backgroundColor: highlightColor,
         borderRadius: '2px',
@@ -79,8 +79,8 @@ export class WordHighlightingStrategy implements HighlightingStrategy {
   }
 
   getWordClassName(chunkIndex: number, wordIndex: number): string {
-    const { currentChunkIndex, currentWordIndex } = this.context;
-    return chunkIndex === currentChunkIndex && wordIndex === currentWordIndex ? 'current-word' : '';
+    const { currentSentenceIndex, currentWordIndex } = this.context;
+    return chunkIndex === currentSentenceIndex && wordIndex === currentWordIndex ? 'current-word' : '';
   }
 
   handleWordClick(chunkIndex: number, wordIndex: number): void {
@@ -89,14 +89,14 @@ export class WordHighlightingStrategy implements HighlightingStrategy {
 
   handleNext(): void {
     // Regular word-by-word navigation (existing logic)
-    const { currentChunkIndex, currentWordIndex } = this.context;
-    this.context.onWordClick(currentChunkIndex, currentWordIndex + 1);
+    const { currentSentenceIndex, currentWordIndex } = this.context;
+    this.context.onWordClick(currentSentenceIndex, currentWordIndex + 1);
   }
 
   handlePrevious(): void {
     // Regular word-by-word navigation (existing logic)
-    const { currentChunkIndex, currentWordIndex } = this.context;
-    this.context.onWordClick(currentChunkIndex, Math.max(0, currentWordIndex - 1));
+    const { currentSentenceIndex, currentWordIndex } = this.context;
+    this.context.onWordClick(currentSentenceIndex, Math.max(0, currentWordIndex - 1));
   }
 }
 ```
@@ -110,9 +110,9 @@ export class SentenceHighlightingStrategy implements HighlightingStrategy {
   constructor(private context: HighlightingContext) {}
 
   getWordStyle(chunkIndex: number, wordIndex: number): React.CSSProperties {
-    const { currentChunkIndex, currentWordIndex, highlightColor, chapter } = this.context;
+    const { currentSentenceIndex, currentWordIndex, highlightColor, chapter } = this.context;
     
-    if (chunkIndex !== currentChunkIndex || !chapter) return {};
+    if (chunkIndex !== currentSentenceIndex || !chapter) return {};
     
     const sentence = this.findCurrentSentence();
     if (sentence && wordIndex >= sentence.start && wordIndex <= sentence.end) {
@@ -126,9 +126,9 @@ export class SentenceHighlightingStrategy implements HighlightingStrategy {
   }
 
   getWordClassName(chunkIndex: number, wordIndex: number): string {
-    const { currentChunkIndex, currentWordIndex, chapter } = this.context;
+    const { currentSentenceIndex, currentWordIndex, chapter } = this.context;
     
-    if (chunkIndex !== currentChunkIndex || !chapter) return '';
+    if (chunkIndex !== currentSentenceIndex || !chapter) return '';
     
     const sentence = this.findCurrentSentence();
     if (sentence && wordIndex >= sentence.start && wordIndex <= sentence.end) {
@@ -147,7 +147,7 @@ export class SentenceHighlightingStrategy implements HighlightingStrategy {
     // Navigate to next sentence
     const nextSentence = this.findNextSentence();
     if (nextSentence) {
-      this.context.onWordClick(this.context.currentChunkIndex, nextSentence.start);
+      this.context.onWordClick(this.context.currentSentenceIndex, nextSentence.start);
     }
   }
 
@@ -155,16 +155,16 @@ export class SentenceHighlightingStrategy implements HighlightingStrategy {
     // Navigate to previous sentence
     const prevSentence = this.findPreviousSentence();
     if (prevSentence) {
-      this.context.onWordClick(this.context.currentChunkIndex, prevSentence.start);
+      this.context.onWordClick(this.context.currentSentenceIndex, prevSentence.start);
     }
   }
 
   private findCurrentSentence() {
     // Simple: split chunk text on [.!?], find which sentence contains currentWordIndex
-    const { chapter, currentChunkIndex, currentWordIndex } = this.context;
+    const { chapter, currentSentenceIndex, currentWordIndex } = this.context;
     if (!chapter) return null;
     
-    const chunk = chapter.content.chunks[currentChunkIndex];
+    const chunk = chapter.content.chunks[currentSentenceIndex];
     if (!chunk || chunk.type !== 'text') return null;
     
     const words = chunk.text.split(/\s+/);
@@ -225,7 +225,7 @@ import { createHighlightingStrategy, HighlightingContext } from '../highlighting
 import { useSettings } from '../../../settings/SettingsContext';
 
 export const useHighlighting = (
-  currentChunkIndex: number,
+  currentSentenceIndex: number,
   currentWordIndex: number,
   highlightColor: string,
   chapter: ChapterClient | null,
@@ -235,13 +235,13 @@ export const useHighlighting = (
   const { settings, updateSettings } = useSettings();
   
   const context: HighlightingContext = useMemo(() => ({
-    currentChunkIndex,
+    currentSentenceIndex,
     currentWordIndex,
     highlightColor,
     chapter,
     onWordClick,
     onNavigateToChunk
-  }), [currentChunkIndex, currentWordIndex, highlightColor, chapter, onWordClick, onNavigateToChunk]);
+  }), [currentSentenceIndex, currentWordIndex, highlightColor, chapter, onWordClick, onNavigateToChunk]);
 
   const strategy = useMemo(() => 
     createHighlightingStrategy(settings.highlightingMode || 'word', context),
@@ -308,7 +308,7 @@ export const Reader = () => {
   
   // Use highlighting hook instead of optimized functions
   const highlighting = useHighlighting(
-    audio.currentChunkIndex,
+    currentSentenceIndex,
     audio.currentWordIndex,
     settings.highlightColor,
     chapter,

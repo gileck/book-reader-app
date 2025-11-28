@@ -81,7 +81,7 @@ WordHighlightingAPI.highlightWord(currentSentenceIndex, wordIndex);
 // Sentence highlighting - same index!
 <TextChunk 
     chunkIndex={chunk.index}
-    currentChunkIndex={currentSentenceIndex}  // Direct match!
+    currentSentenceIndex={currentSentenceIndex}  // Direct match!
 />
 ```
 
@@ -194,7 +194,7 @@ useEffect(() => {
     }
     
     return () => clearInterval(highlightIntervalRef.current);
-}, [state.isPlaying, state.currentChunkIndex, state.currentWordIndex]);
+}, [state.isPlaying, state.currentSentenceIndex, state.currentWordIndex]);
 ```
 
 ## WordHighlightingAPI
@@ -379,9 +379,9 @@ The sentence highlighting system follows these core principles:
 
 ```mermaid
 graph TB
-    A[Audio Playback] --> B[currentChunkIndex State]
+    A[Audio Playback] --> B[currentSentenceIndex State]
     B --> C[React Component Rendering]
-    C --> D{currentChunkIndex === chunkIndex?}
+    C --> D{currentSentenceIndex === chunkIndex?}
     D -->|Yes| E[Apply 'current-sentence' class]
     D -->|No| F[No highlighting class]
     E --> G[CSS Background Styling]
@@ -404,7 +404,7 @@ Sentence highlighting is achieved through simple conditional class application:
         lineHeight: 1.6,
         fontSize: '1rem'
     }}
-    className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+    className={currentSentenceIndex === chunkIndex ? 'current-sentence' : ''}
     id={`text-chunk-${chunkIndex}`}
     data-chunk-index={chunkIndex}
     data-paragraph-index={chunk.paragraphIndex}
@@ -425,19 +425,19 @@ Example in `TextChunk.tsx`:
 interface TextChunkProps {
     chunk: TextChunkClient;
     chunkIndex: number;
-    currentChunkIndex: number; // Added for sentence highlighting
+    currentSentenceIndex: number; // Added for sentence highlighting
     handleLinkClick: (link: ChunkLink) => void;
 }
 
 export const TextChunk: React.FC<TextChunkProps> = ({
     chunk,
     chunkIndex,
-    currentChunkIndex,
+    currentSentenceIndex,
     handleLinkClick
 }) => {
     return (
         <Box
-            className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+            className={currentSentenceIndex === chunkIndex ? 'current-sentence' : ''}
         >
             {/* Content */}
         </Box>
@@ -650,7 +650,7 @@ Highlighting responds to audio playback state:
 
 ```typescript
 // Highlights track current audio position
-currentChunkIndex: state.currentChunkIndex,
+currentSentenceIndex: state.currentSentenceIndex,
 currentWordIndex: state.currentWordIndex,
 isPlaying: state.isPlaying
 ```
@@ -716,10 +716,10 @@ WordHighlightingAPI.unhighlightWord(0, 5);
 
 ```typescript
 // In React component
-const TextChunk = ({ chunkIndex, currentChunkIndex, chunk }) => {
+const TextChunk = ({ chunkIndex, currentSentenceIndex, chunk }) => {
     return (
         <Box
-            className={currentChunkIndex === chunkIndex ? 'current-sentence' : ''}
+            className={currentSentenceIndex === chunkIndex ? 'current-sentence' : ''}
         >
             {chunk.text}
         </Box>
@@ -806,7 +806,7 @@ const highlightSequence = async (words: Array<{chunk: number, word: number}>) =>
 4. **Sentence Styling Issues**
    - Check CSS custom property `--sentence-highlight-color` is set
    - Verify `.current-sentence` class is not overridden
-   - Ensure `currentChunkIndex` prop is being passed correctly
+   - Ensure `currentSentenceIndex` prop is being passed correctly
    - Check conditional className logic in React components
 
 ### Debug Tools

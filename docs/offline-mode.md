@@ -229,7 +229,7 @@ const setCurrentChapterNumber = useCallback(async (chapterNumber: number) => {
                 ...prev,
                 chapter: resolvedChapter,
                 currentChapterNumber: chapterNumber,
-                currentChunkIndex: 0,
+                currentSentenceIndex: 0,
                 chapterTransitionLoading: false,
                 navigationError: null
             }));

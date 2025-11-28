@@ -10,7 +10,7 @@ Added a reading time estimation feature to the audio player that calculates and 
 
 Created three utility functions:
 
-- **`calculateTimeRemaining(chunks, currentChunkIndex, playbackSpeed)`**: Calculates the estimated time in seconds based on:
+- **`calculateTimeRemaining(chunks, currentSentenceIndex, playbackSpeed)`**: Calculates the estimated time in seconds based on:
   - Word count in remaining chunks (excluding current sentence)
   - Average speaking rate of ~150 words per minute at 1x speed
   - Current playback speed adjustment (e.g., 1.5x speed = 1.5x faster)
@@ -20,7 +20,7 @@ Created three utility functions:
   - `"4m"` for minutes only
   - `"1h 23m"` for hours and minutes
 
-- **`getFormattedTimeRemaining(chunks, currentChunkIndex, playbackSpeed)`**: Convenience function that combines calculation and formatting. Returns empty string if less than 10 seconds remaining.
+- **`getFormattedTimeRemaining(chunks, currentSentenceIndex, playbackSpeed)`**: Convenience function that combines calculation and formatting. Returns empty string if less than 10 seconds remaining.
 
 ### 2. AudioControls Component Update (`src/client/components/AudioControls.tsx`)
 

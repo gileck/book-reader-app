@@ -114,7 +114,7 @@ container.style.setProperty('--sentence-highlight-color', sentenceHighlightColor
 **Where it's consumed**:
 ```typescript
 // src/client/routes/Reader/components/chunks/TextChunk.tsx
-backgroundColor: currentChunkIndex === chunkIndex ? 'var(--sentence-highlight-color, transparent)' : 'transparent'
+backgroundColor: currentSentenceIndex === chunkIndex ? 'var(--sentence-highlight-color, transparent)' : 'transparent'
 ```
 
 **Auto-adjustment**: When switching themes, the sentence highlight color automatically adjusts for better contrast.

@@ -121,8 +121,8 @@ export const useChunkMapping = (chapter, audio, navigation) => {
   // Enhanced mapping logic for sentence chunks
   const getChunkFromWordIndex = useCallback((wordIndex: number) => {
     // Precise sentence-level targeting
-    return findSentenceChunkByWordIndex(wordIndex, audio.textChunks);
-  }, [audio.textChunks]);
+    return findSentenceChunkByWordIndex(wordIndex, sentences);
+  }, [sentences]);
   
   // ... rest of implementation
 };
@@ -179,20 +179,20 @@ const createBookmark = useCallback((chunkIndex: number, chunk: TextChunk) => {
 ```typescript
 // src/client/routes/Reader/hooks/useContentContext.ts
 const getLastSentences = useCallback((contextCount: number) => {
-  if (!chapter || audio.textChunks.length === 0) return '';
+  if (!chapter || sentences.length === 0) return '';
   
   // Group sentences by paragraph for better context
-  const currentChunk = audio.textChunks[audio.currentChunkIndex];
+  const currentChunk = sentences[currentSentenceIndex];
   const currentParagraphIndex = currentChunk?.paragraphIndex;
   
   // Get sentences from current and previous paragraphs
   return getSentencesWithParagraphContext(
-    audio.textChunks, 
-    audio.currentChunkIndex, 
+    sentences, 
+    currentSentenceIndex, 
     contextCount,
     currentParagraphIndex
   );
-}, [chapter, audio.textChunks, audio.currentChunkIndex]);
+}, [chapter, sentences, currentSentenceIndex]);
 ```
 
 ### **2.6 Scroll & Position Handling**
