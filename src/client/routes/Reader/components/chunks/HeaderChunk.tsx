@@ -6,7 +6,7 @@ import { TextChunkClient } from '@/apis/chapters/types';
 interface HeaderChunkProps {
     chunk: TextChunkClient;
     chunkIndex: number;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     level?: number; // Determined by content analysis
     onChunkClick?: (chunkIndex: number) => void;
 }
@@ -14,16 +14,16 @@ interface HeaderChunkProps {
 export const HeaderChunk: React.FC<HeaderChunkProps> = ({
     chunk,
     chunkIndex,
-    currentChunkIndex,
+    currentSentenceIndex,
     level = 2,
     onChunkClick
 }) => {
     const { settings } = useSettings();
-    
+
     // Single/Double click differentiation (same pattern as TextChunk)
     const clickTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
     const CLICK_DELAY = 200; // milliseconds to wait before treating as single click
-    
+
     // Mobile double-tap detection
     const lastTapRef = React.useRef<number>(0);
     const DOUBLE_TAP_DELAY = 300; // milliseconds
@@ -64,12 +64,12 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
         if (timeSinceLastTap < DOUBLE_TAP_DELAY && timeSinceLastTap > 0) {
             // Double tap detected - just cancel navigation
             event.preventDefault();
-            
+
             if (clickTimeoutRef.current) {
                 clearTimeout(clickTimeoutRef.current);
                 clickTimeoutRef.current = null;
             }
-            
+
             lastTapRef.current = 0; // Reset
         } else {
             // Single tap - handle navigation
@@ -77,7 +77,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                 if (clickTimeoutRef.current) {
                     clearTimeout(clickTimeoutRef.current);
                 }
-                
+
                 clickTimeoutRef.current = setTimeout(() => {
                     onChunkClick(chunkIndex);
                 }, DOUBLE_TAP_DELAY);
@@ -148,7 +148,7 @@ export const HeaderChunk: React.FC<HeaderChunkProps> = ({
                 },
                 p: { xs: 2, sm: 3 },
                 backgroundColor:
-                    currentChunkIndex === chunkIndex
+                    currentSentenceIndex === chunkIndex
                         ? 'var(--sentence-highlight-color, transparent)'
                         : 'transparent',
                 borderRadius: '6px',

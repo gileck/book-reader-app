@@ -20,7 +20,7 @@ interface ReaderContentProps {
     onNavigateToBookmark: (chapterNumber: number, chunkIndex: number) => void;
     onChunkClick?: (chunkIndex: number) => void;
     onAskQuestion?: (chunkIndex: number) => void;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     // Optional sentence-level data (Phase 4)
     sentences?: SentenceChunk[];
     paragraphGroups?: ParagraphGroupMeta[];
@@ -46,7 +46,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     onNavigateToBookmark,
     onChunkClick,
     onAskQuestion,
-    currentChunkIndex,
+    currentSentenceIndex,
     fontSize,
     lineHeight,
     fontFamily,
@@ -115,7 +115,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     // Handle translate action from context menu
     const handleTranslateFromMenu = useCallback(() => {
         if (!contextMenu) return;
-        
+
         // Transfer context menu position to translation popup
         setTranslationPopup({
             chunkIndex: contextMenu.chunkIndex,
@@ -127,7 +127,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     // Handle set current sentence action from context menu
     const handleSetCurrentSentence = useCallback(() => {
         if (!contextMenu) return;
-        
+
         onNavigateToChunk(contextMenu.chunkIndex);
         setContextMenu(null);
     }, [contextMenu, onNavigateToChunk]);
@@ -135,7 +135,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
     // Handle ask question action from context menu
     const handleAskQuestionFromMenu = useCallback(() => {
         if (!contextMenu) return;
-        
+
         if (onAskQuestion) {
             onAskQuestion(contextMenu.chunkIndex);
         }
@@ -153,11 +153,11 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
             if (!translationPopup) return;
 
             const startChunkIndex = translationPopup.chunkIndex;
-            
+
             // Find consecutive text chunks starting from the clicked chunk
             const allChunks = chapter.content.chunks;
             const startIdx = allChunks.findIndex(c => c.index === startChunkIndex);
-            
+
             if (startIdx === -1) {
                 console.error('Start chunk not found');
                 return;
@@ -166,7 +166,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
             // Collect the next N text chunks
             const chunksToTranslate = [];
             let textChunkCount = 0;
-            
+
             for (let i = startIdx; i < allChunks.length && textChunkCount < sentenceCount; i++) {
                 const chunk = allChunks[i];
                 if (chunk.type === 'text') {
@@ -193,10 +193,10 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 );
 
                 const results = await Promise.all(translationPromises);
-                
+
                 // Process all results
                 let lastFreeTierUsage: { used: number; total: number; remaining: number; percentUsed: number } | null = null;
-                
+
                 results.forEach(({ chunkIndex, result }) => {
                     if (result.data?.success && result.data.translatedText) {
                         // Save translation
@@ -204,7 +204,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                             ...prev,
                             [chunkIndex]: result.data!.translatedText,
                         }));
-                        
+
                         // Save translation language
                         setTranslationLanguages(prev => ({
                             ...prev,
@@ -337,7 +337,7 @@ export const ReaderContent: React.FC<ReaderContentProps> = ({
                 paragraphGroups={paragraphGroups}
                 book={book}
                 handleLinkClick={handleLinkNavigation}
-                currentChunkIndex={currentChunkIndex}
+                currentSentenceIndex={currentSentenceIndex}
                 onChunkClick={onChunkClick}
                 onChunkDoubleClick={handleChunkDoubleClick}
                 bionicReadingEnabled={bionicReadingEnabled}

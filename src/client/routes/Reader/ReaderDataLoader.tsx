@@ -27,16 +27,16 @@ export const ReaderDataLoader = () => {
 
     // Error state
     if (error) {
-        const isOfflineError = error.includes('not available offline') || 
-                               error.includes('connect to the internet') ||
-                               error.includes('download this content');
-        
+        const isOfflineError = error.includes('not available offline') ||
+            error.includes('connect to the internet') ||
+            error.includes('download this content');
+
         return (
-            <Box 
-                display="flex" 
-                flexDirection="column" 
-                justifyContent="center" 
-                alignItems="center" 
+            <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
                 minHeight="100vh"
                 gap={3}
                 px={3}
@@ -44,28 +44,28 @@ export const ReaderDataLoader = () => {
                 {isOfflineError && (
                     <CloudOffIcon sx={{ fontSize: 64, color: 'text.secondary', opacity: 0.5 }} />
                 )}
-                
-                <Typography 
-                    color="error" 
-                    variant="h6" 
+
+                <Typography
+                    color="error"
+                    variant="h6"
                     align="center"
                     sx={{ maxWidth: 600 }}
                 >
                     {error}
                 </Typography>
-                
+
                 {isOfflineError && effectiveOffline && (
-                    <Typography 
-                        variant="body2" 
-                        color="text.secondary" 
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
                         align="center"
                         sx={{ maxWidth: 500 }}
                     >
-                        This chapter hasn&apos;t been downloaded for offline reading yet. 
+                        This chapter hasn&apos;t been downloaded for offline reading yet.
                         You can either go back or disable offline mode to load it from the internet.
                     </Typography>
                 )}
-                
+
                 <Button
                     variant="contained"
                     startIcon={<ArrowBackIcon />}
@@ -89,7 +89,7 @@ export const ReaderDataLoader = () => {
             initialBook={data.book}
             initialChapter={data.chapter}
             initialChapterNumber={data.currentChapterNumber}
-            initialChunkIndex={data.currentChunkIndex}
+            initialChunkIndex={data.currentSentenceIndex}
         />
     );
 };

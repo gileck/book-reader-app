@@ -55,12 +55,13 @@ export const ReaderUI = ({
         chapterTransitionLoading,
         navigationError,
         clearNavigationError,
-        audio,
+        currentSentenceIndex,
         settings,
         bookmarks,
         navigation,
         progress,
-        sentenceAudio
+        sentenceAudio,
+        sentences
     } = useReaderState({
         initialBook,
         initialChapter,
@@ -85,8 +86,6 @@ export const ReaderUI = ({
     // Fullscreen state
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isAutoScrollActive, setIsAutoScrollActive] = useState(false);
-    const sentences = sentenceAudio.sentences;
-    const currentSentenceIndex = audio.currentChunkIndex ?? sentenceAudio.controller.currentSentenceIndex ?? 0;
     const previousSentenceIndex = useMemo(() => {
         for (let i = currentSentenceIndex - 1; i >= 0; i--) {
             const chunk = sentences[i];
@@ -137,14 +136,14 @@ export const ReaderUI = ({
         bookTitle: book?.title || '',
         chapterNumber: chapter?.chapterNumber || 1,
         chapterTitle: chapter?.title || '',
-        currentSentence: chapter && audio.textChunks[sentenceAudio.controller.currentSentenceIndex] ? audio.textChunks[sentenceAudio.controller.currentSentenceIndex].text : '',
+        currentSentence: chapter && sentences[currentSentenceIndex] ? sentences[currentSentenceIndex].text : '',
         getLastSentences: () => {
-            if (!chapter || audio.textChunks.length === 0) return '';
+            if (!chapter || sentences.length === 0) return '';
             const contextCount = getContextLines.current();
-            const startIndex = Math.max(0, sentenceAudio.controller.currentSentenceIndex - contextCount);
-            const endIndex = Math.max(0, sentenceAudio.controller.currentSentenceIndex);
+            const startIndex = Math.max(0, currentSentenceIndex - contextCount);
+            const endIndex = Math.max(0, currentSentenceIndex);
             if (startIndex >= endIndex) return '';
-            return audio.textChunks.slice(startIndex, endIndex).map(chunk => chunk.text).join(' ');
+            return sentences.slice(startIndex, endIndex).map((chunk: { text: string }) => chunk.text).join(' ');
         }
     });
 
@@ -182,24 +181,24 @@ export const ReaderUI = ({
     }, [queryParams.mode, appSettings.readingMode, updateSettings]);
 
     // Initialize content context hook with bookQA context lines
-    const contentContext = useContentContext(chapter, audio, bookQA);
+    const contentContext = useContentContext(chapter, { sentences, currentSentenceIndex }, bookQA);
 
     // Initialize scroll handling hook
-    const { scrollToChunk, scrollToSentenceChunk } = useScrollHandling(loading, chapter, audio.currentChunkIndex);
+    const { scrollToChunk, scrollToSentenceChunk } = useScrollHandling(loading, chapter, currentSentenceIndex);
 
     // Handler to scroll to current playing chunk
     const handleScrollToCurrentChunk = useCallback(() => {
         if (activeTab === 'full') {
             // Get the current index fresh when button is clicked
-            const currentIndex = sentenceAudio.controller.currentSentenceIndex;
+            const currentIndex = sentenceAudio.currentSentenceIndex;
             scrollToChunk(currentIndex);
         }
-    }, [sentenceAudio.controller, scrollToChunk, activeTab]);
+    }, [sentenceAudio, scrollToChunk, activeTab]);
 
     // Handler to go to top (navigate to first sentence and scroll to top)
     const handleGoToTop = useCallback(() => {
         // Navigate audio to first sentence
-        sentenceAudio.controller.goToSentence(0);
+        sentenceAudio.goToSentence(0);
 
         // Scroll to top in full mode
         if (activeTab === 'full') {
@@ -210,7 +209,7 @@ export const ReaderUI = ({
                 }, 50);
             }
         }
-    }, [sentenceAudio.controller.goToSentence, activeTab]);
+    }, [sentenceAudio.goToSentence, activeTab]);
 
     // Track if initial position has been scrolled to (full mode only)
     const hasScrolledToInitialPosition = useRef(false);
@@ -235,7 +234,7 @@ export const ReaderUI = ({
         // Wait for content to be fully rendered
         requestAnimationFrame(() => {
             setTimeout(() => {
-                if (audio.currentChunkIndex === 0) {
+                if (currentSentenceIndex === 0) {
                     // Scroll to top for chapter start
                     container.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
                 } else {
@@ -245,7 +244,7 @@ export const ReaderUI = ({
                 hasScrolledToInitialPosition.current = true;
             }, 300); // Give time for DOM elements to render
         });
-    }, [loading, chapter, audio.currentChunkIndex, activeTab, handleScrollToCurrentChunk]);
+    }, [loading, chapter, currentSentenceIndex, activeTab, handleScrollToCurrentChunk]);
 
     const handleTabChange = useCallback((_: React.SyntheticEvent, newTab: 'focus' | 'full' | 'qa' | 'overview' | 'search') => {
         setActiveTab(newTab);
@@ -362,7 +361,7 @@ export const ReaderUI = ({
 
     // Auto-scroll to current sentence when it changes (but not during active playback)
     useEffect(() => {
-        if (sentenceAudio.controller.isPlaying) return; // Don't scroll during playback
+        if (sentenceAudio.isPlaying) return; // Don't scroll during playback
         if (activeTab !== 'full') return;
 
         const timeoutId = window.setTimeout(() => {
@@ -372,7 +371,7 @@ export const ReaderUI = ({
         return () => {
             window.clearTimeout(timeoutId);
         };
-    }, [currentSentenceIndex, activeTab, sentenceAudio.controller.isPlaying, scrollToSentenceChunk]);
+    }, [currentSentenceIndex, activeTab, sentenceAudio.isPlaying, scrollToSentenceChunk]);
 
     // Handle continuous auto-scroll in fullscreen mode
     useEffect(() => {
@@ -423,8 +422,8 @@ export const ReaderUI = ({
 
     // Wrap play function to mark it as user-initiated
     const handleUserPlay = useCallback(() => {
-        void sentenceAudio.controller.play(true); // User clicked play button
-    }, [sentenceAudio.controller]);
+        void sentenceAudio.play(true); // User clicked play button
+    }, [sentenceAudio]);
 
     const handleFullscreenPrevSentence = useCallback(() => {
         if (previousSentenceIndex === null) return;
@@ -432,7 +431,7 @@ export const ReaderUI = ({
             setIsAutoScrollActive(false);
         }
         // Update parent state → controller syncs automatically (controlled component)
-        navigation.setCurrentChunkIndex(previousSentenceIndex);
+        navigation.setCurrentSentenceIndex(previousSentenceIndex);
     }, [previousSentenceIndex, isAutoScrollActive, navigation]);
 
     const handleFullscreenNextSentence = useCallback(() => {
@@ -441,40 +440,40 @@ export const ReaderUI = ({
             setIsAutoScrollActive(false);
         }
         // Update parent state → controller syncs automatically (controlled component)
-        navigation.setCurrentChunkIndex(nextSentenceIndex);
+        navigation.setCurrentSentenceIndex(nextSentenceIndex);
     }, [nextSentenceIndex, isAutoScrollActive, navigation]);
 
     const handlePreviousChunk = useCallback(() => {
         // Use audio controller's prevSentence to properly stop current audio and play new one
-        sentenceAudio.controller.prevSentence();
+        sentenceAudio.prevSentence();
         if (activeTab === 'full' && isFullscreen && isAutoScrollActive) {
             setIsAutoScrollActive(false);
         }
-    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
+    }, [sentenceAudio, activeTab, isFullscreen, isAutoScrollActive]);
 
     const handleNextChunk = useCallback(() => {
         // Use audio controller's nextSentence to properly stop current audio and play new one
-        sentenceAudio.controller.nextSentence();
+        sentenceAudio.nextSentence();
         if (activeTab === 'full' && isFullscreen && isAutoScrollActive) {
             setIsAutoScrollActive(false);
         }
-    }, [sentenceAudio.controller, activeTab, isFullscreen, isAutoScrollActive]);
+    }, [sentenceAudio, activeTab, isFullscreen, isAutoScrollActive]);
 
     // Handler for "Go to Sentence" feature
     const handleNavigateToChunk = useCallback((targetIndex: number) => {
         // Update parent state → controller syncs automatically (controlled component)
         // This triggers highlighting, progress tracking, and auto-scroll
-        navigation.setCurrentChunkIndex(targetIndex);
+        navigation.setCurrentSentenceIndex(targetIndex);
     }, [navigation]);
 
     // Calculate estimated time remaining to read the chapter
     const estimatedTimeRemaining = useMemo(() => {
         return getFormattedTimeRemaining(
             sentenceAudio.sentences,
-            sentenceAudio.controller.currentSentenceIndex,
+            sentenceAudio.currentSentenceIndex,
             settings.playbackSpeed
         );
-    }, [sentenceAudio.sentences, sentenceAudio.controller.currentSentenceIndex, settings.playbackSpeed]);
+    }, [sentenceAudio.sentences, sentenceAudio.currentSentenceIndex, settings.playbackSpeed]);
 
     // Settings are guaranteed to be loaded by ReaderDataLoader, so no need to check again
     // Note: Initial load errors are handled by ReaderDataLoader, not here
@@ -511,11 +510,11 @@ export const ReaderUI = ({
     const handleQuestionSubmit = useCallback((question: string) => {
         // Set the question in the QA input
         setQaQuestion(question);
-        
+
         // Close the dialog
         setQuestionDialogOpen(false);
         setQuestionDialogChunkIndex(null);
-        
+
         // Navigate to QA tab
         handleOpenQAChat();
     }, [handleOpenQAChat]);
@@ -599,7 +598,7 @@ export const ReaderUI = ({
 
                 {activeTab === 'focus' ? (
                     <FocusReader
-                        controller={sentenceAudio.controller}
+                        controller={sentenceAudio}
                         highlightMode={settings.highlightMode}
                         ttsEnabled={settings.ttsEnabled}
                         autoFontScaling={settings.autoFontScaling}
@@ -697,7 +696,7 @@ export const ReaderUI = ({
                                 navigation.setCurrentChapterNumber(chapterNumber);
                             }
                             // Set the chunk index and switch to full mode
-                            navigation.setCurrentChunkIndex(chunkIndex);
+                            navigation.setCurrentSentenceIndex(chunkIndex);
                             setActiveTab('full');
                         }}
                         onBookmark={(chapterNumber, chunkIndex) => {
@@ -707,7 +706,7 @@ export const ReaderUI = ({
                             if (chapterNumber === chapter.chapterNumber) {
                                 // Navigate to the chunk and bookmark it directly
                                 // Use handleBookmarkAtIndex to avoid stale closure issues
-                                navigation.setCurrentChunkIndex(chunkIndex);
+                                navigation.setCurrentSentenceIndex(chunkIndex);
                                 bookmarks.handleBookmarkAtIndex(chunkIndex);
                             } else {
                                 // TODO: Support bookmarking other chapters directly
@@ -716,7 +715,7 @@ export const ReaderUI = ({
                                 // we need to wait for chapter navigation to complete
                                 navigation.setCurrentChapterNumber(chapterNumber);
                                 setTimeout(() => {
-                                    navigation.setCurrentChunkIndex(chunkIndex);
+                                    navigation.setCurrentSentenceIndex(chunkIndex);
                                     // Use handleBookmarkAtIndex with explicit index to avoid stale closure
                                     bookmarks.handleBookmarkAtIndex(chunkIndex);
                                 }, 500);
@@ -766,11 +765,11 @@ export const ReaderUI = ({
                             book={book}
                             scrollContainerRef={scrollContainerRef}
                             onNavigateToChapter={navigation.setCurrentChapterNumber}
-                            onNavigateToChunk={navigation.setCurrentChunkIndex}
+                            onNavigateToChunk={navigation.setCurrentSentenceIndex}
                             onNavigateToBookmark={navigation.handleNavigateToBookmark}
                             onChunkClick={handleChunkClick}
                             onAskQuestion={handleAskQuestionAboutSentence}
-                            currentChunkIndex={audio.currentChunkIndex}
+                            currentSentenceIndex={currentSentenceIndex}
                             fontSize={settings.fontSize}
                             lineHeight={settings.lineHeight}
                             fontFamily={settings.fontFamily}
@@ -811,10 +810,10 @@ export const ReaderUI = ({
                 {!(isFullscreen && activeTab === 'full') && (
                     <AudioControls
                         chapterTitle={`Chapter ${chapter.chapterNumber}: ${chapter.title}`}
-                        currentChunk={sentenceAudio.controller.currentSentenceIndex + 1}
+                        currentChunk={sentenceAudio.currentSentenceIndex + 1}
                         totalChunks={sentenceAudio.sentences.length}
                         onPlay={handleUserPlay}
-                        onPause={sentenceAudio.controller.pause}
+                        onPause={sentenceAudio.pause}
                         onPreviousChunk={handlePreviousChunk}
                         onNextChunk={handleNextChunk}
                         onPreviousChapter={navigation.handlePreviousChapter}
@@ -824,34 +823,34 @@ export const ReaderUI = ({
                         onSpeedSettings={settings.handleSpeedSettings}
                         onAskAI={handleOpenQAChat}
                         onQuickPrompts={handleOpenQuickPrompts}
-                        isPlaying={sentenceAudio.controller.isPlaying}
+                        isPlaying={sentenceAudio.isPlaying}
                         ttsEnabled={settings.ttsEnabled}
-                        isCurrentChunkLoading={sentenceAudio.controller.isCurrentSentenceLoading}
+                        isCurrentChunkLoading={sentenceAudio.isCurrentSentenceLoading}
                         isBookmarked={bookmarks.isBookmarked}
-                        progress={(sentenceAudio.controller.currentSentenceIndex / Math.max(sentenceAudio.sentences.length - 1, 1)) * 100}
+                        progress={(sentenceAudio.currentSentenceIndex / Math.max(sentenceAudio.sentences.length - 1, 1)) * 100}
                         playbackSpeed={settings.playbackSpeed}
                         bookmarks={bookmarks.bookmarks}
                         currentChapterNumber={chapter.chapterNumber}
-                        currentChunkIndex={audio.currentChunkIndex}
+                        currentSentenceIndex={currentSentenceIndex}
                         totalChapters={book.totalChapters}
                         onNavigateToBookmark={navigation.handleNavigateToBookmark}
                         onNavigateToChunk={handleNavigateToChunk}
                         progressData={progress}
                         onChapters={chapterDialog.openDialog}
                         minChapterNumber={book?.chapterStartNumber ?? 1}
-                        ttsServiceAvailable={sentenceAudio.controller.ttsServiceAvailable}
+                        ttsServiceAvailable={sentenceAudio.ttsServiceAvailable}
                         ttsError={
                             // Only show errors for the current sentence (not preloading errors)
-                            sentenceAudio.controller.ttsError &&
-                                sentenceAudio.controller.ttsError.sentenceIndex === sentenceAudio.controller.currentSentenceIndex
+                            sentenceAudio.ttsError &&
+                                sentenceAudio.ttsError.sentenceIndex === sentenceAudio.currentSentenceIndex
                                 ? {
                                     code: 'TTS_ERROR',
-                                    message: sentenceAudio.controller.ttsError.message,
+                                    message: sentenceAudio.ttsError.message,
                                     timestamp: new Date().toISOString()
                                 }
                                 : null
                         }
-                        onDismissError={sentenceAudio.controller.clearError}
+                        onDismissError={sentenceAudio.clearError}
                         chapterTransitionLoading={chapterTransitionLoading}
                         unitLabelOverride="sentences"
                         estimatedTimeRemaining={estimatedTimeRemaining}
@@ -967,8 +966,8 @@ export const ReaderUI = ({
                 <QuestionInputDialog
                     open={questionDialogOpen}
                     sentenceText={
-                        questionDialogChunkIndex !== null && audio.textChunks[questionDialogChunkIndex]
-                            ? audio.textChunks[questionDialogChunkIndex].text
+                        questionDialogChunkIndex !== null && sentences[questionDialogChunkIndex]
+                            ? sentences[questionDialogChunkIndex].text
                             : ''
                     }
                     onSubmit={handleQuestionSubmit}

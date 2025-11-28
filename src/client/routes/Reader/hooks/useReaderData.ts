@@ -14,7 +14,7 @@ interface ReaderData {
     book: BookClient;
     chapter: ChapterClient;
     currentChapterNumber: number;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
 }
 
 interface UseReaderDataResult {
@@ -57,13 +57,13 @@ export const useReaderData = (): UseReaderDataResult => {
         // - When offline: returns cached response or throws error
         try {
             const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
-            
+
             // Check if this came from cache
             const fromCache = chapterResult.isFromCache || false;
-            
-            return { 
-                chapter: chapterResult.data?.chapter || null, 
-                fromLocal: fromCache 
+
+            return {
+                chapter: chapterResult.data?.chapter || null,
+                fromLocal: fromCache
             };
         } catch (error) {
             // If API call fails (offline with no cache), try IndexedDB as last resort
@@ -72,7 +72,7 @@ export const useReaderData = (): UseReaderDataResult => {
             if (localRec) {
                 return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
             }
-            
+
             // No cached version available anywhere
             throw error;
         }
@@ -199,19 +199,19 @@ export const useReaderData = (): UseReaderDataResult => {
                     book,
                     chapter: resolvedChapter,
                     currentChapterNumber: currentChapter,
-                    currentChunkIndex: currentChunk
+                    currentSentenceIndex: currentChunk
                 });
                 setLoading(false);
 
 
             } catch (error) {
                 console.error('Error loading reader data:', error);
-                
+
                 // Extract user-friendly error message
                 let errorMessage = 'Failed to load book content. Please try again.';
                 if (error instanceof Error) {
                     // Use the specific error message if it's user-friendly
-                    if (error.message.includes('not available offline') || 
+                    if (error.message.includes('not available offline') ||
                         error.message.includes('connect to the internet') ||
                         error.message.includes('download this content')) {
                         errorMessage = error.message;
@@ -223,7 +223,7 @@ export const useReaderData = (): UseReaderDataResult => {
                         errorMessage = 'No books found in your library. Please add a book first.';
                     }
                 }
-                
+
                 setError(errorMessage);
                 setLoading(false);
             }

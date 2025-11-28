@@ -18,18 +18,18 @@ const BASE_INTER_SENTENCE_PAUSE_MS = 900;
  * based on the number of words remaining and the current playback speed.
  * 
  * @param chunks - All text chunks in the chapter
- * @param currentChunkIndex - Current chunk/sentence index (0-based)
+ * @param currentSentenceIndex - Current chunk/sentence index (0-based)
  * @param playbackSpeed - Current playback speed multiplier (e.g., 1.0, 1.5, 2.0)
  * @returns Estimated time remaining in seconds
  */
 export function calculateTimeRemaining(
     chunks: TextChunkClient[],
-    currentChunkIndex: number,
+    currentSentenceIndex: number,
     playbackSpeed: number
 ): number {
     // Get remaining chunks (excluding current one)
     const remainingChunks = chunks
-        .slice(currentChunkIndex + 1)
+        .slice(currentSentenceIndex + 1)
         .filter(chunk => chunk.type === 'text' || chunk.type === 'header');
 
     // Count words in all remaining chunks
@@ -57,7 +57,7 @@ export function calculateTimeRemaining(
     // Floor at 300ms to avoid negative or unrealistic values at very high speeds
     const pauseReduction = (playbackSpeed - 1) * 400;
     const adjustedPauseMs = Math.max(300, BASE_INTER_SENTENCE_PAUSE_MS - pauseReduction);
-    
+
     const numberOfPauses = remainingChunks.length;
     const pauseTimeSeconds = (numberOfPauses * adjustedPauseMs) / 1000;
 
@@ -93,17 +93,17 @@ export function formatTimeRemaining(seconds: number): string {
  * Calculates and formats the time remaining for display
  * 
  * @param chunks - All text chunks in the chapter
- * @param currentChunkIndex - Current chunk/sentence index (0-based)
+ * @param currentSentenceIndex - Current chunk/sentence index (0-based)
  * @param playbackSpeed - Current playback speed multiplier
  * @returns Formatted time string (e.g., "4m") or empty string if no time remaining
  */
 export function getFormattedTimeRemaining(
     chunks: TextChunkClient[],
-    currentChunkIndex: number,
+    currentSentenceIndex: number,
     playbackSpeed: number
 ): string {
-    const seconds = calculateTimeRemaining(chunks, currentChunkIndex, playbackSpeed);
-    
+    const seconds = calculateTimeRemaining(chunks, currentSentenceIndex, playbackSpeed);
+
     // If less than 10 seconds, don't show anything
     if (seconds < 10) {
         return '';

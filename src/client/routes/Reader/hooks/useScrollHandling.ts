@@ -4,7 +4,7 @@ import type { ChapterClient } from '../../../../apis/chapters/types';
 export const useScrollHandling = (
     loading: boolean,
     chapter: ChapterClient | null,
-    currentChunkIndex: number | null
+    currentSentenceIndex: number | null
 ) => {
     // Enhanced scroll-to-sentence with paragraph context
     const scrollToSentenceChunk = useCallback((chunkIndex: number, paragraphIndex?: number) => {
@@ -47,16 +47,16 @@ export const useScrollHandling = (
 
     // Handle scrolling to current chunk with enhanced precision
     const handleScrollToCurrentChunk = useCallback(() => {
-        if (currentChunkIndex === null) return;
+        if (currentSentenceIndex === null) return;
 
         // Try enhanced sentence-level scrolling first
-        const paragraphIndex = getCurrentParagraphIndex(currentChunkIndex);
-        const scrolled = scrollToSentenceChunk(currentChunkIndex, paragraphIndex);
+        const paragraphIndex = getCurrentParagraphIndex(currentSentenceIndex);
+        const scrolled = scrollToSentenceChunk(currentSentenceIndex, paragraphIndex);
 
         if (!scrolled) {
-            console.warn(`Could not scroll to current chunk ${currentChunkIndex}. Element not found.`);
+            console.warn(`Could not scroll to current chunk ${currentSentenceIndex}. Element not found.`);
         }
-    }, [currentChunkIndex, getCurrentParagraphIndex, scrollToSentenceChunk]);
+    }, [currentSentenceIndex, getCurrentParagraphIndex, scrollToSentenceChunk]);
 
     // Navigate to specific chunk by index (for bookmark navigation, etc.)
     const scrollToChunk = useCallback((chunkIndex: number) => {

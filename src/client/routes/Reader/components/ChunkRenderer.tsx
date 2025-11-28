@@ -11,7 +11,7 @@ interface ChunkRendererProps {
     paragraphGroups: ParagraphGroup[];
     book: BookClient;
     handleLinkClick: (link: ChunkLink) => void;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     onChunkClick?: (chunkIndex: number) => void;
     onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
     bionicReadingEnabled?: boolean;
@@ -30,7 +30,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
     paragraphGroups,
     book,
     handleLinkClick,
-    currentChunkIndex,
+    currentSentenceIndex,
     onChunkClick,
     onChunkDoubleClick,
     bionicReadingEnabled = false,
@@ -50,7 +50,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         key={`${groupIndex}-${chunkIndexInGroup}`}
                         chunk={chunk}
                         chunkIndex={chunk.index}
-                        currentChunkIndex={currentChunkIndex}
+                        currentSentenceIndex={currentSentenceIndex}
                         onChunkClick={onChunkClick}
                     />
                 );
@@ -72,7 +72,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                         key={`${groupIndex}-${chunkIndexInGroup}`}
                         chunk={chunk}
                         chunkIndex={chunk.index}
-                        currentChunkIndex={currentChunkIndex}
+                        currentSentenceIndex={currentSentenceIndex}
                         handleLinkClick={handleLinkClick}
                         onChunkClick={onChunkClick}
                         onChunkDoubleClick={onChunkDoubleClick}
@@ -96,14 +96,14 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                 const isParagraph = !group.isStandalone;
                 const nextIsParagraph = nextGroup && !nextGroup.isStandalone;
                 const showDivider = isParagraph && nextIsParagraph;
-                
+
                 // Add double spacing (blank line) between consecutive paragraphs
                 // Single spacing for other cases (after headers/images, or before standalone elements)
                 // Using 1.5em to represent approximately one blank line (scales with font-size)
                 const marginBottom = showDivider
                     ? { mb: '1em' } // Less margin since divider provides visual separation
                     : { mb: 2 }; // Normal spacing
-                
+
                 return (
                     <React.Fragment key={groupIndex}>
                         <Box sx={marginBottom}>
@@ -112,7 +112,7 @@ export const ChunkRenderer: React.FC<ChunkRendererProps> = ({
                             )}
                         </Box>
                         {showDivider && (
-                            <Divider sx={{ 
+                            <Divider sx={{
                                 my: '1em',
                                 opacity: 0.3,
                                 borderColor: 'var(--reader-text-color, currentColor)'

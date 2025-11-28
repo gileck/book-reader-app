@@ -16,7 +16,7 @@ const getDefaultBookmarksState = (): BookmarksState => ({
 export const useBookmarks = (
     bookId: string | undefined,
     chapter: ChapterClient | null,
-    currentChunkIndex: number | null
+    currentSentenceIndex: number | null
 ) => {
     const [state, setState] = useState(getDefaultBookmarksState());
 
@@ -44,17 +44,17 @@ export const useBookmarks = (
 
     // Check if current position is bookmarked
     useEffect(() => {
-        if (!chapter || currentChunkIndex === null) {
+        if (!chapter || currentSentenceIndex === null) {
             updateState({ isBookmarked: false });
             return;
         }
 
         const currentBookmark = state.bookmarks.find(bookmark =>
             bookmark.chapterNumber === chapter.chapterNumber &&
-            bookmark.chunkIndex === currentChunkIndex
+            bookmark.chunkIndex === currentSentenceIndex
         );
         updateState({ isBookmarked: !!currentBookmark });
-    }, [state.bookmarks, chapter, currentChunkIndex, updateState]);
+    }, [state.bookmarks, chapter, currentSentenceIndex, updateState]);
 
     // Helper function to calculate sentence index within paragraph for Parser v2
     const calculateSentenceIndexInParagraph = useCallback((chunkIndex: number): number | undefined => {
@@ -111,7 +111,7 @@ export const useBookmarks = (
                 if (result.data.action === 'created' && result.data.bookmark) {
                     updateState({
                         bookmarks: [...state.bookmarks, result.data.bookmark],
-                        isBookmarked: chunkIndex === currentChunkIndex
+                        isBookmarked: chunkIndex === currentSentenceIndex
                     });
                 } else if (result.data.action === 'deleted') {
                     updateState({
@@ -119,14 +119,14 @@ export const useBookmarks = (
                             !(bookmark.chapterNumber === chapter.chapterNumber &&
                                 bookmark.chunkIndex === chunkIndex)
                         ),
-                        isBookmarked: chunkIndex === currentChunkIndex ? false : state.isBookmarked
+                        isBookmarked: chunkIndex === currentSentenceIndex ? false : state.isBookmarked
                     });
                 }
             }
         } catch (error) {
             console.error('Error toggling bookmark:', error);
         }
-    }, [chapter, bookId, currentChunkIndex, state.bookmarks, state.isBookmarked, updateState, calculateSentenceIndexInParagraph]);
+    }, [chapter, bookId, currentSentenceIndex, state.bookmarks, state.isBookmarked, updateState, calculateSentenceIndexInParagraph]);
 
     /**
      * Toggle bookmark at the current chunk index
@@ -135,9 +135,9 @@ export const useBookmarks = (
      * to avoid stale closure issues.
      */
     const handleBookmark = useCallback(async () => {
-        if (currentChunkIndex === null) return;
-        return handleBookmarkAtIndex(currentChunkIndex);
-    }, [currentChunkIndex, handleBookmarkAtIndex]);
+        if (currentSentenceIndex === null) return;
+        return handleBookmarkAtIndex(currentSentenceIndex);
+    }, [currentSentenceIndex, handleBookmarkAtIndex]);
 
     const isChunkBookmarked = useCallback((chunkIndex: number) => {
         if (!chapter) return false;

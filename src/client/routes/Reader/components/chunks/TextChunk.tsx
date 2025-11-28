@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 interface TextChunkProps {
     chunk: TextChunkClient;
     chunkIndex: number;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     handleLinkClick: (link: ChunkLink) => void;
     onChunkClick?: (chunkIndex: number) => void;
     onChunkDoubleClick?: (chunkIndex: number, event: React.MouseEvent) => void;
@@ -39,7 +39,7 @@ const isRTLLanguage = (languageCode?: string): boolean => {
 export const TextChunk: React.FC<TextChunkProps> = ({
     chunk,
     chunkIndex,
-    currentChunkIndex,
+    currentSentenceIndex,
     handleLinkClick,
     onChunkClick,
     onChunkDoubleClick,
@@ -52,19 +52,19 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     freeTierUsage,
     onToggleTranslation
 }) => {
-    const isHighlighted = currentChunkIndex === chunkIndex;
+    const isHighlighted = currentSentenceIndex === chunkIndex;
     const [showOriginal, setShowOriginal] = useState(false);
     const hasTranslation = !!translatedText;
     const isRTL = isRTLLanguage(translatedLanguage);
-    
+
     // Single/Double click differentiation
     const clickTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
     const CLICK_DELAY = 200; // milliseconds to wait before treating as single click
-    
+
     // Mobile double-tap detection
     const lastTapRef = React.useRef<number>(0);
     const DOUBLE_TAP_DELAY = 300; // milliseconds
-    
+
     // Touch movement tracking to distinguish tap from scroll
     const touchStartRef = React.useRef<{ x: number; y: number } | null>(null);
     const SCROLL_THRESHOLD = 10; // pixels - if finger moves more than this, it's a scroll
@@ -76,7 +76,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
     const handleClick = (event: React.MouseEvent) => {
         // Don't handle single clicks if there's a translation or if clicking on controls
         if (hasTranslation) return;
-        
+
         // Check if clicking on interactive elements (links, buttons)
         const target = event.target as HTMLElement;
         if (target.closest('a') || target.closest('button') || target.closest('[role="button"]')) {
@@ -139,29 +139,29 @@ export const TextChunk: React.FC<TextChunkProps> = ({
         if (touch && touchStartRef.current) {
             const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
             const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
-            
+
             // If finger moved more than threshold, it's a scroll - don't trigger click
             if (deltaX > SCROLL_THRESHOLD || deltaY > SCROLL_THRESHOLD) {
                 touchStartRef.current = null;
                 return;
             }
         }
-        
+
         touchStartRef.current = null; // Reset for next touch
-        
+
         const now = Date.now();
         const timeSinceLastTap = now - lastTapRef.current;
 
         if (timeSinceLastTap < DOUBLE_TAP_DELAY && timeSinceLastTap > 0) {
             // Double tap detected - open translation
             event.preventDefault();
-            
+
             // Clear single click timeout
             if (clickTimeoutRef.current) {
                 clearTimeout(clickTimeoutRef.current);
                 clickTimeoutRef.current = null;
             }
-            
+
             if (onChunkDoubleClick) {
                 // Create a synthetic mouse event for compatibility
                 const touch = event.changedTouches[0];
@@ -181,7 +181,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                 if (clickTimeoutRef.current) {
                     clearTimeout(clickTimeoutRef.current);
                 }
-                
+
                 // Set timeout to execute single tap action
                 // This will be cleared if double tap happens before timeout
                 clickTimeoutRef.current = setTimeout(() => {
@@ -225,10 +225,10 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                 color: 'var(--reader-text-color, inherit)',
                 padding: hasTranslation ? '8px' : '0px 5px 0px 5px',
                 marginBottom: `${chunkSpacing}em`,
-                backgroundColor: hasTranslation 
-                    ? 'rgba(33, 150, 243, 0.08)' 
-                    : isHighlighted 
-                        ? 'var(--sentence-highlight-color, transparent)' 
+                backgroundColor: hasTranslation
+                    ? 'rgba(33, 150, 243, 0.08)'
+                    : isHighlighted
+                        ? 'var(--sentence-highlight-color, transparent)'
                         : 'transparent',
                 borderRadius: '6px',
                 borderLeft: hasTranslation ? '3px solid #2196f3' : 'none',
@@ -255,7 +255,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                     >
                         {displayText}
                     </div>
-                    
+
                     {/* Bottom bar with usage info and controls */}
                     <Box
                         sx={{
@@ -292,7 +292,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                                         </span>
                                     </Box>
                                 )}
-                                
+
                                 {/* Cost info - only show if exceeding free tier */}
                                 {!translationFromCache && freeTierUsage && freeTierUsage.used > freeTierUsage.total && translationCost !== undefined && (
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -302,7 +302,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                                 )}
                             </Box>
                         )}
-                        
+
                         {/* Translation controls - right side */}
                         <Box
                             sx={{
@@ -321,7 +321,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                                     backgroundColor: 'action.hover',
                                     border: '1px solid',
                                     borderColor: 'divider',
-                                    '&:hover': { 
+                                    '&:hover': {
                                         backgroundColor: 'action.selected',
                                         borderColor: 'primary.main',
                                     },
@@ -339,7 +339,7 @@ export const TextChunk: React.FC<TextChunkProps> = ({
                                     backgroundColor: 'action.hover',
                                     border: '1px solid',
                                     borderColor: 'divider',
-                                    '&:hover': { 
+                                    '&:hover': {
                                         backgroundColor: 'error.light',
                                         borderColor: 'error.main',
                                         color: 'error.main',

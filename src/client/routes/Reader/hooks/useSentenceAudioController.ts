@@ -11,6 +11,9 @@ export interface SentenceAudioState {
     ttsError: { message: string; sentenceIndex: number } | null;
     ttsServiceAvailable: boolean;
     isCurrentSentenceLoading: boolean;
+    // Declarative play trigger: when true, useEffect will start playback
+    // This replaces setTimeout-based play scheduling
+    pendingPlay: boolean;
 }
 
 export interface SentenceAudioApi {
@@ -38,7 +41,8 @@ const getDefaultState = (): SentenceAudioState => ({
     intendedPlay: false,
     ttsError: null,
     ttsServiceAvailable: true,
-    isCurrentSentenceLoading: false
+    isCurrentSentenceLoading: false,
+    pendingPlay: false
 });
 
 export function useSentenceAudioController(
@@ -60,7 +64,7 @@ export function useSentenceAudioController(
      * 1. NO internal state for currentSentenceIndex - uses prop directly
      * 2. When controller needs to change index → calls onSentenceIndexChange(newIndex)
      * 3. Parent updates state → component re-renders with new prop value
-     * 4. Single source of truth: parent's state.currentChunkIndex
+     * 4. Single source of truth: parent's state.currentSentenceIndex
      * 
      * Benefits:
      * - No state duplication
@@ -160,10 +164,13 @@ export function useSentenceAudioController(
     }, [chapter, selectedProvider, selectedVoice, sentences, ttsEnabled, update]);
 
     const play = useCallback(async (userInitiated: boolean = false) => {
-        // IMPORTANT: Use ref to get latest value, not prop (avoids stale closure in setTimeout callbacks)
+        // IMPORTANT: Use ref to get latest value, not prop (avoids stale closure)
         // The prop value gets captured when the callback is created, but the ref always has current value
         const index = currentSentenceIndexRef.current;
         const chunk = sentences[index];
+
+        // Clear pendingPlay flag since we're handling the play request now
+        update({ pendingPlay: false });
 
         // Skip playback for images only - play both text and headers
         if (!chunk || chunk.type === 'image' || !chunk.text?.trim()) {
@@ -173,12 +180,12 @@ export function useSentenceAudioController(
             );
             if (nextPlayableIndex !== -1) {
                 // CRITICAL: Update ref SYNCHRONOUSLY before state update
-                // This ensures the recursive play() call sees the new index
+                // This ensures the next play() call sees the new index
                 currentSentenceIndexRef.current = nextPlayableIndex;
                 // CONTROLLED: Request parent to update state via callback
                 onSentenceIndexChange(nextPlayableIndex);
-                // Retry play with new index (preserve userInitiated flag)
-                setTimeout(() => void play(userInitiated), 50);
+                // Schedule play via pendingPlay flag - useEffect will trigger it
+                update({ pendingPlay: true });
             }
             return;
         }
@@ -235,10 +242,10 @@ export function useSentenceAudioController(
      * 2. Reset word index (internal state update)
      * 3. Call onSentenceIndexChange(newIndex) → parent updates state
      * 4. Parent re-renders component with new currentSentenceIndex prop
-     * 5. If audio was playing, resume at new index
+     * 5. If audio was playing, set pendingPlay flag → useEffect triggers play
      * 
      * This function coordinates:
-     * - Internal state (word index, playback state)
+     * - Internal state (word index, playback state, pendingPlay)
      * - Parent state (sentence index via callback)
      * - Audio element (pause/play operations)
      */
@@ -258,21 +265,18 @@ export function useSentenceAudioController(
 
         // CRITICAL: Update ref SYNCHRONOUSLY before triggering state update
         // This ensures play() will read the correct index even if React hasn't re-rendered yet.
-        // The useEffect that syncs the ref runs AFTER React commits, which may be after the setTimeout fires.
-        // By updating the ref here, we guarantee play() sees the new index.
         currentSentenceIndexRef.current = clamped;
 
         // CONTROLLED: Request parent to update sentence index
         // Parent will update state → component re-renders → prop changes
         onSentenceIndexChange(clamped);
 
-        // If audio was playing, start playing the new chunk
+        // If audio was playing, schedule play via pendingPlay flag
+        // useEffect will trigger play() on next render cycle (after state updates)
         if (intendedPlay) {
-            setTimeout(() => {
-                void play();
-            }, 50);
+            update({ pendingPlay: true });
         }
-    }, [sentences.length, update, play, onSentenceIndexChange]);
+    }, [sentences.length, update, onSentenceIndexChange]);
 
     const goToSentence = useCallback((index: number) => {
         navigateToSentenceIndex(index);
@@ -321,6 +325,26 @@ export function useSentenceAudioController(
     const clearError = useCallback(() => {
         update({ ttsError: null });
     }, [update]);
+
+    /**
+     * Declarative play trigger: useEffect watches pendingPlay flag
+     * 
+     * When pendingPlay becomes true:
+     * 1. Navigation or auto-advance has set the flag
+     * 2. React has committed state updates (sentence index is now correct)
+     * 3. This effect fires and triggers play()
+     * 
+     * Benefits over setTimeout:
+     * - Guaranteed to run AFTER React state updates are committed
+     * - No magic timing delays (50ms was arbitrary)
+     * - Proper cleanup if component unmounts
+     * - React DevTools can trace the cause-effect chain
+     */
+    useEffect(() => {
+        if (state.pendingPlay) {
+            void play();
+        }
+    }, [state.pendingPlay, play]);
 
     // Preload current sentence and next 3 sentences for smooth playback
     const hasInitiallyLoadedRef = useRef(false);
@@ -463,21 +487,19 @@ export function useSentenceAudioController(
 
             // If audio was playing, reload and resume with new voice
             if (wasPlaying) {
-                // Small delay to ensure cache is cleared
-                setTimeout(() => {
-                    void loadSentence(currentSentenceIndex, true).then(() => {
-                        // Resume playback with new voice if user intended continuous play
-                        if (stateRef.current.intendedPlay) {
-                            void play();
-                        }
-                    });
-                }, 50);
+                // Load the current sentence with the new voice, then trigger play via pendingPlay
+                void loadSentence(currentSentenceIndex, true).then(() => {
+                    // Resume playback with new voice if user intended continuous play
+                    if (stateRef.current.intendedPlay) {
+                        update({ pendingPlay: true });
+                    }
+                });
             }
 
             prevVoiceRef.current = selectedVoice;
             prevProviderRef.current = selectedProvider;
         }
-    }, [selectedVoice, selectedProvider, state.isPlaying, loadSentence, play, update]);
+    }, [selectedVoice, selectedProvider, state.isPlaying, loadSentence, update]);
 
     // Handle word highlighting when word index changes
     useEffect(() => {

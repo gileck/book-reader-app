@@ -6,7 +6,7 @@ interface UseReadingLogsProps {
     userId: string;
     bookId: string | undefined;
     chapter: ChapterClient | null;
-    currentChunkIndex: number | null;
+    currentSentenceIndex: number | null;
     isPlaying: boolean;
 }
 
@@ -14,7 +14,7 @@ export const useReadingLogs = ({
     userId,
     bookId,
     chapter,
-    currentChunkIndex,
+    currentSentenceIndex,
     isPlaying
 }: UseReadingLogsProps) => {
     const lastLoggedChunk = useRef<number>(-1);
@@ -58,18 +58,18 @@ export const useReadingLogs = ({
         // 1. Audio is playing
         // 2. We haven't already logged this chunk
         // 3. We have valid data
-        // 4. currentChunkIndex is not null
+        // 4. currentSentenceIndex is not null
         if (isPlaying &&
-            currentChunkIndex !== null &&
-            currentChunkIndex !== lastLoggedChunk.current &&
+            currentSentenceIndex !== null &&
+            currentSentenceIndex !== lastLoggedChunk.current &&
             bookId &&
             chapter &&
-            currentChunkIndex >= 0) {
+            currentSentenceIndex >= 0) {
 
-            logChunk(currentChunkIndex);
-            lastLoggedChunk.current = currentChunkIndex;
+            logChunk(currentSentenceIndex);
+            lastLoggedChunk.current = currentSentenceIndex;
         }
-    }, [isPlaying, currentChunkIndex, logChunk, bookId, chapter]);
+    }, [isPlaying, currentSentenceIndex, logChunk, bookId, chapter]);
 
     // Reset logged chunk when chapter changes
     useEffect(() => {

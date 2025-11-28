@@ -10,7 +10,7 @@ interface SimpleTextRendererProps {
     chapter: ChapterClient;
     book: BookClient;
     scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     // Note: Word highlighting now handled outside React via DOM manipulation
     // Note: Sentence highlighting done directly in JSX - much simpler!
     handleWordClick: (chunkIndex: number, wordIndex: number) => void;
@@ -24,7 +24,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
     chapter,
     book,
     scrollContainerRef,
-    currentChunkIndex,
+    currentSentenceIndex,
     handleWordClick,
     handleSentenceClick,
     isChunkBookmarked,
@@ -33,9 +33,9 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
 }) => {
     const { fontSize, lineHeight, fontFamily, textColor } = useUserTheme();
     const chunkRefs = useRef<Map<number, HTMLDivElement>>(new Map());
-    const previousChunkIndex = useRef<number>(currentChunkIndex);
+    const previousChunkIndex = useRef<number>(currentSentenceIndex);
     const hasScrolledToInitialPosition = useRef<boolean>(false);
-    const [isContentVisible, setIsContentVisible] = useState(currentChunkIndex === 0);
+    const [isContentVisible, setIsContentVisible] = useState(currentSentenceIndex === 0);
     const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
     const [selectedText, setSelectedText] = useState('');
     const [showExplainButton, setShowExplainButton] = useState(false);
@@ -55,7 +55,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
             (entries) => {
                 entries.forEach((entry) => {
                     const chunkIndex = parseInt(entry.target.getAttribute('data-chunk-index') || '0');
-                    if (chunkIndex === currentChunkIndex) {
+                    if (chunkIndex === currentSentenceIndex) {
                         onCurrentChunkVisibilityChange(entry.isIntersecting);
                     }
                 });
@@ -68,7 +68,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
         );
 
         // Observe current chunk
-        const currentChunkElement = chunkRefs.current.get(currentChunkIndex);
+        const currentChunkElement = chunkRefs.current.get(currentSentenceIndex);
         if (currentChunkElement) {
             intersectionObserverRef.current.observe(currentChunkElement);
         }
@@ -79,12 +79,12 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                 intersectionObserverRef.current = null;
             }
         };
-    }, [currentChunkIndex, onCurrentChunkVisibilityChange, scrollContainerRef]);
+    }, [currentSentenceIndex, onCurrentChunkVisibilityChange, scrollContainerRef]);
 
     // Expose method to scroll to current chunk
     useEffect(() => {
         const scrollToCurrentChunk = () => {
-            const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
+            const currentChunkRef = chunkRefs.current.get(currentSentenceIndex);
             if (currentChunkRef) {
                 currentChunkRef.scrollIntoView({
                     behavior: 'smooth',
@@ -99,13 +99,13 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
         return () => {
             delete (window as Window & { scrollToCurrentChunk?: () => void }).scrollToCurrentChunk;
         };
-    }, [currentChunkIndex]);
+    }, [currentSentenceIndex]);
 
     // Handle initial positioning when chapter loads with a saved position
     useEffect(() => {
-        if (!hasScrolledToInitialPosition.current && currentChunkIndex > 0) {
+        if (!hasScrolledToInitialPosition.current && currentSentenceIndex > 0) {
             const scrollToInitialPosition = () => {
-                const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
+                const currentChunkRef = chunkRefs.current.get(currentSentenceIndex);
                 if (currentChunkRef) {
                     // Instantly position to correct location while content is hidden
                     currentChunkRef.scrollIntoView({
@@ -113,7 +113,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                         block: 'center'
                     });
                     hasScrolledToInitialPosition.current = true;
-                    previousChunkIndex.current = currentChunkIndex;
+                    previousChunkIndex.current = currentSentenceIndex;
 
                     // Show content after positioning (small delay to ensure scroll completes)
                     setTimeout(() => {
@@ -138,18 +138,18 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
 
                 return () => clearTimeout(timeoutId);
             }
-        } else if (currentChunkIndex === 0) {
+        } else if (currentSentenceIndex === 0) {
             // If starting from beginning, show content immediately
             setIsContentVisible(true);
             hasScrolledToInitialPosition.current = true;
         }
-    }, [currentChunkIndex]);
+    }, [currentSentenceIndex]);
 
     // Auto-scroll to current chunk only when chunk index changes (after initial load)
     useEffect(() => {
-        if (hasScrolledToInitialPosition.current && previousChunkIndex.current !== currentChunkIndex) {
+        if (hasScrolledToInitialPosition.current && previousChunkIndex.current !== currentSentenceIndex) {
             const scrollToChunk = () => {
-                const currentChunkRef = chunkRefs.current.get(currentChunkIndex);
+                const currentChunkRef = chunkRefs.current.get(currentSentenceIndex);
                 if (currentChunkRef) {
                     currentChunkRef.scrollIntoView({
                         behavior: 'smooth',
@@ -162,19 +162,19 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
 
             // Try immediate scroll first
             if (scrollToChunk()) {
-                previousChunkIndex.current = currentChunkIndex;
+                previousChunkIndex.current = currentSentenceIndex;
             } else {
                 // If immediate scroll fails (ref not ready), retry after a short delay
                 const timeoutId = setTimeout(() => {
                     if (scrollToChunk()) {
-                        previousChunkIndex.current = currentChunkIndex;
+                        previousChunkIndex.current = currentSentenceIndex;
                     }
                 }, 100);
 
                 return () => clearTimeout(timeoutId);
             }
         }
-    }, [currentChunkIndex]);
+    }, [currentSentenceIndex]);
 
     // Safety timeout: ensure content becomes visible after maximum wait time
     useEffect(() => {
@@ -338,7 +338,7 @@ export const SimpleTextRenderer: React.FC<SimpleTextRendererProps> = ({
                                     )}
                                     <Typography
                                         variant="body1"
-                                        className={currentChunkIndex === index ? 'current-sentence' : ''}
+                                        className={currentSentenceIndex === index ? 'current-sentence' : ''}
                                         onDoubleClick={() => handleSentenceClick(index)}
                                         sx={{
                                             lineHeight: lineHeight,

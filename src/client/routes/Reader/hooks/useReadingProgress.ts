@@ -5,7 +5,7 @@ interface UseReadingProgressProps {
     userId: string;
     bookId: string | undefined;
     currentChapterNumber: number | null;
-    currentChunkIndex: number | null;
+    currentSentenceIndex: number | null;
     isPlaying?: boolean; // Track if audio is playing for session time
     isInitialLoadComplete?: boolean; // Flag to indicate if initial reading position is loaded
 }
@@ -14,7 +14,7 @@ export const useReadingProgress = ({
     userId,
     bookId,
     currentChapterNumber,
-    currentChunkIndex,
+    currentSentenceIndex,
     isPlaying = false,
     isInitialLoadComplete = false
 }: UseReadingProgressProps) => {
@@ -25,13 +25,13 @@ export const useReadingProgress = ({
 
     // Use refs to always access current values without dependency cycles
     const currentChapterRef = useRef(currentChapterNumber);
-    const currentChunkRef = useRef(currentChunkIndex);
+    const currentChunkRef = useRef(currentSentenceIndex);
 
     // Update refs when values change
     useEffect(() => {
         currentChapterRef.current = currentChapterNumber;
-        currentChunkRef.current = currentChunkIndex;
-    }, [currentChapterNumber, currentChunkIndex]);
+        currentChunkRef.current = currentSentenceIndex;
+    }, [currentChapterNumber, currentSentenceIndex]);
 
     const [progressData, setProgressData] = useState<{
         chapterProgress: number;
@@ -151,7 +151,7 @@ export const useReadingProgress = ({
     useEffect(() => {
         // Don't save until initial reading position is loaded from database
         // and we have valid chapter/chunk values (not null)
-        if (!bookId || !isInitialLoadComplete || currentChapterNumber === null || currentChunkIndex === null) return;
+        if (!bookId || !isInitialLoadComplete || currentChapterNumber === null || currentSentenceIndex === null) return;
 
         if (saveTimeoutRef.current) {
             clearTimeout(saveTimeoutRef.current);
@@ -166,7 +166,7 @@ export const useReadingProgress = ({
                 clearTimeout(saveTimeoutRef.current);
             }
         };
-    }, [currentChapterNumber, currentChunkIndex, saveProgress, bookId, isInitialLoadComplete]);
+    }, [currentChapterNumber, currentSentenceIndex, saveProgress, bookId, isInitialLoadComplete]);
 
     // Save immediately when component unmounts
     useEffect(() => {

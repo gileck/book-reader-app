@@ -33,7 +33,7 @@ interface ReaderState {
     book: BookClient | null;
     chapter: ChapterClient | null;
     currentChapterNumber: number | null;
-    currentChunkIndex: number | null;
+    currentSentenceIndex: number | null;
     loading: boolean;
     chapterTransitionLoading: boolean;
     error: string | null;
@@ -54,7 +54,7 @@ export const useReader = () => {
         book: null,
         chapter: null,
         currentChapterNumber: null,
-        currentChunkIndex: null,
+        currentSentenceIndex: null,
         loading: true,
         chapterTransitionLoading: false,
         error: null
@@ -236,7 +236,7 @@ export const useReader = () => {
                         book,
                         chapter: resolvedChapter,
                         currentChapterNumber: currentChapter,
-                        currentChunkIndex: currentChunk,
+                        currentSentenceIndex: currentChunk,
                         loading: false,
                         chapterTransitionLoading: false,
                         error: null
@@ -277,7 +277,7 @@ export const useReader = () => {
                         ...prev,
                         chapter: resolvedChapter,
                         currentChapterNumber: chapterNumber,
-                        currentChunkIndex: 0,
+                        currentSentenceIndex: 0,
                         chapterTransitionLoading: false
                     }));
                 } else {
@@ -308,8 +308,8 @@ export const useReader = () => {
     const userSettings = useUserSettings();
 
     // Unified function to update chunk index (single source of truth in reader)
-    const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
-        setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
+    const setCurrentSentenceIndex = useCallback((chunkIndex: number) => {
+        setState(prev => ({ ...prev, currentSentenceIndex: chunkIndex }));
     }, []);
 
     // Build sentence map (sentence-level view) for progress tracking
@@ -322,40 +322,40 @@ export const useReader = () => {
         userSettings.selectedProvider as TtsProvider,
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
-        state.currentChunkIndex ?? 0,
-        setCurrentChunkIndex,  // Callback for controller to update parent state
+        state.currentSentenceIndex ?? 0,
+        setCurrentSentenceIndex,  // Callback for controller to update parent state
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset
     );
 
-    // Sync state.currentChunkIndex with sentenceAudio.currentSentenceIndex
+    // Sync state.currentSentenceIndex with sentenceAudio.currentSentenceIndex
     // Prevent controller from overwriting initial loaded position
     const hasInitialized = useRef(false);
     const prevSentenceIndexRef = useRef(sentenceAudio.currentSentenceIndex);
 
     useEffect(() => {
         // On first load, initialize controller with loaded position
-        if (!hasInitialized.current && state.currentChunkIndex !== null && !state.loading) {
+        if (!hasInitialized.current && state.currentSentenceIndex !== null && !state.loading) {
             hasInitialized.current = true;
-            if (state.currentChunkIndex !== 0 && state.currentChunkIndex !== sentenceAudio.currentSentenceIndex) {
-                sentenceAudio.goToSentence(state.currentChunkIndex);
+            if (state.currentSentenceIndex !== 0 && state.currentSentenceIndex !== sentenceAudio.currentSentenceIndex) {
+                sentenceAudio.goToSentence(state.currentSentenceIndex);
             }
-            prevSentenceIndexRef.current = state.currentChunkIndex;
+            prevSentenceIndexRef.current = state.currentSentenceIndex;
             return;
         }
 
         // After initialization, sync controller changes back to state
         if (hasInitialized.current && sentenceAudio.currentSentenceIndex !== prevSentenceIndexRef.current) {
             prevSentenceIndexRef.current = sentenceAudio.currentSentenceIndex;
-            setCurrentChunkIndex(sentenceAudio.currentSentenceIndex);
+            setCurrentSentenceIndex(sentenceAudio.currentSentenceIndex);
         }
-    }, [sentenceAudio.currentSentenceIndex, setCurrentChunkIndex, state.currentChunkIndex, state.loading, sentenceAudio]);
+    }, [sentenceAudio.currentSentenceIndex, setCurrentSentenceIndex, state.currentSentenceIndex, state.loading, sentenceAudio]);
 
     // Legacy audio adapter: sentence index IS chunk index (simplified!)
     // Use state as source of truth for position
     const audioPlayback = {
-        currentChunkIndex: state.currentChunkIndex ?? 0,
+        currentSentenceIndex: state.currentSentenceIndex ?? 0,
         currentWordIndex: sentenceAudio.currentWordIndex,
         isPlaying: sentenceAudio.isPlaying,
         isCurrentChunkLoading: sentenceAudio.isCurrentSentenceLoading,
@@ -365,9 +365,9 @@ export const useReader = () => {
         handleWordClick: sentenceAudio.handleWordClick,
         handlePreviousChunk: sentenceAudio.prevSentence,
         handleNextChunk: sentenceAudio.nextSentence,
-        setCurrentChunkIndex: (index: number) => {
+        setCurrentSentenceIndex: (index: number) => {
             sentenceAudio.goToSentence(index);
-            setCurrentChunkIndex(index);
+            setCurrentSentenceIndex(index);
         },
         preloadChunk: sentenceAudio.preload,
         ttsError: sentenceAudio.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.ttsError, timestamp: new Date().toISOString() } : null,
@@ -382,9 +382,9 @@ export const useReader = () => {
         userId: user?.id || '',
         bookId,
         currentChapterNumber: state.currentChapterNumber,
-        currentChunkIndex: state.currentChunkIndex,
+        currentSentenceIndex: state.currentSentenceIndex,
         isPlaying: audioPlayback.isPlaying,
-        isInitialLoadComplete: !state.loading && state.chapter !== null && state.currentChapterNumber !== null && state.currentChunkIndex !== null
+        isInitialLoadComplete: !state.loading && state.chapter !== null && state.currentChapterNumber !== null && state.currentSentenceIndex !== null
     });
 
     // Reading logs hook - logs every chunk that is played
@@ -392,14 +392,14 @@ export const useReader = () => {
         userId: user?.id || '',
         bookId,
         chapter: state.chapter,
-        currentChunkIndex: sentenceAudio.currentSentenceIndex,
+        currentSentenceIndex: sentenceAudio.currentSentenceIndex,
         isPlaying: audioPlayback.isPlaying
     });
 
     const bookmarks = useBookmarks(
         bookId,
         state.chapter,
-        state.currentChunkIndex
+        state.currentSentenceIndex
     );
 
     // Chapter navigation functions
@@ -426,13 +426,13 @@ export const useReader = () => {
 
         if (chapterNumber === state.chapter.chapterNumber) {
             audioPlayback.handlePause();
-            setCurrentChunkIndex(chunkIndex);
+            setCurrentSentenceIndex(chunkIndex);
         } else {
             setCurrentChapterNumber(chapterNumber);
-            setCurrentChunkIndex(chunkIndex);
+            setCurrentSentenceIndex(chunkIndex);
             audioPlayback.handlePause();
         }
-    }, [state.chapter, setCurrentChapterNumber, setCurrentChunkIndex, audioPlayback]);
+    }, [state.chapter, setCurrentChapterNumber, setCurrentSentenceIndex, audioPlayback]);
 
     // Update playback speed in audio when speed changes
     const handleSpeedChange = useCallback(async (speed: number) => {
@@ -462,7 +462,7 @@ export const useReader = () => {
 
         // Audio playback
         audio: {
-            currentChunkIndex: audioPlayback.currentChunkIndex,
+            currentSentenceIndex: audioPlayback.currentSentenceIndex,
             currentWordIndex: audioPlayback.currentWordIndex,
             isPlaying: audioPlayback.isPlaying,
             isCurrentChunkLoading: audioPlayback.isCurrentChunkLoading,
@@ -472,7 +472,7 @@ export const useReader = () => {
             handleWordClick: audioPlayback.handleWordClick,
             handlePreviousChunk: audioPlayback.handlePreviousChunk,
             handleNextChunk: audioPlayback.handleNextChunk,
-            setCurrentChunkIndex: audioPlayback.setCurrentChunkIndex, // This one calls controller + setState
+            setCurrentSentenceIndex: audioPlayback.setCurrentSentenceIndex, // This one calls controller + setState
             preloadChunk: audioPlayback.preloadChunk,
             ttsError: audioPlayback.ttsError,
             ttsServiceAvailable: audioPlayback.ttsServiceAvailable,
@@ -537,7 +537,7 @@ export const useReader = () => {
             handlePreviousChapter,
             handleNextChapter,
             handleNavigateToBookmark,
-            setCurrentChunkIndex,
+            setCurrentSentenceIndex,
             setCurrentChapterNumber,
             mapParagraphToFirstSentenceIndex: (paragraphIndex: number) => {
                 const group = sentenceMap.paragraphGroups.find(g => g.paragraphIndex === paragraphIndex);

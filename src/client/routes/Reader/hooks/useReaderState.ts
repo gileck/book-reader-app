@@ -17,7 +17,7 @@ interface RuntimeState {
     book: BookClient;
     chapter: ChapterClient;
     currentChapterNumber: number;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     chapterTransitionLoading: boolean;
     navigationError: string | null; // Temporary error for failed navigation attempts
 }
@@ -43,7 +43,7 @@ export const useReaderState = ({
         book: initialBook,
         chapter: initialChapter,
         currentChapterNumber: initialChapterNumber,
-        currentChunkIndex: initialChunkIndex,
+        currentSentenceIndex: initialChunkIndex,
         chapterTransitionLoading: false,
         navigationError: null
     });
@@ -71,13 +71,13 @@ export const useReaderState = ({
         // - When offline: returns cached response or throws error
         try {
             const chapterResult = await getChapterByNumber({ bookId: bookIdParam, chapterNumber });
-            
+
             // Check if this came from cache
             const fromCache = chapterResult.isFromCache || false;
-            
-            return { 
-                chapter: chapterResult.data?.chapter || null, 
-                fromLocal: fromCache 
+
+            return {
+                chapter: chapterResult.data?.chapter || null,
+                fromLocal: fromCache
             };
         } catch (error) {
             // If API call fails (offline with no cache), try IndexedDB as last resort
@@ -86,7 +86,7 @@ export const useReaderState = ({
             if (localRec) {
                 return { chapter: buildChapterFromLocal(localRec), fromLocal: true };
             }
-            
+
             // No cached version available anywhere
             throw error;
         }
@@ -98,10 +98,10 @@ export const useReaderState = ({
 
         try {
             // Clear navigation error and show loading state
-            setState(prev => ({ 
-                ...prev, 
-                navigationError: null, 
-                chapterTransitionLoading: true 
+            setState(prev => ({
+                ...prev,
+                navigationError: null,
+                chapterTransitionLoading: true
             }));
 
             const { chapter: resolvedChapter } = await loadChapterPreferOffline(bookId, chapterNumber);
@@ -111,7 +111,7 @@ export const useReaderState = ({
                     ...prev,
                     chapter: resolvedChapter,
                     currentChapterNumber: chapterNumber,
-                    currentChunkIndex: 0,
+                    currentSentenceIndex: 0,
                     chapterTransitionLoading: false,
                     navigationError: null
                 }));
@@ -125,7 +125,7 @@ export const useReaderState = ({
             }
         } catch (error) {
             console.error('Error loading chapter:', error);
-            
+
             // Extract user-friendly error message
             let errorMessage = `Failed to load chapter ${chapterNumber}.`;
             if (error instanceof Error) {
@@ -138,7 +138,7 @@ export const useReaderState = ({
                     errorMessage = `Chapter ${chapterNumber} could not be found. It may not exist in this book.`;
                 }
             }
-            
+
             // FAILED: Stay on current chapter, show error notification
             setState(prev => ({
                 ...prev,
@@ -147,7 +147,7 @@ export const useReaderState = ({
             }));
         }
     }, [bookId, state.currentChapterNumber, loadChapterPreferOffline]);
-    
+
     // Function to clear navigation error
     const clearNavigationError = useCallback(() => {
         setState(prev => ({ ...prev, navigationError: null }));
@@ -157,8 +157,8 @@ export const useReaderState = ({
     const userSettings = useUserSettings();
 
     // Unified function to update chunk index
-    const setCurrentChunkIndex = useCallback((chunkIndex: number) => {
-        setState(prev => ({ ...prev, currentChunkIndex: chunkIndex }));
+    const setCurrentSentenceIndex = useCallback((chunkIndex: number) => {
+        setState(prev => ({ ...prev, currentSentenceIndex: chunkIndex }));
     }, []);
 
     // Build sentence map
@@ -173,8 +173,8 @@ export const useReaderState = ({
         userSettings.selectedProvider as TtsProvider,
         userSettings.playbackSpeed,
         userSettings.ttsEnabled,
-        state.currentChunkIndex ?? 0,  // ← Single source of truth: parent state (prop)
-        setCurrentChunkIndex,          // ← Callback for controller to update parent
+        state.currentSentenceIndex ?? 0,  // ← Single source of truth: parent state (prop)
+        setCurrentSentenceIndex,          // ← Callback for controller to update parent
         0,
         userSettings.highlightMode,
         userSettings.wordSpeedOffset
@@ -186,46 +186,13 @@ export const useReaderState = ({
     // 3. Parent updates state → controller re-renders with new prop value
     // 4. No internal state, no sync effect needed!
 
-    // Legacy audio adapter
-    // Wrap controller methods to update state when user navigates
-    const audioPlayback = {
-        currentChunkIndex: state.currentChunkIndex ?? 0,
-        currentWordIndex: sentenceAudio.currentWordIndex,
-        isPlaying: sentenceAudio.isPlaying,
-        isCurrentChunkLoading: sentenceAudio.isCurrentSentenceLoading,
-        textChunks: sentenceAudio.sentences,
-        handlePlay: sentenceAudio.play,
-        handlePause: sentenceAudio.pause,
-        handleWordClick: sentenceAudio.handleWordClick,
-        handlePreviousChunk: () => {
-            // Update state first, then let controller follow
-            const newIndex = Math.max(0, (state.currentChunkIndex ?? 0) - 1);
-            setCurrentChunkIndex(newIndex);
-        },
-        handleNextChunk: () => {
-            // Update state first, then let controller follow
-            const newIndex = Math.min(sentenceAudio.sentences.length - 1, (state.currentChunkIndex ?? 0) + 1);
-            setCurrentChunkIndex(newIndex);
-        },
-        setCurrentChunkIndex: (index: number) => {
-            // Update state, controller will follow
-            setCurrentChunkIndex(index);
-        },
-        preloadChunk: sentenceAudio.preload,
-        ttsError: sentenceAudio.ttsError ? { code: 'TTS_ERROR', message: sentenceAudio.ttsError, timestamp: new Date().toISOString() } : null,
-        ttsServiceAvailable: sentenceAudio.ttsServiceAvailable,
-        clearTtsError: sentenceAudio.clearError,
-        retryFailedChunk: sentenceAudio.retryFailed,
-        isChunkFailed: () => false
-    };
-
     // Reading progress hook - use audio controller's position as source of truth
     const readingProgress = useReadingProgress({
         userId: user?.id || '',
         bookId,
         currentChapterNumber: state.currentChapterNumber,
-        currentChunkIndex: sentenceAudio.currentSentenceIndex, // ← Use controller's position, not state
-        isPlaying: audioPlayback.isPlaying,
+        currentSentenceIndex: sentenceAudio.currentSentenceIndex,
+        isPlaying: sentenceAudio.isPlaying,
         isInitialLoadComplete: true // Always true since data is pre-loaded
     });
 
@@ -234,14 +201,14 @@ export const useReaderState = ({
         userId: user?.id || '',
         bookId,
         chapter: state.chapter,
-        currentChunkIndex: sentenceAudio.currentSentenceIndex,
-        isPlaying: audioPlayback.isPlaying
+        currentSentenceIndex: sentenceAudio.currentSentenceIndex,
+        isPlaying: sentenceAudio.isPlaying
     });
 
     const bookmarks = useBookmarks(
         bookId,
         state.chapter,
-        state.currentChunkIndex
+        state.currentSentenceIndex
     );
 
     // Chapter navigation functions
@@ -251,29 +218,29 @@ export const useReaderState = ({
         const minChapterNumber = state.book?.chapterStartNumber ?? 1;
         if (previousChapterNumber >= minChapterNumber) {
             setCurrentChapterNumber(previousChapterNumber);
-            audioPlayback.handlePause();
+            sentenceAudio.pause();
         }
-    }, [state.currentChapterNumber, state.book?.chapterStartNumber, setCurrentChapterNumber, audioPlayback]);
+    }, [state.currentChapterNumber, state.book?.chapterStartNumber, setCurrentChapterNumber, sentenceAudio]);
 
     const handleNextChapter = useCallback(() => {
         if (state.book && state.currentChapterNumber !== null && state.currentChapterNumber < state.book.totalChapters) {
             setCurrentChapterNumber(state.currentChapterNumber + 1);
-            audioPlayback.handlePause();
+            sentenceAudio.pause();
         }
-    }, [state.book, state.currentChapterNumber, setCurrentChapterNumber, audioPlayback]);
+    }, [state.book, state.currentChapterNumber, setCurrentChapterNumber, sentenceAudio]);
 
     const handleNavigateToBookmark = useCallback((chapterNumber: number, chunkIndex: number) => {
         if (!state.chapter) return;
 
         if (chapterNumber === state.chapter.chapterNumber) {
-            audioPlayback.handlePause();
-            setCurrentChunkIndex(chunkIndex);
+            sentenceAudio.pause();
+            setCurrentSentenceIndex(chunkIndex);
         } else {
             setCurrentChapterNumber(chapterNumber);
-            setCurrentChunkIndex(chunkIndex);
-            audioPlayback.handlePause();
+            setCurrentSentenceIndex(chunkIndex);
+            sentenceAudio.pause();
         }
-    }, [state.chapter, setCurrentChapterNumber, setCurrentChunkIndex, audioPlayback]);
+    }, [state.chapter, setCurrentChapterNumber, setCurrentSentenceIndex, sentenceAudio]);
 
     // Update playback speed
     const handleSpeedChange = useCallback(async (speed: number) => {
@@ -290,6 +257,9 @@ export const useReaderState = ({
         clearNavigationError,
         currentChapterNumber: state.currentChapterNumber || 1,
 
+        // Current sentence index - THE primary state for tracking position
+        currentSentenceIndex: state.currentSentenceIndex ?? 0,
+
         // Progress tracking
         progress: {
             chapterProgress: readingProgress.progressData.chapterProgress,
@@ -299,27 +269,6 @@ export const useReaderState = ({
             sessionsCount: readingProgress.progressData.sessionsCount,
             alert: readingProgress.alert,
             closeAlert: readingProgress.closeAlert
-        },
-
-        // Audio playback
-        audio: {
-            currentChunkIndex: audioPlayback.currentChunkIndex,
-            currentWordIndex: audioPlayback.currentWordIndex,
-            isPlaying: audioPlayback.isPlaying,
-            isCurrentChunkLoading: audioPlayback.isCurrentChunkLoading,
-            textChunks: audioPlayback.textChunks,
-            handlePlay: audioPlayback.handlePlay,
-            handlePause: audioPlayback.handlePause,
-            handleWordClick: audioPlayback.handleWordClick,
-            handlePreviousChunk: audioPlayback.handlePreviousChunk,
-            handleNextChunk: audioPlayback.handleNextChunk,
-            setCurrentChunkIndex: audioPlayback.setCurrentChunkIndex,
-            preloadChunk: audioPlayback.preloadChunk,
-            ttsError: audioPlayback.ttsError,
-            ttsServiceAvailable: audioPlayback.ttsServiceAvailable,
-            clearTtsError: audioPlayback.clearTtsError,
-            retryFailedChunk: audioPlayback.retryFailedChunk,
-            isChunkFailed: audioPlayback.isChunkFailed
         },
 
         // User settings
@@ -385,7 +334,7 @@ export const useReaderState = ({
             handlePreviousChapter,
             handleNextChapter,
             handleNavigateToBookmark,
-            setCurrentChunkIndex,
+            setCurrentSentenceIndex,
             setCurrentChapterNumber,
             mapParagraphToFirstSentenceIndex: (paragraphIndex: number) => {
                 const group = sentenceMap.paragraphGroups.find(g => g.paragraphIndex === paragraphIndex);
@@ -393,12 +342,15 @@ export const useReaderState = ({
             }
         },
 
-        // Sentence-level audio and data
-        sentenceAudio: {
-            controller: sentenceAudio,
-            sentences: sentenceAudio.sentences,
-            paragraphGroups: sentenceMap.paragraphGroups
-        }
+        // Sentence audio controller - handles playback, TTS, and navigation
+        // Use sentenceAudio.play(), sentenceAudio.pause(), sentenceAudio.nextSentence(), etc.
+        sentenceAudio,
+
+        // Sentences array (shortcut to sentenceAudio.sentences)
+        sentences: sentenceAudio.sentences,
+
+        // Paragraph groups for content rendering
+        paragraphGroups: sentenceMap.paragraphGroups
     };
 };
 

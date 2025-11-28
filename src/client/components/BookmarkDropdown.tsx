@@ -19,7 +19,7 @@ import type { BookmarkClient } from '../../apis/bookmarks/types';
 interface BookmarkDropdownProps {
     bookmarks: BookmarkClient[];
     currentChapterNumber: number;
-    currentChunkIndex: number;
+    currentSentenceIndex: number;
     onNavigateToBookmark?: (chapterNumber: number, chunkIndex: number) => void;
     onToggleBookmark?: () => void;
     isCurrentBookmarked?: boolean;
@@ -28,7 +28,7 @@ interface BookmarkDropdownProps {
 export const BookmarkDropdown: React.FC<BookmarkDropdownProps> = ({
     bookmarks,
     currentChapterNumber,
-    currentChunkIndex,
+    currentSentenceIndex,
     onNavigateToBookmark,
     onToggleBookmark,
     isCurrentBookmarked = false
@@ -130,7 +130,7 @@ export const BookmarkDropdown: React.FC<BookmarkDropdownProps> = ({
                     ...sortedBookmarks.map((bookmark) => {
                         const isCurrentPosition =
                             bookmark.chapterNumber === currentChapterNumber &&
-                            bookmark.chunkIndex === currentChunkIndex;
+                            bookmark.chunkIndex === currentSentenceIndex;
 
                         return (
                             <MenuItem

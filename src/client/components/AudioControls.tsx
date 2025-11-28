@@ -58,7 +58,7 @@ interface AudioControlsProps {
     playbackSpeed?: number;
     bookmarks?: BookmarkClient[];
     currentChapterNumber?: number;
-    currentChunkIndex?: number;
+    currentSentenceIndex?: number;
     totalChapters?: number;
     minChapterNumber?: number;
     onNavigateToBookmark?: (chapterNumber: number, chunkIndex: number) => void;
@@ -110,7 +110,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
     playbackSpeed = 1.0,
     bookmarks = [],
     currentChapterNumber = 1,
-    currentChunkIndex = 0,
+    currentSentenceIndex = 0,
     totalChapters = 1,
     minChapterNumber = 1,
     onNavigateToBookmark,
@@ -335,7 +335,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                                     <MyLocation sx={{ fontSize: 20 }} />
                                 </IconButton>
                             )}
-                            
+
                             {/* Go to Top Button */}
                             <IconButton
                                 onClick={onGoToTop || (() => onNavigateToChunk?.(0))}
@@ -598,7 +598,7 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     <BookmarkDropdown
                         bookmarks={bookmarks}
                         currentChapterNumber={currentChapterNumber}
-                        currentChunkIndex={currentChunkIndex}
+                        currentSentenceIndex={currentSentenceIndex}
                         onNavigateToBookmark={onNavigateToBookmark}
                         onToggleBookmark={onBookmark}
                         isCurrentBookmarked={isBookmarked}
