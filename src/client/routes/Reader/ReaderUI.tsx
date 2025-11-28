@@ -877,7 +877,6 @@ export const ReaderUI = ({
                     onVoiceChange={settings.handleVoiceChange}
                     onProviderChange={settings.handleProviderChange}
                     onWordTimingOffsetChange={settings.handleWordTimingOffsetChange}
-                    onPreviewVoice={settings.handlePreviewVoice}
                 />
 
                 {/* Theme Modal */}

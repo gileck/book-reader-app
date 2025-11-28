@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Dialog, CircularProgress, Box } from '@mui/material';
-import { VOICE_MAPPINGS, type Voice, type TtsProvider, getVoiceTier } from '../../common/tts/ttsUtils';
+import { type TtsProvider, getVoiceTier, getVoiceById } from '../../common/tts/ttsUtils';
 import { useTtsUsage } from '../hooks/useTtsUsage';
 import { getVoiceTypeUsage } from '../../common/tts/ttsUsageCalculator';
+import { VoicePickerSheet } from './VoicePickerSheet';
 
 interface SpeedControlModalProps {
     open: boolean;
@@ -17,56 +18,34 @@ interface SpeedControlModalProps {
     onVoiceChange: (voice: string) => void;
     onProviderChange: (provider: string) => void;
     onWordTimingOffsetChange: (offset: number) => void;
-    onPreviewVoice: (voice: string, provider: string) => void;
 }
 
-// Voice tier configuration
-interface TierConfig {
-    key: string;
-    label: string;
-    price: string;
-    freeLimit: string;
-    isPremium: boolean;
-}
-
-const getTierConfig = (provider: TtsProvider, tier: string): TierConfig => {
-    if (provider === 'google') {
-        switch (tier) {
-            case 'chirp3-hd': return { key: 'chirp3-hd', label: 'Chirp 3 HD', price: '$30/1M', freeLimit: '1M free', isPremium: true };
-            case 'studio': return { key: 'studio', label: 'Studio', price: '$160/1M', freeLimit: '1M free', isPremium: true };
-            case 'neural2': return { key: 'neural2', label: 'Neural2', price: '$16/1M', freeLimit: '1M free', isPremium: true };
-            case 'wavenet': return { key: 'wavenet', label: 'WaveNet', price: '$4/1M', freeLimit: '4M free', isPremium: false };
-            default: return { key: 'standard', label: 'Standard', price: '$4/1M', freeLimit: '4M free', isPremium: false };
-        }
-    } else if (provider === 'polly') {
-        switch (tier) {
-            case 'long-form': return { key: 'long-form', label: 'Long-Form', price: '$100/1M', freeLimit: '500K free', isPremium: true };
-            case 'generative': return { key: 'generative', label: 'Generative', price: '$30/1M', freeLimit: '100K free', isPremium: true };
-            case 'neural': return { key: 'neural', label: 'Neural', price: '$16/1M', freeLimit: '1M free', isPremium: true };
-            default: return { key: 'standard', label: 'Standard', price: '$4/1M', freeLimit: '5M free', isPremium: false };
-        }
-    } else {
-        return { key: 'neural', label: 'Premium AI', price: '~$0.22/1K', freeLimit: '10K free', isPremium: true };
+// Voice tier configuration for display
+const getTierLabel = (tier: string): string => {
+    switch (tier) {
+        case 'chirp3-hd': return 'Chirp 3 HD';
+        case 'studio': return 'Studio';
+        case 'neural2': return 'Neural2';
+        case 'wavenet': return 'WaveNet';
+        case 'standard': return 'Standard';
+        case 'long-form': return 'Long-Form';
+        case 'generative': return 'Generative';
+        case 'neural': return 'Neural';
+        default: return tier;
     }
 };
 
-const groupVoicesByTier = (voices: Voice[], provider: TtsProvider) => {
-    const groups: Record<string, { config: TierConfig; voices: Voice[] }> = {};
-    const tierOrder = provider === 'google'
-        ? ['chirp3-hd', 'studio', 'neural2', 'wavenet', 'standard']
-        : provider === 'polly'
-            ? ['long-form', 'generative', 'neural', 'standard']
-            : ['neural'];
+const getProviderDisplayName = (provider: TtsProvider): string => {
+    switch (provider) {
+        case 'google': return 'Google';
+        case 'polly': return 'Polly';
+        case 'elevenlabs': return 'ElevenLabs';
+        default: return provider;
+    }
+};
 
-    tierOrder.forEach(tier => {
-        groups[tier] = { config: getTierConfig(provider, tier), voices: [] };
-    });
-
-    voices.forEach(voice => {
-        if (groups[voice.tier]) groups[voice.tier].voices.push(voice);
-    });
-
-    return tierOrder.filter(tier => groups[tier]?.voices.length > 0).map(tier => groups[tier]);
+const isPremiumTier = (tier: string): boolean => {
+    return ['chirp3-hd', 'studio', 'neural2', 'long-form', 'generative', 'neural'].includes(tier);
 };
 
 // iOS-style CSS
@@ -131,30 +110,54 @@ const styles = {
         fontSize: 17,
         color: 'rgba(255,255,255,0.55)',
     },
-    segmentedControl: {
-        display: 'flex',
-        background: 'rgba(255,255,255,0.08)',
-        borderRadius: 9,
-        padding: 2,
-        gap: 2,
-    },
-    segment: {
-        flex: 1,
-        padding: '8px 12px',
-        fontSize: 13,
-        fontWeight: 500,
-        textAlign: 'center' as const,
-        borderRadius: 7,
+    voiceCard: {
+        background: 'rgba(255,255,255,0.05)',
+        borderRadius: 12,
+        padding: '12px 16px',
         cursor: 'pointer',
-        transition: 'all 0.2s ease',
-        color: 'rgba(255,255,255,0.6)',
-        background: 'transparent',
-        border: 'none',
+        transition: 'background 0.15s ease',
     },
-    segmentActive: {
-        background: 'rgba(255,255,255,0.15)',
-        color: '#fff',
+    voiceCardTop: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 4,
+    },
+    voiceCardProvider: {
+        fontSize: 13,
+        color: 'rgba(255,255,255,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+    },
+    voiceCardBadge: {
+        fontSize: 10,
+        fontWeight: 700,
+        padding: '2px 6px',
+        borderRadius: 4,
+        background: 'rgba(10,132,255,0.2)',
+        color: '#0a84ff',
+    },
+    voiceCardName: {
+        fontSize: 17,
         fontWeight: 600,
+        color: '#fff',
+    },
+    voiceCardGender: {
+        fontSize: 15,
+        color: 'rgba(255,255,255,0.4)',
+        marginLeft: 8,
+    },
+    changeButton: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 4,
+        fontSize: 15,
+        color: '#0a84ff',
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        padding: 0,
     },
     toggle: {
         width: 51,
@@ -204,76 +207,6 @@ const styles = {
         transform: 'translateX(-50%)',
         cursor: 'pointer',
     },
-    tierHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '12px 16px',
-        cursor: 'pointer',
-        borderRadius: 10,
-        background: 'rgba(255,255,255,0.03)',
-        marginBottom: 2,
-    },
-    tierLabel: {
-        flex: 1,
-        fontSize: 15,
-        fontWeight: 600,
-    },
-    tierBadge: {
-        fontSize: 10,
-        fontWeight: 700,
-        padding: '2px 6px',
-        borderRadius: 4,
-        background: 'rgba(255,255,255,0.15)',
-        marginLeft: 8,
-    },
-    tierMeta: {
-        fontSize: 13,
-        color: 'rgba(255,255,255,0.4)',
-    },
-    voiceRow: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '12px 16px 12px 32px',
-        cursor: 'pointer',
-        borderRadius: 8,
-        marginBottom: 1,
-        transition: 'background 0.15s ease',
-    },
-    voiceRowSelected: {
-        background: 'rgba(10,132,255,0.15)',
-    },
-    voiceName: {
-        flex: 1,
-        fontSize: 17,
-    },
-    voiceGender: {
-        fontSize: 15,
-        color: 'rgba(255,255,255,0.4)',
-        marginRight: 12,
-    },
-    playButton: {
-        width: 32,
-        height: 32,
-        borderRadius: '50%',
-        background: 'rgba(255,255,255,0.1)',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: 'rgba(255,255,255,0.6)',
-        transition: 'all 0.15s ease',
-    },
-    checkmark: {
-        width: 22,
-        height: 22,
-        borderRadius: '50%',
-        background: '#0a84ff',
-        marginRight: 12,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     usageBar: {
         height: 4,
         background: 'rgba(255,255,255,0.1)',
@@ -306,33 +239,10 @@ const styles = {
     },
 };
 
-// Play Icon SVG
-const PlayIcon = () => (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-        <path d="M3 1.5v11l9-5.5L3 1.5z" />
-    </svg>
-);
-
-// Checkmark Icon SVG
-const CheckIcon = () => (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="#fff">
-        <path d="M5.5 10.5L2 7l1-1 2.5 2.5L11 3l1 1-6.5 6.5z" />
-    </svg>
-);
-
-// Chevron Icon SVG
-const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
-    <svg
-        width="12"
-        height="12"
-        viewBox="0 0 12 12"
-        fill="rgba(255,255,255,0.4)"
-        style={{
-            transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-            transition: 'transform 0.2s ease'
-        }}
-    >
-        <path d="M2 4l4 4 4-4" />
+// Chevron Right Icon SVG
+const ChevronRightIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+        <path d="M4 2l4 4-4 4" />
     </svg>
 );
 
@@ -349,72 +259,38 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
     onVoiceChange,
     onProviderChange,
     onWordTimingOffsetChange,
-    onPreviewVoice
 }) => {
     const [localSpeed, setLocalSpeed] = useState(currentSpeed);
-    const [localVoice, setLocalVoice] = useState(currentVoice);
     const [localOffset, setLocalOffset] = useState(wordTimingOffset);
-    const [selectedProvider, setSelectedProvider] = useState<TtsProvider>(currentProvider as TtsProvider || 'google');
     const [localTtsEnabled, setLocalTtsEnabled] = useState<boolean>(ttsEnabled);
-    const [expandedTiers, setExpandedTiers] = useState<Set<string>>(new Set());
+    const [voicePickerOpen, setVoicePickerOpen] = useState(false);
 
     const { summary, loading: usageLoading } = useTtsUsage(open);
 
-    const availableVoices = useMemo(() => VOICE_MAPPINGS[selectedProvider] || [], [selectedProvider]);
-    const voiceGroups = useMemo(() => groupVoicesByTier(availableVoices, selectedProvider), [availableVoices, selectedProvider]);
+    // Get current voice details for display
+    const provider = currentProvider as TtsProvider || 'google';
+    const currentVoiceData = useMemo(() => getVoiceById(provider, currentVoice), [provider, currentVoice]);
+    const currentVoiceTier = getVoiceTier(provider, currentVoice);
+    const usageInfo = summary?.freeTierMonthUsage
+        ? getVoiceTypeUsage(provider, currentVoiceTier, summary.freeTierMonthUsage)
+        : null;
 
     useEffect(() => {
         setLocalSpeed(currentSpeed);
-        setLocalVoice(currentVoice);
         setLocalOffset(wordTimingOffset);
         setLocalTtsEnabled(ttsEnabled);
-    }, [currentSpeed, currentVoice, wordTimingOffset, ttsEnabled]);
-
-    // Auto-expand tier containing selected voice
-    useEffect(() => {
-        const voice = availableVoices.find(v => v.id === localVoice);
-        if (voice) {
-            setExpandedTiers(prev => new Set([...prev, voice.tier]));
-        }
-    }, [localVoice, availableVoices]);
-
-    useEffect(() => {
-        if (open && availableVoices.length > 0 && !availableVoices.some(v => v.id === localVoice)) {
-            const firstVoice = availableVoices[0].id;
-            setLocalVoice(firstVoice);
-            onVoiceChange(firstVoice);
-        }
-    }, [open, availableVoices, localVoice, onVoiceChange]);
-
-    const handleProviderClick = (provider: TtsProvider) => {
-        setSelectedProvider(provider);
-        onProviderChange(provider);
-        const voices = VOICE_MAPPINGS[provider];
-        if (voices.length > 0) {
-            setLocalVoice(voices[0].id);
-            onVoiceChange(voices[0].id);
-        }
-        setExpandedTiers(new Set());
-    };
-
-    const toggleTier = (tierKey: string) => {
-        setExpandedTiers(prev => {
-            const next = new Set(prev);
-            if (next.has(tierKey)) next.delete(tierKey);
-            else next.add(tierKey);
-            return next;
-        });
-    };
+    }, [currentSpeed, wordTimingOffset, ttsEnabled]);
 
     const handleSpeedChange = (value: number) => {
         setLocalSpeed(value);
         onSpeedChange(value);
     };
 
-    const currentVoiceTier = getVoiceTier(selectedProvider, localVoice);
-    const usageInfo = summary?.freeTierMonthUsage
-        ? getVoiceTypeUsage(selectedProvider, currentVoiceTier, summary.freeTierMonthUsage)
-        : null;
+    const handleVoiceConfirm = (voice: string, newProvider: TtsProvider) => {
+        onProviderChange(newProvider);
+        onVoiceChange(voice);
+        setVoicePickerOpen(false);
+    };
 
     return (
         <Dialog
@@ -583,94 +459,39 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                         </div>
                     </div>
 
-                    {/* Voice Selection */}
+                    {/* Voice Selection - Summary Card */}
                     <div style={styles.section}>
                         <div style={styles.sectionLabel}>Voice</div>
 
-                        {/* Provider Segmented Control */}
-                        <div style={styles.segmentedControl}>
-                            {(['google', 'polly', 'elevenlabs'] as TtsProvider[]).map(provider => (
-                                <button
-                                    key={provider}
-                                    style={{
-                                        ...styles.segment,
-                                        ...(selectedProvider === provider ? styles.segmentActive : {})
-                                    }}
-                                    onClick={() => handleProviderClick(provider)}
-                                >
-                                    {provider === 'google' ? 'Google' : provider === 'polly' ? 'Polly' : 'ElevenLabs'}
+                        {/* Voice Summary Card */}
+                        <div
+                            style={styles.voiceCard}
+                            onClick={() => setVoicePickerOpen(true)}
+                        >
+                            <div style={styles.voiceCardTop}>
+                                <div style={styles.voiceCardProvider}>
+                                    {getProviderDisplayName(provider)}
+                                    {isPremiumTier(currentVoiceTier) && (
+                                        <span style={styles.voiceCardBadge}>HQ</span>
+                                    )}
+                                    <span style={{ color: 'rgba(255,255,255,0.3)' }}>·</span>
+                                    <span>{getTierLabel(currentVoiceTier)}</span>
+                                </div>
+                                <button style={styles.changeButton}>
+                                    Change
+                                    <ChevronRightIcon />
                                 </button>
-                            ))}
-                        </div>
-
-                        {/* Voice List */}
-                        <div style={{ marginTop: 16 }}>
-                            {voiceGroups.map(group => {
-                                const isExpanded = expandedTiers.has(group.config.key);
-                                const hasSelected = group.voices.some(v => v.id === localVoice);
-
-                                return (
-                                    <div key={group.config.key}>
-                                        {/* Tier Header */}
-                                        <div
-                                            style={styles.tierHeader}
-                                            onClick={() => toggleTier(group.config.key)}
-                                        >
-                                            <span style={styles.tierLabel}>
-                                                {group.config.label}
-                                                {group.config.isPremium && (
-                                                    <span style={styles.tierBadge}>HQ</span>
-                                                )}
-                                            </span>
-                                            <span style={styles.tierMeta}>
-                                                {group.config.price} · {group.config.freeLimit}
-                                            </span>
-                                            <ChevronIcon expanded={isExpanded || hasSelected} />
-                                        </div>
-
-                                        {/* Voices */}
-                                        {(isExpanded || hasSelected) && (
-                                            <div style={{ marginBottom: 8 }}>
-                                                {group.voices.map(voice => {
-                                                    const isSelected = localVoice === voice.id;
-                                                    return (
-                                                        <div
-                                                            key={voice.id}
-                                                            style={{
-                                                                ...styles.voiceRow,
-                                                                ...(isSelected ? styles.voiceRowSelected : {})
-                                                            }}
-                                                            onClick={() => {
-                                                                setLocalVoice(voice.id);
-                                                                onVoiceChange(voice.id);
-                                                            }}
-                                                        >
-                                                            {isSelected ? (
-                                                                <div style={styles.checkmark}>
-                                                                    <CheckIcon />
-                                                                </div>
-                                                            ) : (
-                                                                <div style={{ width: 34 }} />
-                                                            )}
-                                                            <span style={styles.voiceName}>{voice.name}</span>
-                                                            <span style={styles.voiceGender}>{voice.gender}</span>
-                                                            <button
-                                                                style={styles.playButton}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    onPreviewVoice(voice.id, selectedProvider);
-                                                                }}
-                                                            >
-                                                                <PlayIcon />
-                                                            </button>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                                <span style={styles.voiceCardName}>
+                                    {currentVoiceData?.name || currentVoice}
+                                </span>
+                                {currentVoiceData && (
+                                    <span style={styles.voiceCardGender}>
+                                        {currentVoiceData.gender}
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         {/* Usage */}
@@ -680,7 +501,7 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                                 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Loading usage...</span>
                             </Box>
                         ) : usageInfo && (
-                            <div style={{ marginTop: 16, padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderRadius: 10 }}>
+                            <div style={{ marginTop: 12, padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderRadius: 10 }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
                                     <span style={{ color: 'rgba(255,255,255,0.5)' }}>Free tier ({currentVoiceTier})</span>
                                     <span style={{ color: 'rgba(255,255,255,0.7)' }}>{usageInfo.percentageUsed.toFixed(0)}%</span>
@@ -751,6 +572,15 @@ export const SpeedControlModal: React.FC<SpeedControlModalProps> = ({
                     </button>
                 </div>
             </div>
+
+            {/* Voice Picker Sheet */}
+            <VoicePickerSheet
+                open={voicePickerOpen}
+                onClose={() => setVoicePickerOpen(false)}
+                currentVoice={currentVoice}
+                currentProvider={provider}
+                onConfirm={handleVoiceConfirm}
+            />
         </Dialog>
     );
 };
